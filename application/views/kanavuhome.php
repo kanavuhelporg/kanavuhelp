@@ -422,7 +422,7 @@
           <li><a class="dropdown-item" href="#">Causes</a></li>
         </ul>
       </li>
-      <a class="navbar-brand" href="#">Donate</a>
+      <a class="navbar-brand" href="#">Donateeee</a>
       <a class="navbar-brand p-3" href="#">My Helps</a>
       <a class="navbar-brand p-3" href="#">How it works</a>
       <a class="navbar-brand p-3" href="#">Blogs</a>
