@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <title>Kanavu Help</title>
   <style>
-    body {
+  body {
       font-family: 'sen', sans-serif;
     }
 
@@ -21,45 +21,165 @@
       font-weight: bolder;
       font-size: x-large;
     }
+@media(max-width:576px) {
+  .logo{
+     margin-left:10px;
+}
+@media (min-width: 577px) and (max-width: 768px) {
+    .logo {
+        margin-left: 30px;
+    }
+}
+@media (min-width: 769px) and (max-width: 992px) {
+    .logo {
+        margin-left: 50px;
+    }
+}
+@media (min-width: 993px) {
+    .logo {
+        margin-left: 65px;
+    }
+  }
+}
+#navbarscroll{
+  margin-top:17px;
+  margin-bottom:10px;
+  margin-left:10px;
+}
+/* @media(max-width:576px) {
+  .nav .container ul .nav-item{
+    text-align:center;
+    display:block;
+  }
+@media (min-width: 577px) and (max-width: 768px) {
+  .nav .container ul .nav-item {
+    text-align:center;
+    }
+} */
+/* @media (min-width: 769px) and (max-width: 992px) {
+  .nav .container li .nav-item {
+    text-align:center;
+    }
+} */
+/* @media (min-width: 993px) {
+  .nav .container li .nav-item {
+    text-align:center;
+    }
+  } */
+/* } */
+   
+@media(max-width:576px) {
+  .carousel{
+    width:576px;
+    height:250px !important;
+    margin-top:120px !important;
+    overflow:hidden !important;
+  }
+  .imgtext1 {
+    height:800px  !important;
+    margin-top:-350px !important;
+    font-size: 10px !important;
+  }
+    .imgtext11 {
+      font-size: 5px !important;
+    }
+    .imgtext2 {
+        margin-left: -1900px !important;
+        margin-top: -30px ;
+    }
+    .imgtext22 {
+      font-size: 5px!important;
+    }
+    
+    .second {
+      margin-top:30px !important;;
+      margin-left: 8px !important;
+      overflow:hidden !important;
+      text-align:center !important; 
+    }
+    .second .col-md-4{
+      padding-bottom:10px !important;
+    }
+    .second1 {
+      margin-left: 8px !important;
+      /* margin-bottom:1px !important; */
+      /* padding-bottom:1px !important; */
+    }
+    #carouselExampleControls{
+      display:none !important;
+    }
+    .footimg {
+      margin-left: 2px !important;
+    }
+  }
+@media (min-width: 577px) and (max-width: 768px) {
+  .nav .container ul .nav-item {
+    text-align:center;
+    }
+    .carousel{
+    width:100% !important;
+    margin-top:130px;
+  }
+    .imgtext11 {
+      font-size: 10px !important;
+    }
+    .imgtext22 {
+      font-size: 10px !important;
+      margin-left:-100px !important;
+    }
+    .second {
+      margin-top:30px !important;;
+      margin-right: 8px !important;
+      overflow:hidden !important;
+      text-align:center !important; 
+    }
+    .second .col-md-4{
+      padding-bottom:10px !important;
+    }
+    .second1 {
+      /* margin-left: 8px !important; */
+      /* margin-bottom:1px !important; */
+      /* padding-bottom:1px !important; */
+    }
+    #carouselExampleControls{
+      display:none !important;
+    }
+    .footimg {
+      margin-left: 10px !important;
+    }
+  }
 
-    .nav {
+.nav {
       padding-top: 10px;
       font-size: 16px;
       /* align-items: center; */
       justify-content: center !important;
       column-gap: 20px !important;
-
     }
 
     .img-fluid1 {
       width: 100%;
       height: 100%;
     }
-
     .btn {
-      color: #EB2D32;
-      font-weight: bolder;
-      border-radius: 50px;
+      color: #EB2D32 !important;
+      font-weight: bolder !important;
+      border-radius: 50px !important;
     }
-
     .btn:hover {
-      background-color: #EB2D32;
-      color: white;
+      background-color: #EB2D32 !important;
+      color: white !important;
     }
 
     .btn-1 {
-      margin-left: 26px;
-      background-color: #EB2D32;
-      color: white;
+      margin-left: 26px !important;
+      background-color: #EB2D32 !important;
+      color: white !important;
     }
 
     /* .btn-1:hover{
     color:
 } */
-    .btn-2 {
-      /* margin-right:-50px; */
-    }
-
     .dropdown-toggle {
       font-size: 18px;
       color: black;
@@ -210,33 +330,22 @@
       margin-top: 40px;
       width: 100%;
       height: 660px;
-      margin-right: auto;
-      /* margin-right:0%; */
-      */
-      /* overflow-x: hidden; */
+      /* margin-right: auto; */
       background-size: cover;
-      /* background-repeat: no-repeat;
-    background-position: center;  */
-
     }
-
     #demo1 {
-      margin-top: 30px;
-
+      margin-top: 50px;
     }
-
     .img-fluid2 {
       width: 100%;
       object-fit: fill;
     }
-
     .circle {
       border-color: #EB2D32;
       position: relative;
       border-radius: 20px;
       /* margin-top: -300px; */
     }
-
     .rectangle {
       width: 250px;
       height: 390px;
@@ -252,6 +361,7 @@
 
     .rectt {
       margin-top: 45px;
+      margin-left:3%;
       position: relative;
       z-index: 1;
     }
@@ -331,8 +441,8 @@
       height: 100%;
       font-size: 21px;
       font-style: normal;
-      margin-top: -700px;
-      margin-left: 90px;
+      margin-top: -560px;
+      margin-left: 30px;
     }
 
     .cardimg {
@@ -394,48 +504,59 @@
       margin-left: 10px;
 
     }
-
-    @media(max-width:768px) {
-      .footer1 {
-        text-align: center;
-        padding: 10px;
-        margin-left: 10px;
-      }
-    }
   </style>
 </head>
-
 <body>
-  <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
-    <div class="container-fluid nav">
-      <!-- <a class="navbar-brand logo" href="#">KANAVU.HELP</a> -->
-      <img class="navbar-brand logo" src="assets/img/Kanavu_help.png" alt="no image">
-    </div>
-    <div class="container nav text-center">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" style="font: size 8px;">Fundraise for</a>
-        <ul class="dropdown-menu ">
-          <li><a class="dropdown-item" href="#">Medical</a></li>
-          <li><a class="dropdown-item" href="#">Education</a></li>
-          <li><a class="dropdown-item" href="#">Dreams</a></li>
-          <li><a class="dropdown-item" href="#">Environment</a></li>
-          <li><a class="dropdown-item" href="#">Causes</a></li>
-        </ul>
-      </li>
-      <a class="navbar-brand" href="#">Donateeee</a>
-      <a class="navbar-brand p-3" href="#">My Helps</a>
-      <a class="navbar-brand p-3" href="#">How it works</a>
-      <a class="navbar-brand p-3" href="#">Blogs</a>
-      <a class="navbar-brand" href="#">Contact us</a>
-    </div>
-    <!-- <form class="container"> 
-       <form> <input class="form-control searchbar1" type="search" placeholder="Search" aria-label="Search"></form>
-      </form> -->
-    <div class="container nav">
-      <a href="<?= base_url('welcome/login') ?>"> <button type="button" class="btn btn-1 border">Login</button></a>
-      <button type="button" class="btn btn-2 border">Start a Kanavu</button>
-    </div>
-  </nav>
+<nav class="navbar navbar-expand-lg bg-light fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img class="logo" src="assets/img/Kanavu_help.png" alt="Kanavu Help">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarscroll">
+        <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0 navbar-nav-scroll text-center text-lg-start"> -->
+        <ul class="navbar-nav mb-2 mb-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                <li class="nav-item dropdown ">
+                    <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">Fundraise for</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Individuals</a></li>
+                        <li><a class="dropdown-item" href="#">Charities</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-brand p-3" href="#">Donate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-brand p-3" href="#">My Helps</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-brand p-3" href="#demo1">How it works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-brand p-3" href="#">Blogs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-brand p-3" href="#">Contact us</a>
+                </li>
+            </ul>
+        </div>
+</div>
+<div class="container navbar-link d-flex">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-2 border">Start a Kanavu</button>
+                    </li>
+                    </ul>
+                </div>
+</nav>
+              
+
+
   <!-- Carousel -->
   <div id="demo" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-indicators">
@@ -477,7 +598,7 @@
   </div>
   <!-- FIsrst session end -->
   <div class=" second">
-    <div class="containers">
+    <div class="container-xxl">
       <div class="h4" style="text-align:center">BE THE REASON OF<span style="color:#EB2D32" ;> SOMEONE SMILES</span></div>
       <div style="display: flex; justify-content: center;">
         <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
@@ -588,6 +709,7 @@
   </div>
 
   <!-- second session end -->
+
   <!-- <div class="container-fluid" style="position:background";>
                 <div class="img-fluid third">
                      <img class="img-fluid" src="assets/img/bg.svg" alt="no image" class="d-block w-100" >
@@ -603,46 +725,47 @@
         <img class="img-fluid img-fluid2" src="assets/img/bg.svg" alt="no image" class="d-block w-100">
         <div class="imgtext3">
           <p style="text-align:center" ;>HOW IT WORKS ( START A FUNDRAISE IN <span style="color:#EB2D32;">THREE SIMPLE STEP )</span></p>
-          <div style="display: flex; justify-content: center;">
+          <div class="d-flex justify-content-center">
             <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
           </div>
           <!--  -->
           <div class="container rectt">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="rectangle rect">
-                  <p class="circle circle0"><span style="margin-left:auto; margin-right:auto; align-item:center" ;>01</span></p>
-                  <p class="ptag" style="text-align:center;"><strong style="color:white">Start your<br> fundraiser</strong></p>
+                  <p class="circle circle0"><span class="d-flex align-items-center justify-content-center">01</span></p>
+                  <p class="ptag text-center"><strong style="color:white">Start your<br> fundraiser</strong></p>
                   <img src="assets/img/Group 109.svg" alt="noimage" class="imgrnd">
                 </div>
               </div>
             </div>
+                  <div class="container">
+                   <div class="row">
+                        <div class="col-md-4">
+                          <div class="rectangle rect1">
+                            <p class="circle circle1"><span class="cirtext">02</span></p>
+                            <p class="ptag text-center" ;><strong style="color:white">Share your<br> fundraiser</strong></p>
+                            <img src="assets/img/Group 28.svg" alt="noimage" class="imgrnd">
+                          </div>
+                        </div>
+                    </div>
+         
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-md-4">
+                             <div class="rectangle rect2">
+                              <p class="circle circle2">03</p>
+                              <p class="ptag text-center"><strong style="color:white">Withdraw<br> funds</strong></p>
+                               <img src="assets/img/Group 29.svg" alt="noimage" class="imgrnd">
+                            </div>
+                          </div>
+                         </div>
+                       </div>
+                    </div>
           </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="rectangle rect1">
-                  <p class="circle circle1"><span class="cirtext">02</span></p>
-                  <p class="ptag" style="text-align:center" ;><strong style="color:white">Share your<br> fundraiser</strong></p>
-                  <img src="assets/img/Group 28.svg" alt="noimage" class="imgrnd">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="rectangle rect2">
-                  <p class="circle circle2">03</p>
-                  <p class="ptag" style="text-align:center"><strong style="color:white">Withdraw<br> funds</strong></p>
-                  <img src="assets/img/Group 29.svg" alt="noimage" class="imgrnd">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
+  </div>
+  </div>
   </div>
   <!--  -->
   <!-- third section end -->
@@ -672,7 +795,7 @@
   </div>
   <!-- fourth session end -->
   <div class="second1">
-    <div class="containers">
+    <div class="container-xxl">
       <div class="h4" style="text-align:center">LATEST CHARITY BLOGS</div>
       <div style="display: flex; justify-content: center;">
         <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
@@ -742,7 +865,7 @@
     </div>
   </div>
   <!--  -->
-  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+ <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
       </div>
@@ -755,7 +878,7 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only"></span>
     </a>
-  </div>
+  </div> 
   <div class="footer">
     <footer class="footer mt-auto py-3">
       <div class="container">
