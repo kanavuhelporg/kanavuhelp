@@ -14,7 +14,6 @@
   <style>
   body {
       font-family: 'sen', sans-serif;
-      overflow-x:hidden;
     }
 
  .logo {
@@ -114,7 +113,7 @@
     }
 
     .second {
-      margin-top: 20px;
+      margin-top: 86px;
       width: 78%;
       margin-left: 160px;
     }
@@ -139,8 +138,8 @@
 
     .row {
       width: 100%;
-      /* margin-left: 30px; */
-    } 
+      margin-left: 30px;
+    }
 
     .share-button {
       margin-left: 150px;
@@ -203,31 +202,35 @@
 
     .third {
       position: relative;
-      margin-top: -20px;
+      margin-top: 100px;
       width: 100%;
-      /* height: 660px; */
+      height: 660px;
       /* height: 100%; */
-      /* left:0;
-      right:0; */
+      left:0;
+      right:0;
       background-size: cover;
       object-fit: fill;
     }
     .img-fluid2 {
       width: 100%;
-      margin-top:90px;
       object-fit: fill;
     }
     .imgtext3 {
       width: 100%;
-      /* height: 100%; */
+      height: 100%;
       font-size: 21px;
       font-style: normal;
-      margin-top: -500px;
-      /* margin-left: 30px;  */
+      margin-top: -560px;
+      margin-left: 30px; 
     }
-/* .bgimg{
-  margin-bottom:50px;
-} */
+    /* .bgimg{ */
+      /* left:0;
+      right:0; */
+      /* align-items:center; */
+      /* margin-left:450px; */
+      /* margin-bottom: */
+      /* margin-bottom:50; */
+    /* } */
     .circle {
       border-color: #EB2D32;
       position: relative;
@@ -330,19 +333,16 @@
 
     .fourth {
       width: 100%;
-      margin-top: 104px;
+      margin-top: 86px;
       margin-left: 10px;
       margin-right: 50px;
       /* margin-left: 250px; */
     }
-    .row1{
-      width:100%;
-      height:auto;
-    }
+
     .second1 {
       margin-top: 86px;
-      width: 100%;
-      /* margin-left: 160px; */
+      width: 78%;
+      margin-left: 160px;
     }
 
     .footer {
@@ -395,55 +395,14 @@
         margin-left: 50px;
     }
   }
-  @media (min-width: 577px) and (max-width: 868px) {
+  @media (min-width: 577px) and (max-width: 768px) {
     .logo {
-        margin-left: 5px;
-    }
-    .navbar{
-      width:100%;
-      /* height:100%; */
-    }
-    .navbar-nav{
-      padding-right:2px !important;
-
+        margin-left: 30px;
     }
     .carousel{
     width:100% !important;
-    margin-top:30px;
+    margin-top:130px;
   }
-  .imgtext1 {
-      width: 50%;
-      font-size: 30px !important;
-      margin-right:0;
-      margin-left:30px !important;
-      margin-top: -300px;
-      padding-left:0;
-    }
-.imgtext11{
-  font-size:8px;
-  /* margin-left:50px;  */
-}
-.imgtext11 ul li{
-      margin-left:-30px;
-      padding-left:0;
-    }
-    .imgtext2 {
-      width: 100%;
-      /* height: 100%; */
-      font-size: 30px;
-      margin-top: -360px;
-      margin-left: 300px;
-      padding-bottom: 0px;
-    }
-.imgtext22{
-  font-size:8px;
-  margin-right:0px;
-  margin-bottom:0px;
-}
-.imgtext22 ul li{
-      margin-left:-33px;
-      padding-left:0;
-    }
     /* .imgtext11 {
       font-size: 10px !important;
     } */
@@ -469,25 +428,22 @@
       display:none !important;
     }
     .footimg {
-      margin-left:16%;
-      /* padding: 0px; */
-      height:100%;
-      width:100%;
+      margin-left: 10px !important;
     }
   }
 @media(max-width:576px) {
-  .body{
+.body{
   overflow-y:hidden;
-      }
-  .logo{
+}
+.logo{
      margin-left:10px;
-     }
-    .img-fluid1 {
+  }
+.img-fluid1 {
       margin-top:95px;   
       width: 100%;
       height:100%;
     }
-  .imgtext1 {
+.imgtext1 {
       width: 50%;
       font-size: 10px !important;
       margin-right:0;
@@ -495,32 +451,29 @@
       margin-top: -140px;
       padding-left:0;
     }
-    .imgtext11{
+.imgtext11{
   font-size:8px;
   /* margin-left:50px;  */
-      }
+}
 .imgtext11 ul li{
       margin-left:-30px;
       padding-left:0;
     }
-  .btn-1, .btn-2 {
+.btn-1, .btn-2 {
     display: inline-block;
     margin-right: 10px;
-    }
-  .btn-3{
+}
+.btn-3{
     font-size:6px;
     background-color: #EB2D32 !important;
     color: white !important;
-          }
-    #demo{
-  height:50%;
-        }
-    .btn-4{
+}
+.btn-4{
     font-size:6px;
     background-color: #EB2D32 !important;
       color: white !important;
-          }
-    .imgtext2 {
+}
+.imgtext2 {
       width: 50%;
       /* height: 100%; */
       font-size: 8px;
@@ -528,21 +481,22 @@
       margin-left: 200px;
       padding-bottom: 0px;
     }
-    .imgtext22{
+.imgtext22{
   font-size:8px;
   margin-right:0px;
   margin-bottom:0px;
-    }
-    .imgtext22 ul li{
+}
+.imgtext22 ul li{
       margin-left:-33px;
       padding-left:0;
     }
-  .carousel .carousel-inner{
+.carousel .carousel-inner{
       max-height: 110vh;
       over-flow:hidden;
     }
   
     .second {
+      margin-top:0px;
       width: 100%;
       height:auto;
       align-items:center;
@@ -554,6 +508,13 @@
       border-radius: 7.5px;
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
     }
+
+    /* .card1,
+    .card2,
+    .card3 {
+      padding: 0;
+    } */
+
     #card1,
     #card2,
     #card3 {
@@ -561,9 +522,8 @@
     }
     .row {
       width: 100%;
-      height:auto;
-      /* margin-bottom: 50px; */
-      /* margin-top:300px; */
+      margin-left: 30px;
+      margin-top:300px;
     }
     .share-button {
       margin-left: 75px;
@@ -575,12 +535,38 @@
       margin-top: 12px;
       margin-bottom: 12px;
     }
+    /* .third {
+      margin-top: 15%;
+      max-width: 100%;
+      height:100% ;
+      /* margin-right: auto; */
+      background-size: cover;
+    } */
+    /* .bgimg{
+     max-width:10%;
+      height:20%;
+    }
+    .img-fluid2 {
+      max-width: 100%;
+      height: auto;
+      object-fit: fill;
+    }
   
+    .imgtext3 {
+      width: 100%;
+      height: 100%;
+      font-size: 21px;
+      font-style: normal;
+      margin-top: 0px;
+      /* margin-left: 30px;  */
+    /* } */ 
 
     .third {
       position: relative;
       margin-top: 10px;
       width: 100%;
+      height: 100px;
+      /* height: 100%; */
       left:0;
       right:0;
       background-size: cover;
@@ -589,24 +575,16 @@
     .img-fluid2 {
       width:100%;
       object-fit: fill;
-      /* display:none; */
     }
     .imgtext3 {
       width: 100%;
-      /* height: 100%; */
-      font-size: 10px;
+      height: 100%;
+      font-size: 21px;
       font-style: normal;
       margin-top: -560px;
-      /* margin-left: 30px;  */
+      margin-left: 30px; 
     }
-    .bgimg{
-      left:0;
-      flex-direction: column;
-    }
-  #demo1{
-  height:100%;
-  margin-top:600px;
-    }
+
     .cardimg {
       width: 100%;
       padding: 10px;
@@ -621,15 +599,7 @@
     .second1 {
       margin-top: 15%;
       width: 100%;
-      /* align-items:center; */
       margin-left:0%;
-    }
-    .h4{
-      font-size:15px;
-    }
-    .p{
-      font-size:10px;
-      justify-content:flex-start;
     }
     .footer {
       height: 250px;
@@ -663,7 +633,7 @@
         
         <div class="collapse navbar-collapse" id="navbarscroll">
         <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0 navbar-nav-scroll text-center text-lg-start"> -->
-        <ul class="navbar-nav mb-2 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <ul class="navbar-nav mb-2 mb-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                 <li class="nav-item dropdown ">
                     <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">Fundraise for</a>
                     <ul class="dropdown-menu">
@@ -701,7 +671,7 @@
                 </div>
 </nav>
   <!-- Carousel -->
-  <div id="demo" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
+  <div id="demo" class="carousel slide carousel-fade  vh-100" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
       <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
@@ -915,7 +885,7 @@
     -->
   <!-- third section end -->
 
-<div  id="demo1" class=" container-fluid third">
+<div  class=" container-fluid third">
     <!-- <div class="col-md-4"> -->
           <img class="img-fluid  img-fluid2 " src="assets/img/bg.svg" alt="no image" class="d-block w-100">
         <div class="imgtext3">
@@ -925,10 +895,7 @@
           </div>  
             <div class="position-relative bgimg">
                <!-- <div class="position-absolute top-50 start-50 translate-middle"> -->
-                  <center><img src="assets/img/green.png" alt="noimage">
-                  <img src="assets/img/red.png" alt="noimage">
-                  <img src="assets/img/yellow.png" alt="noimage">
-                </center>
+                  <center><img src="assets/img/final-removebg.png" alt="noimage"></center>
                </div>
             </div>
             </div>
@@ -965,14 +932,14 @@
   </div>
   <!-- fourth session end -->
   <div class="second1">
-    <div class="container-md">
+    <div class="container-xxl">
       <div class="h4" style="text-align:center">LATEST CHARITY BLOGS</div>
       <div style="display: flex; justify-content: center;">
         <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
       </div>
       <div class="p" style="text-align:center">we exist for non-profits,social enterprises,community groups,<br>activist and individual citizens that are making.</div>
     </div><br>
-    <div class="row row1">
+    <div class="row">
       <div class="col-md-4">
         <div class="card">
           <div class="card-body card1">
@@ -1035,7 +1002,7 @@
     </div>
   </div>
   <!--  -->
- <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+ <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
       </div>
@@ -1048,7 +1015,7 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only"></span>
     </a>
-  </div>  -->
+  </div> 
   <div class="footer">
     <footer class="footer mt-auto py-3">
       <div class="container">
