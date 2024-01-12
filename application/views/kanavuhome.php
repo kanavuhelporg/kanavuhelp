@@ -575,8 +575,6 @@
       margin-top: 12px;
       margin-bottom: 12px;
     }
-  
-
     .third {
       position: relative;
       margin-top: 10px;
