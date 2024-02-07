@@ -15,8 +15,10 @@
   body {
       font-family: 'sen', sans-serif;
       overflow-x:hidden;
+      left:0;
+      right:0;
+      bottom:0;
     }
-
  .logo {
       margin-left: 65px;
       font-weight: bolder;
@@ -25,7 +27,7 @@
   #navbarscroll{
         margin-top:17px;
         margin-bottom:10px;
-        /* margin-left:10px; */
+        margin-left:70px;
   }
     .img-fluid1 {
       width: 100%;
@@ -143,11 +145,11 @@
     } 
 
     .share-button {
-      margin-left: 150px;
+      margin-left: 120px;
     }
 
     .btn0 {
-      margin-left: 150px;
+      margin-left: 120px;
     }
 
     .btn2 {
@@ -394,55 +396,150 @@
     .logo {
         margin-left: 50px;
     }
+    .navbar{
+      width:100%;
+      right:0 !important;
+    }
+    .carousel{
+    width:100% !important;
+    margin-top:52px;
   }
-  @media (min-width: 577px) and (max-width: 868px) {
+  .bttn{
+    /* left:0; */
+    margin:0;
+    padding:0;
+  }
+  .imgtext1 {
+      width: 50%;
+      font-size: 37px !important;
+      margin-right:0;
+      margin-left:30px !important;
+      margin-top: -340px;
+      padding-left:0;
+    }
+    .imgtext11{
+      font-size:12px;
+    }
+    .imgtext11 ul li{
+      margin-left:-30px;
+      padding-left:0;
+    }
+    .imgtext2 {
+      width: 100%;
+      font-size: 30px;
+      margin-top: -300px;
+      margin-left: 430px;
+      /* padding-bottom: 0px; */
+    }
+    .imgtext22{
+      font-size:12px;
+      margin-right:0px;
+      /* margin-bottom:0px; */
+    }
+    .imgtext22 ul li{
+      margin-left:-33px;
+      padding-bottom:2px;
+    }
+    #carouselExampleControls{
+      display:none;
+    }
+    .btn-1, .btn-2 {
+    display: inline-block;
+    margin-right: 10px;
+    }
+  .btn-3 .btn-4{
+    /* font-size:6px; */
+    margin-top:5px;
+  }
+.row{
+  width:100%;
+  left:0;
+  right:0;
+  padding-left:2px;
+}
+.btn0{
+  /* margin-right:20px; */
+  margin-left:10%;
+}
+.share-button{
+  margin-left:10%;
+}
+.imgtext3 {
+      width: 100%;
+      /* height: 100%; */
+      font-size: 17px;
+      /* font-style: normal; */
+      margin-top: -390px;
+      /* margin-left: 30px;  */
+    }
+    .demo1{
+      width:100%;
+      height:auto;
+    }
+    .bttn{
+      /* margin-top:20px; */
+      margin-right:0;
+      justify-content:space-between;
+      margin-top:0;
+    }
+    .footimg{
+      margin-left:30%;
+
+    }
+  }
+  @media (min-width: 577px) and (max-width: 768px) {
     .logo {
         margin-left: 5px;
     }
     .navbar{
       width:100%;
+      right:0!important;
       /* height:100%; */
     }
     .navbar-nav{
       padding-right:2px !important;
-
     }
     .carousel{
     width:100% !important;
-    margin-top:30px;
+    margin-top:40px;
+  }
+  .bttn{
+    /* left:0; */
+    margin:0;
+    padding:0;
   }
   .imgtext1 {
       width: 50%;
-      font-size: 30px !important;
+      font-size: 19px !important;
       margin-right:0;
-      margin-left:30px !important;
-      margin-top: -300px;
+      margin-left:25px !important;
+      margin-top: -200px !important;
       padding-left:0;
     }
-.imgtext11{
-  font-size:8px;
+  .imgtext11{
+     font-size:8px;
   /* margin-left:50px;  */
-}
-.imgtext11 ul li{
+    }
+    .imgtext11 ul li{
       margin-left:-30px;
       padding-left:0;
     }
     .imgtext2 {
       width: 100%;
       /* height: 100%; */
-      font-size: 30px;
-      margin-top: -360px;
-      margin-left: 300px;
-      padding-bottom: 0px;
+      font-size: 18px;
+      margin-top: -210px;
+      margin-left: 330px !important;;
+      /* padding-bottom: 0px; */
     }
-.imgtext22{
-  font-size:8px;
-  margin-right:0px;
-  margin-bottom:0px;
-}
-.imgtext22 ul li{
+    .imgtext22{
+      font-size:9px;
+      margin-right:0px;
+      /* margin-bottom:0px; */
+    }
+    .imgtext22 ul li{
       margin-left:-33px;
-      padding-left:0;
+      padding-bottom:0;
     }
     /* .imgtext11 {
       font-size: 10px !important;
@@ -452,14 +549,49 @@
       margin-left:-100px !important;
     } */
     .second {
-      margin-top:30px !important;;
-      margin-right: 8px !important;
+      /* margin-top:30px !important; */
+      left:0 !important;
+      right:0;
+      padding-left:0% !important;
+      /* margin-right: 8px !important; */
       overflow:hidden !important;
-      text-align:center !important; 
     }
+    /* .row{
+      right:0;
+       width: 100%;
+      height:auto;
+      /* padding-left:2px; */
+    /* }----------- */ 
     .second .col-md-4{
       padding-bottom:10px !important;
+      width:100%;
     }
+    .imgtext3 {
+      width: 100%;
+      /* height: 100%; */
+      font-size: 17px;
+      /* font-style: normal; */
+      margin-top: -100px;
+      margin-top: 15%;
+      /* margin-left: 30px;  */
+    }
+    .third{
+      /* position:relative; */
+      background-color:#fef2f2;
+      /* right:0; */
+      /* left:0; */
+    }
+    .img-fluid2 {  
+      display:none !important;
+    }
+    .bgimg{
+      width:100%;
+      align-items:center !important;
+    }
+    /* .demo1{
+      width:100%;
+      height:auto;
+    } */
     .second1 {
       /* margin-left: 8px !important; */
       /* margin-bottom:1px !important; */
@@ -470,14 +602,24 @@
     }
     .footimg {
       margin-left:16%;
+      /* bottom:0; */
       /* padding: 0px; */
-      height:100%;
-      width:100%;
+      /* height:100%; */
+      /* width:100%; */
     }
-  }
+    .footer {
+      height: 250px;
+      width: 100%;
+      left:0;
+      right:0;
+      margin-top:15%;
+      /* color: #f0f0f0; */
+    }
+    }
 @media(max-width:576px) {
   .body{
   overflow-y:hidden;
+  overflow-x:hidden;
       }
   .logo{
      margin-left:10px;
@@ -487,6 +629,13 @@
       width: 100%;
       height:100%;
     }
+    .img-fluid2 {
+     display:none !important;
+    }
+      .carousel{
+    width:100% !important;
+    margin-top:1px;
+  }
   .imgtext1 {
       width: 50%;
       font-size: 10px !important;
@@ -496,10 +645,10 @@
       padding-left:0;
     }
     .imgtext11{
-  font-size:8px;
+      font-size:8px;
   /* margin-left:50px;  */
       }
-.imgtext11 ul li{
+    .imgtext11 ul li{
       margin-left:-30px;
       padding-left:0;
     }
@@ -513,12 +662,12 @@
     color: white !important;
           }
     #demo{
-  height:50%;
+    height:50%;
         }
     .btn-4{
     font-size:6px;
     background-color: #EB2D32 !important;
-      color: white !important;
+    color: white !important;
           }
     .imgtext2 {
       width: 50%;
@@ -529,9 +678,9 @@
       padding-bottom: 0px;
     }
     .imgtext22{
-  font-size:8px;
-  margin-right:0px;
-  margin-bottom:0px;
+      font-size:8px;
+      margin-right:0px;
+      margin-bottom:0px;
     }
     .imgtext22 ul li{
       margin-left:-33px;
@@ -541,14 +690,12 @@
       max-height: 110vh;
       over-flow:hidden;
     }
-  
     .second {
       width: 100%;
       height:auto;
       align-items:center;
       margin-left: 0px;
     }
-
     .card {
       width: 92%;
       border-radius: 7.5px;
@@ -577,12 +724,13 @@
     }
     .third {
       position: relative;
-      margin-top: 10px;
+      /* margin-top: 10px; */
       width: 100%;
       left:0;
       right:0;
       background-size: cover;
       object-fit: fill;
+      background-color:#fef2f2;
     }
     .img-fluid2 {
       width:100%;
@@ -594,7 +742,7 @@
       /* height: 100%; */
       font-size: 10px;
       font-style: normal;
-      margin-top: -560px;
+      margin-top: -558px;
       /* margin-left: 30px;  */
     }
     .bgimg{
@@ -637,7 +785,6 @@
       margin-top:15%;
       color: #f0f0f0;
     }
-/*  */
     .footimg {
       margin-left: 15%;
       padding: 0px;
@@ -650,9 +797,9 @@
   </style>
 </head>
 <body>
-<nav class="navbar  navbar-expand-md bg-light fixed-top pe-5">
+<nav class="navbar  navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="http://localhost/kanavuhelp/">
             <img class="logo" src="assets/img/Kanavu_help.png" alt="Kanavu Help">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -662,38 +809,38 @@
         <div class="collapse navbar-collapse" id="navbarscroll">
         <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0 navbar-nav-scroll text-center text-lg-start"> -->
         <ul class="navbar-nav mb-2 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                <li class="nav-item dropdown ">
+                <li class="nav-item dropdown px-3">
                     <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">Fundraise for</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Individuals</a></li>
-                        <li><a class="dropdown-item" href="#">Charities</a></li>
+                        <li><a class="dropdown-item"  href="<?= base_url('kanavuhelp/individual') ?>">Individuals</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/charity') ?>">Charities</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-brand p-3" href="#">Donate</a>
+                    <a class="navbar-brand p-5 p-md-1" href="<?= base_url('kanavuhelp/donate') ?>">Donate</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-brand p-3" href="#">My Helps</a>
+                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/myhelps') ?>">My Helps</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-brand p-3" href="#demo1">How it works</a>
+                    <a class="navbar-brand p-3 p-md-1" href="#demo1">How it works</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-brand p-3" href="#">Blogs</a>
+                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/blogs') ?>">Blogs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-brand p-3" href="#">Contact us</a>
+                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/contactus') ?>">Contact us</a>
                 </li>
             </ul>
         </div>
 </div>
-<div class="container navbar-link d-md-flex  justify-content-sm-start ps-md-5 pe-md-1">
+<div class="container navbar-link  justify-content-sm-start bttn">
                   <!-- <ul class="navbar-nav d-md-flex flex-row justify-content-end"> -->
                     <!-- <li class="nav-item"> -->
                         <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
                     <!-- </li> -->
                     <!-- <li class="nav-item"> -->
-                        <button type="button" class="btn btn-2 border">Start a Kanavu</button>
+                    <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
                     <!-- </li> -->
                     <!-- </ul> -->
                 </div>
@@ -712,7 +859,7 @@
           <div class="imgtext11">
           <ul style="list-style-type:none"><li  class="p-sm-0" style="font-weight: bold;">"Empowering Lives,Defeating diseases & disasters"</li>
             <li class="p-sm-0">join Us in the Fight & Healing.</li>
-           <li> <button type="button" class="btn border btn-3">Start a Help</button></li></ul>
+           <li> <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn border btn-3">Start a Kanavu</button></a></li></ul>
           </div>
         </div>
         </div>
@@ -726,7 +873,7 @@
             <ul style="list-style-type:none"><li class="p-sm-0" style="font-weight:bold;">"Empowering Lives,Defeating diseases & disasters"</li>
             <li class="p-sm-0">join Us in the Fight & Healing.</li>
           <li>
-          <button type="button" class="btn border btn-4">Start a Help</button></li></ul>
+          <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn border btn-4">Start a Kanavu</button></a></li></ul>
         </div>
          </div>
     </div>
@@ -915,7 +1062,7 @@
 
 <div  id="demo1" class=" container-fluid third">
     <!-- <div class="col-md-4"> -->
-          <img class="img-fluid  img-fluid2 " src="assets/img/bg.svg" alt="no image" class="d-block w-100">
+          <img class="img-fluid img-fluid2 d-block w-100" src="assets/img/bg.svg" alt="no image" class="">
         <div class="imgtext3">
           <p style="text-align:center";>HOW IT WORKS ( START A FUNDRAISE IN <span style="color:#EB2D32;">THREE SIMPLE STEP )</span></p>
           <div class="d-flex justify-content-center">

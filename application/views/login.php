@@ -42,16 +42,19 @@
         <div style="margin-top:10px"><img src="http://localhost/kanavuhelp/assets/img/Kanavu_help.png" alt="noimage" ></div>
         <br>
             <h2>Sign in</h2>
-            <p>Don't have an Account? <a href="<?= base_url('Welcome/register') ?>"><span style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p>
-            <form method="post" action="<?= base_url('Welcome/submit') ?>"> 
+            <p>Don't have an Account? <a href="<?= base_url('kanavuhelp/register') ?>"><span style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p>
+            <form name="login" onsubmit="return loginValidate()" method="post" action="<?= base_url('kanavuhelp/userLogin') ?>" > 
             
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">email</label>
             <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1">
+            <div id="mailerr" class="text-danger"></div>
           </div>
+
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">password</label>
             <input type="password" class="form-control" id="exampleInputpassword1" name="exampleInputpassword1" >
+            <div id="passworderr" class="text-danger"></div>
           </div>
           <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -72,5 +75,39 @@
         </div>
         </div>
 </form>
+<script>
+
+  function loginValidate() {
+    var email = document.login.exampleInputEmail1.value.trim(); // Trim the input value
+    var password = document.login.exampleInputpassword1.value.trim(); // Trim the input value
+
+    // Validate email
+    if (email === "") {
+        var emailsms = "Email must be filled out";
+        document.getElementById("mailerr").innerHTML = emailsms;
+        return false;
+    } else if (!/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)) {
+        document.getElementById("mailerr").innerHTML = "You have entered an invalid email address";
+        return false;
+    } else {
+        document.getElementById("mailerr").innerHTML = "";
+    }
+
+    // Validate password
+    if (password === "") {
+        var passwordsms = "Password must be filled out";
+        document.getElementById("passworderr").innerHTML = passwordsms;
+        return false;
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/.test(password)) {
+        document.getElementById("passworderr").innerHTML = "Password does not match the criteria";
+        return false;
+    } else {
+        document.getElementById("passworderr").innerHTML = "";
+    }
+
+    return true; // Submit the form if all validations pass
+}
+
+  </script>
     </body>
     </html>
