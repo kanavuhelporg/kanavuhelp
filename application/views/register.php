@@ -11,35 +11,89 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="loginstyle.css">
     <title>Login Page</title>
+<style>
+   .btnsignin{
+    background-color: #EB2D32;
+    color:white;
+   }  
+   </style>
+
+
 </head>
 <body>  
 <div class="container-fluid">
     <div class="row">
     <div class="col-sm-6 logi1">
-        <div style="margin-top:10px"><img src="img/Kanavu.help.png" alt="noimage" ></div>
+        <div style="margin-top:10px"><img src="http://localhost/kanavuhelp/assets/img/Kanavu_help.png" alt="noimage" ></div>
         <br>
             <h2 style="margin-bottom:30px;">Register</h2>
             <!-- <p>Don't have an Account?<span style="color:red; text-decoration:underline;margin-left:10px;">Create Now</span></p> -->
-        <form>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" value="Mythili Muthusamy">
-              </div>
+            <form name="register" onsubmit="return registerValidate()" method="post" action="<?= base_url('kanavuhelp/submit1') ?>" > 
+
+        <div class="mb-3">
+                <label for="exampleInputName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="exampleInputName" name="exampleInputName">
+                <div id="nameerr" class="text-danger"></div>
+            </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">E-Mail</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" value="example@gmail.com">
+            <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" >
+            <div id="mailerr" class="text-danger"></div>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" value="@#*%">
+            <input type="password" class="form-control" id="exampleInputPassword1" name="exampleInputPassword1">
+            <div id="passworderr" class="text-danger"></div>
           </div>
-        <button type="submit" class="btn border btnsignin"><a href="login.html"  style="color:white;">Sign Up</a></button>
+        <button type="submit" class="btn btnsignin"> Sign Up</button>
         </div>
     <div class="col-sm-6">
-            <img src="img/help (2).jpeg" alt="no image">
+            <img src="http://localhost/kanavuhelp/assets/img/right.svg" alt="no image">
         </div>
         </div>
         </div>
 </form>
+<script>
+function registerValidate() {
+    var name = document.register.exampleInputName.value.trim(); // Trim the input value
+    var email = document.register.exampleInputEmail1.value.trim(); // Trim the input value
+    var password = document.register.exampleInputPassword1.value.trim(); // Trim the input value
+
+    // Validate name
+    if (name === "") {
+        var namesms = "Name must be filled out";
+        document.getElementById("nameerr").innerHTML = namesms;
+        return false;
+    } else {
+        document.getElementById("nameerr").innerHTML = "";
+    }
+
+    // Validate email
+    if (email === "") {
+        var emailsms = "Email must be filled out";
+        document.getElementById("mailerr").innerHTML = emailsms;
+        return false;
+    } else if (!/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)) {
+        document.getElementById("mailerr").innerHTML = "You have entered an invalid email address";
+        return false;
+    } else {
+        document.getElementById("mailerr").innerHTML = "";
+    }
+
+    // Validate password
+    if (password === "") {
+        var passwordsms = "Password must be filled out";
+        document.getElementById("passworderr").innerHTML = passwordsms;
+        return false;
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/.test(password)) {
+        document.getElementById("passworderr").innerHTML = "Password does not match the criteria";
+        return false;
+    } else {
+        document.getElementById("passworderr").innerHTML = "";
+    }
+
+    return true;// Submit the form if all validations pass
+}
+</script>
     </body>
     </html>
