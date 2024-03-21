@@ -24,6 +24,12 @@ class UserModel extends CI_Model
 		$this->db->insert('register', $data);
 		return true;
 	}
+	public function store($data)
+	{
+		$this->db->insert('contact_us',$data);
+		return true;
+	}
+	
 
 // 	function get($data){
 // 	$result->$this->db->select('*')->where('email',$data['email'])->where('password',$data['password'])->get('register')->row();
@@ -44,7 +50,5 @@ public function loginUser()
         $count = $this->db->query($query);
         return $count->result_array();
     }
-
-
 }
 ?>

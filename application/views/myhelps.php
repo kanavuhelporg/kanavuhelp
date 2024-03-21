@@ -59,11 +59,11 @@
 </div>
 <div class="container w-full flex justify-between ml-0 md:ml-20 mt-8 md:mt-20">
     <h4 class="text-lg font-bold ml-0 md:ml-20 mb-2 md:mr-4 md:mb-0">Help Status and details</h4>
-    <h4 class="text-lg font-bold mr-0 md:mr-20 mb-2 md:ml-4">You Contributed</h4>
+    <!-- <h4 class="text-lg font-bold mr30 md:mr-20 mb-2 md:ml-4">You Contributed</h4> -->
 </div>     
-        <div class="container w-full md:w-4/5 border rounded-lg shadow-md flex flex-col md:flex-row mt-10 mb-10 mx-auto md:ml-40 p-4">
+        <div class="container w-full md:w-4/5 border shadow-md flex flex-col md:flex-row mt-10 mb-10 mx-auto md:ml-40 p-4">
             <div class="w-full md:w-1/3 border rounded-lg p-6">
-                <img src="your-image-source.jpg" alt="Image" class="w-full h-auto rounded-full">
+                <img src="http://localhost/kanavuhelp/assets/img/storm.png" alt="Image" class="w-full h-auto rounded-full">
             </div>
             <div class="w-full md:w-1/3 ml-0 md:ml-4 border rounded-lg p-6">
                 <h2 class="text-base mb-2">Storm affected region in southern parts of Salem</h2>
@@ -81,7 +81,7 @@
         
         <div class="container w-full md:w-4/5 border rounded-lg shadow-md flex flex-col md:flex-row mt-10 mb-10 mx-auto md:ml-40 p-4">
             <div class="w-full md:w-1/3 border rounded-lg p-6">
-                <img src="your-image-source.jpg" alt="Image" class="w-full h-auto rounded-full">
+                <img src="http://localhost/kanavuhelp/assets/img/storm.png" alt="Image" class="w-full h-auto rounded-full">
             </div>
             <div class="w-full md:w-1/3 ml-0 md:ml-4 border rounded-lg p-6">
                 <h2 class="text-base mb-2">Storm affected region in southern parts of Salem</h2>

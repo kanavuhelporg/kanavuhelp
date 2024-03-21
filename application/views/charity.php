@@ -362,7 +362,7 @@
           <!-- <img src="Mask-Group-241.png" alt="" style="position: absolute; top: 0px; left: -60px;"> -->
           <h3 class="mt-10" style="margin-top: 20px;"><strong>START YOUR HELP</strong></h3>
                <h6>"We make a living by what we get,but we make a life by what we give"</h6>
-               <img src="http://localhost/kanavuhelp/assets/img/btfly.png" alt="no img" class="w-full h-auto img1" style="position: absolute; top: 220px; left: 30px; margin-top:320px;margin-left:30px;">
+               <img src="http://localhost/kanavuhelp/assets/img/btfly.png" alt="no img" class="w-full h-auto img1" style="position: absolute; top: 250px; left: 30px; margin-top:320px;margin-left:30px;">
        </div>
        <div class="col-md-8 ff">
           <div id="smartwizard" dir="rtl-">

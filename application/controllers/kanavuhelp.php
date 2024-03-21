@@ -76,34 +76,45 @@ class kanavuhelp extends CI_Controller
 		$this->load->view('charity.php');
 	}
 
-	// public function submit()
-	// {
-	// 	$data['email'] = $this->input->post('exampleInputEmail1');
-	// 	$data['password'] = $this->input->post('exampleInputpassword1');
-	// 	$this->load->model('UserModel');
-	// 	$response = $this->UserModel->store($data);
-	// 	if ($response == true) {
-	// 		echo '<script>alert("Succesfully registered")</script>';
-	// 		$this->login();
+	public function submit_form()
+	{
+		$data['full-name'] = $this->input->post('full-name');
+		$data['email'] = $this->input->post('email');
+		$data['phone'] = $this->input->post('phone');
+		$data['message'] = $this->input->post('message');
+		$this->load->model('UserModel');
+		$response = $this->UserModel->store($data);
+		if ($response == true) {
+			echo '<script>alert("Succesfully registered")</script>';
+			$this->load->view('donate.php');
 
-	// 	} else {
-	// 		echo 'Failed to register';
-	// 	}
-	// }
+		} else {
+			echo 'Failed to register';
+		}
+	}
 
 
 // 	public function submit()
 // {
-//     	$data['name'] = $this->input->post('exampleInputName');
-// 		$data['email'] = $this->input->post('exampleInputEmail1');
+//     	$data['amount'] = $this->input->post('amount');
+// 		$data['title'] = $this->input->post('title');
+// 		$data['ngo'] = $this->input->post('ngo');
+// 		$data['education'] = $this->input->post('education');
+// 		$data['employment'] = $this->input->post('employment');
+// 		$data['aboutus'] = $this->input->post('aboutus');
+// 		$data['city'] = $this->input->post('city');
+// 		$data['description'] = $this->input->post('description');
+// 		$data['flexCheckDefault'] = $this->input->post('flexCheckDefault');
 // 		$this->load->model('UserModel');
-// 		$status = $this->UserModel->get($data);
-    
-//     if ($status==true) {
-//             echo '<script>alert("Login successful")</script>';
-//         } else {
-//             echo '<script>alert("Incorrect password")</script>';
-//         }
+// 		$response = $this->UserModel->store($data);
+// 		if ($response == true) {
+// 			echo '<script>alert("Succesfully registered")</script>';
+// 			$this->load->view('donate.php');
+
+// 		} else {
+// 			echo 'Failed to register';
+// 		}
+	
 // }
 
 public function userLogin()
@@ -151,9 +162,6 @@ public function userLogin()
 			echo 'Failed to register';
 		}
 	}
-
-
-
 
 }
 

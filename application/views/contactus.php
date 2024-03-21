@@ -88,24 +88,25 @@
                   </div>
                   <h4 class="text-base text-black-500 text-center mt-3"><strong>Submit your inquiry, and we'll respond to you as soon as possible!</strong></h4>
                 <div class="relative mb-4 mt-5">
+                  <form name="contactus" id="myForm" onsubmit="return contact_us()" method="post" action="<?= base_url('kanavuhelp/submit_form') ?>">
                   <label for="full-name" class="leading-7 text-sm text-gray-600">Full Name</label>
-                  <input type="text" id="full-name" name="full-name" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                  <input type="text" id="full-name" name="full-name" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
                 </div>
                 <div class="relative mb-4">
                   <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
-                  <input type="email" id="email" name="email" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                  <input type="email" id="email" name="email" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
                 </div>
                 <div class="relative mb-4">
                     <label for="phone" class="leading-7 text-sm text-gray-600">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    <input type="phone" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
                   </div>
                   <div class="relative mb-4">
                     <label for="message" class="leading-7 text-sm text-gray-600">Message</label>
-                    <textarea id="message" name="message" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
+                    <textarea id="message" name="message" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required></textarea>
                   </div>                
-                <button class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Send a Message</button>
+                <button type="submit"class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Send a Message</button>
               </div>
-              
+              </form>
               
             </div>
           </section>
@@ -141,9 +142,15 @@
     
     
     </header>
-
-
-
+    <script>
+    function contact_us() {
+    var full-name = document.contactus.full-name.value.trim(); // Trim the input value
+    var email = document.contactus.email.value.trim(); // Trim the input value
+    var phone = document.contactus.phone.value.trim(); // Trim the input value
+    var message = document.contactus.message.value.trim(); // Trim the input value
+    
+  }
+   </script>
 
 </body>
 </html>

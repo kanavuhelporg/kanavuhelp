@@ -315,7 +315,7 @@
                          <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">Fundraise for</a>
                          <ul class="dropdown-menu">
                              <li><a class="dropdown-item" href="http://localhost/kanavuhelp/kanavuhelp/individual#step-1">Individuals</a></li>
-                             <li><a class="dropdown-item" href="http://localhost/kanavuhelp/kanavuhelp/individual#">Charities</a></li>
+                             <li><a class="dropdown-item" href="http://localhost/kanavuhelp/kanavuhelp/charity#step-1">Charities</a></li>
                          </ul>
                      </li>
                      <li class="nav-item">
@@ -359,7 +359,7 @@
                <!-- <img src="Mask-Group-241.png" alt="" style="position: absolute; top: 0px; left: -60px;"> -->
                <h3 class="mt-10" style="margin-top: 20px;"><strong>START YOUR HELP</strong></h3>
                <h6>"We make a living by what we get,but we make a life by what we give"</h6>
-               <img src="http://localhost/kanavuhelp/assets/img/btfly.png" alt="no img" class="w-full h-auto img1" style="position: absolute; top: 220px; left: 30px; margin-top:320px;margin-left:30px;">
+               <img src="http://localhost/kanavuhelp/assets/img/btfly.png" alt="no img" class="w-full h-auto img1" style="position: absolute; top: 250px; left: 30px; margin-top:320px;margin-left:30px;">
                <!-- <img src="http://localhost/kanavuhelp/assets/img/btfly.png" alt="no img" class="w-full h-auto img1"> -->
 
             </div>
@@ -402,10 +402,12 @@
                                  </div>
                                  <div class="col-md-8">
                                     <div>
-                                       <select class="form-select" id="validationCustom04" required>
+                                       <select class="form-select" name="form-select" id="validationCustom04" required>
                                           <option selected disabled value="">Choose...</option>
                                           <option>...</option>
                                        </select>
+                                       
+                                       
                                        <div class="invalid-feedback">
                                           Please select a valid state.
                                        </div>

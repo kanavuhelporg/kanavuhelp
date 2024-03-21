@@ -37,16 +37,20 @@
       color: #EB2D32!important;
       font-weight: bolder !important;
       border-radius: 50px !important;
+      
     }
     .btn:hover {
       background-color: #EB2D32 !important;
       color: white !important;
     }
     .btn-1 {
-      margin-left: 26px !important;
+      margin-left: 300px !important;
       background-color: #EB2D32 !important;
       color: white !important;
     }
+    /* .btn-2{
+      margin-left:100px;
+    } */
     .dropdown-toggle {
       font-size: 18px;
       color: black;
