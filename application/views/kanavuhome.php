@@ -803,7 +803,7 @@
 <body>
 <nav class="navbar  navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="https://kanavu.help/kanavuhelp/">
+        <a class="navbar-brand" href="https://localhost/kanavuhelp/">
             <img class="logo" src="assets/img/Kanavu_help.png" alt="Kanavu Help">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -1201,7 +1201,7 @@
   <div class="footer">
     <footer class="footer mt-auto py-3">
       <div class="container">
-        <h5 style="text-align:center">Kanavu.help</h5>
+        <h5 style="text-align:center">localhost</h5>
         <!-- <span class="text-muted">Your footer content goes here.</span> -->
         <div class="footer1">
           <a class="footer-lable lable" href="#">About</a>
@@ -1223,7 +1223,7 @@
         </a>
       </div>
       <img src="assets/img/footer-secured-card 1.svg" alt="no image" class="footimg">
-      <p class="text-center">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
+      <p class="text-center">copyright 2024 @ localhost. All Rights Reserved.</p>
   </div>
   </footer>
   <!--  -->

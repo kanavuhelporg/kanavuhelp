@@ -99,7 +99,7 @@
             <div class="footer">
         <footer class="footer mt-auto h-256 w-full bg-red-600 py-3 text-white">
             <div class="container mx-auto">
-                <h5 class="text-center">Kanavu.help</h5>
+                <h5 class="text-center">localhost</h5>
                 <div class="flex justify-center p-3 ml-4">
                     <a href="#" class="footer-lable lable ml-5">About</a>
                     <a href="#" class="footer-lable lable ml-5">Contact</a>
@@ -119,7 +119,7 @@
                 </a>
             </div>
             <img src="http://localhost/kanavuhelp/assets/img/footer-secured-card 1.svg" alt="no image" class="footimg mx-auto mt-4">
-            <p class="text-center p-2">Copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
+            <p class="text-center p-2">Copyright 2024 @ localhost. All Rights Reserved.</p>
         </footer>
     </div>
     

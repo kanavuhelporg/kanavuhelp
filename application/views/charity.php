@@ -450,7 +450,7 @@
                       <div class="col-md-12 my-3">
                          <div class="row">
                             <div class="col-md-12">
-                               <input type="text" class="form-control" placeholder="How did you hear about kanavu.help" required>
+                               <input type="text" class="form-control" placeholder="How did you hear about localhost" required>
                                <div class="valid-feedback">
                                   Looks good!
                                </div>
@@ -759,7 +759,7 @@
  <div class="footer">
    <footer class="footer mt-auto py-3">
      <div class="container">
-       <h5 style="text-align:center">Kanavu.help</h5>
+       <h5 style="text-align:center">localhost</h5>
        <!-- <span class="text-muted">Your footer content goes here.</span> -->
        <div class="footer1">
          <a class="footer-lable lable" href="#">About</a>
@@ -781,7 +781,7 @@
        </a>
      </div>
      <img src="http://localhost/kanavuhelp/assets/img/footer-secured-card 1.svg" alt="no image" class="footimg">
-     <p class="text-center">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
+     <p class="text-center">copyright 2024 @ localhost. All Rights Reserved.</p>
  </div>
  </footer>
 

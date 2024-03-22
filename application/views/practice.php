@@ -1019,7 +1019,7 @@
   <div class="footer">
     <footer class="footer mt-auto py-3">
       <div class="container">
-        <h5 style="text-align:center">Kanavu.help</h5>
+        <h5 style="text-align:center">localhost</h5>
         <!-- <span class="text-muted">Your footer content goes here.</span> -->
         <div class="footer1">
           <a class="footer-lable lable" href="#">About</a>
@@ -1041,7 +1041,7 @@
         </a>
       </div>
       <img src="assets/img/footer-secured-card 1.svg" alt="no image" class="footimg">
-      <p class="text-center">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
+      <p class="text-center">copyright 2024 @ localhost. All Rights Reserved.</p>
   </div>
   </footer>
   <!--  -->
