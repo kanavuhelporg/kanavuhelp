@@ -302,7 +302,7 @@
       <nav class="navbar  navbar-expand-lg bg-light fixed-top">
          <div class="container-fluid">
              <a class="navbar-brand" href="http://localhost/kanavuhelp/">
-                 <img class="logo" src="<?= base_url('kanavuhelp/Kanavu_help.png') ?>" alt="Kanavu Help">
+                 <img class="logo" src="http://localhost/kanavuhelp/assets/img/Kanavu_help.png" alt="Kanavu Help">
              </a>
              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
                  <span class="navbar-toggler-icon"></span>

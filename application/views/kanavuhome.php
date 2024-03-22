@@ -803,7 +803,7 @@
 <body>
 <nav class="navbar  navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost/kanavuhelp/">
+        <a class="navbar-brand" href="https://kanavu.help/kanavuhelp/">
             <img class="logo" src="assets/img/Kanavu_help.png" alt="Kanavu Help">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
