@@ -35,7 +35,7 @@
           </button>
         </div>
         <div class="container-fluid mx-auto mt-5">
-            <img src="assets/img/startakanavu.png" alt="No Image" class="w-full h-auto">
+            <img src="<?php echo base_url('/assets/img/startakanavu.png');?>" alt="No Image" class="w-full h-auto">
         </div>      
             <div class="footer">
         <footer class="footer mt-auto h-256 w-full bg-red-600 py-3 text-white">
@@ -50,16 +50,16 @@
             </div>
             <div class="social-icons flex justify-center text-center mt-4">
                 <a href="https://www.facebook.com/" target="_blank">
-                    <img src="assets/img/facebook-f.svg" alt="Facebook Logo" class="w-6 h-6 mr-2">
+                    <img src="<?php echo base_url('/assets/img/facebook-f.svg');?>" alt="Facebook Logo" class="w-6 h-6 mr-2">
                 </a>
                 <a href="https://twitter.com/" target="_blank">
-                    <img src="assets/img/twitter.svg" alt="Twitter Logo" class="w-6 h-6 mr-2">
+                    <img src="<?php echo base_url('/assets/img/linkedin-in.svg');?>" alt="Twitter Logo" class="w-6 h-6 mr-2">
                 </a>
                 <a href="https://www.linkedin.com/" target="_blank">
-                    <img src="assets/img/linkedin-in.svg" alt="LinkedIn Logo" class="w-6 h-6">
+                    <img src="<?php echo base_url('/assets/img/linkedin-in.svg');?>" alt="LinkedIn Logo" class="w-6 h-6">
                 </a>
             </div>
-            <img src="assets/img/footer-secured-card 1.svg" alt="no image" class="footimg mx-auto mt-4">
+            <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg');?>" alt="no image" class="footimg mx-auto mt-4">
             <p class="text-center p-2">Copyright 2024 @ localhost. All Rights Reserved.</p>
         </footer>
     </div>

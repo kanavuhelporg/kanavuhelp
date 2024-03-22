@@ -16,13 +16,19 @@
       right:0;
       bottom:0;
     }
+    .social-icons img{
+    width:20px;
+    height:20px;
+    margin-left: 10px;
+
+}
       </style>
 </head>
 <body class="overflow-x-hidden">
     <header class="text-gray-600 body-font">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="http://localhost/kanavuhelp/">
-            <img class="logo" src="http://localhost/kanavuhelp/assets/img/Kanavu_help.png" alt="Kanavu Help">
+            <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help">
           </a>
           <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
             <div class="group inline-block relative mr-5">
@@ -34,7 +40,7 @@
                     <!-- Add more dropdown options as needed -->
                 </div>
             </div>
-            <a href="http://localhost/kanavuhelp/kanavuhelp/donate" class="mr-10 hover:text-gray-900"> Donate</a>
+            <a href="<?= base_url('kanavuhelp/donate') ?>" class="mr-10 hover:text-gray-900"> Donate</a>
             <a href="<?= base_url('kanavuhelp/myhelps') ?>"  class="mr-10 hover:text-gray-900">My helps</a>
             <a href="http://localhost/kanavuhelp/#demo1" class="mr-10 hover:text-gray-900">How it works</a>
             <a href="<?= base_url('kanavuhelp/blogs') ?>" class="mr-10 hover:text-gray-900">Blogs</a>
@@ -45,10 +51,10 @@
           </button>
         </div></header>
         <div class="container-fluid mx-auto mt-5">
-            <img src="http://localhost/kanavuhelp/assets/img/donate.png" alt="No Image" class="w-full h-auto">
+            <img src="<?php echo base_url('/assets/img/donate.png');?>" alt="No Image" class="w-full h-auto">
         </div>
         <div class="container mx-auto text-center mt-8">
-            <img src="http://localhost/kanavuhelp/assets/img/handwithheart.png" alt="No Image" class="h-auto inline-block">
+            <img src="<?php echo base_url('/assets/img/handwithheart.png');?>" alt="No Image" class="h-auto inline-block">
         </div>
         <div class="mx-auto text-center mt-3"><p><strong>"Fundraising is the gentle art of teaching the joy of giving"</strong></p></div>
         <div class="mx-auto text-center mt-8">
@@ -64,7 +70,7 @@
           <div class="flex flex-wrap">
             <div class="p-4 md:w-1/3">
               <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="https://dummyimage.com/720x400" alt="blog">
+                <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/cancer_treatment.png');?>" alt="blog">
                 <div class="p-6">
                   <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
                   <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3">By kailashwaran
@@ -76,7 +82,7 @@
                   <div class="mt-4">
                   <button class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-white-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
                   <a href="#" class="inline-flex items-center border-0 py-1 px-3 ml-17 md:mt-0 transition-transform transform hover:scale-110">
-                    <img src="http://localhost/kanavuhelp/assets/img/share-2.svg" alt="Share Button" class="h-6">
+                    <img src="<?php echo base_url('/assets/img/share-2.svg');?>" alt="Share Button" class="h-6">
                 </a>
                 </div>                  
                 </div>
@@ -85,9 +91,9 @@
             <!-- <div class="flex flex-wrap"> -->
               <div class="p-4 md:w-1/3">
                 <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="https://dummyimage.com/720x400" alt="blog">
+                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/urban-flood-mitigation.png');?>" alt="blog">
                   <div class="p-6">
-                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
+                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>Flood-affected house near the Poyang Lake</strong></h1>
               
                   
                     <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3">By kailashwaran
@@ -99,7 +105,7 @@
                     <div class="mt-4">
                     <button class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
                     <a href="#" class="inline-flex items-center border-0 py-1 px-3 ml-17 md:mt-0 transition-transform transform hover:scale-110">
-                      <img src="http://localhost/kanavuhelp/assets/img/share-2.svg" alt="Share Button" class="h-6">
+                      <img src="<?php echo base_url('/assets/img/share-2.svg');?>" alt="Share Button" class="h-6">
                   </a>
                   </div>                  
                   </div>
@@ -107,9 +113,9 @@
               </div>
               <div class="p-4 md:w-1/3">
                 <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="https://dummyimage.com/720x400" alt="blog">
+                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/patient-with-cancer.png');?>" alt="blog">
                   <div class="p-6">
-                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
+                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>Cancer Treatment for a Girl in Gujarat</strong></h1>
                     <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3">By kailashwaran
                     <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 ml-8 md:mt-0">Medical</button></h2></div>
                     <p><span class="text-gray-300">$20000</span> Raised out of <span class="text-gray-300">$30000000</span></p>
@@ -127,9 +133,9 @@
               </div>
               <div class="p-4 md:w-1/3">
                 <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="https://dummyimage.com/720x400" alt="blog">
+                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/salem_storm.png');?>" alt="blog">
                   <div class="p-6">
-                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
+                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>Storm affected region in southern parts of Salem</strong></h1>
                     <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3">By kailashwaran
                     <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 ml-8 md:mt-0">Medical</button></h2></div>
                     <p><span class="text-gray-300">$20000</span> Raised out of <span class="text-gray-300">$30000000</span></p>
@@ -139,7 +145,7 @@
                     <div class="mt-4">
                     <button class="inline-flex items-center bg-gray-200 text-red-500 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
                     <a href="#" class="inline-flex items-center border-0 py-1 px-3 ml-17 md:mt-0 transition-transform transform hover:scale-110">
-                      <img src="http://localhost/kanavuhelp/assets/img/share-2.svg" alt="Share Button" class="h-6">
+                      <img src="<?php echo base_url('/assets/img/share-2.svg');?>" alt="Share Button" class="h-6">
                   </a>
                   </div>                  
                   </div>
@@ -147,9 +153,9 @@
               </div>
               <div class="p-4 md:w-1/3">
                 <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="https://dummyimage.com/720x400" alt="blog">
+                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/tribal_people.png');?>" alt="blog">
                   <div class="p-6">
-                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
+                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>Help the tribal people in the village near Tripura</strong></h1>
                     <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3">By kailashwaran
                     <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 ml-8 md:mt-0">Medical</button></h2></div>
                     <p><span class="text-gray-300">$20000</span> Raised out of <span class="text-gray-300">$30000000</span></p>
@@ -159,7 +165,7 @@
                     <div class="mt-4">
                     <button class="inline-flex items-center  bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
                     <a href="#" class="inline-flex items-center border-0 py-1 px-3 ml-17 md:mt-0 transition-transform transform hover:scale-110">
-                      <img src="http://localhost/kanavuhelp/assets/img/share-2.svg" alt="Share Button" class="h-6">
+                      <img src="<?php echo base_url('/assets/img/share-2.svg');?>" alt="Share Button" class="h-6">
                   </a>
                   </div>                  
                   </div>
@@ -180,16 +186,16 @@
             </div>
             <div class="social-icons flex justify-center text-center mt-4">
                 <a href="https://www.facebook.com/" target="_blank">
-                    <img src="http://localhost/kanavuhelp/assets/img/facebook-f.svg" alt="Facebook Logo" class="w-6 h-6 mr-2">
+                    <img src="<?php echo base_url('/assets/img/facebook-f.svg');?>" alt="Facebook Logo" >
                 </a>
                 <a href="https://twitter.com/" target="_blank">
-                    <img src="http://localhost/kanavuhelp/assets/img/twitter.svg" alt="Twitter Logo" class="w-6 h-6 mr-2">
+                    <img src="<?php echo base_url('/assets/img/twitter.svg');?>" alt="Twitter Logo">
                 </a>
                 <a href="https://www.linkedin.com/" target="_blank">
-                    <img src="http://localhost/kanavuhelp/assets/img/linkedin-in.svg" alt="LinkedIn Logo" class="w-6 h-6">
+                    <img src="<?php echo base_url('/assets/img/linkedin-in.svg');?>" alt="LinkedIn Logo">
                 </a>
             </div>
-            <img src="http://localhost/kanavuhelp/assets/img/footer-secured-card 1.svg" alt="no image" class="footimg mx-auto mt-4">
+            <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg');?>" alt="no image" class="footimg mx-auto mt-4">
             <p class="text-center p-2">Copyright 2024 @ localhost. All Rights Reserved.</p>
         </footer>
     </div>

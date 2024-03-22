@@ -39,7 +39,7 @@
 <div class="container-fluid">
     <div class="row">
     <div class="col-sm-6 logi1">
-        <div style="margin-top:10px"><img src="http://localhost/kanavuhelp/assets/img/Kanavu_help.png" alt="noimage" ></div>
+        <div style="margin-top:10px"><img src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="noimage" ></div>
         <br>
             <h2>Sign in</h2>
             <p>Don't have an Account? <a href="<?= base_url('kanavuhelp/register') ?>"><span style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p>
@@ -65,12 +65,12 @@
           <p style="margin-top:10px;text-align:center;font-size:15px;"><strong>--------------OR-------------</strong></p>
             <!-- <p style="margin-top:10px;text-align:center;font-size:15px;"><strong><span style="display:inline-block; width:50%;"><hr></span>OR<span style="display:inline-block; width:50%;"><hr></span></strong></p>  -->
   <div class="social-icons" style="text-align:center;">continue with 
-    <img src="http://localhost/kanavuhelp/assets/img/fbk.svg" alt="noimage" style="width:40px;height:40px;margin-left:10px;"></img>
-    <img src="http://localhost/kanavuhelp/assets/img/googlelogo.png" alt="noimage" style="margin-left:10px;"></img>
+    <img src="<?php echo base_url('/assets/img/fbk.svg');?>" alt="noimage" style="width:40px;height:40px;margin-left:10px;"></img>
+    <img src="<?php echo base_url('/assets/img/googlelogo.png');?>" alt="noimage" style="margin-left:10px;"></img>
    </div>   
         </div>
     <div class="col-sm-6">    
-            <img src="http://localhost/kanavuhelp/assets/img/right.svg" alt="no image">
+            <img src="<?php echo base_url('/assets/img/right.svg');?>" alt="no image">
         </div>
         </div>
         </div>

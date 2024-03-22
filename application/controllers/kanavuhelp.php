@@ -42,9 +42,9 @@ class kanavuhelp extends CI_Controller
 	{
 		$this->load->view('dummy.php');
 	}
-	public function startakanavu()
+	public function startahelp()
 	{
-		$this->load->view('startakanavu.php');
+		$this->load->view('startahelp.php');
 	}
 	public function register()
 	{

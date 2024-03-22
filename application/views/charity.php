@@ -308,7 +308,7 @@
       <nav class="navbar  navbar-expand-lg bg-light fixed-top">
          <div class="container-fluid">
              <a class="navbar-brand" href="http://localhost/kanavuhelp/">
-                 <img class="logo" src="http://localhost/kanavuhelp/assets/img/Kanavu_help.png" alt="Kanavu Help">
+                 <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help">
              </a>
              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
                  <span class="navbar-toggler-icon"></span>
@@ -354,15 +354,15 @@
                      </div>
      </nav>
      <div class="container-fluid mt-5 mt-md-4 mt-lg-5">
-      <img src="http://localhost/kanavuhelp/assets/img/sthelp.png" alt="No Image" class="img-fluid">
+      <img src="<?php echo base_url('/assets/img/sthelp.png');?>" alt="No Image" class="img-fluid">
   </div>
-  <div class="container box" style=margin-top:100px;">
+  <div class="container box" style="margin-top:100px;">
     <div class="row box1" style="margin-top:100px;">
        <div class="col-md-4 text-start mm text-center">
           <!-- <img src="Mask-Group-241.png" alt="" style="position: absolute; top: 0px; left: -60px;"> -->
           <h3 class="mt-10" style="margin-top: 20px;"><strong>START YOUR HELP</strong></h3>
                <h6>"We make a living by what we get,but we make a life by what we give"</h6>
-               <img src="http://localhost/kanavuhelp/assets/img/btfly.png" alt="no img" class="w-full h-auto img1" style="position: absolute; top: 250px; left: 30px; margin-top:320px;margin-left:30px;">
+               <img src="<?php echo base_url('/assets/img/btfly.png');?>" alt="no img" class="w-full h-auto img1" style="position: absolute; top: 250px; left: 30px; margin-top:320px;margin-left:30px;">
        </div>
        <div class="col-md-8 ff">
           <div id="smartwizard" dir="rtl-">
@@ -770,17 +770,17 @@
      </div>
      <div class="social-icons d-flex justify-content-center text-center">
        <a href="https://www.facebook.com/" target="_blank">
-         <img src="http://localhost/kanavuhelp/assets/img/facebook-f.svg" alt="Facebook Logo">
+         <img src="<?php echo base_url('/assets/img/facebook-f.svg');?>" alt="Facebook Logo">
        </a>
        <a href="https://twitter.com/" target="_blank">
-         <img src="http://localhost/kanavuhelp/assets/img/twitter.svg" alt="Twitter Logo">
+         <img src="<?php echo base_url('/assets/img/twitter.svg');?>" alt="Twitter Logo">
        </a>
        <!-- LinkedIn -->
        <a href="https://www.linkedin.com/" target="_blank">
-         <img src="http://localhost/kanavuhelp/assets/img/linkedin-in.svg" alt="LinkedIn Logo">
+         <img src="<?php echo base_url('/assets/img/linkedin-in.svg');?>" alt="LinkedIn Logo">
        </a>
      </div>
-     <img src="http://localhost/kanavuhelp/assets/img/footer-secured-card 1.svg" alt="no image" class="footimg">
+     <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg');?>" alt="no image" class="footimg">
      <p class="text-center">copyright 2024 @ localhost. All Rights Reserved.</p>
  </div>
  </footer>

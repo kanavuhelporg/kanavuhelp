@@ -24,7 +24,7 @@
 <div class="container-fluid">
     <div class="row">
     <div class="col-sm-6 logi1">
-        <div style="margin-top:10px"><img src="http://localhost/kanavuhelp/assets/img/Kanavu_help.png" alt="noimage" ></div>
+        <div style="margin-top:10px"><img src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="noimage" ></div>
         <br>
             <h2 style="margin-bottom:30px;">Register</h2>
             <!-- <p>Don't have an Account?<span style="color:red; text-decoration:underline;margin-left:10px;">Create Now</span></p> -->
@@ -48,7 +48,7 @@
         <button type="submit" class="btn btnsignin"> Sign Up</button>
         </div>
     <div class="col-sm-6">
-            <img src="http://localhost/kanavuhelp/assets/img/right.svg" alt="no image">
+            <img src="<?php echo base_url('/assets/img/right.svg');?>" alt="no image">
         </div>
         </div>
         </div>
