@@ -803,7 +803,7 @@
 <body>
 <nav class="navbar  navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost/kanavuhelp/">
+        <a class="navbar-brand" href="<?= base_url('/kanavuhelp') ?>">
             <img class="logo" src="assets/img/Kanavu_help.png" alt="Kanavu Help">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -862,7 +862,7 @@
           <div class="myimg1 p-0-sm m-0-sm"><p>THE <strong>WORLD'S <br>PLATFORM</strong> FOR <br><span class="fs-40 fs-sm-10" style="color:#EB2D32; font-weight: bolder;">HELP</span></p>
           <div class="imgtext11">
           <ul style="list-style-type:none"><li  class="p-sm-0" style="font-weight: bold;">"Empowering Lives,Defeating diseases & disasters"</li>
-            <li class="p-sm-0">join Us in the Fight & Healing.</li>
+            <li class="p-sm-0">join Us in the Fight & Healing.</li><br>
            <li> <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn border btn-3">Start a Kanavu</button></a></li></ul>
           </div>
         </div>
@@ -876,7 +876,7 @@
           <div class=imgtext22>
             <ul style="list-style-type:none"><li class="p-sm-0" style="font-weight:bold;">"Empowering Lives,Defeating diseases & disasters"</li>
             <li class="p-sm-0">join Us in the Fight & Healing.</li>
-          <li>
+          <li><br>
           <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn border btn-4">Start a Kanavu</button></a></li></ul>
         </div>
          </div>
@@ -1204,7 +1204,7 @@
         <h5 style="text-align:center">localhost</h5>
         <!-- <span class="text-muted">Your footer content goes here.</span> -->
         <div class="footer1">
-          <a class="footer-lable lable" href="#">About</a>
+          <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
           <a class="footer-lable lable" href="#">Contact</a>
           <a class="footer-lable lable" href="#">Terms of Use</a>
           <a class="footer-lable" href="#">Privacy Policy</a>

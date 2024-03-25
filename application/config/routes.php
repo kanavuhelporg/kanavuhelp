@@ -64,3 +64,4 @@ $route['blogs'] = 'kanavuhelp/blogs';
 $route['contactus'] = 'kanavuhelp/contactus';
 $route['individual'] = 'kanavuhelp/individual';
 $route['charity'] = 'kanavuhelp/charity';
+$route['abouts'] = 'kanavuhelp/abouts';

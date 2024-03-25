@@ -301,7 +301,7 @@
    <body>
       <nav class="navbar  navbar-expand-lg bg-light fixed-top">
          <div class="container-fluid">
-             <a class="navbar-brand" href="http://localhost/kanavuhelp/">
+             <a class="navbar-brand" href="<?= base_url('/kanavuhelp') ?>">
                  <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help">
              </a>
              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -314,8 +314,8 @@
                      <li class="nav-item dropdown px-3">
                          <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">Fundraise for</a>
                          <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="http:///localhost/kanavuhelp/individual#step-1">Individuals</a></li>
-                             <li><a class="dropdown-item" href="http://localhost/kanavuhelp/charity#step-1">Charities</a></li>
+                             <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/individual#step-1') ?>">Individuals</a></li>
+                             <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/charity#step-1') ?>">Charities</a></li>
                          </ul>
                      </li>
                      <li class="nav-item">
@@ -325,7 +325,7 @@
                          <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/myhelps') ?>">My Helps</a>
                      </li>
                      <li class="nav-item">
-                         <a class="navbar-brand p-3 p-md-1" href="#demo1">How it works</a>
+                         <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/#demo1') ?>"">How it works</a>
                      </li>
                      <li class="nav-item">
                          <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/blogs') ?>">Blogs</a>
@@ -342,7 +342,8 @@
                              <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
                          <!-- </li> -->
                          <!-- <li class="nav-item"> -->
-                             <button type="button" class="btn btn-2 border">Start a Kanavu</button>
+                         <a href="<?=base_url('kanavuhelp/individual')?>">
+                             <button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
                          <!-- </li> -->
                          <!-- </ul> -->
                      </div>
@@ -785,7 +786,7 @@
        <h5 style="text-align:center">kanavu.help</h5>
        <!-- <span class="text-muted">Your footer content goes here.</span> -->
        <div class="footer1">
-         <a class="footer-lable lable" href="#">About</a>
+         <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
          <a class="footer-lable lable" href="#">Contact</a>
          <a class="footer-lable lable" href="#">Terms of Use</a>
          <a class="footer-lable" href="#">Privacy Policy</a>

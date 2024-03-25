@@ -75,6 +75,11 @@ class kanavuhelp extends CI_Controller
 	{
 		$this->load->view('charity.php');
 	}
+	public function abouts()
+	{
+		$this->load->view('abouts.php');
+	}
+	
 
 	public function submit_form()
 	{
