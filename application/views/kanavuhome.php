@@ -1205,7 +1205,7 @@
         <!-- <span class="text-muted">Your footer content goes here.</span> -->
         <div class="footer1">
           <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
-          <a class="footer-lable lable" href="#">Contact</a>
+          <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
           <a class="footer-lable lable" href="#">Terms of Use</a>
           <a class="footer-lable" href="#">Privacy Policy</a>
         </div>

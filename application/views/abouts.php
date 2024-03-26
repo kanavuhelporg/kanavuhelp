@@ -90,8 +90,8 @@ center img{
             <div class="container mx-auto">
                 <h5 class="text-center">localhost</h5>
                 <div class="flex justify-center p-3 ml-4">
-                    <a href="#" class="footer-lable lable ml-5">About</a>
-                    <a href="#" class="footer-lable lable ml-5">Contact</a>
+                    <a href="<?= base_url('kanavuhelp/abouts') ?>" class="footer-lable lable ml-5">About</a>
+                    <a href="<?= base_url('kanavuhelp/contactus') ?>" class="footer-lable lable ml-5">Contact</a>
                     <a href="#" class="footer-lable lable ml-5">Terms of Use</a>
                     <a href="#" class="footer-lable lable ml-5">Privacy Policy</a>
                 </div>
