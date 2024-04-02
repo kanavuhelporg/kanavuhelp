@@ -22,6 +22,28 @@
     margin-left: 10px;
 
 }
+.btn {
+      color: #EB2D32!important;
+      font-weight: bolder !important;
+      border-radius: 50px !important;
+      
+    }
+    .btn:hover {
+      background-color: #EB2D32 !important;
+      color: white !important;
+    }
+    .btn-1 {
+      margin-left: 200px !important;
+      background-color: #EB2D32 !important;
+      color: white !important;
+      width:100px;
+      height:50px;
+    }
+    .btn-2{
+      height:50px;
+      width:150px;
+    }
+    
       </style>
 </head>
 <body class="overflow-x-hidden">
@@ -40,17 +62,15 @@
                     <!-- Add more dropdown options as needed -->
                 </div>
             </div>
-            <a href="<?= base_url('kanavuhelp/donate') ?>" class="mr-10 hover:text-gray-900"> Donate</a>
+            <a href="<?= base_url('kanavuhelp/donate') ?>" class="mr-10 hover:text-gray-900 " style="color:#E01A2B"> Donate</a>
             <a href="<?= base_url('kanavuhelp/myhelps') ?>"  class="mr-10 hover:text-gray-900">My helps</a>
             <a href="http://localhost/kanavuhelp/#demo1" class="mr-10 hover:text-gray-900">How it works</a>
             <a href="<?= base_url('kanavuhelp/blogs') ?>" class="mr-10 hover:text-gray-900">Blogs</a>
             <a href="<?= base_url('kanavuhelp/contactus') ?>" class="hover:text-gray-900">Contact us</a>
         </nav>
-        <a href="<?= base_url('kanavuhelp/login') ?>">
-          <button class="inline-flex items-center bg-red-500 text-white border-0 m-1 py-1 px-3 focus:outline-none hover:bg-white-200 rounded-full text-base mt-4  md:mt-0">Login</button></a>
-        <a href="<?= base_url('kanavuhelp/individual') ?>">  
-            <button class="inline-flex items-center bg-gray-100 text-red-500 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-4  md:mt-0">Start a Kanavu
-          </button></a>
+        <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
+        <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
+
         </div></header>
         <div class="container-fluid mx-auto mt-5">
             <img src="<?php echo base_url('/assets/img/donate.png');?>" alt="No Image" class="w-full h-auto">
@@ -84,7 +104,7 @@
                   <div class="mt-4">
                   <button class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-white-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
                   <a href="#" class="inline-flex items-center border-0 py-1 px-3 ml-17 md:mt-0 transition-transform transform hover:scale-110">
-                    <img src="<?php echo base_url('/assets/img/share-2.svg');?>" alt="Share Button" class="h-6">
+                    <img src="<?php echo base_url('/assets/img/share-2.svg');?>" alt="Share Button" class="h-6 share">
                 </a>
                 </div>                  
                 </div>

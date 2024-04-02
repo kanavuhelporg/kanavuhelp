@@ -8,6 +8,7 @@
       <!-- <link href="bootstrap.min.css" rel="stylesheet" />
          <script src="bootstrap.bundle.min.js"></script> -->
       <!-- Bootrap for the demo page -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
       <!--wizard-->
@@ -36,15 +37,21 @@
       color: #EB2D32!important;
       font-weight: bolder !important;
       border-radius: 50px !important;
+      
     }
     .btn:hover {
       background-color: #EB2D32 !important;
       color: white !important;
     }
     .btn-1 {
-      margin-left: 26px !important;
+      margin-left: 260px !important;
       background-color: #EB2D32 !important;
       color: white !important;
+      width:100px;
+      height:50px;
+    }
+    .btn-2{
+      height:50px;
     }
     .dropdown-toggle {
       font-size: 18px;
@@ -437,8 +444,8 @@ body #multi-step-form-container{
                      <li class="nav-item dropdown px-3">
                          <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">Fundraise for</a>
                          <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/individual#step-1') ?>">Individuals</a></li>
-                             <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/individual#') ?>">Charities</a></li>
+                             <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/individual') ?>">Individuals</a></li>
+                             <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/charity#step-1') ?>">Charities</a></li>
                          </ul>
                      </li>
                      <li class="nav-item">
@@ -466,7 +473,7 @@ body #multi-step-form-container{
                          <!-- </li> -->
                          <!-- <li class="nav-item"> -->
                            <a href="<?=base_url('kanavuhelp/individual')?>">
-                             <button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
+                             <button type="button" class="btn btn-2 border" >Start a Kanavu</button></a>
                          <!-- </li> -->
                          <!-- </ul> -->
                      </div>
@@ -512,7 +519,7 @@ body #multi-step-form-container{
             </li>
         </ul>
         <!-- Step Wise Form Content -->
-        <form id="userAccountSetupForm" name="userAccountSetupForm" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/save_data') ?>" enctype="multipart/form-data" method="POST" class="row row-cols-1 ms-5 me-5" >
+        <form id="charityform" name="charityform" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/charityform_data') ?>" enctype="multipart/form-data" method="POST" class="row row-cols-1 ms-5 me-5" >
             <!-- Step 1 Content -->
             <section id="step-1" class="form-step "  style="height:450px;border:none;">
                 <p class="font-normal"><b>TELL US ABOUT YOUR FUNDRAISER</b></p>

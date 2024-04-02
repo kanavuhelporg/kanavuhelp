@@ -44,13 +44,15 @@
       color: white !important;
     }
     .btn-1 {
-      margin-left: 300px !important;
+      margin-left: 260px !important;
       background-color: #EB2D32 !important;
       color: white !important;
+      width:100px;
+      height:50px;
     }
-    /* .btn-2{
-      margin-left:100px;
-    } */
+    .btn-2{
+      height:50px;
+    }
     .dropdown-toggle {
       font-size: 18px;
       color: black;
@@ -108,11 +110,16 @@
     .btn-3{
       background-color: #EB2D32 !important;
       color: white !important;
+      height:50px;
+      width:160px;
+     
     }
     .btn-4{
       margin-left:-8px;
       background-color: #EB2D32 !important;
       color: white !important;
+      height:50px;
+     width:160px;
     }
     .carousel-fade .carousel-item {
       transition: opacity 1s;

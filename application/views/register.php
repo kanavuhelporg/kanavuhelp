@@ -16,6 +16,13 @@
     background-color: #EB2D32;
     color:white;
    }  
+   body{
+    background-color:#FEF2F2;
+    font-family: 'sen', sans-serif;
+   }
+   form label{
+    color:#718096;
+   }
    </style>
 
 
@@ -24,13 +31,14 @@
 <div class="container-fluid">
     <div class="row">
     <div class="col-sm-6 logi1">
-        <div style="margin-top:10px"><img src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="noimage" ></div>
-        <br>
-            <h2 style="margin-bottom:30px;">Register</h2>
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>" >
+            <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help"style="margin-top:100px;margin-left:50px;">
+          </a><br><br>
+            <h2 style="margin-bottom:30px;margin-left:50px;">Register</h2>
             <!-- <p>Don't have an Account?<span style="color:red; text-decoration:underline;margin-left:10px;">Create Now</span></p> -->
-            <form name="register" onsubmit="return registerValidate()" method="post" action="<?= base_url('kanavuhelp/submit1') ?>" > 
+            <form name="register" onsubmit="return registerValidate()" method="post" action="<?= base_url('kanavuhelp/submit1') ?>" style="margin-left:50px;margin-right:50px;"  > 
 
-        <div class="mb-3">
+        <div class="mb-3" >
                 <label for="exampleInputName" class="form-label">Name</label>
                 <input type="text" class="form-control" id="exampleInputName" name="exampleInputName">
                 <div id="nameerr" class="text-danger"></div>
@@ -58,6 +66,7 @@ function registerValidate() {
     var name = document.register.exampleInputName.value.trim(); // Trim the input value
     var email = document.register.exampleInputEmail1.value.trim(); // Trim the input value
     var password = document.register.exampleInputPassword1.value.trim(); // Trim the input value
+}
 
     // Validate name
     if (name === "") {

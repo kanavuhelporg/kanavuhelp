@@ -15,6 +15,8 @@
       *{
     overflow: hidden;
     background-color:#FEF2F2;
+    font-family: 'sen', sans-serif;
+
 }
 .logi1{
     margin-top:30px;
@@ -34,6 +36,9 @@
 .btnsignin a:hover{
     color:black;
 }
+form label{
+    color:#718096;
+}
 </style>
 </head>
 <body>  
@@ -41,11 +46,12 @@
 <div class="container-fluid">
     <div class="row">
     <div class="col-sm-6 logi1">
-        <div style="margin-top:10px"><img src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="noimage" ></div>
-        <br>
-            <h2>Sign in</h2>
-            <p>Don't have an Account? <a href="<?= base_url('kanavuhelp/register') ?>"><span style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p>
-            <form name="login" onsubmit="return loginValidate()" method="post" action="<?= base_url('kanavuhelp/userLogin') ?>"  > 
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>" >
+            <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help"style="margin-top:10px;margin-left:50px;">
+          </a><br><br>        <br>
+            <h2 style="margin-left:50px;">Sign in</h2>
+            <p style="margin-left:50px;">Don't have an Account? <a href="<?= base_url('kanavuhelp/register') ?>"><span style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p>
+            <form name="login" onsubmit="return loginValidate()" method="post" action="<?= base_url('kanavuhelp/userLogin') ?>" style="margin-left:50px;margin-right:50px;" > 
             
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">email</label>
@@ -60,15 +66,15 @@
           </div>
           <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Remember me <a href="#" class="atag" style="margin-left:340px;">Forgot password</a></label>
+            <label class="form-check-label" for="exampleCheck1">Remember me <a href="#" class="atag" style="margin-left:410px;">Forgot password?</a></label>
           </div>
           <!-- <p class="forgot-password">Forgot Password</p>  -->
           <button type="submit" name="save" class="btn border btnsignin" >Sign in </button> 
           <p style="margin-top:10px;text-align:center;font-size:15px;"><strong>--------------OR-------------</strong></p>
             <!-- <p style="margin-top:10px;text-align:center;font-size:15px;"><strong><span style="display:inline-block; width:50%;"><hr></span>OR<span style="display:inline-block; width:50%;"><hr></span></strong></p>  -->
   <div class="social-icons" style="text-align:center;">continue with 
-    <img src="<?php echo base_url('/assets/img/fbk.svg');?>" alt="noimage" style="width:40px;height:40px;margin-left:10px;"></img>
-    <img src="<?php echo base_url('/assets/img/googlelogo.png');?>" alt="noimage" style="margin-left:10px;"></img>
+    <img src="<?php echo base_url('/assets/img/vector.png');?>" alt="noimage" style="width:40px;height:40px;margin-left:10px;"></img>
+    <img src="<?php echo base_url('/assets/img/icons8-google 1.png');?>" alt="noimage" style="margin-left:10px;"></img>
    </div>   
         </div>
     <div class="col-sm-6">    

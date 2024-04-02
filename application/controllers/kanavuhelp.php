@@ -99,27 +99,55 @@ class kanavuhelp extends CI_Controller
 	}
 
 
-	public function save_data()
+public function charityform_data()
 {
-    	$data['amount'] = $this->input->post('amount');
-		$data['title'] = $this->input->post('title');
-		$data['ngo'] = $this->input->post('ngo');
-		$data['education'] = $this->input->post('education');
-		$data['employment'] = $this->input->post('employment');
-		$data['aboutus'] = $this->input->post('aboutus');
-		$data['city'] = $this->input->post('city');
-		$data['description'] = $this->input->post('description');
-		$this->load->model('UserModel');
-		$response = $this->UserModel->store2($data);
-		if ($response == true) {
-			echo '<script>alert("Succesfully registered")</script>';
-			$this->load->view('donate.php');
+    $data['amount'] = $this->input->post('amount');
+    $data['title'] = $this->input->post('title');
+    $data['ngo'] = $this->input->post('ngo');
+    $data['education'] = $this->input->post('education');
+    $data['employment'] = $this->input->post('employment');
+    $data['aboutus'] = $this->input->post('aboutus');
+    $data['city'] = $this->input->post('city');
+    $data['description'] = $this->input->post('description');
 
-		} else {
-			echo 'Failed to register';
-		}
-	
+    // Load upload library
+    $this->load->library('upload');
+    $config['upload_path'] = './assets/charityform_img/';
+    $config['allowed_types'] = 'gif|jpg|png|svg|mov|mpeg|mp3|avi|mp4|gif';
+    $config['max_size'] = 1024;
+    $config['max_width'] = 1024;
+    $config['max_height'] = 768;
+    $this->upload->initialize($config);
+
+    // Check if file is uploaded successfully
+    if (!$this->upload->do_upload('file')) {
+        // File upload failed, handle the error
+        $error = $this->upload->display_errors();
+        echo "Upload error: $error"; // Debugging statement
+        redirect('kanavuhelp/individual', 'refresh');
+    } else {
+        // File uploaded successfully, get file name and insert into database
+        $file_data = $this->upload->data();
+        $file_name = $file_data['file_name'];
+        // echo "File uploaded successfully: $file_name"; // Debugging statement
+
+        // Add file name to $data array
+        $data['file'] = $file_name;
+
+        // Load UserModel and call store2 method
+        $this->load->model('UserModel');
+        $response = $this->UserModel->store2($data);
+
+        // Check if data is stored successfully
+        if ($response == true) {
+            echo '<script>alert("Successfully registered")</script>';
+            $this->load->view('donate.php');
+        } else {
+            echo 'Failed to register';
+        }
+    }
 }
+
 public function individualform_data()
 {
     // Retrieve form data
@@ -139,13 +167,14 @@ public function individualform_data()
     
     // Upload file
 	$this->load->library('upload');
-    $config['upload_path'] = './assets/individualform_img/';
-    $config['allowed_types'] = 'gif|jpg|png|svg|mov|mpeg|mp3|avi|mp4|gif';
+    $config['upload_path'] = './assets/charityform_img/';
+    $config['allowed_types'] = 'gif|jpg|png|svg';
     $config['max_size'] = 1024;
     $config['max_width'] = 1024;
     $config['max_height'] = 768;
     $this->upload->initialize($config);
 
+    // Check if file is uploaded successfully
     if (!$this->upload->do_upload('cover_image')) {
         // File upload failed, handle the error
         $error = $this->upload->display_errors();
@@ -154,17 +183,18 @@ public function individualform_data()
     } else {
         // File uploaded successfully, get file name and insert into database
         $file_data = $this->upload->data();
-        echo "File uploaded successfully: " . $file_data['file_name']; // Debugging statement
         $file_name = $file_data['file_name'];
-        // $data['file_path'] = $file_path;
-    
+        // echo "File uploaded successfully: $file_name"; // Debugging statement
+
+        // Add file name to $data array
+        $data['cover_image'] = $file_name;
         // Load model and insert data into the database
         $this->load->model('UserModel');
         $response = $this->UserModel->store3($data);
         
         if ($response == true) {
             echo '<script>alert("Successfully registered")</script>';
-            // $this->load->view('donate.php');
+            $this->load->view('donate.php');
         } else {
             echo 'Failed to register';
         }

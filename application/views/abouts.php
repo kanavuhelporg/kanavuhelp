@@ -38,15 +38,36 @@ center img{
     width: 400px;
 }
 
+ .btn {
+      color: #EB2D32!important;
+      font-weight: bolder !important;
+      border-radius: 50px !important;
+      
+    }
+    .btn:hover {
+      background-color: #EB2D32 !important;
+      color: white !important;
+    }
+    .btn-1 {
+      margin-left: 200px !important;
+      background-color: #EB2D32 !important;
+      color: white !important;
+      width:100px;
+      height:50px;
+    }
+    .btn-2{
+      height:50px;
+      width:150px;
+    }
 </style>
 </head>
 <body class="overflow-x-hidden">
     <header class="text-gray-600 body-font">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>">
-            <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help">
+            <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help"style="margin-left:50px;">
           </a>
-          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"style="margin-left:200px;" >
             <div class="group inline-block relative mr-5">
                 <a href="#" class="hover:text-gray-900 ml-5">Fundraise for</a>
                 <div class="opacity-0 group-hover:opacity-100 absolute z-10 bg-white border rounded-md p-2">
@@ -62,11 +83,9 @@ center img{
             <a href="<?= base_url('kanavuhelp/blogs') ?>" class="mr-10 hover:text-gray-900">Blogs</a>
             <a href="<?= base_url('kanavuhelp/contactus') ?>" class="hover:text-gray-900">Contact us</a>
         </nav>
-        <a href="<?= base_url('kanavuhelp/login') ?>">
-          <button class="inline-flex items-center bg-red-500 text-white border-0 m-1 py-1 px-3 focus:outline-none hover:bg-white-200 rounded-full text-base mt-4  md:mt-0">Login</button></a>
-        <a href="<?= base_url('kanavuhelp/individual') ?>">  
-            <button class="inline-flex items-center bg-gray-100 text-red-500 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-4  md:mt-0">Start a Kanavu
-          </button></a>
+        <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
+        <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
+
         </div>
     </header>
     
