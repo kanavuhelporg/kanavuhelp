@@ -29,7 +29,17 @@ class UserModel extends CI_Model
 		$this->db->insert('contact_us',$data);
 		return true;
 	}
+	public function store2($data)
+	{
+		$this->db->insert('charity',$data);
+		return true;
+	}
 	
+	public function store3($data)
+	{
+		$this->db->insert('individualform',$data);
+		return true;
+	}
 
 // 	function get($data){
 // 	$result->$this->db->select('*')->where('email',$data['email'])->where('password',$data['password'])->get('register')->row();

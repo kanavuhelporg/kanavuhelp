@@ -99,28 +99,79 @@ class kanavuhelp extends CI_Controller
 	}
 
 
-// 	public function submit()
-// {
-//     	$data['amount'] = $this->input->post('amount');
-// 		$data['title'] = $this->input->post('title');
-// 		$data['ngo'] = $this->input->post('ngo');
-// 		$data['education'] = $this->input->post('education');
-// 		$data['employment'] = $this->input->post('employment');
-// 		$data['aboutus'] = $this->input->post('aboutus');
-// 		$data['city'] = $this->input->post('city');
-// 		$data['description'] = $this->input->post('description');
-// 		$data['flexCheckDefault'] = $this->input->post('flexCheckDefault');
-// 		$this->load->model('UserModel');
-// 		$response = $this->UserModel->store($data);
-// 		if ($response == true) {
-// 			echo '<script>alert("Succesfully registered")</script>';
-// 			$this->load->view('donate.php');
+	public function save_data()
+{
+    	$data['amount'] = $this->input->post('amount');
+		$data['title'] = $this->input->post('title');
+		$data['ngo'] = $this->input->post('ngo');
+		$data['education'] = $this->input->post('education');
+		$data['employment'] = $this->input->post('employment');
+		$data['aboutus'] = $this->input->post('aboutus');
+		$data['city'] = $this->input->post('city');
+		$data['description'] = $this->input->post('description');
+		$this->load->model('UserModel');
+		$response = $this->UserModel->store2($data);
+		if ($response == true) {
+			echo '<script>alert("Succesfully registered")</script>';
+			$this->load->view('donate.php');
 
-// 		} else {
-// 			echo 'Failed to register';
-// 		}
+		} else {
+			echo 'Failed to register';
+		}
 	
-// }
+}
+public function individualform_data()
+{
+    // Retrieve form data
+    $data['form-select'] = $this->input->post('form-select');
+    $data['name'] = $this->input->post('name');
+    $data['email'] = $this->input->post('email');
+    $data['phone'] = $this->input->post('phone');
+    $data['beneficiary_name'] = $this->input->post('beneficiary_name');
+    $data['beneficiary_age'] = $this->input->post('beneficiary_age');
+    $data['location'] = $this->input->post('location');
+    $data['beneficiary_phone'] = $this->input->post('beneficiary_phone');
+    $data['form-option'] = $this->input->post('form-option');
+    $data['amount'] = $this->input->post('amount');
+    $data['end_date'] = $this->input->post('end_date');
+    $data['cause-heading'] = $this->input->post('cause-heading');
+    $data['cause-description'] = $this->input->post('cause-description');
+    
+    // Upload file
+	$this->load->library('upload');
+    $config['upload_path'] = './assets/individualform_img/';
+    $config['allowed_types'] = 'gif|jpg|png|svg|mov|mpeg|mp3|avi|mp4|gif';
+    $config['max_size'] = 1024;
+    $config['max_width'] = 1024;
+    $config['max_height'] = 768;
+    $this->upload->initialize($config);
+
+    if (!$this->upload->do_upload('cover_image')) {
+        // File upload failed, handle the error
+        $error = $this->upload->display_errors();
+        echo "Upload error: $error"; // Debugging statement
+        redirect('kanavuhelp/individual', 'refresh');
+    } else {
+        // File uploaded successfully, get file name and insert into database
+        $file_data = $this->upload->data();
+        echo "File uploaded successfully: " . $file_data['file_name']; // Debugging statement
+        $file_name = $file_data['file_name'];
+        // $data['file_path'] = $file_path;
+    
+        // Load model and insert data into the database
+        $this->load->model('UserModel');
+        $response = $this->UserModel->store3($data);
+        
+        if ($response == true) {
+            echo '<script>alert("Successfully registered")</script>';
+            // $this->load->view('donate.php');
+        } else {
+            echo 'Failed to register';
+        }
+    }
+}
+
+
 
 public function userLogin()
     {

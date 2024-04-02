@@ -14,10 +14,12 @@
     <style>
       *{
     overflow: hidden;
+    background-color:#FEF2F2;
 }
 .logi1{
     margin-top:30px;
     padding: 40px;
+    
 }
 .btnsignin{
     width:100%;
@@ -43,7 +45,7 @@
         <br>
             <h2>Sign in</h2>
             <p>Don't have an Account? <a href="<?= base_url('kanavuhelp/register') ?>"><span style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p>
-            <form name="login" onsubmit="return loginValidate()" method="post" action="<?= base_url('kanavuhelp/userLogin') ?>" > 
+            <form name="login" onsubmit="return loginValidate()" method="post" action="<?= base_url('kanavuhelp/userLogin') ?>"  > 
             
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">email</label>
