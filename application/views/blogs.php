@@ -25,7 +25,7 @@
       color: #EB2D32!important;
       font-weight: bolder !important;
       border-radius: 50px !important;
-      
+      border:1px solid  #EB2D32 ;
     }
     .btn:hover {
       background-color: #EB2D32 !important;
@@ -36,11 +36,15 @@
       background-color: #EB2D32 !important;
       color: white !important;
       width:100px;
-      height:50px;
+      height:45px;
     }
     .btn-2{
-      height:50px;
+      height:45px;
       width:150px;
+    }
+    .donate-btn button{
+      border:1px solid red;
+      background-color: white;
     }
 
       </style>
@@ -51,7 +55,7 @@
           <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>">
             <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help">
           </a>
-          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center" >
             <div class="group inline-block relative mr-5">
                 <a href="#" class="hover:text-gray-900 ml-5">Fundraise for</a>
                 <div class="opacity-0 group-hover:opacity-100 absolute z-10 bg-white border rounded-md p-2">
@@ -93,17 +97,14 @@
                 <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/cancer_treatment.png');?>" alt="blog">
                 <div class="p-6">
                   <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
-                  <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3">By kailashwaran
+                  <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3 ">By kailashwaran
                   <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 ml-8 md:mt-0">Medical</button></h2></div>                  <!-- <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing microdosing tousled waistcoat.</p> -->                 
                   <p><span class="text-gray-300">$20000</span> Raised out of <span class="text-gray-300">$30000000</span></p>
                   <div role="progressbar" aria-label="Example -1px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 8px" class="relative bg-gray-300 rounded mt-3">
                     <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                   </div>
-                  <div class="mt-4">
-                  <button class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-white-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
-                  <a href="#" class="inline-flex items-center border-0 py-1 px-3 ml-17 md:mt-0 transition-transform transform hover:scale-110">
-                    <img src="<?php echo base_url('/assets/img/share-2.svg');?>" alt="Share Button" class="h-6">
-                </a>
+                  <div class="mt-4  donate-btn" >
+                  <button class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-white-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
                 </div>                  
                 </div>
               </div>
@@ -122,11 +123,8 @@
                     <div role="progressbar" aria-label="Example -1px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 8px" class="relative bg-gray-300 rounded mt-3">
                       <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                     </div>
-                    <div class="mt-4">
-                    <button class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
-                    <a href="#" class="inline-flex items-center border-0 py-1 px-3 ml-17 md:mt-0 transition-transform transform hover:scale-110">
-                      <img src="<?php echo base_url('/assets/img/share-2.svg');?>" alt="Share Button" class="h-6">
-                  </a>
+                    <div class="mt-4 donate-btn">
+                    <button class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
                   </div>                  
                   </div>
                 </div>
@@ -142,11 +140,8 @@
                     <div role="progressbar" aria-label="Example -1px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 8px" class="relative bg-gray-300 rounded mt-3">
                       <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                     </div>
-                    <div class="mt-4">
-                    <button class="inline-flex items-center bg-gray-200  text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
-                    <a href="#" class="inline-flex items-center border-0 py-1 px-3 ml-17 md:mt-0 transition-transform transform hover:scale-110">
-                      <img src="<?php echo base_url('/assets/img/share-2.svg');?>" alt="Share Button" class="h-6">
-                  </a>
+                    <div class="mt-4 donate-btn">
+                    <button class="inline-flex items-center bg-gray-200  text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
                   </div>                  
                   </div>
                 </div>
@@ -162,11 +157,8 @@
                     <div role="progressbar" aria-label="Example -1px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 8px" class="relative bg-gray-300 rounded mt-3">
                       <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                     </div>
-                    <div class="mt-4">
-                    <button class="inline-flex items-center bg-gray-200 text-red-500 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
-                    <a href="#" class="inline-flex items-center border-0 py-1 px-3 ml-17 md:mt-0 transition-transform transform hover:scale-110">
-                      <img src="<?php echo base_url('/assets/img/share-2.svg');?>" alt="Share Button" class="h-6">
-                  </a>
+                    <div class="mt-4 donate-btn">
+                    <button class="inline-flex items-center bg-gray-200 text-red-500 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
                   </div>                  
                   </div>
                 </div>

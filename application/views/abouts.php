@@ -42,7 +42,7 @@ center img{
       color: #EB2D32!important;
       font-weight: bolder !important;
       border-radius: 50px !important;
-      
+      border:1px solid  #EB2D32 ;
     }
     .btn:hover {
       background-color: #EB2D32 !important;
@@ -53,12 +53,13 @@ center img{
       background-color: #EB2D32 !important;
       color: white !important;
       width:100px;
-      height:50px;
+      height:45px;
     }
     .btn-2{
-      height:50px;
+      height:45px;
       width:150px;
     }
+
 </style>
 </head>
 <body class="overflow-x-hidden">

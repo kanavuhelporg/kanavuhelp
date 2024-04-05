@@ -20,7 +20,7 @@
       color: #EB2D32!important;
       font-weight: bolder !important;
       border-radius: 50px !important;
-      
+      border:1px solid  #EB2D32 ;
     }
     .btn:hover {
       background-color: #EB2D32 !important;
@@ -31,10 +31,10 @@
       background-color: #EB2D32 !important;
       color: white !important;
       width:100px;
-      height:50px;
+      height:45px;
     }
     .btn-2{
-      height:50px;
+      height:45px;
       width:150px;
     }
       </style>
@@ -45,7 +45,7 @@
           <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>">
             <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help">
           </a>
-          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center" style="color:black;">
             <div class="group inline-block relative mr-5">
                 <a href="#" class="hover:text-gray-900 ml-5">Fundraise for</a>
                 <div class="opacity-0 group-hover:opacity-100 absolute z-10 bg-white border rounded-md p-2">

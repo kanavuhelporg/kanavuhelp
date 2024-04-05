@@ -37,6 +37,7 @@
       color: #EB2D32!important;
       font-weight: bolder !important;
       border-radius: 50px !important;
+      border:1px solid red !important;
       
     }
     .btn:hover {
@@ -48,10 +49,10 @@
       background-color: #EB2D32 !important;
       color: white !important;
       width:100px;
-      height:50px;
+      height:45px;
     }
     .btn-2{
-      height:50px;
+      height:45px;
     }
     .dropdown-toggle {
       font-size: 18px;
@@ -110,7 +111,7 @@
     .btn-3{
       background-color: #EB2D32 !important;
       color: white !important;
-      height:50px;
+      height:45px;
       width:160px;
      
     }
@@ -118,7 +119,7 @@
       margin-left:-8px;
       background-color: #EB2D32 !important;
       color: white !important;
-      height:50px;
+      height:45px;
      width:160px;
     }
     .carousel-fade .carousel-item {
@@ -388,7 +389,7 @@
       margin-left: 20x;
     }
     .footimg {
-      margin-left: 420px;
+      margin-left: 520px;
       padding: 20px;
     }
     .social-icons img {

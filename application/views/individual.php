@@ -37,6 +37,7 @@
       color: #EB2D32!important;
       font-weight: bolder !important;
       border-radius: 50px !important;
+      border:1px solid red !important;
     }
     .btn:hover {
       background-color: #EB2D32 !important;
@@ -47,10 +48,10 @@
       background-color: #EB2D32 !important;
       color: white !important;
       width:100px;
-      height:50px;
+      height:45px;
     }
     .btn-2{
-      height:50px;
+      height:45px;
     }
     .dropdown-toggle {
       font-size: 18px;
@@ -98,7 +99,7 @@
       margin-left: 20x;
     }
     .footimg {
-      margin-left: 420px;
+      margin-left: 520px;
       padding: 20px;
     }
     .social-icons img {
@@ -727,7 +728,7 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
        </a>
      </div>
      <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg');?>" alt="no image" class="footimg">
-     <p class="text-center">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
+     <p class="text-center" style="font-size:17px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
  </div>
  </footer>
 </body>
