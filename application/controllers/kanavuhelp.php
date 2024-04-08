@@ -124,7 +124,7 @@ public function charityform_data()
         // File upload failed, handle the error
         $error = $this->upload->display_errors();
         echo "Upload error: $error"; // Debugging statement
-        redirect('kanavuhelp/individual', 'refresh');
+        redirect('kanavuhelp/charity', 'refresh');
     } else {
         // File uploaded successfully, get file name and insert into database
         $file_data = $this->upload->data();
@@ -167,7 +167,7 @@ public function individualform_data()
     
     // Upload file
 	$this->load->library('upload');
-    $config['upload_path'] = './assets/charityform_img/';
+    $config['upload_path'] = './assets/individualform_img/';
     $config['allowed_types'] = 'gif|jpg|png|svg';
     $config['max_size'] = 1024;
     $config['max_width'] = 1024;

@@ -177,6 +177,13 @@ center button {
 button:hover {
   background-color: #E9E3E3;
 }
+.donatefor{
+  border:1px solid #E01A2B;
+  color:#E01A2B;
+  background-color:#fff;
+}
+  
+
       </style>
 </head>
 <body class="overflow-x-hidden">
@@ -212,8 +219,8 @@ button:hover {
             <img src="<?php echo base_url('/assets/img/handwithheart.png');?>" alt="No Image" class="h-auto inline-block">
         </div>
         <div class="mx-auto text-center mt-3"><p><strong>"Fundraising is the gentle art of teaching the joy of giving"</strong></p></div>
-        <div class="mx-auto text-center mt-8">
-        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 md:mt-0">All</button>
+        <div class="mx-auto text-center mt-8 ">
+        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 md:mt-0 donatefor">All</button>
         <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 md:mt-0">Medical</button>
         <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mr-3 md:mt-0">Crisis</button>
         <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 md:mt-0">Education</button>

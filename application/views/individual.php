@@ -40,12 +40,12 @@
       border:1px solid red !important;
     }
     .btn:hover {
-      background-color: #EB2D32 !important;
+      background-color: red !important;
       color: white !important;
     }
     .btn-1 {
       margin-left: 260px !important;
-      background-color: #EB2D32 !important;
+      background-color: red!important;
       color: white !important;
       width:100px;
       height:45px;
@@ -431,6 +431,80 @@ body #multi-step-form-container{
     background-color: transparent;
     outline: none;
   }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* overflow-y: auto; */
+    background-color: rgba(0,0,0,0.5);
+  }
+  
+  /* CSS for the modal content */
+  .modal-content {
+    background-color: #FFFFFF;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    /* width: 30%; */
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    /* height:83%; */
+  }
+
+  /* Close button style */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .otp-field {
+  flex-direction: row;
+  /* column-gap: 10px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.otp-field input {
+  /* height: 45px;
+  width: 42px; */
+  border-radius: 6px;
+  outline: none;
+  font-size: 1.125rem;
+  text-align: center;
+  border: 1px solid #ddd;
+  padding-bottom:10px;
+  
+}
+.otp-field input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+.otp-field input::-webkit-inner-spin-button,
+.otp-field input::-webkit-outer-spin-button {
+  display: none;
+}
+
+.resend {
+  font-size: 12px;
+  color:black;    
+}
+.resend a{
+  text-decoration:none;
+  color:#E01A2B;
+}
    </style>
    <body>
       <nav class="navbar  navbar-expand-lg bg-light fixed-top">
@@ -530,7 +604,7 @@ body #multi-step-form-container{
             </li>
         </ul>
         <!-- Step Wise Form Content -->
-        <form id="individualForm" name="individualForm" onsubmit="return individual()" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" method="POST" class="row row-cols-1 ms-5 me-5" >
+        <form id="individualForm" name="individualForm" onsubmit="return individual()"  action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" method="POST" class="row row-cols-1 ms-5 me-5" >
             <!-- Step 1 Content -->
             <section id="step-1" class="form-step "  style="height:450px;border:none;">
             <h2>Basic Details</h2>
@@ -557,9 +631,42 @@ body #multi-step-form-container{
     <input type="phone" id="phone" name="phone" placeholder="Phone Number* " required>
                 </div>
                 <div class="mt-3 primary"  style="margin-left:450px;">
-                    <button class="button btn-navigate-form-step" type="button" step_number="2">Continue</button>
+                    <button id="openModalBtn1" class="button btn-navigate-form-step" type="button" step_number="1">Continue</button>
                 </div>
             </section>
+            <div id="myModal1" class="modal">
+            <div class="modal-content" >
+                    <span class="close">&times;</span>
+                    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px;">
+          <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+            <div class="card-body p-5 text-center" >
+              <h4><b>Enter OTP to verify your account</b></h4>
+              <p style="font-size:16px;"><b>Enter OTP to verify your account</b></p>
+              <img src="<?php echo base_url('/assets/img/Group 55.png');?>" alt="No Image" class="h-auto inline-block" style="width:50px;height:50px;">
+              <p style="font-size:16px;"><b>We have sent OTP to your email, demo@gmail.com</b></p>
+              <div class="otp-field mb-4">
+                <input type="number" />
+                <input type="number" disabled />
+                <input type="number" disabled />
+                <input type="number" disabled />
+                <input type="number" disabled />
+                <input type="number" disabled />
+              </div>
+  
+              <button id="verifyButton" class="button btn-navigate-form-step" step_number="2">
+              Continue
+              </button><br><br>              
+              <p class="resend text-muted mb-0" style="font-size:17px;">
+              <b>Didn’t receive the OTP? </b><br>In case you do not receive the OTP on your email id, please check your spam/junk folders.<br>  <a href=""><b>Resend</b></a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+            </div>
+            </div>
             <!-- Step 2 Content, default hidden on page load. -->
             <section id="step-2" class="form-step d-none" style="border:none;">
             <h2>Beneficiary Details</h2>                <!-- Step 2 input fields -->
@@ -634,6 +741,106 @@ body #multi-step-form-container{
  * Define a function to navigate betweens form steps.
  * It accepts one parameter. That is - step number.
  */
+function openModal(modalId) {
+  var modal = document.getElementById(modalId);
+  modal.style.display = "block";
+}
+
+// Function to close the modal
+function closeModal(modalId) {
+  var modal = document.getElementById(modalId);
+  modal.style.display = "none";
+}
+
+// Event listeners for opening and closing modals
+document.getElementById("openModalBtn1").addEventListener("click", function() {
+  openModal("myModal1");
+});
+document.querySelectorAll(".close").forEach(function(closeBtn) {
+  closeBtn.addEventListener("click", function() {
+    var modalId = closeBtn.closest('.modal').id;
+    closeModal(modalId);
+  });
+});
+window.addEventListener("click", function(event) {
+  document.querySelectorAll(".modal").forEach(function(modal) {
+    if (event.target == modal) {
+      closeModal(modal.id);
+    }
+  });
+});
+document.getElementById("verifyButton").addEventListener("click", function() {
+  // Code to close the modal
+  document.getElementById("myModal1").style.display = "none";
+});
+const inputs = document.querySelectorAll(".otp-field > input");
+const button = document.querySelector(".btn");
+
+window.addEventListener("load", () => inputs[0].focus());
+button.setAttribute("disabled", "disabled");
+
+inputs[0].addEventListener("paste", function (event) {
+  event.preventDefault();
+
+  const pastedValue = (event.clipboardData || window.clipboardData).getData(
+    "text"
+  );
+  const otpLength = inputs.length;
+
+  for (let i = 0; i < otpLength; i++) {
+    if (i < pastedValue.length) {
+      inputs[i].value = pastedValue[i];
+      inputs[i].removeAttribute("disabled");
+      inputs[i].focus;
+    } else {
+      inputs[i].value = ""; // Clear any remaining inputs
+      inputs[i].focus;
+    }
+  }
+});
+
+inputs.forEach((input, index1) => {
+  input.addEventListener("keyup", (e) => {
+    const currentInput = input;
+    const nextInput = input.nextElementSibling;
+    const prevInput = input.previousElementSibling;
+
+    if (currentInput.value.length > 1) {
+      currentInput.value = "";
+      return;
+    }
+
+    if (
+      nextInput &&
+      nextInput.hasAttribute("disabled") &&
+      currentInput.value !== ""
+    ) {
+      nextInput.removeAttribute("disabled");
+      nextInput.focus();
+    }
+
+    if (e.key === "Backspace") {
+      inputs.forEach((input, index2) => {
+        if (index1 <= index2 && prevInput) {
+          input.setAttribute("disabled", true);
+          input.value = "";
+          prevInput.focus();
+        }
+      });
+    }
+
+    button.classList.remove("active");
+    button.setAttribute("disabled", "disabled");
+
+    const inputsNo = inputs.length;
+    if (!inputs[inputsNo - 1].disabled && inputs[inputsNo - 1].value !== "") {
+      button.classList.add("active");
+      button.removeAttribute("disabled");
+
+      return;
+    }
+  });
+});
 const navigateToFormStep = (stepNumber) => {
     /**
      * Hide all form steps.
