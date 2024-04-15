@@ -46,7 +46,11 @@
       border:1px solid red;
       background-color: white;
     }
-
+    .shadow-md {
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Adjust the shadow properties as needed */
+    border-radius:20px;
+    margin-bottom:30px;
+}
       </style>
 </head>
 <body class="overflow-x-hidden">
@@ -89,76 +93,72 @@
         <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-4 mr-3 md:mt-0">Emergency</button>
         <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-4 mr-3 md:mt-0">Events</button>
     </div> -->
-    <section class="text-gray-600 body-font">
+    <section class="text-gray-600 body-font" >
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-wrap">
-            <div class="p-4 md:w-1/3">
-              <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/cancer_treatment.png');?>" alt="blog">
+            <div class="shadow-md p-4 md:w-1/4" id="container1" style="margin-left:130px;">
+              <div class="h-full rounded-lg overflow-hiddens" >
+                <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/blog1 1.png');?>" alt="blog">
+                <div class="flex justify-between items-center mt-4 ml-6 mr-14">
+                  <img  src="<?php echo base_url('/assets/img/calendar.svg');?>" alt="blog" style="width:20px;">April 11, 2024
+                  <img  src="<?php echo base_url('/assets/img/user-regular.svg');?>" alt="blog" style="margin-left:40px">By Admin
+                </div>
                 <div class="p-6">
-                  <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
-                  <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3 ">By kailashwaran
-                  <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 ml-8 md:mt-0">Medical</button></h2></div>                  <!-- <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing microdosing tousled waistcoat.</p> -->                 
-                  <p><span class="text-gray-300">$20000</span> Raised out of <span class="text-gray-300">$30000000</span></p>
-                  <div role="progressbar" aria-label="Example -1px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 8px" class="relative bg-gray-300 rounded mt-3">
-                    <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
-                  </div>
+                  <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>Donate for nutrition less poor people in Local</strong></h1>
+                  <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1" style="color:grey;">Lorem ipsum dolor sit amet, consectetur adipiscing</h1>
                   <div class="mt-4  donate-btn" >
-                  <button class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-white-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
+                  <button onclick="toggleDetails('detailsSection1')" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-white-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
                 </div>                  
                 </div>
               </div>
             </div>
             <!-- <div class="flex flex-wrap"> -->
-              <div class="p-4 md:w-1/3">
-                <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/cancer_treatment.png');?>" alt="blog">
-                  <div class="p-6">
-                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
-              
-                  
-                    <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3">By kailashwaran
-                    <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 ml-8 md:mt-0  sm:ml-2">Medical</button></h2></div>
-                    <p><span class="text-gray-300">$20000</span> Raised out of <span class="text-gray-300">$30000000</span></p>
-                    <div role="progressbar" aria-label="Example -1px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 8px" class="relative bg-gray-300 rounded mt-3">
-                      <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
+              <div class=" shadow-md p-4 md:w-1/4"  id="container2" style="margin-left:50px;">
+                <div class="h-full rounded-lg overflow-hidden">
+                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/blog2 1.png');?>" alt="blog">
+                  <div class="flex justify-between items-center mt-4 ml-6 mr-14">
+                  <img  src="<?php echo base_url('/assets/img/calendar.svg');?>" alt="blog" style="width:20px;">April 11, 2024
+                  <img  src="<?php echo base_url('/assets/img/user-regular.svg');?>" alt="blog" style="margin-left:40px">By Admin
                     </div>
+                  <div class="p-6">
+                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>Charity meetup in Berline next year
+                    </strong></h1>
+                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1" style="color:grey;">Lorem ipsum dolor sit amet, consectetur adipiscing</h1>
                     <div class="mt-4 donate-btn">
-                    <button class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
+                    <button onclick="toggleDetails('detailsSection2')" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
                   </div>                  
                   </div>
                 </div>
               </div>
-              <div class="p-4 md:w-1/3">
-                <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/cancer_treatment.png');?>" alt="blog">
-                  <div class="p-6">
-                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
-                    <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3">By kailashwaran
-                    <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 ml-8 md:mt-0">Medical</button></h2></div>
-                    <p><span class="text-gray-300">$20000</span> Raised out of <span class="text-gray-300">$30000000</span></p>
-                    <div role="progressbar" aria-label="Example -1px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 8px" class="relative bg-gray-300 rounded mt-3">
-                      <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
+              <div class="shadow-md p-4 md:w-1/4" id="container3" style="margin-left:50px;">
+                <div class="h-full rounded-lg overflow-hidden">
+                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/blog3 1.png');?>" alt="blog">
+                  <div class="flex justify-between items-center mt-4 ml-6 mr-14">
+                  <img  src="<?php echo base_url('/assets/img/calendar.svg');?>" alt="blog" style="width:20px;">April 11, 2024
+                  <img  src="<?php echo base_url('/assets/img/user-regular.svg');?>" alt="blog" style="margin-left:40px">By Admin
                     </div>
+                  <div class="p-6">
+                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>Donate for nutrition less poor people in Local</strong></h1>
+                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1" style="color:grey;">Lorem ipsum dolor sit amet, consectetur adipiscing</h1>
                     <div class="mt-4 donate-btn">
-                    <button class="inline-flex items-center bg-gray-200  text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
+                    <button onclick="toggleDetails('detailsSection3')" class="inline-flex items-center bg-gray-200  text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
                   </div>                  
                   </div>
                 </div>
               </div>
-              <div class="p-4 md:w-1/3">
-                <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/cancer_treatment.png');?>" alt="blog">
-                  <div class="p-6">
-                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
-                    <div class="d-flex"><h2 class="title-font text-md font-medium text-gray-300 mb-3">By kailashwaran
-                    <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 ml-8 md:mt-0">Medical</button></h2></div>
-                    <p><span class="text-gray-300">$20000</span> Raised out of <span class="text-gray-300">$30000000</span></p>
-                    <div role="progressbar" aria-label="Example -1px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 8px" class="relative bg-gray-300 rounded mt-3">
-                      <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
+              <div class="shadow-md p-4 md:w-1/4" id="container4" style="margin-left:130px;">
+                <div class="h-full rounded-lg overflow-hidden">
+                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/blog4 1.png');?>" alt="blog">
+                  <div class="flex justify-between items-center mt-4 ml-6 mr-14">
+                  <img  src="<?php echo base_url('/assets/img/calendar.svg');?>" alt="blog" style="width:20px;">April 11, 2024
+                  <img  src="<?php echo base_url('/assets/img/user-regular.svg');?>" alt="blog" style="margin-left:40px">By Admin
                     </div>
+                  <div class="p-6">
+                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>Treatment for every helpless children
+                    </strong></h1>
+                    <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1" style="color:grey;">Lorem ipsum dolor sit amet, consectetur adipiscing</h1>
                     <div class="mt-4 donate-btn">
-                    <button class="inline-flex items-center bg-gray-200 text-red-500 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
+                    <button onclick="toggleDetails('detailsSection4')" class="inline-flex items-center bg-gray-200 text-red-500 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Read More</button>
                   </div>                  
                   </div>
                 </div>
@@ -184,7 +184,79 @@
                 </div>
               </div> -->
         </div></div>
+        <div id="detailsSection1" class="container px-0 py-0 mx-auto" style="display: none;margin-left:40px;margin-bottom:350px;margin-top:1px;">
+    <!-- Details for Container 1 -->
+    <img src="<?php echo base_url('/assets/img/blog1 1.png');?>" alt="blog" width="700" height="700" >
+    <div class="flex items-center mt-4">
+        <img src="<?php echo base_url('/assets/img/calendar.svg');?>" alt="blog" style="width:20px; margin-right: 5px;">April 11, 2024
+        <img src="<?php echo base_url('/assets/img/user-regular.svg');?>" alt="blog" style="margin-left:5px;">By Admin
+    </div><br>
+    <div class="p-0">
+        <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
+        <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1" style="color:grey;">Lorem ipsum dolor sit amet, consectetur adipiscing</h1>
+    </div>       
+</div>
+
+<div id="detailsSection2" class="container px-0 py-0 mx-auto" style="display: none;margin-left:40px;margin-bottom:350px;margin-top:1px;">
+    <!-- Details for Container 1 -->
+    <img src="<?php echo base_url('/assets/img/blog2 1.png');?>" alt="blog" width="700" height="700" >
+    <div class="flex items-center mt-4">
+        <img src="<?php echo base_url('/assets/img/calendar.svg');?>" alt="blog" style="width:20px; margin-right: 5px;">April 11, 2024
+        <img src="<?php echo base_url('/assets/img/user-regular.svg');?>" alt="blog" style="margin-left:5px;">By Admin
+    </div><br>
+    <div class="p-0">
+        <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
+        <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1" style="color:grey;">Lorem ipsum dolor sit amet, consectetur adipiscing</h1>
+    </div>       
+</div>
+<div id="detailsSection3" class="container px-0 py-0 mx-auto" style="display: none;margin-left:40px;margin-bottom:350px;margin-top:1px;">
+    <!-- Details for Container 1 -->
+    <img src="<?php echo base_url('/assets/img/blog3 1.png.png');?>" alt="blog" width="700" height="700" >
+    <div class="flex items-center mt-4">
+        <img src="<?php echo base_url('/assets/img/calendar.svg');?>" alt="blog" style="width:20px; margin-right: 5px;">April 11, 2024
+        <img src="<?php echo base_url('/assets/img/user-regular.svg');?>" alt="blog" style="margin-left:5px;">By Admin
+    </div><br>
+    <div class="p-0">
+        <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
+        <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1" style="color:grey;">Lorem ipsum dolor sit amet, consectetur adipiscing</h1>
+    </div>       
+</div>
+<div id="detailsSection4" class="container px-0 py-0 mx-auto" style="display: none;margin-left:40px;margin-bottom:350px;margin-top:1px;">
+    <!-- Details for Container 1 -->
+    <img src="<?php echo base_url('/assets/img/blog4 1.png.png');?>" alt="blog" width="700" height="700" >
+    <div class="flex items-center mt-4">
+        <img src="<?php echo base_url('/assets/img/calendar.svg');?>" alt="blog" style="width:20px; margin-right: 5px;">April 11, 2024
+        <img src="<?php echo base_url('/assets/img/user-regular.svg');?>" alt="blog" style="margin-left:5px;">By Admin
+    </div><br>
+    <div class="p-0">
+        <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1"><strong>cancer treatment for a girl child in maharastra</strong></h1>
+        <h1 class="tracking-widest text-md title-font font-medium text-gray-900 mb-1" style="color:grey;">Lorem ipsum dolor sit amet, consectetur adipiscing</h1>
+    </div>       
+</div>
+
       </section>
+      <script>
+    function toggleDetails(detailsId) {
+        var detailsSection = document.getElementById(detailsId);
+        var containers = document.querySelectorAll('[id^="container"]');
+
+        // Hide all other containers
+        containers.forEach(function(container) {
+            if (container.id !== detailsId) {
+                container.style.display = 'none';
+            }
+        });
+
+        // Toggle the display property of the clicked container
+        if (detailsSection.style.display === 'none' || detailsSection.style.display === '') {
+            detailsSection.style.display = 'block';
+        } else {
+            detailsSection.style.display = 'none';
+        }
+    }
+</script>
+
+
       <div class="footer">
         <footer class="footer mt-auto h-256 w-full bg-red-600 py-3 text-white">
             <div class="container mx-auto">

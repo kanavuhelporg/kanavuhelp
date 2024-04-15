@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js'></script>ap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <title>Kanavu Help</title>
   <style>
   body {
@@ -806,9 +809,47 @@
       display:none !important;
      }
       } 
+      /* Profile Picture */
+.profile-pic{
+   display: inline-block;
+   vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+   border-radius: 50%;
+}
+
+.profile-pic img{
+   width: 100%;
+   height: auto;
+   object-fit: cover;
+}
+.profile-menu .dropdown-menu {
+  right: 0;
+  left: unset;
+}
+.profile-menu .fa-fw {
+  margin-right: 10px;
+}
+
+.toggle-change::after {
+  border-top: 0;
+  border-bottom: 0.3em solid;
+}
   </style>
 </head>
 <body>
+<?php
+// Check if the user is logged in
+$isLoggedIn = isset($_SESSION['user_id']);
+
+// Assuming you have a user profile picture stored in session or database
+$profilePicture = '';
+if ($isLoggedIn) {
+    // Fetch the user's profile picture or use a default one
+    $profilePicture = isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : 'https://source.unsplash.com/250x250?person';
+}
+?>
 <nav class="navbar  navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?= base_url('/kanavuhelp') ?>">
@@ -846,16 +887,13 @@
             </ul>
         </div>
 </div>
-<div class="container navbar-link  justify-content-sm-start bttn">
-                  <!-- <ul class="navbar-nav d-md-flex flex-row justify-content-end"> -->
-                    <!-- <li class="nav-item"> -->
-                        <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
-                    <!-- </li> -->
-                    <!-- <li class="nav-item"> -->
-                    <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
-                    <!-- </li> -->
-                    <!-- </ul> -->
-                </div>
+<!-- Profile section -->
+
+        <!-- If user is not logged in, display login and signup buttons -->
+        <div class="container navbar-link justify-content-sm-start bttn">
+            <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
+            <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
+        </div>
 </nav>
   <!-- Carousel -->
   <div id="demo" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
@@ -1191,6 +1229,19 @@
       </div>
     </div>
   </div>
+  <script>
+    document.querySelectorAll('.dropdown-toggle').forEach(item => {
+  item.addEventListener('click', event => {
+ 
+    if(event.target.classList.contains('dropdown-toggle') ){
+      event.target.classList.toggle('toggle-change');
+    }
+    else if(event.target.parentElement.classList.contains('dropdown-toggle')){
+      event.target.parentElement.classList.toggle('toggle-change');
+    }
+  })
+});
+</script>
   <!--  -->
  <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">

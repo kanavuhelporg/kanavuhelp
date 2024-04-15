@@ -40,6 +40,19 @@
       height:45px;
       width:150px;
     }
+    .shadow-md {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Adjust the shadow properties as needed */
+    border-radius:20px;
+}
+.data{
+    border:1px solid #E01A2B;
+  color:#E01A2B;
+  background-color:#fff;
+}
+.data:hover{
+    background-color:#E01A2B;
+    color:white;
+}
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -69,25 +82,25 @@
         <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
 
         </div>
-         
     </header>
 
         <div class="container-fluid mx-auto mt-5">
             <img src="<?php echo base_url('/assets/img/myhelps.png');?>" alt="No Image" class="w-full h-auto">
         </div>
-        <div class="mx-auto text-center mt-8 md:ml-20 md:ml-40">
-    <button class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 text-red-500 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 mr-2">My Donations</button>
-    <button class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0">My Fundraisers</button>
+        <div class="mx-auto text-center mt-8 md:ml-20 ">
+    <button id="myDonationsButton" class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 text-red-500 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data">My Donations</button>
+    <button id="myFundraisersButton" class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 data">My Fundraisers</button>
 </div>
-<div class="container w-full flex justify-between ml-0 md:ml-20 mt-8 md:mt-20">
-    <h4 class="text-lg font-bold ml-0 md:ml-20 mb-2 md:mr-4 md:mb-0">Help Status and details</h4>
-    <!-- <h4 class="text-lg font-bold mr30 md:mr-20 mb-2 md:ml-4">You Contributed</h4> -->
-</div>     
-        <div class="container w-full md:w-4/5 border shadow-md flex flex-col md:flex-row mt-10 mb-10 mx-auto md:ml-40 p-4">
-            <div class="w-full md:w-1/3 border rounded-lg p-6">
-                <img src="<?php echo base_url('/assets/img/storm.png');?>" alt="Image" class="w-full h-auto rounded-full">
+<div class="container mx-auto md:w-2/3 flex justify-between mt-8 md:mt-20" id="helpStatusContainer">
+    <h3 class="text-lg font-bold ml-20  mb-2 md:mr-4 md:mb-0">Help Status and details</h3>
+    <h4 class="text-lg font-bold mr-40 md:mr-40 mb-2 md:ml-4">You Contributed</h4>
+</div>
+    
+        <div class="container w-full md:w-3/5 border shadow-md flex flex-col md:flex-row mt-10 mb-10 mx-auto  p-4 " id="myDonationsContainer1">
+            <div class="w-full md:w-1/3 rounded-lg p-6">
+                <img src="<?php echo base_url('/assets/img/storm.png');?>" alt="Image" class="w-48 h-48" style="border-radius:10px;">
             </div>
-            <div class="w-full md:w-1/3 ml-0 md:ml-4 border rounded-lg p-6">
+            <div class="w-full md:w-2/3 ml-0 md:ml-4  rounded-lg p-6">
                 <h2 class="text-base mb-2">Storm affected region in southern parts of Salem</h2>
                 <p class="text-gray-700">Created By</p>
                 <p class="text-gray-700">Dhineshkumar</p>
@@ -96,16 +109,16 @@
                     <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                 </div>
             </div>
-            <div class="w-full md:w-1/3 ml-0 md:ml-4 border rounded-lg p-6 text-center md:text-left">
+            <div class="w-full md:w-1/3 ml-0 md:ml-4  rounded-lg p-6 text-center md:text-left">
                 <h2 class="text-xl font-bold mb-2 mt-4 md:mt-10">RS.2000</h2>
             </div>
         </div>
         
-        <div class="container w-full md:w-4/5 border rounded-lg shadow-md flex flex-col md:flex-row mt-10 mb-10 mx-auto md:ml-40 p-4">
-            <div class="w-full md:w-1/3 border rounded-lg p-6">
-                <img src="<?php echo base_url('/assets/img/storm.png');?>" alt="Image" class="w-full h-auto rounded-full">
+        <div class="container w-full md:w-3/5 border shadow-md flex flex-col md:flex-row mt-10 mb-10 mx-auto  p-4 " id="myDonationsContainer2">
+            <div class="w-full md:w-1/3 rounded-lg p-6">
+                <img src="<?php echo base_url('/assets/img/storm.png');?>" alt="Image" class="w-48 h-48" style="border-radius:10px;">
             </div>
-            <div class="w-full md:w-1/3 ml-0 md:ml-4 border rounded-lg p-6">
+            <div class="w-full md:w-2/3 ml-0 md:ml-4 rounded-lg p-6">
                 <h2 class="text-base mb-2">Storm affected region in southern parts of Salem</h2>
                 <p class="text-gray-700">Created By</p>
                 <p class="text-gray-700">Dhineshkumar</p>
@@ -114,10 +127,90 @@
                     <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                 </div>
             </div>
-            <div class="w-full md:w-1/3 ml-0 md:ml-4 border rounded-lg p-6 text-center md:text-left">
+            <div class="w-full md:w-1/3 ml-0 md:ml-4 rounded-lg p-6 text-center md:text-left">
                 <h2 class="text-xl font-bold mb-2 mt-4 md:mt-10">RS.2000</h2>
             </div>
         </div>
+        <div class=" fundraiser container w-full md:w-3/5 border shadow-md flex flex-col md:flex-row mt-10 mb-10 mx-auto  p-4 hidden" id="myFundraisersContainer1">
+            <div class="w-full md:w-1/3 rounded-lg p-6">
+                <img src="<?php echo base_url('/assets/img/storm.png');?>" alt="Image" class="w-48 h-48" style="border-radius:10px;">
+            </div>
+            <div class="w-full md:w-2/3 ml-0 md:ml-4  rounded-lg p-6">
+                <h2 class="text-base mb-2">Storm affected region in southern parts of Salem</h2>
+                <p class="text-gray-700">Created By</p>
+                <p class="text-gray-700">Dhineshkumar</p>
+                <p><span class="text-gray-300">$20000</span> Raised out of <span class="text-gray-300">$30000000</span></p>
+                <div role="progressbar" aria-label="Example -1px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 8px" class="relative bg-gray-300 rounded mt-3">
+                    <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 ml-0 md:ml-4  rounded-lg p-6 text-center md:text-left">
+            <?php
+    // Assuming $endDate is the end date of the fundraiser
+    $endDate = "2024-04-30"; // Example end date (YYYY-MM-DD format)
+    ?>
+    <?php
+    // Calculate remaining days
+    $remainingDays = ceil((strtotime($endDate) - time()) / (60 * 60 * 24));
+    ?>
+    <h2 class=" mb-2 mt-4 md:mt-10" style="color:grey;"><?php echo $remainingDays; ?> days left</h2>
+            </div>
+        </div>
+        
+        <div class="container w-full md:w-3/5 border shadow-md flex flex-col md:flex-row mt-10 mb-10 mx-auto  p-4 hidden" id="myFundraisersContainer2">
+            <div class="w-full md:w-1/3 rounded-lg p-6">
+                <img src="<?php echo base_url('/assets/img/storm.png');?>" alt="Image" class="w-48 h-48" style="border-radius:10px;">
+            </div>
+            <div class="w-full md:w-2/3 ml-0 md:ml-4 rounded-lg p-6">
+                <h2 class="text-base mb-2">Storm affected region in southern parts of Salem</h2>
+                <p class="text-gray-700">Created By</p>
+                <p class="text-gray-700">Dhineshkumar</p>
+                <p><span class="text-gray-300">$20000</span> Raised out of <span class="text-gray-300">$30000000</span></p>
+                <div role="progressbar" aria-label="Example -1px high" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 8px" class="relative bg-gray-300 rounded mt-3">
+                    <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 ml-0 md:ml-4 rounded-lg p-6 text-center md:text-left">
+            <?php
+    // Assuming $endDate is the end date of the fundraiser
+    $endDate = "2024-04-22"; // Example end date (YYYY-MM-DD format)
+    ?>
+    <?php
+    // Calculate remaining days
+    $remainingDays = ceil((strtotime($endDate) - time()) / (60 * 60 * 24));
+    ?>
+    <h2 class=" mb-2 mt-4 md:mt-10" style="color:grey;"><?php echo $remainingDays; ?> days left</h2>
+            </div>
+        </div>
+        <script>
+    // Get references to the buttons and containers
+    const myDonationsButton = document.querySelector("#myDonationsButton");
+    const myFundraisersButton = document.querySelector("#myFundraisersButton");
+    const myDonationsContainer1 = document.querySelector("#myDonationsContainer1");
+    const myDonationsContainer2 = document.querySelector("#myDonationsContainer2");
+    const myFundraisersContainer1 = document.querySelector("#myFundraisersContainer1");
+    const myFundraisersContainer2 = document.querySelector("#myFundraisersContainer2");
+    const helpStatusContainer = document.querySelector("#helpStatusContainer");
+    // Add click event listeners to the buttons
+    myDonationsButton.addEventListener("click", () => {
+        // Show My Donations containers and hide My Fundraisers containers
+        myDonationsContainer1.classList.remove("hidden");
+        myDonationsContainer2.classList.remove("hidden");
+        myFundraisersContainer1.classList.add("hidden");
+        myFundraisersContainer2.classList.add("hidden");
+        helpStatusContainer.classList.remove("hidden");
+    });
+
+    myFundraisersButton.addEventListener("click", () => {
+        // Show My Fundraisers containers and hide My Donations containers
+        myFundraisersContainer1.classList.remove("hidden");
+        myFundraisersContainer2.classList.remove("hidden");
+        myDonationsContainer1.classList.add("hidden");
+        myDonationsContainer2.classList.add("hidden");
+        helpStatusContainer.classList.add("hidden");
+    });
+</script>
+
             <div class="footer">
         <footer class="footer mt-auto h-256 w-full bg-red-600 py-3 text-white">
             <div class="container mx-auto">
@@ -144,11 +237,5 @@
             <p class="text-center p-2">Copyright 2024 @ localhost. All Rights Reserved.</p>
         </footer>
     </div>
-    
-   
-
-
-
-
 </body>
 </html>
