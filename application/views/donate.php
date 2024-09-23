@@ -182,7 +182,10 @@ button:hover {
   color:#E01A2B;
   background-color:#fff;
 }
-  
+.donatefor:hover{
+  background-color:#E01A2B;
+  color:white;
+}   
 
       </style>
 </head>
@@ -220,17 +223,17 @@ button:hover {
         </div>
         <div class="mx-auto text-center mt-3"><p><strong>"Fundraising is the gentle art of teaching the joy of giving"</strong></p></div>
         <div class="mx-auto text-center mt-8 ">
-        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 md:mt-0 donatefor">All</button>
-        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 md:mt-0">Medical</button>
-        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mr-3 md:mt-0">Crisis</button>
-        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 md:mt-0">Education</button>
-        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-4 mr-3 md:mt-0">Emergency</button>
-        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-4 mr-3 md:mt-0">Events</button>
+        <button class=" filter-btn inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 md:mt-0 donatefor"  data-filter="all">All</button>
+        <button class=" filter-btn inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 md:mt-0 donatefor" data-filter="medical">Medical</button>
+        <button class=" filter-btn inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mr-3 md:mt-0 donatefor" data-filter="crisis">Crisis</button>
+        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base p-4 mt-4 mr-3 md:mt-0 donatefor">Education</button>
+        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-4 mr-3 md:mt-0 donatefor">Emergency</button>
+        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-4 mr-3 md:mt-0 donatefor">Events</button>
     </div>
     <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-wrap">
-            <div class="p-4 md:w-1/3">
+          <div class="flex flex-wrap" id="projects">
+            <div class="p-4 md:w-1/3" data-category="medical">
               <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                 <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/cancer_treatment.png');?>" alt="blog">
                 <div class="p-6">
@@ -242,7 +245,7 @@ button:hover {
                     <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                   </div>
                   <div class="mt-4 donate-btn">
-                  <button id="openModalBtn1" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
+                  <button id="openModalBtn1" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0 donatefor">Donate Now</button>
                   <div id="myModal1" class="modal">
     <!-- Modal content -->
                  <div class="modal-content" >
@@ -300,7 +303,7 @@ button:hover {
               </div>
             </div>
             <!-- <div class="flex flex-wrap"> -->
-              <div class="p-4 md:w-1/3">
+              <div class="p-4 md:w-1/3" data-category="crisis">
                 <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                   <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/urban-flood-mitigation.png');?>" alt="blog">
                   <div class="p-6">
@@ -314,7 +317,7 @@ button:hover {
                       <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                     </div>
                     <div class="mt-4 donate-btn">
-                    <button id="openModalBtn2" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
+                    <button id="openModalBtn2" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0 donatefor">Donate Now</button>
                   <div id="myModal2" class="modal">
     <!-- Modal content -->
                  <div class="modal-content">
@@ -370,7 +373,7 @@ button:hover {
                   </div>
                 </div>
               </div>
-              <div class="p-4 md:w-1/3">
+              <div class="p-4 md:w-1/3" data-category="medical">
                 <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                   <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/patient-with-cancer.png');?>" alt="blog">
                   <div class="p-6">
@@ -382,7 +385,7 @@ button:hover {
                       <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                     </div>
                     <div class="mt-4 donate-btn">
-                    <button id="openModalBtn3" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
+                    <button id="openModalBtn3" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0 donatefor">Donate Now</button>
                   <div id="myModal3" class="modal">
     <!-- Modal content -->
                  <div class="modal-content">
@@ -438,7 +441,7 @@ button:hover {
                   </div>
                 </div>
               </div>
-              <div class="p-4 md:w-1/3">
+              <div class="p-4 md:w-1/3" data-category="crisis">
                 <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                   <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="<?php echo base_url('/assets/img/salem_storm.png');?>" alt="blog">
                   <div class="p-6">
@@ -450,7 +453,7 @@ button:hover {
                       <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                     </div>
                     <div class="mt-4 donate-btn">
-                    <button id="openModalBtn4" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
+                    <button id="openModalBtn4" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0 donatefor">Donate Now</button>
                   <div id="myModal4" class="modal">
     <!-- Modal content -->
                  <div class="modal-content">
@@ -518,7 +521,7 @@ button:hover {
                       <div class="absolute left-0 top-0 bg-blue-600 h-full rounded" style="width: 26%"></div>
                     </div>
                     <div class="mt-4 donate-btn">
-                    <button id="openModalBtn5" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0">Donate Now</button>
+                    <button id="openModalBtn5" class="inline-flex items-center bg-gray-200 text-red-600 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-full text-base mt-8 mr-10 md:mt-0 donatefor">Donate Now</button>
                   <div id="myModal5" class="modal">
     <!-- Modal content -->
                  <div class="modal-content">
@@ -578,6 +581,7 @@ button:hover {
         </div></div>
       </section>
       <script>
+        
       function openModal(modalId) {
   var modal = document.getElementById(modalId);
   modal.style.display = "block";
@@ -625,6 +629,27 @@ window.addEventListener("click", function(event) {
         var shareBar = document.getElementById(id);
         shareBar.classList.toggle('show');
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const projects = document.getElementById('projects').children;
+
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const category = this.getAttribute('data-filter');
+          for (let i = 0; i < projects.length; i++) {
+            const project = projects[i];
+            const projectCategory = project.getAttribute('data-category');
+            if (category === 'all' || projectCategory === category) {
+              project.style.display = 'block';
+            } else {
+              project.style.display = 'none';
+            }
+          }
+        });
+      });
+    });
+
 </script>
 
       <div class="footer">
