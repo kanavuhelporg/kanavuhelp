@@ -23,6 +23,21 @@
    form label{
     color:#718096;
    }
+   .right-image {
+            width: 100%;
+            height: 100vh; /* Set image height to fill the viewport height */
+            object-fit: cover; /* Ensure the image covers the entire area while maintaining aspect ratio */
+        }
+
+        .social-icons img {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+        }
+        .logo{
+            margin-top:100px;
+            margin-left:50px;
+        }
    </style>
 
 
@@ -32,11 +47,11 @@
     <div class="row">
     <div class="col-sm-6 logi1">
           <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>" >
-            <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help"style="margin-top:100px;margin-left:50px;">
+            <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help"style="">
           </a><br><br>
             <h2 style="margin-bottom:30px;margin-left:50px;">Register</h2>
             <!-- <p>Don't have an Account?<span style="color:red; text-decoration:underline;margin-left:10px;">Create Now</span></p> -->
-            <form name="register" onsubmit="return registerValidate()" method="post" action="<?= base_url('kanavuhelp/submit1') ?>" style="margin-left:50px;margin-right:50px;"  > 
+            <form name="register" onsubmit="return registerValidate()" method="post" action="<?= base_url('kanavuhelp/registeration') ?>" style="margin-left:50px;margin-right:50px;"  > 
 
         <div class="mb-3" >
                 <label for="exampleInputName" class="form-label">Name</label>
@@ -55,9 +70,10 @@
           </div>
         <button type="submit" class="btn btnsignin"> Sign Up</button>
         </div>
-    <div class="col-sm-6">
-            <img src="<?php echo base_url('/assets/img/right.svg');?>" alt="no image">
-        </div>
+            <!-- Right side image column -->
+            <div class="col-md-6 d-none d-md-block">
+                <img src="<?php echo base_url('/assets/img/right.svg'); ?>" alt="Right image" class="right-image">
+            </div>
         </div>
         </div>
 </form>
@@ -102,7 +118,7 @@ function registerValidate() {
     }
 
     return true;// Submit the form if all validations pass
-}
+
 </script>
     </body>
     </html>

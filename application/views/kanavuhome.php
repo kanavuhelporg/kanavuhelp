@@ -839,20 +839,9 @@
   </style>
 </head>
 <body>
-<?php
-// Check if the user is logged in
-$isLoggedIn = isset($_SESSION['user_id']);
-
-// Assuming you have a user profile picture stored in session or database
-$profilePicture = '';
-if ($isLoggedIn) {
-    // Fetch the user's profile picture or use a default one
-    $profilePicture = isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : 'https://source.unsplash.com/250x250?person';
-}
-?>
 <nav class="navbar  navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="<?= base_url('/kanavuhelp') ?>">
+        <a class="navbar-brand" href="<?= base_url('index') ?>">
             <img class="logo" src="assets/img/Kanavu_help.png" alt="Kanavu Help">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -865,24 +854,24 @@ if ($isLoggedIn) {
                 <li class="nav-item dropdown px-3">
                     <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">Fundraise for</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item"  href="<?= base_url('kanavuhelp/individual') ?>">Individuals</a></li>
-                        <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/charity') ?>">Charities</a></li>
+                        <li><a class="dropdown-item"  href="<?= base_url('/individual') ?>">Individuals</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('/charity') ?>">Charities</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-brand p-5 p-md-1" href="<?= base_url('kanavuhelp/donate') ?>">Donate</a>
+                    <a class="navbar-brand p-5 p-md-1" href="<?= base_url('/donate') ?>">Donate</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/myhelps') ?>">My Helps</a>
+                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/myhelps') ?>">My Helps</a>
                 </li>
                 <li class="nav-item">
                     <a class="navbar-brand p-3 p-md-1" href="#demo1">How it works</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/blogs') ?>">Blogs</a>
+                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/blogs') ?>">Blogs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/contactus') ?>">Contact us</a>
+                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/contactus') ?>">Contact us</a>
                 </li>
             </ul>
         </div>
@@ -891,8 +880,8 @@ if ($isLoggedIn) {
 
         <!-- If user is not logged in, display login and signup buttons -->
         <div class="container navbar-link justify-content-sm-start bttn">
-            <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
-            <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
+            <a href="<?= base_url('/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
+            <a href="<?= base_url('/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
         </div>
 </nav>
   <!-- Carousel -->
@@ -909,7 +898,7 @@ if ($isLoggedIn) {
           <div class="imgtext11">
           <ul style="list-style-type:none"><li  class="p-sm-0" style="font-weight: bold;">"Empowering Lives,Defeating diseases & disasters"</li>
             <li class="p-sm-0">join Us in the Fight & Healing.</li><br>
-           <li> <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn border btn-3">Start a Kanavu</button></a></li></ul>
+           <li> <a href="<?= base_url('/individual') ?>"><button type="button" class="btn border btn-3">Start a Kanavu</button></a></li></ul>
           </div>
         </div>
         </div>
@@ -923,7 +912,7 @@ if ($isLoggedIn) {
             <ul style="list-style-type:none"><li class="p-sm-0" style="font-weight:bold;">"Empowering Lives,Defeating diseases & disasters"</li>
             <li class="p-sm-0">join Us in the Fight & Healing.</li>
           <li><br>
-          <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn border btn-4">Start a Kanavu</button></a></li></ul>
+          <a href="<?= base_url('/individual') ?>"><button type="button" class="btn border btn-4">Start a Kanavu</button></a></li></ul>
         </div>
          </div>
     </div>
@@ -1263,8 +1252,8 @@ if ($isLoggedIn) {
         <h5 style="text-align:center">localhost</h5>
         <!-- <span class="text-muted">Your footer content goes here.</span> -->
         <div class="footer1">
-          <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
-          <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
+          <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+          <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
           <a class="footer-lable lable" href="#">Terms of Use</a>
           <a class="footer-lable" href="#">Privacy Policy</a>
         </div>
