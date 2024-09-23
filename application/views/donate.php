@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
      <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <title>donate</title>
     <style>
         body {
@@ -186,35 +188,41 @@ button:hover {
   background-color:#E01A2B;
   color:white;
 }   
+.hidden {
+    display: none;
+  }
+.login_btn{
+  margin-right: 20px;
+}
 
       </style>
 </head>
 <body class="overflow-x-hidden">
-    <header class="text-gray-600 body-font">
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>">
-            <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help">
-          </a>
-          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"style="color:black;">
-            <div class="group inline-block relative mr-5" >
-                <a href="#" class="hover:text-gray-900 ml-5">Fundraise for</a>
-                <div class="opacity-0 group-hover:opacity-100 absolute z-10 bg-white border rounded-md p-2">
-                    <!-- Dropdown content goes here -->
-                    <a  href="<?= base_url('kanavuhelp/individual') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Individual</a>
-                    <a  href="<?= base_url('kanavuhelp/charity') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Charities</a>
-                    <!-- Add more dropdown options as needed -->
-                </div>
-            </div>
-            <a href="<?= base_url('kanavuhelp/donate') ?>" class="mr-10 hover:text-gray-900 " style="color:#E01A2B"> Donate</a>
-            <a href="<?= base_url('kanavuhelp/myhelps') ?>"  class="mr-10 hover:text-gray-900">My helps</a>
-            <a href="http://localhost/kanavuhelp/#demo1" class="mr-10 hover:text-gray-900">How it works</a>
-            <a href="<?= base_url('kanavuhelp/blogs') ?>" class="mr-10 hover:text-gray-900">Blogs</a>
-            <a href="<?= base_url('kanavuhelp/contactus') ?>" class="hover:text-gray-900">Contact us</a>
-        </nav>
-        <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
-        <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
+<header class="text-gray-600 body-font">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>">
+      <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help">
+    </a>
+    <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center" style="color:black;">
+      <div class="group inline-block relative mr-5">
+        <a href="#" class="hover:text-gray-900 ml-5 flex items-center" id="fundraise-toggle">Fundraise for <i class="fas fa-chevron-down ml-2"></i></a>
+        <div class="hidden absolute z-10 bg-white border rounded-md p-2" id="fundraise-dropdown">
+          <!-- Dropdown content goes here -->
+          <a href="<?= base_url('kanavuhelp/individual') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Individual</a>
+          <a href="<?= base_url('kanavuhelp/charity') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Charities</a>
+        </div>
+      </div>
+      <a href="<?= base_url('kanavuhelp/donate') ?>" class="mr-10 hover:text-gray-900" style="color:#E01A2B">Donate</a>
+      <a href="<?= base_url('kanavuhelp/myhelps') ?>" class="mr-10 hover:text-gray-900">My helps</a>
+      <a href="http://localhost/kanavuhelp/#demo1" class="mr-10 hover:text-gray-900">How it works</a>
+      <a href="<?= base_url('kanavuhelp/blogs') ?>" class="mr-10 hover:text-gray-900">Blogs</a>
+      <a href="<?= base_url('kanavuhelp/contactus') ?>" class="hover:text-gray-900">Contact us</a>
+    </nav>
+    <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border login_btn">Login</button></a>
+    <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border register_btn">Start a Kanavu</button></a>
+  </div>
+    </header>
 
-        </div></header>
         <div class="container-fluid mx-auto mt-5">
             <img src="<?php echo base_url('/assets/img/donate.png');?>" alt="No Image" class="w-full h-auto">
         </div>
@@ -679,7 +687,14 @@ window.addEventListener("click", function(event) {
         </footer>
     </div>
     
-    
+    <script>
+  document.getElementById("fundraise-toggle").addEventListener("click", function(event) {
+    event.preventDefault();
+    var dropdown = document.getElementById("fundraise-dropdown");
+    dropdown.classList.toggle("hidden");
+  });
+</script>
+
     </header>
 
 

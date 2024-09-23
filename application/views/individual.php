@@ -612,14 +612,15 @@ body #multi-step-form-container{
                 <!-- Step 1 input fields -->
                 <div class=" col-md-12 my-3">
                 <label for="form-select">I am raising fund for:</label>
-                <select name="form-select" id="form-select" style="width: 540px; height: 40px;">
+                <select name="form_select" id="form_select" style="width: 540px; height: 40px;">
     <option value="" selected>--Select--</option>
     <option value="Medical">Medical</option>
     <option value="Crisis">Crisis</option>
     <?php foreach ($result as $row) { ?>
-        <option value="<?php echo $row['id']; ?>" <?php echo set_select('form-select', $row['id'], False); ?>><?php echo $row['raising-fund-for']; ?></option> 
+        <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_select', $row['id'], False); ?>><?php echo $row['raising_fund_for']; ?></option> 
     <?php } ?>
 </select><br>
+
 
     <label for="name"></label>
     <input type="text" id="name" name="name" placeholder="Name" required>

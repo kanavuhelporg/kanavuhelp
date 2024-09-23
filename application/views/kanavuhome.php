@@ -12,7 +12,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js'></script>ap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js' rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <title>Kanavu Help</title>
   <style>
   body {
@@ -48,7 +50,7 @@
       color: white !important;
     }
     .btn-1 {
-      margin-left: 260px !important;
+      margin-left: 280px !important;
       background-color: #EB2D32 !important;
       color: white !important;
       width:100px;
@@ -836,6 +838,9 @@
   border-top: 0;
   border-bottom: 0.3em solid;
 }
+.login_btn{
+  margin-right: 20px;
+}
   </style>
 </head>
 <body>
@@ -880,8 +885,8 @@
 
         <!-- If user is not logged in, display login and signup buttons -->
         <div class="container navbar-link justify-content-sm-start bttn">
-            <a href="<?= base_url('/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
-            <a href="<?= base_url('/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
+            <a href="<?= base_url('/login') ?>"><button type="button" class="btn btn-1 border login_btn">Login</button></a>
+            <a href="<?= base_url('/individual') ?>"><button type="button" class="btn btn-2 border register_btn">Start a Kanavu</button></a>
         </div>
 </nav>
   <!-- Carousel -->
