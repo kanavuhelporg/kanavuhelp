@@ -109,6 +109,7 @@
       margin-left: 10px;
 
     }
+    
 @media (min-width: 993px) {
    .img-fluid {
       margin-top:50px;   
@@ -373,13 +374,15 @@ ul.form-stepper li a .form-stepper-circle {
 }
 body #multi-step-form-container{
     width: 700px;
-    height:680;
+    height:630px;
     /* margin-bottom: 50px ; */
     padding: 20px;
     border: none;
     background-color: white;
     float:right;
-   
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    margin-left: 100px;
   }
   body label {
     display: block;
@@ -428,12 +431,15 @@ body #multi-step-form-container{
     background-color: transparent;
     outline: none;
   }
+  .login_btn{
+    margin-right: 20px;
+  }
    </style>
    <body>
       <nav class="navbar  navbar-expand-lg bg-light fixed-top">
          <div class="container-fluid">
-             <a class="navbar-brand" href="<?= base_url('/kanavuhelp') ?>">
-                 <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help">
+             <a class="navbar-brand" href="<?= base_url('/kanavuhome') ?>">
+                 <img class="logo" src="<?=base_url('assets/img/Kanavu_help.png')?>" alt="Kanavu Help">
              </a>
              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
                  <span class="navbar-toggler-icon"></span>
@@ -445,24 +451,24 @@ body #multi-step-form-container{
                      <li class="nav-item dropdown px-3">
                          <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">Fundraise for</a>
                          <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/individual') ?>">Individuals</a></li>
-                             <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/charity#step-1') ?>">Charities</a></li>
+                             <li><a class="dropdown-item" href="<?= base_url('/individual') ?>">Individuals</a></li>
+                             <li><a class="dropdown-item" href="<?= base_url('/charity#step-1') ?>">Charities</a></li>
                          </ul>
                      </li>
                      <li class="nav-item">
-                         <a class="navbar-brand p-5 p-md-1" href="<?= base_url('kanavuhelp/donate') ?>">Donate</a>
+                         <a class="navbar-brand p-5 p-md-1" href="<?= base_url('/donate') ?>">Donate</a>
                      </li>
                      <li class="nav-item">
-                         <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/myhelps') ?>">My Helps</a>
+                         <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/myhelps') ?>">My Helps</a>
                      </li>
                      <li class="nav-item">
                          <a class="navbar-brand p-3 p-md-1" href="#demo1">How it works</a>
                      </li>
                      <li class="nav-item">
-                         <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/blogs') ?>">Blogs</a>
+                         <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/blogs') ?>">Blogs</a>
                      </li>
                      <li class="nav-item">
-                         <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/contactus') ?>">Contact us</a>
+                         <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/contactus') ?>">Contact us</a>
                      </li>
                  </ul>
              </div>
@@ -470,17 +476,17 @@ body #multi-step-form-container{
      <div class="container navbar-link  justify-content-sm-start bttn">
                        <!-- <ul class="navbar-nav d-md-flex flex-row justify-content-end"> -->
                          <!-- <li class="nav-item"> -->
-                             <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
+                             <a href="<?= base_url('/login') ?>"><button type="button" class="btn btn-1 border login_btn">Login</button></a>
                          <!-- </li> -->
                          <!-- <li class="nav-item"> -->
-                           <a href="<?=base_url('kanavuhelp/individual')?>">
-                             <button type="button" class="btn btn-2 border" >Start a Kanavu</button></a>
+                           <a href="<?=base_url('/individual')?>">
+                             <button type="button" class="btn btn-2 border register_btn" >Start a Kanavu</button></a>
                          <!-- </li> -->
                          <!-- </ul> -->
                      </div>
      </nav>
-     <div class="container-fluid mt-5 mt-md-4 mt-lg-5">
-      <img src="<?php echo base_url('/assets/img/sthelp.png');?>" alt="No Image" class="img-fluid">
+     <div class="container-fluid ">
+      <img src="<?php echo base_url('/assets/img/sthelp.png');?>" alt="No Image" class="img-fluid" >
   </div>
   <div class="container box" style="margin-top:100px;margin-left: 200px;">
     <div class="row box1" style="margin-top:100px;">
@@ -672,8 +678,8 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
        <h5 style="text-align:center">kanavu.help</h5>
        <!-- <span class="text-muted">Your footer content goes here.</span> -->
        <div class="footer1">
-         <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
-         <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
+         <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+         <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
          <a class="footer-lable lable" href="#">Terms of Use</a>
          <a class="footer-lable" href="#">Privacy Policy</a>
        </div>

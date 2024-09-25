@@ -10,67 +10,87 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js'></script>ap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js' rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
   <title>Kanavu Help</title>
   <style>
-  body {
+    body {
       font-family: 'sen', sans-serif;
-      overflow-x:hidden;
-      left:0;
-      right:0;
-      bottom:0;
+      overflow-x: hidden;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
- .logo {
+
+    .logo {
       margin-left: 65px;
       font-weight: bolder;
       font-size: x-large;
     }
-  #navbarscroll{
-        margin-top:17px;
-        margin-bottom:10px;
-        margin-left:70px;
-  }
+
+    #navbarscroll {
+      margin-top: 17px;
+      margin-bottom: 10px;
+      margin-left: 70px;
+    }
+
     .img-fluid1 {
       width: 100%;
       height: 100%;
     }
+
     .btn {
-      color: #EB2D32!important;
+      color: #EB2D32 !important;
       font-weight: bolder !important;
       border-radius: 50px !important;
-      border:1px solid red !important;
-      
+      border: 1px solid red !important;
+
     }
+
     .btn:hover {
       background-color: #EB2D32 !important;
       color: white !important;
     }
+
     .btn-1 {
-      margin-left: 260px !important;
+      margin-left: 280px !important;
       background-color: #EB2D32 !important;
       color: white !important;
-      width:100px;
-      height:45px;
+      width: 100px;
+      height: 45px;
     }
-    .btn-2{
-      height:45px;
+
+    .btn-2 {
+      height: 45px;
     }
+
     .dropdown-toggle {
       font-size: 18px;
       color: black;
     }
+
     .navbar-brand {
       font-size: 16px;
     }
+
     .dropdown-toggle:hover,
     .navbar:hover,
     .navbar-brand:hover,
     .dropdown-item:hover {
       color: #EB2D32;
     }
- .imgtext1 {
+
+    .imgtext1 {
       width: 30%;
       height: 100%;
       font-size: 48px;
@@ -80,16 +100,19 @@
       padding-bottom: 100px;
       /* letter-spacing: 2px; */
     }
+
     .imgtext11 {
       font-size: 18px;
       text-align: initial;
       margin-top: 5px;
       letter-spacing: normal;
     }
-    .imgtext11 ul li{
-      margin-left:-20px;
-      padding-left:0;
+
+    .imgtext11 ul li {
+      margin-left: -20px;
+      padding-left: 0;
     }
+
     .imgtext2 {
       width: 30%;
       height: 100%;
@@ -100,6 +123,7 @@
       padding-bottom: 100px;
       /* letter-spacing: 2px;    */
     }
+
     .imgtext22 {
       font-size: 18px;
       text-align: initial;
@@ -107,24 +131,28 @@
       margin-top: 5px;
       /* letter-spacing: normal; */
     }
-    .imgtext22 ul li{
-      margin-left:-20px;
-      padding-left:0;
+
+    .imgtext22 ul li {
+      margin-left: -20px;
+      padding-left: 0;
     }
-    .btn-3{
+
+    .btn-3 {
       background-color: #EB2D32 !important;
       color: white !important;
-      height:45px;
-      width:160px;
-     
+      height: 45px;
+      width: 160px;
+
     }
-    .btn-4{
-      margin-left:-8px;
+
+    .btn-4 {
+      margin-left: -8px;
       background-color: #EB2D32 !important;
       color: white !important;
-      height:45px;
-     width:160px;
+      height: 45px;
+      width: 160px;
     }
+
     .carousel-fade .carousel-item {
       transition: opacity 1s;
       /* Adjust the duration here */
@@ -157,7 +185,7 @@
     .row {
       width: 100%;
       /* margin-left: 30px; */
-    } 
+    }
 
     .share-button {
       margin-left: 120px;
@@ -229,11 +257,13 @@
       background-size: cover;
       object-fit: fill;
     }
+
     .img-fluid2 {
       width: 100%;
-      margin-top:90px;
+      margin-top: 90px;
       object-fit: fill;
     }
+
     .imgtext3 {
       width: 100%;
       /* height: 100%; */
@@ -242,7 +272,8 @@
       margin-top: -500px;
       /* margin-left: 30px;  */
     }
-/* .bgimg{
+
+    /* .bgimg{
   margin-bottom:50px;
 } */
     .circle {
@@ -251,6 +282,7 @@
       border-radius: 20px;
       /* margin-top: -300px; */
     }
+
     .rectangle {
       width: 250px;
       height: 390px;
@@ -266,7 +298,7 @@
 
     .rectt {
       margin-top: 45px;
-      margin-left:3%;
+      margin-left: 3%;
       position: relative;
       z-index: 1;
     }
@@ -340,7 +372,8 @@
       margin-left: auto;
       margin-top: 50px;
     }
-.cardimg {
+
+    .cardimg {
       width: 100%;
       padding: 10px;
     }
@@ -352,10 +385,12 @@
       margin-right: 50px;
       /* margin-left: 250px; */
     }
-    .row1{
-      width:100%;
-      height:auto;
+
+    .row1 {
+      width: 100%;
+      height: auto;
     }
+
     .second1 {
       margin-top: 86px;
       width: 100%;
@@ -365,8 +400,8 @@
     .footer {
       height: 250px;
       width: 100%;
-      left:0;
-      right:0;
+      left: 0;
+      right: 0;
       background-color: #EB2D32;
       margin-top: 88px;
       color: #f0f0f0;
@@ -388,13 +423,16 @@
     .lable {
       border-right: 3px solid #fff;
     }
+
     .footer1 a {
       margin-left: 20x;
     }
+
     .footimg {
       margin-left: 520px;
       padding: 20px;
     }
+
     .social-icons img {
       width: 20px;
       height: 20px;
@@ -403,498 +441,602 @@
     }
 
     @media (min-width: 993px) {
-    .logo {
+      .logo {
         margin-left: 65px;
+      }
     }
-  }
-  @media (min-width: 769px) and (max-width: 992px) {
-    .logo {
-        margin-left: 50px;
-    }
-    .navbar{
-      width:100%;
-      right:0 !important;
-    }
-    .carousel{
-    width:100% !important;
-    margin-top:52px;
-  }
-  .bttn{
-    /* left:0; */
-    margin:0;
-    padding:0;
-  }
-  .imgtext1 {
-      width: 50%;
-      font-size: 37px !important;
-      margin-right:0;
-      margin-left:30px !important;
-      margin-top: -340px;
-      padding-left:0;
-    }
-    .imgtext11{
-      font-size:12px;
-    }
-    .imgtext11 ul li{
-      margin-left:-30px;
-      padding-left:0;
-    }
-    .imgtext2 {
-      width: 100%;
-      font-size: 30px;
-      margin-top: -300px;
-      margin-left: 430px;
-      /* padding-bottom: 0px; */
-    }
-    .imgtext22{
-      font-size:12px;
-      margin-right:0px;
-      /* margin-bottom:0px; */
-    }
-    .imgtext22 ul li{
-      margin-left:-33px;
-      padding-bottom:2px;
-    }
-    #carouselExampleControls{
-      display:none;
-    }
-    .btn-1, .btn-2 {
-    display: inline-block;
-    margin-right: 10px;
-    }
-  .btn-3 .btn-4{
-    /* font-size:6px; */
-    margin-top:5px;
-  }
-.row{
-  width:100%;
-  left:0;
-  right:0;
-  padding-left:2px;
-}
-.btn0{
-  /* margin-right:20px; */
-  margin-left:10%;
-}
-.share-button{
-  margin-left:10%;
-}
-.imgtext3 {
-      width: 100%;
-      /* height: 100%; */
-      font-size: 17px;
-      /* font-style: normal; */
-      margin-top: -390px;
-      /* margin-left: 30px;  */
-    }
-    .demo1{
-      width:100%;
-      height:auto;
-    }
-    .bttn{
-      /* margin-top:20px; */
-      margin-right:0;
-      justify-content:space-between;
-      margin-top:0;
-    }
-    .footimg{
-      margin-left:30%;
 
+    @media (min-width: 769px) and (max-width: 992px) {
+      .logo {
+        margin-left: 50px;
+      }
+
+      .navbar {
+        width: 100%;
+        right: 0 !important;
+      }
+
+      .carousel {
+        width: 100% !important;
+        margin-top: 52px;
+      }
+
+      .bttn {
+        /* left:0; */
+        margin: 0;
+        padding: 0;
+      }
+
+      .imgtext1 {
+        width: 50%;
+        font-size: 37px !important;
+        margin-right: 0;
+        margin-left: 30px !important;
+        margin-top: -340px;
+        padding-left: 0;
+      }
+
+      .imgtext11 {
+        font-size: 12px;
+      }
+
+      .imgtext11 ul li {
+        margin-left: -30px;
+        padding-left: 0;
+      }
+
+      .imgtext2 {
+        width: 100%;
+        font-size: 30px;
+        margin-top: -300px;
+        margin-left: 430px;
+        /* padding-bottom: 0px; */
+      }
+
+      .imgtext22 {
+        font-size: 12px;
+        margin-right: 0px;
+        /* margin-bottom:0px; */
+      }
+
+      .imgtext22 ul li {
+        margin-left: -33px;
+        padding-bottom: 2px;
+      }
+
+      #carouselExampleControls {
+        display: none;
+      }
+
+      .btn-1,
+      .btn-2 {
+        display: inline-block;
+        margin-right: 10px;
+      }
+
+      .btn-3 .btn-4 {
+        /* font-size:6px; */
+        margin-top: 5px;
+      }
+
+      .row {
+        width: 100%;
+        left: 0;
+        right: 0;
+        padding-left: 2px;
+      }
+
+      .btn0 {
+        /* margin-right:20px; */
+        margin-left: 10%;
+      }
+
+      .share-button {
+        margin-left: 10%;
+      }
+
+      .imgtext3 {
+        width: 100%;
+        /* height: 100%; */
+        font-size: 17px;
+        /* font-style: normal; */
+        margin-top: -390px;
+        /* margin-left: 30px;  */
+      }
+
+      .demo1 {
+        width: 100%;
+        height: auto;
+      }
+
+      .bttn {
+        /* margin-top:20px; */
+        margin-right: 0;
+        justify-content: space-between;
+        margin-top: 0;
+      }
+
+      .footimg {
+        margin-left: 30%;
+
+      }
     }
-  }
-  @media (min-width: 577px) and (max-width: 768px) {
-    .logo {
+
+    @media (min-width: 577px) and (max-width: 768px) {
+      .logo {
         margin-left: 5px;
-    }
-    .navbar{
-      width:100%;
-      right:0!important;
-      /* height:100%; */
-    }
-    .navbar-nav{
-      padding-right:2px !important;
-    }
-    .carousel{
-    width:100% !important;
-    margin-top:40px;
-  }
-  .bttn{
-    /* left:0; */
-    margin:0;
-    padding:0;
-  }
-  .imgtext1 {
-      width: 50%;
-      font-size: 19px !important;
-      margin-right:0;
-      margin-left:25px !important;
-      margin-top: -200px !important;
-      padding-left:0;
-    }
-  .imgtext11{
-     font-size:8px;
-  /* margin-left:50px;  */
-    }
-    .imgtext11 ul li{
-      margin-left:-30px;
-      padding-left:0;
-    }
-    .imgtext2 {
-      width: 100%;
-      /* height: 100%; */
-      font-size: 18px;
-      margin-top: -210px;
-      margin-left: 330px !important;;
-      /* padding-bottom: 0px; */
-    }
-    .imgtext22{
-      font-size:9px;
-      margin-right:0px;
-      /* margin-bottom:0px; */
-    }
-    .imgtext22 ul li{
-      margin-left:-33px;
-      padding-bottom:0;
-    }
-    /* .imgtext11 {
+      }
+
+      .navbar {
+        width: 100%;
+        right: 0 !important;
+        /* height:100%; */
+      }
+
+      .navbar-nav {
+        padding-right: 2px !important;
+      }
+
+      .carousel {
+        width: 100% !important;
+        margin-top: 40px;
+      }
+
+      .bttn {
+        /* left:0; */
+        margin: 0;
+        padding: 0;
+      }
+
+      .imgtext1 {
+        width: 50%;
+        font-size: 19px !important;
+        margin-right: 0;
+        margin-left: 25px !important;
+        margin-top: -200px !important;
+        padding-left: 0;
+      }
+
+      .imgtext11 {
+        font-size: 8px;
+        /* margin-left:50px;  */
+      }
+
+      .imgtext11 ul li {
+        margin-left: -30px;
+        padding-left: 0;
+      }
+
+      .imgtext2 {
+        width: 100%;
+        /* height: 100%; */
+        font-size: 18px;
+        margin-top: -210px;
+        margin-left: 330px !important;
+        ;
+        /* padding-bottom: 0px; */
+      }
+
+      .imgtext22 {
+        font-size: 9px;
+        margin-right: 0px;
+        /* margin-bottom:0px; */
+      }
+
+      .imgtext22 ul li {
+        margin-left: -33px;
+        padding-bottom: 0;
+      }
+
+      /* .imgtext11 {
       font-size: 10px !important;
     } */
-    /* .imgtext22 {
+      /* .imgtext22 {
       font-size: 10px !important;
       margin-left:-100px !important;
     } */
-    .second {
-      /* margin-top:30px !important; */
-      left:0 !important;
-      right:0;
-      padding-left:0% !important;
-      /* margin-right: 8px !important; */
-      overflow:hidden !important;
-    }
-    /* .row{
+      .second {
+        /* margin-top:30px !important; */
+        left: 0 !important;
+        right: 0;
+        padding-left: 0% !important;
+        /* margin-right: 8px !important; */
+        overflow: hidden !important;
+      }
+
+      /* .row{
       right:0;
        width: 100%;
       height:auto;
       /* padding-left:2px; */
-    /* }----------- */ 
-    .second .col-md-4{
-      padding-bottom:10px !important;
-      width:100%;
-    }
-    .imgtext3 {
-      width: 100%;
-      /* height: 100%; */
-      font-size: 17px;
-      /* font-style: normal; */
-      margin-top: -100px;
-      margin-top: 15%;
-      /* margin-left: 30px;  */
-    }
-    .third{
-      /* position:relative; */
-      background-color:#fef2f2;
-      /* right:0; */
-      /* left:0; */
-    }
-    .img-fluid2 {  
-      display:none !important;
-    }
-    .bgimg{
-      width:100%;
-      align-items:center !important;
-    }
-    /* .demo1{
+      /* }----------- */
+      .second .col-md-4 {
+        padding-bottom: 10px !important;
+        width: 100%;
+      }
+
+      .imgtext3 {
+        width: 100%;
+        /* height: 100%; */
+        font-size: 17px;
+        /* font-style: normal; */
+        margin-top: -100px;
+        margin-top: 15%;
+        /* margin-left: 30px;  */
+      }
+
+      .third {
+        /* position:relative; */
+        background-color: #fef2f2;
+        /* right:0; */
+        /* left:0; */
+      }
+
+      .img-fluid2 {
+        display: none !important;
+      }
+
+      .bgimg {
+        width: 100%;
+        align-items: center !important;
+      }
+
+      /* .demo1{
       width:100%;
       height:auto;
     } */
-    .second1 {
-      /* margin-left: 8px !important; */
-      /* margin-bottom:1px !important; */
-      /* padding-bottom:1px !important; */
-    }
-    #carouselExampleControls{
-      display:none !important;
-    }
-    .footimg {
-      margin-left:16%;
-      /* bottom:0; */
-      /* padding: 0px; */
-      /* height:100%; */
-      /* width:100%; */
-    }
-    .footer {
-      height: 250px;
-      width: 100%;
-      left:0;
-      right:0;
-      margin-top:15%;
-      /* color: #f0f0f0; */
-    }
-    }
-@media(max-width:576px) {
-  .body{
-  overflow-y:hidden;
-  overflow-x:hidden;
+      .second1 {
+        /* margin-left: 8px !important; */
+        /* margin-bottom:1px !important; */
+        /* padding-bottom:1px !important; */
       }
-  .logo{
-     margin-left:10px;
-     }
-    .img-fluid1 {
-      margin-top:95px;   
-      width: 100%;
-      height:100%;
-    }
-    .img-fluid2 {
-     display:none !important;
-    }
-      .carousel{
-    width:100% !important;
-    margin-top:1px;
-  }
-  .imgtext1 {
-      width: 50%;
-      font-size: 10px !important;
-      margin-right:0;
-      margin-left:30px !important;
-      margin-top: -140px;
-      padding-left:0;
-    }
-    .imgtext11{
-      font-size:8px;
-  /* margin-left:50px;  */
+
+      #carouselExampleControls {
+        display: none !important;
       }
-    .imgtext11 ul li{
-      margin-left:-30px;
-      padding-left:0;
-    }
-  .btn-1, .btn-2 {
-    display: inline-block;
-    margin-right: 10px;
-    }
-  .btn-3{
-    font-size:6px;
-    background-color: #EB2D32 !important;
-    color: white !important;
-          }
-    #demo{
-    height:50%;
-        }
-    .btn-4{
-    font-size:6px;
-    background-color: #EB2D32 !important;
-    color: white !important;
-          }
-    .imgtext2 {
-      width: 50%;
-      /* height: 100%; */
-      font-size: 8px;
-      margin-top: -130px;
-      margin-left: 200px;
-      padding-bottom: 0px;
-    }
-    .imgtext22{
-      font-size:8px;
-      margin-right:0px;
-      margin-bottom:0px;
-    }
-    .imgtext22 ul li{
-      margin-left:-33px;
-      padding-left:0;
-    }
-  .carousel .carousel-inner{
-      max-height: 110vh;
-      over-flow:hidden;
-    }
-    .second {
-      width: 100%;
-      height:auto;
-      align-items:center;
-      margin-left: 0px;
-    }
-    .card {
-      width: 92%;
-      border-radius: 7.5px;
-      box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
-    }
-    #card1,
-    #card2,
-    #card3 {
-      padding: 10px;
-    }
-    .row {
-      width: 100%;
-      height:auto;
-      /* margin-bottom: 50px; */
-      /* margin-top:300px; */
-    }
-    .share-button {
-      margin-left: 75px;
-    }
-    .btn0 {
-      margin-left: 75px;
-    }
-    .heart {
-      margin-top: 12px;
-      margin-bottom: 12px;
-    }
-    .third {
-      position: relative;
-      /* margin-top: 10px; */
-      width: 100%;
-      left:0;
-      right:0;
-      background-size: cover;
-      object-fit: fill;
-      background-color:#fef2f2;
-    }
-    .img-fluid2 {
-      width:100%;
-      object-fit: fill;
-      /* display:none; */
-    }
-    .imgtext3 {
-      width: 100%;
-      /* height: 100%; */
-      font-size: 10px;
-      font-style: normal;
-      margin-top: -558px;
-      /* margin-left: 30px;  */
-    }
-    .bgimg{
-      left:0;
-      flex-direction: column;
-    }
-  #demo1{
-  height:100%;
-  margin-top:600px;
-    }
-    .cardimg {
-      width: 100%;
-      padding: 10px;
-    }
-    .fourth {
-      width: 100%;
-      margin-top: 15%;
-      margin-left: auto;
-      margin-right: auto;
-      /* margin-left: 250px; */
-    }
-    .second1 {
-      margin-top: 15%;
-      width: 100%;
-      /* align-items:center; */
-      margin-left:0%;
-    }
-    .h4{
-      font-size:15px;
-    }
-    .p{
-      font-size:10px;
-      justify-content:flex-start;
-    }
-    .footer {
-      height: 250px;
-      width: 100%;
-      left:0;
-      right:0;
-      margin-top:15%;
-      color: #f0f0f0;
-    }
-    .footimg {
-      margin-left: 15%;
-      padding: 0px;
-      height:8%;
-    }
-    #carouselExampleControls{
-      display:none !important;
-     }
-      } 
-      /* Profile Picture */
-.profile-pic{
-   display: inline-block;
-   vertical-align: middle;
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
-   border-radius: 50%;
-}
 
-.profile-pic img{
-   width: 100%;
-   height: auto;
-   object-fit: cover;
-}
-.profile-menu .dropdown-menu {
-  right: 0;
-  left: unset;
-}
-.profile-menu .fa-fw {
-  margin-right: 10px;
-}
+      .footimg {
+        margin-left: 16%;
+        /* bottom:0; */
+        /* padding: 0px; */
+        /* height:100%; */
+        /* width:100%; */
+      }
 
-.toggle-change::after {
-  border-top: 0;
-  border-bottom: 0.3em solid;
-}
+      .footer {
+        height: 250px;
+        width: 100%;
+        left: 0;
+        right: 0;
+        margin-top: 15%;
+        /* color: #f0f0f0; */
+      }
+    }
+
+    @media(max-width:576px) {
+      .body {
+        overflow-y: hidden;
+        overflow-x: hidden;
+      }
+
+      .logo {
+        margin-left: 10px;
+      }
+
+      .img-fluid1 {
+        margin-top: 95px;
+        width: 100%;
+        height: 100%;
+      }
+
+      .img-fluid2 {
+        display: none !important;
+      }
+
+      .carousel {
+        width: 100% !important;
+        margin-top: 1px;
+      }
+
+      .imgtext1 {
+        width: 50%;
+        font-size: 10px !important;
+        margin-right: 0;
+        margin-left: 30px !important;
+        margin-top: -140px;
+        padding-left: 0;
+      }
+
+      .imgtext11 {
+        font-size: 8px;
+        /* margin-left:50px;  */
+      }
+
+      .imgtext11 ul li {
+        margin-left: -30px;
+        padding-left: 0;
+      }
+
+      .btn-1,
+      .btn-2 {
+        display: inline-block;
+        margin-right: 10px;
+      }
+
+      .btn-3 {
+        font-size: 6px;
+        background-color: #EB2D32 !important;
+        color: white !important;
+      }
+
+      #demo {
+        height: 50%;
+      }
+
+      .btn-4 {
+        font-size: 6px;
+        background-color: #EB2D32 !important;
+        color: white !important;
+      }
+
+      .imgtext2 {
+        width: 50%;
+        /* height: 100%; */
+        font-size: 8px;
+        margin-top: -130px;
+        margin-left: 200px;
+        padding-bottom: 0px;
+      }
+
+      .imgtext22 {
+        font-size: 8px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+      }
+
+      .imgtext22 ul li {
+        margin-left: -33px;
+        padding-left: 0;
+      }
+
+      .carousel .carousel-inner {
+        max-height: 110vh;
+        over-flow: hidden;
+      }
+
+      .second {
+        width: 100%;
+        height: auto;
+        align-items: center;
+        margin-left: 0px;
+      }
+
+      .card {
+        width: 92%;
+        border-radius: 7.5px;
+        box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      #card1,
+      #card2,
+      #card3 {
+        padding: 10px;
+      }
+
+      .row {
+        width: 100%;
+        height: auto;
+        /* margin-bottom: 50px; */
+        /* margin-top:300px; */
+      }
+
+      .share-button {
+        margin-left: 75px;
+      }
+
+      .btn0 {
+        margin-left: 75px;
+      }
+
+      .heart {
+        margin-top: 12px;
+        margin-bottom: 12px;
+      }
+
+      .third {
+        position: relative;
+        /* margin-top: 10px; */
+        width: 100%;
+        left: 0;
+        right: 0;
+        background-size: cover;
+        object-fit: fill;
+        background-color: #fef2f2;
+      }
+
+      .img-fluid2 {
+        width: 100%;
+        object-fit: fill;
+        /* display:none; */
+      }
+
+      .imgtext3 {
+        width: 100%;
+        /* height: 100%; */
+        font-size: 10px;
+        font-style: normal;
+        margin-top: -558px;
+        /* margin-left: 30px;  */
+      }
+
+      .bgimg {
+        left: 0;
+        flex-direction: column;
+      }
+
+      #demo1 {
+        height: 100%;
+        margin-top: 600px;
+      }
+
+      .cardimg {
+        width: 100%;
+        padding: 10px;
+      }
+
+      .fourth {
+        width: 100%;
+        margin-top: 15%;
+        margin-left: auto;
+        margin-right: auto;
+        /* margin-left: 250px; */
+      }
+
+      .second1 {
+        margin-top: 15%;
+        width: 100%;
+        /* align-items:center; */
+        margin-left: 0%;
+      }
+
+      .h4 {
+        font-size: 15px;
+      }
+
+      .p {
+        font-size: 10px;
+        justify-content: flex-start;
+      }
+
+      .footer {
+        height: 250px;
+        width: 100%;
+        left: 0;
+        right: 0;
+        margin-top: 15%;
+        color: #f0f0f0;
+      }
+
+      .footimg {
+        margin-left: 15%;
+        padding: 0px;
+        height: 8%;
+      }
+
+      #carouselExampleControls {
+        display: none !important;
+      }
+    }
+
+    /* Profile Picture */
+    .profile-pic {
+      display: inline-block;
+      vertical-align: middle;
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+
+    .profile-pic img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .profile-menu .dropdown-menu {
+      right: 0;
+      left: unset;
+    }
+
+    .profile-menu .fa-fw {
+      margin-right: 10px;
+    }
+
+    .toggle-change::after {
+      border-top: 0;
+      border-bottom: 0.3em solid;
+    }
+
+    .login_btn {
+      margin-right: 20px;
+    }
+    .drop_down{
+      margin-left: 80%;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
+    }
   </style>
 </head>
+
 <body>
-<?php
-// Check if the user is logged in
-$isLoggedIn = isset($_SESSION['user_id']);
+<nav class="navbar navbar-expand-lg bg-light fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="<?= base_url('index') ?>">
+      <img class="logo" src="assets/img/Kanavu_help.png" alt="Kanavu Help">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll"
+      aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-// Assuming you have a user profile picture stored in session or database
-$profilePicture = '';
-if ($isLoggedIn) {
-    // Fetch the user's profile picture or use a default one
-    $profilePicture = isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : 'https://source.unsplash.com/250x250?person';
-}
-?>
-<nav class="navbar  navbar-expand-lg bg-light fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="<?= base_url('/kanavuhelp') ?>">
-            <img class="logo" src="assets/img/Kanavu_help.png" alt="Kanavu Help">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarscroll">
-        <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0 navbar-nav-scroll text-center text-lg-start"> -->
-        <ul class="navbar-nav mb-2 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                <li class="nav-item dropdown px-3">
-                    <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">Fundraise for</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item"  href="<?= base_url('kanavuhelp/individual') ?>">Individuals</a></li>
-                        <li><a class="dropdown-item" href="<?= base_url('kanavuhelp/charity') ?>">Charities</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="navbar-brand p-5 p-md-1" href="<?= base_url('kanavuhelp/donate') ?>">Donate</a>
-                </li>
-                <li class="nav-item">
-                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/myhelps') ?>">My Helps</a>
-                </li>
-                <li class="nav-item">
-                    <a class="navbar-brand p-3 p-md-1" href="#demo1">How it works</a>
-                </li>
-                <li class="nav-item">
-                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/blogs') ?>">Blogs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="navbar-brand p-3 p-md-1" href="<?= base_url('kanavuhelp/contactus') ?>">Contact us</a>
-                </li>
-            </ul>
-        </div>
-</div>
+    <div class="collapse navbar-collapse" id="navbarscroll">
+      <ul class="navbar-nav mb-2 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item dropdown px-3">
+          <a class="nav-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            style="text-decoration: none;">Fundraise for</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="<?= base_url('/individual') ?>">Individuals</a></li>
+            <li><a class="dropdown-item" href="<?= base_url('/charity') ?>">Charities</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="navbar-brand p-5 p-md-1" href="<?= base_url('/donate') ?>">Donate</a>
+        </li>
+        <li class="nav-item">
+          <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/myhelps') ?>">My Helps</a>
+        </li>
+        <li class="nav-item">
+          <a class="navbar-brand p-3 p-md-1" href="#demo1">How it works</a>
+        </li>
+        <li class="nav-item">
+          <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/blogs') ?>">Blogs</a>
+        </li>
+        <li class="nav-item">
+          <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/contactus') ?>">Contact us</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-flex align-items-center ms-auto">
+
 <!-- Profile section -->
+<?php if ($this->session->userdata('userId')): ?>
+  <div class="d-flex align-items-center">
+    <!-- Profile image and username wrapped in a clickable div -->
+    <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+      <!-- Profile image -->
+      <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
+      <!-- Username next to image -->
+      <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+    </div>
+    <!-- Dropdown for profile actions -->
+    <ul class="dropdown-menu drop_down" aria-labelledby="userProfile">
+    <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+    </ul>
+  </div>
+<?php else: ?>
+  <!-- Show login button if user is not logged in -->
+  <a href="<?= base_url('/login') ?>"><button type="button" class="btn btn-1 border login_btn">Login</button></a>
+<?php endif; ?>
 
-        <!-- If user is not logged in, display login and signup buttons -->
-        <div class="container navbar-link justify-content-sm-start bttn">
-            <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
-            <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
-        </div>
+<!-- Add margin to the button to create space -->
+<a href="<?= base_url('/individual') ?>"><button type="button" class="btn btn-2 border register_btn me-3 ms-3">Start a Kanavu</button></a>
+
+</div>
+
+  </div>
 </nav>
+
   <!-- Carousel -->
   <div id="demo" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-indicators">
@@ -905,28 +1047,38 @@ if ($isLoggedIn) {
       <div class="carousel-item active">
         <img class="img-fluid img-fluid1" src="assets/img/1.svg" alt="no image" class="d-block w-100">
         <div class="imgtext1 text-md-start">
-          <div class="myimg1 p-0-sm m-0-sm"><p>THE <strong>WORLD'S <br>PLATFORM</strong> FOR <br><span class="fs-40 fs-sm-10" style="color:#EB2D32; font-weight: bolder;">HELP</span></p>
-          <div class="imgtext11">
-          <ul style="list-style-type:none"><li  class="p-sm-0" style="font-weight: bold;">"Empowering Lives,Defeating diseases & disasters"</li>
-            <li class="p-sm-0">join Us in the Fight & Healing.</li><br>
-           <li> <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn border btn-3">Start a Kanavu</button></a></li></ul>
+          <div class="myimg1 p-0-sm m-0-sm">
+            <p>THE <strong>WORLD'S <br>PLATFORM</strong> FOR <br><span class="fs-40 fs-sm-10"
+                style="color:#EB2D32; font-weight: bolder;">HELP</span></p>
+            <div class="imgtext11">
+              <ul style="list-style-type:none">
+                <li class="p-sm-0" style="font-weight: bold;">"Empowering Lives,Defeating diseases & disasters"</li>
+                <li class="p-sm-0">join Us in the Fight & Healing.</li><br>
+                <li> <a href="<?= base_url('/individual') ?>"><button type="button" class="btn border btn-3">Start a
+                      Kanavu</button></a></li>
+              </ul>
+            </div>
           </div>
-        </div>
         </div>
       </div>
       <!-- image 2   -->
       <div class="carousel-item">
         <img class="img-fluid img-fluid1" src="assets/img/2.svg" alt="No Image" class="d-block w-100">
         <div class="imgtext2 text-md-start">
-        <div class="myimg1 p-0-sm m-0-sm"> <p>WE ARE ON A MISSION TO <br><span class="fs-40 fs-sm-10" style="color:#EB2D32;">HELP THE WORLD</span></p>
-          <div class=imgtext22>
-            <ul style="list-style-type:none"><li class="p-sm-0" style="font-weight:bold;">"Empowering Lives,Defeating diseases & disasters"</li>
-            <li class="p-sm-0">join Us in the Fight & Healing.</li>
-          <li><br>
-          <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn border btn-4">Start a Kanavu</button></a></li></ul>
+          <div class="myimg1 p-0-sm m-0-sm">
+            <p>WE ARE ON A MISSION TO <br><span class="fs-40 fs-sm-10" style="color:#EB2D32;">HELP THE WORLD</span></p>
+            <div class=imgtext22>
+              <ul style="list-style-type:none">
+                <li class="p-sm-0" style="font-weight:bold;">"Empowering Lives,Defeating diseases & disasters"</li>
+                <li class="p-sm-0">join Us in the Fight & Healing.</li>
+                <li><br>
+                  <a href="<?= base_url('/individual') ?>"><button type="button" class="btn border btn-4">Start a
+                      Kanavu</button></a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-         </div>
-    </div>
       </div>
     </div>
     <!-- Left and right controls/icons -->
@@ -944,7 +1096,8 @@ if ($isLoggedIn) {
       <div style="display: flex; justify-content: center;">
         <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
       </div>
-      <div class="p" style="text-align:center">we try our best to help helpless people,<br>Donate to charity causes around the world.</div>
+      <div class="p" style="text-align:center">we try our best to help helpless people,<br>Donate to charity causes
+        around the world.</div>
     </div><br>
     <div class="row">
       <div class="col-md-4">
@@ -960,7 +1113,8 @@ if ($isLoggedIn) {
                         <input type="range" class="form-range" id="rangeInput" min="0" max="100" value="20">
                       </div>
                     </form> -->
-              <div class="progress" role="progressbar" aria-label="Example -1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 8px">
+              <div class="progress" role="progressbar" aria-label="Example -1px high" aria-valuenow="25"
+                aria-valuemin="0" aria-valuemax="100" style="height: 8px">
                 <div class="progress-bar" style="width: 26%"></div>
               </div>
               <span class="range-details">RS.20000 Raised out of Rs.20,00,000</span>
@@ -987,7 +1141,8 @@ if ($isLoggedIn) {
                       <input type="range" class="form-range" id="rangeInput" min="0" max="100" value="50">
                     </div>
                   </form> -->
-              <div class="progress" role="progressbar" aria-label="Example -1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 8px">
+              <div class="progress" role="progressbar" aria-label="Example -1px high" aria-valuenow="25"
+                aria-valuemin="0" aria-valuemax="100" style="height: 8px">
                 <div class="progress-bar" style="width: 26%"></div>
               </div>
               <span class="range-details">RS.20000 Raised out of Rs.20,00,000</span>
@@ -1015,7 +1170,8 @@ if ($isLoggedIn) {
                     <input type="range" class="form-range" id="rangeInput" min="0" max="100" value="85">
                   </div>
                 </form> -->
-              <div class="progress" role="progressbar" aria-label="Example -1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 8px">
+              <div class="progress" role="progressbar" aria-label="Example -1px high" aria-valuenow="25"
+                aria-valuemin="0" aria-valuemax="100" style="height: 8px">
                 <div class="progress-bar" style="width: 26%"></div>
               </div>
               <span class="range-details">RS.20000 Raised out of Rs.20,00,000</span>
@@ -1035,7 +1191,7 @@ if ($isLoggedIn) {
   <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
-      <!-- Your existing carousel item content here -->
+        <!-- Your existing carousel item content here -->
       </div>
       <!-- Add more carousel items as needed -->
     </div>
@@ -1110,24 +1266,25 @@ if ($isLoggedIn) {
     -->
   <!-- third section end -->
 
-<div  id="demo1" class=" container-fluid third">
+  <div id="demo1" class=" container-fluid third">
     <!-- <div class="col-md-4"> -->
-          <img class="img-fluid img-fluid2 d-block w-100" src="assets/img/bg.svg" alt="no image" class="">
-        <div class="imgtext3">
-          <p style="text-align:center";>HOW IT WORKS ( START A FUNDRAISE IN <span style="color:#EB2D32;">THREE SIMPLE STEP )</span></p>
-          <div class="d-flex justify-content-center">
-            <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
-          </div>  
-            <div class="position-relative bgimg">
-               <!-- <div class="position-absolute top-50 start-50 translate-middle"> -->
-                  <center><img src="assets/img/green.png" alt="noimage">
-                  <img src="assets/img/red.png" alt="noimage">
-                  <img src="assets/img/yellow.png" alt="noimage">
-                </center>
-               </div>
-            </div>
-            </div>
-    <!-- </div> -->
+    <img class="img-fluid img-fluid2 d-block w-100" src="assets/img/bg.svg" alt="no image" class="">
+    <div class="imgtext3">
+      <p style="text-align:center" ;>HOW IT WORKS ( START A FUNDRAISE IN <span style="color:#EB2D32;">THREE SIMPLE STEP
+          )</span></p>
+      <div class="d-flex justify-content-center">
+        <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
+      </div>
+      <div class="position-relative bgimg">
+        <!-- <div class="position-absolute top-50 start-50 translate-middle"> -->
+        <center><img src="assets/img/green.png" alt="noimage">
+          <img src="assets/img/red.png" alt="noimage">
+          <img src="assets/img/yellow.png" alt="noimage">
+        </center>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
   </div>
 
 
@@ -1165,7 +1322,8 @@ if ($isLoggedIn) {
       <div style="display: flex; justify-content: center;">
         <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
       </div>
-      <div class="p" style="text-align:center">we exist for non-profits,social enterprises,community groups,<br>activist and individual citizens that are making.</div>
+      <div class="p" style="text-align:center">we exist for non-profits,social enterprises,community groups,<br>activist
+        and individual citizens that are making.</div>
     </div><br>
     <div class="row row1">
       <div class="col-md-4">
@@ -1176,7 +1334,8 @@ if ($isLoggedIn) {
               <div class="cardimg">
                 <img class="img" src="assets/img/calendar.svg" href="#" alt="no image" style="width:20px" ;> 20 JAN,2024
                 <!-- <div class="cardimg1"> -->
-                <img class="img" src="assets/img/user-regular.svg" href="#" alt="no image" style="margin-left:40px" ;> by Admin
+                <img class="img" src="assets/img/user-regular.svg" href="#" alt="no image" style="margin-left:40px" ;>
+                by Admin
                 <!-- </div> -->
               </div>
               <h5 class="card-title">you can write your heading</h5>
@@ -1197,7 +1356,8 @@ if ($isLoggedIn) {
             <div id="card2">
               <div class="cardimg">
                 <img class="img" src="assets/img/calendar.svg" href="#" alt="no image" style="width:20px" ;> 20 JAN,2024
-                <img class="img" src="assets/img/user-regular.svg" href="#" alt="no image" style="margin-left:40px" ;> by Admin
+                <img class="img" src="assets/img/user-regular.svg" href="#" alt="no image" style="margin-left:40px" ;>
+                by Admin
               </div>
               <h5 class="card-title">you can write your heading</h5>
               <p>you can write your paragraph</p>
@@ -1216,7 +1376,8 @@ if ($isLoggedIn) {
             <div id="card3">
               <div class="cardimg">
                 <img class="img" src="assets/img/calendar.svg" href="#" alt="no image" style="width:20px" ;> 20 JAN,2024
-                <img class="img" src="assets/img/user-regular.svg" href="#" alt="no image" style="margin-left:40px" ;> by Admin
+                <img class="img" src="assets/img/user-regular.svg" href="#" alt="no image" style="margin-left:40px" ;>
+                by Admin
               </div>
               <h5 class="card-title">you can write your heading</h5>
               <p>you can write your paragraph</p>
@@ -1231,19 +1392,19 @@ if ($isLoggedIn) {
   </div>
   <script>
     document.querySelectorAll('.dropdown-toggle').forEach(item => {
-  item.addEventListener('click', event => {
- 
-    if(event.target.classList.contains('dropdown-toggle') ){
-      event.target.classList.toggle('toggle-change');
-    }
-    else if(event.target.parentElement.classList.contains('dropdown-toggle')){
-      event.target.parentElement.classList.toggle('toggle-change');
-    }
-  })
-});
-</script>
+      item.addEventListener('click', event => {
+
+        if (event.target.classList.contains('dropdown-toggle')) {
+          event.target.classList.toggle('toggle-change');
+        }
+        else if (event.target.parentElement.classList.contains('dropdown-toggle')) {
+          event.target.parentElement.classList.toggle('toggle-change');
+        }
+      })
+    });
+  </script>
   <!--  -->
- <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
       </div>
@@ -1263,8 +1424,8 @@ if ($isLoggedIn) {
         <h5 style="text-align:center">localhost</h5>
         <!-- <span class="text-muted">Your footer content goes here.</span> -->
         <div class="footer1">
-          <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
-          <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
+          <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+          <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
           <a class="footer-lable lable" href="#">Terms of Use</a>
           <a class="footer-lable" href="#">Privacy Policy</a>
         </div>

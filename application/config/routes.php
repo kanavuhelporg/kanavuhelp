@@ -53,7 +53,7 @@ $route['default_controller'] = 'kanavuhelp';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['index'] = 'kanavuhelp/kanavuhome';
-$route['homepage'] = 'kanavuhelp/kanavuhome';
+$route['kanavuhome'] = 'kanavuhelp/kanavuhome';
 $route['login'] = 'kanavuhelp/login';
 $route['register'] = 'kanavuhelp/register';
 $route['dummy'] = 'kanavuhelp/dummyl';
@@ -65,3 +65,5 @@ $route['contactus'] = 'kanavuhelp/contactus';
 $route['individual'] = 'kanavuhelp/individual';
 $route['charity'] = 'kanavuhelp/charity';
 $route['abouts'] = 'kanavuhelp/abouts';
+$route['logout'] = 'kanavuhelp/logout';
+

@@ -65,27 +65,27 @@ center img{
 <body class="overflow-x-hidden">
     <header class="text-gray-600 body-font">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>">
-            <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help"style="margin-left:50px;">
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhome') ?>">
+            <img class="logo" src="<?=base_url('assets/img/Kanavu_help.png')?>" alt="Kanavu Help"style="margin-left:50px;">
           </a>
           <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"style="margin-left:200px;" >
             <div class="group inline-block relative mr-5">
                 <a href="#" class="hover:text-gray-900 ml-5">Fundraise for</a>
                 <div class="opacity-0 group-hover:opacity-100 absolute z-10 bg-white border rounded-md p-2">
                     <!-- Dropdown content goes here -->
-                    <a  href="<?= base_url('kanavuhelp/individual') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Individual</a>
-                    <a  href="<?= base_url('kanavuhelp/charity') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Charities</a>
+                    <a  href="<?= base_url('/individual') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Individual</a>
+                    <a  href="<?= base_url('/charity') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Charities</a>
                     <!-- Add more dropdown options as needed -->
                 </div>
             </div>
-            <a href="<?= base_url('kanavuhelp/donate') ?>" class="mr-10 hover:text-gray-900"> Donate</a>
-            <a href="<?= base_url('kanavuhelp/myhelps') ?>"  class="mr-10 hover:text-gray-900">My helps</a>
+            <a href="<?= base_url('/donate') ?>" class="mr-10 hover:text-gray-900"> Donate</a>
+            <a href="<?= base_url('/myhelps') ?>"  class="mr-10 hover:text-gray-900">My helps</a>
             <a href="http://localhost/kanavuhelp/#demo1" class="mr-10 hover:text-gray-900">How it works</a>
-            <a href="<?= base_url('kanavuhelp/blogs') ?>" class="mr-10 hover:text-gray-900">Blogs</a>
-            <a href="<?= base_url('kanavuhelp/contactus') ?>" class="hover:text-gray-900">Contact us</a>
+            <a href="<?= base_url('/blogs') ?>" class="mr-10 hover:text-gray-900">Blogs</a>
+            <a href="<?= base_url('/contactus') ?>" class="hover:text-gray-900">Contact us</a>
         </nav>
-        <a href="<?= base_url('kanavuhelp/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
-        <a href="<?= base_url('kanavuhelp/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
+        <a href="<?= base_url('/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
+        <a href="<?= base_url('/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
 
         </div>
     </header>
@@ -110,8 +110,8 @@ center img{
             <div class="container mx-auto">
                 <h5 class="text-center">localhost</h5>
                 <div class="flex justify-center p-3 ml-4">
-                    <a href="<?= base_url('kanavuhelp/abouts') ?>" class="footer-lable lable ml-5">About</a>
-                    <a href="<?= base_url('kanavuhelp/contactus') ?>" class="footer-lable lable ml-5">Contact</a>
+                    <a href="<?= base_url('/abouts') ?>" class="footer-lable lable ml-5">About</a>
+                    <a href="<?= base_url('/contactus') ?>" class="footer-lable lable ml-5">Contact</a>
                     <a href="#" class="footer-lable lable ml-5">Terms of Use</a>
                     <a href="#" class="footer-lable lable ml-5">Privacy Policy</a>
                 </div>
