@@ -65,3 +65,5 @@ $route['contactus'] = 'kanavuhelp/contactus';
 $route['individual'] = 'kanavuhelp/individual';
 $route['charity'] = 'kanavuhelp/charity';
 $route['abouts'] = 'kanavuhelp/abouts';
+$route['logout'] = 'kanavuhelp/logout';
+
