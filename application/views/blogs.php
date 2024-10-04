@@ -13,7 +13,7 @@
     body {
       font-family: 'Sen', sans-serif;
     }
-
+/* carousel */
     .carousel-item {
       height: 100vh;
     }
@@ -23,7 +23,7 @@
       height: 100%;
       width: 100%;
     }
-
+/* Login_button */
     .login-button {
       background-color: #E01A2B;
       color: white;
@@ -33,7 +33,7 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-
+/* start a kanavu button */
     .startkanavu-button {
       border: 1px solid #E01A2B;
       color: #E01A2B;
@@ -43,23 +43,121 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-
+/* nav bar menu size */
     .offcanvas-body {
       font-size: 17px;
     }
+/* carousel text */
+    .imgtext1,
+    .imgtext2 {
+      position: absolute;
+      color: #000;
+      width: 30%;
+      font-size: 48px;
+      font-style: normal;
+      padding-bottom: 100px;
+    }
+
+    .imgtext1 {
+      top: 50%;
+      left: 65px;
+      transform: translateY(-50%);
+    }
+
+    .imgtext2 {
+      top: 50%;
+      right: 65px;
+      transform: translateY(-50%);
+    }
+
+    .imgtext1 strong,
+    .imgtext2 strong {
+      font-weight: bolder;
+    }
+
+    .imgtext11,
+    .imgtext22 {
+      font-size: 18px;
+      margin-top: 5px;
+    }
+
+    .imgtext11 ul,
+    .imgtext22 ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .imgtext11 ul li {
+      margin-left: 0px;
+    }
 
 
+    .imgtext1 span,
+    .imgtext2 span {
+      color: #EB2D32;
+      font-weight: bolder;
+      font-size: 40px;
+    }
+
+    /* filter_button above cards */
+    .filter-btn {
+      background-color: transparent;
+      /* No background color */
+      border-width: 2px;
+      /* Add border width for clarity */
+    }
+
+    .filter-btn.active {
+      border-color: #EB2D32;
+      /* Red border for active button */
+      color: #EB2D32;
+      /* Red text for active button */
+    }
+
+    .filter-btn:not(.active) {
+      border-color: #A9A9A9;
+      /* Grey border for inactive buttons */
+      color: #A9A9A9;
+      /* Grey text for inactive buttons */
+    }
+
+    .filter-btn:hover {
+      border-color: #EB2D32;
+      color: white;
+      background-color: #EB2D32;
+    }
+    .donatefor {
+      border: 1px solid #E01A2B;
+      color: #E01A2B;
+      background-color: #fff;
+      border-radius: 20px;
+    }
+    /* card section */
     .card {
       width: 80%;
       /* Make the card width responsive */
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
-
+      
     }
+
+    .carousel-item .row {
+      margin-left: 150px;
+      margin-right: 150px;
+    }
+
+    .carousel-item .col-12.col-md-4 {
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-bottom: 20px;
+      
+    }
+
+ 
 
     .card-title {
       font-size: 18px;
       font-weight: bold;
-
+      
     }
 
     .card_button {
@@ -72,6 +170,8 @@
       color: rgba(224, 26, 43, 1);
       border-radius: 25px;
     }
+
+    /* footer */
 
     .footer {
       height: 250px;
@@ -115,8 +215,10 @@
       margin-left: 10px;
 
     }
+@media (max-width: 767px) {
 
-    @media (max-width: 767px) {
+  /* carousel */
+
       .carousel-item {
         position: relative;
       }
@@ -126,24 +228,21 @@
         width: 100%;
         object-fit: cover;
       }
-
-      .card {
+      .card{
         margin-left: 10%;
       }
 
-      .donate_img {
-        width: 100%;
-        /* Ensure the parent container takes full width */
+    /* donate  image below nav bar */
+          .donate_img {
+        width: 100%; /* Ensure the parent container takes full width */
         position: relative;
-      }
+    }
 
-      .donate_img img {
+    .donate_img img {
         width: 100%;
-        height: 300px;
-        /* Maintain aspect ratio */
-        object-fit: cover;
-        /* Ensures the image fills its container */
-      }
+        height: 300px; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensures the image fills its container */
+    }
     }
   </style>
 </head>
@@ -182,7 +281,7 @@
               <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="#">How it works</a>
+              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>" style="color:rgba(235, 45, 50, 1)">Blogs</a>
@@ -205,9 +304,9 @@
                 </ul>
               </div>
             <?php else: ?>
-              <a href="#" class="login-button me-2">Login</a>
+              <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            <a href="#" class="startkanavu-button">Start a kanavu</a>
+            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
           </div>
         </div>
       </div>
