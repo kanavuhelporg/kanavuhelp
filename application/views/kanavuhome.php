@@ -274,7 +274,7 @@
       left: 0;
       right: 0;
       background-color: #EB2D32;
-      margin-top: -100px;
+      /* margin-top: -100px; */
       color: #f0f0f0;
     }
 
@@ -1069,8 +1069,8 @@
           <div class="row text-center">
             <div class="col-12">
               <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
-                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
+                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
                 <a class="footer-lable lable" href="#">Terms of Use</a>
                 <a class="footer-lable lable" href="#">Privacy Policy</a>
               </div>
@@ -1093,6 +1093,7 @@
         <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
       </footer>
     </div>
+
 
 
     <!-- Bootstrap JS and dependencies (Popper.js) -->
