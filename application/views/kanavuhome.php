@@ -13,7 +13,7 @@
     body {
       font-family: 'Sen', sans-serif;
     }
-
+/* carousel img */
     .carousel-item {
       height: 100vh;
     }
@@ -23,7 +23,7 @@
       height: 100%;
       width: 100%;
     }
-
+/* login_button */
     .login-button {
       background-color: #E01A2B;
       color: white;
@@ -33,7 +33,7 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-
+/* start a kanavu button */
     .startkanavu-button {
       border: 1px solid #E01A2B;
       color: #E01A2B;
@@ -43,11 +43,11 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-
+/* navigation bar  menu size */
     .offcanvas-body {
       font-size: 17px;
     }
-
+/* carousel text */
     .imgtext1,
     .imgtext2 {
       position: absolute;
@@ -105,7 +105,7 @@
       color: white;
       border-radius: 20px;
     }
-
+/* cards section */
     .card {
       width: 100%;
       /* Make the card width responsive */
@@ -146,12 +146,14 @@
       color: rgba(224, 26, 43, 1);
       border-radius: 25px;
     }
-
+/* readmore_button in card */
     .readmore_btn {
       border: 1px solid rgba(224, 26, 43, 1);
       color: rgba(224, 26, 43, 1);
       border-radius: 25px;
     }
+
+      /* how its works section */
 
     .how-it-works-container {
       display: flex;
@@ -265,7 +267,7 @@
       /* Yellow */
       color: #FFD700;
     }
-
+/* footer */
     .footer {
       height: 250px;
       width: 100%;
@@ -311,6 +313,8 @@
 
     /* Responsive Adjustments */
     @media (max-width: 768px) {
+      /* how its works section */
+
       .how-it-works-container {
         flex-direction: column;
         /* Stack steps vertically */
@@ -468,6 +472,8 @@
     }
 
     @media (max-width: 768px) {
+
+      /* how its works section */
       .how-it-works-container {
         flex-direction: column;
         align-items: center;
@@ -499,6 +505,7 @@
     }
 
     @media (max-width: 767px) {
+      /* carousel */
       .carousel-item {
         position: relative;
       }
@@ -508,7 +515,7 @@
         width: 100%;
         object-fit: cover;
       }
-
+/* carousel text */
       .imgtext1,
       .imgtext2 {
         background-color: rgba(255, 255, 255, 0.7);
@@ -542,11 +549,11 @@
       .btn-4 {
         font-size: 14px;
       }
-
+/* stats section below  how its work section */
       .stats-section {
         margin-top: 170%;
       }
-
+/* how its works section */
       .worktext {
         margin-bottom: 550px;
         margin-top: -250px;
@@ -612,9 +619,9 @@
                 </ul>
               </div>
             <?php else: ?>
-              <a href="#" class="login-button me-2">Login</a>
+              <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            <a href="#" class="startkanavu-button">Start a kanavu</a>
+            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
           </div>
         </div>
       </div>

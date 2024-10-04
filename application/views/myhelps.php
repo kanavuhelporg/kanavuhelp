@@ -13,7 +13,7 @@
     body {
       font-family: 'Sen', sans-serif;
     }
-
+/* carousel */
     .carousel-item {
       height: 100vh;
     }
@@ -23,7 +23,7 @@
       height: 100%;
       width: 100%;
     }
-
+/* Login_button */
     .login-button {
       background-color: #E01A2B;
       color: white;
@@ -33,7 +33,7 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-
+/* Start a kanavu button */
     .startkanavu-button {
       border: 1px solid #E01A2B;
       color: #E01A2B;
@@ -43,12 +43,12 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-
+/* nav bar menu size */
     .offcanvas-body {
       font-size: 17px;
     }
 
-
+/* footer */
     .footer {
       height: 250px;
       width: 100%;
@@ -91,7 +91,7 @@
       margin-left: 10px;
 
     }
-
+/* button above cards */
     .data {
       border: 1px solid #E01A2B;
       color: #E01A2B;
@@ -103,7 +103,7 @@
       background-color: #E01A2B;
       color: white;
     }
-
+/* card section */
     .card {
       border: none;
       flex-direction: row;
@@ -120,13 +120,13 @@
     .card-title {
       width: 250px;
     }
-
+/* progress bar in the card */
     .progress {
       width: 286px;
     }
 
     @media (max-width: 767px) {
-
+/* img below nav bar */
       .donate_img {
         width: 100%;
         /* Ensure the parent container takes full width */
@@ -140,7 +140,7 @@
         object-fit: cover;
         /* Ensures the image fills its container */
       }
-
+/* card section */
       .card {
         flex-direction: column;
       }
@@ -188,7 +188,7 @@
               <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color:rgba(235, 45, 50, 1)">My Helps</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="#">How it works</a>
+              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
@@ -211,9 +211,9 @@
                 </ul>
               </div>
             <?php else: ?>
-              <a href="#" class="login-button me-2">Login</a>
+              <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            <a href="#" class="startkanavu-button">Start a kanavu</a>
+            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
           </div>
         </div>
       </div>

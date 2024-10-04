@@ -13,7 +13,7 @@
     body {
       font-family: 'Sen', sans-serif;
     }
-
+/* carousel */
     .carousel-item {
       height: 100vh;
     }
@@ -23,7 +23,7 @@
       height: 100%;
       width: 100%;
     }
-
+/* Login_button */
     .login-button {
       background-color: #E01A2B;
       color: white;
@@ -33,7 +33,7 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-
+/* start a kanavu button */
     .startkanavu-button {
       border: 1px solid #E01A2B;
       color: #E01A2B;
@@ -43,11 +43,11 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-
+/* nav bar menu size */
     .offcanvas-body {
       font-size: 17px;
     }
-
+/* carousel text */
     .imgtext1,
     .imgtext2 {
       position: absolute;
@@ -98,6 +98,8 @@
       font-weight: bolder;
       font-size: 40px;
     }
+
+    /* filter_button above cards */
     .filter-btn {
       background-color: transparent;
       /* No background color */
@@ -130,6 +132,7 @@
       background-color: #fff;
       border-radius: 20px;
     }
+    /* card section */
     .card {
       width: 80%;
       /* Make the card width responsive */
@@ -167,6 +170,9 @@
       color: rgba(224, 26, 43, 1);
       border-radius: 25px;
     }
+
+    /* footer */
+
     .footer {
       height: 250px;
       width: 100%;
@@ -210,6 +216,9 @@
 
     }
 @media (max-width: 767px) {
+
+  /* carousel */
+
       .carousel-item {
         position: relative;
       }
@@ -222,6 +231,8 @@
       .card{
         margin-left: 10%;
       }
+
+    /* donate  image below nav bar */
           .donate_img {
         width: 100%; /* Ensure the parent container takes full width */
         position: relative;
@@ -269,7 +280,7 @@
               <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="#">How it works</a>
+              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
@@ -292,9 +303,9 @@
                 </ul>
               </div>
             <?php else: ?>
-              <a href="#" class="login-button me-2">Login</a>
+              <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            <a href="#" class="startkanavu-button">Start a kanavu</a>
+            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
           </div>
         </div>
       </div>
