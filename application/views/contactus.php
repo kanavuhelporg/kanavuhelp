@@ -1,246 +1,551 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanavu_help</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-  <title>contactus</title>
   <style>
     body {
-      font-family: 'sen', sans-serif;
-      overflow-x: hidden;
+      font-family: 'Sen', sans-serif;
+    }
+/* carousel */
+    .carousel-item {
+      height: 100vh;
+    }
+
+    .carousel-item img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+/* Login_button */
+    .login-button {
+      background-color: #E01A2B;
+      color: white;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s background-color;
+    }
+/* start a kanavu button */
+    .startkanavu-button {
+      border: 1px solid #E01A2B;
+      color: #E01A2B;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s background-color;
+    }
+/* nav bar menu size */
+    .offcanvas-body {
+      font-size: 17px;
+    }
+/* carousel text */
+    .imgtext1,
+    .imgtext2 {
+      position: absolute;
+      color: #000;
+      width: 30%;
+      font-size: 48px;
+      font-style: normal;
+      padding-bottom: 100px;
+    }
+
+    .imgtext1 {
+      top: 50%;
+      left: 65px;
+      transform: translateY(-50%);
+    }
+
+    .imgtext2 {
+      top: 50%;
+      right: 65px;
+      transform: translateY(-50%);
+    }
+
+    .imgtext1 strong,
+    .imgtext2 strong {
+      font-weight: bolder;
+    }
+
+    .imgtext11,
+    .imgtext22 {
+      font-size: 18px;
+      margin-top: 5px;
+    }
+
+    .imgtext11 ul,
+    .imgtext22 ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .imgtext11 ul li {
+      margin-left: 0px;
+    }
+
+
+    .imgtext1 span,
+    .imgtext2 span {
+      color: #EB2D32;
+      font-weight: bolder;
+      font-size: 40px;
+    }
+
+    /* filter_button above cards */
+    .filter-btn {
+      background-color: transparent;
+      /* No background color */
+      border-width: 2px;
+      /* Add border width for clarity */
+    }
+
+    .filter-btn.active {
+      border-color: #EB2D32;
+      /* Red border for active button */
+      color: #EB2D32;
+      /* Red text for active button */
+    }
+
+    .filter-btn:not(.active) {
+      border-color: #A9A9A9;
+      /* Grey border for inactive buttons */
+      color: #A9A9A9;
+      /* Grey text for inactive buttons */
+    }
+
+    .filter-btn:hover {
+      border-color: #EB2D32;
+      color: white;
+      background-color: #EB2D32;
+    }
+    .donatefor {
+      border: 1px solid #E01A2B;
+      color: #E01A2B;
+      background-color: #fff;
+      border-radius: 20px;
+    }
+    /* card section */
+    .card {
+      width: 80%;
+      /* Make the card width responsive */
+      box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
+      
+    }
+
+    .carousel-item .row {
+      margin-left: 150px;
+      margin-right: 150px;
+    }
+
+    .carousel-item .col-12.col-md-4 {
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-bottom: 20px;
+      
+    }
+
+ 
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      
+    }
+
+    .card_button {
+      border: 1px solid rgba(174, 168, 168, 1);
+      border-radius: 25px;
+    }
+
+    .donate_btn {
+      border: 1px solid rgba(224, 26, 43, 1);
+      color: rgba(224, 26, 43, 1);
+      border-radius: 25px;
+    }
+
+    /* footer */
+
+    .footer {
+      height: 250px;
+      width: 100%;
       left: 0;
       right: 0;
-      bottom: 0;
+      background-color: #EB2D32;
+      margin-top: 50px;
+      color: #f0f0f0;
     }
 
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      /* Ensures the header is on top of other elements */
-      background-color: white;
-      /* You can adjust this as needed */
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      /* Optional: Add shadow for visual effect */
+    .footer1 {
+      text-align: center;
+      padding: 10px;
+      margin-left: 10px;
     }
 
-    body {
-      padding-top: 100px;
-      /* Adjust this to account for the height of your header */
+    .footer-lable {
+      color: white;
+      text-decoration: none;
+      padding-right: 20px;
+      padding-left: 20px;
     }
 
-    .container-fluid {
-      margin-top: -15px;
+    .lable {
+      border-right: 3px solid #fff;
     }
 
-    .btn {
-      color: #EB2D32 !important;
-      font-weight: bolder !important;
-      border-radius: 50px !important;
-      border: 1px solid #EB2D32;
+    .footer1 a {
+      margin-left: 20x;
     }
 
-    .btn:hover {
-      background-color: #EB2D32 !important;
-      color: white !important;
+    .footimg {
+      margin-left: 520px;
+      padding: 20px;
     }
 
-    .btn-1 {
-      margin-left: 200px !important;
-      background-color: #EB2D32 !important;
-      color: white !important;
-      width: 100px;
-      height: 45px;
+    .social-icons img {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+
+    }
+    #details{
+      display:block-inline;
+    }
+    #location{
+      margin-left:12%;
+    }
+    #loc_icon{
+      margin-left:25%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    #phone{
+      margin-left:7%
+    }
+    #phone_icon{
+      margin-left:17%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    #email{
+      margin-left:-3%;
+    }
+    #envelope_icon{
+      margin-left:35%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    .line{
+      margin-left:35%;
+      transform:translate(20px,-40px);
+    }
+    
+    input[type]{
+      width:50%;
+    }
+    .area{
+      width:50%;
+    }
+    .form1{
+      margin-left:17%;
+    }
+@media (max-width: 767px) {
+
+  /* carousel */
+  .line{
+      margin-left:32%;
+      transform:translate(-70px,-50px);
+    }
+      .carousel-item {
+        position: relative;
+      }
+
+      .carousel-item img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+      .card{
+        margin-left: 10%;
+      }
+
+    /* donate  image below nav bar */
+          .donate_img {
+        width: 100%; /* Ensure the parent container takes full width */
+        position: relative;
     }
 
-    .btn-2 {
-      height: 45px;
-      width: 150px;
+    .donate_img img {
+        width: 100%;
+        height: 300px; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensures the image fills its container */
     }
-
-    .hidden {
-      display: none;
+    #details{
+      display:block;
     }
-
-    .login_btn {
-      margin-right: 20px;
+    #location{
+      margin-left:27%;
     }
-  </style>
-</head>
-
-<body class="overflow-x-hidden">
-  <header class="text-gray-600 body-font">
-    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-      <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-        href="<?= base_url('/kanavuhome') ?>">
-        <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png'); ?>" alt="Kanavu Help">
+    #loc_icon{
+      margin-left:19%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    #phone{
+      margin-left:33%
+    }
+    #phone_icon{
+      margin-left:13%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    #email{
+      margin-left:22%;
+    }
+    #envelope_icon{
+      margin-left:22%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    .form1{
+      margin-left:3%;
+    }
+    input[type]{
+      width:90%;
+    }
+    .area{
+      width:90%;
+    }
+    }
+    </style>
+    </head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand me-auto" href="<?=base_url('')?>">
+        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
       </a>
-      <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center" style="color:black;">
-        <div class="group inline-block relative mr-5">
-          <a href="#" class="hover:text-gray-900 ml-5 flex items-center" id="fundraise-toggle">Fundraise for <i
-              class="fas fa-chevron-down ml-2"></i></a>
-          <div class="hidden absolute z-10 bg-white border rounded-md p-2" id="fundraise-dropdown">
-            <!-- Dropdown content goes here -->
-            <a href="<?= base_url('/individual') ?>"
-              class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Individual</a>
-            <a href="<?= base_url('/charity') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Charities</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">
+            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Fundraise for</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?= base_url('/individual') ?>">Individuals</a></li>
+                <li><a class="dropdown-item" href="<?= base_url('/charity') ?>">Charities</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" >Donate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>"style="color:rgba(235, 45, 50, 1)">Contact Us</a>
+            </li>
+          </ul><br>
+          <div class="d-flex align-items-center ms-auto">
+            <?php if ($this->session->userdata('userId')): ?>
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown">
+                  <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                    style="width: 30px; height: 30px; border-radius: 50%;">
+                  <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                </div>
+                <ul class="dropdown-menu" aria-labelledby="userProfile">
+                  <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i>
+                      Logout</a></li>
+                </ul>
+              </div>
+            <?php else: ?>
+              <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
+            <?php endif; ?>
+            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
           </div>
         </div>
-        <a href="<?= base_url('/donate') ?>" class="mr-10 hover:text-gray-900">Donate</a>
-        <a href="<?= base_url('/myhelps') ?>" class="mr-10 hover:text-gray-900">My helps</a>
-        <a href="http://localhost/kanavuhelp/#demo1" class="mr-10 hover:text-gray-900">How it works</a>
-        <a href="<?= base_url('/blogs') ?>" class="mr-10 hover:text-gray-900">Blogs</a>
-        <a href="<?= base_url('/contactus') ?>" class="hover:text-gray-900" style="color:#E01A2B">Contact
-          us</a>
-      </nav>
-      <a href="<?= base_url('/login') ?>"><button type="button" class="btn btn-1 border login_btn">Login</button></a>
-      <a href="<?= base_url('/individual') ?>"><button type="button" class="btn btn-2 border register_btn">Start a
-          Kanavu</button></a>
+      </div>
     </div>
-  </header>
-
-  <div class="container-fluid">
-    <img src="<?php echo base_url('/assets/img/contactus.png'); ?>" alt="No Image" class="w-full h-auto">
+  </nav>
+  <div class="donate_img mt-5 pt-4">
+    <img src="<?=base_url('assets/img/contact_us.png')?>" width="100%">
   </div>
+  
+  <div class="row" id="details">
+    
+    <div class="col"  id="location">
+      <br>
+           <br>
+    <i class="fa-solid fa-location-dot" id="loc_icon"></i>
+            <br><strong>The Kanavu Startup Village</strong>
+            <br><strong>Annamalaikottai, Sivagiri</strong></p>
+        </div>
+        <div class="col" id="phone">
+     <br><br>
+     <i class="fa-solid fa-phone-volume" id="phone_icon"></i>
+     <br><strong>+91 93792 48387</strong>
+    </div>
+    <div class="col" id="email">
+      <br><br>
+      <i class="fa-regular fa-envelope" id="envelope_icon"></i>
+      <br>
+    <strong>karthi.easwaramoorthy@gmail.com</strong>
+        </div>
+    </div>
 
-  <div class="flex flex-col md:flex-row mt-10 justify-center">
-    <div class="w-full md:w-80 lg:w-96 xl:w-1/4 m-4 p-4 border rounded-lg">
-      <div class="flex mb-2 justify-center">
-        <img src="<?php echo base_url('/assets/img/location.png'); ?>" alt="Image 1" class="h-auto rounded-md">
-      </div>
-      <div>
-        <p class="text-gray-700 text-center text-sm md:text-base lg:text-lg xl:text-xl"><strong>The Kanavu Statup
-            Village</strong></p>
-        <p class="text-gray-700 text-center text-sm md:text-base lg:text-lg xl:text-xl"><strong>Annamalaikottai,
-            Sivagiri</strong></p>
-      </div>
-    </div>
-    <div class="w-full md:w-80 lg:w-96 xl:w-1/4 m-4 p-4 border rounded-lg">
-      <div class="flex mb-2 justify-center">
-        <img src="<?php echo base_url('/assets/img/call.png'); ?>" alt="Image 2" class="h-auto rounded-md">
-      </div>
-      <div>
-        <p class="text-gray-700 text-center text-xs md:text-sm lg:text-base xl:text-lg"><strong>+91 9379248387</strong>
-        </p>
-      </div>
-    </div>
-    <div class="w-full md:w-80 lg:w-96 xl:w-1/4 m-4 p-4 border rounded-lg">
-      <div class="flex mb-2 justify-center">
-        <img src="<?php echo base_url('/assets/img/email.png'); ?>" alt="Image 3" class="h-auto rounded-md">
-      </div>
-      <div>
-        <p class="text-gray-700 text-center text-xs md:text-sm lg:text-base xl:text-lg">
-          <strong>karthi.easwaramoorthy@gmail.com</strong>
-        </p>
-      </div>
-    </div>
-  </div>
 
 
   <section class="text-gray-600 body-font">
     <div class="container px-5 py-6 mx-auto flex flex-wrap items-center">
       <div class="lg:w-3/7 md:w-1/2 sm:w-1/1 xsm:w-1/1  bg-gray-100 rounded-lg p-8 flex flex-col mx-auto mt-10">
-        <h2 class="text-gray-900 text-lg font-medium title-font mb-5 text-center"><strong>GET IN TOUCH WITH US</strong>
-        </h2>
-        <div class="flex justify-center">
-          <img class=" max-w-screen-md" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="no image">
+      <br><br>  
+      <h4 class="text-gray-900 text-lg font-medium title-font mb-5 text-center"><strong>GET IN TOUCH WITH US</strong>
+        </h4>
+        <div class="flex justify-center" >
+          <img class=" max-w-screen-md line" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="no image">
         </div>
-        <h4 class="text-base text-black-500 text-center mt-3"><strong>Submit your inquiry, and we'll respond to you as
-            soon as possible!</strong></h4>
-        <div class="relative mb-4 mt-5">
-          <form name="contactus" id="myForm" onsubmit="return contact_us()" method="post"
-            action="<?= base_url('kanavuhelp/contact_us') ?>">
-            <label for="full-name" class="leading-7 text-sm text-gray-600">Full Name</label>
-            <input type="text" id="full-name" name="full-name"
-              class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              required>
-        </div>
-        <div class="relative mb-4">
-          <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
-          <input type="email" id="email" name="email"
-            class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-            required>
-        </div>
-        <div class="relative mb-4">
-          <label for="phone" class="leading-7 text-sm text-gray-600">Phone Number</label>
-          <input type="phone" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10"
-            class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-            required>
-        </div>
-        <div class="relative mb-4">
-          <label for="message" class="leading-7 text-sm text-gray-600">Message</label>
-          <textarea id="message" name="message"
-            class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-            required></textarea>
-        </div>
-        <button type="submit"
-          class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Send a
-          Message</button>
-      </div>
-      </form>
+        <h5 class="text-base text-black-500 text-center "><strong>Submit your inquiry, and we'll respond to you <br>as
+            soon as possible!</strong></h5>
+            <div class="relative mb-4 mt-5 form1">
+  <form name="contactus" class="form1" id="myForm" onsubmit="return contact_us()" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
 
-    </div>
-  </section>
-
-
-
-  <div class="footer">
-    <footer class="footer mt-auto h-256 w-full bg-red-600 py-3 text-white">
-      <div class="container mx-auto">
-        <h5 class="text-center">localhost</h5>
-        <div class="flex justify-center p-3 ml-4">
-          <a href="<?= base_url('/abouts') ?>" class="footer-lable lable ml-5">About</a>
-          <a href="<?= base_url('/contactus') ?>" class="footer-lable lable ml-5">Contact</a>
-          <a href="#" class="footer-lable lable ml-5">Terms of Use</a>
-          <a href="#" class="footer-lable lable ml-5">Privacy Policy</a>
-        </div>
-      </div>
-      <div class="social-icons flex justify-center text-center mt-4">
-        <a href="https://www.facebook.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo" class="w-6 h-6 mr-2">
-        </a>
-        <a href="https://twitter.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo" class="w-6 h-6 mr-2">
-        </a>
-        <a href="https://www.linkedin.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo" class="w-6 h-6">
-        </a>
-      </div>
-      <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image"
-        class="footimg mx-auto mt-4">
-      <p class="text-center p-2">Copyright 2024 @ localhost. All Rights Reserved.</p>
-    </footer>
+    <!-- Name Field -->
+    <div class="mb-3">
+  
+  
+  
+    <input type="text" class="form-control" name="full-name" id="exampleFormControlInput1" placeholder="Name*" required>
+    <p id="demo" style="color:red"></p>
   </div>
+<div class="mb-3">
+  
+  <input type="email" class="form-control" name="email" id="exampleFormControlInput2" placeholder="Mail ID*" required>
+  <p id="demo1" style="color:red"></p>
+</div>
+<div class="mb-3">
+  
+  <input type="tel" class="form-control" name="phone" id="exampleFormControlInput3" placeholder="Phone Number*" required>
+  <p id="demo2" style="color:red"></p>
+</div>
+<div class="mb-3">
+  
+  <textarea class="form-control area" name="message" id="exampleFormControlTextarea1" rows="3" placeholder="Message*" required></textarea>
+  <p id="demo3" style="color:red"></p>
+</div>
+<button type="submit" class="btn btn-primary btn-lg" style=" background-color:#E01A2B;margin-left:12%;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
+  </form>
+  
+</div>
 
+  </section>
+  <div class="footer">
+      <footer class="footer mt-auto py-3">
+        <div class="container">
+          <h5 class="text-center">Kanavu.help</h5>
+          <div class="row text-center">
+            <div class="col-12">
+              <div class="footer1">
+                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
+                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
+                <a class="footer-lable lable" href="#">Terms of Use</a>
+                <a class="footer-lable lable" href="#">Privacy Policy</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="social-icons d-flex justify-content-center text-center my-2">
+          <a href="https://www.facebook.com/" target="_blank" class="mx-2">
+            <img src="assets/img/facebook-f.svg" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
+          </a>
+          <a href="https://twitter.com/" target="_blank" class="mx-2">
+            <img src="assets/img/twitter.svg" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
+          </a>
+          <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
+            <img src="assets/img/linkedin-in.svg" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
+          </a>
+        </div>
+        <img src="assets/img/footer-secured-card 1.svg" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
+          style="max-width: 200px;">
+        <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
+      </footer>
+    </div>
 
-  </header>
+      <!-- Bootstrap JS and dependencies (Popper.js) -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    function contact_us() {
-      var full-name = document.contactus.full - name.value.trim(); // Trim the input value
-      var email = document.contactus.email.value.trim(); // Trim the input value
-      var phone = document.contactus.phone.value.trim(); // Trim the input value
-      var message = document.contactus.message.value.trim(); // Trim the input value
+  function contact_us(){
+     // Get values from form inputs
+     const name = document.getElementById("exampleFormControlInput1").value;
+            const email = document.getElementById("exampleFormControlInput2").value;
+            const phone = document.getElementById("exampleFormControlInput3").value;
+            const message = document.getElementById("exampleFormControlTextarea1").value;
 
-    }
-  </script>
-  <script>
-    document.getElementById("fundraise-toggle").addEventListener("click", function (event) {
-      event.preventDefault();
-      var dropdown = document.getElementById("fundraise-dropdown");
-      dropdown.classList.toggle("hidden");
-    });
-  </script>
-</body>
+const error_message1=document.getElementById("demo");
+const error_message2=document.getElementById("demo1");
+const error_message3=document.getElementById("demo2");
+const error_message4=document.getElementById("demo3");
+error_message1.innerHTML="";
+error_message2.innerHTML="";
+error_message3.innerHTML="";
+error_message4.innerHTML="";
+            // Regular expressions for validation
+            const nameRegex = /^[A-Za-z\s]+$/; // Allow only alphabets and spaces
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email format
+            const phoneRegex = /^\d{10}$/; // Phone number with 10 digits
 
-</html>
+            // Validate name
+            if (name.length < 3 || (!nameRegex.test(name))) {
+                error_message1.innerHTML+="Name must have atleast 3 characters <br> Only alphabets and spaces are allowed.";
+                return false;
+            }
+
+            // Validate email
+            if (!emailRegex.test(email)) {
+                 error_message2.innerHTML+="Please enter a valid email address.";
+                return false;
+            }
+
+            // Validate phone number
+            if (!phoneRegex.test(phone)) {
+                 error_message3.innerHTML+="Please enter a valid 10-digit phone number.";
+                return false;
+            }
+            if(message.length<10)
+            {
+              error_message4.innerHTML+="Comments must be minimum of 10 characters";
+              return false;
+            }
+            // If all fields are valid
+            
+            return true;
+        
+  }  
+  </script>
+  </body>
+    </html>
+    
