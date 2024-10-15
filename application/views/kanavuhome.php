@@ -14,9 +14,9 @@
       font-family: 'Sen', sans-serif;
     }
 /* carousel img */
-    .carousel-item {
+    /* .carousel-item {
       height: 100vh;
-    }
+    } */
 
     .carousel-item img {
       object-fit: cover;
@@ -185,7 +185,7 @@
       /* For absolute positioning of overlay */
       width: 250px;
     }
-
+   
     .step-1 {
       background-color: #50C878;
       /* Greenish color */
@@ -364,8 +364,9 @@
       font-size: 1.2rem;
       color: #fff;
       /* margin-top: 5px; */
-      width: 100px;
       margin-left: 60px;
+      margin-right: 70px;
+      align-content: center;
       /* margin-right: 70px; */
 
     }
@@ -549,15 +550,12 @@
       .btn-4 {
         font-size: 14px;
       }
-/* stats section below  how its work section */
-      .stats-section {
-        margin-top: 170%;
-      }
+      
 /* how its works section */
-      .worktext {
+      /* .worktext {
         margin-bottom: 550px;
         margin-top: -250px;
-      }
+      } */
     }
   </style>
 </head>
@@ -643,7 +641,7 @@
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border btn-3">Start a Kanavu</button>
+                  <button type="button" class="btn border btn-3">Start a Fundraise</button>
                 </a>
               </li>
             </ul>
@@ -664,7 +662,7 @@
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border btn-4">Start a Kanavu</button>
+                  <button type="button" class="btn border btn-4">Start a Fundraise</button>
                 </a>
               </li>
             </ul>
@@ -836,10 +834,10 @@
         <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
       </div>
     </div>
-    <img src="<?= base_url('assets/img/steps.png') ?>" class="steps_img"
-      style="object-fit: cover; width: 100%; margin-top: -200px;">
-    <div class="container how-it-works-container">
-      <div class="row justify-content-center">
+    <!-- <img src="<?= base_url('assets/img/steps.png') ?>" class="steps_img"
+      style="object-fit: cover; width: 100%; margin-top: -200px;"> -->
+    <div class="container " style="display:flex; justify-content:center">
+      <div class="row justify-content-center" style="margin-top:65px;">
         <!-- Step 1 -->
         <div class="col-12 col-lg-4 text-center mb-4">
           <div class="step-container step-1 text-center">
