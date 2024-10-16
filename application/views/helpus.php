@@ -215,66 +215,10 @@
       margin-left: 10px;
 
     }
-    #details{
-      display:block-inline;
-    }
-    #location{
-      margin-left:12%;
-    }
-    #loc_icon{
-      margin-left:25%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    #phone{
-      margin-left:7%
-    }
-    #phone_icon{
-      margin-left:17%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    #email{
-      margin-left:-3%;
-    }
-    #envelope_icon{
-      margin-left:35%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    .line{
-      margin-left:35%;
-      transform:translate(20px,-40px);
-    }
-    
-    input[type]{
-      width:50%;
-    }
-    .area{
-      width:50%;
-    }
-    .form1{
-      margin-left:17%;
-    }
-    .msg_btn{
-      margin-left:15%;
-    }
-    @media (min-width: 767px) and (max-width: 990px) {
-      .line{
-      margin-left:39%;
-      transform:translate(-70px,-50px);
-    }
-    .msg_btn{
-      margin-left:7%;
-    }
-}
 @media (max-width: 767px) {
 
   /* carousel */
-  .line{
-      margin-left:30%;
-      transform:translate(-70px,-50px);
-    }
+
       .carousel-item {
         position: relative;
       }
@@ -299,49 +243,10 @@
         height: 300px; /* Maintain aspect ratio */
         object-fit: cover; /* Ensures the image fills its container */
     }
-    #details{
-      display:block;
-    }
-    #location{
-      margin-left:17%;
-    }
-    #loc_icon{
-      margin-left:19%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    #phone{
-      margin-left:22%
-    }
-    #phone_icon{
-      margin-left:13%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    #email{
-      margin-left:15%;
-    }
-    #envelope_icon{
-      margin-left:22%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    .form1{
-      margin-left:3%;
-    }
-    input[type]{
-      width:90%;
-    }
-    .area{
-      width:90%;
-    }
-    .msg_btn{
-      margin-left:20%;
-    }
     }
     </style>
     </head>
-<body >
+<body>
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="<?=base_url('')?>">
@@ -369,7 +274,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" >Donate</a>
+              <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color:rgba(235, 45, 50, 1)">Donate</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
@@ -381,7 +286,7 @@
               <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>"style="color:rgba(235, 45, 50, 1)">Contact Us</a>
+              <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
             </li>
           </ul><br>
           <div class="d-flex align-items-center ms-auto">
@@ -400,80 +305,20 @@
             <?php else: ?>
               <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
+           
           </div>
         </div>
       </div>
     </div>
   </nav>
   <div class="donate_img mt-5 pt-4">
-    <img src="<?=base_url('assets/img/contact_us.png')?>" width="100%">
+    <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
   </div>
-  
-  <div class="row text-center mt-5 mb-5" >
-    <div class="col-12 col-md-4 mt-3" >
-        <i class="fa-solid fa-location-dot fs-4" style="color:#EB2D32;" ></i>
-        <br><strong>The Kanavu Startup Village</strong>
-        <br><strong>Annamalaikottai, Sivagiri</strong>
-    </div>
-    
-    <div class="col-12 col-md-4 mt-3" >
-        <i class="fa-solid fa-phone-volume fs-4" style="color:#EB2D32;"></i>
-        <br><strong>+91 93792 48387</strong>
-    </div>
-    
-    <div class="col-12 col-md-4 mt-3" >
-        <i class="fa-regular fa-envelope fs-4"  style="color:#EB2D32;"></i>
-        <br><strong>karthi.easwaramoorthy@gmail.com</strong>
-    </div>
-</div>
-
-
-
-
-  <section class="text-gray-600 body-font">
-    <div class="container px-5 py-6 mx-auto flex flex-wrap items-center">
-      <div class="lg:w-3/7 md:w-1/2 sm:w-1/1 xsm:w-1/1  bg-gray-100 rounded-lg p-8 flex flex-col mx-auto mt-10">
-      <br><br>  
-      <h4 class="text-gray-900 text-lg font-medium title-font mb-5 text-center"><strong>GET IN TOUCH WITH US</strong>
-        </h4>
-        <div class="flex justify-center" >
-          <img class=" max-w-screen-md line" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="no image">
-        </div>
-        <h3 class="text-base text-black-500 text-center w-auto"><strong>Submit your inquiry, and we'll respond to you <br>as
-            soon as possible!</strong></h3>
-            <div class="relative mb-4 mt-5 form1">
-  <form name="contactus" class="form1" id="myForm" onsubmit="return contact_us()" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
-
-    <!-- Name Field -->
-    <div class="mb-3">
-  
-  
-  
-    <input type="text" class="form-control" name="full-name" id="exampleFormControlInput1" placeholder="Name*" required>
-    <p id="demo" style="color:red"></p>
-  </div>
-<div class="mb-3">
-  
-  <input type="email" class="form-control" name="email" id="exampleFormControlInput2" placeholder="Mail ID*" required>
-  <p id="demo1" style="color:red"></p>
-</div>
-<div class="mb-3">
-  
-  <input type="tel" class="form-control" name="phone" id="exampleFormControlInput3" placeholder="Phone Number*" required>
-  <p id="demo2" style="color:red"></p>
-</div>
-<div class="mb-3">
-  
-  <textarea class="form-control area" name="message" id="exampleFormControlTextarea1" rows="3" placeholder="Message*" required></textarea>
-  <p id="demo3" style="color:red"></p>
-</div>
-<button type="submit" class="btn btn-primary btn-lg msg_btn" style=" background-color:#E01A2B;border:none;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
-  </form>
-  
-</div>
-
-  </section>
+  <br>
+  <div style="margin-left:%">
+  <h2>Cancer treatment </h2>
+  <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="img-fluid" alt="error in image loading">
+            </div>
   <div class="footer">
       <footer class="footer mt-auto py-3">
         <div class="container">
@@ -509,55 +354,6 @@
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-  function contact_us(){
-     // Get values from form inputs
-     const name = document.getElementById("exampleFormControlInput1").value;
-            const email = document.getElementById("exampleFormControlInput2").value;
-            const phone = document.getElementById("exampleFormControlInput3").value;
-            const message = document.getElementById("exampleFormControlTextarea1").value;
-
-const error_message1=document.getElementById("demo");
-const error_message2=document.getElementById("demo1");
-const error_message3=document.getElementById("demo2");
-const error_message4=document.getElementById("demo3");
-error_message1.innerHTML="";
-error_message2.innerHTML="";
-error_message3.innerHTML="";
-error_message4.innerHTML="";
-            // Regular expressions for validation
-            const nameRegex = /^[A-Za-z\s]+$/; // Allow only alphabets and spaces
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email format
-            const phoneRegex = /^\d{10}$/; // Phone number with 10 digits
-
-            // Validate name
-            if (name.length < 3 || (!nameRegex.test(name))) {
-                error_message1.innerHTML+="Name must have atleast 3 characters <br> Only alphabets and spaces are allowed.";
-                return false;
-            }
-
-            // Validate email
-            if (!emailRegex.test(email)) {
-                 error_message2.innerHTML+="Please enter a valid email address.";
-                return false;
-            }
-
-            // Validate phone number
-            if (!phoneRegex.test(phone)) {
-                 error_message3.innerHTML+="Please enter a valid 10-digit phone number.";
-                return false;
-            }
-            if(message.length<10)
-            {
-              error_message4.innerHTML+="Comments must be minimum of 10 characters";
-              return false;
-            }
-            // If all fields are valid
-            
-            return true;
-        
-  }  
-  </script>
-  </body>
+    </body>
     </html>
     

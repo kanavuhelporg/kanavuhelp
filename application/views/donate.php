@@ -343,6 +343,15 @@
     <button
       class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
       data-filter="events">Events</button>
+      <button
+      class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
+      data-filter="events">Dreams</button>
+      <button
+      class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
+      data-filter="events">Inmits</button>
+      <button
+      class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
+      data-filter="events">Agriculture</button>
   </div><br>
   <script>
     document.querySelectorAll('.filter-btn').forEach(button => {
@@ -357,103 +366,39 @@
     });
   </script>
   <div class="container mt-5">
-    <div class="row">
-      <!-- First Card -->
-      <div class="col-12 col-md-4 mb-4">
-        <div class="card">
-          <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="card-text text-muted mb-0">by Kailaswaran</p>
-              <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-            </div>
-            <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-            <div class="progress mb-2">
-              <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <a href="#" class="btn donate_btn">Donate Now</a>
-          </div>
-        </div>
-      </div>
-      <!-- Second Card -->
-      <div class="col-12 col-md-4 mb-4">
-        <div class="card">
-          <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">Flood-affected house near the Poyang Lake</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="card-text text-muted mb-0">by Kailaswaran</p>
-              <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-            </div>
-            <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
-            <div class="progress mb-2">
-              <div class="progress-bar w-50" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <a href="#" class="btn donate_btn">Donate Now</a>
-          </div>
-        </div>
-      </div>
-      <!-- Third Card -->
-      <div class="col-12 col-md-4 mb-4">
-        <div class="card">
-          <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">Cancer Treatment for a Girl in Gujarat</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="card-text text-muted mb-0">by Kailaswaran</p>
-              <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-            </div>
-            <p class="card-text"><strong>₹ 1,50,000</strong> raised out of ₹ 2,00,000</p>
-            <div class="progress mb-2">
-              <div class="progress-bar w-75" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <a href="#" class="btn donate_btn">Donate Now</a>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="row">
+    <?php if (!empty($fundraisers)): ?>
+        <?php foreach ($fundraisers as $fundraiser): ?>
+            <div class="col-12 col-md-4 mb-4 d-flex">
+                <div class="card h-100">
+                    <!-- Display the image -->
+                    <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" class="card-img-top" alt="no image">
+                    
+                    <div class="card-body d-flex flex-column">
+                        <!-- Title -->
+                        <p class="card-title"><?= $fundraiser->cause_heading?></p>
 
-    <!-- Second row of cards -->
-    <div class="row">
-      <!-- Fourth Card -->
-      <div class="col-12 col-md-4 mb-4">
-        <div class="card">
-          <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">Project Title 4</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="card-text text-muted mb-0">by Kailaswaran</p>
-              <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-            </div>
-            <p class="card-text"><strong>₹ 30,000</strong> raised out of ₹ 50,000</p>
-            <div class="progress mb-2">
-              <div class="progress-bar w-20" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <a href="#" class="btn donate_btn">Donate Now</a>
-          </div>
-        </div>
-      </div>
-      <!-- Fifth Card -->
-      <div class="col-12 col-md-4 mb-4">
-        <div class="card">
-          <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">Project Title 5</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="card-text text-muted mb-0">by Kailaswaran</p>
-              <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-            </div>
-            <p class="card-text"><strong>₹ 45,000</strong> raised out of ₹ 70,000</p>
-            <div class="progress mb-2">
-              <div class="progress-bar w-35" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <a href="#" class="btn donate_btn">Donate Now</a>
-          </div>
-        </div>
-      </div>
+                        <!-- Organizer's name and category -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="card-text text-muted mb-0">by <?= $fundraiser->name ?></p>
+                            <button type="button" class="btn card_button text-muted ms-auto"><?= $fundraiser->category ?></button>
+                        </div>
 
-    </div>
+                       
+
+                        <!-- Donate button -->
+                        <a href="#" class="btn donate_btn mt-auto">Donate Now</a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No fundraisers available at the moment.</p>
+    <?php endif; ?>
+</div>
+
+</div>
+
   </div>
   <div class="footer">
       <footer class="footer mt-auto py-3">

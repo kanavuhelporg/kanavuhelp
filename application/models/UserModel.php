@@ -40,6 +40,11 @@ class UserModel extends CI_Model
 		$this->db->insert('individualform',$data);
 		return true;
 	}
+	public function get_cause_details()
+	{
+		$query = $this->db->get('individualform');
+		return $query->result();
+	}
 
 // 	function get($data){
 // 	$result->$this->db->select('*')->where('email',$data['email'])->where('password',$data['password'])->get('register')->row();
