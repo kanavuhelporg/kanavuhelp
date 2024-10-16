@@ -21,10 +21,6 @@
 <style>
   body {
     font-family: 'sen', sans-serif;
-    overflow-x: hidden;
-    left: 0;
-    right: 0;
-    bottom: 0;
   }
 
   .logo {
@@ -32,7 +28,35 @@
     font-weight: bolder;
     font-size: x-large;
   }
-
+  /* login_button */
+  .login-button {
+      background-color: #E01A2B;
+      color: white;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s background-color;
+    }
+/* start a kanavu button */
+    .startkanavu-button {
+      border: 1px solid #E01A2B;
+      color: #E01A2B;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s background-color;
+    }
+/* navigation bar  menu size */
+    .offcanvas-body {
+      font-size: 17px;
+    }
+    .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  border: 1px solid #41464b;
+  padding: (1rem) var(1rem);
+}
   #navbarscroll {
     margin-top: 17px;
     margin-bottom: 10px;
@@ -594,62 +618,160 @@
   .login_btn {
     margin-right: 20px;
   }
+  @media (max-width: 768px) {
+  .container.box {
+    margin-top: 50px;
+    margin-left: 0px;
+  }
+
+  .box1 {
+    margin-top: 50px;
+  }
+
+  .mm {
+    margin-top: 30px;
+  }
+
+  .img1 {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 20px;
+    margin-left: 0px;
+  }
+
+  #multi-step-form-container {
+    margin-top: 10px;
+  }
+
+  .form-stepper-horizontal {
+    flex-direction: column;
+  }
+
+  .form-stepper-list {
+    width: 100%;
+  }
+
+  .otp-field input {
+    width: 40px;
+    margin: 0 5px;
+  }
+
+  .otp-field {
+    display: flex;
+    justify-content: center;
+  }
+
+  .modal-content {
+    width: 90%;
+    height: auto;
+  }
+
+  input[type="text"], input[type="email"], input[type="number"], input[type="phone"], input[type="date"], select {
+    width: 100%;
+    height: auto;
+  }
+
+  .primary button {
+    width: 100%;
+  }
+}
+.donate_img {
+        width: 100%; /* Ensure the parent container takes full width */
+        position: relative;
+    }
+
+    .donate_img img {
+        width: 100%;
+        height: 300px; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensures the image fills its container */
+    }
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container.box {
+    margin-left: 50px;
+  }
+
+  .img1 {
+    top: 150px;
+    left: 20px;
+    margin-left: 100px;
+  }
+
+  .otp-field input {
+    width: 50px;
+    margin: 0 8px;
+  }
+}
+
 </style>
 
 <body>
-  <nav class="navbar  navbar-expand-lg bg-light fixed-top">
+<nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="<?= base_url('/kanavuhome') ?>">
-        <img class="logo" src="<?=base_url('assets/img/Kanavu_help.png')?>" alt="Kanavu Help">
+      <a class="navbar-brand me-auto" href="<?=base_url('')?>">
+        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll"
-        aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarscroll">
-        <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0 navbar-nav-scroll text-center text-lg-start"> -->
-        <ul class="navbar-nav mb-2 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-          <li class="nav-item dropdown px-3">
-            <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-              style="text-decoration: none;">Fundraise for</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="<?= base_url('/individual#step-1') ?>">Individuals</a></li>
-              <li><a class="dropdown-item" href="<?= base_url('/charity') ?>">Charities</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="navbar-brand p-5 p-md-1" href="<?= base_url('/donate') ?>">Donate</a>
-          </li>
-          <li class="nav-item">
-            <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/myhelps') ?>">My Helps</a>
-          </li>
-          <li class="nav-item">
-            <a class="navbar-brand p-3 p-md-1" href="#demo1">How it works</a>
-          </li>
-          <li class="nav-item">
-            <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/blogs') ?>">Blogs</a>
-          </li>
-          <li class="nav-item">
-            <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/contactus') ?>">Contact us</a>
-          </li>
-        </ul>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">
+            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Fundraise for</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?= base_url('/individual') ?>">Individuals</a></li>
+                <li><a class="dropdown-item" href="<?= base_url('/charity') ?>">Charities</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color:rgba(235, 45, 50, 1)">Donate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+          </ul><br>
+          <div class="d-flex align-items-center ms-auto">
+            <?php if ($this->session->userdata('userId')): ?>
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown">
+                  <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                    style="width: 30px; height: 30px; border-radius: 50%;">
+                  <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                </div>
+                <ul class="dropdown-menu" aria-labelledby="userProfile">
+                  <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i>
+                      Logout</a></li>
+                </ul>
+              </div>
+            <?php else: ?>
+              <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
+            <?php endif; ?>
+            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="container navbar-link  justify-content-sm-start bttn">
-      <!-- <ul class="navbar-nav d-md-flex flex-row justify-content-end"> -->
-      <!-- <li class="nav-item"> -->
-      <a href="<?= base_url('/login') ?>"><button type="button" class="btn btn-1 border login_btn">Login</button></a>
-      <!-- </li> -->
-      <!-- <li class="nav-item"> -->
-      <a href="<?= base_url('/individual') ?>">
-        <button type="button" class="btn btn-2 border register_btn">Start a Kanavu</button></a>
-      <!-- </li> -->
-      <!-- </ul> -->
-    </div>
   </nav>
-  <div class="container-fluid ">
-    <img src="<?php echo base_url('/assets/img/sthelp.png'); ?>" alt="No Image" class="img-fluid">
+  <div class="donate_img mt-5 pt-4">
+    <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
   </div>
   <div class="container box" style="margin-top:100px;margin-left: 200px;">
     <div class="row box1" style="margin-top:100px;">
@@ -663,6 +785,7 @@
 
       <div id="multi-step-form-container" class="mt-10" style="margin-top: 20px;">
         <!-- Form Steps / Progress Bar -->
+
         <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap  ">
           <!-- Step 1 -->
           <li class="form-stepper-active text-center form-stepper-list" step="1">

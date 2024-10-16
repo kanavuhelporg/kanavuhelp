@@ -14,7 +14,7 @@
       font-family: 'Sen', sans-serif;
     }
 /* carousel */
-    .carousel-item {
+    /* .carousel-item {
       height: 100vh;
     }
 
@@ -22,7 +22,7 @@
       object-fit: cover;
       height: 100%;
       width: 100%;
-    }
+    } */
 /* Login_button */
     .login-button {
       background-color: #E01A2B;
