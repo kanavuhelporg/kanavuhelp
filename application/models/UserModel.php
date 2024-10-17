@@ -51,6 +51,7 @@ class UserModel extends CI_Model
 // 	}
 // }
 
+
 public function loginUser()
     {
         $postData = $this->input->post(null, true);
