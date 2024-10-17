@@ -55,8 +55,10 @@ class kanavuhelp extends CI_Controller
         $this->load->view('charity.php');
     }
     public function donate()
-    {
-        $this->load->view('donate.php');
+    {$data['category']=$this->UserModel->get_category();
+        $data['fundraisers'] = $this->UserModel->get_cause_details();
+
+        $this->load->view('donate.php', $data);
     }
     public function myhelps()
     {
@@ -73,6 +75,10 @@ class kanavuhelp extends CI_Controller
     public function abouts()
     {
         $this->load->view('abouts.php');
+    }
+    public function helpus()
+    {
+        $this->load->view('helpus.php');
     }
     public function registeration()
     {
