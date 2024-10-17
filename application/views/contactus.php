@@ -481,8 +481,8 @@
           <div class="row text-center">
             <div class="col-12">
               <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
-                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
+                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
                 <a class="footer-lable lable" href="#">Terms of Use</a>
                 <a class="footer-lable lable" href="#">Privacy Policy</a>
               </div>

@@ -55,7 +55,7 @@ class kanavuhelp extends CI_Controller
         $this->load->view('charity.php');
     }
     public function donate()
-    {
+    {$data['category']=$this->UserModel->get_category();
         $data['fundraisers'] = $this->UserModel->get_cause_details();
 
         $this->load->view('donate.php', $data);

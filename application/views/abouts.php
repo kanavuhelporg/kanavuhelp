@@ -1,134 +1,489 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>donate</title>
-    <style>
-        body {
-      font-family: 'sen', sans-serif;
-      overflow-x:hidden;
-      left:0;
-      right:0;
-      bottom:0;
-    }
-    .social-icons img{
-    width:20px;
-    height:20px;
-    margin-left: 10px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanavu_help</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-}
-p{
-    margin-top:100px;
-    font-size:22px;
-    text-align:center;
-    padding-bottom:0px;
+  <style>
+    body {
+      font-family: 'Sen', sans-serif;
+    }
+/* carousel */
+    .carousel-item {
+      height: 100vh;
+    }
+
+    .carousel-item img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+/* Login_button */
+    .login-button {
+      background-color: #E01A2B;
+      color: white;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s background-color;
+    }
+/* start a kanavu button */
+    .startkanavu-button {
+      border: 1px solid #E01A2B;
+      color: #E01A2B;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s background-color;
+    }
+/* nav bar menu size */
+    .offcanvas-body {
+      font-size: 17px;
+    }
+/* carousel text */
+    .imgtext1,
+    .imgtext2 {
+      position: absolute;
+      color: #000;
+      width: 30%;
+      font-size: 48px;
+      font-style: normal;
+      padding-bottom: 100px;
+    }
+
+    .imgtext1 {
+      top: 50%;
+      left: 65px;
+      transform: translateY(-50%);
+    }
+
+    .imgtext2 {
+      top: 50%;
+      right: 65px;
+      transform: translateY(-50%);
+    }
+
+    .imgtext1 strong,
+    .imgtext2 strong {
+      font-weight: bolder;
+    }
+
+    .imgtext11,
+    .imgtext22 {
+      font-size: 18px;
+      margin-top: 5px;
+    }
+
+    .imgtext11 ul,
+    .imgtext22 ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .imgtext11 ul li {
+      margin-left: 0px;
+    }
+
+
+    .imgtext1 span,
+    .imgtext2 span {
+      color: #EB2D32;
+      font-weight: bolder;
+      font-size: 40px;
+    }
+
+    /* filter_button above cards */
+    .filter-btn {
+      background-color: transparent;
+      /* No background color */
+      border-width: 2px;
+      /* Add border width for clarity */
+    }
+
+    .filter-btn.active {
+      border-color: #EB2D32;
+      /* Red border for active button */
+      color: #EB2D32;
+      /* Red text for active button */
+    }
+
+    .filter-btn:not(.active) {
+      border-color: #A9A9A9;
+      /* Grey border for inactive buttons */
+      color: #A9A9A9;
+      /* Grey text for inactive buttons */
+    }
+
+    .filter-btn:hover {
+      border-color: #EB2D32;
+      color: white;
+      background-color: #EB2D32;
+    }
+    .donatefor {
+      border: 1px solid #E01A2B;
+      color: #E01A2B;
+      background-color: #fff;
+      border-radius: 20px;
+    }
+    /* card section */
+    .card {
+      width: 80%;
+      /* Make the card width responsive */
+      box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
+      
+    }
+
+    .carousel-item .row {
+      margin-left: 150px;
+      margin-right: 150px;
+    }
+
+    .carousel-item .col-12.col-md-4 {
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-bottom: 20px;
+      
+    }
+
+ 
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      
+    }
+
+    .card_button {
+      border: 1px solid rgba(174, 168, 168, 1);
+      border-radius: 25px;
+    }
+
+    .donate_btn {
+      border: 1px solid rgba(224, 26, 43, 1);
+      color: rgba(224, 26, 43, 1);
+      border-radius: 25px;
+    }
+
+   /* footer */
+
+   .footer {
+      height: 250px;
+      width: 100%;
+      left: 0;
+      right: 0;
+      background-color: #EB2D32;
+      margin-top: 50px;
+      color: #f0f0f0;
+    }
+
+    .footer1 {
+      text-align: center;
+      padding: 10px;
+      margin-left: 10px;
+    }
+
+    .footer-lable {
+      color: white;
+      text-decoration: none;
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+
+    .lable {
+      border-right: 3px solid #fff;
+    }
+
+    .footer1 a {
+      margin-left: 20x;
+    }
+
+    .footimg {
+      margin-left: 520px;
+      padding: 20px;
+    }
+
+    .social-icons img {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+
+    }
+    #details{
+      display:block-inline;
+    }
+    #location{
+      margin-left:12%;
+    }
+    #loc_icon{
+      margin-left:25%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    #phone{
+      margin-left:7%
+    }
+    #phone_icon{
+      margin-left:17%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    #email{
+      margin-left:-3%;
+    }
+    #envelope_icon{
+      margin-left:35%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    .line{
+      margin-left:35%;
+      transform:translate(20px,-40px);
+    }
     
+    input[type]{
+      width:50%;
+    }
+    .area{
+      width:50%;
+    }
+    .form1{
+      margin-left:17%;
+    }
+    .msg_btn{
+      margin-left:15%;
+    }
+    .about p {
+    line-height: 1.6; /* Improve readability */
 }
-.about p{
-    padding-top: 0px;
-    font-size:17px;
+@media (max-width: 576px) {
+    .about p {
+        font-size: 0.9rem; /* Smaller text on mobile */
+    }
 }
-center img{
-    height: 350px;
-    width: 400px;
+    @media (min-width: 767px) and (max-width: 990px) {
+      .line{
+      margin-left:39%;
+      transform:translate(-70px,-50px);
+    }
+    .msg_btn{
+      margin-left:7%;
+    }
 }
+@media (max-width: 767px) {
 
- .btn {
-      color: #EB2D32!important;
-      font-weight: bolder !important;
-      border-radius: 50px !important;
-      border:1px solid  #EB2D32 ;
+  /* carousel */
+  .line{
+      margin-left:30%;
+      transform:translate(-70px,-50px);
     }
-    .btn:hover {
-      background-color: #EB2D32 !important;
-      color: white !important;
-    }
-    .btn-1 {
-      margin-left: 200px !important;
-      background-color: #EB2D32 !important;
-      color: white !important;
-      width:100px;
-      height:45px;
-    }
-    .btn-2{
-      height:45px;
-      width:150px;
+      .carousel-item {
+        position: relative;
+      }
+
+      .carousel-item img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+      .card{
+        margin-left: 10%;
+      }
+
+    /* donate  image below nav bar */
+          .donate_img {
+        width: 100%; /* Ensure the parent container takes full width */
+        position: relative;
     }
 
-</style>
-</head>
-<body class="overflow-x-hidden">
-    <header class="text-gray-600 body-font">
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhome') ?>">
-            <img class="logo" src="<?=base_url('assets/img/Kanavu_help.png')?>" alt="Kanavu Help"style="margin-left:50px;">
-          </a>
-          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"style="margin-left:200px;" >
-            <div class="group inline-block relative mr-5">
-                <a href="#" class="hover:text-gray-900 ml-5">Fundraise for</a>
-                <div class="opacity-0 group-hover:opacity-100 absolute z-10 bg-white border rounded-md p-2">
-                    <!-- Dropdown content goes here -->
-                    <a  href="<?= base_url('/individual') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Individual</a>
-                    <a  href="<?= base_url('/charity') ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Charities</a>
-                    <!-- Add more dropdown options as needed -->
-                </div>
-            </div>
-            <a href="<?= base_url('/donate') ?>" class="mr-10 hover:text-gray-900"> Donate</a>
-            <a href="<?= base_url('/myhelps') ?>"  class="mr-10 hover:text-gray-900">My helps</a>
-            <a href="http://localhost/kanavuhelp/#demo1" class="mr-10 hover:text-gray-900">How it works</a>
-            <a href="<?= base_url('/blogs') ?>" class="mr-10 hover:text-gray-900">Blogs</a>
-            <a href="<?= base_url('/contactus') ?>" class="hover:text-gray-900">Contact us</a>
-        </nav>
-        <a href="<?= base_url('/login') ?>"><button type="button" class="btn btn-1 border">Login</button></a>
-        <a href="<?= base_url('/individual') ?>"><button type="button" class="btn btn-2 border">Start a Kanavu</button></a>
+    .donate_img img {
+        width: 100%;
+        height: 300px; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensures the image fills its container */
+    }
+    #details{
+      display:block;
+    }
+    #location{
+      margin-left:17%;
+    }
+    #loc_icon{
+      margin-left:19%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    #phone{
+      margin-left:22%
+    }
+    #phone_icon{
+      margin-left:13%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    #email{
+      margin-left:15%;
+    }
+    #envelope_icon{
+      margin-left:22%;
+      color:#E01A2B;
+      font-size:26px;
+    }
+    .form1{
+      margin-left:3%;
+    }
+    input[type]{
+      width:90%;
+    }
+    .area{
+      width:90%;
+    }
+    .msg_btn{
+      margin-left:20%;
+    }
+    }
+    </style>
+    </head>
+<body >
+  <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand me-auto" href="<?=base_url('')?>">
+        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
+      </a>
 
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">
+            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
-    </header>
-    
-    
-    <p><strong>"Mission to make a"<img src="<?php echo base_url('/assets/img/Emoji.png');?>" style="display:inline;"></strong></p><br>
-    <div class="flex justify-center">
-        <img class=" max-w-screen-md" src="<?php echo base_url('/assets/img/underline.svg');?>" alt="no image">
-    </div>
-    <div class="about">
-    <p style="margin-top:40px;">At Kanavu.help, we are driven by a passionate<br> 
-    commitment to make a positive impact in the lives of<br>
-    those in need. We believe in the power of collective action<br>
-    and are committed to creating a better, more<br>
-    compassionate world for everyone.</p></div><br>
-
-    <center><img src="<?php echo base_url('/assets/img/Group 102.svg');?>"></center>
-
-    
-    <div class="footer">
-        <footer class="footer mt-auto h-256 w-full bg-red-600 py-3 text-white">
-            <div class="container mx-auto">
-                <h5 class="text-center">localhost</h5>
-                <div class="flex justify-center p-3 ml-4">
-                    <a href="<?= base_url('/abouts') ?>" class="footer-lable lable ml-5">About</a>
-                    <a href="<?= base_url('/contactus') ?>" class="footer-lable lable ml-5">Contact</a>
-                    <a href="#" class="footer-lable lable ml-5">Terms of Use</a>
-                    <a href="#" class="footer-lable lable ml-5">Privacy Policy</a>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Fundraise for</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?= base_url('/individual') ?>">Individuals</a></li>
+                <li><a class="dropdown-item" href="<?= base_url('/charity') ?>">Charities</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" >Donate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+          </ul><br>
+          <div class="d-flex align-items-center ms-auto">
+            <?php if ($this->session->userdata('userId')): ?>
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown">
+                  <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                    style="width: 30px; height: 30px; border-radius: 50%;">
+                  <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
                 </div>
-            </div>
-            <div class="social-icons flex justify-center text-center mt-4">
-                <a href="https://www.facebook.com/" target="_blank">
-                    <img src="<?php echo base_url('/assets/img/facebook-f.svg');?>" alt="Facebook Logo" class="w-6 h-6 mr-2">
-                </a>
-                <a href="https://twitter.com/" target="_blank">
-                    <img src="<?php echo base_url('/assets/img/twitter.svg');?>" alt="Twitter Logo" class="w-6 h-6 mr-2">
-                </a>
-                <a href="https://www.linkedin.com/" target="_blank">
-                    <img src="<?php echo base_url('/assets/img/linkedin-in.svg');?>" alt="LinkedIn Logo" class="w-6 h-6">
-                </a>
-            </div>
-            <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg');?>" alt="no image" class="footimg mx-auto mt-4">
-            <p class="text-center p-2" style="margin-top:0px;font-size:16px;">Copyright 2024 @ localhost. All Rights Reserved.</p>
-        </footer>
+                <ul class="dropdown-menu" aria-labelledby="userProfile">
+                  <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i>
+                      Logout</a></li>
+                </ul>
+              </div>
+            <?php else: ?>
+              <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
+            <?php endif; ?>
+            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  
+    
+  <div class="container mt-5">
+    <br><br>
+
+    <!-- Underline Image -->
+    <div class="text-center">
+    <p class="text-center">
+    <h4>
+            "Mission to make a" 
+            <img src="<?php echo base_url('/assets/img/Emoji.png'); ?>" style="display: inline; vertical-align: middle;" alt="Emoji" width="30">
+            </h4>
+            </p>
+        <img class="img-fluid" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="Underline" style="max-width: 100%; height: auto;">
     </div>
 
+    <!-- About Text Section -->
+    <div class="about mt-4">
+        <p class="text-center">
+            At Kanavu.help, we are driven by a passionate<br> 
+            commitment to make a positive impact in the lives of<br>
+            those in need. We believe in the power of collective action<br>
+            and are committed to creating a better, more<br>
+            compassionate world for everyone.
+        </p>
+    </div>
+
+    <!-- Group Image -->
+    <div class="text-center my-4">
+        <img class="img-fluid" src="<?php echo base_url('/assets/img/Group 102.svg'); ?>" alt="Group 102" style="max-width: 100%; height: auto;">
+    </div>
+</div>
+
+
+<div class="footer">
+      <footer class="footer mt-auto py-3">
+        <div class="container">
+          <h5 class="text-center">Kanavu.help</h5>
+          <div class="row text-center">
+            <div class="col-12">
+              <div class="footer1">
+                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
+                <a class="footer-lable lable" href="#">Terms of Use</a>
+                <a class="footer-lable lable" href="#">Privacy Policy</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="social-icons d-flex justify-content-center text-center my-2">
+          <a href="https://www.facebook.com/" target="_blank" class="mx-2">
+            <img src="assets/img/facebook-f.svg" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
+          </a>
+          <a href="https://twitter.com/" target="_blank" class="mx-2">
+            <img src="assets/img/twitter.svg" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
+          </a>
+          <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
+            <img src="assets/img/linkedin-in.svg" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
+          </a>
+        </div>
+        <img src="assets/img/footer-secured-card 1.svg" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
+          style="max-width: 200px;">
+        <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
+      </footer>
+    </div>
+
+
+<!-- Bootstrap JS and dependencies (Popper.js) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+            </body>
+            </html>

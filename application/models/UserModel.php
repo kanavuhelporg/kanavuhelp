@@ -45,7 +45,11 @@ class UserModel extends CI_Model
 		$query = $this->db->get('individualform');
 		return $query->result();
 	}
-
+public function get_category()
+{
+	$query=$this->db->get('category');
+	return $query->result();
+}
 // 	function get($data){
 // 	$result->$this->db->select('*')->where('email',$data['email'])->where('password',$data['password'])->get('register')->row();
 // 	if(!empty($result)){
