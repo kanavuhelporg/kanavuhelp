@@ -657,7 +657,7 @@
         <!-- <img src="Mask-Group-241.png" alt="" style="position: absolute; top: 0px; left: -60px;"> -->
         <h3 class="mt-10" style="margin-top: 50px;"><strong>START YOUR HELP</strong></h3>
         <h6>"We make a living by what we get,but we make a life by what we give"</h6>
-        <img src="<?php echo base_url('/assets/img/btfly.png'); ?>" alt="no img" class="w-full h-auto img1"
+        <!-- <img src="<?php echo base_url('/assets/img/btfly.png'); ?>" alt="no img" class="w-full h-auto img1" -->
           style="position: absolute; top: 200px; left: 30px; margin-top:400px;margin-left:200px;">
       </div>
 
@@ -715,7 +715,7 @@
                 <option value="Emergency">Emergency</option>
                 <option value="Events">Events</option>
                 <?php foreach ($result as $row) { ?>
-                  <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_select', $row['id'], False); ?>>
+                  <option value="<?php echo $row['id']; ?>" <?php echo set_select('category', $row['id'], False); ?>>
                     <?php echo $row['raising_fund_for']; ?>
                   </option>
                 <?php } ?>
@@ -809,7 +809,7 @@
                 <option value="Emergency">Emergency</option>
                 <option value="Events">Events</option>
                 <?php foreach ($result as $row) { ?>
-                  <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_option', $row['id'], False); ?>>
+                  <option value="<?php echo $row['id']; ?>" <?php echo set_select('category', $row['id'], False); ?>>
                     <?php echo $row['raising_fund_for']; ?>
                   </option>
                 <?php } ?>
@@ -834,10 +834,10 @@
                 <input type="file" id="cover_image" name="cover_image" accept="image/*" required>
               </div><br><br>
               <label for="cause-heading"></label>
-              <input type="text" id="cause-heading" name="cause-heading" placeholder="Heading" required>
+              <input type="text" id="cause-heading" name="cause_heading" placeholder="Heading" required>
 
               <label for="cause-description"></label>
-              <input id="cause-description" name="cause-description" placeholder="Description" required>
+              <input id="cause-description" name="cause_description" placeholder="Description" required>
             </div>
             <div class="mt-3 primary" style="margin-left:250px;">
               <button class="button btn-navigate-form-step" type="button" step_number="3"

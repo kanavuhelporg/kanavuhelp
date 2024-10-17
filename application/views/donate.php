@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
 
   <style>
     body {
@@ -79,8 +80,11 @@
 }
 
 .bi-share {
-    font-size: 1.5rem; /* Adjust the size of the share icon */
-    cursor: pointer;   /* Optional: Make it clickable */
+    font-size: 1.3rem; /* Adjust the size of the share icon */
+   transform:translateX(130px);
+    cursor: pointer;
+    color:#E01A2B;
+       /* Optional: Make it clickable */
 }
 
     .imgtext11,
@@ -145,7 +149,7 @@
       width: 80%;
       /* Make the card width responsive */
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
-      
+     
     }
 
     .carousel-item .row {
@@ -223,10 +227,20 @@
       margin-left: 10px;
 
     }
+    @media (max-width:1000px and min-width:767px)
+    {
+      .bi-share {
+    font-size: 1.3rem; /* Adjust the size of the share icon */
+   transform:translateX(0px);
+    cursor: pointer;
+    color:#E01A2B;
+       /* Optional: Make it clickable */
+}
+    }
 @media (max-width: 767px) {
 
   /* carousel */
-
+  
       .carousel-item {
         position: relative;
       }
@@ -237,7 +251,7 @@
         object-fit: cover;
       }
       .card{
-        margin-left: 10%;
+        margin-left: 2%;
       }
 
     /* donate  image below nav bar */
@@ -365,11 +379,12 @@ document.querySelectorAll('.filter-btn').forEach(button => {
   <div class="row">
     <?php if (!empty($fundraisers)): ?>
         <?php foreach ($fundraisers as $fundraiser): ?>
-            <!-- Add data-category attribute and Bootstrap classes for fixed size -->
+       <!-- Add data-category attribute and Bootstrap classes for fixed size -->
             <div class="col-12 col-md-4 mb-4 d-flex">
+            <a href=  "<?= base_url('/helpus') ?>"   style="text-decoration:none;color:black">  
                 <div class="card h-100 w-100 fixed-card">
                     <!-- Display the image -->
-                    <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" class="card-img-top fixed-card-img" alt="no image">
+                    <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="80%" height="200px" class="card-img-top fixed-card-img" alt="no image">
                     
                     <div class="card-body d-flex flex-column">
                         <!-- Title -->
@@ -380,7 +395,12 @@ document.querySelectorAll('.filter-btn').forEach(button => {
                             <p class="card-text text-muted mb-0">by <?= $fundraiser->name ?></p>
                             <button type="button" class="btn card_button text-muted ms-auto"><?= $fundraiser->category ?></button>
                         </div>
-
+                        
+                        <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
+            <div class="progress mb-2">
+              <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            
                         <!-- Donate button and share icon -->
                         <div class="d-flex align-items-center mt-auto">
                             <!-- Donate Now button -->
@@ -392,6 +412,7 @@ document.querySelectorAll('.filter-btn').forEach(button => {
                     </div>
                 </div>
             </div>
+        </a>
         <?php endforeach; ?>
     <?php else: ?>
         <p>No fundraisers available at the moment.</p>
