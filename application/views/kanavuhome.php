@@ -14,9 +14,9 @@
       font-family: 'Sen', sans-serif;
     }
 /* carousel img */
-    /* .carousel-item {
+    .carousel-item {
       height: 100vh;
-    } */
+    }
 
     .carousel-item img {
       object-fit: cover;
@@ -641,7 +641,7 @@
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border btn-3">Start a Fundraise</button>
+                  <button type="button" class="btn border btn-3">Start a Kanavu</button>
                 </a>
               </li>
             </ul>
@@ -662,7 +662,7 @@
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border btn-4">Start a Fundraise</button>
+                  <button type="button" class="btn border btn-4">Start a Kanavu</button>
                 </a>
               </li>
             </ul>
@@ -671,6 +671,7 @@
       </div>
     </div>
   </div>
+  
   <div class="container-xxl mt-5">
     <div class="h4" style="text-align:center">BE THE REASON OF<span style="color:#EB2D32"> SOMEONE SMILES</span></div>
     <div style="display: flex; justify-content: center;">
@@ -725,19 +726,19 @@
               </div>
             </div>
             <!-- Third Card -->
-            <div class="col-12 col-md-4 d-none d-md-block">
+            <div class="col-12 col-md-4">
               <div class="card">
                 <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <p class="card-title">Cancer Treatment for a Girl in Gujarat</p>
+                  <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <p class="card-text text-muted mb-0">by Kailaswaran</p>
                     <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
                     <!-- Add btn-secondary for styling -->
                   </div>
-                  <p class="card-text"><strong>₹ 1,50,000</strong> raised out of ₹ 2,00,000</p>
+                  <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
                   <div class="progress mb-2">
-                    <div class="progress-bar w-75" role="progressbar" aria-valuenow="25" aria-valuemin="0"
+                    <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0"
                       aria-valuemax="100"></div>
                   </div>
                   <a href="#" class="btn donate_btn">Donate Now</a>
@@ -748,22 +749,22 @@
         </div>
 
         <!-- Second Set of Cards -->
-        <div class="carousel-item">
+        <div class="carousel-item active">
           <div class="row">
             <!-- First Card -->
             <div class="col-12 col-md-4">
               <div class="card">
                 <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <p class="card-title">Project Title 4</p>
+                  <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <p class="card-text text-muted mb-0">by Kailaswaran</p>
                     <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
                     <!-- Add btn-secondary for styling -->
                   </div>
-                  <p class="card-text"><strong>₹ 30,000</strong> raised out of ₹ 50,000</p>
+                  <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
                   <div class="progress mb-2">
-                    <div class="progress-bar w-20" role="progressbar" aria-valuenow="25" aria-valuemin="0"
+                    <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0"
                       aria-valuemax="100"></div>
                   </div>
                   <a href="#" class="btn donate_btn">Donate Now</a>
@@ -775,15 +776,15 @@
               <div class="card">
                 <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <p class="card-title">Project Title 5</p>
+                  <p class="card-title">Flood-affected house near the Poyang Lake</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <p class="card-text text-muted mb-0">by Kailaswaran</p>
                     <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
                     <!-- Add btn-secondary for styling -->
                   </div>
-                  <p class="card-text"><strong>₹ 45,000</strong> raised out of ₹ 70,000</p>
+                  <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
                   <div class="progress mb-2">
-                    <div class="progress-bar w-35" role="progressbar" aria-valuenow="25" aria-valuemin="0"
+                    <div class="progress-bar w-50" role="progressbar" aria-valuenow="25" aria-valuemin="0"
                       aria-valuemax="100"></div>
                   </div>
                   <a href="#" class="btn donate_btn">Donate Now</a>
@@ -791,19 +792,19 @@
               </div>
             </div>
             <!-- Third Card -->
-            <div class="col-12 col-md-4 d-none d-md-block">
+            <div class="col-12 col-md-4">
               <div class="card">
                 <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <p class="card-title">Project Title 6</p>
+                  <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <p class="card-text text-muted mb-0">by Kailaswaran</p>
                     <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
                     <!-- Add btn-secondary for styling -->
                   </div>
-                  <p class="card-text"><strong>₹ 70,000</strong> raised out of ₹ 90,000</p>
+                  <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
                   <div class="progress mb-2">
-                    <div class="progress-bar w-40" role="progressbar" aria-valuenow="25" aria-valuemin="0"
+                    <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0"
                       aria-valuemax="100"></div>
                   </div>
                   <a href="#" class="btn donate_btn">Donate Now</a>
