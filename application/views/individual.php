@@ -108,8 +108,8 @@
   }
 
   .footer {
-    height: 250px;
-
+    /* height: 250px; */
+    width: 100%;
     left: 0;
     right: 0;
     background-color: #EB2D32;
@@ -278,9 +278,9 @@
 
   }
 
-  #multi-step-form-container {
+  /* #multi-step-form-container {
     margin-top: 1rem;
-  }
+  } */
 
   .text-center {
     text-align: center;
@@ -465,16 +465,16 @@
   body #multi-step-form-container {
     width: 700px;
     height: 680;
-    /* margin-bottom: 50px ; */
+    margin-bottom: 50px;
     padding: 20px;
-    /* border: 2px solid black; */
+    border: 2px solid black;
     border-radius: 10px;
     background-color: white;
     float: right;
     margin-left: 80px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
 
-  }
+  } 
 
   body label {
     display: block;
@@ -619,10 +619,6 @@
     margin-right: 20px;
   }
   @media (max-width: 768px) {
-  .container.box {
-    margin-top: 50px;
-    margin-left: 0px;
-  }
 
   .box1 {
     margin-top: 50px;
@@ -702,135 +698,158 @@
     margin: 0 8px;
   }
 }
-
+.btn-red {
+    color: white !important; /* Force white text */
+    background-color: red !important; /* Force red background */
+    border-color: red !important; /* Force red border */
+}
 </style>
 
 <body>
 <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="<?=base_url('')?>">
-        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-      </a>
+        <!-- Navbar brand -->
+        <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
+            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help" style="max-width: 150px;">
+        </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <!-- Navbar toggler (for mobile view) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title">
-            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Fundraise for</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="<?= base_url('/individual') ?>">Individuals</a></li>
-                <li><a class="dropdown-item" href="<?= base_url('/charity') ?>">Charities</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color:rgba(235, 45, 50, 1)">Donate</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
-            </li>
-          </ul><br>
-          <div class="d-flex align-items-center ms-auto">
-            <?php if ($this->session->userdata('userId')): ?>
-              <div class="d-flex align-items-center">
-                <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown">
-                  <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                    style="width: 30px; height: 30px; border-radius: 50%;">
-                  <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                </div>
-                <ul class="dropdown-menu" aria-labelledby="userProfile">
-                  <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i>
-                      Logout</a></li>
+        <!-- Offcanvas (for mobile navigation) -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+                    <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help" style="max-width: 120px;">
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Navbar links -->
+                <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+                    </li>
                 </ul>
-              </div>
-            <?php else: ?>
-              <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
-            <?php endif; ?>
-            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
-          </div>
+
+                <!-- User profile or login -->
+                <div class="d-flex align-items-center ms-auto">
+                    <?php if ($this->session->userdata('userId')): ?>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="<?= base_url('assets/img/Ellipse 12.png') ?>" alt="Profile Image" class="rounded-circle" style="width: 30px; height: 30px;">
+                                <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                            </div>
+                            <ul class="dropdown-menu" aria-labelledby="userProfile">
+                                <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                      <a href="<?= base_url('/login') ?>" class="btn btn-red me-2">Login</a>
+                    <?php endif; ?>
+                    <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </nav>
+</nav>
+
+
   <div class="donate_img mt-5 pt-4">
-    <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
+  <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
   </div>
-  <div class="container box" style="margin-top:100px;margin-left: 200px;">
-    <div class="row box1" style="margin-top:100px;">
-      <div class="col-md-4 text-start mm text-center">
-        <!-- <img src="Mask-Group-241.png" alt="" style="position: absolute; top: 0px; left: -60px;"> -->
-        <h3 class="mt-10" style="margin-top: 50px;"><strong>START YOUR HELP</strong></h3>
-        <h6>"We make a living by what we get,but we make a life by what we give"</h6>
-        <img src="<?php echo base_url('/assets/img/btfly.png'); ?>" alt="no img" class="w-full h-auto img1"
-          style="position: absolute; top: 200px; left: 30px; margin-top:400px;margin-left:200px;">
-      </div>
+  <div class="mx-auto text-center mt-8 md:ml-20 ">
+    <button id="myDonationsButton" 
+      class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 text-red-500 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data"
+      onclick="window.location.href='<?= base_url('/individual') ?>'">
+      Individual
+    </button>
 
-      <div id="multi-step-form-container" class="mt-10" style="margin-top: 20px;">
-        <!-- Form Steps / Progress Bar -->
+    <button id="myFundraisersButton"
+      class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 data"
+      onclick="window.location.href='<?= base_url('/charity') ?>'">
+      Charities
+    </button>
+</div>
 
-        <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap  ">
-          <!-- Step 1 -->
-          <li class="form-stepper-active text-center form-stepper-list" step="1">
-            <a class="mx-2 ">
-              <span class="form-stepper-circle">
-                <span>1</span>
-              </span>
-            </a>
-          </li>
-          <!-- Step 2 -->
-          <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
-            <a class="mx-2">
-              <span class="form-stepper-circle text-muted">
-                <span>2</span>
-              </span>
-            </a>
-          </li>
-          <!-- Step 3 -->
-          <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
-            <a class="mx-2">
-              <span class="form-stepper-circle text-muted">
-                <span>3</span>
-              </span>
-            </a>
-          </li>
-          <li class="form-stepper-unfinished text-center form-stepper-list" step="4">
-            <a class="mx-2">
-              <span class="form-stepper-circle text-muted">
-                <span>4</span>
-              </span>
-            </a>
-          </li>
-        </ul>
-        <!-- Step Wise Form Content -->
-        <form id="individualForm" name="individualForm" onsubmit="return individual()"
-          action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" method="POST"
-          class="row row-cols-1 ms-5 me-5">
-          <!-- Step 1 Content -->
-          <section id="step-1" class="form-step " style="height:450px;border:none;">
+<div class="container box mt-auto py-3">
+    <div class="row box1 mt-auto py-3">
+    <div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="container-fluid mt-5">
+    <div class="row align-items-center">
+        <!-- Left Column for Image and Text -->
+        <div class="col-md-6 d-flex justify-content-center">
+            <div class="text-center">
+                <h3 class="mt-4"><strong>START YOUR HELP</strong></h3>
+                <h6>"We make a living by what we get, but we make a life by what we give"</h6>
+                <img src="<?php echo base_url('/assets/img/btfly.png');?>" alt="no img" class="img-fluid" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
+        <!-- Right Column for Form -->
+        <div class="col-md-6">
+            <div id="multi-step-form-container mt-auto py-3">
+                <!-- Form Steps / Progress Bar -->
+                <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap">
+                    <!-- Step 1 -->
+                    <li class="form-stepper-active text-center form-stepper-list" step="1">
+                        <a class="mx-2">
+                            <span class="form-stepper-circle">
+                                <span>1</span>
+                            </span>
+                        </a>
+                    </li>
+                    <!-- Step 2 -->
+                    <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
+                        <a class="mx-2">
+                            <span class="form-stepper-circle text-muted">
+                                <span>2</span>
+                            </span>
+                        </a>
+                    </li>
+                    <!-- Step 3 -->
+                    <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
+                        <a class="mx-2">
+                            <span class="form-stepper-circle text-muted">
+                                <span>3</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="form-stepper-unfinished text-center form-stepper-list" step="4">
+                        <a class="mx-2">
+                            <span class="form-stepper-circle text-muted">
+                                <span>4</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Step Wise Form Content -->
+                <form id="charityform" name="charityform" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/charityform_data') ?>" enctype="multipart/form-data" method="POST" class="row row-cols-1">
+                    <!-- Step 1 Content -->
+                    <section id="step-1" class="form-step " style="height:450px;border:none;">
             <h2>Basic Details</h2>
 
             <!-- Step 1 input fields -->
             <div class=" col-md-12 my-3">
               <label for="form-select">I am raising fund for:</label>
-              <select name="form_select" id="form_select" style="width: 540px; height: 40px;">
+              <select name="form_select" id="form_select">
                 <option value="" selected>--Select--</option>
                 <option value="Medical">Medical</option>
                 <option value="Crisis">Crisis</option>
@@ -838,15 +857,12 @@
                 <option value="Emergency">Emergency</option>
                 <option value="Events">Events</option>
                 <?php foreach ($result as $row) { ?>
-                  <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_select', $row['id'], False); ?>>
-                    <?php echo $row['raising_fund_for']; ?>
-                  </option>
-                <?php } ?>
-              </select><br>
-
-
-
-              <label for="name"></label>
+                <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_select', $row['id'], False); ?>>
+                  <?php echo $row['raising_fund_for']; ?>
+                </option>
+              <?php } ?>
+            </select>
+            <label for="name"></label>
               <input type="text" id="name" name="name" placeholder="Name" required>
 
               <label for="email"> </label>
@@ -855,10 +871,15 @@
               <label for="phone"></label>
               <input type="phone" id="phone" name="phone" placeholder="Phone Number* " required>
             </div>
-            <div class="mt-3 primary" style="margin-left:450px;">
-              <button id="openModalBtn1" class="button btn-navigate-form-step" type="button"
-                step_number="1">Continue</button>
-            </div>
+            <div class="container">
+              <div class="row">
+               <div class="col-12 text-center mt-3">
+                  <button id="openModalBtn1" class="button btn-navigate-form-step" type="button" step_number="1">
+                    Continue
+                  </button>
+                  </div>
+                </div>
+              </div>
           </section>
           <div id="myModal1" class="modal">
             <div class="modal-content">
@@ -912,7 +933,7 @@
               <input type="phone" id="beneficiary_phone" name="beneficiary_phone" maxlength="10"
                 placeholder="Phone Number* " required>
             </div>
-            <div class="mt-3 primary" style="margin-left:330px;">
+            <div class="col-12 text-center mt-3">
               <button class="button btn-navigate-form-step" type="button" step_number="1"
                 style="width:100px;">Back</button>
               <button class="button btn-navigate-form-step" type="button" step_number="3">continue</button>
@@ -924,7 +945,7 @@
             <!-- Step 3 input fields -->
             <div class="col-md-12 my-3">
               <label for="form-option">I am raising fund for:</label>
-              <select name="form_option" id="form_option" style="width: 540px; height: 40px;">
+              <select name="form_select" id="form_select">
                 <option value="" selected>--Select--</option>
                 <option value="Medical">Medical</option>
                 <option value="Crisis">Crisis</option>
@@ -932,18 +953,19 @@
                 <option value="Emergency">Emergency</option>
                 <option value="Events">Events</option>
                 <?php foreach ($result as $row) { ?>
-                  <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_option', $row['id'], False); ?>>
-                    <?php echo $row['raising_fund_for']; ?>
-                  </option>
-                <?php } ?>
-              </select><br>
+                <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_select', $row['id'], False); ?>>
+                  <?php echo $row['raising_fund_for']; ?>
+                </option>
+              <?php } ?>
+            </select>
+
               <label for="amount"></label>
               <input type="number" id="amount" name="amount" placeholder="Amount*" required>
 
               <label for="end_date"></label>
               <input type="date" id="end_date" name="end_date" placeholder="End Date* " required>
             </div>
-            <div class="mt-3 primary" style="margin-left:330px;">
+            <div class="col-12 text-center mt-3">
               <button class="button btn-navigate-form-step" type="button" step_number="2"
                 style="width:100px;">Back</button>
               <button class="button btn-navigate-form-step" type="button" step_number="4">continue</button>
@@ -951,18 +973,34 @@
           </section>
           <section id="step-4" class="form-step d-none" style="border:none;">
             <h2>Elaborate Cause Details</h2>
-            <div class="col-md-12 my-3">
-              <div class="file-upload-container">
-                <label for="cover_image">upload cover photo</label>
-                <input type="file" id="cover_image" name="cover_image" accept="image/*" required>
-              </div><br><br>
-              <label for="cause-heading"></label>
-              <input type="text" id="cause-heading" name="cause-heading" placeholder="Heading" required>
+            <div class="container">
+  <div class="row">
+    <div class="col-12 my-3">
+      <!-- File Upload Input Field -->
+      <div class="file-upload-container mt-auto py-3">
+        <label for="cover_image" class="form-label">Upload Cover Photo</label>
+        <input type="file" id="cover_image" name="cover_image" class="form-control w-100" accept="image/*" required>
+      </div>
+      <br>
 
-              <label for="cause-description"></label>
-              <input id="cause-description" name="cause-description" placeholder="Description" required>
-            </div>
-            <div class="mt-3 primary" style="margin-left:250px;">
+      <!-- Heading input field -->
+      <div class="form-group">
+        <label for="cause-heading" class="form-label">Heading</label>
+        <input type="text" id="cause-heading" name="cause-heading" class="form-control" placeholder="Heading" required>
+      </div>
+      <br>
+
+      <!-- Description input field -->
+      <div class="form-group">
+        <label for="cause-description" class="form-label">Description</label>
+        <textarea id="cause-description" name="cause-description" class="form-control" rows="4" placeholder="Description" required></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+            <div class="col-12 text-center mt-3">
               <button class="button btn-navigate-form-step" type="button" step_number="3"
                 style="width:100px;">Back</button>
               <button class="button submit-btn" type="submit">Submit for Approval</button>
@@ -972,7 +1010,6 @@
       </div>
     </div>
   </div>
-
   <script>
     /**
   * Define a function to navigate betweens form steps.
@@ -1148,33 +1185,38 @@
     });
   </script>
   <div class="footer">
-    <footer class="footer mt-auto py-3">
-      <div class="container">
-        <h5 style="text-align:center">kanavu.help</h5>
-        <!-- <span class="text-muted">Your footer content goes here.</span> -->
-        <div class="footer1">
-          <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
-          <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-          <a class="footer-lable lable" href="#">Terms of Use</a>
-          <a class="footer-lable" href="#">Privacy Policy</a>
-        </div>
-      </div>
-      <div class="social-icons d-flex justify-content-center text-center">
-        <a href="https://www.facebook.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo">
-        </a>
-        <a href="https://twitter.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo">
-        </a>
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo">
-        </a>
-      </div>
-      <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="footimg">
-      <p class="text-center" style="font-size:17px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
+<footer class="footer mt-auto py-3">
+  <div class="container">
+    <h5 style="text-align:center">kanavu.help</h5>
+    <!-- <span class="text-muted">Your footer content goes here.</span> -->
+    <div class="footer1">
+      <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+      <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
+      <a class="footer-lable lable" href="#">Terms of Use</a>
+      <a class="footer-lable" href="#">Privacy Policy</a>
+    </div>
   </div>
-  </footer>
+
+  <div class="social-icons d-flex justify-content-center text-center">
+    <a href="https://www.facebook.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo">
+    </a>
+    <a href="https://twitter.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo">
+    </a>
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo">
+    </a>
+  </div>
+  <div class="text-center my-3">
+    <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="img-fluid mx-auto d-block" style="width: 200px; display: block;">
+  </div>
+
+
+  <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
+</footer>
+</div>
 </body>
 
 </html>
