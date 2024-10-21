@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
   <style>
     body {
       font-family: 'Sen', sans-serif;
@@ -23,6 +23,13 @@
       height: 100%;
       width: 100%;
     }
+    .bi-share {
+    font-size: 1.3rem; /* Adjust the size of the share icon */
+   transform:translateX(130px);
+    cursor: pointer;
+    color:#E01A2B;
+       /* Optional: Make it clickable */
+}
 /* Login_button */
     .login-button {
       background-color: #E01A2B;
@@ -267,11 +274,8 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Fundraise for</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="<?= base_url('/individual') ?>">Individuals</a></li>
-                <li><a class="dropdown-item" href="<?= base_url('/charity') ?>">Charities</a></li>
-              </ul>
+               <a class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start A Fundraiser</a>
+              
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color:rgba(235, 45, 50, 1)">Donate</a>
@@ -311,14 +315,127 @@
       </div>
     </div>
   </nav>
-  <div class="donate_img mt-5 pt-4">
+  
+
+
+  
+  
+ 
+    <!-- Fundraiser Banner Image -->
+    <div class="donate_img mt-5 pt-4">
     <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
   </div>
-  <br>
-  <div style="margin-left:%">
-  <h2>Cancer treatment </h2>
-  <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="img-fluid" alt="error in image loading">
+    <div class="container mt-5 pt-4">
+    <!-- Cause Heading and Main Content -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <!-- Cause Heading -->
+            <h1><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
+            
+            <!-- Fundraiser Image -->
+            <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="80%" height="300px" alt="no image" class="img-fluid mb-3">
+            
+            <!-- Cause Description -->
+            <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>
+            
+            <!-- Share Fundraiser Button -->
+            <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B">
+                <i class="bi  bi-share"></i> &nbsp;Share this fundraiser
+            </button>
+            <br>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="col-md-4">
+            <!-- Amount Raised and Goal -->
+            <h4>₹ <strong><?= number_format($fundraiser->raised_amount) ?></strong><br> raised out of ₹ <?= number_format($fundraiser->amount) ?></h4>
+            <div class="progress mb-2">
+              <?php
+              // Calculate progress percentage
+              $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+              ?>
+              <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
+
+            <!-- Supporters and Days Left -->
+            <p><strong><?= isset($fundraiser->supporters_count) ? htmlspecialchars($fundraiser->supporters_count) : '0' ?></strong> Supporters
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong> days left</p>
+
+            <!-- Donate Button -->
+            <a href="#" class="btn btn-danger btn-block">Donate Now</a>
+            
+            <!-- Payment Options -->
+            <p class="mt-2">or pay with 
+                <img src="<?= base_url('assets/img/gpay.png') ?>"  width= "20%"alt="Google Pay">
+                <img src="<?= base_url('assets/img/phonepay.jpg') ?>"  width=" 20%" alt="PhonePe" class="ms-2">
+            </p>
+
+           <!-- Top Donors Section -->
+<div class="card p-3" style="background-color: #fff0f0; border-radius: 10px; border: none;" >
+    <h5 style="font-weight: bold;">Top Donors</h5>
+    <ul class="list-group" style="list-style-type: none; padding: 0;">
+        <!-- Donor 1 -->
+        <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
+            <div class="d-flex align-items-center">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                    D
+                </div>
+                <span style="margin-left: 10px;">Dineshwaran</span>
+            </div>
+            <span style="font-weight: bold;">Rs.10,000</span>
+        </li>
+
+        <!-- Donor 2 -->
+        <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
+            <div class="d-flex align-items-center">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                    K
+                </div>
+                <span style="margin-left: 10px;">Kamaraj</span>
+            </div>
+            <span style="font-weight: bold;">Rs.5,000</span>
+        </li>
+
+        <!-- Show more -->
+        <li class="text-center" style="padding: 10px 0;">
+            <a href="#" style="color: red; text-decoration: none;">Show more <span>&#x25BC;</span></a>
+        </li>
+    </ul>
+</div>
+
+
+        </div>
+    </div>
+
+    <!-- Organizer and Beneficiary Information -->
+    <div class="row mt-4">
+    <!-- Created by Section -->
+    <div class="col-md-6" style=" border-radius:12px;border:1px solid #E0E1E3; display: flex; align-items: center; padding: 10px; width:20%">
+        
+        <div>
+            <p style="margin: 0;">Created by</p>
+            <strong style="font-size: 16px;"><?= htmlspecialchars($fundraiser->name) ?></strong>
+        </div>
+    </div>
+
+    <!-- Beneficiary Section -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="col-md-6" style="  border-radius:12px;width:20%;border:1px solid #E0E1E3; display: flex; align-items: center; padding: 10px;">
+        
+        <div>
+            <p style="margin: 0; ">This fundraiser will benefit</p>
+            <strong style="font-size: 16px;"><?= htmlspecialchars($fundraiser->beneficiary_name) ?></strong>
+            <p style="margin: 0;">from  </p>
+        </div>
+    </div>
+</div>
+
+<br>
+    <!-- Disclaimer Section -->
+    <p class="text-muted" style="width:70%">
+        Content Disclaimer: The views and opinions expressed on the campaign page are those of the campaigner or donors. They do not reflect or represent the company’s views and opinions.
+    </p>
+</div>
+
   <div class="footer">
       <footer class="footer mt-auto py-3">
         <div class="container">

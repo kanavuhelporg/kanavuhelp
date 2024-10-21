@@ -81,11 +81,11 @@
 
 .bi-share {
     font-size: 1.3rem; /* Adjust the size of the share icon */
-   transform:translateX(130px);
     cursor: pointer;
-    color:#E01A2B;
-       /* Optional: Make it clickable */
+    color: #E01A2B;
+    margin-left: auto; /* Pushes the share icon to the far right in its flex container */
 }
+
 
     .imgtext11,
     .imgtext22 {
@@ -227,16 +227,7 @@
       margin-left: 10px;
 
     }
-    @media (max-width:1000px and min-width:767px)
-    {
-      .bi-share {
-    font-size: 1.3rem; /* Adjust the size of the share icon */
-   transform:translateX(0px);
-    cursor: pointer;
-    color:#E01A2B;
-       /* Optional: Make it clickable */
-}
-    }
+    
 @media (max-width: 767px) {
 
   /* carousel */
@@ -381,7 +372,8 @@ document.querySelectorAll('.filter-btn').forEach(button => {
         <?php foreach ($fundraisers as $fundraiser): ?>
        <!-- Add data-category attribute and Bootstrap classes for fixed size -->
             <div class="col-12 col-md-4 mb-4 d-flex">
-            <a href=  "<?= base_url('/helpus') ?>"   style="text-decoration:none;color:black">  
+            <a href="<?= base_url('/helpus?fundraiser_id=' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
+ 
                 <div class="card h-100 w-100 fixed-card">
                     <!-- Display the image -->
                     <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="80%" height="200px" class="card-img-top fixed-card-img" alt="no image">
@@ -405,7 +397,7 @@ document.querySelectorAll('.filter-btn').forEach(button => {
                         <div class="d-flex align-items-center mt-auto">
                             <!-- Donate Now button -->
                             <a href="#" class="btn donate_btn">Donate Now</a>
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <!-- Share icon (adjust margin for spacing) -->
                             <i class="bi bi-share ms-2"></i>
                         </div>
