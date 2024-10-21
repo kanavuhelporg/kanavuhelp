@@ -77,8 +77,19 @@ class kanavuhelp extends CI_Controller
         $this->load->view('abouts.php');
     }
     public function helpus()
-    {
-        $this->load->view('helpus.php');
+    { // Get the fundraiser_id from the query string
+        $fundraiser_id = $this->input->get('fundraiser_id');
+        
+        // Load the fundraiser model and fetch details from the database
+     
+        $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
+        
+        // Pass the fetched data to the view
+        $data['fundraiser'] = $fundraiser_details;
+        
+        // Load the helpus view and pass the data
+        $this->load->view('helpus', $data);
+       
     }
     public function registeration()
     {
@@ -216,6 +227,7 @@ class kanavuhelp extends CI_Controller
             }
         }
     }
+    
     public function contact_us()
 	{
 		$data['full-name'] = $this->input->post('full-name');

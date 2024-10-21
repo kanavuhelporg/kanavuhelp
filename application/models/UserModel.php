@@ -40,6 +40,7 @@ class UserModel extends CI_Model
 		$this->db->insert('individualform',$data);
 		return true;
 	}
+	
 	public function get_cause_details()
 	{
 		$query = $this->db->get('individualform');
@@ -59,6 +60,14 @@ public function get_category()
 // 		return false;
 // 	}
 // }
+public function get_fundraiser_details($fundraiser_id) {
+	// Query the database to get the fundraiser details by ID
+	$this->db->where('id', $fundraiser_id);
+	$query = $this->db->get('individualform');  // Assuming your table is named 'fundraisers'
+	
+	// Return the row containing the fundraiser details
+	return $query->row();
+}
 
 public function loginUser()
     {
