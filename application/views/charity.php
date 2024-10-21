@@ -3,7 +3,7 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>paint</title>
+      <title>Charity</title>
       <link rel="stylesheet" href="style.css" />
       <!-- <link href="bootstrap.min.css" rel="stylesheet" />
          <script src="bootstrap.bundle.min.js"></script> -->
@@ -16,18 +16,61 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
    </head>
    <style>
-      body {
-      font-family: 'sen', sans-serif;
-      overflow-x:hidden;
-      left:0;
-      right:0;
-      bottom:0;
+
+      html, body {
+    font-family: 'sen', sans-serif;
+    height: 100%;
+    margin: auto;
+    padding: 0;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.footer-container {
+    margin-top: auto;
+}
+#footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+  .logo {
+    margin-left: 65px;
+    font-weight: bolder;
+    font-size: x-large;
+  }
+  /* login_button */
+  .login-button {
+      background-color: #E01A2B;
+      color: white;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s background-color;
     }
- .logo {
-      margin-left: 65px;
-      font-weight: bolder;
-      font-size: x-large;
+/* start a kanavu button */
+    .startkanavu-button {
+      border: 1px solid #E01A2B;
+      color: #E01A2B;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s background-color;
     }
+/* navigation bar  menu size */
+    .offcanvas-body {
+      font-size: 17px;
+    }
+    .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  border: 1px solid #41464b;
+  padding: (1rem) var(1rem);
+}
   #navbarscroll{
         margin-top:17px;
         margin-bottom:10px;
@@ -70,9 +113,9 @@
     .dropdown-item:hover {
       color: #EB2D32;
     }
-    .footer {
+    /* .footer {
       height: 250px;
-     
+      width: 100%;
       left:0;
       right:0;
       background-color: #EB2D32;
@@ -84,17 +127,6 @@
       text-align: center;
       padding: 10px;
       margin-left: 10px;
-    }
-
-    .footer-lable {
-      color: white;
-      text-decoration: none;
-      padding-right: 20px;
-      padding-left: 20px;
-    }
-
-    .lable {
-      border-right: 3px solid #fff;
     }
     .footer1 a {
       margin-left: 20x;
@@ -108,8 +140,63 @@
       height: 20px;
       margin-left: 10px;
 
-    }
+    } */
+    .footer {
+    background-color: #d32f2f; /* Matching the red background */
+    color: white;
     
+}
+
+.footer h5 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.footer1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.footer1 a {
+    color: white;
+    /* margin: 0 7px; */
+    text-decoration: none;
+}
+
+.footer1 a:hover {
+    text-decoration: underline;
+}
+
+.social-icons {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.social-icons a {
+    margin: 0 10px;
+}
+
+.text-center img {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.footer p {
+    margin-bottom: 0; /* Prevent extra space below the copyright text */
+    font-size: 14px;
+}
+.footer-lable {
+    color: white;
+    text-decoration: none;
+    padding-right: 20px;
+    padding-left: 20px;
+  } 
+
+  .lable {
+    border-right: 3px solid #fff;
+  }
+
+
 @media (min-width: 993px) {
    .img-fluid {
       margin-top:50px;   
@@ -418,7 +505,7 @@ body #multi-step-form-container{
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    width: 540px;
+    width: 100%;
     display: inline-block;
     background-color:#F8F8F8;
   }
@@ -434,169 +521,243 @@ body #multi-step-form-container{
   .login_btn{
     margin-right: 20px;
   }
+  .btn-red {
+    color: white !important; /* Force white text */
+    background-color: red !important; /* Force red background */
+    border-color: red !important; /* Force red border */
+}
+.donate_img {
+        width: 100%; /* Ensure the parent container takes full width */
+        position: relative;
+    }
+
+    .donate_img img {
+        width: 100%;
+        height: 300px; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensures the image fills its container */
+    }
    </style>
    <body>
-      <nav class="navbar  navbar-expand-lg bg-light fixed-top">
-         <div class="container-fluid">
-             <a class="navbar-brand" href="<?= base_url('/kanavuhome') ?>">
-                 <img class="logo" src="<?=base_url('assets/img/Kanavu_help.png')?>" alt="Kanavu Help">
-             </a>
-             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarscroll" aria-controls="navbarscroll" aria-expanded="false" aria-label="Toggle navigation">
-                 <span class="navbar-toggler-icon"></span>
-             </button>
-             
-             <div class="collapse navbar-collapse" id="navbarscroll">
-             <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0 navbar-nav-scroll text-center text-lg-start"> -->
-             <ul class="navbar-nav mb-2 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                     <li class="nav-item dropdown px-3">
-                         <a class="nav-item  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">Fundraise for</a>
-                         <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="<?= base_url('/individual') ?>">Individuals</a></li>
-                             <li><a class="dropdown-item" href="<?= base_url('/charity#step-1') ?>">Charities</a></li>
-                         </ul>
-                     </li>
-                     <li class="nav-item">
-                         <a class="navbar-brand p-5 p-md-1" href="<?= base_url('/donate') ?>">Donate</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/myhelps') ?>">My Helps</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="navbar-brand p-3 p-md-1" href="#demo1">How it works</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/blogs') ?>">Blogs</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="navbar-brand p-3 p-md-1" href="<?= base_url('/contactus') ?>">Contact us</a>
-                     </li>
-                 </ul>
-             </div>
-     </div>
-     <div class="container navbar-link  justify-content-sm-start bttn">
-                       <!-- <ul class="navbar-nav d-md-flex flex-row justify-content-end"> -->
-                         <!-- <li class="nav-item"> -->
-                             <a href="<?= base_url('/login') ?>"><button type="button" class="btn btn-1 border login_btn">Login</button></a>
-                         <!-- </li> -->
-                         <!-- <li class="nav-item"> -->
-                           <a href="<?=base_url('/individual')?>">
-                             <button type="button" class="btn btn-2 border register_btn" >Start a Kanavu</button></a>
-                         <!-- </li> -->
-                         <!-- </ul> -->
-                     </div>
-     </nav>
-     <div class="container-fluid ">
-      <img src="<?php echo base_url('/assets/img/sthelp.png');?>" alt="No Image" class="img-fluid" >
+   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    <div class="container-fluid">
+        <!-- Navbar brand -->
+        <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
+            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help" style="max-width: 150px;">
+        </a>
+
+        <!-- Navbar toggler (for mobile view) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Offcanvas (for mobile navigation) -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+                    <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help" style="max-width: 120px;">
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Navbar links -->
+                <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+                    </li>
+                </ul>
+
+                <!-- User profile or login -->
+                <div class="d-flex align-items-center ms-auto">
+                    <?php if ($this->session->userdata('userId')): ?>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="<?= base_url('assets/img/Ellipse 12.png') ?>" alt="Profile Image" class="rounded-circle" style="width: 30px; height: 30px;">
+                                <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                            </div>
+                            <ul class="dropdown-menu" aria-labelledby="userProfile">
+                                <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                      <a href="<?= base_url('/login') ?>" class="btn btn-red me-2">Login</a>
+                    <?php endif; ?>
+                    <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+  <div class="donate_img mt-5 pt-4">
+  <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
   </div>
-  <div class="container box" style="margin-top:100px;margin-left: 200px;">
-    <div class="row box1" style="margin-top:100px;">
-       <div class="col-md-4 text-start mm text-center">
-          <!-- <img src="Mask-Group-241.png" alt="" style="position: absolute; top: 0px; left: -60px;"> -->
-          <h3 class="mt-10" style="margin-top: 50px;"><strong>START YOUR HELP</strong></h3>
-               <h6>"We make a living by what we get,but we make a life by what we give"</h6>
-               <img src="<?php echo base_url('/assets/img/btfly.png');?>" alt="no img" class="w-full h-auto img1" style="position: absolute; top: 200px; left: 30px; margin-top:400px;margin-left:200px;">
-       </div>
-      
-    <div id="multi-step-form-container" class="mt-10" style="margin-top: 20px;">
-        <!-- Form Steps / Progress Bar -->
-        <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap  ">
-            <!-- Step 1 -->
-            <li class="form-stepper-active text-center form-stepper-list" step="1">
-                <a class="mx-2 ">
-                    <span class="form-stepper-circle">
-                        <span>1</span>
-                    </span>
-                </a>
-            </li>
-            <!-- Step 2 -->
-            <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
-                <a class="mx-2">
-                    <span class="form-stepper-circle text-muted">
-                        <span>2</span>
-                    </span>
-                </a>
-            </li>
-            <!-- Step 3 -->
-            <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
-                <a class="mx-2">
-                    <span class="form-stepper-circle text-muted">
-                        <span>3</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
-        <!-- Step Wise Form Content -->
-        <form id="charityform" name="charityform" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/charityform_data') ?>" enctype="multipart/form-data" method="POST" class="row row-cols-1 ms-5 me-5" >
-            <!-- Step 1 Content -->
-            <section id="step-1" class="form-step "  style="height:450px;border:none;">
-                <p class="font-normal"><b>TELL US ABOUT YOUR FUNDRAISER</b></p>
-                <h6 class="font-normal">RAISING FUNDS FOR NGO/CHARITY PURPOSE</h6>
+  <div class="mx-auto text-center mt-8 md:ml-20 ">
+    <button id="myDonationsButton" 
+      class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 text-red-500 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data"
+      onclick="window.location.href='<?= base_url('/individual') ?>'">
+      Individual
+    </button>
 
-                <!-- Step 1 input fields -->
-                <div class=" col-md-12 my-3">
-                <label for="amount"></label>
-                <input type="number" id="amount" name="amount" placeholder="Amount" required>
-
-                <label for="name"></label>
-                <input type="text" id="title" name="title" placeholder="Fundraiser Title*" required>
-
-                <label for="ngo"></label>
-                <input type="text" id="ngo" name="ngo" placeholder="NGO Name*" required>
-
-                <label for="education"></label>
-                <input type="education" id="education" name="education" placeholder="Your Education Qualification*" required>
-
-                <label for="employment"></label>
-                <input type="text" id="employment" name="employment"  placeholder="Your Employment Status*" required>
-
-                <label for="aboutus"></label>
-                <input type="text" id="aboutus" name="aboutus" placeholder="How did you hear about kanavu.help *">
+    <button id="myFundraisersButton"
+      class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 data"
+      onclick="window.location.href='<?= base_url('/charity') ?>'">
+      Charities
+    </button>
+</div>
+<div class="container-fluid box mt-auto py-3">
+    <div class="row box1 mt-auto py-3">
+        <div class="container-fluid mt-5">
+            <div class="row align-items-center">
+                <!-- Left Column for Image and Text -->
+                <div class="col-md-6 d-flex justify-content-center">
+                    <div class="text-center">
+                        <h3 class="mt-4"><strong>START YOUR HELP</strong></h3>
+                        <h6>"We make a living by what we get, but we make a life by what we give"</h6>
+                        <img src="<?php echo base_url('/assets/img/btfly.png');?>" alt="no img" class="img-fluid" style="max-width: 100%; height: auto;">
+                    </div>
                 </div>
-                <div class="mt-3 primary"  style="margin-left:450px;">
-                    <button class="button btn-navigate-form-step" type="button" step_number="2">Continue</button>
-                </div>
-            </section>
-            <!-- Step 2 Content, default hidden on page load. -->
-            <section id="step-2" class="form-step d-none" style="border:none;">
-                <p class="font-normal"><b>FUNDRAISER DETAILS</b></p>
-                <!-- Step 2 input fields -->
-                <div class="col-md-12 my-3">
-                <div class="col-md-12 my-3">
-                <div class="file-upload-container">
-      <label for="file">Add Fundraiser Image/Video</label>
-      <input type="file" class="file-upload-input" id="file" name="file" accept="image/*,video/*">
-    </div><br><br>
+                <!-- Right Column for Form -->
+                <div class="col-md-6">
+                    <div id="multi-step-form-container mt-auto py-3">
+                        <!-- Form Steps / Progress Bar -->
+                        <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap">
+                            <!-- Step 1 -->
+                            <li class="form-stepper-active text-center form-stepper-list" step="1">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle">
+                                        <span>1</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <!-- Step 2 -->
+                            <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle text-muted">
+                                        <span>2</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <!-- Step 3 -->
+                            <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle text-muted">
+                                        <span>3</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="form-stepper-unfinished text-center form-stepper-list" step="4">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle text-muted">
+                                        <span>4</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- Step Wise Form Content -->
+                        <form id="charityform" name="charityform" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/charityform_data') ?>" enctype="multipart/form-data" method="POST" class="row row-cols-1">
+                            <!-- Step 1 Content -->
+                            <section id="step-1" class="form-step" style="border:none;">
+                                <p class="font-normal"><b>TELL US ABOUT YOUR FUNDRAISER</b></p>
+                                <h6 class="font-normal">RAISING FUNDS FOR NGO/CHARITY PURPOSE</h6>
 
-                <label for="city"></label>
-                <input type="text" id="city" name="city" placeholder="City*" required>
+                                <!-- Step 1 input fields -->
+                                <div class="col-md-12 my-3">
+                                    <label for="amount"></label>
+                                    <input type="number" id="amount" name="amount" placeholder="Amount" required>
+
+                                    <label for="name"></label>
+                                    <input type="text" id="title" name="title" placeholder="Fundraiser Title*" required>
+
+                                    <label for="ngo"></label>
+                                    <input type="text" id="ngo" name="ngo" placeholder="NGO Name*" required>
+
+                                    <label for="education"></label>
+                                    <input type="text" id="education" name="education" placeholder="Your Education Qualification*" required>
+
+                                    <label for="employment"></label>
+                                    <input type="text" id="employment" name="employment" placeholder="Your Employment Status*" required>
+
+                                    <label for="aboutus"></label>
+                                    <input type="text" id="aboutus" name="aboutus" placeholder="How did you hear about kanavu.help *">
+                                </div>
+                                <div class="mt-3 text-center">
+                                    <button class="btn text-red-500 btn-navigate-form-step" type="button" step_number="2">Continue</button>
+                                </div>
+                            </section>
+                            <!-- Step 2 Content, default hidden on page load. -->
+                            <section id="step-2" class="form-step d-none" style="border:none;">
+                                <p class="font-normal"><b>FUNDRAISER DETAILS</b></p>
+                                <!-- Step 2 input fields -->
+                                <div class="col-md-12 my-3">
+                                    <div class="file-upload-container">
+                                        <div class="container-fluid">
+                                            <div class="form-group row">
+                                                <label for="file" class="col-form-label col-12 col-sm-4 text-sm-right">Add Fundraiser Image/Video</label>
+                                                <div class="col-12 col-sm-8">
+                                                    <input type="file" class="form-control-file" id="file" name="file" accept="image/*,video/*">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><br><br>
+                                    <label for="city"></label>
+                                    <input type="text" id="city" name="city" placeholder="City*" required>
+                                  </div>
+                                <div class="mt-3 d-flex justify-content-center">
+                                    <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="1" style="width: 100px;">Back</button>
+                                    <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="3">Continue</button>
+                                </div>
+                            </section>
+                            <!-- Step 3 Content, default hidden on page load. -->
+                            <section id="step-3" class="form-step d-none" style="border:none;">
+                                <p class="font-normal"><b>TELL THE STORY WHY YOU ARE RUNNING A FUNDRAISER</b></p>
+                                <!-- Step 3 input fields -->
+                                <div class="container-fluid">
+                                    <div class="form-group row">
+                                        <!-- Description Textarea -->
+                                        <div class="col-12 my-3">
+                                            <label for="description">Description</label>
+                                            <textarea id="description" name="description" class="form-control" rows="6" placeholder="Enter description here"></textarea>
+                                        </div>
+
+                                        <!-- Checkbox with Privacy Policy -->
+                                        <div class="col-12 my-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    By clicking submit button you agree to our <u>privacy policy and terms and conditions</u>.
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3 d-flex justify-content-center">
+                                    <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="2" style="width: 100px;">Back</button>
+                                    <button class="btn text-red-500 submit-btn mx-2" type="submit">Submit for Approval</button>
+                                </div>
+                            </section>
+                        </form>
+                    </div>
                 </div>
-                <div class="mt-3 primary" style="margin-left:330px;">
-                    <button class="button btn-navigate-form-step" type="button" step_number="1"style="width:100px;">Back</button>
-                    <button class="button btn-navigate-form-step" type="button" step_number="3">continue</button>
-                </div>
-            </section>
-            <!-- Step 3 Content, default hidden on page load. -->
-            <section id="step-3" class="form-step d-none" style="border:none;">
-                <p class="font-normal"><b>TELL THE STORY WHY YOU ARE RUNNING A FUNDRAISER</b></p>
-                <!-- Step 3 input fields -->
-                <div class="col-md-12 my-3">
-                <label for="description"></label><br>
-                <textarea id="description" name="description" rows="6" cols="64" placeholder="Description"></textarea><br><BR>
-                <label class="form-check-label" for="flexCheckDefault">
-                <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
-                                 By clicking submit button you agree to our 
-                                 <u>privacy policy and terms and conditions</u>.
-                               </label>
-                </div>
-                <div class="mt-3 primary"style="margin-left:250px;">
-                    <button class="button btn-navigate-form-step" type="button" step_number="2" style="width:100px;">Back</button>
-                    <button class="button submit-btn" type="submit">Submit for Approval</button>
-                </div>
-            </section>
-        </form>
+            </div>
+        </div>
     </div>
 </div>
-</div>
+
   
 <script>
    /**
@@ -673,32 +834,39 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
 });
 </script>
 <div class="footer">
-   <footer class="footer mt-auto py-3">
-     <div class="container">
-       <h5 style="text-align:center">kanavu.help</h5>
-       <!-- <span class="text-muted">Your footer content goes here.</span> -->
-       <div class="footer1">
-         <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
-         <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-         <a class="footer-lable lable" href="#">Terms of Use</a>
-         <a class="footer-lable" href="#">Privacy Policy</a>
-       </div>
-     </div>
-     <div class="social-icons d-flex justify-content-center text-center">
-       <a href="https://www.facebook.com/" target="_blank">
-         <img src="<?php echo base_url('/assets/img/facebook-f.svg');?>" alt="Facebook Logo">
-       </a>
-       <a href="https://twitter.com/" target="_blank">
-         <img src="<?php echo base_url('/assets/img/twitter.svg');?>" alt="Twitter Logo">
-       </a>
-       <!-- LinkedIn -->
-       <a href="https://www.linkedin.com/" target="_blank">
-         <img src="<?php echo base_url('/assets/img/linkedin-in.svg');?>" alt="LinkedIn Logo">
-       </a>
-     </div>
-     <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg');?>" alt="no image" class="footimg">
-     <p class="text-center" style="font-size:17px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
- </div>
- </footer>
+<footer class="footer mt-auto py-3">
+  <div class="container">
+    <h5 style="text-align:center">kanavu.help</h5>
+    <!-- <span class="text-muted">Your footer content goes here.</span> -->
+    <div class="footer1">
+      <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+      <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
+      <a class="footer-lable lable" href="#">Terms of Use</a>
+      <a class="footer-lable" href="#">Privacy Policy</a>
+    </div>
+  </div>
+
+  <div class="social-icons d-flex justify-content-center text-center">
+    <a href="https://www.facebook.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo">
+    </a>
+    <a href="https://twitter.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo">
+    </a>
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo">
+    </a>
+  </div>
+  <div class="text-center my-3">
+    <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="img-fluid mx-auto d-block" style="width: 200px; display: block;">
+  </div>
+
+
+  <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
+</footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
