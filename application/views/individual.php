@@ -108,8 +108,8 @@
   }
 
   .footer {
-    height: 250px;
-
+    /* height: 250px; */
+    width: 100%;
     left: 0;
     right: 0;
     background-color: #EB2D32;
@@ -770,8 +770,6 @@
         </div>
     </div>
 </nav>
-
-
   <div class="donate_img mt-5 pt-4">
   <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
   </div>
@@ -1185,33 +1183,38 @@
     });
   </script>
   <div class="footer">
-    <footer class="footer mt-auto py-3">
-      <div class="container mt-auto py-3">
-        <h5 style="text-align:center">kanavu.help</h5>
-        <!-- <span class="text-muted">Your footer content goes here.</span> -->
-        <div class="footer1">
-          <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
-          <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-          <a class="footer-lable lable" href="#">Terms of Use</a>
-          <a class="footer-lable" href="#">Privacy Policy</a>
-        </div>
-      </div>
-      <div class="social-icons d-flex justify-content-center text-center">
-        <a href="https://www.facebook.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo">
-        </a>
-        <a href="https://twitter.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo">
-        </a>
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo">
-        </a>
-      </div>
-      <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="footimg">
-      <p class="text-center" style="font-size:17px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
+<footer class="footer mt-auto py-3">
+  <div class="container">
+    <h5 style="text-align:center">kanavu.help</h5>
+    <!-- <span class="text-muted">Your footer content goes here.</span> -->
+    <div class="footer1">
+      <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+      <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
+      <a class="footer-lable lable" href="#">Terms of Use</a>
+      <a class="footer-lable" href="#">Privacy Policy</a>
+    </div>
   </div>
-  </footer>
+
+  <div class="social-icons d-flex justify-content-center text-center">
+    <a href="https://www.facebook.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo">
+    </a>
+    <a href="https://twitter.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo">
+    </a>
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo">
+    </a>
+  </div>
+  <div class="text-center my-3">
+    <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="img-fluid mx-auto d-block" style="width: 200px; display: block;">
+  </div>
+
+
+  <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
+</footer>
+</div>
 </body>
 
 </html>
