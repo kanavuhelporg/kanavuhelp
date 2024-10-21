@@ -55,8 +55,10 @@ class kanavuhelp extends CI_Controller
         $this->load->view('charity.php');
     }
     public function donate()
-    {
-        $this->load->view('donate.php');
+    {$data['category']=$this->UserModel->get_category();
+        $data['fundraisers'] = $this->UserModel->get_cause_details();
+
+        $this->load->view('donate.php', $data);
     }
     public function myhelps()
     {
@@ -73,6 +75,21 @@ class kanavuhelp extends CI_Controller
     public function abouts()
     {
         $this->load->view('abouts.php');
+    }
+    public function helpus()
+    { // Get the fundraiser_id from the query string
+        $fundraiser_id = $this->input->get('fundraiser_id');
+        
+        // Load the fundraiser model and fetch details from the database
+     
+        $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
+        
+        // Pass the fetched data to the view
+        $data['fundraiser'] = $fundraiser_details;
+        
+        // Load the helpus view and pass the data
+        $this->load->view('helpus', $data);
+       
     }
     public function registeration()
     {
@@ -114,7 +131,7 @@ class kanavuhelp extends CI_Controller
     public function individualform_data()
     {
         // Retrieve form data
-        $data['form_select'] = $this->input->post('form_select'); // Correct field name
+        $data['category'] = $this->input->post('category'); // Correct field name
         $data['name'] = $this->input->post('name');
         $data['email'] = $this->input->post('email');
         $data['phone'] = $this->input->post('phone');
@@ -125,8 +142,8 @@ class kanavuhelp extends CI_Controller
         $data['form_option'] = $this->input->post('form_option'); // Make sure this field is correct as well
         $data['amount'] = $this->input->post('amount');
         $data['end_date'] = $this->input->post('end_date');
-        $data['cause-heading'] = $this->input->post('cause-heading');
-        $data['cause-description'] = $this->input->post('cause-description');
+        $data['cause_heading'] = $this->input->post('cause_heading');
+        $data['cause_description'] = $this->input->post('cause_description');
 
         // Handle file upload
         $this->load->library('upload');
@@ -210,6 +227,7 @@ class kanavuhelp extends CI_Controller
             }
         }
     }
+    
     public function contact_us()
 	{
 		$data['full-name'] = $this->input->post('full-name');

@@ -8,13 +8,13 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
   <style>
     body {
       font-family: 'Sen', sans-serif;
     }
 /* carousel */
-    /* .carousel-item {
+    .carousel-item {
       height: 100vh;
     }
 
@@ -22,7 +22,14 @@
       object-fit: cover;
       height: 100%;
       width: 100%;
-    } */
+    }
+    .bi-share {
+    font-size: 1.3rem; /* Adjust the size of the share icon */
+   transform:translateX(130px);
+    cursor: pointer;
+    color:#E01A2B;
+       /* Optional: Make it clickable */
+}
 /* Login_button */
     .login-button {
       background-color: #E01A2B;
@@ -215,66 +222,10 @@
       margin-left: 10px;
 
     }
-    #details{
-      display:block-inline;
-    }
-    #location{
-      margin-left:12%;
-    }
-    #loc_icon{
-      margin-left:25%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    #phone{
-      margin-left:7%
-    }
-    #phone_icon{
-      margin-left:17%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    #email{
-      margin-left:-3%;
-    }
-    #envelope_icon{
-      margin-left:35%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    .line{
-      margin-left:35%;
-      transform:translate(20px,-40px);
-    }
-    
-    input[type]{
-      width:50%;
-    }
-    .area{
-      width:50%;
-    }
-    .form1{
-      margin-left:17%;
-    }
-    .msg_btn{
-      margin-left:15%;
-    }
-    @media (min-width: 767px) and (max-width: 990px) {
-      .line{
-      margin-left:39%;
-      transform:translate(-70px,-50px);
-    }
-    .msg_btn{
-      margin-left:7%;
-    }
-}
 @media (max-width: 767px) {
 
   /* carousel */
-  .line{
-      margin-left:30%;
-      transform:translate(-70px,-50px);
-    }
+
       .carousel-item {
         position: relative;
       }
@@ -299,49 +250,10 @@
         height: 300px; /* Maintain aspect ratio */
         object-fit: cover; /* Ensures the image fills its container */
     }
-    #details{
-      display:block;
-    }
-    #location{
-      margin-left:17%;
-    }
-    #loc_icon{
-      margin-left:19%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    #phone{
-      margin-left:22%
-    }
-    #phone_icon{
-      margin-left:13%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    #email{
-      margin-left:15%;
-    }
-    #envelope_icon{
-      margin-left:22%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    .form1{
-      margin-left:3%;
-    }
-    input[type]{
-      width:90%;
-    }
-    .area{
-      width:90%;
-    }
-    .msg_btn{
-      margin-left:20%;
-    }
     }
     </style>
     </head>
-<body >
+<body>
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="<?=base_url('')?>">
@@ -360,26 +272,27 @@
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
-                    </li>
-                </ul>
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item dropdown">
+               <a class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start A Fundraiser</a>
+              
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color:rgba(235, 45, 50, 1)">Donate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+          </ul><br>
           <div class="d-flex align-items-center ms-auto">
             <?php if ($this->session->userdata('userId')): ?>
               <div class="d-flex align-items-center">
@@ -396,80 +309,133 @@
             <?php else: ?>
               <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
+           
           </div>
         </div>
       </div>
     </div>
   </nav>
-  <div class="donate_img mt-5 pt-4">
-    <img src="<?=base_url('assets/img/contact_us.png')?>" width="100%">
-  </div>
   
-  <div class="row text-center mt-5 mb-5" >
-    <div class="col-12 col-md-4 mt-3" >
-        <i class="fa-solid fa-location-dot fs-4" style="color:#EB2D32;" ></i>
-        <br><strong>The Kanavu Startup Village</strong>
-        <br><strong>Annamalaikottai, Sivagiri</strong>
-    </div>
-    
-    <div class="col-12 col-md-4 mt-3" >
-        <i class="fa-solid fa-phone-volume fs-4" style="color:#EB2D32;"></i>
-        <br><strong>+91 93792 48387</strong>
-    </div>
-    
-    <div class="col-12 col-md-4 mt-3" >
-        <i class="fa-regular fa-envelope fs-4"  style="color:#EB2D32;"></i>
-        <br><strong>karthi.easwaramoorthy@gmail.com</strong>
-    </div>
-</div>
 
 
-
-
-  <section class="text-gray-600 body-font">
-    <div class="container px-5 py-6 mx-auto flex flex-wrap items-center">
-      <div class="lg:w-3/7 md:w-1/2 sm:w-1/1 xsm:w-1/1  bg-gray-100 rounded-lg p-8 flex flex-col mx-auto mt-10">
-      <br><br>  
-      <h4 class="text-gray-900 text-lg font-medium title-font mb-5 text-center"><strong>GET IN TOUCH WITH US</strong>
-        </h4>
-        <div class="flex justify-center" >
-          <img class=" max-w-screen-md line" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="no image">
+  
+  
+ 
+    <!-- Fundraiser Banner Image -->
+    <div class="donate_img mt-5 pt-4">
+    <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
+  </div>
+    <div class="container mt-5 pt-4">
+    <!-- Cause Heading and Main Content -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <!-- Cause Heading -->
+            <h1><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
+            
+            <!-- Fundraiser Image -->
+            <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="80%" height="300px" alt="no image" class="img-fluid mb-3">
+            
+            <!-- Cause Description -->
+            <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>
+            
+            <!-- Share Fundraiser Button -->
+            <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B">
+                <i class="bi  bi-share"></i> &nbsp;Share this fundraiser
+            </button>
+            <br>
         </div>
-        <h3 class="text-base text-black-500 text-center w-auto"><strong>Submit your inquiry, and we'll respond to you <br>as
-            soon as possible!</strong></h3>
-            <div class="relative mb-4 mt-5 form1">
-  <form name="contactus" class="form1" id="myForm" onsubmit="return contact_us()" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
 
-    <!-- Name Field -->
-    <div class="mb-3">
-  
-  
-  
-    <input type="text" class="form-control" name="full-name" id="exampleFormControlInput1" placeholder="Name*" required>
-    <p id="demo" style="color:red"></p>
-  </div>
-<div class="mb-3">
-  
-  <input type="email" class="form-control" name="email" id="exampleFormControlInput2" placeholder="Mail ID*" required>
-  <p id="demo1" style="color:red"></p>
-</div>
-<div class="mb-3">
-  
-  <input type="tel" class="form-control" name="phone" id="exampleFormControlInput3" placeholder="Phone Number*" required>
-  <p id="demo2" style="color:red"></p>
-</div>
-<div class="mb-3">
-  
-  <textarea class="form-control area" name="message" id="exampleFormControlTextarea1" rows="3" placeholder="Message*" required></textarea>
-  <p id="demo3" style="color:red"></p>
-</div>
-<button type="submit" class="btn btn-primary btn-lg msg_btn" style=" background-color:#E01A2B;border:none;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
-  </form>
-  
+        <!-- Right Sidebar -->
+        <div class="col-md-4">
+            <!-- Amount Raised and Goal -->
+            <h4>₹ <strong><?= number_format($fundraiser->raised_amount) ?></strong><br> raised out of ₹ <?= number_format($fundraiser->amount) ?></h4>
+            <div class="progress mb-2">
+              <?php
+              // Calculate progress percentage
+              $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+              ?>
+              <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <!-- Supporters and Days Left -->
+            <p><strong><?= isset($fundraiser->supporters_count) ? htmlspecialchars($fundraiser->supporters_count) : '0' ?></strong> Supporters
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong> days left</p>
+
+            <!-- Donate Button -->
+            <a href="#" class="btn btn-danger btn-block">Donate Now</a>
+            
+            <!-- Payment Options -->
+            <p class="mt-2">or pay with 
+                <img src="<?= base_url('assets/img/gpay.png') ?>"  width= "20%"alt="Google Pay">
+                <img src="<?= base_url('assets/img/phonepay.jpg') ?>"  width=" 20%" alt="PhonePe" class="ms-2">
+            </p>
+
+           <!-- Top Donors Section -->
+<div class="card p-3" style="background-color: #fff0f0; border-radius: 10px; border: none;" >
+    <h5 style="font-weight: bold;">Top Donors</h5>
+    <ul class="list-group" style="list-style-type: none; padding: 0;">
+        <!-- Donor 1 -->
+        <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
+            <div class="d-flex align-items-center">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                    D
+                </div>
+                <span style="margin-left: 10px;">Dineshwaran</span>
+            </div>
+            <span style="font-weight: bold;">Rs.10,000</span>
+        </li>
+
+        <!-- Donor 2 -->
+        <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
+            <div class="d-flex align-items-center">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                    K
+                </div>
+                <span style="margin-left: 10px;">Kamaraj</span>
+            </div>
+            <span style="font-weight: bold;">Rs.5,000</span>
+        </li>
+
+        <!-- Show more -->
+        <li class="text-center" style="padding: 10px 0;">
+            <a href="#" style="color: red; text-decoration: none;">Show more <span>&#x25BC;</span></a>
+        </li>
+    </ul>
 </div>
 
-  </section>
+
+        </div>
+    </div>
+
+    <!-- Organizer and Beneficiary Information -->
+    <div class="row mt-4">
+    <!-- Created by Section -->
+    <div class="col-md-6" style=" border-radius:12px;border:1px solid #E0E1E3; display: flex; align-items: center; padding: 10px; width:20%">
+        
+        <div>
+            <p style="margin: 0;">Created by</p>
+            <strong style="font-size: 16px;"><?= htmlspecialchars($fundraiser->name) ?></strong>
+        </div>
+    </div>
+
+    <!-- Beneficiary Section -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="col-md-6" style="  border-radius:12px;width:20%;border:1px solid #E0E1E3; display: flex; align-items: center; padding: 10px;">
+        
+        <div>
+            <p style="margin: 0; ">This fundraiser will benefit</p>
+            <strong style="font-size: 16px;"><?= htmlspecialchars($fundraiser->beneficiary_name) ?></strong>
+            <p style="margin: 0;">from  </p>
+        </div>
+    </div>
+</div>
+
+<br>
+    <!-- Disclaimer Section -->
+    <p class="text-muted" style="width:70%">
+        Content Disclaimer: The views and opinions expressed on the campaign page are those of the campaigner or donors. They do not reflect or represent the company’s views and opinions.
+    </p>
+</div>
+
   <div class="footer">
       <footer class="footer mt-auto py-3">
         <div class="container">
@@ -477,8 +443,8 @@
           <div class="row text-center">
             <div class="col-12">
               <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
-                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
+                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
+                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
                 <a class="footer-lable lable" href="#">Terms of Use</a>
                 <a class="footer-lable lable" href="#">Privacy Policy</a>
               </div>
@@ -505,55 +471,6 @@
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-  function contact_us(){
-     // Get values from form inputs
-     const name = document.getElementById("exampleFormControlInput1").value;
-            const email = document.getElementById("exampleFormControlInput2").value;
-            const phone = document.getElementById("exampleFormControlInput3").value;
-            const message = document.getElementById("exampleFormControlTextarea1").value;
-
-const error_message1=document.getElementById("demo");
-const error_message2=document.getElementById("demo1");
-const error_message3=document.getElementById("demo2");
-const error_message4=document.getElementById("demo3");
-error_message1.innerHTML="";
-error_message2.innerHTML="";
-error_message3.innerHTML="";
-error_message4.innerHTML="";
-            // Regular expressions for validation
-            const nameRegex = /^[A-Za-z\s]+$/; // Allow only alphabets and spaces
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email format
-            const phoneRegex = /^\d{10}$/; // Phone number with 10 digits
-
-            // Validate name
-            if (name.length < 3 || (!nameRegex.test(name))) {
-                error_message1.innerHTML+="Name must have atleast 3 characters <br> Only alphabets and spaces are allowed.";
-                return false;
-            }
-
-            // Validate email
-            if (!emailRegex.test(email)) {
-                 error_message2.innerHTML+="Please enter a valid email address.";
-                return false;
-            }
-
-            // Validate phone number
-            if (!phoneRegex.test(phone)) {
-                 error_message3.innerHTML+="Please enter a valid 10-digit phone number.";
-                return false;
-            }
-            if(message.length<10)
-            {
-              error_message4.innerHTML+="Comments must be minimum of 10 characters";
-              return false;
-            }
-            // If all fields are valid
-            
-            return true;
-        
-  }  
-  </script>
-  </body>
+    </body>
     </html>
     

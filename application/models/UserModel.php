@@ -40,7 +40,17 @@ class UserModel extends CI_Model
 		$this->db->insert('individualform',$data);
 		return true;
 	}
-
+	
+	public function get_cause_details()
+	{
+		$query = $this->db->get('individualform');
+		return $query->result();
+	}
+public function get_category()
+{
+	$query=$this->db->get('category');
+	return $query->result();
+}
 // 	function get($data){
 // 	$result->$this->db->select('*')->where('email',$data['email'])->where('password',$data['password'])->get('register')->row();
 // 	if(!empty($result)){
@@ -50,6 +60,14 @@ class UserModel extends CI_Model
 // 		return false;
 // 	}
 // }
+public function get_fundraiser_details($fundraiser_id) {
+	// Query the database to get the fundraiser details by ID
+	$this->db->where('id', $fundraiser_id);
+	$query = $this->db->get('individualform');  // Assuming your table is named 'fundraisers'
+	
+	// Return the row containing the fundraiser details
+	return $query->row();
+}
 
 public function loginUser()
     {

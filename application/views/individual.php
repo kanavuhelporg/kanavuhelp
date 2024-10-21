@@ -770,8 +770,6 @@
         </div>
     </div>
 </nav>
-
-
   <div class="donate_img mt-5 pt-4">
   <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
   </div>

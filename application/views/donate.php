@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
 
   <style>
     body {
@@ -74,6 +75,17 @@
     .imgtext2 strong {
       font-weight: bolder;
     }
+    .donate_btn {
+    margin-right: 10px; /* Custom margin between button and icon */
+}
+
+.bi-share {
+    font-size: 1.3rem; /* Adjust the size of the share icon */
+    cursor: pointer;
+    color: #E01A2B;
+    margin-left: auto; /* Pushes the share icon to the far right in its flex container */
+}
+
 
     .imgtext11,
     .imgtext22 {
@@ -137,7 +149,7 @@
       width: 80%;
       /* Make the card width responsive */
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
-      
+     
     }
 
     .carousel-item .row {
@@ -215,10 +227,11 @@
       margin-left: 10px;
 
     }
+    
 @media (max-width: 767px) {
 
   /* carousel */
-
+  
       .carousel-item {
         position: relative;
       }
@@ -229,7 +242,7 @@
         object-fit: cover;
       }
       .card{
-        margin-left: 10%;
+        margin-left: 2%;
       }
 
     /* donate  image below nav bar */
@@ -316,140 +329,117 @@
 
   </div>
   <div class="mx-auto text-center mt-8">
-    <button
-      class="filter-btn inline-flex items-center border-2 border-red-500 text-red-500 py-1 px-3 focus:outline-none rounded-full text-base p-4 mt-4 mr-3 md:mt-0 donatefor active"
+  <div class="category-buttons">
+  <!-- "All" button -->
+  <button
+      class="filter-btn  active inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
       data-filter="all">All</button>
+      
+  <?php if (!empty($category)): ?>
+      <?php foreach ($category as $cat): ?>
+          <button
+              class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
+              data-filter="<?= $cat->name ?>"><?= $cat->name ?></button>
+      <?php endforeach; ?>
+  <?php else: ?>
+      <p>No categories available at the moment.</p>
+  <?php endif; ?>
+</div>
 
-    <button
-      class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base p-4 mt-4 mr-3 md:mt-0 donatefor"
-      data-filter="medical">Medical</button>
-
-    <button
-      class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base p-4 mt-4 mr-3 md:mt-0 donatefor"
-      data-filter="crisis">Crisis</button>
-
-    <button
-      class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base p-4 mt-4 mr-3 md:mt-0 donatefor"
-      data-filter="education">Education</button>
-
-    <button
-      class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
-      data-filter="emergency">Emergency</button>
-
-    <button
-      class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
-      data-filter="events">Events</button>
-  </div><br>
+    </div>
   <script>
-    document.querySelectorAll('.filter-btn').forEach(button => {
-      button.addEventListener('click', () => {
+    // Add click event listeners to each filter button for active class toggle
+document.querySelectorAll('.filter-btn').forEach(button => {
+    button.addEventListener('click', () => {
         // Remove 'active' class from all buttons
         document.querySelectorAll('.filter-btn').forEach(btn => {
-          btn.classList.remove('active');
+            btn.classList.remove('active');
         });
         // Add 'active' class to the clicked button
         button.classList.add('active');
-      });
     });
+});
+
   </script>
-  <div class="container mt-5">
-    <div class="row">
-      <!-- First Card -->
-      <div class="col-12 col-md-4 mb-4">
-        <div class="card">
-          <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="card-text text-muted mb-0">by Kailaswaran</p>
-              <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-            </div>
-            <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
+ <!-- Fundraiser Cards with Fixed Size -->
+<div class="container mt-5">
+  <div class="row">
+    <?php if (!empty($fundraisers)): ?>
+        <?php foreach ($fundraisers as $fundraiser): ?>
+       <!-- Add data-category attribute and Bootstrap classes for fixed size -->
+            <div class="col-12 col-md-4 mb-4 d-flex">
+            <a href="<?= base_url('/helpus?fundraiser_id=' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
+ 
+                <div class="card h-100 w-100 fixed-card">
+                    <!-- Display the image -->
+                    <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="80%" height="200px" class="card-img-top fixed-card-img" alt="no image">
+                    
+                    <div class="card-body d-flex flex-column">
+                        <!-- Title -->
+                        <p class="card-title"><?= $fundraiser->cause_heading ?></p>
+
+                        <!-- Organizer's name and category -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="card-text text-muted mb-0">by <?= $fundraiser->name ?></p>
+                            <button type="button" class="btn card_button text-muted ms-auto"><?= $fundraiser->category ?></button>
+                        </div>
+                        
+                        <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
             <div class="progress mb-2">
               <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <a href="#" class="btn donate_btn">Donate Now</a>
-          </div>
-        </div>
-      </div>
-      <!-- Second Card -->
-      <div class="col-12 col-md-4 mb-4">
-        <div class="card">
-          <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">Flood-affected house near the Poyang Lake</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="card-text text-muted mb-0">by Kailaswaran</p>
-              <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
+            
+                        <!-- Donate button and share icon -->
+                        <div class="d-flex align-items-center mt-auto">
+                            <!-- Donate Now button -->
+                            <a href="#" class="btn donate_btn">Donate Now</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <!-- Share icon (adjust margin for spacing) -->
+                            <i class="bi bi-share ms-2"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
-            <div class="progress mb-2">
-              <div class="progress-bar w-50" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <a href="#" class="btn donate_btn">Donate Now</a>
-          </div>
-        </div>
-      </div>
-      <!-- Third Card -->
-      <div class="col-12 col-md-4 mb-4">
-        <div class="card">
-          <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">Cancer Treatment for a Girl in Gujarat</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="card-text text-muted mb-0">by Kailaswaran</p>
-              <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-            </div>
-            <p class="card-text"><strong>₹ 1,50,000</strong> raised out of ₹ 2,00,000</p>
-            <div class="progress mb-2">
-              <div class="progress-bar w-75" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <a href="#" class="btn donate_btn">Donate Now</a>
-          </div>
-        </div>
-      </div>
-    </div>
+        </a>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No fundraisers available at the moment.</p>
+    <?php endif; ?>
+  </div>
+</div>
 
-    <!-- Second row of cards -->
-    <div class="row">
-      <!-- Fourth Card -->
-      <div class="col-12 col-md-4 mb-4">
-        <div class="card">
-          <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">Project Title 4</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="card-text text-muted mb-0">by Kailaswaran</p>
-              <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-            </div>
-            <p class="card-text"><strong>₹ 30,000</strong> raised out of ₹ 50,000</p>
-            <div class="progress mb-2">
-              <div class="progress-bar w-20" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <a href="#" class="btn donate_btn">Donate Now</a>
-          </div>
-        </div>
-      </div>
-      <!-- Fifth Card -->
-      <div class="col-12 col-md-4 mb-4">
-        <div class="card">
-          <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-title">Project Title 5</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="card-text text-muted mb-0">by Kailaswaran</p>
-              <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-            </div>
-            <p class="card-text"><strong>₹ 45,000</strong> raised out of ₹ 70,000</p>
-            <div class="progress mb-2">
-              <div class="progress-bar w-35" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <a href="#" class="btn donate_btn">Donate Now</a>
-          </div>
-        </div>
-      </div>
+<script>
+ document.addEventListener('DOMContentLoaded', function () {
+  // Get all category filter buttons
+  const filterButtons = document.querySelectorAll('.filter-btn');
 
-    </div>
+  // Get all card containers (each contains a fundraiser flashcard)
+  const cards = document.querySelectorAll('.card-container');
+
+  // Add click event listeners to each filter button
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const selectedCategory = this.getAttribute('data-filter');
+      console.log('Selected Category:', selectedCategory); // Debugging
+
+      // Loop through each card and display based on category match
+      cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        console.log('Card Category:', cardCategory); // Debugging
+
+        if (selectedCategory === 'all' || selectedCategory === cardCategory) {
+          // Show card if category matches or if "All" is selected
+          card.style.display = 'block';
+        } else {
+          // Hide card if category doesn't match
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+
+</script>
   </div>
   <div class="footer">
       <footer class="footer mt-auto py-3">
@@ -458,8 +448,8 @@
           <div class="row text-center">
             <div class="col-12">
               <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
-                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
+                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
                 <a class="footer-lable lable" href="#">Terms of Use</a>
                 <a class="footer-lable lable" href="#">Privacy Policy</a>
               </div>
