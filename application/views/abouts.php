@@ -408,7 +408,7 @@
             <?php else: ?>
               <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
+            <!-- <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a> -->
           </div>
         </div>
       </div>

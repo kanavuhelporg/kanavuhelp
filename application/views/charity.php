@@ -552,7 +552,7 @@ body #multi-step-form-container{
                     <?php else: ?>
                       <a href="<?= base_url('/login') ?>" class="btn btn-red me-2">Login</a>
                     <?php endif; ?>
-                    <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a>
+                    <!-- <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a> -->
                 </div>
             </div>
         </div>
