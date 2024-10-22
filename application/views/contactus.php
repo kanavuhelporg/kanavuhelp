@@ -299,35 +299,11 @@
         height: 300px; /* Maintain aspect ratio */
         object-fit: cover; /* Ensures the image fills its container */
     }
-    #details{
-      display:block;
-    }
-    #location{
-      margin-left:17%;
-    }
-    #loc_icon{
-      margin-left:19%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    #phone{
-      margin-left:22%
-    }
-    #phone_icon{
-      margin-left:13%;
-      color:#E01A2B;
-      font-size:26px;
-    }
-    #email{
-      margin-left:15%;
-    }
-    #envelope_icon{
-      margin-left:22%;
-      color:#E01A2B;
-      font-size:26px;
-    }
+   
+    
+   
     .form1{
-      margin-left:3%;
+      margin-left:2%;
     }
     input[type]{
       width:90%;
@@ -368,7 +344,7 @@
                         <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" >My Helps</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
@@ -377,7 +353,7 @@
                         <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>" style="color: rgba(235, 45, 50, 1)">Contact Us</a>
                     </li>
                 </ul>
           <div class="d-flex align-items-center ms-auto">
@@ -396,7 +372,7 @@
             <?php else: ?>
               <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
+            
           </div>
         </div>
       </div>
