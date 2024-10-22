@@ -113,8 +113,8 @@
     .dropdown-item:hover {
       color: #EB2D32;
     }
-    .footer {
-      /* height: 250px; */
+    /* .footer {
+      height: 250px;
       width: 100%;
       left:0;
       right:0;
@@ -128,17 +128,6 @@
       padding: 10px;
       margin-left: 10px;
     }
-
-    .footer-lable {
-      color: white;
-      text-decoration: none;
-      padding-right: 20px;
-      padding-left: 20px;
-    }
-
-    .lable {
-      border-right: 3px solid #fff;
-    }
     .footer1 a {
       margin-left: 20x;
     }
@@ -151,8 +140,62 @@
       height: 20px;
       margin-left: 10px;
 
-    }
+    } */
+    .footer {
+    background-color: #d32f2f; /* Matching the red background */
+    color: white;
     
+}
+
+.footer h5 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.footer1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.footer1 a {
+    color: white;
+    /* margin: 0 7px; */
+    text-decoration: none;
+}
+
+.footer1 a:hover {
+    text-decoration: underline;
+}
+
+.social-icons {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.social-icons a {
+    margin: 0 10px;
+}
+
+.text-center img {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.footer p {
+    margin-bottom: 0; /* Prevent extra space below the copyright text */
+    font-size: 14px;
+}
+.footer-lable {
+    color: white;
+    text-decoration: none;
+    padding-right: 20px;
+    padding-left: 20px;
+  } 
+
+  .lable {
+    border-right: 3px solid #fff;
+  }
+
 @media (min-width: 993px) {
    .img-fluid {
       margin-top:50px;   
@@ -461,7 +504,7 @@ body #multi-step-form-container{
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    width: 540px;
+    width: 100%;
     display: inline-block;
     background-color:#F8F8F8;
   }
@@ -575,149 +618,145 @@ body #multi-step-form-container{
       Charities
     </button>
 </div>
-
-  
-  <div class="container box mt-auto py-3">
+<div class="container-fluid box mt-auto py-3">
     <div class="row box1 mt-auto py-3">
-    <div class="container mt-5">
-    <div class="row align-items-center">
         <div class="container-fluid mt-5">
-    <div class="row align-items-center">
-        <!-- Left Column for Image and Text -->
-        <div class="col-md-6 d-flex justify-content-center">
-            <div class="text-center">
-                <h3 class="mt-4"><strong>START YOUR HELP</strong></h3>
-                <h6>"We make a living by what we get, but we make a life by what we give"</h6>
-                <img src="<?php echo base_url('/assets/img/btfly.png');?>" alt="no img" class="img-fluid" style="max-width: 100%; height: auto;">
-            </div>
-        </div>
-        <!-- Right Column for Form -->
-        <div class="col-md-6">
-            <div id="multi-step-form-container mt-auto py-3">
-                <!-- Form Steps / Progress Bar -->
-                <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap">
-                    <!-- Step 1 -->
-                    <li class="form-stepper-active text-center form-stepper-list" step="1">
-                        <a class="mx-2">
-                            <span class="form-stepper-circle">
-                                <span>1</span>
-                            </span>
-                        </a>
-                    </li>
-                    <!-- Step 2 -->
-                    <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
-                        <a class="mx-2">
-                            <span class="form-stepper-circle text-muted">
-                                <span>2</span>
-                            </span>
-                        </a>
-                    </li>
-                    <!-- Step 3 -->
-                    <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
-                        <a class="mx-2">
-                            <span class="form-stepper-circle text-muted">
-                                <span>3</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="form-stepper-unfinished text-center form-stepper-list" step="4">
-                        <a class="mx-2">
-                            <span class="form-stepper-circle text-muted">
-                                <span>4</span>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-                <!-- Step Wise Form Content -->
-                <form id="charityform" name="charityform" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/charityform_data') ?>" enctype="multipart/form-data" method="POST" class="row row-cols-1">
-                    <!-- Step 1 Content -->
-                    <section id="step-1" class="form-step" style="height:450px;border:none;">
-                        <p class="font-normal"><b>TELL US ABOUT YOUR FUNDRAISER</b></p>
-                        <h6 class="font-normal">RAISING FUNDS FOR NGO/CHARITY PURPOSE</h6>
+            <div class="row align-items-center">
+                <!-- Left Column for Image and Text -->
+                <div class="col-md-6 d-flex justify-content-center">
+                    <div class="text-center">
+                        <h3 class="mt-4"><strong>START YOUR HELP</strong></h3>
+                        <h6>"We make a living by what we get, but we make a life by what we give"</h6>
+                        <img src="<?php echo base_url('/assets/img/btfly.png');?>" alt="no img" class="img-fluid" style="max-width: 100%; height: auto;">
+                    </div>
+                </div>
+                <!-- Right Column for Form -->
+                <div class="col-md-6">
+                    <div id="multi-step-form-container mt-auto py-3">
+                        <!-- Form Steps / Progress Bar -->
+                        <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap">
+                            <!-- Step 1 -->
+                            <li class="form-stepper-active text-center form-stepper-list" step="1">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle">
+                                        <span>1</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <!-- Step 2 -->
+                            <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle text-muted">
+                                        <span>2</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <!-- Step 3 -->
+                            <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle text-muted">
+                                        <span>3</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="form-stepper-unfinished text-center form-stepper-list" step="4">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle text-muted">
+                                        <span>4</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- Step Wise Form Content -->
+                        <form id="charityform" name="charityform" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/charityform_data') ?>" enctype="multipart/form-data" method="POST" class="row row-cols-1">
+                            <!-- Step 1 Content -->
+                            <section id="step-1" class="form-step" style="border:none;">
+                                <p class="font-normal"><b>TELL US ABOUT YOUR FUNDRAISER</b></p>
+                                <h6 class="font-normal">RAISING FUNDS FOR NGO/CHARITY PURPOSE</h6>
 
-                        <!-- Step 1 input fields -->
-                        <div class="col-md-12 my-3">
-                            <label for="amount"></label>
-                            <input type="number" id="amount" name="amount" placeholder="Amount" required>
+                                <!-- Step 1 input fields -->
+                                <div class="col-md-12 my-3">
+                                    <label for="amount"></label>
+                                    <input type="number" id="amount" name="amount" placeholder="Amount" required>
 
-                            <label for="name"></label>
-                            <input type="text" id="title" name="title" placeholder="Fundraiser Title*" required>
+                                    <label for="name"></label>
+                                    <input type="text" id="title" name="title" placeholder="Fundraiser Title*" required>
 
-                            <label for="ngo"></label>
-                            <input type="text" id="ngo" name="ngo" placeholder="NGO Name*" required>
+                                    <label for="ngo"></label>
+                                    <input type="text" id="ngo" name="ngo" placeholder="NGO Name*" required>
 
-                            <label for="education"></label>
-                            <input type="text" id="education" name="education" placeholder="Your Education Qualification*" required>
+                                    <label for="education"></label>
+                                    <input type="text" id="education" name="education" placeholder="Your Education Qualification*" required>
 
-                            <label for="employment"></label>
-                            <input type="text" id="employment" name="employment" placeholder="Your Employment Status*" required>
+                                    <label for="employment"></label>
+                                    <input type="text" id="employment" name="employment" placeholder="Your Employment Status*" required>
 
-                            <label for="aboutus"></label>
-                            <input type="text" id="aboutus" name="aboutus" placeholder="How did you hear about kanavu.help *">
-                        </div>
-                        <div class="mt-3 text-center">
-                            <button class="btn text-red-500 btn-navigate-form-step" type="button" step_number="2">Continue</button>
-                        </div>
-                    </section>
-                    <!-- Step 2 Content, default hidden on page load. -->
-                    <section id="step-2" class="form-step d-none" style="border:none;">
-                        <p class="font-normal"><b>FUNDRAISER DETAILS</b></p>
-                        <!-- Step 2 input fields -->
-                        <div class="col-md-12 my-3">
-                            <div class="file-upload-container">
-                                <div class="container">
+                                    <label for="aboutus"></label>
+                                    <input type="text" id="aboutus" name="aboutus" placeholder="How did you hear about kanavu.help *">
+                                </div>
+                                <div class="mt-3 text-center">
+                                    <button class="btn text-red-500 btn-navigate-form-step" type="button" step_number="2">Continue</button>
+                                </div>
+                            </section>
+                            <!-- Step 2 Content, default hidden on page load. -->
+                            <section id="step-2" class="form-step d-none" style="border:none;">
+                                <p class="font-normal"><b>FUNDRAISER DETAILS</b></p>
+                                <!-- Step 2 input fields -->
+                                <div class="col-md-12 my-3">
+                                    <div class="file-upload-container">
+                                        <div class="container-fluid">
+                                            <div class="form-group row">
+                                                <label for="file" class="col-form-label col-12 col-sm-4 text-sm-right">Add Fundraiser Image/Video</label>
+                                                <div class="col-12 col-sm-8">
+                                                    <input type="file" class="form-control-file" id="file" name="file" accept="image/*,video/*">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><br><br>
+                                    <label for="city"></label>
+                                    <input type="text" id="city" name="city" placeholder="City*" required>
+                                  </div>
+                                <div class="mt-3 d-flex justify-content-center">
+                                    <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="1" style="width: 100px;">Back</button>
+                                    <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="3">Continue</button>
+                                </div>
+                            </section>
+                            <!-- Step 3 Content, default hidden on page load. -->
+                            <section id="step-3" class="form-step d-none" style="border:none;">
+                                <p class="font-normal"><b>TELL THE STORY WHY YOU ARE RUNNING A FUNDRAISER</b></p>
+                                <!-- Step 3 input fields -->
+                                <div class="container-fluid">
                                     <div class="form-group row">
-                                        <label for="file" class="col-form-label col-12 col-sm-4 text-sm-right">Add Fundraiser Image/Video</label>
-                                        <div class="col-12 col-sm-8">
-                                            <input type="file" class="form-control-file" id="file" name="file" accept="image/*,video/*">
+                                        <!-- Description Textarea -->
+                                        <div class="col-12 my-3">
+                                            <label for="description">Description</label>
+                                            <textarea id="description" name="description" class="form-control" rows="6" placeholder="Enter description here"></textarea>
+                                        </div>
+
+                                        <!-- Checkbox with Privacy Policy -->
+                                        <div class="col-12 my-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    By clicking submit button you agree to our <u>privacy policy and terms and conditions</u>.
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div><br><br>
-                            <label for="city"></label>
-                            <input type="text" id="city" name="city" placeholder="City*" required>
-                        </div>
-                        <div class="mt-3 d-flex justify-content-center">
-                            <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="1" style="width: 100px;">Back</button>
-                            <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="3">Continue</button>
-                        </div>
-                    </section>
-                    <!-- Step 3 Content, default hidden on page load. -->
-                    <section id="step-3" class="form-step d-none" style="border:none;">
-                        <p class="font-normal"><b>TELL THE STORY WHY YOU ARE RUNNING A FUNDRAISER</b></p>
-                        <!-- Step 3 input fields -->
-                        <div class="container">
-                            <div class="form-group row">
-                                <!-- Description Textarea -->
-                                <div class="col-12 my-3">
-                                    <label for="description">Description</label>
-                                    <textarea id="description" name="description" class="form-control" rows="6" placeholder="Enter description here"></textarea>
+                                <div class="mt-3 d-flex justify-content-center">
+                                    <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="2" style="width: 100px;">Back</button>
+                                    <button class="btn text-red-500 submit-btn mx-2" type="submit">Submit for Approval</button>
                                 </div>
-
-                                <!-- Checkbox with Privacy Policy -->
-                                <div class="col-12 my-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            By clicking submit button you agree to our <u>privacy policy and terms and conditions</u>.
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-3 d-flex justify-content-center">
-                            <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="2" style="width: 100px;">Back</button>
-                            <button class="btn text-red-500 submit-btn mx-2" type="submit">Submit for Approval</button>
-                        </div>
-                    </section>
-                </form>
+                            </section>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-    </div>
-</div>
   
 <script>
    /**
@@ -822,7 +861,6 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
     <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="img-fluid mx-auto d-block" style="width: 200px; display: block;">
   </div>
 
-
   <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
 </footer>
 </div>
@@ -830,3 +868,4 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
