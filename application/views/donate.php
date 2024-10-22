@@ -9,6 +9,12 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <style>
     body {
@@ -283,10 +289,11 @@
                         <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color: rgba(235, 45, 50, 1)">Donate</a>
+
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate')  ?>" style="color: rgba(235, 45, 50, 1)">Donate</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" >My Helps</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
@@ -314,8 +321,8 @@
             <?php else: ?>
               <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            <!-- <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a> -->
-          </div>
+
+           </div>
         </div>
       </div>
     </div>
@@ -332,9 +339,9 @@
   <div class="category-buttons">
   <!-- "All" button -->
   <button
-      class="filter-btn  active inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
+      class="filter-btn active inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
       data-filter="all">All</button>
-      
+
   <?php if (!empty($category)): ?>
       <?php foreach ($category as $cat): ?>
           <button
@@ -346,30 +353,14 @@
   <?php endif; ?>
 </div>
 
-    </div>
-  <script>
-    // Add click event listeners to each filter button for active class toggle
-document.querySelectorAll('.filter-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        // Remove 'active' class from all buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        // Add 'active' class to the clicked button
-        button.classList.add('active');
-    });
-});
-
-  </script>
- <!-- Fundraiser Cards with Fixed Size -->
+<!-- Fundraiser Cards with Fixed Size -->
 <div class="container mt-5">
   <div class="row">
     <?php if (!empty($fundraisers)): ?>
         <?php foreach ($fundraisers as $fundraiser): ?>
-       <!-- Add data-category attribute and Bootstrap classes for fixed size -->
-            <div class="col-12 col-md-4 mb-4 d-flex">
+            <!-- Add data-category attribute -->
+            <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= $fundraiser->category ?>">
             <a href="<?= base_url('/helpus?fundraiser_id=' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
- 
                 <div class="card h-100 w-100 fixed-card">
                     <!-- Display the image -->
                     <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="80%" height="200px" class="card-img-top fixed-card-img" alt="no image">
@@ -385,22 +376,23 @@ document.querySelectorAll('.filter-btn').forEach(button => {
                         </div>
                         
                         <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-            <div class="progress mb-2">
-              <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            
+                        <div class="progress mb-2">
+                          <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        
                         <!-- Donate button and share icon -->
                         <div class="d-flex align-items-center mt-auto">
                             <!-- Donate Now button -->
-                            <a href="#" class="btn donate_btn">Donate Now</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <!-- Share icon (adjust margin for spacing) -->
+                            <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal">Donate Now</a>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <!-- Share icon -->
                             <i class="bi bi-share ms-2"></i>
                         </div>
                     </div>
                 </div>
+            </a>
             </div>
-        </a>
         <?php endforeach; ?>
     <?php else: ?>
         <p>No fundraisers available at the moment.</p>
@@ -409,38 +401,41 @@ document.querySelectorAll('.filter-btn').forEach(button => {
 </div>
 
 <script>
- document.addEventListener('DOMContentLoaded', function () {
-  // Get all category filter buttons
-  const filterButtons = document.querySelectorAll('.filter-btn');
+    // Add click event listeners to each filter button for active class toggle
+    document.querySelectorAll('.filter-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove 'active' class from all buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
 
-  // Get all card containers (each contains a fundraiser flashcard)
-  const cards = document.querySelectorAll('.card-container');
+            // Add 'active' class to the clicked button
+            button.classList.add('active');
 
-  // Add click event listeners to each filter button
-  filterButtons.forEach(button => {
-    button.addEventListener('click', function () {
-      const selectedCategory = this.getAttribute('data-filter');
-      console.log('Selected Category:', selectedCategory); // Debugging
+            // Get selected category
+            const selectedCategory = button.getAttribute('data-filter');
+            console.log('Selected Category:', selectedCategory); // Debugging
 
-      // Loop through each card and display based on category match
-      cards.forEach(card => {
-        const cardCategory = card.getAttribute('data-category');
-        console.log('Card Category:', cardCategory); // Debugging
+            // Select all fundraiser cards
+            const cards = document.querySelectorAll('.card-container');
 
-        if (selectedCategory === 'all' || selectedCategory === cardCategory) {
-          // Show card if category matches or if "All" is selected
-          card.style.display = 'block';
-        } else {
-          // Hide card if category doesn't match
-          card.style.display = 'none';
-        }
-      });
+            // Loop through each card and display based on category match
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                console.log('Card Category:', cardCategory); // Debugging
+
+                if (selectedCategory === 'all' || selectedCategory === cardCategory) {
+                    // Show card if category matches or if "All" is selected
+                    card.style.display = 'block';
+                } else {
+                    // Hide card if category doesn't match
+                    card.style.display = 'none';
+                }
+            });
+        });
     });
-  });
-});
-
 </script>
-  </div>
+
   <div class="footer">
       <footer class="footer mt-auto py-3">
         <div class="container">
@@ -476,6 +471,75 @@ document.querySelectorAll('.filter-btn').forEach(button => {
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+  <!-- Other HTML code, like the card section -->
+
+<!-- Donation Modal -->
+<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+        <!-- Donation Form -->
+        <form>
+          <!-- Image -->
+          <div class="text-center">
+            <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%">
+          </div>
+
+          <!-- Modal Title and Description -->
+          <div class="text-center mt-2">
+            <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
+            <p>Your contribution has the potential <br> to make a greater difference.</p>
+          </div>
+
+          <!-- Currency and Amount -->
+          <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
+  <select class="form-control" id="currency" style="width:35%;">
+    <option>INR</option>
+    <option>USD</option>
+  </select>
+
+  <!-- Add gap between the fields using Bootstrap spacing utility -->
+  <input type="number" class="form-control ms-5" id="amount" placeholder="Enter amount" style="width:40%;">
+</div>
+
+
+          <!-- Name -->
+          <div class="form-group ms-4"> <!-- Added margin start to shift right -->
+  <input type="text" class="form-control" id="name" placeholder="Enter your name" style="width:92%;">
+</div>
+
+          <!-- Email -->
+          <div class="form-group ms-4">
+            <input type="email" class="form-control" id="email" placeholder="Enter your email" style="width:92%;">
+          </div>
+
+          <!-- Phone Number -->
+          <div class="form-group ms-4">
+            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" style="width:92%;">
+          </div>
+
+          <!-- Continue Button -->
+          <div class="d-flex justify-content-center">
+  <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+    Continue to Pay ₹
+  </button>
+</div>
+
+        </form>
+
+        <!-- Terms and Privacy Policy -->
+        <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
     </html>
     

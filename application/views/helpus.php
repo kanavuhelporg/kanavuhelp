@@ -9,6 +9,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <style>
     body {
       font-family: 'Sen', sans-serif;
@@ -256,12 +263,12 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="<?=base_url('')?>">
+      <a class="navbar-brand me-auto" href="<?=base_url('')?>" >
         <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
       </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
-        <span class="navbar-toggler-icon"></span>
+      <button class="navbar-toggler"style="color:#EB2D32" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon" style="color:#EB2D32"></span>
       </button>
 
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
@@ -362,72 +369,74 @@
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong> days left</p>
 
             <!-- Donate Button -->
-            <a href="#" class="btn btn-danger btn-block">Donate Now</a>
+            <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal">Donate Now</a>
             
             <!-- Payment Options -->
-            <p class="mt-2">or pay with 
-                <img src="<?= base_url('assets/img/gpay.png') ?>"  width= "20%"alt="Google Pay">
-                <img src="<?= base_url('assets/img/phonepay.jpg') ?>"  width=" 20%" alt="PhonePe" class="ms-2">
+            <p class="mt-2">or pay with &nbsp;&nbsp;
+                <img src="<?= base_url('assets/img/gpay.png') ?>" height=".3%" width= "15%"alt="Google Pay">
+               &nbsp; <img src="<?= base_url('assets/img/phonepay.jpg') ?>"height=".5%"  width=" 15%" alt="PhonePe" class="ms-2">
             </p>
 
            <!-- Top Donors Section -->
-<div class="card p-3" style="background-color: #fff0f0; border-radius: 10px; border: none;" >
-    <h5 style="font-weight: bold;">Top Donors</h5>
-    <ul class="list-group" style="list-style-type: none; padding: 0;">
-        <!-- Donor 1 -->
-        <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
-            <div class="d-flex align-items-center">
-                <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                    D
-                </div>
-                <span style="margin-left: 10px;">Dineshwaran</span>
-            </div>
-            <span style="font-weight: bold;">Rs.10,000</span>
-        </li>
+           <div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="card p-3" style="background-color: #fff0f0; border-radius: 10px; border: none;">
+                <h5 style="font-weight: bold;">Top Donors</h5>
+                <ul class="list-group" style="list-style-type: none; padding: 0;">
+                    <!-- Donor 1 -->
+                    <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
+                        <div class="d-flex align-items-center">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                                D
+                            </div>
+                            <span style="margin-left: 10px;">Dineshwaran</span>
+                        </div>
+                        <span style="font-weight: bold;">Rs.10,000</span>
+                    </li>
 
-        <!-- Donor 2 -->
-        <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
-            <div class="d-flex align-items-center">
-                <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                    K
-                </div>
-                <span style="margin-left: 10px;">Kamaraj</span>
-            </div>
-            <span style="font-weight: bold;">Rs.5,000</span>
-        </li>
+                    <!-- Donor 2 -->
+                    <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
+                        <div class="d-flex align-items-center">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                                K
+                            </div>
+                            <span style="margin-left: 10px;">Kamaraj</span>
+                        </div>
+                        <span style="font-weight: bold;">Rs.5,000</span>
+                    </li>
 
-        <!-- Show more -->
-        <li class="text-center" style="padding: 10px 0;">
-            <a href="#" style="color: red; text-decoration: none;">Show more <span>&#x25BC;</span></a>
-        </li>
-    </ul>
+                    <!-- Show more -->
+                    <li class="text-center" style="padding: 10px 0;">
+                        <a href="#" style="color: red; text-decoration: none;">Show more <span>&#x25BC;</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 
-        </div>
-    </div>
-
-    <!-- Organizer and Beneficiary Information -->
-    <div class="row mt-4">
+    <div class="row mt-4" >
     <!-- Created by Section -->
-    <div class="col-md-6" style=" border-radius:12px;border:1px solid #E0E1E3; display: flex; align-items: center; padding: 10px; width:20%">
-        
-        <div>
+    <div class="col-md-3 col-sm-12 d-flex  mb-3 mb-md-0" >
+        <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px; ">
             <p style="margin: 0;">Created by</p>
-            <strong style="font-size: 16px;"><?= htmlspecialchars($fundraiser->name) ?></strong>
+            <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->name) ?></strong>
         </div>
     </div>
 
-    <!-- Beneficiary Section -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <div class="col-md-6" style="  border-radius:12px;width:20%;border:1px solid #E0E1E3; display: flex; align-items: center; padding: 10px;">
-        
-        <div>
-            <p style="margin: 0; ">This fundraiser will benefit</p>
-            <strong style="font-size: 16px;"><?= htmlspecialchars($fundraiser->beneficiary_name) ?></strong>
-            <p style="margin: 0;">from  </p>
+    <!-- Beneficiary Section -->
+    <div class="col-md-3 col-sm-12 d-flex ">
+        <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px;">
+            <p style="margin: 0;">This fundraiser will benefit</p>
+            <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->beneficiary_name) ?></strong>
+            <p style="margin: 0;">from</p>
         </div>
     </div>
 </div>
+
+
 
 <br>
     <!-- Disclaimer Section -->
@@ -471,6 +480,74 @@
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+    
+  <!-- Donation Modal -->
+<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+        <!-- Donation Form -->
+        <form>
+          <!-- Image -->
+          <div class="text-center">
+            <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%">
+          </div>
+
+          <!-- Modal Title and Description -->
+          <div class="text-center mt-2">
+            <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
+            <p>Your contribution has the potential <br> to make a greater difference.</p>
+          </div>
+
+          <!-- Currency and Amount -->
+          <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
+  <select class="form-control" id="currency" style="width:35%;">
+    <option>INR</option>
+    <option>USD</option>
+  </select>
+
+  <!-- Add gap between the fields using Bootstrap spacing utility -->
+  <input type="number" class="form-control ms-5" id="amount" placeholder="Enter amount" style="width:40%;">
+</div>
+
+
+          <!-- Name -->
+          <div class="form-group ms-4"> <!-- Added margin start to shift right -->
+  <input type="text" class="form-control" id="name" placeholder="Enter your name" style="width:92%;">
+</div>
+
+          <!-- Email -->
+          <div class="form-group ms-4">
+            <input type="email" class="form-control" id="email" placeholder="Enter your email" style="width:92%;">
+          </div>
+
+          <!-- Phone Number -->
+          <div class="form-group ms-4">
+            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" style="width:92%;">
+          </div>
+
+          <!-- Continue Button -->
+          <div class="d-flex justify-content-center">
+  <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+    Continue to Pay ₹
+  </button>
+</div>
+
+        </form>
+<br>
+        <!-- Terms and Privacy Policy -->
+        <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
     </html>
     
