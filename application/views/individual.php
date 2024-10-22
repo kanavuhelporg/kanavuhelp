@@ -53,9 +53,17 @@
     .offcanvas-body {
       font-size: 17px;
     }
+    .navbar-toggler {
+    padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px #2125296b;
+    border-radius: .25rem;
+    transition: box-shadow .15s ease-in-out;
+}
     .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-  border: 1px solid #41464b;
   padding: (1rem) var(1rem);
 }
   #navbarscroll {
@@ -768,13 +776,13 @@
                 <!-- Navbar links -->
                 <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+                        <a class="nav-link" href="<?= base_url('/individual') ?>" style="color: rgba(235, 45, 50, 1)">Start a Fundraiser</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
@@ -802,7 +810,7 @@
                     <?php else: ?>
                       <a href="<?= base_url('/login') ?>" class="btn btn-red me-2">Login</a>
                     <?php endif; ?>
-                    <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a>
+                    <!-- <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a> -->
                 </div>
             </div>
         </div>

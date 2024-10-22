@@ -344,6 +344,7 @@
                         <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
                     </li>
                     <li class="nav-item">
+
                         <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" >My Helps</a>
                     </li>
                     <li class="nav-item">
@@ -372,8 +373,8 @@
             <?php else: ?>
               <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            
-          </div>
+
+           </div>
         </div>
       </div>
     </div>

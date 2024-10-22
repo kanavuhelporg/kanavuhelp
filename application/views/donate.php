@@ -289,6 +289,7 @@
                         <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
                     </li>
                     <li class="nav-item">
+
                         <a class="nav-link mx-lg-2" href="<?= base_url('/donate')  ?>" style="color: rgba(235, 45, 50, 1)">Donate</a>
                     </li>
                     <li class="nav-item">
@@ -320,8 +321,8 @@
             <?php else: ?>
               <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            
-          </div>
+
+           </div>
         </div>
       </div>
     </div>

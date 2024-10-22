@@ -587,7 +587,7 @@
                         <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
@@ -615,7 +615,7 @@
             <?php else: ?>
               <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
             <?php endif; ?>
-            <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a>
+            <!-- <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a> -->
           </div>
         </div>
       </div>
@@ -637,7 +637,7 @@
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border btn-3">Start a Kanavu</button>
+                  <button type="button" class="btn border btn-3">Start a Fundraiser</button>
                 </a>
               </li>
             </ul>
@@ -658,7 +658,7 @@
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border btn-4">Start a Kanavu</button>
+                  <button type="button" class="btn border btn-4">Start a Fundraiser</button>
                 </a>
               </li>
             </ul>
