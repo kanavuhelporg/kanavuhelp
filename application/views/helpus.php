@@ -9,7 +9,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
-  
+  <!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <!-- Bootstrap CSS -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -276,7 +278,7 @@
           <h5 class="offcanvas-title">
             <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
           </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" style="color:#EB2D32"></button>
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
@@ -369,19 +371,19 @@
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong> days left</p>
 
             <!-- Donate Button -->
-            <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal">Donate Now</a>
+            <a href="#" id="donateButton" class="btn donate_btn" data-toggle="modal" data-target="#donationModal">Donate Now</a>
             
             <!-- Payment Options -->
             <p class="mt-2">or pay with &nbsp;&nbsp;
-                <img src="<?= base_url('assets/img/gpay.png') ?>" height=".3%" width= "15%"alt="Google Pay">
-               &nbsp; <img src="<?= base_url('assets/img/phonepay.jpg') ?>"height=".5%"  width=" 15%" alt="PhonePe" class="ms-2">
+                <img src="<?= base_url('assets/img/gpay.png') ?>"  width= "10%"alt="Google Pay">
+               &nbsp; <img src="<?= base_url('assets/img/phonepay.jpg') ?>"  width=" 10%" alt="PhonePe" class="ms-2">
             </p>
 
            <!-- Top Donors Section -->
-           <div class="container mt-4">
+<div class="container mt-4">
     <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <div class="card p-3" style="background-color: #fff0f0; border-radius: 10px; border: none;">
+        <div class="col-md-12 col-sm-12">
+            <div class="card p-3" style="background-color: #fff0f0; border-radius: 10px; border: none; width: 100%; max-width: 600px; margin: 0 auto;">
                 <h5 style="font-weight: bold;">Top Donors</h5>
                 <ul class="list-group" style="list-style-type: none; padding: 0;">
                     <!-- Donor 1 -->
@@ -415,11 +417,11 @@
         </div>
     </div>
 </div>
-
+            </div>
 
     <div class="row mt-4" >
     <!-- Created by Section -->
-    <div class="col-md-3 col-sm-12 d-flex  mb-3 mb-md-0" >
+    <div class="col-md-3 col-sm-12justify-content-start d-flex  mb-3 mb-md-0" >
         <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px; ">
             <p style="margin: 0;">Created by</p>
             <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->name) ?></strong>
@@ -427,7 +429,7 @@
     </div>
 
     <!-- Beneficiary Section -->
-    <div class="col-md-3 col-sm-12 d-flex ">
+    <div class="col-md-3 justify-content-start col-sm-12 d-flex ">
         <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px;">
             <p style="margin: 0;">This fundraiser will benefit</p>
             <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->beneficiary_name) ?></strong>
@@ -437,14 +439,13 @@
 </div>
 
 
-
-<br>
     <!-- Disclaimer Section -->
     <p class="text-muted" style="width:70%">
+      <br>
         Content Disclaimer: The views and opinions expressed on the campaign page are those of the campaigner or donors. They do not reflect or represent the company’s views and opinions.
     </p>
 </div>
-
+            </div>
   <div class="footer">
       <footer class="footer mt-auto py-3">
         <div class="container">
@@ -482,20 +483,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
   <!-- Donation Modal -->
-<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
         <!-- Donation Form -->
         <form>
           <!-- Image -->
           <div class="text-center">
             <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%">
           </div>
-
           <!-- Modal Title and Description -->
           <div class="text-center mt-2">
             <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
@@ -504,20 +504,18 @@
 
           <!-- Currency and Amount -->
           <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
-  <select class="form-control" id="currency" style="width:35%;">
-    <option>INR</option>
-    <option>USD</option>
-  </select>
+            <select class="form-control" id="currency" style="width:35%;">
+              <option>INR</option>
+              <option>USD</option>
+            </select>
 
-  <!-- Add gap between the fields using Bootstrap spacing utility -->
-  <input type="number" class="form-control ms-5" id="amount" placeholder="Enter amount" style="width:40%;">
-</div>
-
+            <input type="number" class="form-control ms-5" id="amount" placeholder="Enter amount" style="width:40%;">
+          </div>
 
           <!-- Name -->
-          <div class="form-group ms-4"> <!-- Added margin start to shift right -->
-  <input type="text" class="form-control" id="name" placeholder="Enter your name" style="width:92%;">
-</div>
+          <div class="form-group ms-4">
+            <input type="text" class="form-control" id="name" placeholder="Enter your name" style="width:92%;">
+          </div>
 
           <!-- Email -->
           <div class="form-group ms-4">
@@ -531,19 +529,66 @@
 
           <!-- Continue Button -->
           <div class="d-flex justify-content-center">
-  <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
-    Continue to Pay ₹
-  </button>
-</div>
-
+            <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+              Continue to Pay ₹
+            </button>
+          </div>
         </form>
-<br>
+
         <!-- Terms and Privacy Policy -->
         <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  // Handle modal close event to ensure page is accessible
+  var donationModal = document.getElementById('donationModal');
+  donationModal.addEventListener('hidden.bs.modal', function (event) {
+    // This will trigger when the modal is fully closed
+    document.body.classList.remove('modal-open'); // Ensure body is not still marked as modal-open
+    document.querySelector('.modal-backdrop').remove(); // Remove backdrop if still present
+  });
+</script>
+
+
+<script>
+  // Simulate user login status (from backend or session)
+  var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
+
+  // Handle Donate button click
+  document.getElementById('donateButton').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    if (!isLoggedIn) {
+      // Ask for confirmation before redirecting to the login page
+      var confirmRedirect = alert("You need to login to donate. Do you want to proceed to the login page?");
+
+      
+        // Redirect to login page if user clicks "OK"
+        window.location.href = "<?= base_url('/login') ?>"; // Replace with your actual login URL
+     
+    } else {
+      // Show the donation modal if logged in
+      var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+      donationModal.show();
+    }
+  });
+</script>
+
+  // Ensure that the modal can be shown again after being closed
+  donationModalElement.addEventListener('hidden.bs.modal', function() {
+    document.body.classList.remove('modal-open'); // Remove modal-open class if still present
+    var modalBackdrop = document.querySelector('.modal-backdrop');
+    if (modalBackdrop) {
+      modalBackdrop.remove(); // Remove any leftover backdrop
+    }
+  });
+});
+</script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

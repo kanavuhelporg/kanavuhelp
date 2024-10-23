@@ -10,6 +10,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
 <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap JS and jQuery -->
@@ -266,7 +270,7 @@
     </style>
     </head>
 <body>
-  <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+<nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="<?=base_url('')?>">
         <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
@@ -289,10 +293,10 @@
                         <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
                     </li>
                     <li class="nav-item">
-
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate')  ?>" style="color: rgba(235, 45, 50, 1)">Donate</a>
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color: rgba(235, 45, 50, 1)">Donate</a>
                     </li>
                     <li class="nav-item">
+
                         <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" >My Helps</a>
                     </li>
                     <li class="nav-item">
@@ -302,7 +306,7 @@
                         <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>" >Contact Us</a>
                     </li>
                 </ul>
           <div class="d-flex align-items-center ms-auto">
@@ -346,7 +350,7 @@
       <?php foreach ($category as $cat): ?>
           <button
               class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
-              data-filter="<?= $cat->name ?>"><?= $cat->name ?></button>
+              data-filter="<?= htmlspecialchars($cat->name, ENT_QUOTES) ?>"><?= htmlspecialchars($cat->name, ENT_QUOTES) ?></button>
       <?php endforeach; ?>
   <?php else: ?>
       <p>No categories available at the moment.</p>
@@ -358,21 +362,17 @@
   <div class="row">
     <?php if (!empty($fundraisers)): ?>
         <?php foreach ($fundraisers as $fundraiser): ?>
-            <!-- Add data-category attribute -->
-            <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= $fundraiser->category ?>">
+            <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
             <a href="<?= base_url('/helpus?fundraiser_id=' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
                 <div class="card h-100 w-100 fixed-card">
-                    <!-- Display the image -->
-                    <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="80%" height="200px" class="card-img-top fixed-card-img" alt="no image">
+                    <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top fixed-card-img" alt="no image">
                     
                     <div class="card-body d-flex flex-column">
-                        <!-- Title -->
-                        <p class="card-title"><?= $fundraiser->cause_heading ?></p>
+                        <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
 
-                        <!-- Organizer's name and category -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="card-text text-muted mb-0">by <?= $fundraiser->name ?></p>
-                            <button type="button" class="btn card_button text-muted ms-auto"><?= $fundraiser->category ?></button>
+                            <p class="card-text text-muted mb-0">by <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
+                            <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                         </div>
                         
                         <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
@@ -380,13 +380,8 @@
                           <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         
-                        <!-- Donate button and share icon -->
                         <div class="d-flex align-items-center mt-auto">
-                            <!-- Donate Now button -->
-                            <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal">Donate Now</a>
-
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <!-- Share icon -->
+                            <a href="#" id="donateButton" class="btn donate_btn" data-toggle="modal" data-target="#donationModal">Donate Now</a>
                             <i class="bi bi-share ms-2"></i>
                         </div>
                     </div>
@@ -400,37 +395,39 @@
   </div>
 </div>
 
+
+
 <script>
-    // Add click event listeners to each filter button for active class toggle
-    document.querySelectorAll('.filter-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove 'active' class from all buttons
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+    document.addEventListener('DOMContentLoaded', () => {
+        // Add click event listeners to each filter button for active class toggle
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove 'active' class from all buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
 
-            // Add 'active' class to the clicked button
-            button.classList.add('active');
+                // Add 'active' class to the clicked button
+                button.classList.add('active');
 
-            // Get selected category
-            const selectedCategory = button.getAttribute('data-filter');
-            console.log('Selected Category:', selectedCategory); // Debugging
+                // Get selected category
+                const selectedCategory = button.getAttribute('data-filter');
 
-            // Select all fundraiser cards
-            const cards = document.querySelectorAll('.card-container');
+                // Select all fundraiser cards
+                const cards = document.querySelectorAll('.card-container');
 
-            // Loop through each card and display based on category match
-            cards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
-                console.log('Card Category:', cardCategory); // Debugging
+                // Loop through each card and display based on category match
+                cards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
 
-                if (selectedCategory === 'all' || selectedCategory === cardCategory) {
-                    // Show card if category matches or if "All" is selected
-                    card.style.display = 'block';
-                } else {
-                    // Hide card if category doesn't match
-                    card.style.display = 'none';
-                }
+                    if (selectedCategory === 'all' || selectedCategory === cardCategory) {
+                        // Show card if category matches or if "All" is selected
+                        card.style.display = 'block';
+                    } else {
+                        // Hide card if category doesn't match
+                        card.style.display = 'none';
+                    }
+                });
             });
         });
     });
@@ -474,20 +471,22 @@
   <!-- Other HTML code, like the card section -->
 
 <!-- Donation Modal -->
-<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+<!-- Donate Button -->
+
+<!-- Donation Modal -->
+<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
         <!-- Donation Form -->
         <form>
           <!-- Image -->
           <div class="text-center">
             <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%">
           </div>
-
           <!-- Modal Title and Description -->
           <div class="text-center mt-2">
             <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
@@ -496,20 +495,18 @@
 
           <!-- Currency and Amount -->
           <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
-  <select class="form-control" id="currency" style="width:35%;">
-    <option>INR</option>
-    <option>USD</option>
-  </select>
+            <select class="form-control" id="currency" style="width:35%;">
+              <option>INR</option>
+              <option>USD</option>
+            </select>
 
-  <!-- Add gap between the fields using Bootstrap spacing utility -->
-  <input type="number" class="form-control ms-5" id="amount" placeholder="Enter amount" style="width:40%;">
-</div>
-
+            <input type="number" class="form-control ms-5" id="amount" placeholder="Enter amount" style="width:40%;">
+          </div>
 
           <!-- Name -->
-          <div class="form-group ms-4"> <!-- Added margin start to shift right -->
-  <input type="text" class="form-control" id="name" placeholder="Enter your name" style="width:92%;">
-</div>
+          <div class="form-group ms-4">
+            <input type="text" class="form-control" id="name" placeholder="Enter your name" style="width:92%;">
+          </div>
 
           <!-- Email -->
           <div class="form-group ms-4">
@@ -523,11 +520,10 @@
 
           <!-- Continue Button -->
           <div class="d-flex justify-content-center">
-  <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
-    Continue to Pay ₹
-  </button>
-</div>
-
+            <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+              Continue to Pay ₹
+            </button>
+          </div>
         </form>
 
         <!-- Terms and Privacy Policy -->
@@ -536,6 +532,42 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Handle modal close event to ensure page is accessible
+  var donationModal = document.getElementById('donationModal');
+  donationModal.addEventListener('hidden.bs.modal', function (event) {
+    // This will trigger when the modal is fully closed
+    document.body.classList.remove('modal-open'); // Ensure body is not still marked as modal-open
+    document.querySelector('.modal-backdrop').remove(); // Remove backdrop if still present
+  });
+</script>
+
+
+<script>
+  // Simulate user login status (from backend or session)
+  var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
+
+  // Handle Donate button click
+  document.getElementById('donateButton').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    if (!isLoggedIn) {
+      // Ask for confirmation before redirecting to the login page
+      var confirmRedirect = alert("You need to login to donate. Do you want to proceed to the login page?");
+
+      
+        // Redirect to login page if user clicks "OK"
+        window.location.href = "<?= base_url('/login') ?>"; // Replace with your actual login URL
+     
+    } else {
+      // Show the donation modal if logged in
+      var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+      donationModal.show();
+    }
+  });
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

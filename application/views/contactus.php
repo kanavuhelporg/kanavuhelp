@@ -12,6 +12,8 @@
   <style>
     body {
       font-family: 'Sen', sans-serif;
+      left:0;
+      right:0;
     }
 /* carousel */
     /* .carousel-item {
@@ -383,24 +385,26 @@
     <img src="<?=base_url('assets/img/contact_us.png')?>" width="100%">
   </div>
   
-  <div class="row text-center mt-5 mb-5" >
-    <div class="col-12 col-md-4 mt-3" >
-        <i class="fa-solid fa-location-dot fs-4" style="color:#EB2D32;" ></i>
+  <div class="row text-center mt-4 mb-5" style="margin-left:0px;margin-right:0px;">
+    <!-- Location Section -->
+    <div class="col-12 col-md-4 mb-4 mb-md-0">
+        <i class="fa-solid fa-location-dot fs-2" style="color: #EB2D32;"></i>
         <br><strong>The Kanavu Startup Village</strong>
         <br><strong>Annamalaikottai, Sivagiri</strong>
     </div>
-    
-    <div class="col-12 col-md-4 mt-3" >
-        <i class="fa-solid fa-phone-volume fs-4" style="color:#EB2D32;"></i>
+
+    <!-- Phone Section -->
+    <div class="col-12 col-md-4 mb-3 mb-md-0">
+        <i class="fa-solid fa-phone-volume fs-2" style="color: #EB2D32;"></i>
         <br><strong>+91 93792 48387</strong>
     </div>
-    
-    <div class="col-12 col-md-4 mt-3" >
-        <i class="fa-regular fa-envelope fs-4"  style="color:#EB2D32;"></i>
+
+    <!-- Email Section -->
+    <div class="col-12 col-md-4 mb-3 mb-md-0">
+        <i class="fa-regular fa-envelope fs-2" style="color: #EB2D32;"></i>
         <br><strong>karthi.easwaramoorthy@gmail.com</strong>
     </div>
 </div>
-
 
 
 

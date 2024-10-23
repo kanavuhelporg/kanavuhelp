@@ -28,7 +28,7 @@ class kanavuhelp extends CI_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('cookie');
-
+        
     }
     public function index()
     {
@@ -55,11 +55,17 @@ class kanavuhelp extends CI_Controller
         $this->load->view('charity.php');
     }
     public function donate()
-    {$data['category']=$this->UserModel->get_category();
-        $data['fundraisers'] = $this->UserModel->get_cause_details();
+{
+    $data['category'] = $this->UserModel->get_category();
+    $data['fundraisers'] = $this->UserModel->get_cause_details();
 
-        $this->load->view('donate.php', $data);
-    }
+    // Check if user is logged in using CodeIgniter session
+    $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+    $data['is_logged_in'] = $is_logged_in;
+
+    $this->load->view('donate', $data); // Note: no need for '.php' in the view name
+}
+
     public function myhelps()
     {
         $this->load->view('myhelps.php');
@@ -86,7 +92,9 @@ class kanavuhelp extends CI_Controller
         
         // Pass the fetched data to the view
         $data['fundraiser'] = $fundraiser_details;
-        
+        // Check if user is logged in using CodeIgniter session
+    $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+    $data['is_logged_in'] = $is_logged_in;
         // Load the helpus view and pass the data
         $this->load->view('helpus', $data);
        
@@ -107,27 +115,27 @@ class kanavuhelp extends CI_Controller
 
     }
     public function userLogin()
-    {
-        $postData = $this->input->post(null, true);
-        $login = $this->UserModel->loginUser();
+{
+    $postData = $this->input->post(null, true);
+    $login = $this->UserModel->loginUser();
 
-        if (isset($login[0]['id'])) {
-            // Set session data for the logged-in user
-            $userLoggedIn = array(
-                'userId' => $login[0]['id'],
-                'userName' => $login[0]['name'],
-            );
-            $this->session->set_userdata($userLoggedIn);
+    if (isset($login[0]['id'])) {
+        // Set session data for the logged-in user
+        $userLoggedIn = array(
+            'userId' => $login[0]['id'],
+            'userName' => $login[0]['name'],
+        );
+        $this->session->set_userdata($userLoggedIn); // Use CodeIgniter session library
 
-            // Redirect to 'kanavuhome' after successful login
-            redirect(base_url('kanavuhome'));
-
-        } else {
-            // If login fails, reload the login page with an error message
-            $this->load->view('login.php');
-            echo '<script>alert("Please enter registered credentials.");</script>';
-        }
+        // Redirect to 'kanavuhome' after successful login
+        redirect(base_url('kanavuhome'));
+    } else {
+        // If login fails, reload the login page with an error message
+        $this->load->view('login');
+        echo '<script>alert("Please enter registered credentials.");</script>';
     }
+}
+
     public function individualform_data()
     {
         // Retrieve form data
