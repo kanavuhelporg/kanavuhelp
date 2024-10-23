@@ -21,7 +21,7 @@ class UserModel extends CI_Model
 // }
 	public function store1($data)
 	{
-		$this->db->insert('register', $data);
+		$this->db->insert('user', $data);
 		return true;
 	}
 	public function store($data)
@@ -74,7 +74,7 @@ public function loginUser()
         $postData = $this->input->post(null, true);
         $Email = $postData['exampleInputEmail1'];
         $Password = $postData['exampleInputpassword1'];
-        $query = "SELECT * FROM register WHERE email = '$Email' AND password = '$Password'";
+        $query = "SELECT * FROM user WHERE email = '$Email' AND password = '$Password'";
         $count = $this->db->query($query);
         return $count->result_array();
     }
