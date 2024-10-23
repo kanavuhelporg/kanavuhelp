@@ -286,24 +286,24 @@
                         <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
                     </li>
                 </ul>
-          <div class="d-flex align-items-center ms-auto">
-            <?php if ($this->session->userdata('userId')): ?>
-              <div class="d-flex align-items-center">
-                <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown">
-                  <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                    style="width: 30px; height: 30px; border-radius: 50%;">
-                  <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                <div class="d-flex align-items-center ms-auto">
+                <?php if ($this->session->userdata('userId')): ?>
+                  <div class="d-flex align-items-center">
+                    <div class="dropdown" id="userProfile">
+                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                         style="width: 30px; height: 30px; border-radius: 50%;">
+                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                      </div>
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <?php else: ?>
+                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+                  <?php endif; ?>
                 </div>
-                <ul class="dropdown-menu" aria-labelledby="userProfile">
-                  <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i>
-                      Logout</a></li>
-                </ul>
-              </div>
-            <?php else: ?>
-              <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
-            <?php endif; ?>
-            <!-- <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a> -->
-          </div>
         </div>
       </div>
     </div>
