@@ -53,17 +53,6 @@
     .offcanvas-body {
       font-size: 17px;
     }
-    .navbar-toggler {
-    padding: 0.25rem 0.75rem; /* Adjust vertical and horizontal padding */
-    font-size: 1.25rem; /* Adjust font size */
-    line-height: 1;
-    color: #fff; /* White color for the toggler icon */
-    background-color: transparent; /* No background color */
-    border: 1px solid #41464b4f; /* Semi-transparent white border */
-    border-radius: 0.25rem; /* Slightly rounded corners */
-    transition: all 0.3s ease; /* Smooth transition for hover and focus effects */
-}
-
     .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
   padding: (1rem) var(1rem);
