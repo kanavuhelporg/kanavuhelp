@@ -381,7 +381,7 @@
                         </div>
                         
                         <div class="d-flex align-items-center mt-auto">
-                            <a href="#" id="donateButton" class="btn donate_btn" data-toggle="modal" data-target="#donationModal">Donate Now</a>
+                        <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal">Donate Now</a>
                             <i class="bi bi-share ms-2"></i>
                         </div>
                     </div>
@@ -534,39 +534,47 @@
 </div>
 
 <script>
+  // Simulate user login status (from backend or session)
+  var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
+
+  // Handle Donate button click using event delegation
+  document.querySelector('.container').addEventListener('click', function(event) {
+    if (event.target.classList.contains('donate_btn')) {
+      event.preventDefault(); // Prevent default link behavior
+
+      if (!isLoggedIn) {
+        // Ask for confirmation before redirecting to the login page
+        var confirmRedirect = alert("You need to login to donate. Do you want to proceed to the login page?");
+        
+        
+          // Redirect to login page if user clicks "OK"
+          window.location.href = "<?= base_url('/login') ?>"; // Replace with your actual login URL
+        
+      } else {
+        // Show the donation modal if logged in
+        var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+        donationModal.show();
+      }
+    }
+  });
+
   // Handle modal close event to ensure page is accessible
   var donationModal = document.getElementById('donationModal');
   donationModal.addEventListener('hidden.bs.modal', function (event) {
     // This will trigger when the modal is fully closed
     document.body.classList.remove('modal-open'); // Ensure body is not still marked as modal-open
-    document.querySelector('.modal-backdrop').remove(); // Remove backdrop if still present
-  });
-</script>
-
-
-<script>
-  // Simulate user login status (from backend or session)
-  var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
-
-  // Handle Donate button click
-  document.getElementById('donateButton').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent default link behavior
-
-    if (!isLoggedIn) {
-      // Ask for confirmation before redirecting to the login page
-      var confirmRedirect = alert("You need to login to donate. Do you want to proceed to the login page?");
-
-      
-        // Redirect to login page if user clicks "OK"
-        window.location.href = "<?= base_url('/login') ?>"; // Replace with your actual login URL
-     
-    } else {
-      // Show the donation modal if logged in
-      var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
-      donationModal.show();
+    var modalBackdrop = document.querySelector('.modal-backdrop');
+    if (modalBackdrop) {
+      modalBackdrop.remove(); // Remove backdrop if still present
     }
+
+    // Reset form fields when the modal is closed
+    donationModal.querySelector('form').reset();
   });
 </script>
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
