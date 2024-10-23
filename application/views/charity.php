@@ -66,9 +66,19 @@
     .offcanvas-body {
       font-size: 17px;
     }
+    .navbar-toggler {
+    padding: 0.25rem 0.75rem; /* Adjust vertical and horizontal padding */
+    font-size: 1.25rem; /* Adjust font size */
+    line-height: 1;
+    color: #fff; /* White color for the toggler icon */
+    background-color: transparent; /* No background color */
+    border: 1px solid #41464b4f; /* Semi-transparent white border */
+    border-radius: 0.25rem; /* Slightly rounded corners */
+    transition: all 0.3s ease; /* Smooth transition for hover and focus effects */
+}
+
     .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-  border: 1px solid #41464b;
   padding: (1rem) var(1rem);
 }
   #navbarscroll{
@@ -113,7 +123,7 @@
     .dropdown-item:hover {
       color: #EB2D32;
     }
-    /* .footer {
+    .footer {
       height: 250px;
       width: 100%;
       left:0;
@@ -128,7 +138,7 @@
       padding: 10px;
       margin-left: 10px;
     }
-    .footer1 a {
+    /* .footer1 a {
       margin-left: 20x;
     }
     .footimg {
@@ -141,21 +151,21 @@
       margin-left: 10px;
 
     } */
-    .footer {
-    background-color: #d32f2f; /* Matching the red background */
+    /* .footer {
+    background-color: #d32f2f; 
     color: white;
     
-}
+} */
 
 .footer h5 {
     margin-bottom: 15px;
     text-align: center;
 }
 
-.footer1 {
+/* .footer1 {
     text-align: center;
     margin-bottom: 10px;
-}
+} */
 
 .footer1 a {
     color: white;
@@ -868,4 +878,5 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 
