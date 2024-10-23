@@ -53,15 +53,6 @@
     .offcanvas-body {
       font-size: 17px;
     }
-    .navbar-toggler {
-    padding: .25rem .75rem;
-    font-size: 1.25rem;
-    line-height: 1;
-    background-color: transparent;
-    border: 1px #2125296b;
-    border-radius: .25rem;
-    transition: box-shadow .15s ease-in-out;
-}
     .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
   padding: (1rem) var(1rem);
@@ -116,7 +107,7 @@
     color: #EB2D32;
   }
 
-  /* .footer {
+  .footer {
     height: 250px;
     width: 100%;
     left: 0;
@@ -130,7 +121,7 @@
     text-align: center;
     padding: 10px;
     margin-left: 10px;
-  }*/
+  }
 
   .footer-lable {
     color: white;
@@ -158,21 +149,21 @@
     margin-left: 10px;
 
   } */
-  .footer {
-    background-color: #d32f2f; /* Matching the red background */
+  /* .footer {
+    background-color: #d32f2f;
     color: white;
     
-}
+} */
 
 .footer h5 {
     margin-bottom: 15px;
     text-align: center;
 }
 
-.footer1 {
+/* .footer1 {
     text-align: center;
     margin-bottom: 10px;
-}
+} */
 
 .footer1 a {
     color: white;
@@ -1249,5 +1240,6 @@
 </body>
 
 </html>
+
 
 
