@@ -599,24 +599,26 @@
                         <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
                     </li>
                 </ul>
-          <div class="d-flex align-items-center ms-auto">
-            <?php if ($this->session->userdata('userId')): ?>
-              <div class="d-flex align-items-center">
-                <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown">
-                  <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                    style="width: 30px; height: 30px; border-radius: 50%;">
-                  <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                <div class="d-flex align-items-center ms-auto">
+                <?php if ($this->session->userdata('userId')): ?>
+                  <div class="d-flex align-items-center">
+                    <div class="dropdown" id="userProfile">
+                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                         style="width: 30px; height: 30px; border-radius: 50%;">
+                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                      </div>
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <?php else: ?>
+                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+                  <?php endif; ?>
                 </div>
-                <ul class="dropdown-menu" aria-labelledby="userProfile">
-                  <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i>
-                      Logout</a></li>
-                </ul>
-              </div>
-            <?php else: ?>
-              <a href="<?=base_url('/login')?>" class="login-button me-2">Login</a>
-            <?php endif; ?>
-            <!-- <a href="<?=base_url('/individual')?>" class="startkanavu-button">Start a kanavu</a> -->
-          </div>
+
+          
         </div>
       </div>
     </div>
@@ -667,161 +669,185 @@
       </div>
     </div>
   </div>
-  
   <div class="container-xxl mt-5">
-    <div class="h4" style="text-align:center">BE THE REASON OF<span style="color:#EB2D32"> SOMEONE SMILES</span></div>
-    <div style="display: flex; justify-content: center;">
-      <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
-    </div>
-    <div class="p" style="text-align:center">we try our best to help helpless people,<br>Donate to charity causes
-      around the world.</div>
-  </div><br>
-  <div class="container mt-5">
-    <div id="cardCarousel" class="carousel slide carousel-dark" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="row">
-            <!-- First Card -->
-            <div class="col-12 col-md-4">
-              <div class="card">
-                <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                    <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-                    <!-- Add btn-secondary for styling -->
-                  </div>
-                  <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-                  <div class="progress mb-2">
-                    <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <a href="#" class="btn donate_btn">Donate Now</a>
-                </div>
+  <div class="h4 text-center">BE THE REASON OF<span style="color:#EB2D32"> SOMEONE SMILES</span></div>
+  <div style="display: flex; justify-content: center;">
+    <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
+  </div>
+  <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
+</div><br>
+<div id="carouselExample" class="carousel slide">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="row px-3 px-md-5 px-lg-6"> <!-- Responsive padding for row -->
+        <!-- First image, always visible -->
+        <div class="col-12 col-md-4">
+          <div class="card blogs_card">
+            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text text-muted mb-0">by Kailaswaran</p>
+                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
               </div>
-            </div>
-            <!-- Second Card -->
-            <div class="col-12 col-md-4 d-none d-md-block">
-              <div class="card">
-                <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <p class="card-title">Flood-affected house near the Poyang Lake</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                    <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-                    <!-- Add btn-secondary for styling -->
-                  </div>
-                  <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
-                  <div class="progress mb-2">
-                    <div class="progress-bar w-50" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <a href="#" class="btn donate_btn">Donate Now</a>
-                </div>
+              <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
+              <div class="progress mb-2">
+                <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-            </div>
-            <!-- Third Card -->
-            <div class="col-12 col-md-4">
-              <div class="card">
-                <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                    <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-                    <!-- Add btn-secondary for styling -->
-                  </div>
-                  <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-                  <div class="progress mb-2">
-                    <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <a href="#" class="btn donate_btn">Donate Now</a>
-                </div>
-              </div>
+              <a href="#" class="btn donate_btn">Donate Now</a>
             </div>
           </div>
         </div>
 
-        <!-- Second Set of Cards -->
-        <div class="carousel-item active">
-          <div class="row">
-            <!-- First Card -->
-            <div class="col-12 col-md-4">
-              <div class="card">
-                <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                    <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-                    <!-- Add btn-secondary for styling -->
-                  </div>
-                  <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-                  <div class="progress mb-2">
-                    <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <a href="#" class="btn donate_btn">Donate Now</a>
-                </div>
+        <!-- These images are hidden on small screens and only show on larger ones -->
+        <div class="col-md-4 d-none d-md-block">
+          <div class="card">
+            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-title">Flood-affected house near the Poyang Lake</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text text-muted mb-0">by Kailaswaran</p>
+                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
               </div>
+              <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
+              <div class="progress mb-2">
+                <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <a href="#" class="btn donate_btn">Donate Now</a>
             </div>
-            <!-- Second Card -->
-            <div class="col-12 col-md-4 d-none d-md-block">
-              <div class="card">
-                <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <p class="card-title">Flood-affected house near the Poyang Lake</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                    <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-                    <!-- Add btn-secondary for styling -->
-                  </div>
-                  <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
-                  <div class="progress mb-2">
-                    <div class="progress-bar w-50" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <a href="#" class="btn donate_btn">Donate Now</a>
-                </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-none d-md-block">
+          <div class="card">
+            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text text-muted mb-0">by Kailaswaran</p>
+                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
               </div>
-            </div>
-            <!-- Third Card -->
-            <div class="col-12 col-md-4">
-              <div class="card">
-                <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                    <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-                    <!-- Add btn-secondary for styling -->
-                  </div>
-                  <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-                  <div class="progress mb-2">
-                    <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <a href="#" class="btn donate_btn">Donate Now</a>
-                </div>
+              <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
+              <div class="progress mb-2">
+                <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
+              <a href="#" class="btn donate_btn">Donate Now</a>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Carousel Controls -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#cardCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#cardCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+    <!-- Next carousel item -->
+    <div class="carousel-item">
+      <div class="row px-3 px-md-5 px-lg-6"> <!-- Adjust padding for the next slide -->
+        <div class="col-12 col-md-4">
+          <div class="card blogs_card">
+            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text text-muted mb-0">by Kailaswaran</p>
+                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
+              </div>
+              <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
+              <div class="progress mb-2">
+                <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <a href="#" class="btn donate_btn">Donate Now</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Two additional cards hidden on smaller screens -->
+        <div class="col-md-4 d-none d-md-block">
+          <div class="card">
+            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-title">Flood-affected house near the Poyang Lake</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text text-muted mb-0">by Kailaswaran</p>
+                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
+              </div>
+              <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
+              <div class="progress mb-2">
+                <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <a href="#" class="btn donate_btn">Donate Now</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-none d-md-block">
+          <div class="card">
+            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text text-muted mb-0">by Kailaswaran</p>
+                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
+              </div>
+              <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
+              <div class="progress mb-2">
+                <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <a href="#" class="btn donate_btn">Donate Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Carousel controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+
+          
+          <!-- Second Card -->
+          <!-- <div class="col-12 col-md-4 mb-4">
+            <div class="card">
+              <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-title">Flood-affected house near the Poyang Lake</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="card-text text-muted mb-0">by Kailaswaran</p>
+                  <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
+                </div>
+                <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
+                <div class="progress mb-2">
+                  <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <a href="#" class="btn donate_btn">Donate Now</a>
+              </div>
+            </div>
+          </div> -->
+          
+          <!-- Third Card -->
+          <!-- <div class="col-12 col-md-4 mb-4">
+            <div class="card">
+              <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="card-text text-muted mb-0">by Kailaswaran</p>
+                  <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
+                </div>
+                <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
+                <div class="progress mb-2">
+                  <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <a href="#" class="btn donate_btn">Donate Now</a>
+              </div>
+            </div>
+          </div> -->
 
   <div class="position-relative" id="how-it-works-section">
     <div class="container-xxl ">

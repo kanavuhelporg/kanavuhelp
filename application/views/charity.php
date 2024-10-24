@@ -592,20 +592,22 @@ body #multi-step-form-container{
 
                 <!-- User profile or login -->
                 <div class="d-flex align-items-center ms-auto">
-                    <?php if ($this->session->userdata('userId')): ?>
-                        <div class="d-flex align-items-center">
-                            <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="<?= base_url('assets/img/Ellipse 12.png') ?>" alt="Profile Image" class="rounded-circle" style="width: 30px; height: 30px;">
-                                <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                            </div>
-                            <ul class="dropdown-menu" aria-labelledby="userProfile">
-                                <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                            </ul>
-                        </div>
-                    <?php else: ?>
-                      <a href="<?= base_url('/login') ?>" class="btn btn-red me-2">Login</a>
-                    <?php endif; ?>
-                    <!-- <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a> -->
+                <?php if ($this->session->userdata('userId')): ?>
+                  <div class="d-flex align-items-center">
+                    <div class="dropdown" id="userProfile">
+                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                         style="width: 30px; height: 30px; border-radius: 50%;">
+                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                      </div>
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <?php else: ?>
+                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+                  <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -616,17 +618,16 @@ body #multi-step-form-container{
   <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
   </div>
   <div class="mx-auto text-center mt-8 md:ml-20 ">
-    <button id="myDonationsButton" 
-      class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 text-red-500 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data"
+  <button id="myDonationsButton" 
+      class="inline-flex items-center bg-blue-500 border-red-700 py-2 px-6 text-white focus:outline-none hover:bg-red-600 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data"
       onclick="window.location.href='<?= base_url('/individual') ?>'">
       Individual
-    </button>
-
-    <button id="myFundraisersButton"
-      class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 data"
+</button>
+<button id="myDonationsButton" 
+      class="inline-flex items-center bg-red-500 border-white-700 py-2 px-6 text-white focus:outline-none hover:bg-blue-600 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data"
       onclick="window.location.href='<?= base_url('/charity') ?>'">
       Charities
-    </button>
+</button>
 </div>
 <div class="container-fluid box mt-auto py-3">
     <div class="row box1 mt-auto py-3">
