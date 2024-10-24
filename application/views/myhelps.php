@@ -232,49 +232,35 @@
       Fundraisers</button>
   </div>
 
-  <div class="container d-flex justify-content-center align-items-center mt-5">
-    <div class="card">
-      <!-- Use img-fluid and custom inline styles for width and height -->
-      <img src="<?= base_url('assets/img/salem_storm.png') ?>" class="card-img-top img-fluid" style="" alt="...">
-      <div class="card-body">
-        <div class="card_text d-flex justify-content-between">
-          <p class="card-title"><b>Storm affected region in southern parts of Salem</b></p>
-        </div>
-        <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" with Rs.2000 more to the right -->
-        <div class="d-flex justify-content-between align-items-center">
-          <p class="card-text text-muted">Created by <br> Dinesh Kumar</p>
-          <p class="ms-4"><b>Rs. 2000</b></p> <!-- Added ms-auto to push Rs.2000 to the right -->
-        </div>
-        <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-        <div class="progress mb-2">
-          <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container d-flex justify-content-center align-items-center mt-5">
-    <div class="card">
-      <!-- Use img-fluid and custom inline styles for width and height -->
-      <img src="<?= base_url('assets/img/urban-flood-mitigation.png') ?>" class="card-img-top img-fluid" style=""
-        alt="...">
-      <div class="card-body">
-        <div class="card_text d-flex justify-content-between">
-          <p class="card-title"><b>Storm affected region in southern parts of Salem</b></p>
-        </div>
-        <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" with Rs.2000 more to the right -->
-        <div class="d-flex justify-content-between align-items-center">
-          <p class="card-text text-muted">Created by <br> Dinesh Kumar</p>
-          <p class="ms-4"><b>Rs. 2000</b></p> <!-- Added ms-auto to push Rs.2000 to the right -->
-        </div>
-        <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-        <div class="progress mb-2">
-          <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  
+    <?php if (!empty($causes)) : ?>
+        <?php foreach ($causes as $cause) : ?>
+          <div class="container d-flex justify-content-center align-items-center mt-5">
+            <div class="card mb-3">
+                <!-- Use img-fluid and custom inline styles for width and height -->
+                <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top img-fluid" alt="...">
+                
+                <div class="card-body">
+                    <div class="card_text d-flex justify-content-between">
+                        <p class="card-title"><b><?= $cause->cause_heading?></b></p>
+                    </div>
+                    <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="card-text text-muted">Created by <br> <?= $cause->name ?></p>
+                        <p class="ms-4"><b> Your Donation₹ <?= number_format($cause->donated_amount) ?></b></p>
+                    </div>
+                    <p class="card-text"><strong>₹  Total Amount  ₹ <?= number_format($cause->amount) ?></p>
+                    <!--<div class="progress mb-2">
+                        <div class="progress-bar" role="progressbar" style="width: <?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>%;" aria-valuenow="<?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else : ?>
+        <p>No causes found for your account.</p>
+    <?php endif; ?>
+</div>
 
 
 

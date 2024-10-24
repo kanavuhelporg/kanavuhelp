@@ -327,7 +327,7 @@
                   <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
                   <?php endif; ?>
                 </div>
-        </div>
+        
       </div>
     </div>
   </nav>
@@ -381,7 +381,7 @@
                         </div>
                         
                         <div class="d-flex align-items-center mt-auto">
-                        <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal">Donate Now</a>
+                        <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
                             <i class="bi bi-share ms-2"></i>
                         </div>
                     </div>
@@ -394,7 +394,11 @@
     <?php endif; ?>
   </div>
 </div>
-
+<script>
+function setCauseId(causeId) {
+  document.getElementById('cause_id').value = causeId;
+}
+</script>
 
 
 <script>
@@ -482,49 +486,58 @@
       </div>
       <div class="modal-body">
         <!-- Donation Form -->
-        <form>
-          <!-- Image -->
-          <div class="text-center">
-            <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%">
-          </div>
-          <!-- Modal Title and Description -->
-          <div class="text-center mt-2">
-            <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
-            <p>Your contribution has the potential <br> to make a greater difference.</p>
-          </div>
+        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
+    <!-- Hidden fields to store cause ID and user ID -->
+    <input type="hidden" name="cause_id" id="cause_id" value="">
+    <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
 
-          <!-- Currency and Amount -->
-          <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
-            <select class="form-control" id="currency" style="width:35%;">
-              <option>INR</option>
-              <option>USD</option>
-            </select>
+    <!-- Donation Form Fields -->
+    <div class="text-center">
+      <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
+    </div>
 
-            <input type="number" class="form-control ms-5" id="amount" placeholder="Enter amount" style="width:40%;">
-          </div>
+    <div class="text-center mt-2">
+      <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
+      <p>Your contribution has the potential <br> to make a greater difference.</p>
+    </div>
 
-          <!-- Name -->
-          <div class="form-group ms-4">
-            <input type="text" class="form-control" id="name" placeholder="Enter your name" style="width:92%;">
-          </div>
+    <!-- Currency and Amount -->
+    <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
+      <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
+        <option>INR</option>
+        <option>USD</option>
+      </select>
 
-          <!-- Email -->
-          <div class="form-group ms-4">
-            <input type="email" class="form-control" id="email" placeholder="Enter your email" style="width:92%;">
-          </div>
+      <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
+    </div>
 
-          <!-- Phone Number -->
-          <div class="form-group ms-4">
-            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" style="width:92%;">
-          </div>
+    <!-- Name -->
+    <div class="form-group ms-4">
+      <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
+    </div>
 
-          <!-- Continue Button -->
-          <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
-              Continue to Pay ₹
-            </button>
-          </div>
-        </form>
+    <!-- Email -->
+    <div class="form-group ms-4">
+      <input type="email" name="emailid" class="form-control" id="email" placeholder="Enter your email*" style="width:92%;" required>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="form-group ms-4">
+      <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Enter your phone number*" style="width:92%;" required>
+    </div>
+
+    <!-- Transaction ID -->
+    <div class="form-group ms-4">
+      <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter The Transaction Id*" style="width:92%;" required>
+    </div>
+
+    <!-- Continue Button -->
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+        Continue to Pay ₹
+      </button>
+    </div>
+  </form>
 
         <!-- Terms and Privacy Policy -->
         <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
