@@ -67,3 +67,4 @@ $route['charity'] = 'kanavuhelp/charity';
 $route['abouts'] = 'kanavuhelp/abouts';
 $route['logout'] = 'kanavuhelp/logout';
 $route['helpus']='kanavuhelp/helpus';
+$route['processDonation'] = 'kanavuhelp/processDonation';

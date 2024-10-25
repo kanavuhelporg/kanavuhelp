@@ -40,6 +40,25 @@ class UserModel extends CI_Model
 		$this->db->insert('individualform',$data);
 		return true;
 	}
+	public function saveDonation($data) {
+        return $this->db->insert('donation_for_cause', $data);
+    }
+	public function getCausesDonationByUserId($user_id) {
+		$this->db->select('f.*, d.amount as donated_amount');
+		$this->db->from('donation_for_cause d');
+		$this->db->join('individualform f', 'd.cause_id = f.id'); // Assuming 'id' is the primary key in the fundraisers table
+		$this->db->where('d.user_id', $user_id); // Match the logged-in user's donations
+		$this->db->order_by('d.created_at', 'DESC'); // Optionally order by the donation date
+		
+		// Fetch the results
+		$result = $this->db->get()->result();
+		
+		// Debugging: Print the result to check if data is returned
+		
+		
+		return $result;
+	}
+	
 	
 	public function get_cause_details()
 	{

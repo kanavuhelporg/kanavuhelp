@@ -54,6 +54,43 @@ class kanavuhelp extends CI_Controller
     {
         $this->load->view('charity.php');
     }
+
+    public function processDonation() {
+        // Load the model where the donation logic will be handled
+        $this->load->model('UserModel');
+
+        // Get form input values
+        $cause_id = $this->input->post('cause_id');
+        $user_id = $this->input->post('user_id');
+        $amount = $this->input->post('amount');
+        $name = $this->input->post('name');
+        $emailid = $this->input->post('emailid');
+        $phoneno = $this->input->post('phoneno');
+        $transactionid = $this->input->post('transactionid');
+        $currency_type = $this->input->post('currency_type');
+
+        // Prepare data to insert
+        $data = array(
+            'cause_id' => $cause_id,
+            'user_id' => $user_id,
+            'amount' => $amount,
+            'name' => $name,
+            'emailid' => $emailid,
+            'phoneno' => $phoneno,
+            'transactionid' => $transactionid,
+            'currency_type' => $currency_type
+        );
+
+        // Call the model function to save the donation
+        if ($this->UserModel->saveDonation($data)) {
+            // Redirect to a success page or show a success message
+            redirect('myhelps');
+        } else {
+            // Redirect or display an error message
+            redirect('error');
+        }
+    }
+
     public function donate()
 {
     $data['category'] = $this->UserModel->get_category();
@@ -66,10 +103,24 @@ class kanavuhelp extends CI_Controller
     $this->load->view('donate', $data); // Note: no need for '.php' in the view name
 }
 
-    public function myhelps()
-    {
-        $this->load->view('myhelps.php');
+public function myhelps() {
+    if (!$this->session->userdata('userId')) {
+        redirect('login');
     }
+
+    // Debugging: Check if the userId is available in the session
+    $user_id = $this->session->userdata('userId');
+    echo "Logged in user ID: " . $user_id; // Check if this prints the correct userId
+
+    $this->load->model('UserModel');
+
+    // Fetch causes created or donated by the logged-in user
+    $data['causes'] = $this->UserModel->getCausesDonationByUserId($user_id);
+
+    // Load the view and pass the causes data
+    $this->load->view('myhelps.php', $data);
+}
+
     public function blogs()
     {
         $this->load->view('blogs.php');
