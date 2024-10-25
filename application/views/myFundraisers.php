@@ -127,11 +127,7 @@
     .progress {
       width: 286px;
     }
-.amount{
-  margin-right:15%;
-}
-
-@media (min-width:768px) and (max-width:990px) {
+    @media (min-width:768px) and (max-width:990px) {
   .card{
     width:auto;
   }
@@ -151,11 +147,8 @@
         object-fit: cover;
         /* Ensures the image fills its container */
       }
-      .contri_text{
-        display:none;
-      }
 /* card section */
-      .card {
+.card {
         flex-direction: column;
         width: auto;
       }
@@ -164,9 +157,6 @@
         margin: 20px;
         width: auto;
         height: 167px;
-      }
-      .amount{
-        margin-right:0px;
       }
     }
   </style>
@@ -250,27 +240,30 @@
 
 <script>
   // Adding click event to navigate to 'My Fundraisers' page
-  document.getElementById("myFundraisersButton").addEventListener("click", function() {
-    window.location.href = "<?php echo base_url('myFundraisers'); ?>"; // Correctly quoted and lowercase path
+  document.getElementById("myDonationsButton").addEventListener("click", function() {
+    window.location.href = "<?php echo base_url('myhelps'); ?>"; // Correctly quoted and lowercase path
   });
 </script>
 
-
-<div class="container mt-5">
-    <div class="row">
-        <!-- Section Title and Contributions Info -->
-        <div class="col-md-6 text-center">
-            <h4 class="font-weight-bold">Help Status and Details</h4>
-        </div>
-        <div class="col-md-4 text-end contri_text">
-            <h4 class="font-weight-bold">You Contributed</h4>
-        </div>
-    </div>
-</div>
+  
     <?php if (!empty($causes)) : ?>
         <?php foreach ($causes as $cause) : ?>
+            <?php
+// Convert end_date to a DateTime object
+$endDate = new DateTime($cause->end_date);
+$today = new DateTime(); // Current date
+
+// Calculate the difference
+$interval = $today->diff($endDate);
+$daysLeft = $interval->days;
+
+// If end date is in the past, set days left to 0 or display "Expired"
+if ($interval->invert) {
+    $daysLeft = 0;
+}
+?>
           <div class="container d-flex justify-content-center align-items-center mt-5">
-          <a href="<?= base_url('/helpus/' . $cause->id) ?>" style="text-decoration:none;color:black">
+          <a href="<?= base_url('helpus/' . $cause->id) ?>" style="text-decoration:none;color:black">
             <div class="card mb-3">
                 <!-- Use img-fluid and custom inline styles for width and height -->
                 <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top img-fluid" alt="...">
@@ -278,24 +271,29 @@
                 <div class="card-body">
                     <div class="card_text d-flex justify-content-between">
                         <p class="card-title"><b><?= $cause->cause_heading?></b></p>
+                        <p class="text-muted"> <?= $daysLeft > 0 ? $daysLeft . ' days' : 'Expired' ?>left</p>
                     </div>
                     <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" -->
                     <div class="d-flex justify-content-between align-items-center">
                         <p class="card-text text-muted">Created by <br> <?= $cause->name ?></p>
-                        <p class="amount" ><b> ₹ <?= number_format($cause->donated_amount) ?></b></p>
-
-                        <!-- <p class="amount me-4 "><b> ₹ <?= number_format($cause->donated_amount) ?></b></p> -->
+                        <!--<p class="ms-4"><b> Your Donation₹ <?= number_format($cause->donated_amount) ?></b></p>-->
                     </div>
-                    <!--<p class="card-text"><strong>₹  Total Amount  ₹ <?= number_format($cause->amount) ?></p>-->
+                    
+                   
+
+<p class="card-text">
+    <strong>End Date:</strong> <?= htmlspecialchars($cause->end_date) ?><br>
+    
+</p>
+
                     <!--<div class="progress mb-2">
                         <div class="progress-bar" role="progressbar" style="width: <?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>%;" aria-valuenow="<?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
                         </div>-->
                     </div>
                 </div>
-        </a>
             </div>
+        </a>
         <?php endforeach; ?>
-        
     <?php else : ?>
         <p>No causes found for your account.</p>
     <?php endif; ?>
