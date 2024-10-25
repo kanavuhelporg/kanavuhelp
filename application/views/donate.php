@@ -363,7 +363,7 @@
     <?php if (!empty($fundraisers)): ?>
         <?php foreach ($fundraisers as $fundraiser): ?>
             <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
-            <a href="<?= base_url('/helpus?fundraiser_id=' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
+            <a href="<?= base_url('/helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
                 <div class="card h-100 w-100 fixed-card">
                     <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top fixed-card-img" alt="no image">
                     

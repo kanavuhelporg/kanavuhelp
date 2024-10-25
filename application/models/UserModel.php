@@ -59,6 +59,20 @@ class UserModel extends CI_Model
 		return $result;
 	}
 	
+	public function getCausesByUserId($user_id) {
+		$this->db->select('f.*');
+		$this->db->from('individualform f');
+		$this->db->where('f.user_id', $user_id); // Match the logged-in user's donations
+		//$this->db->order_by('d.created_at', 'DESC'); // Optionally order by the donation date
+		
+		// Fetch the results
+		$result = $this->db->get()->result();
+		
+		// Debugging: Print the result to check if data is returned
+		
+		
+		return $result;
+	}
 	
 	public function get_cause_details()
 	{

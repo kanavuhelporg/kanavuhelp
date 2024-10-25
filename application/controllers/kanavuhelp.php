@@ -48,6 +48,13 @@ class kanavuhelp extends CI_Controller
     }
     public function individual()
     {
+        if (!$this->session->userdata('userId')) {
+            echo "<script>
+                alert('You must be logged in to access Start A Fundraiser page.');
+                window.location.href = '" . base_url('login') . "';
+              </script>";
+        exit;
+        }
         $this->load->view('individual.php');
     }
     public function charity()
@@ -91,6 +98,22 @@ class kanavuhelp extends CI_Controller
         }
     }
 
+
+    /*to view cause raised by user*/
+public function myFundraisers(){
+    $user_id = $this->session->userdata('userId');
+    // Check if this prints the correct userId
+
+    $this->load->model('UserModel');
+
+    // Fetch causes created or donated by the logged-in user
+    $data['causes'] = $this->UserModel->getCausesByUserId($user_id);
+
+    // Load the view and pass the causes data
+    
+    $this->load->view('myFundraisers.php',$data);
+}
+
     public function donate()
 {
     $data['category'] = $this->UserModel->get_category();
@@ -105,12 +128,16 @@ class kanavuhelp extends CI_Controller
 
 public function myhelps() {
     if (!$this->session->userdata('userId')) {
-        redirect('login');
+        echo "<script>
+            alert('You must be logged in to access Myhelps page.');
+            window.location.href = '" . base_url('login') . "';
+          </script>";
+    exit;
     }
 
     // Debugging: Check if the userId is available in the session
     $user_id = $this->session->userdata('userId');
-    echo "Logged in user ID: " . $user_id; // Check if this prints the correct userId
+    // Check if this prints the correct userId
 
     $this->load->model('UserModel');
 
@@ -133,23 +160,25 @@ public function myhelps() {
     {
         $this->load->view('abouts.php');
     }
-    public function helpus()
-    { // Get the fundraiser_id from the query string
-        $fundraiser_id = $this->input->get('fundraiser_id');
-        
-        // Load the fundraiser model and fetch details from the database
-     
+    public function helpus($fundraiser_id = null)
+{
+    if ($fundraiser_id) {
+        // Fetch fundraiser details
         $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
-        
-        // Pass the fetched data to the view
         $data['fundraiser'] = $fundraiser_details;
-        // Check if user is logged in using CodeIgniter session
-    $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
-    $data['is_logged_in'] = $is_logged_in;
+
+        // Check if user is logged in
+        $is_logged_in = $this->session->userdata('userId') !== null;
+        $data['is_logged_in'] = $is_logged_in;
+
         // Load the helpus view and pass the data
         $this->load->view('helpus', $data);
-       
+    } else {
+        // Redirect or show error if no fundraiser_id is found
+        redirect('error_page');
     }
+}
+
     public function registeration()
     {
         $data['name'] = $this->input->post('exampleInputName');
@@ -189,6 +218,7 @@ public function myhelps() {
 
     public function individualform_data()
     {
+        
         // Retrieve form data
         $data['category'] = $this->input->post('category'); // Correct field name
         $data['name'] = $this->input->post('name');
@@ -231,7 +261,7 @@ public function myhelps() {
 
             if ($response == true) {
                 echo '<script>alert("Successfully registered")</script>';
-                $this->load->view('donate.php');
+                redirect('donate.php');
             } else {
                 echo 'Failed to register';
             }
