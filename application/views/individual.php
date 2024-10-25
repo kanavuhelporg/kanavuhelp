@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,6 @@
          <script src="bootstrap.bundle.min.js"></script> -->
   <!-- Bootrap for the demo page -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -41,7 +41,7 @@
       transition: 0.3s background-color;
     }
 /* start a kanavu button */
-    /* .startkanavu-button {
+    .startkanavu-button {
       border: 1px solid #E01A2B;
       color: #E01A2B;
       font-size: 16px;
@@ -49,7 +49,7 @@
       border-radius: 25px;
       text-decoration: none;
       transition: 0.3s background-color;
-    } */
+    }
 /* navigation bar  menu size */
     .offcanvas-body {
       font-size: 17px;
@@ -362,7 +362,6 @@
   }
 
   .form-step {
-    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     padding: auto;
   }
@@ -564,7 +563,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    width: 540px;
+    width: 100%;
     display: inline-block;
     background-color: #F8F8F8;
   }
@@ -789,22 +788,20 @@
 
                 <!-- User profile or login -->
                 <div class="d-flex align-items-center ms-auto">
-                <?php if ($this->session->userdata('userId')): ?>
-                  <div class="d-flex align-items-center">
-                    <div class="dropdown" id="userProfile">
-                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                         style="width: 30px; height: 30px; border-radius: 50%;">
-                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                      </div>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <?php else: ?>
-                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-                  <?php endif; ?>
+                    <?php if ($this->session->userdata('userId')): ?>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="<?= base_url('assets/img/Ellipse 12.png') ?>" alt="Profile Image" class="rounded-circle" style="width: 30px; height: 30px;">
+                                <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                            </div>
+                            <ul class="dropdown-menu" aria-labelledby="userProfile">
+                                <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                      <a href="<?= base_url('/login') ?>" class="btn btn-red me-2">Login</a>
+                    <?php endif; ?>
+                    <!-- <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a> -->
                 </div>
             </div>
         </div>
@@ -814,17 +811,18 @@
   <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
   </div>
   <div class="mx-auto text-center mt-8 md:ml-20 ">
-<button id="myDonationsButton" 
-      class="inline-flex items-center bg-red-500 border-red-700 py-2 px-6 text-red focus:outline-none hover:bg-blue-600 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data"
+    <button id="myDonationsButton" 
+      class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 text-red-500 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data"
       onclick="window.location.href='<?= base_url('/individual') ?>'">
       Individual
-</button>
-<button id="myDonationsButton" 
-      class="inline-flex items-center bg-red-500 border-red-700 py-2 px-6 text-red focus:outline-none hover:bg-blue-600 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data">
+    </button>
+
+    <button id="myFundraisersButton"
+      class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0">
       Charities
 </button>
-</div>
 
+</div>
 <div class="container-fluid box mt-auto py-3">
     <div class="row box1 mt-auto py-3">
         <div class="container-fluid mt-5">
@@ -839,188 +837,164 @@
                 </div>
                 <!-- Right Column for Form -->
                 <div class="col-md-6">
-            <div id="multi-step-form-container mt-auto py-3">
-                <!-- Form Steps / Progress Bar -->
-                <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap">
+                  <div id="multi-step-form-container mt-auto py-3">
+                  <!-- Form Steps / Progress Bar -->
+                    <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap">
                     <!-- Step 1 -->
-                    <li class="form-stepper-active text-center form-stepper-list" step="1">
+                      <li class="form-stepper-active text-center form-stepper-list" step="1">
                         <a class="mx-2">
                             <span class="form-stepper-circle">
                                 <span>1</span>
                             </span>
                         </a>
-                    </li>
-                    <!-- Step 2 -->
-                    <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
+                      </li>
+                      <!-- Step 2 -->
+                      <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
                         <a class="mx-2">
                             <span class="form-stepper-circle text-muted">
                                 <span>2</span>
                             </span>
                         </a>
-                    </li>
-                    <!-- Step 3 -->
-                    <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
+                      </li>
+                      <!-- Step 3 -->
+                      <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
                         <a class="mx-2">
                             <span class="form-stepper-circle text-muted">
                                 <span>3</span>
                             </span>
                         </a>
-                    </li>
-
-                </ul>
-                        <!-- Step Wise Form Content -->
-                        <form id="charityform" name="charityform" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/charityform_data') ?>" enctype="multipart/form-data" class="row">
-                            <!-- Step 1 Content -->
-                            <section id="step-1" class="form-step col-12" style="height: 450px;">
-    <h2>Basic Details</h2>
-    <div class="row col-12 my-3">
-        <div class="col-md-4">
-            <label for="myDropdown" class="form-label">I am raising fund for:</label>
-        </div>
-        <div class="col-md-8">
-            <select id="myDropdown" class="form-select" onchange="handleDropdownChange()">
-                <option value="Medical">Medical</option>
-                <option value="Crisis">Crisis</option>
-                <option value="Education">Education</option>
-                <option value="Emergency">Emergency</option>
-                <option value="Events">Events</option>
-                <?php foreach ($result as $row) { ?>
-                    <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_select', $row['id'], False); ?>>
-                        <?php echo $row['raising_fund_for']; ?>
-                    </option>
-                <?php } ?>
-            </select>
-        </div>
-    </div>
-
-    <label for="name"></label>
-    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
-
-    <label for="beneficiary_age"></label>
-    <input type="number" id="beneficiary_age" name="beneficiary_age" class="form-control" placeholder="Age" required>
-
-    <label for="location"></label>
-    <input type="text" id="location" name="location" class="form-control" placeholder="Location" required>
-
-    <label for="email"></label>
-    <input type="email" id="email" name="email" class="form-control" placeholder="Mail Id*" required>
-
-    <label for="phone"></label>
-    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
-
-    <div class="col-12 text-center mt-3">
-      <button class="button btn-navigate-form-step" type="button" step_number="1">continue</button>
-    </div>
-</section>
-
-
-                            <!--step 1 OTP Verification-->
-                            <div id="myModal1" class="modal">
-                                <div class="modal-content">
-                                    <span class="close">&times;</span>
-                                    <div class="row justify-content-center">
-                                        <div class="col-12" style="max-width: 736px;">
-                                            <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
-                                                <div class="card-body p-5 text-center">
-                                                    <h4><b>Enter OTP to verify your account</b></h4>
-                                                    <img src="<?php echo base_url('/assets/img/Group 55.png'); ?>" alt="No Image" class="h-auto" style="width: 50px;">
-                                                    <p><b>We have sent OTP to your email, demo@gmail.com</b></p>
-                                                    <div class="otp-field mb-4">
-                                                        <input type="number" class="form-control w-100"/>
-                                                    </div>
-                                                    <button id="verifyButton" class="btn btn-navigate-form-step" step_number="2">Continue</button>
-                                                    <p class="text-muted mb-0 mt-3">
-                                                        <b>Didn’t receive the OTP?</b><br>
-                                                        <a href="#">Resend</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Step 2 Content, default hidden on page load. -->
-                            <!-- <section id="step-2" class="form-step d-none" style="border:none;">
-                            <h2>Beneficiary Details</h2> 
-                            <div class="col-md-12 my-3">
-                                <label for="name"></label>
-                                <input type="text" id="beneficiary_name" name="beneficiary_name" placeholder="Name" required>
-
-                                <label for="age"></label>
-                                <input type="age" id="beneficiary_age" name="beneficiary_age" placeholder="Age" required>
-
-                                <label for="location"></label>
-                                <input type="txt" id="location" name="location" placeholder="Location" required>
-
-                                <label for="phone"></label>
-                                <input type="phone" id="beneficiary_phone" name="beneficiary_phone" maxlength="10"
-                                    placeholder="Phone Number* " required>
-                            </div>
-                            <div class="col-12 text-center mt-3">
-                                <button class="button btn-navigate-form-step" type="button" step_number="1"
-                                    style="width:100px;">Back</button>
-                                <button class="button btn-navigate-form-step" type="button" step_number="3">continue</button>
-                            </div>
-                        </section> -->
-                        <!-- Step 3 Content, default hidden on page load. -->
-                        <section id="step-2" class="form-step d-none" style="border:none;">
-                        <h2>Cause Details</h2>
-                        <!-- Step 3 input fields -->
-                        <div class="col-md-12 my-3">
-                            <label for="form-option">I am raising fund for:</label>
-                            <select name="form_select" id="form_select">
-                                <option value="" selected>--Select--</option>
-                                <option value="Medical">Medical</option>
-                                <option value="Crisis">Crisis</option>
-                                <option value="Education">Education</option>
-                                <option value="Emergency">Emergency</option>
-                                <option value="Events">Events</option>
-                                <?php foreach ($result as $row) { ?>
-                                <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_select', $row['id'], False); ?>>
-                                    <?php echo $row['raising_fund_for']; ?>
-                                </option>
-                                <?php } ?>
+                      </li>
+                    </ul>
+                    <!-- Step Wise Form Content -->
+                    <form id="charityform" name="charityform" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/charityform_data') ?>" enctype="multipart/form-data" class="row">
+                    <!-- Step 1 Content -->
+                      <section id="step-1" class="form-step col-12" style="height: 450px;">
+                      <h2>Basic Details</h2>
+                        <div class="row col-12 my-3">
+                          <div class="col-md-4">
+                            <label for="myDropdown" class="form-label">I am raising fund for:</label>
+                          </div>
+                          <div class="col-md-8">
+                            <select name="form_select_step1" id="form_select_step1" class="form-control" onchange="copySelection()">
+                              <option value="Medical">Medical</option>
+                              <option value="Crisis">Crisis</option>
+                              <option value="Education">Education</option>
+                              <option value="Emergency">Emergency</option>
+                              <option value="Events">Events</option>
+                              <?php foreach ($result as $row) { ?>
+                              <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_select_step1', $row['id'], False); ?>>
+                                <?php echo $row['raising_fund_for']; ?>
+                              </option>
+                              <?php } ?>
                             </select>
+                          </div>
+                        </div>
+                        <label for="name"></label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
 
+                        <label for="beneficiary_age"></label>
+                        <input type="number" id="beneficiary_age" name="beneficiary_age" class="form-control" placeholder="Age" required>
+
+                        <label for="location"></label>
+                        <input type="text" id="location" name="location" class="form-control" placeholder="Location" required>
+
+                        <label for="email"></label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Mail Id*" required>
+
+                        <label for="phone"></label>
+                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
+
+                        <div class="mt-3 d-flex justify-content-center">
+                        <button id="openModalBtn1" class="btn btn-navigate-form-step" type="button" step_number="1">
+                          Continue
+                        </button>
+                      </div>
+
+                      </section>
+                      <div id="myModal1" class="modal">
+                        <div class="modal-content">
+                          <span class="close">&times;</span>
+                            <div class="row justify-content-center">
+                              <div class="col-12 col-md-6 col-lg-4" style="width:736px;height:530px;">
+                                <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+                                  <div class="card-body p-5 text-center">
+                                  <h4><b>Enter OTP to verify your account</b></h4>
+                                  <p style="font-size:16px;"><b>Enter OTP to verify your account</b></p>
+                                    <img src="<?php echo base_url('/assets/img/Group 55.png'); ?>" alt="No Image"
+                                      class="h-auto inline-block" style="width:50px;height:50px;">
+                                    <p style="font-size:16px;"><b>We have sent OTP to your email, demo@gmail.com</b></p>
+                                      <div class="otp-field mb-4">
+                                        <input type="number" />
+                                        <input type="number" disabled />
+                                        <input type="number" disabled />
+                                        <input type="number" disabled />
+                                        <input type="number" disabled />
+                                        <input type="number" disabled />
+                                      </div>
+
+                                      <button id="verifyButton" class="button btn-navigate-form-step" step_number="2">
+                                          Continue
+                                      <button><br><br>
+                                      <p class="resend text-muted mb-0" style="font-size:17px;">
+                                        <b>Didn’t receive the OTP? </b><br>In case you do not receive the OTP on your email id, please
+                                        check your spam/junk folders.<br> <a href=""><b>Resend</b></a>
+                                      </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                        <!-- Step 3 Content, default hidden on page load. -->
+                        <section id="step-2" class="form-step d-none px-3" style="border:none;">
+                          <h2>Cause Details</h2>
+                          <div class="col-md-12 my-3">
+                            <label for="form_selected_text">I am raising fund for:</label>
+                            <input type="text" name="form_selected_text" id="form_selected_text" class="form-control" readonly>
+
+                            <!-- Other form fields for Step 2 -->
                             <label for="amount"></label>
                             <input type="number" id="amount" name="amount" placeholder="Amount*" required>
 
                             <label for="end_date"></label>
-                            <input type="date" id="end_date" name="end_date" placeholder="End Date* " required>
-                        </div>
-                        <div class="col-12 text-center mt-3">
-                            <button class="button btn-navigate-form-step" type="button" step_number="1"
-                                style="width:100px;">Back</button>
-                            <button class="button btn-navigate-form-step" type="button" step_number="3">continue</button>
-                        </div>
-                        </section> 
+                            <input type="date" id="end_date" name="end_date" placeholder="End Date*" required>
+                          </div>
+
+                          <div class="col-12 text-center mt-3">
+                            <button class="button btn-navigate-form-step" type="button" step_number="1" style="width:100px;">Back</button>
+                            <button class="button btn-navigate-form-step" type="button" step_number="3">Continue</button>
+                          </div>
+                        </section>
+
                         <section id="step-3" class="form-step d-none" style="border:none;">
-                        <h2>Elaborate Cause Details</h2>
-                        <div class="container">
+                          <h2>Elaborate Cause Details</h2>
+                          <div class="container">
                             <div class="row">
-                                <div class="col-12 my-3">
-                                <!-- File Upload Input Field -->
-                                    <div class="file-upload-container mt-auto py-3">
-                                        <label for="cover_image" class="form-label">Upload Cover Photo</label>
-                                        <input type="file" id="cover_image" name="cover_image" class="form-control w-100" accept="image/*" required>
-                                    </div>
-                                    <br>
-
-                                    <!-- Heading input field -->
-                                    <div class="form-group">
-                                        <label for="cause-heading" class="form-label">Heading</label>
-                                        <input type="text" id="cause-heading" name="cause-heading" class="form-control" placeholder="Heading" required>
-                                    </div>
-                                    <br>
-
-                                    <!-- Description input field -->
-                                    <div class="form-group">
-                                        <label for="cause-description" class="form-label">Description</label>
-                                        <textarea id="cause-description" name="cause-description" class="form-control" rows="4" placeholder="Description" required></textarea>
-                                    </div>
+                              <div class="col-12 my-3">
+                              <!-- File Upload Input Field -->
+                                <div class="file-upload-container mt-auto py-3">
+                                  <label for="cover_image" class="form-label">Upload Cover Photo</label>
+                                  <input type="file" id="cover_image" name="cover_image" class="form-control w-100" accept="image/*" required>
                                 </div>
+                                 
+
+                                <!-- Heading input field -->
+                                <div class="form-group">
+                                  <label for="cause-heading" class="form-label">Heading</label>
+                                  <input type="text" id="cause-heading" name="cause-heading" class="form-control w-100" placeholder="Heading" required>
+                                </div>
+                                
+
+                                <!-- Description input field -->
+                                <div class="form-group">
+                                  <label for="cause-description" class="form-label">Description</label>
+                                  <textarea id="cause-description" name="cause-description" class="form-control w-100" rows="4" placeholder="Description" required></textarea>
+                                </div>
+                              </div>
                             </div>
-                        </div>
+                          </div>
+
                         <div class="col-12 text-center mt-3">
                             <button class="button btn-navigate-form-step" type="button" step_number="2"
                                 style="width:100px;">Back</button>
@@ -1040,6 +1014,13 @@
   * Define a function to navigate betweens form steps.
   * It accepts one parameter. That is - step number.
   */
+  function copySelection() {
+        var selectStep1 = document.getElementById('form_select_step1');
+        var textStep2 = document.getElementById('form_selected_text');
+
+        // Set the text field value of Step 2 to match the selected option in Step 1
+        textStep2.value = selectStep1.options[selectStep1.selectedIndex].text;
+    }
     function openModal(modalId) {
       var modal = document.getElementById(modalId);
       modal.style.display = "block";
@@ -1244,6 +1225,3 @@
 </body>
 
 </html>
-
-
-
