@@ -866,7 +866,7 @@
                       </li>
                     </ul>
                     <!-- Step Wise Form Content -->
-                    <form id="charityform" name="charityform" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/charityform_data') ?>" enctype="multipart/form-data" class="row">
+                    <form id="individualform" name="individualform" onsubmit="return individual()" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="row">
                     <!-- Step 1 Content -->
                       <section id="step-1" class="form-step col-12" style="height: 450px;">
                       <h2>Basic Details</h2>
@@ -875,16 +875,17 @@
                             <label for="myDropdown" class="form-label">I am raising fund for:</label>
                           </div>
                           <div class="col-md-8">
-                            <select name="form_select_step1" id="form_select_step1" class="form-control" onchange="copySelection()">
+                            <select name="form_control" id="form_control" class="form-control" onchange="copySelection()">
                               <option value="Medical">Medical</option>
                               <option value="Crisis">Crisis</option>
                               <option value="Education">Education</option>
                               <option value="Emergency">Emergency</option>
                               <option value="Events">Events</option>
                               <?php foreach ($result as $row) { ?>
-                              <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_select_step1', $row['id'], False); ?>>
+                                <option value="<?php echo $row['id']; ?>">
                                 <?php echo $row['raising_fund_for']; ?>
-                              </option>
+                                </option>
+
                               <?php } ?>
                             </select>
                           </div>
@@ -893,7 +894,7 @@
                         <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
 
                         <label for="beneficiary_age"></label>
-                        <input type="number" id="beneficiary_age" name="beneficiary_age" class="form-control" placeholder="Age" required>
+                        <input type="number" id="beneficiary_age" name="age" class="form-control" placeholder="Age" required>
 
                         <label for="location"></label>
                         <input type="text" id="location" name="location" class="form-control" placeholder="Location" required>
@@ -951,7 +952,7 @@
                           <h2>Cause Details</h2>
                           <div class="col-md-12 my-3">
                             <label for="form_selected_text">I am raising fund for:</label>
-                            <input type="text" name="form_selected_text" id="form_selected_text" class="form-control" readonly>
+                            <input type="text" name="form_option" id="form_selected_text" class="form-control" readonly>
 
                             <!-- Other form fields for Step 2 -->
                             <label for="amount"></label>
@@ -982,14 +983,14 @@
                                 <!-- Heading input field -->
                                 <div class="form-group">
                                   <label for="cause-heading" class="form-label">Heading</label>
-                                  <input type="text" id="cause-heading" name="cause-heading" class="form-control w-100" placeholder="Heading" required>
+                                  <input type="text" id="cause-heading" name="cause-heading" class="form-control w-100" placeholder="Heading" >
                                 </div>
                                 
 
                                 <!-- Description input field -->
                                 <div class="form-group">
                                   <label for="cause-description" class="form-label">Description</label>
-                                  <textarea id="cause-description" name="cause-description" class="form-control w-100" rows="4" placeholder="Description" required></textarea>
+                                  <textarea id="cause-description" name="cause-description" class="form-control w-100" rows="4" placeholder="Description" ></textarea>
                                 </div>
                               </div>
                             </div>
@@ -1015,12 +1016,10 @@
   * It accepts one parameter. That is - step number.
   */
   function copySelection() {
-        var selectStep1 = document.getElementById('form_select_step1');
-        var textStep2 = document.getElementById('form_selected_text');
-
-        // Set the text field value of Step 2 to match the selected option in Step 1
-        textStep2.value = selectStep1.options[selectStep1.selectedIndex].text;
-    }
+    var selectBox = document.getElementById("form_control");
+    var selectedText = selectBox.options[selectBox.selectedIndex].text;
+    document.getElementById("form_selected_text").value = selectedText;
+}
     function openModal(modalId) {
       var modal = document.getElementById(modalId);
       modal.style.display = "block";
