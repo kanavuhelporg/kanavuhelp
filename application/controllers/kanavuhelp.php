@@ -48,20 +48,86 @@ class kanavuhelp extends CI_Controller
     }
     public function individual()
     {
+        if (!$this->session->userdata('userId')) {
+            echo "<script>
+                alert('You must be logged in to access Start A Fundraiser page.');
+                window.location.href = '" . base_url('login') . "';
+              </script>";
+        exit;
+        }
         $this->load->view('individual.php');
     }
     public function charity()
     {
         $this->load->view('charity.php');
     }
+
+    public function processDonation() {
+        // Load the model where the donation logic will be handled
+        $this->load->model('UserModel');
+
+        // Get form input values
+        $cause_id = $this->input->post('cause_id');
+        $user_id = $this->input->post('user_id');
+        $amount = $this->input->post('amount');
+        $name = $this->input->post('name');
+        $emailid = $this->input->post('emailid');
+        $phoneno = $this->input->post('phoneno');
+        $transactionid = $this->input->post('transactionid');
+        $currency_type = $this->input->post('currency_type');
+
+        // Prepare data to insert
+        $data = array(
+            'cause_id' => $cause_id,
+            'user_id' => $user_id,
+            'amount' => $amount,
+            'name' => $name,
+            'emailid' => $emailid,
+            'phoneno' => $phoneno,
+            'transactionid' => $transactionid,
+            'currency_type' => $currency_type
+        );
+
+        // Call the model function to save the donation
+        if ($this->UserModel->saveDonation($data)) {
+            // Redirect to a success page or show a success message
+            redirect('myhelps');
+        } else {
+            // Redirect or display an error message
+            redirect('error');
+        }
+    }
+
     public function donate()
-    {
-        $this->load->view('donate.php');
+{
+    $data['category'] = $this->UserModel->get_category();
+    $data['fundraisers'] = $this->UserModel->get_cause_details();
+
+    // Check if user is logged in using CodeIgniter session
+    $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+    $data['is_logged_in'] = $is_logged_in;
+
+    $this->load->view('donate', $data); // Note: no need for '.php' in the view name
+}
+
+public function myhelps() {
+    if (!$this->session->userdata('userId')) {
+        redirect('login');
     }
-    public function myhelps()
-    {
-        $this->load->view('myhelps.php');
-    }
+
+    // Debugging: Check if the userId is available in the session
+    $user_id = $this->session->userdata('userId');
+    echo "Logged in user ID: " . $user_id; // Check if this prints the correct userId
+
+    $this->load->model('UserModel');
+
+    // Fetch causes created or donated by the logged-in user
+    $data['causes'] = $this->UserModel->getCausesDonationByUserId($user_id);
+
+    // Load the view and pass the causes data
+    $this->load->view('myhelps.php', $data);
+}
+
     public function blogs()
     {
         $this->load->view('blogs.php');
@@ -73,6 +139,23 @@ class kanavuhelp extends CI_Controller
     public function abouts()
     {
         $this->load->view('abouts.php');
+    }
+    public function helpus()
+    { // Get the fundraiser_id from the query string
+        $fundraiser_id = $this->input->get('fundraiser_id');
+        
+        // Load the fundraiser model and fetch details from the database
+     
+        $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
+        
+        // Pass the fetched data to the view
+        $data['fundraiser'] = $fundraiser_details;
+        // Check if user is logged in using CodeIgniter session
+    $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+    $data['is_logged_in'] = $is_logged_in;
+        // Load the helpus view and pass the data
+        $this->load->view('helpus', $data);
+       
     }
     public function registeration()
     {
@@ -113,6 +196,7 @@ class kanavuhelp extends CI_Controller
     }
     public function individualform_data()
     {
+        
         // Retrieve form data
         $data['form_control'] = $this->input->post('form_control'); // Correct field name
         $data['name'] = $this->input->post('name');
@@ -158,7 +242,7 @@ class kanavuhelp extends CI_Controller
 
             if ($response == true) {
                 echo '<script>alert("Successfully registered")</script>';
-                $this->load->view('donate.php');
+                redirect('donate.php');
             } else {
                 echo 'Failed to register';
             }
