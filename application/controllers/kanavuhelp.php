@@ -28,7 +28,7 @@ class kanavuhelp extends CI_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('cookie');
-        
+
     }
     public function index()
     {
@@ -98,22 +98,6 @@ class kanavuhelp extends CI_Controller
         }
     }
 
-
-    /*to view cause raised by user*/
-public function myFundraisers(){
-    $user_id = $this->session->userdata('userId');
-    // Check if this prints the correct userId
-
-    $this->load->model('UserModel');
-
-    // Fetch causes created or donated by the logged-in user
-    $data['causes'] = $this->UserModel->getCausesByUserId($user_id);
-
-    // Load the view and pass the causes data
-    
-    $this->load->view('myFundraisers.php',$data);
-}
-
     public function donate()
 {
     $data['category'] = $this->UserModel->get_category();
@@ -128,16 +112,12 @@ public function myFundraisers(){
 
 public function myhelps() {
     if (!$this->session->userdata('userId')) {
-        echo "<script>
-            alert('You must be logged in to access Myhelps page.');
-            window.location.href = '" . base_url('login') . "';
-          </script>";
-    exit;
+        redirect('login');
     }
 
     // Debugging: Check if the userId is available in the session
     $user_id = $this->session->userdata('userId');
-    // Check if this prints the correct userId
+    echo "Logged in user ID: " . $user_id; // Check if this prints the correct userId
 
     $this->load->model('UserModel');
 
@@ -160,25 +140,23 @@ public function myhelps() {
     {
         $this->load->view('abouts.php');
     }
-    public function helpus($fundraiser_id = null)
-{
-    if ($fundraiser_id) {
-        // Fetch fundraiser details
+    public function helpus()
+    { // Get the fundraiser_id from the query string
+        $fundraiser_id = $this->input->get('fundraiser_id');
+        
+        // Load the fundraiser model and fetch details from the database
+     
         $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
+        
+        // Pass the fetched data to the view
         $data['fundraiser'] = $fundraiser_details;
-
-        // Check if user is logged in
-        $is_logged_in = $this->session->userdata('userId') !== null;
-        $data['is_logged_in'] = $is_logged_in;
-
+        // Check if user is logged in using CodeIgniter session
+    $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+    $data['is_logged_in'] = $is_logged_in;
         // Load the helpus view and pass the data
         $this->load->view('helpus', $data);
-    } else {
-        // Redirect or show error if no fundraiser_id is found
-        redirect('error_page');
+       
     }
-}
-
     public function registeration()
     {
         $data['name'] = $this->input->post('exampleInputName');
@@ -195,45 +173,48 @@ public function myhelps() {
 
     }
     public function userLogin()
-{
-    $postData = $this->input->post(null, true);
-    $login = $this->UserModel->loginUser();
+    {
+        $postData = $this->input->post(null, true);
+        $login = $this->UserModel->loginUser();
 
-    if (isset($login[0]['id'])) {
-        // Set session data for the logged-in user
-        $userLoggedIn = array(
-            'userId' => $login[0]['id'],
-            'userName' => $login[0]['name'],
-        );
-        $this->session->set_userdata($userLoggedIn); // Use CodeIgniter session library
+        if (isset($login[0]['id'])) {
+            // Set session data for the logged-in user
+            $userLoggedIn = array(
+                'userId' => $login[0]['id'],
+                'userName' => $login[0]['name'],
+            );
+            $this->session->set_userdata($userLoggedIn);
 
-        // Redirect to 'kanavuhome' after successful login
-        redirect(base_url('kanavuhome'));
-    } else {
-        // If login fails, reload the login page with an error message
-        $this->load->view('login');
-        echo '<script>alert("Please enter registered credentials.");</script>';
+            // Redirect to 'kanavuhome' after successful login
+            redirect(base_url('kanavuhome'));
+
+        } else {
+            // If login fails, reload the login page with an error message
+            $this->load->view('login.php');
+            echo '<script>alert("Please enter registered credentials.");</script>';
+        }
     }
-}
-
     public function individualform_data()
     {
         
         // Retrieve form data
-        $data['category'] = $this->input->post('category'); // Correct field name
+        $data['form_control'] = $this->input->post('form_control'); // Correct field name
         $data['name'] = $this->input->post('name');
         $data['email'] = $this->input->post('email');
         $data['phone'] = $this->input->post('phone');
-        $data['beneficiary_name'] = $this->input->post('beneficiary_name');
-        $data['beneficiary_age'] = $this->input->post('beneficiary_age');
+        // $data['beneficiary_name'] = $this->input->post('beneficiary_name');
+        $data['age'] = $this->input->post('age');
         $data['location'] = $this->input->post('location');
-        $data['beneficiary_phone'] = $this->input->post('beneficiary_phone');
+        // $data['beneficiary_phone'] = $this->input->post('beneficiary_phone');
         $data['form_option'] = $this->input->post('form_option'); // Make sure this field is correct as well
         $data['amount'] = $this->input->post('amount');
         $data['end_date'] = $this->input->post('end_date');
-        $data['cause_heading'] = $this->input->post('cause_heading');
-        $data['cause_description'] = $this->input->post('cause_description');
-
+        $data['cause-heading'] = $this->input->post('cause-heading');
+        $data['cause-description'] = $this->input->post('cause-description');
+        // print_r($data);
+        // exit;
+//         print_r($this->input->post('form_control')); // This should output the selected value of form_control
+// exit;
         // Handle file upload
         $this->load->library('upload');
         $config['upload_path'] = './assets/individualform_img/';
@@ -246,7 +227,7 @@ public function myhelps() {
         if (!$this->upload->do_upload('cover_image')) {
             $error = $this->upload->display_errors();
             echo "Upload error: $error";
-            redirect('kanavuhelp/individual', 'refresh');
+            redirect('kanavuhelp/individual');
         } else {
             // File upload success
             $file_data = $this->upload->data();
@@ -316,7 +297,6 @@ public function myhelps() {
             }
         }
     }
-    
     public function contact_us()
 	{
 		$data['full-name'] = $this->input->post('full-name');

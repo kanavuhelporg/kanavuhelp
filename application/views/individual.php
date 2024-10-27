@@ -741,7 +741,6 @@
     border-color: red !important; /* Force red border */
 }
 </style>
-
 <body>
 <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
@@ -788,20 +787,22 @@
 
                 <!-- User profile or login -->
                 <div class="d-flex align-items-center ms-auto">
-                    <?php if ($this->session->userdata('userId')): ?>
-                        <div class="d-flex align-items-center">
-                            <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="<?= base_url('assets/img/Ellipse 12.png') ?>" alt="Profile Image" class="rounded-circle" style="width: 30px; height: 30px;">
-                                <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                            </div>
-                            <ul class="dropdown-menu" aria-labelledby="userProfile">
-                                <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                            </ul>
-                        </div>
-                    <?php else: ?>
-                      <a href="<?= base_url('/login') ?>" class="btn btn-red me-2">Login</a>
-                    <?php endif; ?>
-                    <!-- <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a> -->
+                <?php if ($this->session->userdata('userId')): ?>
+                  <div class="d-flex align-items-center">
+                    <div class="dropdown" id="userProfile">
+                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                         style="width: 30px; height: 30px; border-radius: 50%;">
+                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                      </div>
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <?php else: ?>
+                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+                  <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -866,7 +867,7 @@
                       </li>
                     </ul>
                     <!-- Step Wise Form Content -->
-                    <form id="charityform" name="charityform" onsubmit="return charity()" method="post" action="<?= base_url('kanavuhelp/charityform_data') ?>" enctype="multipart/form-data" class="row">
+                    <form id="individualform" name="individualform" onsubmit="return individual()" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="row">
                     <!-- Step 1 Content -->
                       <section id="step-1" class="form-step col-12" style="height: 450px;">
                       <h2>Basic Details</h2>
@@ -875,16 +876,17 @@
                             <label for="myDropdown" class="form-label">I am raising fund for:</label>
                           </div>
                           <div class="col-md-8">
-                            <select name="form_select_step1" id="form_select_step1" class="form-control" onchange="copySelection()">
+                            <select name="form-control" id="form-control" class="form-control" onchange="copySelection()">
                               <option value="Medical">Medical</option>
                               <option value="Crisis">Crisis</option>
                               <option value="Education">Education</option>
                               <option value="Emergency">Emergency</option>
                               <option value="Events">Events</option>
                               <?php foreach ($result as $row) { ?>
-                              <option value="<?php echo $row['id']; ?>" <?php echo set_select('form_select_step1', $row['id'], False); ?>>
+                                <option value="<?php echo $row['id']; ?>">
                                 <?php echo $row['raising_fund_for']; ?>
-                              </option>
+                                </option>
+
                               <?php } ?>
                             </select>
                           </div>
@@ -893,7 +895,7 @@
                         <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
 
                         <label for="beneficiary_age"></label>
-                        <input type="number" id="beneficiary_age" name="beneficiary_age" class="form-control" placeholder="Age" required>
+                        <input type="number" id="beneficiary_age" name="age" class="form-control" placeholder="Age" required>
 
                         <label for="location"></label>
                         <input type="text" id="location" name="location" class="form-control" placeholder="Location" required>
@@ -904,54 +906,52 @@
                         <label for="phone"></label>
                         <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
 
-                        <div class="mt-3 d-flex justify-content-center">
-                        <button id="openModalBtn1" class="btn btn-navigate-form-step" type="button" step_number="1">
-                          Continue
-                        </button>
-                      </div>
+                        <div class="mt-3 primary" style="margin-left:450px;">
+              <button id="openModalBtn1" class="button btn-navigate-form-step" type="button"
+                step_number="1">Continue</button>
+            </div>
 
                       </section>
                       <div id="myModal1" class="modal">
-                        <div class="modal-content">
-                          <span class="close">&times;</span>
-                            <div class="row justify-content-center">
-                              <div class="col-12 col-md-6 col-lg-4" style="width:736px;height:530px;">
-                                <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
-                                  <div class="card-body p-5 text-center">
-                                  <h4><b>Enter OTP to verify your account</b></h4>
-                                  <p style="font-size:16px;"><b>Enter OTP to verify your account</b></p>
-                                    <img src="<?php echo base_url('/assets/img/Group 55.png'); ?>" alt="No Image"
-                                      class="h-auto inline-block" style="width:50px;height:50px;">
-                                    <p style="font-size:16px;"><b>We have sent OTP to your email, demo@gmail.com</b></p>
-                                      <div class="otp-field mb-4">
-                                        <input type="number" />
-                                        <input type="number" disabled />
-                                        <input type="number" disabled />
-                                        <input type="number" disabled />
-                                        <input type="number" disabled />
-                                        <input type="number" disabled />
-                                      </div>
-
-                                      <button id="verifyButton" class="button btn-navigate-form-step" step_number="2">
-                                          Continue
-                                      <button><br><br>
-                                      <p class="resend text-muted mb-0" style="font-size:17px;">
-                                        <b>Didn’t receive the OTP? </b><br>In case you do not receive the OTP on your email id, please
-                                        check your spam/junk folders.<br> <a href=""><b>Resend</b></a>
-                                      </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </section>
-                        </div>
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <div class="row justify-content-center">
+                <div class="col-12 col-md-6 col-lg-4" style="width:736px;height:530px;">
+                  <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+                    <div class="card-body p-5 text-center">
+                      <h4><b>Enter OTP to verify your account</b></h4>
+                      <p style="font-size:16px;"><b>Enter OTP to verify your account</b></p>
+                      <img src="<?php echo base_url('/assets/img/Group 55.png'); ?>" alt="No Image"
+                        class="h-auto inline-block" style="width:50px;height:50px;">
+                      <p style="font-size:16px;"><b>We have sent OTP to your email, demo@gmail.com</b></p>
+                      <div class="otp-field mb-4">
+                        <input type="number" />
+                        <input type="number" disabled />
+                        <input type="number" disabled />
+                        <input type="number" disabled />
+                        <input type="number" disabled />
+                        <input type="number" disabled />
                       </div>
+
+                      <button id="verifyButton" class="button btn-navigate-form-step" step_number="2">
+                        Continue
+                      </button><br><br>
+                      <p class="resend text-muted mb-0" style="font-size:17px;">
+                        <b>Didn’t receive the OTP? </b><br>In case you do not receive the OTP on your email id, please
+                        check your spam/junk folders.<br> <a href=""><b>Resend</b></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
                         <!-- Step 3 Content, default hidden on page load. -->
                         <section id="step-2" class="form-step d-none px-3" style="border:none;">
                           <h2>Cause Details</h2>
                           <div class="col-md-12 my-3">
                             <label for="form_selected_text">I am raising fund for:</label>
-                            <input type="text" name="form_selected_text" id="form_selected_text" class="form-control" readonly>
+                            <input type="text" name="form_option" id="form_selected_text" class="form-control" readonly>
 
                             <!-- Other form fields for Step 2 -->
                             <label for="amount"></label>
@@ -981,15 +981,15 @@
 
                                 <!-- Heading input field -->
                                 <div class="form-group">
-                                  <label for="cause-heading" class="form-label">Heading</label>
-                                  <input type="text" id="cause-heading" name="cause-heading" class="form-control w-100" placeholder="Heading" required>
+                                  <label for="cause_heading" class="form-label">Heading</label>
+                                  <input type="text" id="cause_heading" name="cause_heading" class="form-control w-100" placeholder="Heading" >
                                 </div>
                                 
 
                                 <!-- Description input field -->
                                 <div class="form-group">
-                                  <label for="cause-description" class="form-label">Description</label>
-                                  <textarea id="cause-description" name="cause-description" class="form-control w-100" rows="4" placeholder="Description" required></textarea>
+                                  <label for="cause_description" class="form-label">Description</label>
+                                  <textarea id="cause_description" name="cause_description" class="form-control w-100" rows="4" placeholder="Description" ></textarea>
                                 </div>
                               </div>
                             </div>
@@ -1223,5 +1223,4 @@
 </footer>
 </div>
 </body>
-
 </html>
