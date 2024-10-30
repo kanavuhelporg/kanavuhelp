@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -741,6 +740,7 @@
     border-color: red !important; /* Force red border */
 }
 </style>
+
 <body>
 <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
@@ -787,22 +787,20 @@
 
                 <!-- User profile or login -->
                 <div class="d-flex align-items-center ms-auto">
-                <?php if ($this->session->userdata('userId')): ?>
-                  <div class="d-flex align-items-center">
-                    <div class="dropdown" id="userProfile">
-                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                         style="width: 30px; height: 30px; border-radius: 50%;">
-                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                      </div>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <?php else: ?>
-                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-                  <?php endif; ?>
+                    <?php if ($this->session->userdata('userId')): ?>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="<?= base_url('assets/img/Ellipse 12.png') ?>" alt="Profile Image" class="rounded-circle" style="width: 30px; height: 30px;">
+                                <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                            </div>
+                            <ul class="dropdown-menu" aria-labelledby="userProfile">
+                                <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                      <a href="<?= base_url('/login') ?>" class="btn btn-red me-2">Login</a>
+                    <?php endif; ?>
+                    <!-- <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a> -->
                 </div>
             </div>
         </div>
@@ -867,52 +865,45 @@
                       </li>
                     </ul>
                     <!-- Step Wise Form Content -->
-                    <form id="individualform" name="individualform" onsubmit="return individual()" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="row">
-                    <!-- Step 1 Content -->
-                      <section id="step-1" class="form-step col-12" style="height: 450px;">
-                      <h2>Basic Details</h2>
-                        <div class="row col-12 my-3">
-                          <div class="col-md-4">
-                            <label for="myDropdown" class="form-label">I am raising fund for:</label>
-                          </div>
-                          <div class="col-md-8">
-                            <select name="form-control" id="form-control" class="form-control" onchange="copySelection()">
-                              <option value="Medical">Medical</option>
-                              <option value="Crisis">Crisis</option>
-                              <option value="Education">Education</option>
-                              <option value="Emergency">Emergency</option>
-                              <option value="Events">Events</option>
-                              <?php foreach ($result as $row) { ?>
-                                <option value="<?php echo $row['id']; ?>">
-                                <?php echo $row['raising_fund_for']; ?>
-                                </option>
-
-                              <?php } ?>
-                            </select>
-                          </div>
-                        </div>
-                        <label for="name"></label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
-
-                        <label for="beneficiary_age"></label>
-                        <input type="number" id="beneficiary_age" name="age" class="form-control" placeholder="Age" required>
-
-                        <label for="location"></label>
-                        <input type="text" id="location" name="location" class="form-control" placeholder="Location" required>
-
-                        <label for="email"></label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Mail Id*" required>
-
-                        <label for="phone"></label>
-                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
-
-                        <div class="mt-3 primary" style="margin-left:450px;">
-              <button id="openModalBtn1" class="button btn-navigate-form-step" type="button"
-                step_number="1">Continue</button>
+                    <form id="individualform" name="individualform" onsubmit="return individual()" method="post" 
+          action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="row">
+        
+        <!-- Step 1 Content -->
+        <section id="step-1" class="form-step col-12" style="height: 450px;">
+            <h2>Basic Details</h2>
+            <div class="row col-12 my-3">
+                <div class="col-md-4">
+                    <label for="category" class="form-label">I am raising fund for:</label>
+                </div>
+                <div class="col-md-8">
+    <select name="category" id="category" class="form-control" onchange="copySelection()">
+        <option value="Medical">Medical</option>
+        <option value="Crisis">Crisis</option>
+        <option value="Education">Education</option>
+        <option value="Emergency">Emergency</option>
+        <option value="Events">Events</option>
+        <?php foreach ($result as $row) { ?>
+            <option value="<?php echo $row['id']; ?>" <?php echo set_select('category', $row['id'], False); ?>>
+                <?php echo $row['raising_fund_for']; ?>
+            </option>
+        <?php } ?>
+    </select>
+</div>
             </div>
 
-                      </section>
-                      <div id="myModal1" class="modal">
+            <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
+            <input type="number" id="age" name="age" class="form-control" placeholder="Age" required>
+            <input type="text" id="location" name="location" class="form-control" placeholder="Location" required>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Mail Id*" required>
+            <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
+
+            <div class="col-12 text-center mt-3">
+                <button id="openModalBtn1" class="button btn-navigate-form-step" type="button" step_number="1">Continue</button>
+            </div>
+        </section>
+
+        <!-- OTP Modal -->
+        <div id="myModal1" class="modal">
             <div class="modal-content">
               <span class="close">&times;</span>
               <div class="row justify-content-center">
@@ -946,251 +937,149 @@
               </div>
             </div>
           </div>
-                        <!-- Step 3 Content, default hidden on page load. -->
-                        <section id="step-2" class="form-step d-none px-3" style="border:none;">
-                          <h2>Cause Details</h2>
-                          <div class="col-md-12 my-3">
-                            <label for="form_selected_text">I am raising fund for:</label>
-                            <input type="text" name="form_option" id="form_selected_text" class="form-control" readonly>
 
-                            <!-- Other form fields for Step 2 -->
-                            <label for="amount"></label>
-                            <input type="number" id="amount" name="amount" placeholder="Amount*" required>
+        <!-- Step 2 Content -->
+        <!-- <section id="step-2" class="form-step d-none">
+            <h2>Beneficiary Details</h2>
+            <input type="text" id="beneficiary_name" name="beneficiary_name" placeholder="Name" required>
+            <input type="number" id="beneficiary_age" name="beneficiary_age" placeholder="Age" required>
+            <input type="text" id="beneficiary_location" name="beneficiary_location" placeholder="Location" required>
+            <input type="tel" id="beneficiary_phone" name="beneficiary_phone" placeholder="Phone Number*" required>
+            
+            <button class="button btn-navigate-form-step" type="button" step_number="1">Back</button>
+            <button class="button btn-navigate-form-step" type="button" step_number="3">Continue</button>
+        </section> -->
 
-                            <label for="end_date"></label>
-                            <input type="date" id="end_date" name="end_date" placeholder="End Date*" required>
-                          </div>
+        <!-- Step 3 Content -->
+        <section id="step-2" class="form-step d-none" style="border:none;">
+                            <h2>Cause Details</h2>
+                                <!-- Step 2 input fields -->
+                                <div class="col-md-12 my-3">
+                                  <label for="form_selected_text">I am raising fund for:</label>
+                                  <input type="text" name="form_option" id="form_selected_text" class="form-control" readonly>
 
-                          <div class="col-12 text-center mt-3">
-                            <button class="button btn-navigate-form-step" type="button" step_number="1" style="width:100px;">Back</button>
-                            <button class="button btn-navigate-form-step" type="button" step_number="3">Continue</button>
-                          </div>
-                        </section>
+                                    <!-- Other form fields for Step 2 -->
+                                    <label for="amount"></label>
+                                    <input type="number" id="amount" name="amount" placeholder="Amount*" required>
 
-                        <section id="step-3" class="form-step d-none" style="border:none;">
-                          <h2>Elaborate Cause Details</h2>
-                          <div class="container">
-                            <div class="row">
-                              <div class="col-12 my-3">
-                              <!-- File Upload Input Field -->
-                                <div class="file-upload-container mt-auto py-3">
-                                  <label for="cover_image" class="form-label">Upload Cover Photo</label>
-                                  <input type="file" id="cover_image" name="cover_image" class="form-control w-100" accept="image/*" required>
+                                    <label for="end_date"></label>
+                                    <input type="date" id="end_date" name="end_date" placeholder="End Date*" required>
                                 </div>
-                                 
-
-                                <!-- Heading input field -->
-                                <div class="form-group">
-                                  <label for="cause_heading" class="form-label">Heading</label>
-                                  <input type="text" id="cause_heading" name="cause_heading" class="form-control w-100" placeholder="Heading" >
+                                <div class="mt-3 d-flex justify-content-center">
+                                    <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="1" style="width: 100px;">Back</button>
+                                    <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="3">Continue</button>
                                 </div>
-                                
+                            </section>
 
-                                <!-- Description input field -->
-                                <div class="form-group">
-                                  <label for="cause_description" class="form-label">Description</label>
-                                  <textarea id="cause_description" name="cause_description" class="form-control w-100" rows="4" placeholder="Description" ></textarea>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                        <div class="col-12 text-center mt-3">
-                            <button class="button btn-navigate-form-step" type="button" step_number="2"
-                                style="width:100px;">Back</button>
-                            <button class="button submit-btn" type="submit">Submit for Approval</button>
-                        </div>
-                        </section>
-                        </form>
-                    </div>
-                </div>
-            </div>       
-        </div>
+        <!-- Step 4 Content -->
+        <section id="step-3" class="form-step d-none">
+    <h2>Elaborate Cause Details</h2>
+    <input type="file" id="cover_image" name="cover_image" accept="image/*" required>
+    <input type="text" id="cause_heading" name="cause_heading" placeholder="Heading" required>
+    <textarea id="cause_description" name="cause_description" placeholder="Description" required></textarea>
+    <div>
+      <button class="button btn-navigate-form-step" type="button" step_number="2">Back</button>
+      <button class="button submit-btn" type="submit" id="submitApprovalButton">Submit for Approval</button>
     </div>
-</div>
+</section>
+    </form>
+
+      </div>
+    </div>
+  </div>
 
   <script>
-    /**
-  * Define a function to navigate betweens form steps.
-  * It accepts one parameter. That is - step number.
-  */
-  function copySelection() {
-        var selectStep1 = document.getElementById('form_select_step1');
-        var textStep2 = document.getElementById('form_selected_text');
-
-        // Set the text field value of Step 2 to match the selected option in Step 1
-        textStep2.value = selectStep1.options[selectStep1.selectedIndex].text;
+    function copySelection() {
+        // Get the selected option's text
+        var selectedText = document.getElementById("category").options[document.getElementById("category").selectedIndex].text;
+        // Set it in the readonly input field
+        document.getElementById("form_selected_text").value = selectedText;
     }
+
     function openModal(modalId) {
-      var modal = document.getElementById(modalId);
-      modal.style.display = "block";
+        document.getElementById(modalId).style.display = "block";
     }
 
-    // Function to close the modal
     function closeModal(modalId) {
-      var modal = document.getElementById(modalId);
-      modal.style.display = "none";
+        document.getElementById(modalId).style.display = "none";
     }
 
-    // Event listeners for opening and closing modals
     document.getElementById("openModalBtn1").addEventListener("click", function () {
-      openModal("myModal1");
+        openModal("myModal1");
     });
+
     document.querySelectorAll(".close").forEach(function (closeBtn) {
-      closeBtn.addEventListener("click", function () {
-        var modalId = closeBtn.closest('.modal').id;
-        closeModal(modalId);
-      });
+        closeBtn.addEventListener("click", function () {
+            closeModal(closeBtn.closest('.modal').id);
+        });
     });
-    window.addEventListener("click", function (event) {
-      document.querySelectorAll(".modal").forEach(function (modal) {
-        if (event.target == modal) {
-          closeModal(modal.id);
-        }
-      });
-    });
-    document.getElementById("verifyButton").addEventListener("click", function () {
-      // Code to close the modal
-      document.getElementById("myModal1").style.display = "none";
-    });
+
     const inputs = document.querySelectorAll(".otp-field > input");
-    const button = document.querySelector(".btn");
-
-    window.addEventListener("load", () => inputs[0].focus());
-    button.setAttribute("disabled", "disabled");
-
-    inputs[0].addEventListener("paste", function (event) {
-      event.preventDefault();
-
-      const pastedValue = (event.clipboardData || window.clipboardData).getData(
-        "text"
-      );
-      const otpLength = inputs.length;
-
-      for (let i = 0; i < otpLength; i++) {
-        if (i < pastedValue.length) {
-          inputs[i].value = pastedValue[i];
-          inputs[i].removeAttribute("disabled");
-          inputs[i].focus;
-        } else {
-          inputs[i].value = ""; // Clear any remaining inputs
-          inputs[i].focus;
-        }
-      }
-    });
-
-    inputs.forEach((input, index1) => {
-      input.addEventListener("keyup", (e) => {
-        const currentInput = input;
-        const nextInput = input.nextElementSibling;
-        const prevInput = input.previousElementSibling;
-
-        if (currentInput.value.length > 1) {
-          currentInput.value = "";
-          return;
-        }
-
-        if (
-          nextInput &&
-          nextInput.hasAttribute("disabled") &&
-          currentInput.value !== ""
-        ) {
-          nextInput.removeAttribute("disabled");
-          nextInput.focus();
-        }
-
-        if (e.key === "Backspace") {
-          inputs.forEach((input, index2) => {
-            if (index1 <= index2 && prevInput) {
-              input.setAttribute("disabled", true);
-              input.value = "";
-              prevInput.focus();
+    inputs.forEach((input, index) => {
+        input.addEventListener("input", () => {
+            if (input.value.length === 1) {
+                if (inputs[index + 1]) {
+                    inputs[index + 1].removeAttribute("disabled");
+                    inputs[index + 1].focus();
+                }
+            } else if (input.value.length === 0 && inputs[index - 1]) {
+                inputs[index].setAttribute("disabled", true);
+                inputs[index - 1].focus();
             }
-          });
-        }
-
-        button.classList.remove("active");
-        button.setAttribute("disabled", "disabled");
-
-        const inputsNo = inputs.length;
-        if (!inputs[inputsNo - 1].disabled && inputs[inputsNo - 1].value !== "") {
-          button.classList.add("active");
-          button.removeAttribute("disabled");
-
-          return;
-        }
-      });
+        });
     });
+
+    document.getElementById("verifyButton").addEventListener("click", function () {
+        const otp = Array.from(inputs).map(input => input.value).join("");
+        
+        if (otp.length === 6) {
+            console.log("OTP entered:", otp);
+            closeModal("myModal1");
+            navigateToFormStep(2);
+        } else {
+            alert("Please enter a valid 6-digit OTP.");
+        }
+    });
+
+    document.querySelector(".resend a").addEventListener("click", function (event) {
+        event.preventDefault();
+        alert("OTP Resend functionality goes here.");
+    });
+
     const navigateToFormStep = (stepNumber) => {
-      /**
-       * Hide all form steps.
-       */
-      document.querySelectorAll(".form-step").forEach((formStepElement) => {
-        formStepElement.classList.add("d-none");
-      });
-      /**
-       * Mark all form steps as unfinished.
-       */
-      document.querySelectorAll(".form-stepper-list").forEach((formStepHeader) => {
-        formStepHeader.classList.add("form-stepper-unfinished");
-        formStepHeader.classList.remove("form-stepper-active", "form-stepper-completed");
-      });
-      /**
-       * Show the current form step (as passed to the function).
-       */
-      document.querySelector("#step-" + stepNumber).classList.remove("d-none");
-      /**
-       * Select the form step circle (progress bar).
-       */
-      const formStepCircle = document.querySelector('li[step="' + stepNumber + '"]');
-      /**
-       * Mark the current form step as active.
-       */
-      formStepCircle.classList.remove("form-stepper-unfinished", "form-stepper-completed");
-      formStepCircle.classList.add("form-stepper-active");
-      /**
-       * Loop through each form step circles.
-       * This loop will continue up to the current step number.
-       * Example: If the current step is 3,
-       * then the loop will perform operations for step 1 and 2.
-       */
-      for (let index = 0; index < stepNumber; index++) {
-        /**
-         * Select the form step circle (progress bar).
-         */
-        const formStepCircle = document.querySelector('li[step="' + index + '"]');
-        /**
-         * Check if the element exist. If yes, then proceed.
-         */
-        if (formStepCircle) {
-          /**
-           * Mark the form step as completed.
-           */
-          formStepCircle.classList.remove("form-stepper-unfinished", "form-stepper-active");
-          formStepCircle.classList.add("form-stepper-completed");
-        }
-      }
+        document.querySelectorAll(".form-step").forEach((step) => {
+            step.classList.add("d-none");
+        });
+        document.getElementById("step-" + stepNumber).classList.remove("d-none");
     };
-    /**
-     * Select all form navigation buttons, and loop through them.
-     */
-    document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn) => {
-      /**
-       * Add a click event listener to the button.
-       */
-      formNavigationBtn.addEventListener("click", () => {
-        /**
-         * Get the value of the step.
-         */
-        const stepNumber = parseInt(formNavigationBtn.getAttribute("step_number"));
-        /**
-         * Call the function to navigate to the target form step.
-         */
-        navigateToFormStep(stepNumber);
-      });
+
+    document.querySelectorAll(".btn-navigate-form-step").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const stepNumber = parseInt(btn.getAttribute("step_number"));
+            navigateToFormStep(stepNumber);
+        });
     });
-  </script>
-  <div class="footer">
+
+    // Submit for Approval button functionality
+    document.getElementById("submitApprovalButton").addEventListener("click", function(event) {
+        event.preventDefault();  // Prevents default form submission for validation
+        
+        // Check if required fields are filled
+        const coverImage = document.getElementById("cover_image").files.length > 0;
+        const causeHeading = document.getElementById("cause_heading").value.trim();
+        const causeDescription = document.getElementById("cause_description").value.trim();
+
+        if (coverImage && causeHeading && causeDescription) {
+            alert("Form is ready to be submitted for approval.");
+            // Add any submission logic here, like sending data to the server
+            document.querySelector("form").submit(); // Uncomment if you want to proceed with form submission
+        } else {
+            alert("Please complete all required fields.");
+        }
+    });
+</script>
+
+<div class="footer">
 <footer class="footer mt-auto py-3">
   <div class="container">
     <h5 style="text-align:center">kanavu.help</h5>
@@ -1223,4 +1112,7 @@
 </footer>
 </div>
 </body>
+
 </html>
+
+
