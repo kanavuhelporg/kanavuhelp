@@ -195,59 +195,56 @@ public function myhelps() {
         }
     }
     public function individualform_data()
-    {
-        
-        // Retrieve form data
-        $data['form_control'] = $this->input->post('form_control'); // Correct field name
-        $data['name'] = $this->input->post('name');
-        $data['email'] = $this->input->post('email');
-        $data['phone'] = $this->input->post('phone');
-        // $data['beneficiary_name'] = $this->input->post('beneficiary_name');
-        $data['age'] = $this->input->post('age');
-        $data['location'] = $this->input->post('location');
-        // $data['beneficiary_phone'] = $this->input->post('beneficiary_phone');
-        $data['form_option'] = $this->input->post('form_option'); // Make sure this field is correct as well
-        $data['amount'] = $this->input->post('amount');
-        $data['end_date'] = $this->input->post('end_date');
-        $data['cause-heading'] = $this->input->post('cause-heading');
-        $data['cause-description'] = $this->input->post('cause-description');
-        // print_r($data);
-        // exit;
-//         print_r($this->input->post('form_control')); // This should output the selected value of form_control
-// exit;
-        // Handle file upload
-        $this->load->library('upload');
-        $config['upload_path'] = './assets/individualform_img/';
-        $config['allowed_types'] = 'gif|jpg|png|svg';
-        $config['max_size'] = 1024;
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
-        $this->upload->initialize($config);
+{
+    // Load required model and library
+    $this->load->model('UserModel');
+    $this->load->library('upload');
 
-        if (!$this->upload->do_upload('cover_image')) {
-            $error = $this->upload->display_errors();
-            echo "Upload error: $error";
-            redirect('kanavuhelp/individual');
+    // Retrieve form data
+    $data = [
+        'category' => $this->input->post('category'),
+        'name' => $this->input->post('name'),
+        'email' => $this->input->post('email'),
+        'phone' => $this->input->post('phone'),
+        'age' => $this->input->post('age'),
+        'location' => $this->input->post('location'),
+        'form_option' => $this->input->post('form_option'),
+        'amount' => $this->input->post('amount'),
+        'end_date' => $this->input->post('end_date'),
+        'cause_heading' => $this->input->post('cause_heading'),
+        'cause_description' => $this->input->post('cause_description')
+    ];
+
+    // File upload configuration
+    $config['upload_path'] = './assets/individualform_img/';
+    $config['allowed_types'] = 'gif|jpg|png|svg';
+    $config['max_size'] = 1024;
+    $config['max_width'] = 1024;
+    $config['max_height'] = 768;
+    $this->upload->initialize($config);
+
+    // Handle file upload
+    if (!$this->upload->do_upload('cover_image')) {
+        $error = $this->upload->display_errors();
+        echo "<script>alert('Upload error: $error');</script>";
+        redirect('kanavuhelp/individual');
+    } else {
+        // File upload successful
+        $file_data = $this->upload->data();
+        $data['cover_image'] = $file_data['file_name'];
+
+        // Insert data into the database
+        $response = $this->UserModel->store3($data);
+
+        if ($response) {
+            echo '<script>alert("Successfully registered");</script>';
+            redirect('kanavuhelp/donate'); // Ensure this route points to the donate page
         } else {
-            // File upload success
-            $file_data = $this->upload->data();
-            $file_name = $file_data['file_name'];
-
-            // Add file name to data array
-            $data['cover_image'] = $file_name;
-
-            // Insert data into the database
-            $this->load->model('UserModel');
-            $response = $this->UserModel->store3($data);
-
-            if ($response == true) {
-                echo '<script>alert("Successfully registered")</script>';
-                redirect('donate.php');
-            } else {
-                echo 'Failed to register';
-            }
+            echo '<script>alert("Failed to register");</script>';
+            redirect('kanavuhelp/individual');
         }
     }
+}
 
     public function charityform_data()
     {
