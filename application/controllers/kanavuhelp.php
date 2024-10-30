@@ -75,7 +75,14 @@ class kanavuhelp extends CI_Controller
         $phoneno = $this->input->post('phoneno');
         $transactionid = $this->input->post('transactionid');
         $currency_type = $this->input->post('currency_type');
-
+        if ($this->UserModel->is_transaction_id_exists($transactionid)) {
+            // If it exists, show an error message
+            echo "<script>
+                alert('The transaction id already exist.');
+                window.location.href = '" . base_url('donate') . "';
+              </script>";
+            exit; // Redirect to the donation page or any relevant page
+        }
         // Prepare data to insert
         $data = array(
             'cause_id' => $cause_id,
@@ -91,7 +98,9 @@ class kanavuhelp extends CI_Controller
         // Call the model function to save the donation
         if ($this->UserModel->saveDonation($data)) {
             // Redirect to a success page or show a success message
+            $this->UserModel->update_raised_amount($cause_id, $amount);
             redirect('myhelps');
+           
         } else {
             // Redirect or display an error message
             redirect('error');
@@ -99,17 +108,30 @@ class kanavuhelp extends CI_Controller
     }
 
     public function donate()
-{
-    $data['category'] = $this->UserModel->get_category();
-    $data['fundraisers'] = $this->UserModel->get_cause_details();
-
-    // Check if user is logged in using CodeIgniter session
-    $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
-    $data['is_logged_in'] = $is_logged_in;
-
-    $this->load->view('donate', $data); // Note: no need for '.php' in the view name
-}
-
+    {
+        $data['category'] = $this->UserModel->get_category();
+        $data['fundraisers'] = $this->UserModel->get_cause_details();
+    
+        // Check if user is logged in using CodeIgniter session
+        $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+        $data['is_logged_in'] = $is_logged_in;
+    
+        // Loop through each fundraiser and calculate days_left
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date->diff($current_date)->days;
+            if ($end_date < $current_date) {
+                $days_left = 0;
+            }
+            $fundraiser->days_left = $days_left;
+            $fundraiser->hide_donation_button = $fundraiser->raised_amount >= $fundraiser->amount;
+        }
+        
+    
+        $this->load->view('donate', $data); // Note: no need for '.php' in the view name
+    }
+    
 public function myhelps() {
     if (!$this->session->userdata('userId')) {
         redirect('login');
@@ -140,23 +162,41 @@ public function myhelps() {
     {
         $this->load->view('abouts.php');
     }
-    public function helpus()
-    { // Get the fundraiser_id from the query string
-        $fundraiser_id = $this->input->get('fundraiser_id');
-        
-        // Load the fundraiser model and fetch details from the database
-     
-        $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
-        
-        // Pass the fetched data to the view
-        $data['fundraiser'] = $fundraiser_details;
-        // Check if user is logged in using CodeIgniter session
-    $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
-    $data['is_logged_in'] = $is_logged_in;
-        // Load the helpus view and pass the data
-        $this->load->view('helpus', $data);
-       
+    
+    public function helpus($fundraiser_id = null)
+{
+    if ($fundraiser_id === null) {
+        show_404();
+        return;
     }
+
+    $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
+
+    if (!$fundraiser_details) {
+        show_404();
+        return;
+    }
+
+    // Calculate days left (existing code)
+    $end_date = new DateTime($fundraiser_details->end_date); 
+    $current_date = new DateTime(); 
+    $days_left = $end_date->diff($current_date)->days.'days left';
+    if ($end_date < $current_date) {
+        $days_left = 'expired';
+    }
+    $fundraiser_details->hide_donation_button = $fundraiser_details->raised_amount >= $fundraiser_details->amount;
+    // Get the number of supporters
+    $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
+
+    // Pass data to the view
+    $fundraiser_details->days_left = $days_left;
+    $fundraiser_details->supporters_count = $supporters_count;
+    $data['fundraiser'] = $fundraiser_details;
+    $data['is_logged_in'] = $this->session->userdata('userId') !== null;
+    $this->load->view('helpus', $data);
+}
+
+    
     public function registeration()
     {
         $data['name'] = $this->input->post('exampleInputName');
@@ -245,6 +285,28 @@ public function myhelps() {
         }
     }
 }
+// causes by user id
+public function user_causes() {
+    // Check session for user ID
+    $user_id = $this->session->userdata('userId');
+    if (!$user_id) {
+        redirect('login');
+    }
+
+    // Retrieve fundraisers and prepare days_left calculation
+    $data['fundraisers'] = $this->UserModel->get_user_causes($user_id);
+    $data['is_logged_in'] = true;
+
+    foreach ($data['fundraisers'] as $fundraiser) {
+        $end_date = new DateTime($fundraiser->end_date);
+        $current_date = new DateTime();
+        $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
+        $fundraiser->days_left = $days_left;
+    }
+
+    $this->load->view('myFundraisers', $data);
+}
+
 
     public function charityform_data()
     {

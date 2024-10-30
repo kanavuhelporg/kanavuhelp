@@ -246,22 +246,9 @@
 </script>
 
   
-    <?php if (!empty($causes)) : ?>
-        <?php foreach ($causes as $cause) : ?>
-            <?php
-// Convert end_date to a DateTime object
-$endDate = new DateTime($cause->end_date);
-$today = new DateTime(); // Current date
-
-// Calculate the difference
-$interval = $today->diff($endDate);
-$daysLeft = $interval->days;
-
-// If end date is in the past, set days left to 0 or display "Expired"
-if ($interval->invert) {
-    $daysLeft = 0;
-}
-?>
+    <?php if (!empty($fundraisers)) : ?>
+        <?php foreach ($fundraisers as $cause) : ?>
+            
           <div class="container d-flex justify-content-center align-items-center mt-5">
           <a href="<?= base_url('helpus/' . $cause->id) ?>" style="text-decoration:none;color:black">
             <div class="card mb-3">
@@ -271,7 +258,7 @@ if ($interval->invert) {
                 <div class="card-body">
                     <div class="card_text d-flex justify-content-between">
                         <p class="card-title"><b><?= $cause->cause_heading?></b></p>
-                        <p class="text-muted"> <?= $daysLeft > 0 ? $daysLeft . ' days' : 'Expired' ?>left</p>
+                        <p class="text-muted"> <?= $cause->days_left > 0 ? $cause->days_left . ' days' : 'Expired' ?>left</p>
                     </div>
                     <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" -->
                     <div class="d-flex justify-content-between align-items-center">
