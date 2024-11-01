@@ -363,7 +363,7 @@
     <?php if (!empty($fundraisers)): ?>
         <?php foreach ($fundraisers as $fundraiser): ?>
             <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
-            <a href="<?= base_url('/helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
+            <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
                 <div class="card h-100 w-100 fixed-card">
                     <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top fixed-card-img" alt="no image">
                     
@@ -375,14 +375,23 @@
                             <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                         </div>
                         
-                        <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
+                        <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
                         <div class="progress mb-2">
-                          <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+            <?php
+              // Calculate progress percentage
+              $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+              ?>
+              <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
                         
                         <div class="d-flex align-items-center mt-auto">
-                        <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
-                            <i class="bi bi-share ms-2"></i>
+                        <?php if ($fundraiser->days_left > 0 &&(!$fundraiser->hide_donation_button)) :?>
+        <!-- Donate Button -->
+        <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+        <i class="bi bi-share ms-2"></i>
+        <?php endif; ?>
+            
+                           
                         </div>
                     </div>
                 </div>
@@ -400,7 +409,11 @@ function setCauseId(causeId) {
 }
 </script>
 
-
+<?php if ($this->session->flashdata('error')) : ?>
+    <div class="alert alert-danger">
+        <?= $this->session->flashdata('error'); ?>
+    </div>
+<?php endif; ?>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Add click event listeners to each filter button for active class toggle

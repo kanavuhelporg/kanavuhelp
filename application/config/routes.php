@@ -68,4 +68,4 @@ $route['abouts'] = 'kanavuhelp/abouts';
 $route['logout'] = 'kanavuhelp/logout';
 $route['helpus/(:num)'] = 'kanavuhelp/helpus/$1';
 $route['processDonation'] = 'kanavuhelp/processDonation';
-$route['myFundraisers'] = 'kanavuhelp/myFundraisers';
+$route['myFundraisers'] = 'kanavuhelp/user_causes';

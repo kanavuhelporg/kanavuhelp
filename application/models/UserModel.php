@@ -58,7 +58,28 @@ class UserModel extends CI_Model
 		
 		return $result;
 	}
-	
+	// UserModel.php
+public function get_user_causes($user_id)
+{
+    $this->db->where('user_id', $user_id);  // Adjust 'user_id' to match your database field name
+    $query = $this->db->get('individualform'); // Replace with your table name
+    return $query->result();
+}
+
+public function is_transaction_id_exists($transaction_id) {
+    $this->db->where('transactionid', $transaction_id);
+    $query = $this->db->get('donation_for_cause'); // Replace 'donations' with your actual table name for transactions
+
+    return $query->num_rows() > 0;
+}
+
+	// UserModel.php
+public function update_raised_amount($fundraiser_id, $raised_amount) {
+    $this->db->set('raised_amount', 'raised_amount + ' . (float)$raised_amount, FALSE);
+    $this->db->where('id', $fundraiser_id);
+    return $this->db->update('individualform');  // Adjust table name if needed
+}
+
 	public function getCausesByUserId($user_id) {
 		$this->db->select('f.*');
 		$this->db->from('individualform f');
@@ -93,6 +114,15 @@ public function get_category()
 // 		return false;
 // 	}
 // }
+//no of supporters
+public function count_supporters($fundraiser_id) {
+    $this->db->select('user_id')
+             ->from('donation_for_cause')
+             ->where('cause_id', $fundraiser_id)
+             ->group_by('user_id');
+    return $this->db->count_all_results();
+}
+
 public function get_fundraiser_details($fundraiser_id) {
 	// Query the database to get the fundraiser details by ID
 	$this->db->where('id', $fundraiser_id);
