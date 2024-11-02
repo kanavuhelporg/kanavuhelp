@@ -63,6 +63,10 @@
             <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" >
             <div id="mailerr" class="text-danger"></div>
           </div>
+          <?php if ($this->session->flashdata('error')): ?>
+    <script>alert("<?= $this->session->flashdata('error'); ?>");</script>
+<?php endif; ?>
+
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1" name="exampleInputPassword1">
@@ -82,23 +86,19 @@ function registerValidate() {
     var name = document.register.exampleInputName.value.trim(); // Trim the input value
     var email = document.register.exampleInputEmail1.value.trim(); // Trim the input value
     var password = document.register.exampleInputPassword1.value.trim(); // Trim the input value
-}
+
 
     // Validate name
-    if (name === "") {
-        var namesms = "Name must be filled out";
-        document.getElementById("nameerr").innerHTML = namesms;
+    if (name.length < 3) {
+        document.getElementById("nameerr").innerHTML = "Name must be at least 3 characters long";
         return false;
-    } else {
+    }  else {
         document.getElementById("nameerr").innerHTML = "";
     }
 
     // Validate email
-    if (email === "") {
-        var emailsms = "Email must be filled out";
-        document.getElementById("mailerr").innerHTML = emailsms;
-        return false;
-    } else if (!/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)) {
+    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(email)) {
         document.getElementById("mailerr").innerHTML = "You have entered an invalid email address";
         return false;
     } else {
@@ -106,19 +106,18 @@ function registerValidate() {
     }
 
     // Validate password
-    if (password === "") {
-        var passwordsms = "Password must be filled out";
-        document.getElementById("passworderr").innerHTML = passwordsms;
+    var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%?&]).{5,10}$/;
+    
+    if (!passwordPattern.test(password)) {
+        document.getElementById("passworderr").innerHTML = "Password must be 5-10 characters long, with at least one letter, one digit, and one special character";
         return false;
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/.test(password)) {
-        document.getElementById("passworderr").innerHTML = "Password does not match the criteria";
-        return false;
-    } else {
+    } 
+    else {
         document.getElementById("passworderr").innerHTML = "";
     }
 
     return true;// Submit the form if all validations pass
-
+}
 </script>
     </body>
     </html>

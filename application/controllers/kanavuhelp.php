@@ -197,21 +197,29 @@ public function myhelps() {
 }
 
     
-    public function registeration()
-    {
-        $data['name'] = $this->input->post('exampleInputName');
-        $data['email'] = $this->input->post('exampleInputEmail1');
-        $data['password'] = $this->input->post('exampleInputPassword1');
-        $this->load->model('UserModel');
-        $response = $this->UserModel->store1($data);
-        if ($response == true) {
-            // echo '<script>alert("Succesfully registered")</script>';
+public function registeration() {
+    $data['name'] = $this->input->post('exampleInputName');
+    $data['email'] = $this->input->post('exampleInputEmail1');
+    $data['password'] = $this->input->post('exampleInputPassword1');
+
+    $this->load->model('UserModel');
+
+    // Check if email already exists
+    if ($this->UserModel->isEmailExists($data['email'])) {
+        // Set flash message for the next page load
+        $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
+        redirect('kanavuhelp/register'); // Redirects to the registration page
+    } else {
+        $response = $this->UserModel->register($data);
+        if ($response) {
             $this->load->view('login');
         } else {
             echo 'Failed to register';
         }
-
     }
+}
+
+    
     public function userLogin()
     {
         $postData = $this->input->post(null, true);
@@ -366,7 +374,7 @@ public function user_causes() {
 		$response = $this->UserModel->store($data);
 		if ($response == true) {
 			echo '<script>alert("Succesfully registered")</script>';
-			$this->load->view('donate.php');
+            redirect('kanavuhelp/donate');
 
 		} else {
 			echo 'Failed to register';
