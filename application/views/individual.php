@@ -989,31 +989,35 @@
   </div>
 
   <script>
+    // Copy selected category to readonly input field
     function copySelection() {
-        // Get the selected option's text
-        var selectedText = document.getElementById("category").options[document.getElementById("category").selectedIndex].text;
-        // Set it in the readonly input field
+        const selectedText = document.getElementById("category").options[document.getElementById("category").selectedIndex].text;
         document.getElementById("form_selected_text").value = selectedText;
     }
 
+    // Open a modal by ID
     function openModal(modalId) {
         document.getElementById(modalId).style.display = "block";
     }
 
+    // Close a modal by ID
     function closeModal(modalId) {
         document.getElementById(modalId).style.display = "none";
     }
 
+    // Event listener for opening OTP modal
     document.getElementById("openModalBtn1").addEventListener("click", function () {
         openModal("myModal1");
     });
 
+    // Close modal on 'x' button click
     document.querySelectorAll(".close").forEach(function (closeBtn) {
         closeBtn.addEventListener("click", function () {
             closeModal(closeBtn.closest('.modal').id);
         });
     });
 
+    // OTP input field navigation
     const inputs = document.querySelectorAll(".otp-field > input");
     inputs.forEach((input, index) => {
         input.addEventListener("input", () => {
@@ -1029,6 +1033,7 @@
         });
     });
 
+    // Verify OTP and navigate to Step 2 if valid
     document.getElementById("verifyButton").addEventListener("click", function () {
         const otp = Array.from(inputs).map(input => input.value).join("");
         
@@ -1041,18 +1046,32 @@
         }
     });
 
+    // Resend OTP functionality
     document.querySelector(".resend a").addEventListener("click", function (event) {
         event.preventDefault();
         alert("OTP Resend functionality goes here.");
     });
 
+    // Function to navigate between form steps
     const navigateToFormStep = (stepNumber) => {
         document.querySelectorAll(".form-step").forEach((step) => {
             step.classList.add("d-none");
         });
         document.getElementById("step-" + stepNumber).classList.remove("d-none");
+
+        // Update progress bar for active step
+        document.querySelectorAll(".form-stepper-list").forEach((stepElem, index) => {
+            if (index < stepNumber) {
+                stepElem.classList.remove("form-stepper-unfinished");
+                stepElem.classList.add("form-stepper-active");
+            } else {
+                stepElem.classList.remove("form-stepper-active");
+                stepElem.classList.add("form-stepper-unfinished");
+            }
+        });
     };
 
+    // Navigate form steps on button click
     document.querySelectorAll(".btn-navigate-form-step").forEach((btn) => {
         btn.addEventListener("click", () => {
             const stepNumber = parseInt(btn.getAttribute("step_number"));
@@ -1071,13 +1090,13 @@
 
         if (coverImage && causeHeading && causeDescription) {
             alert("Form is ready to be submitted for approval.");
-            // Add any submission logic here, like sending data to the server
-            document.querySelector("form").submit(); // Uncomment if you want to proceed with form submission
+            document.querySelector("#individualform").submit(); // Proceed with form submission
         } else {
             alert("Please complete all required fields.");
         }
     });
 </script>
+
 
 <div class="footer">
 <footer class="footer mt-auto py-3">
