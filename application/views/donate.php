@@ -340,22 +340,22 @@
 
   </div>
   <div class="mx-auto text-center mt-8">
-  <div class="category-buttons">
+    <div class="category-buttons">
   <!-- "All" button -->
-  <button
+    <button
       class="filter-btn active inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
       data-filter="all">All</button>
 
-  <?php if (!empty($category)): ?>
+    <?php if (!empty($category)): ?>
       <?php foreach ($category as $cat): ?>
           <button
               class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
               data-filter="<?= htmlspecialchars($cat->name, ENT_QUOTES) ?>"><?= htmlspecialchars($cat->name, ENT_QUOTES) ?></button>
       <?php endforeach; ?>
-  <?php else: ?>
+    <?php else: ?>
       <p>No categories available at the moment.</p>
-  <?php endif; ?>
-</div>
+    <?php endif; ?>
+  </div>
 
 <!-- Fundraiser Cards with Fixed Size -->
 <div class="container mt-5">
@@ -414,41 +414,41 @@ function setCauseId(causeId) {
         <?= $this->session->flashdata('error'); ?>
     </div>
 <?php endif; ?>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Add click event listeners to each filter button for active class toggle
-        document.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove 'active' class from all buttons
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
+  $(document).ready(function () {
+    $('.filter-btn').click(function () {
+      var category = $(this).data('filter');
 
-                // Add 'active' class to the clicked button
-                button.classList.add('active');
-
-                // Get selected category
-                const selectedCategory = button.getAttribute('data-filter');
-
-                // Select all fundraiser cards
-                const cards = document.querySelectorAll('.card-container');
-
-                // Loop through each card and display based on category match
-                cards.forEach(card => {
-                    const cardCategory = card.getAttribute('data-category');
-
-                    if (selectedCategory === 'all' || selectedCategory === cardCategory) {
-                        // Show card if category matches or if "All" is selected
-                        card.style.display = 'block';
-                    } else {
-                        // Hide card if category doesn't match
-                        card.style.display = 'none';
-                    }
-                });
+      $.ajax({
+        url: "<?= site_url('DonateController/filterCategory') ?>",
+        type: "POST",
+        data: { category: category },
+        dataType: "json",
+        success: function (response) {
+          $('#donationList').empty(); // Clear current content
+          if (response.length > 0) {
+            $.each(response, function (index, donation) {
+              // Append each donation item to the donation list
+              $('#donationList').append(
+                '<div class="donation-card">' +
+                '<h4>' + donation.title + '</h4>' +
+                '<p>' + donation.description + '</p>' +
+                '</div>'
+              );
             });
-        });
+          } else {
+            $('#donationList').append('<p>No donations available for this category.</p>');
+          }
+        },
+        error: function () {
+          alert("Error fetching data. Please try again.");
+        }
+      });
     });
+  });
 </script>
+
 
   <div class="footer">
       <footer class="footer mt-auto py-3">

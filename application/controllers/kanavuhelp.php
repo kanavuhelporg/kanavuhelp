@@ -1,5 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+class DonateController extends CI_Controller {
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('DonateModel');
+    }
+}
 
 class kanavuhelp extends CI_Controller
 {
@@ -293,6 +299,20 @@ public function registeration() {
         }
     }
 }
+public function filterCategory() {
+        $category = $this->input->post('category');
+
+        // Fetch data based on category
+        if ($category == 'all') {
+            $data = $this->DonateModel->getAllDonations();
+        } else {
+            $data = $this->DonateModel->getDonationsByCategory($category);
+        }
+
+        echo json_encode($data);
+    }
+
+
 // causes by user id
 public function user_causes() {
     // Check session for user ID

@@ -1,4 +1,14 @@
 <?php
+class DonateModel extends CI_Model {
+    public function getAllDonations() {
+        return $this->db->get('donation_for_cause')->result(); // Replace 'donations' with your table name
+    }
+
+    public function getDonationsByCategory($category) {
+        return $this->db->get_where('donation_for_cause', ['category' => $category])->result(); // Replace 'category' with the actual column name
+    }
+}
+
 class UserModel extends CI_Model
 {
 	// public function store($data)
