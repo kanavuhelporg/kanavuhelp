@@ -19,7 +19,12 @@ class UserModel extends CI_Model
 //         return false; // Return false if user does not exist or password doesn't match
 //     }
 // }
-	public function store1($data)
+public function isEmailExists($email) {
+	$this->db->where('email', $email);
+	$query = $this->db->get('user'); // assuming 'user' is your table name
+	return $query->num_rows() > 0;
+}
+	public function register($data)
 	{
 		$this->db->insert('user', $data);
 		return true;
