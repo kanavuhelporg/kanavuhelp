@@ -34,10 +34,13 @@
             height: 40px;
             margin-left: 10px;
         }
-        .logo{
-            margin-top:100px;
-            margin-left:50px;
-        }
+        .logo {
+    margin-top: 100px;
+    margin-left: 50px;
+    max-width: 100%; /* Ensures the image scales down */
+    height: auto; /* Keeps the aspect ratio */
+}
+
    </style>
 
 

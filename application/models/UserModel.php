@@ -29,6 +29,47 @@ class UserModel extends CI_Model
 //         return false; // Return false if user does not exist or password doesn't match
 //     }
 // }
+
+//user name from userid in individudal form table
+public function get_user_name_by_cause_id($cause_id) {
+    $this->db->select('user.name');
+    $this->db->from('individualform');
+    $this->db->join('user', 'individualform.user_id = user.id');
+    $this->db->where('individualform.id', $cause_id);
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+        return $query->row()->name;
+    } else {
+        return 'Guest'; // Default value if no user found for this cause
+    }
+}
+
+//top donars
+public function get_top_donors_by_cause($cause_id, $limit = 3) {
+	$this->db->select('user.name, donation_for_cause.amount');
+	$this->db->from('donation_for_cause');
+	$this->db->join('user', 'donation_for_cause.user_id = user.id');
+	$this->db->where('donation_for_cause.cause_id', $cause_id);
+	$this->db->order_by('donation_for_cause.amount', 'DESC');
+	$this->db->limit($limit);
+	
+	$query = $this->db->get();
+	return $query->result();
+}
+
+public function get_top_fifteen_donors_by_cause($cause_id, $limit = 15,$offset = 3) {
+	$this->db->select('user.name, donation_for_cause.amount');
+	$this->db->from('donation_for_cause');
+	$this->db->join('user', 'donation_for_cause.user_id = user.id');
+	$this->db->where('donation_for_cause.cause_id', $cause_id);
+	$this->db->order_by('donation_for_cause.amount', 'DESC');
+	$this->db->limit($limit, $offset);
+	
+	$query = $this->db->get();
+	return $query->result();
+}
+
 public function isEmailExists($email) {
 	$this->db->where('email', $email);
 	$query = $this->db->get('user'); // assuming 'user' is your table name
@@ -99,7 +140,7 @@ public function update_raised_amount($fundraiser_id, $raised_amount) {
 		$this->db->select('f.*');
 		$this->db->from('individualform f');
 		$this->db->where('f.user_id', $user_id); // Match the logged-in user's donations
-		//$this->db->order_by('d.created_at', 'DESC'); // Optionally order by the donation date
+		$this->db->order_by('d.created_at', 'DESC'); // Optionally order by the donation date
 		
 		// Fetch the results
 		$result = $this->db->get()->result();
@@ -111,10 +152,11 @@ public function update_raised_amount($fundraiser_id, $raised_amount) {
 	}
 	
 	public function get_cause_details()
-	{
-		$query = $this->db->get('individualform');
-		return $query->result();
-	}
+{
+    $this->db->order_by('created_at', 'DESC'); // Order by 'create_at' in descending order (newest first)
+    $query = $this->db->get('individualform');
+    return $query->result();
+}
 public function get_category()
 {
 	$query=$this->db->get('category');

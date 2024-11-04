@@ -140,7 +140,11 @@ class kanavuhelp extends CI_Controller
     
 public function myhelps() {
     if (!$this->session->userdata('userId')) {
-        redirect('login');
+        echo "<script>
+                alert('You must be logged in to view My Helps page');
+                window.location.href = '" . base_url('login') . "';
+              </script>";
+        exit;
     }
 
     // Debugging: Check if the userId is available in the session
@@ -193,10 +197,16 @@ public function myhelps() {
     $fundraiser_details->hide_donation_button = $fundraiser_details->raised_amount >= $fundraiser_details->amount;
     // Get the number of supporters
     $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
+$username=$this->UserModel->get_user_name_by_cause_id($fundraiser_id);
 
+$topdonars=$this->UserModel->get_top_donors_by_cause($fundraiser_id);
+$topdonars15=$this->UserModel->get_top_fifteen_donors_by_cause($fundraiser_id);
     // Pass data to the view
     $fundraiser_details->days_left = $days_left;
     $fundraiser_details->supporters_count = $supporters_count;
+    $fundraiser_details->username=$username;
+    $fundraiser_details->topdonars=$topdonars;
+    $fundraiser_details->topdonars15=$topdonars15;
     $data['fundraiser'] = $fundraiser_details;
     $data['is_logged_in'] = $this->session->userdata('userId') !== null;
     $this->load->view('helpus', $data);
@@ -224,7 +234,15 @@ public function registeration() {
         }
     }
 }
-
+public function get_user_name($user_id) {
+    // Load the User model
+    $this->load->model('UserModel');
+    
+    // Fetch the user name using the model
+    $user_name = $this->UserModel->get_user_name_by_id($user_id);
+    
+    return $user_name;
+}
     
     public function userLogin()
     {

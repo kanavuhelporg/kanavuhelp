@@ -392,45 +392,69 @@
             <div class="card p-3" style="background-color: #fff0f0; border-radius: 10px; border: none; width: 100%; max-width: 600px; margin: 0 auto;">
                 <h5 style="font-weight: bold;">Top Donors</h5>
                 <ul class="list-group" style="list-style-type: none; padding: 0;">
-                    <!-- Donor 1 -->
-                    <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
-                        <div class="d-flex align-items-center">
-                            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                                D
+               
+                  <?php foreach ($fundraiser->topdonars as $donor): ?>
+                        <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
+                            <div class="d-flex align-items-center">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                                    <?= substr($donor->name, 0, 1); ?>
+                                </div>
+                                <span style="margin-left: 10px;"><?= htmlspecialchars($donor->name); ?></span>
                             </div>
-                            <span style="margin-left: 10px;">Dineshwaran</span>
-                        </div>
-                        <span style="font-weight: bold;">Rs.10,000</span>
+                            <span style="font-weight: bold;">Rs.<?= number_format($donor->amount); ?></span>
+                        </li>
+                    <?php endforeach; ?>
+                    <!-- Hidden section for top 15 donors -->
+                    <div id="additional-donors" style="display: none;">
+                        <?php foreach ($fundraiser->topdonars15 as $donor): ?>
+                            <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
+                                <div class="d-flex align-items-center">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                                        <?= substr($donor->name, 0, 1); ?>
+                                    </div>
+                                    <span style="margin-left: 10px;"><?= htmlspecialchars($donor->name); ?></span>
+                                </div>
+                                <span style="font-weight: bold;">Rs.<?= number_format($donor->amount); ?></span>
+                            </li>
+                        <?php endforeach; ?>
+                    </div>
+                    <!-- Toggle Links -->
+                    <li class="text-center" id="show-more" style="padding: 10px 0;">
+                        <a href="javascript:void(0);" style="color: red; text-decoration: none;" onclick="toggleDonors(true)">Show more <span>&#x25BC;</span></a>
+                    </li>
+                    <li class="text-center" id="show-less" style="padding: 10px 0; display: none;">
+                        <a href="javascript:void(0);" style="color: red; text-decoration: none;" onclick="toggleDonors(false)">Show less <span>&#x25B2;</span></a>
                     </li>
 
-                    <!-- Donor 2 -->
-                    <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
-                        <div class="d-flex align-items-center">
-                            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                                K
-                            </div>
-                            <span style="margin-left: 10px;">Kamaraj</span>
-                        </div>
-                        <span style="font-weight: bold;">Rs.5,000</span>
-                    </li>
-
-                    <!-- Show more -->
-                    <li class="text-center" style="padding: 10px 0;">
-                        <a href="#" style="color: red; text-decoration: none;">Show more <span>&#x25BC;</span></a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
             </div>
+            <script>
+function toggleDonors(showMore) {
+    const additionalDonors = document.getElementById('additional-donors');
+    const showMoreLink = document.getElementById('show-more');
+    const showLessLink = document.getElementById('show-less');
 
+    if (showMore) {
+        additionalDonors.style.display = 'block';
+        showMoreLink.style.display = 'none';
+        showLessLink.style.display = 'block';
+    } else {
+        additionalDonors.style.display = 'none';
+        showMoreLink.style.display = 'block';
+        showLessLink.style.display = 'none';
+    }
+}
+</script>
     <div class="row mt-4" >
     <!-- Created by Section -->
     <div class="col-md-3 col-sm-12justify-content-start d-flex  mb-3 mb-md-0" >
         <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px; ">
             <p style="margin: 0;">Created by</p>
-            <strong style="font-size: 14px;"><?= $this->session->userdata('userName') ?></strong>
+            <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->username) ?></strong>
         </div>
     </div>
 
@@ -464,8 +488,8 @@ function setCauseId(causeId) {
           <div class="row text-center">
             <div class="col-12">
               <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
-                <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
+                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
                 <a class="footer-lable lable" href="#">Terms of Use</a>
                 <a class="footer-lable lable" href="#">Privacy Policy</a>
               </div>
@@ -502,7 +526,7 @@ function setCauseId(causeId) {
       </div>
       <div class="modal-body">
         <!-- Donation Form -->
-        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
+        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
     <!-- Hidden fields to store cause ID and user ID -->
     <input type="hidden" name="cause_id" id="cause_id" value="">
     <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
@@ -603,7 +627,49 @@ function setCauseId(causeId) {
 </script>
 
 
+<script>
+function validateForm() {
+    // Validate Name (minimum 3 characters)
+    const name = document.getElementById('name').value.trim();
+    if (name.length < 3) {
+        alert("Name must be at least 3 characters long.");
+        return false;
+    }
 
+    // Validate Email
+    const email = document.getElementById('email').value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+
+    // Validate Amount (decimal)
+    const amount = document.getElementById('amount').value.trim();
+    if (isNaN(amount) || parseFloat(amount) <= 0) {
+        alert("Please enter a valid amount in decimal format.");
+        return false;
+    }
+
+    // Validate Phone Number (10 digits, starts with 6, 7, 8, or 9)
+    const phone = document.getElementById('phone').value.trim();
+    const phonePattern = /^[6-9]\d{9}$/;
+    if (!phonePattern.test(phone)) {
+        alert("Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9.");
+        return false;
+    }
+
+    // Validate Transaction ID (12 digits)
+    const transactionId = document.getElementById('transactionid').value.trim();
+    const transactionPattern = /^\d{12}$/;
+    if (!transactionPattern.test(transactionId)) {
+        alert("Transaction ID must be exactly 12 digits.");
+        return false;
+    }
+
+    return true; // If all validations pass
+}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

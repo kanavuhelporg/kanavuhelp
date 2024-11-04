@@ -499,7 +499,7 @@ function setCauseId(causeId) {
       </div>
       <div class="modal-body">
         <!-- Donation Form -->
-        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
+        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
     <!-- Hidden fields to store cause ID and user ID -->
     <input type="hidden" name="cause_id" id="cause_id" value="">
     <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
@@ -525,7 +525,7 @@ function setCauseId(causeId) {
     </div>
 
     <!-- Name -->
-    <div class="form-group ms-4">
+    <div cladss="form-group ms-4">
       <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
     </div>
 
@@ -598,7 +598,49 @@ function setCauseId(causeId) {
     donationModal.querySelector('form').reset();
   });
 </script>
+<script>
+function validateForm() {
+    // Validate Name (minimum 3 characters)
+    const name = document.getElementById('name').value.trim();
+    if (name.length < 3) {
+        alert("Name must be at least 3 characters long.");
+        return false;
+    }
 
+    // Validate Email
+    const email = document.getElementById('email').value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+
+    // Validate Amount (decimal)
+    const amount = document.getElementById('amount').value.trim();
+    if (isNaN(amount) || parseFloat(amount) <= 0) {
+        alert("Please enter a valid amount in decimal format.");
+        return false;
+    }
+
+    // Validate Phone Number (10 digits, starts with 6, 7, 8, or 9)
+    const phone = document.getElementById('phone').value.trim();
+    const phonePattern = /^[6-9]\d{9}$/;
+    if (!phonePattern.test(phone)) {
+        alert("Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9.");
+        return false;
+    }
+
+    // Validate Transaction ID (12 digits)
+    const transactionId = document.getElementById('transactionid').value.trim();
+    const transactionPattern = /^\d{12}$/;
+    if (!transactionPattern.test(transactionId)) {
+        alert("Transaction ID must be exactly 12 digits.");
+        return false;
+    }
+
+    return true; // If all validations pass
+}
+</script>
 
 
 

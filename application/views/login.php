@@ -93,7 +93,7 @@
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Remember me <a href="#" class="atag"
-                                style="margin-left:410px;">Forgot password?</a></label>
+                                style="margin-left:25px;">Forgot password?</a></label>
                     </div>
                     <button type="submit" name="save" class="btn border btnsignin">Sign in</button>
                     <p style="margin-top:10px;text-align:center;font-size:15px;"><strong>--------------OR-------------</strong></p>
