@@ -69,3 +69,4 @@ $route['logout'] = 'kanavuhelp/logout';
 $route['helpus/(:num)'] = 'kanavuhelp/helpus/$1';
 $route['processDonation'] = 'kanavuhelp/processDonation';
 $route['myFundraisers'] = 'kanavuhelp/user_causes';
+$route['data/fetch/(:any)'] = 'data/fetch/$1';

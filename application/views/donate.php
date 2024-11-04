@@ -339,10 +339,10 @@
     <p class="mt-3 "><b>"Fundraising is the gentle art of teaching the joy of giving."</b></p>
 
   </div>
-  <div class="mx-auto text-center mt-8">
-    <div class="category-buttons">
+  <!-- <div class="mx-auto text-center mt-8">
+    <div class="category-buttons"> -->
   <!-- "All" button -->
-    <button
+    <!-- <button
       class="filter-btn active inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
       data-filter="all">All</button>
 
@@ -355,7 +355,12 @@
     <?php else: ?>
       <p>No categories available at the moment.</p>
     <?php endif; ?>
-  </div>
+  </div> -->
+  <h1>Select a Category</h1>
+    <button onclick="location.href='<?php echo site_url('data/fetch/medical'); ?>'">Medical</button>
+    <button onclick="location.href='<?php echo site_url('data/fetch/education'); ?>'">Education</button>
+    <button onclick="location.href='<?php echo site_url('data/fetch/crisis'); ?>'">Crisis</button>
+    <button onclick="location.href='<?php echo site_url('data/fetch/agriculture'); ?>'">Agriculture</button>
 
 <!-- Fundraiser Cards with Fixed Size -->
 <div class="container mt-5">
