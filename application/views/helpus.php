@@ -498,16 +498,16 @@ function setCauseId(causeId) {
         </div>
         <div class="social-icons d-flex justify-content-center text-center my-2">
           <a href="https://www.facebook.com/" target="_blank" class="mx-2">
-            <img src="assets/img/facebook-f.svg" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
+            <img src="<?= base_url('assets/img/facebook-f.svg')?>" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
           </a>
           <a href="https://twitter.com/" target="_blank" class="mx-2">
-            <img src="assets/img/twitter.svg" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
+            <img src="<?= base_url('assets/img/twitter.svg')?>" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
           </a>
           <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
-            <img src="assets/img/linkedin-in.svg" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
+            <img src="<?= base_url('assets/img/linkedin-in.svg')?>" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
           </a>
         </div>
-        <img src="assets/img/footer-secured-card 1.svg" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
+        <img src="<?= base_url('assets/img/footer-secured-card 1.svg')?>" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
           style="max-width: 200px;">
         <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
       </footer>
