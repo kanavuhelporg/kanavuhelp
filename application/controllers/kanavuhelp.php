@@ -133,13 +133,15 @@ class kanavuhelp extends CI_Controller
     
 public function myhelps() {
     if (!$this->session->userdata('userId')) {
-        redirect('login');
+        echo "<script>
+                alert('You must be logged in to view My Helps page');
+                window.location.href = '" . base_url('login') . "';
+              </script>";
+        exit;
     }
 
     // Debugging: Check if the userId is available in the session
     $user_id = $this->session->userdata('userId');
-    echo "Logged in user ID: " . $user_id; // Check if this prints the correct userId
-
     $this->load->model('UserModel');
 
     // Fetch causes created or donated by the logged-in user
@@ -186,10 +188,16 @@ public function myhelps() {
     $fundraiser_details->hide_donation_button = $fundraiser_details->raised_amount >= $fundraiser_details->amount;
     // Get the number of supporters
     $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
+$username=$this->UserModel->get_user_name_by_cause_id($fundraiser_id);
 
+$topdonars=$this->UserModel->get_top_donors_by_cause($fundraiser_id);
+$topdonars15=$this->UserModel->get_top_fifteen_donors_by_cause($fundraiser_id);
     // Pass data to the view
     $fundraiser_details->days_left = $days_left;
     $fundraiser_details->supporters_count = $supporters_count;
+    $fundraiser_details->username=$username;
+    $fundraiser_details->topdonars=$topdonars;
+    $fundraiser_details->topdonars15=$topdonars15;
     $data['fundraiser'] = $fundraiser_details;
     $data['is_logged_in'] = $this->session->userdata('userId') !== null;
     $this->load->view('helpus', $data);
@@ -209,8 +217,19 @@ public function myhelps() {
         } else {
             echo 'Failed to register';
         }
-
     }
+}
+public function get_user_name($user_id) {
+    // Load the User model
+    $this->load->model('UserModel');
+    
+    // Fetch the user name using the model
+    $user_name = $this->UserModel->get_user_name_by_id($user_id);
+    
+    return $user_name;
+}
+    
+
     public function userLogin()
     {
         $postData = $this->input->post(null, true);
@@ -251,7 +270,8 @@ public function myhelps() {
         'amount' => $this->input->post('amount'),
         'end_date' => $this->input->post('end_date'),
         'cause_heading' => $this->input->post('cause_heading'),
-        'cause_description' => $this->input->post('cause_description')
+        'cause_description' => $this->input->post('cause_description'),
+        'user_id'=>$this->session->userdata('userId')
     ];
 
     // File upload configuration
@@ -294,19 +314,38 @@ public function user_causes() {
         redirect('login');
     }
 
-    // Retrieve fundraisers and prepare days_left calculation
-    $data['fundraisers'] = $this->UserModel->get_user_causes($user_id);
-    $data['is_logged_in'] = true;
+    // Initialize data array
+    $data = ['is_logged_in' => true];
 
-    foreach ($data['fundraisers'] as $fundraiser) {
-        $end_date = new DateTime($fundraiser->end_date);
-        $current_date = new DateTime();
-        $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
-        $fundraiser->days_left = $days_left;
+    try {
+        // Attempt to retrieve fundraisers from the database
+        $data['fundraisers'] = $this->UserModel->get_user_causes($user_id);
+
+        // Check if any fundraisers were retrieved
+        if (!$data['fundraisers']) {
+            show_404(); // Show 404 if no data is returned (optional)
+            return;
+        }
+
+        // Calculate days left for each fundraiser
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
+            $fundraiser->days_left = $days_left;
+        }
+
+    } catch (Exception $e) {
+        // Handle the error if the database cannot be reached
+        log_message('error', 'Database error: ' . $e->getMessage());
+        show_404(); // Display a 404 error page
+        return;
     }
 
+    // Load the view with data if everything is successful
     $this->load->view('myFundraisers', $data);
 }
+
 
 
     public function charityform_data()
