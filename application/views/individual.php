@@ -57,6 +57,15 @@
   background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
   padding: (1rem) var(1rem);
 }
+.navbar-toggler {
+    padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid #4f373766;
+    border-radius: .25rem;
+    transition: box-shadow .15s ease-in-out;
+}
   #navbarscroll {
     margin-top: 17px;
     margin-bottom: 10px;
@@ -113,7 +122,7 @@
     left: 0;
     right: 0;
     background-color: #EB2D32;
-    margin-top: 88px;
+    /* margin-top: 88px; */
     color: #f0f0f0;
   }
 
@@ -134,7 +143,7 @@
     border-right: 3px solid #fff;
   }
 
-  /* .footer1 a {
+  .footer1 a {
     margin-left: 20x;
   }
 
@@ -155,10 +164,10 @@
     
 } */
 
-.footer h5 {
+/* .footer h5 {
     margin-bottom: 15px;
     text-align: center;
-}
+} */
 
 /* .footer1 {
     text-align: center;
@@ -171,9 +180,9 @@
     text-decoration: none;
 }
 
-.footer1 a:hover {
+/* .footer1 a:hover {
     text-decoration: underline;
-}
+} */
 
 .social-icons {
     margin-top: 10px;
@@ -189,10 +198,10 @@
     margin-bottom: 15px;
 }
 
-.footer p {
-    margin-bottom: 0; /* Prevent extra space below the copyright text */
+/* .footer p {
+    margin-bottom: 0; 
     font-size: 14px;
-}
+} */
 
   @media (min-width: 993px) {
     .img-fluid {
@@ -877,6 +886,7 @@
                 </div>
                 <div class="col-md-8">
     <select name="category" id="category" class="form-control" onchange="copySelection()">
+        <option value="Select">Select</option>
         <option value="Medical">Medical</option>
         <option value="Crisis">Crisis</option>
         <option value="Education">Education</option>
@@ -976,7 +986,8 @@
     <h2>Elaborate Cause Details</h2>
     <input type="file" id="cover_image" name="cover_image" accept="image/*" required>
     <input type="text" id="cause_heading" name="cause_heading" placeholder="Heading" required>
-    <textarea id="cause_description" name="cause_description" placeholder="Description" required></textarea>
+    <!-- <textarea id="cause_description" name="cause_description" placeholder="Description" required></textarea> -->
+    <textarea id="cause_description" name="cause_description" class="form-control" rows="6" placeholder="Enter description here"></textarea>
     <div>
       <button class="button btn-navigate-form-step" type="button" step_number="2">Back</button>
       <button class="button submit-btn" type="submit" id="submitApprovalButton">Submit for Approval</button>
