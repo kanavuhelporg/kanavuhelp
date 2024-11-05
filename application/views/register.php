@@ -50,7 +50,7 @@
     <div class="row">
     <div class="col-sm-6 logi1">
           <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhome') ?>" >
-            <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help"style="">
+            <img class="logo" src="<?= base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help"style="">
           </a><br><br>
             <h2 style="margin-bottom:30px;margin-left:50px;">Register</h2>
             <!-- <p>Don't have an Account?<span style="color:red; text-decoration:underline;margin-left:10px;">Create Now</span></p> -->
@@ -79,7 +79,7 @@
         </div>
             <!-- Right side image column -->
             <div class="col-md-6 d-none d-md-block">
-                <img src="<?php echo base_url('/assets/img/right.svg'); ?>" alt="Right image" class="right-image">
+                <img src="<?= base_url('/assets/img/right.svg'); ?>" alt="Right image" class="right-image">
             </div>
         </div>
         </div>

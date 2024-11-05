@@ -117,7 +117,8 @@ public function isEmailExists($email) {
 	// UserModel.php
 public function get_user_causes($user_id)
 {
-    $this->db->where('user_id', $user_id);  // Adjust 'user_id' to match your database field name
+    $this->db->where('user_id', $user_id); 
+	$this->db->order_by('created_at', 'DESC'); // Adjust 'user_id' to match your database field name
     $query = $this->db->get('individualform'); // Replace with your table name
     return $query->result();
 }

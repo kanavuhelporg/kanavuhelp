@@ -149,8 +149,6 @@ public function myhelps() {
 
     // Debugging: Check if the userId is available in the session
     $user_id = $this->session->userdata('userId');
-    echo "Logged in user ID: " . $user_id; // Check if this prints the correct userId
-
     $this->load->model('UserModel');
 
     // Fetch causes created or donated by the logged-in user
@@ -284,7 +282,8 @@ public function get_user_name($user_id) {
         'amount' => $this->input->post('amount'),
         'end_date' => $this->input->post('end_date'),
         'cause_heading' => $this->input->post('cause_heading'),
-        'cause_description' => $this->input->post('cause_description')
+        'cause_description' => $this->input->post('cause_description'),
+        'user_id'=>$this->session->userdata('userId')
     ];
 
     // File upload configuration
@@ -339,19 +338,38 @@ public function user_causes() {
         redirect('login');
     }
 
-    // Retrieve fundraisers and prepare days_left calculation
-    $data['fundraisers'] = $this->UserModel->get_user_causes($user_id);
-    $data['is_logged_in'] = true;
+    // Initialize data array
+    $data = ['is_logged_in' => true];
 
-    foreach ($data['fundraisers'] as $fundraiser) {
-        $end_date = new DateTime($fundraiser->end_date);
-        $current_date = new DateTime();
-        $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
-        $fundraiser->days_left = $days_left;
+    try {
+        // Attempt to retrieve fundraisers from the database
+        $data['fundraisers'] = $this->UserModel->get_user_causes($user_id);
+
+        // Check if any fundraisers were retrieved
+        if (!$data['fundraisers']) {
+            show_404(); // Show 404 if no data is returned (optional)
+            return;
+        }
+
+        // Calculate days left for each fundraiser
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
+            $fundraiser->days_left = $days_left;
+        }
+
+    } catch (Exception $e) {
+        // Handle the error if the database cannot be reached
+        log_message('error', 'Database error: ' . $e->getMessage());
+        show_404(); // Display a 404 error page
+        return;
     }
 
+    // Load the view with data if everything is successful
     $this->load->view('myFundraisers', $data);
 }
+
 
 
     public function charityform_data()

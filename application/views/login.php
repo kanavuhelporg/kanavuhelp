@@ -70,7 +70,7 @@
             <!-- Left side form column -->
             <div class="col-md-6 logi1">
                 <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>">
-                    <img class="logo" src="<?php echo base_url('/assets/img/kanavu_help.png'); ?>" alt="Kanavu Help"
+                    <img class="logo" src="<?= base_url('/assets/img/kanavu_help.png') ?>" alt="Kanavu Help"
                         style="">
                 </a>
                 <br><br><br>
@@ -98,15 +98,15 @@
                     <button type="submit" name="save" class="btn border btnsignin">Sign in</button>
                     <p style="margin-top:10px;text-align:center;font-size:15px;"><strong>--------------OR-------------</strong></p>
                     <div class="social-icons" style="text-align:center;">continue with
-                        <img src="<?php echo base_url('/assets/img/vector.png'); ?>" alt="noimage">
-                        <img src="<?php echo base_url('/assets/img/icons8-google 1.png'); ?>" alt="noimage">
+                        <img src="<?= base_url('/assets/img/vector.png') ?>" alt="noimage">
+                        <img src="<?= base_url('/assets/img/icons8-google 1.png')c ?>" alt="noimage">
                     </div>
                 </form>
             </div>
 
             <!-- Right side image column -->
             <div class="col-md-6 d-none d-md-block">
-                <img src="<?php echo base_url('/assets/img/right.svg'); ?>" alt="Right image" class="right-image">
+                <img src="<?= base_url('/assets/img/right.svg') ?>" alt="Right image" class="right-image">
             </div>
         </div>
     </div>
