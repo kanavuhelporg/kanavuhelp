@@ -818,7 +818,7 @@
   <div class="donate_img mt-5 pt-4">
   <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
   </div>
-  <div class="mx-auto text-center mt-8 md:ml-20 ">
+  <!--<div class="mx-auto text-center mt-8 md:ml-20 ">
     <button id="myDonationsButton" 
       class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 text-red-500 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data"
       onclick="window.location.href='<?= base_url('/individual') ?>'">
@@ -830,7 +830,7 @@
       Charities
 </button>
 
-</div>
+</div>-->
 <div class="container-fluid box mt-auto py-3">
     <div class="row box1 mt-auto py-3">
         <div class="container-fluid mt-5">
@@ -886,23 +886,18 @@
                 </div>
                 <div class="col-md-8">
     <select name="category" id="category" class="form-control" onchange="copySelection()">
-        <option value="Select">Select</option>
-        <option value="Medical">Medical</option>
-        <option value="Crisis">Crisis</option>
-        <option value="Education">Education</option>
-        <option value="Emergency">Emergency</option>
-        <option value="Events">Events</option>
+        <option >select</option>
         <?php foreach ($result as $row) { ?>
-            <option value="<?php echo $row['id']; ?>" <?php echo set_select('category', $row['id'], False); ?>>
-                <?php echo $row['raising_fund_for']; ?>
+            <option value="<?php echo $row['name']; ?>" <?php echo set_select('category', $row['name'], False); ?>>
+                <?php echo $row['name']; ?>
             </option>
         <?php } ?>
     </select>
 </div>
             </div>
 
-            <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
-            <input type="number" id="age" name="age" class="form-control" placeholder="Age" required>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Name of beneficiary" required>
+            <input type="number" id="age" name="age" class="form-control" placeholder="Age of benificiary" required>
             <input type="text" id="location" name="location" class="form-control" placeholder="Location" required>
             <input type="email" id="email" name="email" class="form-control" placeholder="Mail Id*" required>
             <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
@@ -912,7 +907,7 @@
             </div>
         </section>
 
-        <!-- OTP Modal -->
+      <!--  <!-- OTP Modal -->
         <div id="myModal1" class="modal">
             <div class="modal-content">
               <span class="close">&times;</span>

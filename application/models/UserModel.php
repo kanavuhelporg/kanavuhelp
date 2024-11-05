@@ -66,6 +66,11 @@ public function isEmailExists($email) {
 	$query = $this->db->get('user'); // assuming 'user' is your table name
 	return $query->num_rows() > 0;
 }
+
+public function get_all_categories() {
+	$query = $this->db->get('category'); // Replace 'category' with your actual table name
+	return $query->result_array();
+}
 	public function register($data)
 	{
 		$this->db->insert('user', $data);
