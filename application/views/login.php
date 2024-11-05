@@ -99,7 +99,7 @@
                     <p style="margin-top:10px;text-align:center;font-size:15px;"><strong>--------------OR-------------</strong></p>
                     <div class="social-icons" style="text-align:center;">continue with
                         <img src="<?= base_url('/assets/img/vector.png') ?>" alt="noimage">
-                        <img src="<?= base_url('/assets/img/icons8-google 1.png')c ?>" alt="noimage">
+                        <img src="<?= base_url('/assets/img/icons8-google 1.png') ?>" alt="noimage">
                     </div>
                 </form>
             </div>
