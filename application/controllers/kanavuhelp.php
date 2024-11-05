@@ -1,11 +1,4 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
-class DonateController extends CI_Controller {
-    public function __construct() {
-        parent::__construct();
-        $this->load->model('DonateModel');
-    }
-}
 
 class kanavuhelp extends CI_Controller
 {
@@ -211,21 +204,15 @@ $topdonars15=$this->UserModel->get_top_fifteen_donors_by_cause($fundraiser_id);
 }
 
     
-public function registeration() {
-    $data['name'] = $this->input->post('exampleInputName');
-    $data['email'] = $this->input->post('exampleInputEmail1');
-    $data['password'] = $this->input->post('exampleInputPassword1');
-
-    $this->load->model('UserModel');
-
-    // Check if email already exists
-    if ($this->UserModel->isEmailExists($data['email'])) {
-        // Set flash message for the next page load
-        $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
-        redirect('kanavuhelp/register'); // Redirects to the registration page
-    } else {
-        $response = $this->UserModel->register($data);
-        if ($response) {
+    public function registeration()
+    {
+        $data['name'] = $this->input->post('exampleInputName');
+        $data['email'] = $this->input->post('exampleInputEmail1');
+        $data['password'] = $this->input->post('exampleInputPassword1');
+        $this->load->model('UserModel');
+        $response = $this->UserModel->store1($data);
+        if ($response == true) {
+            // echo '<script>alert("Succesfully registered")</script>';
             $this->load->view('login');
         } else {
             echo 'Failed to register';
@@ -242,6 +229,7 @@ public function get_user_name($user_id) {
     return $user_name;
 }
     
+
     public function userLogin()
     {
         $postData = $this->input->post(null, true);
@@ -316,18 +304,6 @@ public function get_user_name($user_id) {
         }
     }
 }
-public function filterCategory() {
-        $category = $this->input->post('category');
-
-        // Fetch data based on category
-        if ($category == 'all') {
-            $data = $this->DonateModel->getAllDonations();
-        } else {
-            $data = $this->DonateModel->getDonationsByCategory($category);
-        }
-
-        echo json_encode($data);
-    }
 
 
 // causes by user id
@@ -430,7 +406,7 @@ public function user_causes() {
 		$response = $this->UserModel->store($data);
 		if ($response == true) {
 			echo '<script>alert("Succesfully registered")</script>';
-            redirect('kanavuhelp/donate');
+			$this->load->view('donate.php');
 
 		} else {
 			echo 'Failed to register';
