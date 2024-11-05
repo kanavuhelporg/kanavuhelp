@@ -54,7 +54,18 @@ class kanavuhelp extends CI_Controller
               </script>";
         exit;
         }
-        $this->load->view('individual.php');
+        
+//category for individudal form
+else{
+    // Load model if not already loaded
+    $this->load->model('UserModel');
+
+    // Retrieve categories from the database
+    $data['result'] = $this->UserModel->get_all_categories();
+
+    // Load the view and pass the categories
+    $this->load->view('individual.php', $data);
+}
     }
     public function charity()
     {
@@ -241,6 +252,7 @@ public function get_user_name($user_id) {
     return $user_name;
 }
     
+
 
     public function userLogin()
     {

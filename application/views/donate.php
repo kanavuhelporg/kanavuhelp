@@ -376,7 +376,7 @@
                         <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="card-text text-muted mb-0">by <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
+                            <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
                             <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                         </div>
                         
