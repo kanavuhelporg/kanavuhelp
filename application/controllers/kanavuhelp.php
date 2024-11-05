@@ -27,7 +27,6 @@ class kanavuhelp extends CI_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('cookie');
-
     }
     public function index()
     {
@@ -52,7 +51,7 @@ class kanavuhelp extends CI_Controller
                 alert('You must be logged in to access Start A Fundraiser page.');
                 window.location.href = '" . base_url('login') . "';
               </script>";
-        exit;
+            exit;
         }
         $this->load->view('individual.php');
     }
@@ -61,7 +60,8 @@ class kanavuhelp extends CI_Controller
         $this->load->view('charity.php');
     }
 
-    public function processDonation() {
+    public function processDonation()
+    {
         // Load the model where the donation logic will be handled
         $this->load->model('UserModel');
 
@@ -99,7 +99,6 @@ class kanavuhelp extends CI_Controller
             // Redirect to a success page or show a success message
             $this->UserModel->update_raised_amount($cause_id, $amount);
             redirect('myhelps');
-           
         } else {
             // Redirect or display an error message
             redirect('error');
@@ -110,11 +109,11 @@ class kanavuhelp extends CI_Controller
     {
         $data['category'] = $this->UserModel->get_category();
         $data['fundraisers'] = $this->UserModel->get_cause_details();
-    
+
         // Check if user is logged in using CodeIgniter session
         $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
         $data['is_logged_in'] = $is_logged_in;
-    
+
         // Loop through each fundraiser and calculate days_left
         foreach ($data['fundraisers'] as $fundraiser) {
             $end_date = new DateTime($fundraiser->end_date);
@@ -126,30 +125,31 @@ class kanavuhelp extends CI_Controller
             $fundraiser->days_left = $days_left;
             $fundraiser->hide_donation_button = $fundraiser->raised_amount >= $fundraiser->amount;
         }
-        
-    
+
+
         $this->load->view('donate', $data); // Note: no need for '.php' in the view name
     }
-    
-public function myhelps() {
-    if (!$this->session->userdata('userId')) {
-        echo "<script>
+
+    public function myhelps()
+    {
+        if (!$this->session->userdata('userId')) {
+            echo "<script>
                 alert('You must be logged in to view My Helps page');
                 window.location.href = '" . base_url('login') . "';
               </script>";
-        exit;
+            exit;
+        }
+
+        // Debugging: Check if the userId is available in the session
+        $user_id = $this->session->userdata('userId');
+        $this->load->model('UserModel');
+
+        // Fetch causes created or donated by the logged-in user
+        $data['causes'] = $this->UserModel->getCausesDonationByUserId($user_id);
+
+        // Load the view and pass the causes data
+        $this->load->view('myhelps.php', $data);
     }
-
-    // Debugging: Check if the userId is available in the session
-    $user_id = $this->session->userdata('userId');
-    $this->load->model('UserModel');
-
-    // Fetch causes created or donated by the logged-in user
-    $data['causes'] = $this->UserModel->getCausesDonationByUserId($user_id);
-
-    // Load the view and pass the causes data
-    $this->load->view('myhelps.php', $data);
-}
 
     public function blogs()
     {
@@ -163,47 +163,47 @@ public function myhelps() {
     {
         $this->load->view('abouts.php');
     }
-    
+
     public function helpus($fundraiser_id = null)
-{
-    if ($fundraiser_id === null) {
-        show_404();
-        return;
+    {
+        if ($fundraiser_id === null) {
+            show_404();
+            return;
+        }
+
+        $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
+
+        if (!$fundraiser_details) {
+            show_404();
+            return;
+        }
+
+        // Calculate days left (existing code)
+        $end_date = new DateTime($fundraiser_details->end_date);
+        $current_date = new DateTime();
+        $days_left = $end_date->diff($current_date)->days . 'days left';
+        if ($end_date < $current_date) {
+            $days_left = 'expired';
+        }
+        $fundraiser_details->hide_donation_button = $fundraiser_details->raised_amount >= $fundraiser_details->amount;
+        // Get the number of supporters
+        $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
+        $username = $this->UserModel->get_user_name_by_cause_id($fundraiser_id);
+
+        $topdonars = $this->UserModel->get_top_donors_by_cause($fundraiser_id);
+        $topdonars15 = $this->UserModel->get_top_fifteen_donors_by_cause($fundraiser_id);
+        // Pass data to the view
+        $fundraiser_details->days_left = $days_left;
+        $fundraiser_details->supporters_count = $supporters_count;
+        $fundraiser_details->username = $username;
+        $fundraiser_details->topdonars = $topdonars;
+        $fundraiser_details->topdonars15 = $topdonars15;
+        $data['fundraiser'] = $fundraiser_details;
+        $data['is_logged_in'] = $this->session->userdata('userId') !== null;
+        $this->load->view('helpus', $data);
     }
 
-    $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
 
-    if (!$fundraiser_details) {
-        show_404();
-        return;
-    }
-
-    // Calculate days left (existing code)
-    $end_date = new DateTime($fundraiser_details->end_date); 
-    $current_date = new DateTime(); 
-    $days_left = $end_date->diff($current_date)->days.'days left';
-    if ($end_date < $current_date) {
-        $days_left = 'expired';
-    }
-    $fundraiser_details->hide_donation_button = $fundraiser_details->raised_amount >= $fundraiser_details->amount;
-    // Get the number of supporters
-    $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
-$username=$this->UserModel->get_user_name_by_cause_id($fundraiser_id);
-
-$topdonars=$this->UserModel->get_top_donors_by_cause($fundraiser_id);
-$topdonars15=$this->UserModel->get_top_fifteen_donors_by_cause($fundraiser_id);
-    // Pass data to the view
-    $fundraiser_details->days_left = $days_left;
-    $fundraiser_details->supporters_count = $supporters_count;
-    $fundraiser_details->username=$username;
-    $fundraiser_details->topdonars=$topdonars;
-    $fundraiser_details->topdonars15=$topdonars15;
-    $data['fundraiser'] = $fundraiser_details;
-    $data['is_logged_in'] = $this->session->userdata('userId') !== null;
-    $this->load->view('helpus', $data);
-}
-
-    
     public function registeration()
     {
         $data['name'] = $this->input->post('exampleInputName');
@@ -218,17 +218,17 @@ $topdonars15=$this->UserModel->get_top_fifteen_donors_by_cause($fundraiser_id);
             echo 'Failed to register';
         }
     }
-}
-public function get_user_name($user_id) {
-    // Load the User model
-    $this->load->model('UserModel');
-    
-    // Fetch the user name using the model
-    $user_name = $this->UserModel->get_user_name_by_id($user_id);
-    
-    return $user_name;
-}
-    
+    public function get_user_name($user_id)
+    {
+        // Load the User model
+        $this->load->model('UserModel');
+
+        // Fetch the user name using the model
+        $user_name = $this->UserModel->get_user_name_by_id($user_id);
+
+        return $user_name;
+    }
+
 
     public function userLogin()
     {
@@ -245,7 +245,6 @@ public function get_user_name($user_id) {
 
             // Redirect to 'kanavuhome' after successful login
             redirect(base_url('kanavuhome'));
-
         } else {
             // If login fails, reload the login page with an error message
             $this->load->view('login.php');
@@ -253,98 +252,98 @@ public function get_user_name($user_id) {
         }
     }
     public function individualform_data()
-{
-    // Load required model and library
-    $this->load->model('UserModel');
-    $this->load->library('upload');
+    {
+        // Load required model and library
+        $this->load->model('UserModel');
+        $this->load->library('upload');
 
-    // Retrieve form data
-    $data = [
-        'category' => $this->input->post('category'),
-        'name' => $this->input->post('name'),
-        'email' => $this->input->post('email'),
-        'phone' => $this->input->post('phone'),
-        'age' => $this->input->post('age'),
-        'location' => $this->input->post('location'),
-        'form_option' => $this->input->post('form_option'),
-        'amount' => $this->input->post('amount'),
-        'end_date' => $this->input->post('end_date'),
-        'cause_heading' => $this->input->post('cause_heading'),
-        'cause_description' => $this->input->post('cause_description'),
-        'user_id'=>$this->session->userdata('userId')
-    ];
+        // Retrieve form data
+        $data = [
+            'category' => $this->input->post('category'),
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'phone' => $this->input->post('phone'),
+            'age' => $this->input->post('age'),
+            'location' => $this->input->post('location'),
+            'form_option' => $this->input->post('form_option'),
+            'amount' => $this->input->post('amount'),
+            'end_date' => $this->input->post('end_date'),
+            'cause_heading' => $this->input->post('cause_heading'),
+            'cause_description' => $this->input->post('cause_description'),
+            'user_id' => $this->session->userdata('userId')
+        ];
 
-    // File upload configuration
-    $config['upload_path'] = './assets/individualform_img/';
-    $config['allowed_types'] = 'gif|jpg|png|svg';
-    $config['max_size'] = 1024;
-    $config['max_width'] = 1024;
-    $config['max_height'] = 768;
-    $this->upload->initialize($config);
+        // File upload configuration
+        $config['upload_path'] = './assets/individualform_img/';
+        $config['allowed_types'] = 'gif|jpg|png|svg';
+        $config['max_size'] = 1024;
+        $config['max_width'] = 1024;
+        $config['max_height'] = 768;
+        $this->upload->initialize($config);
 
-    // Handle file upload
-    if (!$this->upload->do_upload('cover_image')) {
-        $error = $this->upload->display_errors();
-        echo "<script>alert('Upload error: $error');</script>";
-        redirect('kanavuhelp/individual');
-    } else {
-        // File upload successful
-        $file_data = $this->upload->data();
-        $data['cover_image'] = $file_data['file_name'];
-
-        // Insert data into the database
-        $response = $this->UserModel->store3($data);
-
-        if ($response) {
-            echo '<script>alert("Successfully registered");</script>';
-            redirect('kanavuhelp/donate'); // Ensure this route points to the donate page
-        } else {
-            echo '<script>alert("Failed to register");</script>';
+        // Handle file upload
+        if (!$this->upload->do_upload('cover_image')) {
+            $error = $this->upload->display_errors();
+            echo "<script>alert('Upload error: $error');</script>";
             redirect('kanavuhelp/individual');
+        } else {
+            // File upload successful
+            $file_data = $this->upload->data();
+            $data['cover_image'] = $file_data['file_name'];
+
+            // Insert data into the database
+            $response = $this->UserModel->store3($data);
+
+            if ($response) {
+                echo '<script>alert("Successfully registered");</script>';
+                redirect('kanavuhelp/donate'); // Ensure this route points to the donate page
+            } else {
+                echo '<script>alert("Failed to register");</script>';
+                redirect('kanavuhelp/individual');
+            }
         }
     }
-}
 
 
-// causes by user id
-public function user_causes() {
-    // Check session for user ID
-    $user_id = $this->session->userdata('userId');
-    if (!$user_id) {
-        redirect('login');
-    }
+    // causes by user id
+    public function user_causes()
+    {
+        // Check session for user ID
+        $user_id = $this->session->userdata('userId');
+        if (!$user_id) {
+            redirect('login');
+        }
 
-    // Initialize data array
-    $data = ['is_logged_in' => true];
+        // Initialize data array
+        $data = ['is_logged_in' => true];
 
-    try {
-        // Attempt to retrieve fundraisers from the database
-        $data['fundraisers'] = $this->UserModel->get_user_causes($user_id);
+        try {
+            // Attempt to retrieve fundraisers from the database
+            $data['fundraisers'] = $this->UserModel->get_user_causes($user_id);
 
-        // Check if any fundraisers were retrieved
-        if (!$data['fundraisers']) {
-            show_404(); // Show 404 if no data is returned (optional)
+            // Check if any fundraisers were retrieved
+            if (!$data['fundraisers']) {
+                show_404(); // Show 404 if no data is returned (optional)
+                return;
+            }
+
+            // Calculate days left for each fundraiser
+            foreach ($data['fundraisers'] as $fundraiser) {
+                $end_date = new DateTime($fundraiser->end_date);
+                $current_date = new DateTime();
+                $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
+                $fundraiser->days_left = $days_left;
+            }
+        } catch (Exception $e) {
+            // Handle the error if the database cannot be reached
+            log_message('error', 'Database error: ' . $e->getMessage());
+            show_404(); // Display a 404 error page
             return;
         }
 
-        // Calculate days left for each fundraiser
-        foreach ($data['fundraisers'] as $fundraiser) {
-            $end_date = new DateTime($fundraiser->end_date);
-            $current_date = new DateTime();
-            $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
-            $fundraiser->days_left = $days_left;
-        }
-
-    } catch (Exception $e) {
-        // Handle the error if the database cannot be reached
-        log_message('error', 'Database error: ' . $e->getMessage());
-        show_404(); // Display a 404 error page
-        return;
+        // Load the view with data if everything is successful
+        $this->load->view('myFundraisers', $data);
     }
-
-    // Load the view with data if everything is successful
-    $this->load->view('myFundraisers', $data);
-}
 
 
 
@@ -397,29 +396,27 @@ public function user_causes() {
         }
     }
     public function contact_us()
-	{
-		$data['full-name'] = $this->input->post('full-name');
-		$data['email'] = $this->input->post('email');
-		$data['phone'] = $this->input->post('phone');
-		$data['message'] = $this->input->post('message');
-		$this->load->model('UserModel');
-		$response = $this->UserModel->store($data);
-		if ($response == true) {
-			echo '<script>alert("Succesfully registered")</script>';
-			$this->load->view('donate.php');
-
-		} else {
-			echo 'Failed to register';
-		}
-	}
+    {
+        $data['full-name'] = $this->input->post('full-name');
+        $data['email'] = $this->input->post('email');
+        $data['phone'] = $this->input->post('phone');
+        $data['message'] = $this->input->post('message');
+        $this->load->model('UserModel');
+        $response = $this->UserModel->store($data);
+        if ($response == true) {
+            echo '<script>alert("Succesfully registered")</script>';
+            $this->load->view('donate.php');
+        } else {
+            echo 'Failed to register';
+        }
+    }
     public function logout()
-{
-    // Clear session data
-    $this->session->unset_userdata('userId');
-    $this->session->unset_userdata('userName');
-    
-    // Redirect to the login page
-    redirect(base_url('/login'));
-}
+    {
+        // Clear session data
+        $this->session->unset_userdata('userId');
+        $this->session->unset_userdata('userName');
 
+        // Redirect to the login page
+        redirect(base_url('/login'));
+    }
 }
