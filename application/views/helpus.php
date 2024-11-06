@@ -526,7 +526,7 @@ function setCauseId(causeId) {
       </div>
       <div class="modal-body">
         <!-- Donation Form -->
-        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" >
     <!-- Hidden fields to store cause ID and user ID -->
     <input type="hidden" name="cause_id" id="cause_id" value="">
     <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
@@ -552,26 +552,30 @@ function setCauseId(causeId) {
     </div>
 
     <!-- Name -->
+    <!-- Name -->
     <div class="form-group ms-4">
       <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
+    
+      <p id="error1" style="color:red"></p>
     </div>
 
     <!-- Email -->
-    <div class="form-group ms-4">
+   <div class="form-group ms-4">
       <input type="email" name="emailid" class="form-control" id="email" placeholder="Enter your email*" style="width:92%;" required>
+      <p id="error2" style="color:red"></p>
     </div>
 
     <!-- Phone Number -->
     <div class="form-group ms-4">
       <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Enter your phone number*" style="width:92%;" required>
+      <p id="error3" style="color:red"></p>
     </div>
 
     <!-- Transaction ID -->
     <div class="form-group ms-4">
-      <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter The Transaction Id*" style="width:92%;" required>
+      <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
+      <p id="error4" style="color:red"></p>
     </div>
-
-    <!-- Continue Button -->
     <div class="d-flex justify-content-center">
       <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
         Continue to Pay ₹
@@ -627,23 +631,42 @@ function setCauseId(causeId) {
 </script>
 
 
+
 <script>
-function validateForm() {
+document.getElementById('donationForm').onsubmit = function(event) {
+
+    event.preventDefault(); // Prevent default form submission
+    
+    document.getElementById("error1").innerHTML="";
+  document.getElementById("error2").innerHTML="";
+  document.getElementById("error3").innerHTML ="";
+  document.getElementById("error4").innerHTML ="";
     // Validate Name (minimum 3 characters)
     const name = document.getElementById('name').value.trim();
-    if (name.length < 3) {
-        alert("Name must be at least 3 characters long.");
-        return false;
-    }
+const nameRegex = /^[A-Za-z]+$/;
+
+if (name.length < 3) {
+    document.getElementById("error1").innerHTML = "Name must be at least 3 characters long.";
+    return false;
+} else if (!nameRegex.test(name)) {
+    document.getElementById("error1").innerHTML = "Name must contain only alphabetic characters.";
+    return false;
+} else {
+    document.getElementById("error1").innerHTML = ""; // Clear error if input is valid
+    
+}
+
 
     // Validate Email
     const email = document.getElementById('email').value.trim();
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-        alert("Please enter a valid email address.");
+        document.getElementById("error2").innerHTML ="Please enter a valid email address.";
         return false;
     }
-
+else{
+  document.getElementById("error2").innerHTML ="";
+}
     // Validate Amount (decimal)
     const amount = document.getElementById('amount').value.trim();
     if (isNaN(amount) || parseFloat(amount) <= 0) {
@@ -655,20 +678,52 @@ function validateForm() {
     const phone = document.getElementById('phone').value.trim();
     const phonePattern = /^[6-9]\d{9}$/;
     if (!phonePattern.test(phone)) {
-        alert("Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9.");
+        document.getElementById("error3").innerHTML ="Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9.";
         return false;
     }
-
-    // Validate Transaction ID (12 digits)
-    const transactionId = document.getElementById('transactionid').value.trim();
-    const transactionPattern = /^\d{12}$/;
-    if (!transactionPattern.test(transactionId)) {
-        alert("Transaction ID must be exactly 12 digits.");
-        return false;
-    }
-
-    return true; // If all validations pass
+else{
+  document.getElementById("error3").innerHTML ="";
 }
+
+   // Check if the transaction ID already exists message is present on page load
+
+// Validate transaction ID format
+const transactionId = document.getElementById('transactionid').value.trim();
+const transactionPattern = /^\d{12}$/;
+if (!transactionPattern.test(transactionId)) {
+    document.getElementById("error4").innerHTML = "Transaction ID must be exactly 12 digits.";
+    return false;
+}
+
+    
+   
+    
+    // Clear any previous error message
+    error4.innerHTML = "";
+    
+    // Collect form data
+    const formData = new FormData(this);
+    
+    // Send AJAX request
+    fetch('/kanavuhelp/processDonation', {  // Make sure to use the correct path
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'error') {
+            // Display error message in the error4 element
+            error4.innerHTML = data.message;
+        } else if (data.status === 'success') {
+            // Redirect to success page if donation is successful
+            window.location.href = data.redirect;
+        }
+    })
+    .catch(error => {
+        error4.innerHTML = "An unexpected error occurred. Please try again.";
+    });
+};
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
