@@ -87,11 +87,8 @@ else{
         $currency_type = $this->input->post('currency_type');
         if ($this->UserModel->is_transaction_id_exists($transactionid)) {
             // If it exists, show an error message
-            echo "<script>
-                alert('The transaction id already exist.');
-                window.location.href = '" . base_url('donate') . "';
-              </script>";
-            exit; // Redirect to the donation page or any relevant page
+            echo json_encode(['status' => 'error', 'message' => 'The transaction ID already exists.']);
+            return; // Redirect to the donation page or any relevant page
         }
         // Prepare data to insert
         $data = array(
@@ -107,12 +104,10 @@ else{
 
         // Call the model function to save the donation
         if ($this->UserModel->saveDonation($data)) {
-            // Redirect to a success page or show a success message
-            $this->UserModel->update_raised_amount($cause_id, $amount);
-            redirect('myhelps');
+            $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
+            echo json_encode(['status' => 'success', 'redirect' => base_url('myhelps')]);
         } else {
-            // Redirect or display an error message
-            redirect('error');
+            echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your donation.']);
         }
     }
 
