@@ -527,26 +527,32 @@ function setCauseId(causeId) {
       </select>
 
       <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
+     
     </div>
-
+  
     <!-- Name -->
-    <div cladss="form-group ms-4">
+    <div class="form-group ms-4">
       <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
+    
+      <p id="error1" style="color:red"></p>
     </div>
 
     <!-- Email -->
-    <div class="form-group ms-4">
+   <div class="form-group ms-4">
       <input type="email" name="emailid" class="form-control" id="email" placeholder="Enter your email*" style="width:92%;" required>
+      <p id="error2" style="color:red"></p>
     </div>
 
     <!-- Phone Number -->
     <div class="form-group ms-4">
       <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Enter your phone number*" style="width:92%;" required>
+      <p id="error3" style="color:red"></p>
     </div>
 
     <!-- Transaction ID -->
     <div class="form-group ms-4">
-      <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter The Transaction Id*" style="width:92%;" required>
+      <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
+      <p id="error4" style="color:red"></p>
     </div>
 
     <!-- Continue Button -->
@@ -604,47 +610,97 @@ function setCauseId(causeId) {
   });
 </script>
 <script>
-function validateForm() {
-    // Validate Name (minimum 3 characters)
-    const name = document.getElementById('name').value.trim();
-    if (name.length < 3) {
-        alert("Name must be at least 3 characters long.");
-        return false;
-    }
+document.getElementById('donationForm').onsubmit = function(event) {
 
-    // Validate Email
-    const email = document.getElementById('email').value.trim();
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-        alert("Please enter a valid email address.");
-        return false;
-    }
+event.preventDefault(); // Prevent default form submission
 
-    // Validate Amount (decimal)
-    const amount = document.getElementById('amount').value.trim();
-    if (isNaN(amount) || parseFloat(amount) <= 0) {
-        alert("Please enter a valid amount in decimal format.");
-        return false;
-    }
+document.getElementById("error1").innerHTML="";
+document.getElementById("error2").innerHTML="";
+document.getElementById("error3").innerHTML ="";
+document.getElementById("error4").innerHTML ="";
+// Validate Name (minimum 3 characters)
+const name = document.getElementById('name').value.trim();
+const nameRegex = /^[A-Za-z]+$/;
 
-    // Validate Phone Number (10 digits, starts with 6, 7, 8, or 9)
-    const phone = document.getElementById('phone').value.trim();
-    const phonePattern = /^[6-9]\d{9}$/;
-    if (!phonePattern.test(phone)) {
-        alert("Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9.");
-        return false;
-    }
+if (name.length < 3) {
+document.getElementById("error1").innerHTML = "Name must be at least 3 characters long.";
+return false;
+} else if (!nameRegex.test(name)) {
+document.getElementById("error1").innerHTML = "Name must contain only alphabetic characters.";
+return false;
+} else {
+document.getElementById("error1").innerHTML = ""; // Clear error if input is valid
 
-    // Validate Transaction ID (12 digits)
-    const transactionId = document.getElementById('transactionid').value.trim();
-    const transactionPattern = /^\d{12}$/;
-    if (!transactionPattern.test(transactionId)) {
-        alert("Transaction ID must be exactly 12 digits.");
-        return false;
-    }
-
-    return true; // If all validations pass
 }
+
+
+// Validate Email
+const email = document.getElementById('email').value.trim();
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!emailPattern.test(email)) {
+    document.getElementById("error2").innerHTML ="Please enter a valid email address.";
+    return false;
+}
+else{
+document.getElementById("error2").innerHTML ="";
+}
+// Validate Amount (decimal)
+const amount = document.getElementById('amount').value.trim();
+if (isNaN(amount) || parseFloat(amount) <= 0) {
+    alert("Please enter a valid amount in decimal format.");
+    return false;
+}
+
+// Validate Phone Number (10 digits, starts with 6, 7, 8, or 9)
+const phone = document.getElementById('phone').value.trim();
+const phonePattern = /^[6-9]\d{9}$/;
+if (!phonePattern.test(phone)) {
+    document.getElementById("error3").innerHTML ="Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9.";
+    return false;
+}
+else{
+document.getElementById("error3").innerHTML ="";
+}
+
+// Check if the transaction ID already exists message is present on page load
+
+// Validate transaction ID format
+const transactionId = document.getElementById('transactionid').value.trim();
+const transactionPattern = /^\d{12}$/;
+if (!transactionPattern.test(transactionId)) {
+document.getElementById("error4").innerHTML = "Transaction ID must be exactly 12 digits.";
+return false;
+}
+
+
+
+
+// Clear any previous error message
+error4.innerHTML = "";
+
+// Collect form data
+const formData = new FormData(this);
+
+// Send AJAX request
+fetch('/kanavuhelp/processDonation', {  // Make sure to use the correct path
+    method: 'POST',
+    body: formData
+})
+.then(response => response.json())
+.then(data => {
+    if (data.status === 'error') {
+        // Display error message in the error4 element
+        error4.innerHTML = data.message;
+    } else if (data.status === 'success') {
+        // Redirect to success page if donation is successful
+        window.location.href = data.redirect;
+    }
+})
+.catch(error => {
+    error4.innerHTML = "An unexpected error occurred. Please try again.";
+});
+};
+
 </script>
 
 
