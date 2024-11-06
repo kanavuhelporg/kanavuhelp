@@ -356,11 +356,11 @@
       <p>No categories available at the moment.</p>
     <?php endif; ?>
   </div> -->
-  <h1>Select a Category</h1>
+  <!-- <h1>Select a Category</h1>
     <button onclick="location.href='<?php echo site_url('data/fetch/medical'); ?>'">Medical</button>
     <button onclick="location.href='<?php echo site_url('data/fetch/education'); ?>'">Education</button>
     <button onclick="location.href='<?php echo site_url('data/fetch/crisis'); ?>'">Crisis</button>
-    <button onclick="location.href='<?php echo site_url('data/fetch/agriculture'); ?>'">Agriculture</button>
+    <button onclick="location.href='<?php echo site_url('data/fetch/agriculture'); ?>'">Agriculture</button> -->
 
 <!-- Fundraiser Cards with Fixed Size -->
 <div class="container mt-5">
@@ -455,7 +455,7 @@ function setCauseId(causeId) {
 </script>
 
 
-  <div class="footer">
+<div class="footer">
       <footer class="footer mt-auto py-3">
         <div class="container">
           <h5 class="text-center">Kanavu.help</h5>
@@ -472,20 +472,21 @@ function setCauseId(causeId) {
         </div>
         <div class="social-icons d-flex justify-content-center text-center my-2">
           <a href="https://www.facebook.com/" target="_blank" class="mx-2">
-            <img src="assets/img/facebook-f.svg" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
+            <img src="<?= base_url('assets/img/facebook-f.svg')?>" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
           </a>
           <a href="https://twitter.com/" target="_blank" class="mx-2">
-            <img src="assets/img/twitter.svg" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
+            <img src="<?= base_url('assets/img/twitter.svg')?>" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
           </a>
           <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
-            <img src="assets/img/linkedin-in.svg" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
+            <img src="<?= base_url('assets/img/linkedin-in.svg')?>" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
           </a>
         </div>
-        <img src="assets/img/footer-secured-card 1.svg" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
+        <img src="<?= base_url('assets/img/footer-secured-card 1.svg')?>" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
           style="max-width: 200px;">
         <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
       </footer>
     </div>
+
 
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
