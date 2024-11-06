@@ -907,7 +907,7 @@
             </div>
         </section>
 
-      <!--  <!-- OTP Modal -->
+      <!--  <!-- OTP Modal 
         <div id="myModal1" class="modal">
             <div class="modal-content">
               <span class="close">&times;</span>
@@ -941,7 +941,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
 
         <!-- Step 2 Content -->
         <!-- <section id="step-2" class="form-step d-none">
@@ -954,6 +954,12 @@
             <button class="button btn-navigate-form-step" type="button" step_number="1">Back</button>
             <button class="button btn-navigate-form-step" type="button" step_number="3">Continue</button>
         </section> -->
+        <script>
+    document.getElementById("openModalBtn1").addEventListener("click", function () {
+        document.getElementById("step-1").classList.add("d-none");
+        document.getElementById("step-2").classList.remove("d-none");
+    });
+</script>
 
         <!-- Step 3 Content -->
         <section id="step-2" class="form-step d-none" style="border:none;">
@@ -971,11 +977,22 @@
                                     <input type="date" id="end_date" name="end_date" placeholder="End Date*" required>
                                 </div>
                                 <div class="mt-3 d-flex justify-content-center">
-                                    <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="1" style="width: 100px;">Back</button>
-                                    <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="3">Continue</button>
+                                <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="1" style="width: 100px;" onclick="goToSection1()">Back</button>
+                                <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="3" onclick="goToSection3()">Continue</button>
                                 </div>
                             </section>
-
+                            <script>
+    function goToSection1() {
+        // Hide Section 2 and show Section 1
+        document.getElementById("step-2").classList.add("d-none");
+        document.getElementById("step-1").classList.remove("d-none");
+    }
+    function goToSection3() {
+        // Hide Section 2 and show Section 3
+        document.getElementById("step-2").classList.add("d-none");
+        document.getElementById("step-3").classList.remove("d-none");
+    }
+</script>
         <!-- Step 4 Content -->
         <section id="step-3" class="form-step d-none">
     <h2>Elaborate Cause Details</h2>
@@ -984,12 +1001,18 @@
     <!-- <textarea id="cause_description" name="cause_description" placeholder="Description" required></textarea> -->
     <textarea id="cause_description" name="cause_description" class="form-control" rows="6" placeholder="Enter description here"></textarea>
     <div>
-      <button class="button btn-navigate-form-step" type="button" step_number="2">Back</button>
+    <button class="button btn-navigate-form-step" type="button" step_number="2" onclick="goToSection2()">Back</button>
       <button class="button submit-btn" type="submit" id="submitApprovalButton">Submit for Approval</button>
     </div>
 </section>
     </form>
-
+    <script>
+    function goToSection2() {
+        // Hide Section 3 and show Section 2
+        document.getElementById("step-3").classList.add("d-none");
+        document.getElementById("step-2").classList.remove("d-none");
+    }
+</script>
       </div>
     </div>
   </div>
