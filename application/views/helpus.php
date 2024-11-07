@@ -260,6 +260,17 @@
         object-fit: cover; /* Ensures the image fills its container */
     }
     }
+    .donate_btn.no-hover {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+}
+
+.donate_btn.no-hover:hover {
+    background-color: white !important;
+    color: red !important;
+    border: 1px solid red !important;
+}
     </style>
     </head>
 <body>
@@ -371,7 +382,7 @@
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong></p>
            <?php if ($fundraiser->days_left > 0&&(!$fundraiser->hide_donation_button)): ?>
         <!-- Donate Button -->
-        <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+        <a href="#" class="btn donate_btn no-hover" data-toggle="modal" data-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
     <?php endif; ?>
     <?php if ($this->session->flashdata('error')) : ?>
     <div class="alert alert-danger">
@@ -553,17 +564,17 @@ function setCauseId(causeId) {
 
     <!-- Name -->
     <!-- Name -->
-    <div class="form-group ms-4">
+    <!-- <div class="form-group ms-4">
       <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
     
       <p id="error1" style="color:red"></p>
-    </div>
+    </div> -->
 
     <!-- Email -->
-   <div class="form-group ms-4">
+   <!-- <div class="form-group ms-4">
       <input type="email" name="emailid" class="form-control" id="email" placeholder="Enter your email*" style="width:92%;" required>
       <p id="error2" style="color:red"></p>
-    </div>
+    </div> -->
 
     <!-- Phone Number -->
     <div class="form-group ms-4">
@@ -637,42 +648,42 @@ document.getElementById('donationForm').onsubmit = function(event) {
 
     event.preventDefault(); // Prevent default form submission
     
-    document.getElementById("error1").innerHTML="";
-  document.getElementById("error2").innerHTML="";
+  //   document.getElementById("error1").innerHTML="";
+  // document.getElementById("error2").innerHTML="";
   document.getElementById("error3").innerHTML ="";
   document.getElementById("error4").innerHTML ="";
     // Validate Name (minimum 3 characters)
-    const name = document.getElementById('name').value.trim();
-const nameRegex = /^[A-Za-z]+$/;
+//     const name = document.getElementById('name').value.trim();
+// const nameRegex = /^[A-Za-z]+$/;
 
-if (name.length < 3) {
-    document.getElementById("error1").innerHTML = "Name must be at least 3 characters long.";
-    return false;
-} else if (!nameRegex.test(name)) {
-    document.getElementById("error1").innerHTML = "Name must contain only alphabetic characters.";
-    return false;
-} else {
-    document.getElementById("error1").innerHTML = ""; // Clear error if input is valid
+// if (name.length < 3) {
+//     document.getElementById("error1").innerHTML = "Name must be at least 3 characters long.";
+//     return false;
+// } else if (!nameRegex.test(name)) {
+//     document.getElementById("error1").innerHTML = "Name must contain only alphabetic characters.";
+//     return false;
+// } else {
+//     document.getElementById("error1").innerHTML = ""; // Clear error if input is valid
     
-}
+// }
 
 
-    // Validate Email
-    const email = document.getElementById('email').value.trim();
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-        document.getElementById("error2").innerHTML ="Please enter a valid email address.";
-        return false;
-    }
-else{
-  document.getElementById("error2").innerHTML ="";
-}
-    // Validate Amount (decimal)
-    const amount = document.getElementById('amount').value.trim();
-    if (isNaN(amount) || parseFloat(amount) <= 0) {
-        alert("Please enter a valid amount in decimal format.");
-        return false;
-    }
+//     // Validate Email
+//     const email = document.getElementById('email').value.trim();
+//     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     if (!emailPattern.test(email)) {
+//         document.getElementById("error2").innerHTML ="Please enter a valid email address.";
+//         return false;
+//     }
+// else{
+//   document.getElementById("error2").innerHTML ="";
+// }
+//     // Validate Amount (decimal)
+//     const amount = document.getElementById('amount').value.trim();
+//     if (isNaN(amount) || parseFloat(amount) <= 0) {
+//         alert("Please enter a valid amount in decimal format.");
+//         return false;
+//     }
 
     // Validate Phone Number (10 digits, starts with 6, 7, 8, or 9)
     const phone = document.getElementById('phone').value.trim();

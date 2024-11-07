@@ -29,9 +29,20 @@ class kanavuhelp extends CI_Controller
         $this->load->helper('cookie');
     }
     public function index()
-    {
-        $this->load->view('kanavuhome.php');
-    }
+{
+    // Retrieve the top 10 fundraiser data
+    $data['fundraisers'] = $this->UserModel->get_cause_details(10); // Assuming you modify the method to accept a limit
+
+    // Load the view and pass the data
+    $this->load->view('kanavuhome.php', $data);
+}
+public function get_cause_details($limit = 10)
+{
+    $this->kanavu_help->limit($limit);
+    $query = $this->kanavu_help->get('donation_for_cause'); // Replace 'your_table_name' with the actual table name
+    return $query->result();
+}
+
     public function kanavuhome()
     {
         $this->load->view('kanavuhome.php');
@@ -80,8 +91,8 @@ else{
         $cause_id = $this->input->post('cause_id');
         $user_id = $this->input->post('user_id');
         $amount = $this->input->post('amount');
-        $name = $this->input->post('name');
-        $emailid = $this->input->post('emailid');
+        // $name = $this->input->post('name');
+        // $emailid = $this->input->post('emailid');
         $phoneno = $this->input->post('phoneno');
         $transactionid = $this->input->post('transactionid');
         $currency_type = $this->input->post('currency_type');
@@ -95,8 +106,8 @@ else{
             'cause_id' => $cause_id,
             'user_id' => $user_id,
             'amount' => $amount,
-            'name' => $name,
-            'emailid' => $emailid,
+            // 'name' => $name,
+            // 'emailid' => $emailid,
             'phoneno' => $phoneno,
             'transactionid' => $transactionid,
             'currency_type' => $currency_type
