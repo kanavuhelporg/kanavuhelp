@@ -85,9 +85,9 @@
     .imgtext2 strong {
       font-weight: bolder;
     }
-    .donate_btn {
-    margin-right: 10px; /* Custom margin between button and icon */
-}
+    /* .donate_btn {
+    margin-right: 10px; 
+} */
 
 .bi-share {
     font-size: 1.3rem; /* Adjust the size of the share icon */
@@ -189,7 +189,7 @@
 
     .donate_btn {
       border: 1px solid rgba(224, 26, 43, 1);
-      color: rgba(224, 26, 43, 1);
+      /* color: rgba(224, 26, 43, 1); */
       border-radius: 25px;
     }
 
@@ -267,6 +267,18 @@
         object-fit: cover; /* Ensures the image fills its container */
     }
     }
+    .donate_btn.no-hover {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+}
+
+.donate_btn.no-hover:hover {
+    background-color: white !important;
+    color: red !important;
+    border: 1px solid red !important;
+}
+
     </style>
     </head>
 <body>
@@ -356,11 +368,11 @@
       <p>No categories available at the moment.</p>
     <?php endif; ?>
   </div> -->
-  <h1>Select a Category</h1>
+  <!-- <h1>Select a Category</h1>
     <button onclick="location.href='<?php echo site_url('data/fetch/medical'); ?>'">Medical</button>
     <button onclick="location.href='<?php echo site_url('data/fetch/education'); ?>'">Education</button>
     <button onclick="location.href='<?php echo site_url('data/fetch/crisis'); ?>'">Crisis</button>
-    <button onclick="location.href='<?php echo site_url('data/fetch/agriculture'); ?>'">Agriculture</button>
+    <button onclick="location.href='<?php echo site_url('data/fetch/agriculture'); ?>'">Agriculture</button> -->
 
 <!-- Fundraiser Cards with Fixed Size -->
 <div class="container mt-5">
@@ -392,7 +404,8 @@
                         <div class="d-flex align-items-center mt-auto">
                         <?php if ($fundraiser->days_left > 0 &&(!$fundraiser->hide_donation_button)) :?>
         <!-- Donate Button -->
-        <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+        <a href="#" class="btn donate_btn no-hover" data-toggle="modal" data-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+
         <i class="bi bi-share ms-2"></i>
         <?php endif; ?>
             
@@ -455,7 +468,7 @@ function setCauseId(causeId) {
 </script>
 
 
-  <div class="footer">
+<div class="footer">
       <footer class="footer mt-auto py-3">
         <div class="container">
           <h5 class="text-center">Kanavu.help</h5>
@@ -472,20 +485,21 @@ function setCauseId(causeId) {
         </div>
         <div class="social-icons d-flex justify-content-center text-center my-2">
           <a href="https://www.facebook.com/" target="_blank" class="mx-2">
-            <img src="assets/img/facebook-f.svg" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
+            <img src="<?= base_url('assets/img/facebook-f.svg')?>" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
           </a>
           <a href="https://twitter.com/" target="_blank" class="mx-2">
-            <img src="assets/img/twitter.svg" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
+            <img src="<?= base_url('assets/img/twitter.svg')?>" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
           </a>
           <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
-            <img src="assets/img/linkedin-in.svg" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
+            <img src="<?= base_url('assets/img/linkedin-in.svg')?>" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
           </a>
         </div>
-        <img src="assets/img/footer-secured-card 1.svg" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
+        <img src="<?= base_url('assets/img/footer-secured-card 1.svg')?>" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
           style="max-width: 200px;">
         <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
       </footer>
     </div>
+
 
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

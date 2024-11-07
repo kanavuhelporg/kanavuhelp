@@ -748,6 +748,11 @@
     background-color: red !important; /* Force red background */
     border-color: red !important; /* Force red border */
 }
+.error-text {
+    font-size: 0.875em;
+    color: red;
+}
+
 </style>
 
 <body>
@@ -796,21 +801,24 @@
 
                 <!-- User profile or login -->
                 <div class="d-flex align-items-center ms-auto">
-                    <?php if ($this->session->userdata('userId')): ?>
-                        <div class="d-flex align-items-center">
-                            <div class="d-flex align-items-center" id="userProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="<?= base_url('assets/img/Ellipse 12.png') ?>" alt="Profile Image" class="rounded-circle" style="width: 30px; height: 30px;">
-                                <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                            </div>
-                            <ul class="dropdown-menu" aria-labelledby="userProfile">
-                                <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                            </ul>
-                        </div>
-                    <?php else: ?>
-                      <a href="<?= base_url('/login') ?>" class="btn btn-red me-2">Login</a>
-                    <?php endif; ?>
-                    <!-- <a href="<?= base_url('/individual') ?>" class="btn btn-outline-primary me-2">Start a Kanavu</a> -->
+                <?php if ($this->session->userdata('userId')): ?>
+                  <div class="d-flex align-items-center">
+                    <div class="dropdown" id="userProfile">
+                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                         style="width: 30px; height: 30px; border-radius: 50%;">
+                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+                      </div>
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <?php else: ?>
+                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+                  <?php endif; ?>
                 </div>
+        </div>
             </div>
         </div>
     </div>
@@ -834,7 +842,7 @@
 <div class="container-fluid box mt-auto py-3">
     <div class="row box1 mt-auto py-3">
         <div class="container-fluid mt-5">
-            <div class="row align-items-center">
+            <div class="row align-items-center w-100">
                 <!-- Left Column for Image and Text -->
                 <div class="col-md-6 d-flex justify-content-center">
                     <div class="text-center">
@@ -845,177 +853,294 @@
                 </div>
                 <!-- Right Column for Form -->
                 <div class="col-md-6">
-                  <div id="multi-step-form-container mt-auto py-3">
-                  <!-- Form Steps / Progress Bar -->
-                    <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap">
-                    <!-- Step 1 -->
-                      <li class="form-stepper-active text-center form-stepper-list" step="1">
-                        <a class="mx-2">
-                            <span class="form-stepper-circle">
-                                <span>1</span>
-                            </span>
-                        </a>
-                      </li>
-                      <!-- Step 2 -->
-                      <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
-                        <a class="mx-2">
-                            <span class="form-stepper-circle text-muted">
-                                <span>2</span>
-                            </span>
-                        </a>
-                      </li>
-                      <!-- Step 3 -->
-                      <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
-                        <a class="mx-2">
-                            <span class="form-stepper-circle text-muted">
-                                <span>3</span>
-                            </span>
-                        </a>
-                      </li>
-                    </ul>
-                    <!-- Step Wise Form Content -->
-                    <form id="individualform" name="individualform" onsubmit="return individual()" method="post" 
-          action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="row">
-        
-        <!-- Step 1 Content -->
-        <section id="step-1" class="form-step col-12" style="height: 450px;">
-            <h2>Basic Details</h2>
-            <div class="row col-12 my-3">
-                <div class="col-md-4">
-                    <label for="category" class="form-label">I am raising fund for:</label>
-                </div>
-                <div class="col-md-8">
-    <select name="category" id="category" class="form-control" onchange="copySelection()">
-        <option >select</option>
-        <?php foreach ($result as $row) { ?>
-            <option value="<?php echo $row['name']; ?>" <?php echo set_select('category', $row['name'], False); ?>>
-                <?php echo $row['name']; ?>
-            </option>
-        <?php } ?>
-    </select>
-</div>
-            </div>
+                    <div id="multi-step-form-container" class="mt-auto py-3 w-100">
+                        <!-- Form Steps / Progress Bar -->
+                        <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap">
+                            <!-- Step 1 -->
+                            <li class="form-stepper-active text-center form-stepper-list" step="1">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle">
+                                        <span>1</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <!-- Step 2 -->
+                            <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle text-muted">
+                                        <span>2</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <!-- Step 3 -->
+                            <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
+                                <a class="mx-2">
+                                    <span class="form-stepper-circle text-muted">
+                                        <span>3</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- Step Wise Form Content -->
+                        <form id="individualform" name="individualform" onsubmit="return individual()" method="post" 
+                              action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="row w-100">
 
-            <input type="text" id="name" name="name" class="form-control" placeholder="Name of beneficiary" required>
-            <input type="number" id="age" name="age" class="form-control" placeholder="Age of benificiary" required>
-            <input type="text" id="location" name="location" class="form-control" placeholder="Location" required>
-            <input type="email" id="email" name="email" class="form-control" placeholder="Mail Id*" required>
-            <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
+                            <!-- Step 1 Content -->
+                            <section id="step-1" class="form-step col-12" style="height: 450px;">
+    <h2>Basic Details</h2>
+    <div class="row col-12 my-3">
+        <div class="col-md-4">
+            <label for="category" class="form-label">I am raising fund for:</label>
+        </div>
+        <div class="col-md-8">
+            <select name="category" id="category" class="form-control" onchange="copySelection()" required>
+                <option value="">Select</option>
+                <?php foreach ($result as $row) { ?>
+                    <option value="<?php echo $row['name']; ?>" <?php echo set_select('category', $row['name'], False); ?>>
+                        <?php echo $row['name']; ?>
+                    </option>
+                <?php } ?>
+            </select>
+            <span id="category-error" class="error-text text-danger"></span>
+        </div>
+    </div>
 
-            <div class="col-12 text-center mt-3">
-                <button id="openModalBtn1" class="button btn-navigate-form-step" type="button" step_number="1">Continue</button>
-            </div>
-        </section>
+    <input type="text" id="name" name="name" class="form-control" placeholder="Name of beneficiary" required>
+    <span id="name-error" class="error-text text-danger"></span>
 
-      <!--  <!-- OTP Modal 
-        <div id="myModal1" class="modal">
-            <div class="modal-content">
-              <span class="close">&times;</span>
-              <div class="row justify-content-center">
-                <div class="col-12 col-md-6 col-lg-4" style="width:736px;height:530px;">
-                  <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
-                    <div class="card-body p-5 text-center">
-                      <h4><b>Enter OTP to verify your account</b></h4>
-                      <p style="font-size:16px;"><b>Enter OTP to verify your account</b></p>
-                      <img src="<?php echo base_url('/assets/img/Group 55.png'); ?>" alt="No Image"
-                        class="h-auto inline-block" style="width:50px;height:50px;">
-                      <p style="font-size:16px;"><b>We have sent OTP to your email, demo@gmail.com</b></p>
-                      <div class="otp-field mb-4">
-                        <input type="number" />
-                        <input type="number" disabled />
-                        <input type="number" disabled />
-                        <input type="number" disabled />
-                        <input type="number" disabled />
-                        <input type="number" disabled />
-                      </div>
+    <input type="number" id="age" name="age" class="form-control" placeholder="Age of beneficiary" required>
+    <span id="age-error" class="error-text text-danger"></span>
 
-                      <button id="verifyButton" class="button btn-navigate-form-step" step_number="2">
-                        Continue
-                      </button><br><br>
-                      <p class="resend text-muted mb-0" style="font-size:17px;">
-                        <b>Didn’t receive the OTP? </b><br>In case you do not receive the OTP on your email id, please
-                        check your spam/junk folders.<br> <a href=""><b>Resend</b></a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>-->
+    <input type="text" id="location" name="location" class="form-control" placeholder="Location" required>
+    <span id="location-error" class="error-text text-danger"></span>
 
-        <!-- Step 2 Content -->
-        <!-- <section id="step-2" class="form-step d-none">
-            <h2>Beneficiary Details</h2>
-            <input type="text" id="beneficiary_name" name="beneficiary_name" placeholder="Name" required>
-            <input type="number" id="beneficiary_age" name="beneficiary_age" placeholder="Age" required>
-            <input type="text" id="beneficiary_location" name="beneficiary_location" placeholder="Location" required>
-            <input type="tel" id="beneficiary_phone" name="beneficiary_phone" placeholder="Phone Number*" required>
-            
-            <button class="button btn-navigate-form-step" type="button" step_number="1">Back</button>
-            <button class="button btn-navigate-form-step" type="button" step_number="3">Continue</button>
-        </section> -->
-        <script>
+    <input type="email" id="email" name="email" class="form-control" placeholder="Mail Id*" required>
+    <span id="email-error" class="error-text text-danger"></span>
+
+    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
+    <span id="phone-error" class="error-text text-danger"></span>
+
+    <div class="col-12 text-center mt-3">
+        <button id="openModalBtn1" class="button btn-navigate-form-step" style="background-color: red; color: white; border: none;" type="button" step_number="1">Continue</button>
+    </div>
+</section>
+
+<script>
     document.getElementById("openModalBtn1").addEventListener("click", function () {
-        document.getElementById("step-1").classList.add("d-none");
-        document.getElementById("step-2").classList.remove("d-none");
+        // Reset error messages
+        document.querySelectorAll('.error-text').forEach(function (el) {
+            el.innerText = '';
+        });
+
+        // Validation function
+        function validateStep1() {
+            let isValid = true;
+
+            const category = document.getElementById("category").value;
+            const name = document.getElementById("name").value.trim();
+            const age = document.getElementById("age").value;
+            const location = document.getElementById("location").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+
+            if (category === "") {
+                document.getElementById("category-error").innerText = "Please select a category.";
+                isValid = false;
+            }
+            if (name === "") {
+                document.getElementById("name-error").innerText = "Please enter the beneficiary's name.";
+                isValid = false;
+            }
+            if (age === "" || age <= 0) {
+                document.getElementById("age-error").innerText = "Please enter a valid age.";
+                isValid = false;
+            }
+            if (location === "") {
+                document.getElementById("location-error").innerText = "Please enter a location.";
+                isValid = false;
+            }
+            if (email === "" || !/^\S+@\S+\.\S+$/.test(email)) {
+                document.getElementById("email-error").innerText = "Please enter a valid email address.";
+                isValid = false;
+            }
+            if (phone === "" || !/^\d{10}$/.test(phone)) {
+                document.getElementById("phone-error").innerText = "Please enter a valid 10-digit phone number.";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Proceed only if validation passes
+        if (validateStep1()) {
+            document.getElementById("step-1").classList.add("d-none");
+            document.getElementById("step-2").classList.remove("d-none");
+        }
     });
 </script>
 
-        <!-- Step 3 Content -->
-        <section id="step-2" class="form-step d-none" style="border:none;">
-                            <h2>Cause Details</h2>
-                                <!-- Step 2 input fields -->
-                                <div class="col-md-12 my-3">
-                                  <label for="form_selected_text">I am raising fund for:</label>
-                                  <input type="text" name="form_option" id="form_selected_text" class="form-control" readonly>
+                            <!-- Step 2 Content -->
+<section id="step-2" class="form-step d-none w-100">
+    <h2>Cause Details</h2>
+    <div class="col-md-12 my-3">
+        <label for="form_selected_text">I am raising fund for:</label>
+        <input type="text" name="form_option" id="form_selected_text" class="form-control" readonly>
+        
+        <input type="number" id="amount" name="amount" placeholder="Amount*" required>
+        <span id="amount-error" class="error-text text-danger"></span>
 
-                                    <!-- Other form fields for Step 2 -->
-                                    <label for="amount"></label>
-                                    <input type="number" id="amount" name="amount" placeholder="Amount*" required>
+        <input type="date" id="end_date" name="end_date" placeholder="End Date*" required>
+        <span id="end-date-error" class="error-text text-danger"></span>
+    </div>
+    <div class="col-12 text-center mt-3">
+        <button id="openModalBtn1" class="button btn-navigate-form-step" style="background-color: red; color: white; border: none;" type="button" step_number="1" onclick="goToSection1()">Back</button>
+        <button id="openModalBtn1" class="button btn-navigate-form-step" style="background-color: red; color: white; border: none;" type="button" step_number="3" onclick="goToSection3()">Continue</button>
+      </div>
+    <!-- <div class="mt-3 d-flex justify-content-center">
+  <button class="btn btn-danger btn-navigate-form-step mx-2" type="button" step_number="1" style="width: 100px;" onclick="goToSection1()">Back</button>
+  <button class="btn btn-danger btn-navigate-form-step mx-2" type="button" step_number="3" onclick="goToSection3()">Continue</button>
+</div> -->
 
-                                    <label for="end_date"></label>
-                                    <input type="date" id="end_date" name="end_date" placeholder="End Date*" required>
-                                </div>
-                                <div class="mt-3 d-flex justify-content-center">
-                                <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="1" style="width: 100px;" onclick="goToSection1()">Back</button>
-                                <button class="btn text-red-500 btn-navigate-form-step mx-2" type="button" step_number="3" onclick="goToSection3()">Continue</button>
-                                </div>
-                            </section>
-                            <script>
+</section>
+
+<script>
     function goToSection1() {
         // Hide Section 2 and show Section 1
         document.getElementById("step-2").classList.add("d-none");
         document.getElementById("step-1").classList.remove("d-none");
     }
+
+    function validateStep2() {
+        let isValid = true;
+
+        const amount = document.getElementById("amount").value.trim();
+        const endDate = document.getElementById("end_date").value.trim();
+        const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+
+        // Reset error messages
+        document.getElementById("amount-error").innerText = '';
+        document.getElementById("end-date-error").innerText = '';
+
+        // Validate Amount
+        if (amount === "" || isNaN(amount) || amount <= 0) {
+            document.getElementById("amount-error").innerText = "Please enter a valid amount.";
+            isValid = false;
+        }
+
+        // Validate End Date
+        if (endDate === "") {
+            document.getElementById("end-date-error").innerText = "Please select an end date.";
+            isValid = false;
+        } else if (endDate < today) {
+            document.getElementById("end-date-error").innerText = "End date cannot be in the past.";
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
     function goToSection3() {
-        // Hide Section 2 and show Section 3
-        document.getElementById("step-2").classList.add("d-none");
-        document.getElementById("step-3").classList.remove("d-none");
+        // Validate Step 2 before proceeding to Step 3
+        if (validateStep2()) {
+            // Hide Section 2 and show Section 3 if validation passes
+            document.getElementById("step-2").classList.add("d-none");
+            document.getElementById("step-3").classList.remove("d-none");
+        }
     }
 </script>
-        <!-- Step 4 Content -->
-        <section id="step-3" class="form-step d-none">
+
+                            <!-- Step 3 Content -->
+<section id="step-3" class="form-step d-none w-100">
     <h2>Elaborate Cause Details</h2>
+
     <input type="file" id="cover_image" name="cover_image" accept="image/*" required>
+    <span id="cover-image-error" class="error-text text-danger"></span>
+
     <input type="text" id="cause_heading" name="cause_heading" placeholder="Heading" required>
-    <!-- <textarea id="cause_description" name="cause_description" placeholder="Description" required></textarea> -->
-    <textarea id="cause_description" name="cause_description" class="form-control" rows="6" placeholder="Enter description here"></textarea>
-    <div>
-    <button class="button btn-navigate-form-step" type="button" step_number="2" onclick="goToSection2()">Back</button>
-      <button class="button submit-btn" type="submit" id="submitApprovalButton">Submit for Approval</button>
-    </div>
-</section>
-    </form>
-    <script>
-    function goToSection2() {
-        // Hide Section 3 and show Section 2
-        document.getElementById("step-3").classList.add("d-none");
-        document.getElementById("step-2").classList.remove("d-none");
-    }
-</script>
+    <span id="cause-heading-error" class="error-text text-danger"></span>
+
+    <textarea id="cause_description" name="cause_description" class="form-control" rows="6" placeholder="Enter description here" required></textarea>
+    <span id="cause-description-error" class="error-text text-danger"></span>
+
+    <div class="col-12 text-center mt-3">
+        <button id="openModalBtn1" class="button btn-navigate-form-step" style="background-color: red; color: white; border: none;" type="button" step_number="2" onclick="goToSection2()">Back</button>
+        <button class="button submit-btn" type="button" id="submitApprovalButton">Submit for Approval</button>
       </div>
+    <!-- <div>
+        <button class="button btn-navigate-form-step" type="button" step_number="2" onclick="goToSection2()">Back</button>
+        <button class="button submit-btn" type="button" id="submitApprovalButton">Submit for Approval</button>
+    </div> -->
+</section>
+
+<script>
+    function validateStep3() {
+    let isValid = true;
+
+    const coverImage = document.getElementById("cover_image");
+    const causeHeading = document.getElementById("cause_heading").value.trim();
+    const causeDescription = document.getElementById("cause_description").value.trim();
+    
+    // Allowed file types and size limit (e.g., 2MB)
+    const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
+    const maxFileSize = 2 * 1024 * 1024; // 2MB
+
+    // Reset error messages
+    document.getElementById("cover-image-error").innerText = '';
+    document.getElementById("cause-heading-error").innerText = '';
+    document.getElementById("cause-description-error").innerText = '';
+
+    // Validate Cover Image
+    if (coverImage.files.length === 0) {
+        document.getElementById("cover-image-error").innerText = "Please upload a cover image.";
+        isValid = false;
+    } else {
+        const file = coverImage.files[0];
+
+        // Check file type
+        if (!allowedFileTypes.includes(file.type)) {
+            document.getElementById("cover-image-error").innerText = "Only PNG, JPG, JPEG, and SVG formats are allowed.";
+            isValid = false;
+        }
+
+        // Check file size
+        if (file.size > maxFileSize) {
+            document.getElementById("cover-image-error").innerText = "Image size should not exceed 2MB.";
+            isValid = false;
+        }
+    }
+
+    // Validate Cause Heading
+    if (causeHeading === "") {
+        document.getElementById("cause-heading-error").innerText = "Please enter a heading for the cause.";
+        isValid = false;
+    }
+
+    // Validate Cause Description
+    if (causeDescription === "") {
+        document.getElementById("cause-description-error").innerText = "Please enter a description for the cause.";
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+document.getElementById("submitApprovalButton").addEventListener("click", function () {
+    if (validateStep3()) {
+        // Submit the form if validation passes
+        document.getElementById("step-3").closest("form").submit();
+    }
+});
+
+</script>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+
 
   <script>
     // Copy selected category to readonly input field
@@ -1124,6 +1249,7 @@
             alert("Please complete all required fields.");
         }
     });
+    
 </script>
 
 
