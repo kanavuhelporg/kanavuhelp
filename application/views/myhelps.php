@@ -169,6 +169,18 @@
         margin-right:0px;
       }
     }
+    #myDonationsButton, #myFundraisersButton {
+    transition: none;
+    color: #dc3545; /* Red color */
+    background-color: #ffffff; /* White background */
+    border-color: #dc3545; /* Red border */
+  }
+
+  #myDonationsButton:hover, #myFundraisersButton:hover {
+    color: #dc3545; /* Keep red color on hover */
+    background-color: #ffffff; /* Keep white background on hover */
+    border-color: #dc3545; /* Keep red border on hover */
+  }
   </style>
 </head>
 
@@ -243,10 +255,11 @@
   </div> -->
   <div class="mx-auto text-center mt-8 md:ml-20">
   <button id="myDonationsButton"
-    class="inline-flex items-center bg-gray-200 border-red-500 py-2 px-6 text-red-500 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data active">My Donations</button>
+    class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0 mr-2">My Donations</button>
   <button id="myFundraisersButton"
-    class="inline-flex items-center bg-gray-100 border-gray-500 py-2 px-6 text-gray-700 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 data">My Fundraisers</button>
+    class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0">My Fundraisers</button>
 </div>
+
 
 <script>
   // Adding click event to navigate to 'My Fundraisers' page

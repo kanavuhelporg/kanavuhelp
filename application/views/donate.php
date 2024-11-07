@@ -85,9 +85,9 @@
     .imgtext2 strong {
       font-weight: bolder;
     }
-    .donate_btn {
-    margin-right: 10px; /* Custom margin between button and icon */
-}
+    /* .donate_btn {
+    margin-right: 10px; 
+} */
 
 .bi-share {
     font-size: 1.3rem; /* Adjust the size of the share icon */
@@ -189,7 +189,7 @@
 
     .donate_btn {
       border: 1px solid rgba(224, 26, 43, 1);
-      color: rgba(224, 26, 43, 1);
+      /* color: rgba(224, 26, 43, 1); */
       border-radius: 25px;
     }
 
@@ -267,6 +267,18 @@
         object-fit: cover; /* Ensures the image fills its container */
     }
     }
+    .donate_btn.no-hover {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+}
+
+.donate_btn.no-hover:hover {
+    background-color: white !important;
+    color: red !important;
+    border: 1px solid red !important;
+}
+
     </style>
     </head>
 <body>
@@ -392,7 +404,8 @@
                         <div class="d-flex align-items-center mt-auto">
                         <?php if ($fundraiser->days_left > 0 &&(!$fundraiser->hide_donation_button)) :?>
         <!-- Donate Button -->
-        <a href="#" class="btn donate_btn" data-toggle="modal" data-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+        <a href="#" class="btn donate_btn no-hover" data-toggle="modal" data-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+
         <i class="bi bi-share ms-2"></i>
         <?php endif; ?>
             

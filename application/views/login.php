@@ -11,7 +11,7 @@
     <title>Login Page</title>
     <style>
         * {
-            overflow: hidden;
+            /* overflow: hidden; */
             background-color: #FEF2F2;
             font-family: 'Sen', sans-serif;
         }

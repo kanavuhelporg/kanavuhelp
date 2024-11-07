@@ -109,7 +109,7 @@
     .card {
       width: 100%;
       /* Make the card width responsive */
-      box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
+      /* box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2); */
     }
 
     .carousel-item .row {
@@ -638,10 +638,13 @@
               <li style="font-weight: bold;margin-left">"Empowering Lives, Defeating diseases & disasters"</li>
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
-                <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border btn-3">Start a Fundraiser</button>
-                </a>
-              </li>
+  <a href="<?= base_url('/individual') ?>">
+    <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
+      Start a Fundraiser
+    </button>
+  </a>
+</li>
+
             </ul>
           </div>
         </div>
@@ -659,10 +662,13 @@
               <li style="font-weight: bold;">"Empowering Lives, Defeating diseases & disasters"</li>
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
-                <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border btn-4">Start a Fundraiser</button>
-                </a>
-              </li>
+  <a href="<?= base_url('/individual') ?>">
+    <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
+      Start a Fundraiser
+    </button>
+  </a>
+</li>
+
             </ul>
           </div>
         </div>
