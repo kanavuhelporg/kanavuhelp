@@ -29,20 +29,27 @@ class kanavuhelp extends CI_Controller
         $this->load->helper('cookie');
     }
     public function index()
-{
-    // Retrieve the top 10 fundraiser data
-    $data['fundraisers'] = $this->UserModel->get_cause_details(10); // Assuming you modify the method to accept a limit
+    {
+        $data['category'] = $this->UserModel->get_category();
+        $data['fundraisers'] = $this->UserModel->get_cause_details();
 
-    // Load the view and pass the data
-    $this->load->view('kanavuhome.php', $data);
-}
-public function get_cause_details($limit = 10)
-{
-    $this->kanavu_help->limit($limit);
-    $query = $this->kanavu_help->get('donation_for_cause'); // Replace 'your_table_name' with the actual table name
-    return $query->result();
-}
+        // Check if user is logged in using CodeIgniter session
+        $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+        $data['is_logged_in'] = $is_logged_in;
 
+        // Loop through each fundraiser and calculate days_left
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date->diff($current_date)->days;
+            if ($end_date < $current_date) {
+                $days_left = 0;
+            }
+            $fundraiser->days_left = $days_left;
+            $fundraiser->hide_donation_button = $fundraiser->raised_amount >= $fundraiser->amount;
+        }
+        $this->load->view('kanavuhome.php', $data);
+    }
     public function kanavuhome()
     {
         $this->load->view('kanavuhome.php');
@@ -110,20 +117,17 @@ else{
             // 'emailid' => $emailid,
             'phoneno' => $phoneno,
             'transactionid' => $transactionid,
-            'currency_type' => $currency_type,
-            
-
+            'currency_type' => $currency_type
         );
 
         // Call the model function to save the donation
         if ($this->UserModel->saveDonation($data)) {
-           // $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
+            $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
             echo json_encode(['status' => 'success', 'redirect' => base_url('myhelps')]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your donation.']);
         }
     }
-   
 
     public function donate()
     {
@@ -308,9 +312,9 @@ public function get_user_name($user_id) {
         // File upload configuration
         $config['upload_path'] = './assets/individualform_img/';
         $config['allowed_types'] = 'gif|jpg|png|svg';
-        $config['max_size'] = 2024;
-        $config['max_width'] = 2024;
-        $config['max_height'] = 868;
+        $config['max_size'] = 1024;
+        $config['max_width'] = 1024;
+        $config['max_height'] = 768;
         $this->upload->initialize($config);
 
         // Handle file upload

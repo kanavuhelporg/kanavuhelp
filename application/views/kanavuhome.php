@@ -557,6 +557,28 @@
         margin-top: -250px;
       } */
     }
+    @media (max-width: 767px) {
+    #fundraiserCarousel .carousel-inner .carousel-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #fundraiserCarousel .carousel-inner .carousel-item .col-12 {
+        max-width: 100%; /* Ensure full width for mobile */
+    }
+}
+.donate_btn.no-hover {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+}
+
+.donate_btn.no-hover:hover {
+    background-color: white !important;
+    color: red !important;
+    border: 1px solid red !important;
+}
+
   </style>
 </head>
 
@@ -682,178 +704,75 @@
   </div>
   <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
 </div><br>
-<div id="carouselExample" class="carousel slide">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <div class="row px-3 px-md-5 px-lg-6"> <!-- Responsive padding for row -->
-        <!-- First image, always visible -->
-        <div class="col-12 col-md-4">
-          <div class="card blogs_card">
-            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-              </div>
-              <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-              <div class="progress mb-2">
-                <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <a href="#" class="btn donate_btn">Donate Now</a>
-            </div>
-          </div>
-        </div>
 
-        <!-- These images are hidden on small screens and only show on larger ones -->
-        <div class="col-md-4 d-none d-md-block">
-          <div class="card">
-            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-title">Flood-affected house near the Poyang Lake</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-              </div>
-              <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
-              <div class="progress mb-2">
-                <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <a href="#" class="btn donate_btn">Donate Now</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 d-none d-md-block">
-          <div class="card">
-            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-              </div>
-              <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-              <div class="progress mb-2">
-                <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <a href="#" class="btn donate_btn">Donate Now</a>
-            </div>
-          </div>
-        </div>
-      </div>
+<div id="fundraiserCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <?php if (!empty($fundraisers)): ?>
+            <?php
+            // Group items into sets of 3 for desktop view
+            $chunked_fundraisers = array_chunk($fundraisers, 3);
+            foreach ($chunked_fundraisers as $index => $fundraiser_group): ?>
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                    <div class="container">
+                        <div class="row">
+                            <?php foreach ($fundraiser_group as $fundraiser): ?>
+                                <div class="col-12 col-md-4 d-flex justify-content-center">
+                                    <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
+                                        <div class="card h-100 fixed-card" style="width: 100%; max-width: 320px;">
+                                            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" class="card-img-top fixed-card-img" alt="No image" style="height: 200px; object-fit: cover; width: 100%;">
+                                            
+                                            <div class="card-body d-flex flex-column">
+                                                <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
+
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="card-text text-muted mb-0">by <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
+                                                    <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                                                </div>
+                                                
+                                                <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
+                                                <div class="progress mb-2">
+                                                    <?php
+                                                    $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+                                                    ?>
+                                                    <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                
+                                                <div class="d-flex align-items-center mt-auto">
+                                                    <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)) : ?>
+                                                        <a href="#" class="btn donate_btn no-hover" data-bs-toggle="modal" data-bs-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+                                                        <i class="bi bi-share ms-2"></i>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No fundraisers available at the moment.</p>
+        <?php endif; ?>
     </div>
 
-    <!-- Next carousel item -->
-    <div class="carousel-item">
-      <div class="row px-3 px-md-5 px-lg-6"> <!-- Adjust padding for the next slide -->
-        <div class="col-12 col-md-4">
-          <div class="card blogs_card">
-            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-              </div>
-              <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-              <div class="progress mb-2">
-                <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <a href="#" class="btn donate_btn">Donate Now</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Two additional cards hidden on smaller screens -->
-        <div class="col-md-4 d-none d-md-block">
-          <div class="card">
-            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-title">Flood-affected house near the Poyang Lake</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-              </div>
-              <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
-              <div class="progress mb-2">
-                <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <a href="#" class="btn donate_btn">Donate Now</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 d-none d-md-block">
-          <div class="card">
-            <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-              </div>
-              <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-              <div class="progress mb-2">
-                <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <a href="#" class="btn donate_btn">Donate Now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Carousel controls -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+    <!-- Carousel controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
 
-
-
-          
-          <!-- Second Card -->
-          <!-- <div class="col-12 col-md-4 mb-4">
-            <div class="card">
-              <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-              <div class="card-body">
-                <p class="card-title">Flood-affected house near the Poyang Lake</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                  <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-                </div>
-                <p class="card-text"><strong>₹ 1,00,000</strong> raised out of ₹ 2,00,000</p>
-                <div class="progress mb-2">
-                  <div class="progress-bar w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <a href="#" class="btn donate_btn">Donate Now</a>
-              </div>
-            </div>
-          </div> -->
-          
-          <!-- Third Card -->
-          <!-- <div class="col-12 col-md-4 mb-4">
-            <div class="card">
-              <img src="<?= base_url('assets/img/cancer_treatment.png') ?>" class="card-img-top" alt="...">
-              <div class="card-body">
-                <p class="card-title">Cancer Treatment for a Girl Child in Maharashtra</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <p class="card-text text-muted mb-0">by Kailaswaran</p>
-                  <button type="button" class="btn card_button text-muted ms-auto">Medical</button>
-                </div>
-                <p class="card-text"><strong>₹ 20,000</strong> raised out of ₹ 20,00,000</p>
-                <div class="progress mb-2">
-                  <div class="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <a href="#" class="btn donate_btn">Donate Now</a>
-              </div>
-            </div>
-          </div> -->
+<script>
+function setCauseId(causeId) {
+  document.getElementById('cause_id').value = causeId;
+}
+</script>
 
   <div class="position-relative" id="how-it-works-section">
     <div class="container-xxl ">
@@ -1121,7 +1040,216 @@
       </footer>
     </div>
 
+<!-- Donation Modal -->
+<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Donation Form -->
+        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+    <!-- Hidden fields to store cause ID and user ID -->
+    <input type="hidden" name="cause_id" id="cause_id" value="">
+    <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
 
+    <!-- Donation Form Fields -->
+    <div class="text-center">
+      <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
+    </div>
+    <div class="text-center">
+      <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
+    </div>
+
+    <div class="text-center mt-2">
+      <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
+      <!-- <p>Your contribution has the potential <br> to make a greater difference.</p> -->
+    </div>
+
+    <!-- Currency and Amount -->
+    <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
+      <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
+        <option>INR</option>
+        <option>USD</option>
+      </select>
+
+      <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
+     
+    </div>
+  
+    <!-- Name -->
+    <!-- <div class="form-group ms-4">
+      <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
+    
+      <p id="error1" style="color:red"></p>
+    </div> -->
+
+    <!-- Email -->
+   <!-- <div class="form-group ms-4">
+      <input type="email" name="emailid" class="form-control" id="email" placeholder="Enter your email*" style="width:92%;" required>
+      <p id="error2" style="color:red"></p>
+    </div> -->
+
+    <!-- Phone Number -->
+    <div class="form-group ms-4">
+      <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Enter your phone number*" style="width:92%;" required>
+      <p id="error3" style="color:red"></p>
+    </div>
+
+    <!-- Transaction ID -->
+    <div class="form-group ms-4">
+      <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
+      <p id="error4" style="color:red"></p>
+    </div>
+
+    <!-- Continue Button -->
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+        Continue to Pay ₹
+      </button>
+    </div>
+  </form>
+
+        <!-- Terms and Privacy Policy -->
+        <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simulate user login status (from backend or session)
+  var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
+
+  // Handle Donate button click using event delegation
+  document.querySelector('.container').addEventListener('click', function(event) {
+    if (event.target.classList.contains('donate_btn')) {
+      event.preventDefault(); // Prevent default link behavior
+
+      if (!isLoggedIn) {
+        // Ask for confirmation before redirecting to the login page
+        var confirmRedirect = alert("You need to login to donate. Do you want to proceed to the login page?");
+        
+        
+          // Redirect to login page if user clicks "OK"
+          window.location.href = "<?= base_url('/login') ?>"; // Replace with your actual login URL
+        
+      } else {
+        // Show the donation modal if logged in
+        var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+        donationModal.show();
+      }
+    }
+  });
+
+  // Handle modal close event to ensure page is accessible
+  var donationModal = document.getElementById('donationModal');
+  donationModal.addEventListener('hidden.bs.modal', function (event) {
+    // This will trigger when the modal is fully closed
+    document.body.classList.remove('modal-open'); // Ensure body is not still marked as modal-open
+    var modalBackdrop = document.querySelector('.modal-backdrop');
+    if (modalBackdrop) {
+      modalBackdrop.remove(); // Remove backdrop if still present
+    }
+
+    // Reset form fields when the modal is closed
+    donationModal.querySelector('form').reset();
+  });
+</script>
+<script>
+document.getElementById('donationForm').onsubmit = function(event) {
+
+event.preventDefault(); // Prevent default form submission
+
+// document.getElementById("error1").innerHTML="";
+// document.getElementById("error2").innerHTML="";
+document.getElementById("error3").innerHTML ="";
+document.getElementById("error4").innerHTML ="";
+// Validate Name (minimum 3 characters)
+// const name = document.getElementById('name').value.trim();
+// const nameRegex = /^[A-Za-z]+$/;
+
+// if (name.length < 3) {
+// document.getElementById("error1").innerHTML = "Name must be at least 3 characters long.";
+// return false;
+// } else if (!nameRegex.test(name)) {
+// document.getElementById("error1").innerHTML = "Name must contain only alphabetic characters.";
+// return false;
+// } else {
+// document.getElementById("error1").innerHTML = ""; // Clear error if input is valid
+
+// }
+
+
+// // Validate Email
+// const email = document.getElementById('email').value.trim();
+// const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// if (!emailPattern.test(email)) {
+//     document.getElementById("error2").innerHTML ="Please enter a valid email address.";
+//     return false;
+// }
+// else{
+// document.getElementById("error2").innerHTML ="";
+// }
+// Validate Amount (decimal)
+const amount = document.getElementById('amount').value.trim();
+if (isNaN(amount) || parseFloat(amount) <= 0) {
+    alert("Please enter a valid amount in decimal format.");
+    return false;
+}
+
+// Validate Phone Number (10 digits, starts with 6, 7, 8, or 9)
+const phone = document.getElementById('phone').value.trim();
+const phonePattern = /^[6-9]\d{9}$/;
+if (!phonePattern.test(phone)) {
+    document.getElementById("error3").innerHTML ="Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9.";
+    return false;
+}
+else{
+document.getElementById("error3").innerHTML ="";
+}
+
+// Check if the transaction ID already exists message is present on page load
+
+// Validate transaction ID format
+const transactionId = document.getElementById('transactionid').value.trim();
+const transactionPattern = /^\d{12}$/;
+if (!transactionPattern.test(transactionId)) {
+document.getElementById("error4").innerHTML = "Transaction ID must be exactly 12 digits.";
+return false;
+}
+
+
+
+
+// Clear any previous error message
+error4.innerHTML = "";
+
+// Collect form data
+const formData = new FormData(this);
+
+// Send AJAX request
+fetch('/kanavuhelp/processDonation', {  // Make sure to use the correct path
+    method: 'POST',
+    body: formData
+})
+.then(response => response.json())
+.then(data => {
+    if (data.status === 'error') {
+        // Display error message in the error4 element
+        error4.innerHTML = data.message;
+    } else if (data.status === 'success') {
+        // Redirect to success page if donation is successful
+        window.location.href = data.redirect;
+    }
+})
+.catch(error => {
+    error4.innerHTML = "An unexpected error occurred. Please try again.";
+});
+};
+
+</script>
 
     <!-- Bootstrap JS and dependencies (Popper.js) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
