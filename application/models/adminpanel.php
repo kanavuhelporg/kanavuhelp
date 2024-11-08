@@ -43,4 +43,17 @@ public function updateDonationStatus($id, $status, $verifiedBy)
     $result = $this->db->update('donation_for_cause', $data);
     return $result;  // TRUE on success, FALSE on failure
 }
+public function getDonationById1($id)
+{
+    $this->db->select('cause_id, amount');
+    $this->db->from('donation_for_cause');
+    $this->db->where('donation_id', $id);
+    return $this->db->get()->row();
+}
+public function update_raised_amount($cause_id, $amount)
+{
+    $this->db->set('raised_amount', 'raised_amount + ' . (int) $amount, FALSE);
+    $this->db->where('id', $cause_id);
+    return $this->db->update('individualform');
+}
 }

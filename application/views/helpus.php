@@ -546,7 +546,9 @@ function setCauseId(causeId) {
     <div class="text-center">
       <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
     </div>
-
+    <div class="text-center">
+      <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
+    </div>
     <div class="text-center mt-2">
       <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
       <p>Your contribution has the potential <br> to make a greater difference.</p>
