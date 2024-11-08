@@ -129,7 +129,7 @@ public function is_transaction_id_exists($transaction_id) {
 	// UserModel.php
 public function update_raised_amount($fundraiser_id, $raised_amount) {
     $this->db->set('raised_amount', 'raised_amount + ' . (float)$raised_amount, FALSE);
-    $this->db->where('id', $fundraiser_id);
+    $this->db->where('id', $fundraiser_id );
     return $this->db->update('individualform');  // Adjust table name if needed
 }
 

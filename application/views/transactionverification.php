@@ -345,7 +345,7 @@
                     <td><?php echo htmlspecialchars($donation->phoneno); ?></td>
                     <td><?php echo htmlspecialchars($donation->amount); ?></td>
                     <td><?php echo htmlspecialchars($donation->transactionid); ?></td>
-                    <td><?php echo htmlspecialchars($donation->status ); ?></td>
+                    <td><?php echo htmlspecialchars($donation->status == 1 ? 'Yes' : 'No'); ?></td>
                     <td>
                     <a href="#" onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDonationModal">
     Edit
@@ -371,7 +371,7 @@ function editDonation(donation) {
     document.getElementById('donationMobile').value = donation.phoneno;
     document.getElementById('donationAmount').value = donation.amount;
     document.getElementById('donationTransactionId').value = donation.transactionid;
-    document.getElementById('donationVerified').value = donation.verified?1:0 ;
+    document.getElementById('donationVerified').value = donation.status;
 }
 </script>
         <div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
@@ -417,6 +417,7 @@ function editDonation(donation) {
         </div>
     </div>
 </div>
+
 <script>
 $('#editDonationForm').on('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
@@ -425,26 +426,27 @@ $('#editDonationForm').on('submit', function(event) {
         url: $(this).attr('action'),
         type: 'POST',
         data: $(this).serialize(), // Serialize form data
+        dataType: 'json', // Expect JSON response
         success: function(response) {
-            // Log success response
-            console.log(response);
-            if (response == 'success') {
-              
+            console.log('Server Response:', response); // Log server response for debugging
+
+            if (response.status === 'success') {
                 alert('Donation updated successfully');
-                // Optional: reloads the page to show updated data
+                // Optional: Reload the page to show updated data
+                window.location.reload(); // Or redirect to a specific page if needed
             } else {
-                error: function(xhr, status, error) {
-            // Log error response
-           
-alert('Failed to update donation');
+                alert('Failed to update donation');
             }
         },
-        
+        error: function(xhr, status, error) {
+            console.log('AJAX Error:', error); // Log any AJAX errors
+            alert('An error occurred. Please try again.');
         }
     });
 });
 
 </script>
+
         
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

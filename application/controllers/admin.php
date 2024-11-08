@@ -67,20 +67,18 @@ public function updateDonation()
 
     // Get the name from session
     $verifiedBy = $this->session->userdata('userName');
-    log_message('error', 'Donation ID: ' . $id);
-    log_message('error', 'Status: ' . $status);
-    log_message('error', 'Verified By: ' . $verifiedBy);
-
+    
     // Load the model and call the update function
     $this->load->model('adminpanel');
     $updateSuccess = $this->adminpanel->updateDonationStatus($id, $status, $verifiedBy);
 
-    // Return a response for the AJAX call based on success/failure
-    if ($updateSuccess) {
-        echo 'success';
-    } else {
-        echo 'error';
-    }
+    // Set content type header to JSON
+    header('Content-Type: application/json');
+    
+    // Return JSON response for the AJAX call
+    echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
 }
+
+
 
 }

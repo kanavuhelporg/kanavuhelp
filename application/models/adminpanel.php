@@ -8,7 +8,7 @@ class adminpanel extends CI_Model
         $postData = $this->input->post(null, true);
         $Email = $postData['exampleInputEmail1'];
         $Password = $postData['exampleInputpassword1'];
-        $query = "SELECT * FROM user WHERE email = '$Email' AND password = '$Password'";
+        $query = "SELECT * FROM user WHERE email = '$Email' AND password = '$Password' and category='admin'";
         $count = $this->db->query($query);
         return $count->result_array();
     }

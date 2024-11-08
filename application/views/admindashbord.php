@@ -156,6 +156,10 @@
             <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
             <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
             <span style="font-weight:500;"><?php 
+            if (!isset($_SESSION)) {
+              session_start();
+          }
+          
         if ($this->session->userdata('userName')) {
             echo $this->session->userdata('userName');
         } else {

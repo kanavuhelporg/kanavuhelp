@@ -78,7 +78,7 @@
                 <p style="margin-left:50px;">Don't have an Account? <a href="<?= base_url('kanavuhelp/register') ?>"><span
                             style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p>
                 <form name="login" onsubmit="return loginValidate()" method="post"
-                    action="<?= base_url('admin/admindashbord') ?>" style="" class="login-form">
+                    action="<?= base_url('admin/adminLogin') ?>" style="" class="login-form">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">email</label>
                         <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1">
