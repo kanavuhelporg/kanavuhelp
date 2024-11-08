@@ -110,18 +110,20 @@ else{
             // 'emailid' => $emailid,
             'phoneno' => $phoneno,
             'transactionid' => $transactionid,
-            'currency_type' => $currency_type
+            'currency_type' => $currency_type,
+            
 
         );
 
         // Call the model function to save the donation
         if ($this->UserModel->saveDonation($data)) {
-            $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
+           // $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
             echo json_encode(['status' => 'success', 'redirect' => base_url('myhelps')]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your donation.']);
         }
     }
+   
 
     public function donate()
     {
@@ -306,9 +308,9 @@ public function get_user_name($user_id) {
         // File upload configuration
         $config['upload_path'] = './assets/individualform_img/';
         $config['allowed_types'] = 'gif|jpg|png|svg';
-        $config['max_size'] = 1024;
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
+        $config['max_size'] = 2024;
+        $config['max_width'] = 2024;
+        $config['max_height'] = 868;
         $this->upload->initialize($config);
 
         // Handle file upload

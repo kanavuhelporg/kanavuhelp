@@ -11,11 +11,22 @@ class admin extends CI_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('cookie');
+       
     }
     public function index()
     {
         $this->load->view('admin.php');
     }
+    public function logout()
+{
+    // Destroy all session data
+    $this->session->sess_destroy();
+
+    // Redirect to the login page
+    redirect('admin'); // Adjust this if your login page is at a different URL
+}
+
+
     public function admindashbord()
     {
         $this->load->view('admindashbord.php');
@@ -71,7 +82,12 @@ public function updateDonation()
     // Load the model and call the update function
     $this->load->model('adminpanel');
     $updateSuccess = $this->adminpanel->updateDonationStatus($id, $status, $verifiedBy);
-
+    if ($updateSuccess && $status == 1) { // assuming 1 represents "Yes"
+        $donationData = $this->adminpanel->getDonationById1($id); // Get donation details for the cause_id and amount
+        if ($donationData) {
+            $this->adminpanel->update_raised_amount($donationData->cause_id, $donationData->amount);
+        }
+    }
     // Set content type header to JSON
     header('Content-Type: application/json');
     

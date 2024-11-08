@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordinators</title>
+    <title>TransactionVerification</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
     <!-- <link rel="stylesheet" href="./ponsoft.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -315,10 +315,12 @@
           <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;Donation</a></li>
 
           <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Reports</a></li>
-
+ -->
           <li class="nav-item py-2">
-            <a href="<?=base_url('dashboard/logout')?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout</a></li>
-    -->
+          <a href="<?= base_url('admin/logout') ?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2">
+    <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
+</a>
+   
        </ul>          
        
               

@@ -73,3 +73,4 @@ $route['data/fetch/(:any)'] = 'data/fetch/$1';
 $route['admindashbord'] = 'admin/admindashbord';
 $route['admin'] = 'admin/admin';
 $route['transactionverification'] = 'admin/transactionverification';
+$route['admin/logout'] = 'admin/logout';

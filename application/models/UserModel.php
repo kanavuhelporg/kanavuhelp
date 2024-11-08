@@ -42,6 +42,7 @@ public function get_top_donors_by_cause($cause_id, $limit = 3) {
 	$this->db->from('donation_for_cause');
 	$this->db->join('user', 'donation_for_cause.user_id = user.id');
 	$this->db->where('donation_for_cause.cause_id', $cause_id);
+    $this->db->where('donation_for_cause.status', 1);
 	$this->db->order_by('donation_for_cause.amount', 'DESC');
 	$this->db->limit($limit);
 	
@@ -54,6 +55,7 @@ public function get_top_fifteen_donors_by_cause($cause_id, $limit = 15,$offset =
 	$this->db->from('donation_for_cause');
 	$this->db->join('user', 'donation_for_cause.user_id = user.id');
 	$this->db->where('donation_for_cause.cause_id', $cause_id);
+    $this->db->where('donation_for_cause.status', 1);
 	$this->db->order_by('donation_for_cause.amount', 'DESC');
 	$this->db->limit($limit, $offset);
 	
@@ -173,6 +175,7 @@ public function count_supporters($fundraiser_id) {
     $this->db->select('user_id')
              ->from('donation_for_cause')
              ->where('cause_id', $fundraiser_id)
+			 ->where('status',1)
              ->group_by('user_id');
     return $this->db->count_all_results();
 }

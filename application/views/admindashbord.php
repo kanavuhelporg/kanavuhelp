@@ -201,10 +201,11 @@
             <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;Donation</a></li>
 
             <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Reports</a></li>
-
+ -->
             <li class="nav-item py-2">
-              <a href="<?=base_url('ponsoft/logout')?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout</a></li>
-    -->
+            <a href="<?= base_url('admin/logout') ?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2">
+    <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
+</a>
          </ul>
               
          </div><!-----------side-bar-end-------------->
