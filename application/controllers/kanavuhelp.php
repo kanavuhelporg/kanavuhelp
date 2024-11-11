@@ -123,7 +123,6 @@ class kanavuhelp extends CI_Controller
         // Call the model function to save the donation
         if ($this->UserModel->saveDonation($data)) {
             // $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
-           
             echo json_encode(['status' => 'success', 'redirect' => base_url('myhelps')]);
            
         } else {
