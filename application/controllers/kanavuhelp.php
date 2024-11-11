@@ -71,18 +71,18 @@ class kanavuhelp extends CI_Controller
               </script>";
             exit;
         }
-        
-//category for individudal form
-else{
-    // Load model if not already loaded
-    $this->load->model('UserModel');
 
-    // Retrieve categories from the database
-    $data['result'] = $this->UserModel->get_all_categories();
+        //category for individudal form
+        else {
+            // Load model if not already loaded
+            $this->load->model('UserModel');
 
-    // Load the view and pass the categories
-    $this->load->view('individual.php', $data);
-}
+            // Retrieve categories from the database
+            $data['result'] = $this->UserModel->get_all_categories();
+
+            // Load the view and pass the categories
+            $this->load->view('individual.php', $data);
+        }
     }
     public function charity()
     {
@@ -122,7 +122,8 @@ else{
 
         // Call the model function to save the donation
         if ($this->UserModel->saveDonation($data)) {
-            $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
+            // $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
+            echo "<script> alert{'Please Wait for Admin Verification'}</script>";
             echo json_encode(['status' => 'success', 'redirect' => base_url('myhelps')]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your donation.']);
@@ -226,44 +227,45 @@ else{
         $data['is_logged_in'] = $this->session->userdata('userId') !== null;
         $this->load->view('helpus', $data);
     }
-    
-public function registeration() {
-    $data['name'] = $this->input->post('exampleInputName');
-    $data['email'] = $this->input->post('exampleInputEmail1');
-    $data['password'] = $this->input->post('exampleInputPassword1');
 
-    $this->load->model('UserModel');
+    public function registeration()
+    {
+        $data['name'] = $this->input->post('exampleInputName');
+        $data['email'] = $this->input->post('exampleInputEmail1');
+        $data['password'] = $this->input->post('exampleInputPassword1');
 
-    // Check if email already exists
-    if ($this->UserModel->isEmailExists($data['email'])) {
-        // Set flash message for the next page load
-        $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
-        redirect('kanavuhelp/register'); // Redirects to the registration page
-    } else {
-        $response = $this->UserModel->register($data);
-        if ($response) {
-            echo "<script>
+        $this->load->model('UserModel');
+
+        // Check if email already exists
+        if ($this->UserModel->isEmailExists($data['email'])) {
+            // Set flash message for the next page load
+            $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
+            redirect('kanavuhelp/register'); // Redirects to the registration page
+        } else {
+            $response = $this->UserModel->register($data);
+            if ($response) {
+                echo "<script>
                     alert('Registered successfully');
                     window.location.href = '" . base_url('login') . "';
                   </script>";
-            exit;
-        }
-        else {
-            echo 'Failed to register';
+                exit;
+            } else {
+                echo 'Failed to register';
+            }
         }
     }
-}
 
-public function get_user_name($user_id) {
-    // Load the User model
-    $this->load->model('UserModel');
-    
-    // Fetch the user name using the model
-    $user_name = $this->UserModel->get_user_name_by_id($user_id);
-    
-    return $user_name;
-}
-   
+    public function get_user_name($user_id)
+    {
+        // Load the User model
+        $this->load->model('UserModel');
+
+        // Fetch the user name using the model
+        $user_name = $this->UserModel->get_user_name_by_id($user_id);
+
+        return $user_name;
+    }
+
 
 
     public function userLogin()
