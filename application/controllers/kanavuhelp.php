@@ -282,7 +282,8 @@ class kanavuhelp extends CI_Controller
             $this->session->set_userdata($userLoggedIn);
 
             // Redirect to 'kanavuhome' after successful login
-            redirect(base_url('kanavuhome'));
+            $returnUrl = $this->input->get('returnUrl') ?: base_url('kanavuhome');
+        redirect($returnUrl);
         } else {
             // If login fails, reload the login page with an error message
             $this->load->view('login.php');

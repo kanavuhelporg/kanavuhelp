@@ -245,6 +245,39 @@
       </div>
     </div>
   </nav>
+  <!-- Login Required Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>You need to log in to view your helps.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="loginRedirectBtn">Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Check login status from PHP
+  var isLoggedIn = <?= json_encode($is_logged_in); ?>;
+
+  // If the user is not logged in, show the login modal
+  if (!isLoggedIn) {
+    var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
+
+    // Redirect to login page when "Login" button is clicked
+    document.getElementById('loginRedirectBtn').addEventListener('click', function() {
+      var currentUrl = window.location.href;
+      window.location.href = "<?= base_url('/login') ?>?returnUrl=" + encodeURIComponent(currentUrl);
+    });
+  }
+</script>
   <div class="donate_img mt-5 pt-4">
     <img src="<?= base_url('assets/img/myhelps.png') ?>" width="100%">
   </div>

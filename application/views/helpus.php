@@ -382,7 +382,7 @@
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong></p>
            <?php if ($fundraiser->days_left > 0&&(!$fundraiser->hide_donation_button)): ?>
         <!-- Donate Button -->
-        <a href="#" class="btn donate_btn no-hover" data-toggle="modal" data-target="#donationModal" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+        <a href="#" class="btn donate_btn no-hover"  onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
     <?php endif; ?>
     <?php if ($this->session->flashdata('error')) : ?>
     <div class="alert alert-danger">
@@ -390,11 +390,11 @@
     </div>
 <?php endif; ?>
             
-            <!-- Payment Options -->
+            <!-- Payment Options 
             <p class="mt-2">or pay with &nbsp;&nbsp;
                 <img src="<?= base_url('assets/img/gpay.png') ?>"  width= "10%"alt="Google Pay">
                &nbsp; <img src="<?= base_url('assets/img/phonepay.jpg') ?>"  width=" 10%" alt="PhonePe" class="ms-2">
-            </p>
+            </p>-->
 
            <!-- Top Donors Section -->
 <div class="container mt-4">
@@ -602,47 +602,68 @@ function setCauseId(causeId) {
     </div>
   </div>
 </div>
+<!--login alert modal-->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>You need to log in to continue with the donation.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="loginRedirectBtn">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   // Simulate user login status (from backend or session)
   var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
 
-  // Handle Donate button click using event delegation
-  document.querySelector('.container').addEventListener('click', function(event) {
-    if (event.target.classList.contains('donate_btn')) {
+  // Handle Donate button click
+  document.querySelectorAll('.donate_btn').forEach(button => {
+    button.addEventListener('click', function(event) {
       event.preventDefault(); // Prevent default link behavior
 
       if (!isLoggedIn) {
-        // Ask for confirmation before redirecting to the login page
-        var confirmRedirect = alert("You need to login to donate. Do you want to proceed to the login page?");
-        
-        
-          // Redirect to login page if user clicks "OK"
-          window.location.href = "<?= base_url('/login') ?>"; // Replace with your actual login URL
-        
+        // Show login modal if not logged in
+        const baseUrl = "<?= base_url('/login') ?>"; 
+        var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+
+        // Redirect to login page with return URL on OK button click
+        document.getElementById('loginRedirectBtn').addEventListener('click', function() {
+          var currentUrl = window.location.href;
+          window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
+        });
       } else {
         // Show the donation modal if logged in
         var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
         donationModal.show();
       }
-    }
+    });
   });
 
-  // Handle modal close event to ensure page is accessible
-  var donationModal = document.getElementById('donationModal');
-  donationModal.addEventListener('hidden.bs.modal', function (event) {
-    // This will trigger when the modal is fully closed
-    document.body.classList.remove('modal-open'); // Ensure body is not still marked as modal-open
+  // Handle donation modal close event to ensure page is accessible
+  var donationModalElement = document.getElementById('donationModal');
+  donationModalElement.addEventListener('hidden.bs.modal', function () {
+    // Ensure body is not still marked as modal-open
+    document.body.classList.remove('modal-open');
+    
+    // Remove any lingering modal backdrop
     var modalBackdrop = document.querySelector('.modal-backdrop');
     if (modalBackdrop) {
-      modalBackdrop.remove(); // Remove backdrop if still present
+      modalBackdrop.remove();
     }
 
     // Reset form fields when the modal is closed
-    donationModal.querySelector('form').reset();
+    donationModalElement.querySelector('form').reset();
   });
 </script>
-
 
 
 <script>
