@@ -17,7 +17,10 @@
   <!--wizard-->
   <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet"
     type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+  <!-- Font Awesome CDN -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 </head>
 <style>
   body {
@@ -115,6 +118,35 @@
   .dropdown-item:hover {
     color: #EB2D32;
   }
+  /* Custom select dropdown wrapper */
+.custom-dropdown-wrapper {
+    position: relative;
+}
+
+/* Custom select dropdown */
+.custom-dropdown {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 30px;  /* Space for the icon */
+    background-color: #fff;  /* Background color */
+}
+
+/* Dropdown icon styling */
+.custom-dropdown-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;  /* Prevents the icon from being clickable */
+    font-size: 16px;
+    color: #6c757d;  /* Gray color */
+}
+
+/* Optional: Custom focus styling */
+.custom-dropdown:focus {
+    outline: none;
+}
 
   .footer {
     height: 250px;
@@ -717,6 +749,8 @@
     width: 100%;
   }
 }
+@media (max-width: 767px) {
+/* donate  image below nav bar */
 .donate_img {
         width: 100%; /* Ensure the parent container takes full width */
         position: relative;
@@ -731,7 +765,7 @@
   .container.box {
     margin-left: 50px;
   }
-
+}
   .img1 {
     top: 150px;
     left: 20px;
@@ -752,7 +786,19 @@
     font-size: 0.875em;
     color: red;
 }
+.btn.no-hover {
+        background-color: #dc3545 !important; /* Force red background */
+        color: white !important; /* Force white text */
+        border-color: #dc3545 !important; /* Match border color */
+    }
 
+    .btn.no-hover:hover,
+    .btn.no-hover:focus,
+    .btn.no-hover:active {
+        background-color: #dc3545 !important; /* Force red background on hover, focus, and active */
+        color: white !important; /* Force white text on hover, focus, and active */
+        border-color: #dc3545 !important; /* Match border color on hover, focus, and active */
+    }
 </style>
 
 <body>
@@ -823,8 +869,8 @@
         </div>
     </div>
 </nav>
-  <div class="donate_img mt-5 pt-4">
-  <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
+<div class="donate_img mt-5 pt-4">
+    <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
   </div>
   <!--<div class="mx-auto text-center mt-8 md:ml-20 ">
     <button id="myDonationsButton" 
@@ -846,300 +892,307 @@
                 <!-- Left Column for Image and Text -->
                 <div class="col-md-6 d-flex justify-content-center">
                     <div class="text-center">
-                        <h3 class="mt-4"><strong>START YOUR HELP</strong></h3>
+                        <h3 class="mt-4"><strong>START YOUR FUNDRAISER</strong></h3>
                         <h6>"We make a living by what we get, but we make a life by what we give"</h6>
-                        <img src="<?php echo base_url('/assets/img/btfly.png');?>" alt="no img" class="img-fluid" style="max-width: 100%; height: auto;">
+                        <img src="<?php echo base_url('/assets/img/btfly.png'); ?>" alt="no img" class="img-fluid" style="max-width: 100%; height: auto;">
                     </div>
                 </div>
                 <!-- Right Column for Form -->
                 <div class="col-md-6">
                     <div id="multi-step-form-container" class="mt-auto py-3 w-100">
                         <!-- Form Steps / Progress Bar -->
-                        <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0 col-md-10 flex-wrap">
-                            <!-- Step 1 -->
+                        <ul class="form-stepper form-stepper-horizontal text-center mx-auto col-md-10 flex-wrap">
                             <li class="form-stepper-active text-center form-stepper-list" step="1">
                                 <a class="mx-2">
-                                    <span class="form-stepper-circle">
-                                        <span>1</span>
-                                    </span>
+                                    <span class="form-stepper-circle"><span>1</span></span>
                                 </a>
                             </li>
-                            <!-- Step 2 -->
                             <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
                                 <a class="mx-2">
-                                    <span class="form-stepper-circle text-muted">
-                                        <span>2</span>
-                                    </span>
+                                    <span class="form-stepper-circle"><span>2</span></span>
                                 </a>
                             </li>
-                            <!-- Step 3 -->
                             <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
                                 <a class="mx-2">
-                                    <span class="form-stepper-circle text-muted">
-                                        <span>3</span>
-                                    </span>
+                                    <span class="form-stepper-circle"><span>3</span></span>
                                 </a>
                             </li>
                         </ul>
-                        <!-- Step Wise Form Content -->
-                        <form id="individualform" name="individualform" onsubmit="return individual()" method="post" 
-                              action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="row w-100">
 
+                        <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="row w-100">
                             <!-- Step 1 Content -->
-                            <section id="step-1" class="form-step col-12" style="height: 450px;">
-    <h2>Basic Details</h2>
-    <div class="row col-12 my-3">
-        <div class="col-md-4">
-            <label for="category" class="form-label">I am raising fund for:</label>
-        </div>
-        <div class="col-md-8">
-            <select name="category" id="category" class="form-control" onchange="copySelection()" required>
+                            <section id="step-1" class="form-step col-12">
+                                <h2>Basic Details</h2>
+                                <div class="row my-3">
+    <label for="category" class="col-md-4 col-form-label">I am raising fund for:</label>
+    <div class="col-md-8">
+        <div class="custom-dropdown-wrapper">
+            <select name="category" id="category" class="form-control custom-dropdown" onchange="copySelection()" required>
                 <option value="">Select</option>
                 <?php foreach ($result as $row) { ?>
-                    <option value="<?php echo $row['name']; ?>" <?php echo set_select('category', $row['name'], False); ?>>
-                        <?php echo $row['name']; ?>
-                    </option>
+                    <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
                 <?php } ?>
             </select>
-            <span id="category-error" class="error-text text-danger"></span>
+            <i class="fas fa-chevron-down custom-dropdown-icon"></i>
+        </div>
+        <span id="category-error" class="text-danger"></span>
+    </div>
+</div>
+
+                                <div class="form-group row">
+    <label for="name" class="col-sm-4 col-form-label">Name of beneficiary:</label>
+    <div class="col-sm-8">
+        <input type="text" id="name" name="name" class="form-control my-2" placeholder="Name of beneficiary" required>
+        <span id="name-error" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="age" class="col-sm-4 col-form-label">Age of beneficiary:</label>
+    <div class="col-sm-8">
+        <input type="number" id="age" name="age" class="form-control my-2" placeholder="Age of beneficiary" required>
+        <span id="age-error" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="location" class="col-sm-4 col-form-label">Location:</label>
+    <div class="col-sm-8">
+        <input type="text" id="location" name="location" class="form-control my-2" placeholder="Location" required>
+        <span id="location-error" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="email" class="col-sm-4 col-form-label">Mail Id:*</label>
+    <div class="col-sm-8">
+        <input type="email" id="email" name="email" class="form-control my-2" placeholder="Mail Id*" required>
+        <span id="email-error" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="phone" class="col-sm-4 col-form-label">Phone Number:*</label>
+    <div class="col-sm-8">
+        <input type="tel" id="phone" name="phone" class="form-control my-2" placeholder="Phone Number*" required>
+        <span id="phone-error" class="text-danger"></span>
+    </div>
+</div>
+
+                                <div class="text-center mt-3">
+                                    <button type="button" class="btn btn-danger no-hover" onclick="if(validateStep1()) showStep(2)">Continue</button>
+                                </div>
+                            </section>
+
+                            <!-- Step 2 Content -->
+                            <section id="step-2" class="form-step col-12 d-none">
+    <h2>Cause Details</h2>
+
+    <div class="row my-3">
+        <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for:</label>
+        <div class="col-md-8">
+            <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for:" readonly>
         </div>
     </div>
 
-    <input type="text" id="name" name="name" class="form-control" placeholder="Name of beneficiary" required>
-    <span id="name-error" class="error-text text-danger"></span>
+    <div class="row my-3">
+        <label for="amount" class="col-md-4 col-form-label">Amount*:</label>
+        <div class="col-md-8">
+            <input type="number" id="amount" name="amount" class="form-control my-2" placeholder="Amount*" required>
+            <span id="amount-error" class="text-danger"></span>
+        </div>
+    </div>
 
-    <input type="number" id="age" name="age" class="form-control" placeholder="Age of beneficiary" required>
-    <span id="age-error" class="error-text text-danger"></span>
+    <div class="row my-3">
+        <label for="end_date" class="col-md-4 col-form-label">End Date*:</label>
+        <div class="col-md-8">
+            <input type="date" id="end_date" name="end_date" class="form-control my-2" placeholder="End Date*" required>
+            <span id="end-date-error" class="text-danger"></span>
+        </div>
+    </div>
 
-    <input type="text" id="location" name="location" class="form-control" placeholder="Location" required>
-    <span id="location-error" class="error-text text-danger"></span>
-
-    <input type="email" id="email" name="email" class="form-control" placeholder="Mail Id*" required>
-    <span id="email-error" class="error-text text-danger"></span>
-
-    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Phone Number*" required>
-    <span id="phone-error" class="error-text text-danger"></span>
-
-    <div class="col-12 text-center mt-3">
-        <button id="openModalBtn1" class="button btn-navigate-form-step" style="background-color: red; color: white; border: none;" type="button" step_number="1">Continue</button>
+    <div class="text-center mt-3">
+        <button type="button" class="btn btn-danger no-hover" onclick="showStep(1)">Back</button>
+        <button type="button" class="btn btn-danger no-hover" onclick="if(validateStep2()) showStep(3)">Continue</button>
     </div>
 </section>
 
-<script>
-    document.getElementById("openModalBtn1").addEventListener("click", function () {
-        // Reset error messages
-        document.querySelectorAll('.error-text').forEach(function (el) {
-            el.innerText = '';
-        });
-
-        // Validation function
-        function validateStep1() {
-            let isValid = true;
-
-            const category = document.getElementById("category").value;
-            const name = document.getElementById("name").value.trim();
-            const age = document.getElementById("age").value;
-            const location = document.getElementById("location").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const phone = document.getElementById("phone").value.trim();
-
-            if (category === "") {
-                document.getElementById("category-error").innerText = "Please select a category.";
-                isValid = false;
-            }
-            if (name === "") {
-                document.getElementById("name-error").innerText = "Please enter the beneficiary's name.";
-                isValid = false;
-            }
-            if (age === "" || age <= 0) {
-                document.getElementById("age-error").innerText = "Please enter a valid age.";
-                isValid = false;
-            }
-            if (location === "") {
-                document.getElementById("location-error").innerText = "Please enter a location.";
-                isValid = false;
-            }
-            if (email === "" || !/^\S+@\S+\.\S+$/.test(email)) {
-                document.getElementById("email-error").innerText = "Please enter a valid email address.";
-                isValid = false;
-            }
-            if (phone === "" || !/^\d{10}$/.test(phone)) {
-                document.getElementById("phone-error").innerText = "Please enter a valid 10-digit phone number.";
-                isValid = false;
-            }
-
-            return isValid;
-        }
-
-        // Proceed only if validation passes
-        if (validateStep1()) {
-            document.getElementById("step-1").classList.add("d-none");
-            document.getElementById("step-2").classList.remove("d-none");
-        }
-    });
-</script>
-
-                            <!-- Step 2 Content -->
-<section id="step-2" class="form-step d-none w-100">
-    <h2>Cause Details</h2>
-    <div class="col-md-12 my-3">
-        <label for="form_selected_text">I am raising fund for:</label>
-        <input type="text" name="form_option" id="form_selected_text" class="form-control" readonly>
-        
-        <input type="number" id="amount" name="amount" placeholder="Amount*" required>
-        <span id="amount-error" class="error-text text-danger"></span>
-
-        <input type="date" id="end_date" name="end_date" placeholder="End Date*" required>
-        <span id="end-date-error" class="error-text text-danger"></span>
-    </div>
-    <div class="col-12 text-center mt-3">
-        <button id="openModalBtn1" class="button btn-navigate-form-step" style="background-color: red; color: white; border: none;" type="button" step_number="1" onclick="goToSection1()">Back</button>
-        <button id="openModalBtn1" class="button btn-navigate-form-step" style="background-color: red; color: white; border: none;" type="button" step_number="3" onclick="goToSection3()">Continue</button>
-      </div>
-    <!-- <div class="mt-3 d-flex justify-content-center">
-  <button class="btn btn-danger btn-navigate-form-step mx-2" type="button" step_number="1" style="width: 100px;" onclick="goToSection1()">Back</button>
-  <button class="btn btn-danger btn-navigate-form-step mx-2" type="button" step_number="3" onclick="goToSection3()">Continue</button>
-</div> -->
-
-</section>
-
-<script>
-    function goToSection1() {
-        // Hide Section 2 and show Section 1
-        document.getElementById("step-2").classList.add("d-none");
-        document.getElementById("step-1").classList.remove("d-none");
-    }
-
-    function validateStep2() {
-        let isValid = true;
-
-        const amount = document.getElementById("amount").value.trim();
-        const endDate = document.getElementById("end_date").value.trim();
-        const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-
-        // Reset error messages
-        document.getElementById("amount-error").innerText = '';
-        document.getElementById("end-date-error").innerText = '';
-
-        // Validate Amount
-        if (amount === "" || isNaN(amount) || amount <= 0) {
-            document.getElementById("amount-error").innerText = "Please enter a valid amount.";
-            isValid = false;
-        }
-
-        // Validate End Date
-        if (endDate === "") {
-            document.getElementById("end-date-error").innerText = "Please select an end date.";
-            isValid = false;
-        } else if (endDate < today) {
-            document.getElementById("end-date-error").innerText = "End date cannot be in the past.";
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    function goToSection3() {
-        // Validate Step 2 before proceeding to Step 3
-        if (validateStep2()) {
-            // Hide Section 2 and show Section 3 if validation passes
-            document.getElementById("step-2").classList.add("d-none");
-            document.getElementById("step-3").classList.remove("d-none");
-        }
-    }
-</script>
 
                             <!-- Step 3 Content -->
-<section id="step-3" class="form-step d-none w-100">
+                            <section id="step-3" class="form-step col-12 d-none">
     <h2>Elaborate Cause Details</h2>
 
-    <input type="file" id="cover_image" name="cover_image" accept="image/*" required>
-    <span id="cover-image-error" class="error-text text-danger"></span>
+    <div class="row my-3">
+        <label for="cover_image" class="col-md-4 col-form-label">Cover Image:</label>
+        <div class="col-md-8">
+            <input type="file" id="cover_image" name="cover_image" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" required onchange="validateImage()">
+            <span id="cover-image-error" class="text-danger"></span>
+        </div>
+    </div>
 
-    <input type="text" id="cause_heading" name="cause_heading" placeholder="Heading" required>
-    <span id="cause-heading-error" class="error-text text-danger"></span>
+    <div class="row my-3">
+        <label for="cause_heading" class="col-md-4 col-form-label">Heading:</label>
+        <div class="col-md-8">
+            <input type="text" id="cause_heading" name="cause_heading" class="form-control my-2" placeholder="Heading" required>
+            <span id="cause-heading-error" class="text-danger"></span>
+        </div>
+    </div>
 
-    <textarea id="cause_description" name="cause_description" class="form-control" rows="6" placeholder="Enter description here" required></textarea>
-    <span id="cause-description-error" class="error-text text-danger"></span>
+    <div class="row my-3">
+        <label for="cause_description" class="col-md-4 col-form-label">Description:</label>
+        <div class="col-md-8">
+            <textarea id="cause_description" name="cause_description" class="form-control my-2" rows="4" placeholder="Description" required></textarea>
+            <span id="cause-description-error" class="text-danger"></span>
+        </div>
+    </div>
 
-    <div class="col-12 text-center mt-3">
-        <button id="openModalBtn1" class="button btn-navigate-form-step" style="background-color: red; color: white; border: none;" type="button" step_number="2" onclick="goToSection2()">Back</button>
-        <button class="button submit-btn" type="button" id="submitApprovalButton">Submit for Approval</button>
-      </div>
-    <!-- <div>
-        <button class="button btn-navigate-form-step" type="button" step_number="2" onclick="goToSection2()">Back</button>
-        <button class="button submit-btn" type="button" id="submitApprovalButton">Submit for Approval</button>
-    </div> -->
+    <div class="text-center mt-3">
+        <button type="button" class="btn btn-danger no-hover" onclick="showStep(2)">Back</button>
+        <button type="submit" class="btn btn-success no-hover">Submit for Approval</button>
+    </div>
 </section>
 
-<script>
-    function validateStep3() {
-    let isValid = true;
+                        </form>
+                        <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("category").addEventListener("change", () => validateField("category", "category-error", "Please select a category."));
+    document.getElementById("name").addEventListener("input", () => validateField("name", "name-error", "Please enter the name."));
+    document.getElementById("age").addEventListener("input", () => validateField("age", "age-error", "Please enter a valid age."));
+    document.getElementById("location").addEventListener("input", () => validateField("location", "location-error", "Please enter a location."));
+    document.getElementById("email").addEventListener("input", () => validateEmail());
+    document.getElementById("phone").addEventListener("input", () => validatePhone());
+    document.getElementById("amount").addEventListener("input", () => validateField("amount", "amount-error", "Please enter a valid amount."));
+    document.getElementById("end_date").addEventListener("change", () => validateField("end_date", "end-date-error", "Please select an end date."));
+    document.getElementById("cover_image").addEventListener("change", () => validateImage());
+    document.getElementById("cause_heading").addEventListener("input", () => validateField("cause_heading", "cause-heading-error", "Please enter a heading."));
+    document.getElementById("cause_description").addEventListener("input", () => validateField("cause_description", "cause-description-error", "Please enter a description."));
+});
 
-    const coverImage = document.getElementById("cover_image");
-    const causeHeading = document.getElementById("cause_heading").value.trim();
-    const causeDescription = document.getElementById("cause_description").value.trim();
+function showStep(step) {
+    document.querySelectorAll(".form-step").forEach(section => section.classList.add("d-none"));
+    document.getElementById(`step-${step}`).classList.remove("d-none");
+    document.querySelectorAll(".form-stepper-list").forEach(element => {
+        element.classList.remove("form-stepper-active", "form-stepper-completed");
+        element.classList.add("form-stepper-unfinished");
+    });
+    for (let i = 1; i <= step; i++) {
+        const stepElement = document.querySelector(`.form-stepper-list[step="${i}"]`);
+        stepElement.classList.remove("form-stepper-unfinished");
+        stepElement.classList.add(i === step ? "form-stepper-active" : "form-stepper-completed");
+    }
+}
+
+function validateField(id, errorId, errorMessage) {
+    const field = document.getElementById(id);
+    const errorElement = document.getElementById(errorId);
+    if (!field.value) {
+        errorElement.textContent = errorMessage;
+        return false;
+    }
+    errorElement.textContent = "";
+    return true;
+}
+
+function validateEmail() {
+    const email = document.getElementById("email").value;
+    const emailError = document.getElementById("email-error");
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!regex.test(email)) {
+        emailError.textContent = "Please enter a valid email address.";
+        return false;
+    }
+    emailError.textContent = "";
+    return true;
+}
+
+function validatePhone() {
+    const phone = document.getElementById("phone").value;
+    const phoneError = document.getElementById("phone-error");
+    const regex = /^[0-9]{10}$/;
+    if (!regex.test(phone)) {
+        phoneError.textContent = "Please enter a valid phone number.";
+        return false;
+    }
+    phoneError.textContent = "";
+    return true;
+}
+
+function validateImage() {
+    const fileInput = document.getElementById("cover_image");
+    const errorSpan = document.getElementById("cover-image-error");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        errorSpan.textContent = "Please upload a cover image.";
+        fileInput.setCustomValidity("Please upload a cover image.");
+        return false;
+    }
+
+    const maxSize = 2 * 1024 * 1024; // 2MB
+    const allowedTypes = ["image/jpeg", "image/png", "image/svg+xml"];
     
-    // Allowed file types and size limit (e.g., 2MB)
-    const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
-    const maxFileSize = 2 * 1024 * 1024; // 2MB
+    if (file.size > maxSize) {
+        errorSpan.textContent = "File size exceeds 2MB. Please upload a smaller image.";
+        fileInput.setCustomValidity("File size exceeds 2MB.");
+        return false;
+    }
 
-    // Reset error messages
-    document.getElementById("cover-image-error").innerText = '';
-    document.getElementById("cause-heading-error").innerText = '';
-    document.getElementById("cause-description-error").innerText = '';
+    if (!allowedTypes.includes(file.type)) {
+        errorSpan.textContent = "Invalid file type. Please upload a JPG, PNG, or SVG image.";
+        fileInput.setCustomValidity("Invalid file type.");
+        return false;
+    }
 
-    // Validate Cover Image
-    if (coverImage.files.length === 0) {
-        document.getElementById("cover-image-error").innerText = "Please upload a cover image.";
-        isValid = false;
-    } else {
-        const file = coverImage.files[0];
+    const img = new Image();
 
-        // Check file type
-        if (!allowedFileTypes.includes(file.type)) {
-            document.getElementById("cover-image-error").innerText = "Only PNG, JPG, JPEG, and SVG formats are allowed.";
-            isValid = false;
+    img.onload = function () {
+        // Only invalidate if the dimensions exceed 1024x768
+        if (img.width > 1024 || img.height > 768) {
+            errorSpan.textContent = "Image dimensions must not exceed 1024x768 px.";
+            fileInput.setCustomValidity("Invalid image dimensions.");
+        } else {
+            errorSpan.textContent = ""; // Clear error
+            fileInput.setCustomValidity(""); // Clear custom validity
         }
+    };
 
-        // Check file size
-        if (file.size > maxFileSize) {
-            document.getElementById("cover-image-error").innerText = "Image size should not exceed 2MB.";
-            isValid = false;
-        }
-    }
+    img.onerror = function () {
+        errorSpan.textContent = "Invalid image file.";
+        fileInput.setCustomValidity("Invalid image file.");
+    };
 
-    // Validate Cause Heading
-    if (causeHeading === "") {
-        document.getElementById("cause-heading-error").innerText = "Please enter a heading for the cause.";
-        isValid = false;
-    }
+    img.src = URL.createObjectURL(file);
+}
 
-    // Validate Cause Description
-    if (causeDescription === "") {
-        document.getElementById("cause-description-error").innerText = "Please enter a description for the cause.";
-        isValid = false;
-    }
+function validateStep1() {
+    return validateField("category", "category-error", "Please select a category.") &&
+        validateField("name", "name-error", "Please enter the name.") &&
+        validateField("age", "age-error", "Please enter a valid age.") &&
+        validateField("location", "location-error", "Please enter a location.") &&
+        validateEmail() &&
+        validatePhone();
+}
 
-    return isValid;
+function validateStep2() {
+    return validateField("amount", "amount-error", "Please enter a valid amount.") &&
+        validateField("end_date", "end-date-error", "Please select an end date.");
+}
+
+function validateStep3() {
+    return validateImage() &&
+        validateField("cause_heading", "cause-heading-error", "Please enter a heading.") &&
+        validateField("cause_description", "cause-description-error", "Please enter a description.");
 }
 
 document.getElementById("submitApprovalButton").addEventListener("click", function () {
     if (validateStep3()) {
-        // Submit the form if validation passes
         document.getElementById("step-3").closest("form").submit();
     }
 });
-
 </script>
-
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
   <script>

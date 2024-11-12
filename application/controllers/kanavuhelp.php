@@ -290,57 +290,59 @@ class kanavuhelp extends CI_Controller
         }
     }
     public function individualform_data()
-    {
-        // Load required model and library
-        $this->load->model('UserModel');
-        $this->load->library('upload');
+{
+    // Load required model and library
+    $this->load->model('UserModel');
+    $this->load->library('upload');
 
-        // Retrieve form data
-        $data = [
-            'category' => $this->input->post('category'),
-            'name' => $this->input->post('name'),
-            'email' => $this->input->post('email'),
-            'phone' => $this->input->post('phone'),
-            'age' => $this->input->post('age'),
-            'location' => $this->input->post('location'),
-            'form_option' => $this->input->post('form_option'),
-            'amount' => $this->input->post('amount'),
-            'end_date' => $this->input->post('end_date'),
-            'cause_heading' => $this->input->post('cause_heading'),
-            'cause_description' => $this->input->post('cause_description'),
-            'user_id' => $this->session->userdata('userId')
-        ];
+    // Retrieve form data
+    $data = [
+        'category' => $this->input->post('category'),
+        'name' => $this->input->post('name'),
+        'email' => $this->input->post('email'),
+        'phone' => $this->input->post('phone'),
+        'age' => $this->input->post('age'),
+        'location' => $this->input->post('location'),
+        'form_option' => $this->input->post('form_option'),
+        'amount' => $this->input->post('amount'),
+        'end_date' => $this->input->post('end_date'),
+        'cause_heading' => $this->input->post('cause_heading'),
+        'cause_description' => $this->input->post('cause_description'),
+        'user_id' => $this->session->userdata('userId')
+    ];
 
-        // File upload configuration
-        $config['upload_path'] = './assets/individualform_img/';
-        $config['allowed_types'] = 'gif|jpg|png|svg';
-        $config['max_size'] = 1024;
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
-        $this->upload->initialize($config);
+    // File upload configuration
+    $config['upload_path'] = './assets/individualform_img/';
+    $config['allowed_types'] = 'jpg|jpeg|png|svg';
+    $config['max_size'] = 2048; // 2MB
+    $config['max_width'] = 1024;
+    $config['max_height'] = 768;
+    $this->upload->initialize($config);
 
-        // Handle file upload
-        if (!$this->upload->do_upload('cover_image')) {
-            $error = $this->upload->display_errors();
-            echo "<script>alert('Upload error: $error');</script>";
-            redirect('kanavuhelp/individual');
+    // Handle file upload
+    if (!$this->upload->do_upload('cover_image')) {
+        // Error during file upload
+        $error = $this->upload->display_errors();
+        echo "<script>alert('Upload error: $error');</script>";
+        redirect('kanavuhelp/individual');
+    } else {
+        // File upload successful
+        $file_data = $this->upload->data();
+        $data['cover_image'] = $file_data['file_name'];
+
+        // Insert data into the database
+        $response = $this->UserModel->store3($data);
+
+        if ($response) {
+            echo '<script>alert("Successfully registered");</script>';
+            redirect('kanavuhelp/donate'); // Redirect to the donate page after successful registration
         } else {
-            // File upload successful
-            $file_data = $this->upload->data();
-            $data['cover_image'] = $file_data['file_name'];
-
-            // Insert data into the database
-            $response = $this->UserModel->store3($data);
-
-            if ($response) {
-                echo '<script>alert("Successfully registered");</script>';
-                redirect('kanavuhelp/donate'); // Ensure this route points to the donate page
-            } else {
-                echo '<script>alert("Failed to register");</script>';
-                redirect('kanavuhelp/individual');
-            }
+            echo '<script>alert("Failed to register");</script>';
+            redirect('kanavuhelp/individual'); // Redirect back if insertion fails
         }
     }
+}
+
 
 
     // causes by user id
