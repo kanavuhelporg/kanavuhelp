@@ -352,9 +352,9 @@
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>" style="color: rgba(235, 45, 50, 1)">Contact Us</a>
                     </li>
@@ -420,29 +420,41 @@
         <h3 class="text-base text-black-500 text-center w-auto"><strong>Submit your inquiry, and we'll respond to you <br>as
             soon as possible!</strong></h3>
             <div class="relative mb-4 mt-5 form1">
-            <form name="contactus" class="form1" id="myForm" onsubmit="return validateForm()" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
+            <form name="contactus" class="form1" id="myForm" onsubmit="return submitForm()" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
   <!-- Name Field -->
-  <div class="mb-3">
-    <input type="text" class="form-control" name="full-name" id="exampleFormControlInput1" placeholder="Name*" required onblur="validateName()">
-    <p id="demo" style="color:red"></p>
+  <div class="mb-3 row align-items-center">
+    <label for="exampleFormControlInput1" class="col-sm-3 col-form-label">Name:<span class="text-danger">*</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="full-name" id="exampleFormControlInput1" placeholder="Enter your name" required onblur="validateName()">
+      <p id="demo" style="color:red"></p>
+    </div>
   </div>
 
   <!-- Email Field -->
-  <div class="mb-3">
-    <input type="email" class="form-control" name="email" id="exampleFormControlInput2" placeholder="Mail ID*" required onblur="validateEmail()">
-    <p id="demo1" style="color:red"></p>
+  <div class="mb-3 row align-items-center">
+    <label for="exampleFormControlInput2" class="col-sm-3 col-form-label">Mail ID:<span class="text-danger">*</label>
+    <div class="col-sm-9">
+      <input type="email" class="form-control" name="email" id="exampleFormControlInput2" placeholder="Enter your email" required onblur="validateEmail()">
+      <p id="demo1" style="color:red"></p>
+    </div>
   </div>
 
   <!-- Phone Field -->
-  <div class="mb-3">
-    <input type="tel" class="form-control" name="phone" id="exampleFormControlInput3" placeholder="Phone Number*" required onblur="validatePhone()">
-    <p id="demo2" style="color:red"></p>
+  <div class="mb-3 row align-items-center">
+    <label for="exampleFormControlInput3" class="col-sm-3 col-form-label">Phone Number:<span class="text-danger">*</label>
+    <div class="col-sm-9">
+      <input type="tel" class="form-control" name="phone" id="exampleFormControlInput3" placeholder="Enter your phone number" required onblur="validatePhone()">
+      <p id="demo2" style="color:red"></p>
+    </div>
   </div>
 
   <!-- Message Field -->
-  <div class="mb-3">
-    <textarea class="form-control area" name="message" id="exampleFormControlTextarea1" rows="3" placeholder="Message*" required onblur="validateMessage()"></textarea>
-    <p id="demo3" style="color:red"></p>
+  <div class="mb-3 row align-items-center">
+    <label for="exampleFormControlTextarea1" class="col-sm-3 col-form-label">Message:<span class="text-danger">*</label>
+    <div class="col-sm-9">
+      <textarea class="form-control area" name="message" id="exampleFormControlTextarea1" rows="3" placeholder="Enter your message" required onblur="validateMessage()"></textarea>
+      <p id="demo3" style="color:red"></p>
+    </div>
   </div>
 
   <button type="submit" class="btn btn-primary btn-lg msg_btn" style="background-color:#E01A2B;border:none;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
@@ -487,57 +499,50 @@
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-  // Name validation function
-  function validateName() {
-    var name = document.getElementById('exampleFormControlInput1').value;
-    var nameError = document.getElementById('demo');
-    if (name === "") {
-      nameError.innerHTML = "Name is required.";
-    } else if (!/^[A-Za-z\s]+$/.test(name)) {
-      nameError.innerHTML = "Name must contain only letters.";
-    } else {
-      nameError.innerHTML = "";
+  // Check if the form was submitted before and clear the form if true
+  window.onload = function() {
+    if (sessionStorage.getItem("formSubmitted") === "true") {
+      clearForm(); // Clear the form when the page loads if form was submitted
+      sessionStorage.removeItem("formSubmitted"); // Remove the submission flag
     }
   }
 
-  // Email validation function
-  function validateEmail() {
-    var email = document.getElementById('exampleFormControlInput2').value;
-    var emailError = document.getElementById('demo1');
-    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (email === "") {
-      emailError.innerHTML = "Email is required.";
-    } else if (!emailPattern.test(email)) {
-      emailError.innerHTML = "Invalid email format.";
-    } else {
-      emailError.innerHTML = "";
+  function submitForm() {
+    // Validate all fields
+    validateName();
+    validateEmail();
+    validatePhone();
+    validateMessage();
+
+    // Check if there are any validation errors
+    if (document.getElementById("demo").innerHTML === "" &&
+        document.getElementById("demo1").innerHTML === "" &&
+        document.getElementById("demo2").innerHTML === "" &&
+        document.getElementById("demo3").innerHTML === "") {
+
+      // Form is valid, simulate form submission
+      alert("Message sent successfully!");
+
+      // Set flag in sessionStorage to indicate the form has been submitted
+      sessionStorage.setItem("formSubmitted", "true");
+
+      // Clear the form fields and error messages
+      clearForm();
+
+      // Prevent actual submission for testing; remove this line for real submission
+      return false;
     }
+    
+    // Prevent form submission if there are validation errors
+    return false;
   }
 
-  // Phone validation function
-  function validatePhone() {
-    var phone = document.getElementById('exampleFormControlInput3').value;
-    var phoneError = document.getElementById('demo2');
-    if (phone === "") {
-      phoneError.innerHTML = "Phone number is required.";
-    } else if (!/^\d{10}$/.test(phone)) {
-      phoneError.innerHTML = "Phone number must be 10 digits.";
-    } else {
-      phoneError.innerHTML = "";
-    }
-  }
-
-  // Message validation function
-  function validateMessage() {
-    var message = document.getElementById('exampleFormControlTextarea1').value;
-    var messageError = document.getElementById('demo3');
-    if (message === "") {
-      messageError.innerHTML = "Message is required.";
-    } else if (message.length < 10) {
-      messageError.innerHTML = "Message must be at least 10 characters.";
-    } else {
-      messageError.innerHTML = "";
-    }
+  function clearForm() {
+    document.getElementById("myForm").reset(); // Reset form fields
+    document.getElementById("demo").innerHTML = ""; // Clear error messages
+    document.getElementById("demo1").innerHTML = "";
+    document.getElementById("demo2").innerHTML = "";
+    document.getElementById("demo3").innerHTML = "";
   }
 </script>
   </body>

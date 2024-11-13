@@ -24,6 +24,24 @@
     body {
       font-family: 'Sen', sans-serif;
     }
+    .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  padding: (1rem) var(1rem);
+}
+.navbar-toggler {
+    padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid #4f373766;
+    border-radius: .25rem;
+    transition: box-shadow .15s ease-in-out;
+}
+  #navbarscroll {
+    margin-top: 17px;
+    margin-bottom: 10px;
+    margin-left: 70px;
+  }
 /* carousel */
     .carousel-item {
       height: 100vh;
@@ -186,6 +204,10 @@
       border: 1px solid rgba(174, 168, 168, 1);
       border-radius: 25px;
     }
+    .btn.card_button:hover {
+    background-color: inherit; /* Or the original background color */
+    color: inherit; /* Keep the text color as it is */
+}
 
     .donate_btn {
       border: 1px solid rgba(224, 26, 43, 1);
@@ -314,9 +336,9 @@
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>" >Contact Us</a>
                     </li>
@@ -389,7 +411,8 @@
 
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                            <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                            <button type="button" class="btn card_button text-muted ms-auto" style="pointer-events: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+
                         </div>
                         
                         <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
@@ -616,6 +639,9 @@ function validateAmount() {
     amountError.textContent = ""; // Clear error if valid
     return true;
 }
+
+
+
 
 </script>
 

@@ -578,6 +578,10 @@
     color: red !important;
     border: 1px solid red !important;
 }
+.btn.card_button:hover {
+    background-color: inherit; /* Or the original background color */
+    color: inherit; /* Keep the text color as it is */
+}
 
   </style>
 </head>
@@ -614,9 +618,9 @@
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
                     </li>
@@ -726,7 +730,7 @@
 
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="card-text text-muted mb-0">by <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                                                    <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                                                    <button type="button" class="btn card_button text-muted ms-auto" style="pointer-events: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                                                 </div>
                                                 
                                                 <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
@@ -872,7 +876,7 @@ function setCauseId(causeId) {
       </div>
     </div>
   </section>
-  <div class="bg-light">
+  <!-- <div class="bg-light">
     <div class="container-xxl mt-5 pt-5">
       <div class="h4" style="text-align:center">LAST CHARITY BLOGS</div>
       <div style="display: flex; justify-content: center;">
@@ -882,12 +886,12 @@ function setCauseId(causeId) {
         activist and individual citizens that are making.</div>
     </div><br>
     <div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
-      <div class="carousel-inner">
+      <div class="carousel-inner"> -->
         <!-- First slide (active) -->
-        <div class="carousel-item active">
-          <div class="row">
+        <!-- <div class="carousel-item active">
+          <div class="row"> -->
             <!-- Show 1 card on mobile and 3 cards on large screens -->
-            <div class="col-12 col-md-4 mb-4">
+            <!-- <div class="col-12 col-md-4 mb-4">
               <div class="card blogs_card">
                 <img src="<?= base_url('assets/img/blog1 1.png') ?>" class="card-img-top" alt="Image 1">
                 <div class="card-body">
@@ -936,10 +940,10 @@ function setCauseId(causeId) {
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Second slide -->
-        <div class="carousel-item">
+        <!-- <div class="carousel-item">
           <div class="row">
             <div class="col-12 col-md-4 mb-4">
               <div class="card">
@@ -991,10 +995,10 @@ function setCauseId(causeId) {
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Controls -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+      <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
         data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
@@ -1004,7 +1008,7 @@ function setCauseId(causeId) {
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
-    </div>
+    </div> -->
 
 
 
