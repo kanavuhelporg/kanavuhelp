@@ -420,33 +420,33 @@
         <h3 class="text-base text-black-500 text-center w-auto"><strong>Submit your inquiry, and we'll respond to you <br>as
             soon as possible!</strong></h3>
             <div class="relative mb-4 mt-5 form1">
-  <form name="contactus" class="form1" id="myForm" onsubmit="return contact_us()" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
-
-    <!-- Name Field -->
-    <div class="mb-3">
-  
-  
-  
-    <input type="text" class="form-control" name="full-name" id="exampleFormControlInput1" placeholder="Name*" required>
+            <form name="contactus" class="form1" id="myForm" onsubmit="return validateForm()" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
+  <!-- Name Field -->
+  <div class="mb-3">
+    <input type="text" class="form-control" name="full-name" id="exampleFormControlInput1" placeholder="Name*" required onblur="validateName()">
     <p id="demo" style="color:red"></p>
   </div>
-<div class="mb-3">
-  
-  <input type="email" class="form-control" name="email" id="exampleFormControlInput2" placeholder="Mail ID*" required>
-  <p id="demo1" style="color:red"></p>
-</div>
-<div class="mb-3">
-  
-  <input type="tel" class="form-control" name="phone" id="exampleFormControlInput3" placeholder="Phone Number*" required>
-  <p id="demo2" style="color:red"></p>
-</div>
-<div class="mb-3">
-  
-  <textarea class="form-control area" name="message" id="exampleFormControlTextarea1" rows="3" placeholder="Message*" required></textarea>
-  <p id="demo3" style="color:red"></p>
-</div>
-<button type="submit" class="btn btn-primary btn-lg msg_btn" style=" background-color:#E01A2B;border:none;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
-  </form>
+
+  <!-- Email Field -->
+  <div class="mb-3">
+    <input type="email" class="form-control" name="email" id="exampleFormControlInput2" placeholder="Mail ID*" required onblur="validateEmail()">
+    <p id="demo1" style="color:red"></p>
+  </div>
+
+  <!-- Phone Field -->
+  <div class="mb-3">
+    <input type="tel" class="form-control" name="phone" id="exampleFormControlInput3" placeholder="Phone Number*" required onblur="validatePhone()">
+    <p id="demo2" style="color:red"></p>
+  </div>
+
+  <!-- Message Field -->
+  <div class="mb-3">
+    <textarea class="form-control area" name="message" id="exampleFormControlTextarea1" rows="3" placeholder="Message*" required onblur="validateMessage()"></textarea>
+    <p id="demo3" style="color:red"></p>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-lg msg_btn" style="background-color:#E01A2B;border:none;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
+</form>
   
 </div>
 
@@ -486,55 +486,60 @@
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-  function contact_us(){
-     // Get values from form inputs
-     const name = document.getElementById("exampleFormControlInput1").value;
-            const email = document.getElementById("exampleFormControlInput2").value;
-            const phone = document.getElementById("exampleFormControlInput3").value;
-            const message = document.getElementById("exampleFormControlTextarea1").value;
+    <script>
+  // Name validation function
+  function validateName() {
+    var name = document.getElementById('exampleFormControlInput1').value;
+    var nameError = document.getElementById('demo');
+    if (name === "") {
+      nameError.innerHTML = "Name is required.";
+    } else if (!/^[A-Za-z\s]+$/.test(name)) {
+      nameError.innerHTML = "Name must contain only letters.";
+    } else {
+      nameError.innerHTML = "";
+    }
+  }
 
-const error_message1=document.getElementById("demo");
-const error_message2=document.getElementById("demo1");
-const error_message3=document.getElementById("demo2");
-const error_message4=document.getElementById("demo3");
-error_message1.innerHTML="";
-error_message2.innerHTML="";
-error_message3.innerHTML="";
-error_message4.innerHTML="";
-            // Regular expressions for validation
-            const nameRegex = /^[A-Za-z\s]+$/; // Allow only alphabets and spaces
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email format
-            const phoneRegex = /^\d{10}$/; // Phone number with 10 digits
+  // Email validation function
+  function validateEmail() {
+    var email = document.getElementById('exampleFormControlInput2').value;
+    var emailError = document.getElementById('demo1');
+    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (email === "") {
+      emailError.innerHTML = "Email is required.";
+    } else if (!emailPattern.test(email)) {
+      emailError.innerHTML = "Invalid email format.";
+    } else {
+      emailError.innerHTML = "";
+    }
+  }
 
-            // Validate name
-            if (name.length < 3 || (!nameRegex.test(name))) {
-                error_message1.innerHTML+="Name must have atleast 3 characters <br> Only alphabets and spaces are allowed.";
-                return false;
-            }
+  // Phone validation function
+  function validatePhone() {
+    var phone = document.getElementById('exampleFormControlInput3').value;
+    var phoneError = document.getElementById('demo2');
+    if (phone === "") {
+      phoneError.innerHTML = "Phone number is required.";
+    } else if (!/^\d{10}$/.test(phone)) {
+      phoneError.innerHTML = "Phone number must be 10 digits.";
+    } else {
+      phoneError.innerHTML = "";
+    }
+  }
 
-            // Validate email
-            if (!emailRegex.test(email)) {
-                 error_message2.innerHTML+="Please enter a valid email address.";
-                return false;
-            }
-
-            // Validate phone number
-            if (!phoneRegex.test(phone)) {
-                 error_message3.innerHTML+="Please enter a valid 10-digit phone number.";
-                return false;
-            }
-            if(message.length<10)
-            {
-              error_message4.innerHTML+="Comments must be minimum of 10 characters";
-              return false;
-            }
-            // If all fields are valid
-            
-            return true;
-        
-  }  
-  </script>
+  // Message validation function
+  function validateMessage() {
+    var message = document.getElementById('exampleFormControlTextarea1').value;
+    var messageError = document.getElementById('demo3');
+    if (message === "") {
+      messageError.innerHTML = "Message is required.";
+    } else if (message.length < 10) {
+      messageError.innerHTML = "Message must be at least 10 characters.";
+    } else {
+      messageError.innerHTML = "";
+    }
+  }
+</script>
   </body>
     </html>
     

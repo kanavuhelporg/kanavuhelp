@@ -919,12 +919,12 @@
                             </li>
                         </ul>
 
-                        <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="row w-100">
+                        <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="p-3">
                             <!-- Step 1 Content -->
                             <section id="step-1" class="form-step col-12">
                                 <h2>Basic Details</h2>
                                 <div class="row my-3">
-    <label for="category" class="col-md-4 col-form-label">I am raising fund for:</label>
+    <label for="category" class="col-md-4 col-form-label">I am raising fund for:<span class="text-danger">*</label>
     <div class="col-md-8">
         <div class="custom-dropdown-wrapper">
             <select name="category" id="category" class="form-control custom-dropdown" onchange="copySelection()" required>
@@ -940,35 +940,37 @@
 </div>
 
                                 <div class="form-group row">
-    <label for="name" class="col-sm-4 col-form-label">Name of beneficiary:</label>
+    <label for="name" class="col-sm-4 col-form-label">Name of beneficiary:<span class="text-danger">*</label>
     <div class="col-sm-8">
         <input type="text" id="name" name="name" class="form-control my-2" placeholder="Name of beneficiary" required>
         <span id="name-error" class="text-danger"></span>
     </div>
 </div>
 <div class="form-group row">
-    <label for="age" class="col-sm-4 col-form-label">Age of beneficiary:</label>
+    <label for="age" class="col-sm-4 col-form-label">Age of beneficiary:<span class="text-danger">*</label>
     <div class="col-sm-8">
         <input type="number" id="age" name="age" class="form-control my-2" placeholder="Age of beneficiary" required>
         <span id="age-error" class="text-danger"></span>
     </div>
 </div>
 <div class="form-group row">
-    <label for="location" class="col-sm-4 col-form-label">Location:</label>
+    <label for="location" class="col-sm-4 col-form-label">Location:<span class="text-danger">*</label>
     <div class="col-sm-8">
         <input type="text" id="location" name="location" class="form-control my-2" placeholder="Location" required>
         <span id="location-error" class="text-danger"></span>
     </div>
 </div>
 <div class="form-group row">
-    <label for="email" class="col-sm-4 col-form-label">Mail Id:*</label>
+    <!-- <label for="email" class="col-sm-4 col-form-label">Mail Id:*</label> -->
+    <label for="email" class="col-sm-4 col-form-label">Mail Id:<span class="text-danger">*</span></label>
+
     <div class="col-sm-8">
         <input type="email" id="email" name="email" class="form-control my-2" placeholder="Mail Id*" required>
         <span id="email-error" class="text-danger"></span>
     </div>
 </div>
 <div class="form-group row">
-    <label for="phone" class="col-sm-4 col-form-label">Phone Number:*</label>
+    <label for="phone" class="col-sm-4 col-form-label">Phone Number:<span class="text-danger">*</label>
     <div class="col-sm-8">
         <input type="tel" id="phone" name="phone" class="form-control my-2" placeholder="Phone Number*" required>
         <span id="phone-error" class="text-danger"></span>
@@ -992,7 +994,7 @@
     </div>
 
     <div class="row my-3">
-        <label for="amount" class="col-md-4 col-form-label">Amount*:</label>
+        <label for="amount" class="col-md-4 col-form-label">Amount:<span class="text-danger">*</label>
         <div class="col-md-8">
             <input type="number" id="amount" name="amount" class="form-control my-2" placeholder="Amount*" required>
             <span id="amount-error" class="text-danger"></span>
@@ -1000,7 +1002,7 @@
     </div>
 
     <div class="row my-3">
-        <label for="end_date" class="col-md-4 col-form-label">End Date*:</label>
+        <label for="end_date" class="col-md-4 col-form-label">End Date:<span class="text-danger">*</label>
         <div class="col-md-8">
             <input type="date" id="end_date" name="end_date" class="form-control my-2" placeholder="End Date*" required>
             <span id="end-date-error" class="text-danger"></span>
@@ -1019,15 +1021,18 @@
     <h2>Elaborate Cause Details</h2>
 
     <div class="row my-3">
-        <label for="cover_image" class="col-md-4 col-form-label">Cover Image:</label>
-        <div class="col-md-8">
-            <input type="file" id="cover_image" name="cover_image" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" required onchange="validateImage()">
-            <span id="cover-image-error" class="text-danger"></span>
-        </div>
+    <label for="cover_image" class="col-md-4 col-form-label">Cover Image:<span class="text-danger">*</label>
+    <div class="col-md-8">
+        <input type="file" id="cover_image" name="cover_image" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" required onchange="validateImage()">
+        <small class="text-muted">
+            Image size must be up to 2MB, dimensions up to 1024x768 px, and formats: JPG, JPEG, PNG, SVG.
+        </small>
+        <span id="cover-image-error" class="text-danger"></span>
     </div>
+</div>
 
     <div class="row my-3">
-        <label for="cause_heading" class="col-md-4 col-form-label">Heading:</label>
+        <label for="cause_heading" class="col-md-4 col-form-label">Heading:<span class="text-danger">*</label>
         <div class="col-md-8">
             <input type="text" id="cause_heading" name="cause_heading" class="form-control my-2" placeholder="Heading" required>
             <span id="cause-heading-error" class="text-danger"></span>
@@ -1035,12 +1040,13 @@
     </div>
 
     <div class="row my-3">
-        <label for="cause_description" class="col-md-4 col-form-label">Description:</label>
-        <div class="col-md-8">
-            <textarea id="cause_description" name="cause_description" class="form-control my-2" rows="4" placeholder="Description" required></textarea>
-            <span id="cause-description-error" class="text-danger"></span>
-        </div>
+    <label for="cause_description" class="col-md-4 col-form-label">Description:<span class="text-danger">*</label>
+    <div class="col-md-8">
+        <textarea id="cause_description" name="cause_description" class="form-control my-2" rows="4" placeholder="Description" required oninput="validateDescription()"></textarea>
+        <span id="cause-description-error" class="text-danger"></span>
     </div>
+</div>
+
 
     <div class="text-center mt-3">
         <button type="button" class="btn btn-danger no-hover" onclick="showStep(2)">Back</button>
@@ -1077,17 +1083,53 @@ function showStep(step) {
         stepElement.classList.add(i === step ? "form-stepper-active" : "form-stepper-completed");
     }
 }
+function validateAge() {
+    const ageField = document.getElementById("age");
+    const ageError = document.getElementById("age-error");
+    let ageValue = ageField.value.trim();
+
+    // Ensure the age value is positive
+    if (ageValue < 0) {
+        ageValue = ageValue.replace("-", ""); // Remove the negative sign
+        ageField.value = ageValue; // Update the input field with the corrected value
+    }
+
+    // Check if age is a valid number between 1 and 120
+    if (!ageValue || isNaN(ageValue) || ageValue < 1 || ageValue > 120) {
+        ageError.textContent = "Please enter a valid age between 1 and 120.";
+        return false;
+    }
+    
+    ageError.textContent = ""; // Clear error message if validation passes
+    return true;
+}
+
+// Replace the age validation call in the original script
+document.getElementById("age").addEventListener("input", () => validateAge());
 
 function validateField(id, errorId, errorMessage) {
     const field = document.getElementById(id);
     const errorElement = document.getElementById(errorId);
+
     if (!field.value) {
         errorElement.textContent = errorMessage;
         return false;
     }
+
+    if (id === "end_date") {
+        const selectedDate = new Date(field.value);
+        const currentDate = new Date();
+        // Check if the selected date is in the past
+        if (selectedDate <= currentDate) {
+            errorElement.textContent = "End date must be a future date.";
+            return false;
+        }
+    }
+
     errorElement.textContent = "";
     return true;
 }
+
 
 function validateEmail() {
     const email = document.getElementById("email").value;
@@ -1125,24 +1167,34 @@ function validateImage() {
     }
 
     const maxSize = 2 * 1024 * 1024; // 2MB
-    const allowedTypes = ["image/jpeg", "image/png", "image/svg+xml"];
-    
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml"];
+    const allowedExtensions = ["jpg", "jpeg", "png", "svg"];
+
+    // Check file size
     if (file.size > maxSize) {
         errorSpan.textContent = "File size exceeds 2MB. Please upload a smaller image.";
         fileInput.setCustomValidity("File size exceeds 2MB.");
         return false;
     }
 
+    // Check MIME type
     if (!allowedTypes.includes(file.type)) {
-        errorSpan.textContent = "Invalid file type. Please upload a JPG, PNG, or SVG image.";
-        fileInput.setCustomValidity("Invalid file type.");
+        errorSpan.textContent = "Invalid file format. Only JPG, JPEG, PNG, and SVG formats are accepted.";
+        fileInput.setCustomValidity("Invalid file format.");
         return false;
     }
 
-    const img = new Image();
+    // Check file extension
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    if (!allowedExtensions.includes(fileExtension)) {
+        errorSpan.textContent = "Invalid file format. Only JPG, JPEG, PNG, and SVG formats are accepted.";
+        fileInput.setCustomValidity("Invalid file format.");
+        return false;
+    }
 
+    // Load the image to check dimensions
+    const img = new Image();
     img.onload = function () {
-        // Only invalidate if the dimensions exceed 1024x768
         if (img.width > 1024 || img.height > 768) {
             errorSpan.textContent = "Image dimensions must not exceed 1024x768 px.";
             fileInput.setCustomValidity("Invalid image dimensions.");
@@ -1159,6 +1211,45 @@ function validateImage() {
 
     img.src = URL.createObjectURL(file);
 }
+function validateHeading() {
+    const heading = document.getElementById("cause_heading").value;
+    const headingError = document.getElementById("cause-heading-error");
+
+    if (!heading) {
+        headingError.textContent = "Please enter a heading.";
+        return false;
+    }
+    if (heading.length > 50) {
+        headingError.textContent = "Heading must not exceed 50 characters.";
+        return false;
+    }
+    // Check if the heading contains anything other than alphabets (spaces allowed)
+    if (!/^[A-Za-z\s]+$/.test(heading)) {
+        headingError.textContent = "Heading should only contain letters and spaces.";
+        return false;
+    }
+
+    // Clear error if valid
+    headingError.textContent = "";
+    return true;
+}
+function validateDescription() {
+    const descriptionField = document.getElementById("cause_description");
+    const errorSpan = document.getElementById("cause-description-error");
+    const maxLength = 300; // Set the maximum length limit
+    
+    if (descriptionField.value.length > maxLength) {
+        errorSpan.textContent = "Description cannot exceed 300 characters.";
+        return false;
+    }
+    
+    errorSpan.textContent = ""; // Clear error if valid
+    return true;
+}
+
+// Update the event listener for the heading field
+document.getElementById("cause_heading").addEventListener("input", validateHeading);
+
 
 function validateStep1() {
     return validateField("category", "category-error", "Please select a category.") &&
