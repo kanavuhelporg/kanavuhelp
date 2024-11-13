@@ -665,7 +665,25 @@ function setCauseId(causeId) {
   });
 </script>
 
+<form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
+    <input type="hidden" name="returnUrl" id="returnUrl" value="">
+</form>
 
+<script>
+  function redirectToLogin() {
+    // Get the current URL
+    var currentUrl = window.location.href;
+    
+    // Encode the current URL
+    var encodedUrl = encodeURIComponent(currentUrl);
+
+    // Set the hidden input value to the encoded current URL
+    document.getElementById('returnUrl').value = encodedUrl;
+
+    // Submit the form to the login page
+    document.getElementById('redirectToLoginForm').submit();
+}
+</script>
 <script>
 document.getElementById('donationForm').onsubmit = function(event) {
 
