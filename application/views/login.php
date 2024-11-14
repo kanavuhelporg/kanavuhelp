@@ -21,21 +21,34 @@
             padding: 40px;
         }
 
-        .btnsignin {
+        /* .btnsignin {
             width: 100%;
             border-radius: 10px;
             color: white;
             background-color: #EB2D32;
-        }
+        } */
+        .btnsignin {
+    width: 100%;
+    border-radius: 10px;
+    color: white;
+    background-color: #EB2D32;
+    border: none; /* Ensures no border is applied */
+    transition: none; /* Removes any transition effect */
+}
 
+.btnsignin:hover {
+    background-color: #EB2D32; /* Keep the button color the same on hover */
+    color: white; /* Keep text color the same */
+    border: none; /* Ensure no border on hover */
+}
         .atag {
             text-decoration: underline;
             color: #EB2D32;
         }
 
-        .btnsignin a:hover {
+        /* .btnsignin a:hover {
             color: black;
-        }
+        } */
 
         form label {
             color: #718096;
@@ -60,6 +73,7 @@
           margin-left:50px;margin-right:50px;
 
         }
+        
     </style>
 </head>
 
@@ -99,10 +113,18 @@
                     </div>
                     <button type="submit" name="save" class="btn border btnsignin">Sign in</button>
                     <p style="margin-top:10px;text-align:center;font-size:15px;"><strong>--------------OR-------------</strong></p>
-                    <div class="social-icons" style="text-align:center;">continue with
-                        <img src="<?= base_url('/assets/img/vector.png') ?>" alt="noimage">
-                        <img src="<?= base_url('/assets/img/icons8-google 1.png') ?>" alt="noimage">
-                    </div>
+                    <div class="social-icons" style="text-align:center;">
+    <p>Continue with</p>
+    <!-- <a href="https://facebook.com" target="_blank">
+        <button type="button" style="border:none; padding:10px 20px; margin:5px; cursor:pointer;">
+            <img src="<?= base_url('/assets/img/vector.png') ?>" alt="Facebook" style="width:40px; height:40px; vertical-align:middle; margin-right:8px;">
+        </button>
+    </a> -->
+        <button type="button" style="border:none; padding:10px 20px; margin:5px; cursor:pointer;">
+            <img src="<?= base_url('/assets/img/icons8-google 1.png') ?>" alt="Google" style="width:40px; height:40px; vertical-align:middle; margin-right:8px;">
+        </button>
+</div>
+
                 </form>
             </div>
 
@@ -113,7 +135,7 @@
         </div>
     </div>
 
-    <!-- <script>
+    <script>
         function loginValidate() {
             var email = document.login.exampleInputEmail1.value.trim(); // Trim the input value
             var password = document.login.exampleInputpassword1.value.trim(); // Trim the input value
@@ -144,7 +166,7 @@
 
             return true; // Submit the form if all validations pass
         }
-    </script> -->
+    </script> 
 </body>
 
 </html>

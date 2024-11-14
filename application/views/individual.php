@@ -75,6 +75,7 @@
     margin-left: 70px;
   }
 
+
   .btn {
     color: #EB2D32 !important;
     font-weight: bolder !important;
@@ -837,9 +838,9 @@
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
                     </li>
@@ -870,7 +871,7 @@
     </div>
 </nav>
 <div class="donate_img mt-5 pt-4">
-    <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
+    <img src="<?=base_url('assets/img/sthelp.png')?>" width="100%">
   </div>
   <!--<div class="mx-auto text-center mt-8 md:ml-20 ">
     <button id="myDonationsButton" 

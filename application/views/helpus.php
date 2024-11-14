@@ -22,6 +22,24 @@
     body {
       font-family: 'Sen', sans-serif;
     }
+    .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  padding: (1rem) var(1rem);
+}
+.navbar-toggler {
+    padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid #4f373766;
+    border-radius: .25rem;
+    transition: box-shadow .15s ease-in-out;
+}
+  #navbarscroll {
+    margin-top: 17px;
+    margin-bottom: 10px;
+    margin-left: 70px;
+  }
 /* carousel */
     .carousel-item {
       height: 100vh;
@@ -306,9 +324,9 @@
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
             </li>

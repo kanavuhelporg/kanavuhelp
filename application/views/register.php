@@ -12,10 +12,24 @@
     <link rel="stylesheet" href="loginstyle.css">
     <title>Login Page</title>
 <style>
-   .btnsignin{
+   /* .btnsignin{
     background-color: #EB2D32;
     color:white;
-   }  
+   }   */
+   .btnsignin {
+    width: 20%;
+    border-radius: 10px;
+    color: white;
+    background-color: #EB2D32;
+    border: none; /* Ensures no border is applied */
+    transition: none; /* Removes any transition effect */
+}
+
+.btnsignin:hover {
+    background-color: #EB2D32; /* Keep the button color the same on hover */
+    color: white; /* Keep text color the same */
+    border: none; /* Ensure no border on hover */
+}
    body{
     background-color:#FEF2F2;
     font-family: 'sen', sans-serif;
