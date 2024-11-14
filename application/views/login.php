@@ -80,6 +80,8 @@
                 <form name="login" onsubmit="return loginValidate()" method="post"
                     action="<?= base_url('kanavuhelp/userLogin') ?>" style="" class="login-form">
                     <div class="mb-3">
+                    <input type="hidden" name="returnUrl" value="<?= isset($_GET['returnUrl']) ? $_GET['returnUrl'] : '' ?>">
+    
                         <label for="exampleInputEmail1" class="form-label">email</label>
                         <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1">
                         <div id="mailerr" class="text-danger"></div>

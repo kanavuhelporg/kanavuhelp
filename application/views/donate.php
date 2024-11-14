@@ -156,7 +156,8 @@
     }
     /* card section */
     .card {
-      width: 80%;
+      width: 316px;
+      height:466px;
       /* Make the card width responsive */
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
      
@@ -382,7 +383,7 @@
             <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
             <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
                 <div class="card h-100 w-100 fixed-card">
-                    <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top fixed-card-img" alt="no image">
+                    <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" width="316px" height="230px" class="card-img-top fixed-card-img" alt="no image">
                     
                     <div class="card-body d-flex flex-column">
                         <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
@@ -783,7 +784,25 @@ fetch('/kanavuhelp/processDonation', {  // Make sure to use the correct path
 
 </script>
 
+<form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
+    <input type="hidden" name="returnUrl" id="returnUrl" value="">
+</form>
 
+<script>
+  function redirectToLogin() {
+    // Get the current URL
+    var currentUrl = window.location.href;
+    
+    // Encode the current URL
+    var encodedUrl = encodeURIComponent(currentUrl);
+
+    // Set the hidden input value to the encoded current URL
+    document.getElementById('returnUrl').value = encodedUrl;
+
+    // Submit the form to the login page
+    document.getElementById('redirectToLoginForm').submit();
+}
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
