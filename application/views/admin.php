@@ -148,10 +148,7 @@
                 var passwordsms = "Password must be filled out";
                 document.getElementById("passworderr").innerHTML = passwordsms;
                 return false;
-            } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/.test(password)) {
-                document.getElementById("passworderr").innerHTML = "Password does not match the criteria";
-                return false;
-            } else {
+            }  else {
                 document.getElementById("passworderr").innerHTML = "";
             }
 

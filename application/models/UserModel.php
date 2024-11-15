@@ -98,7 +98,7 @@ public function get_all_categories() {
         return $this->db->insert('donation_for_cause', $data);
     }
 	public function getCausesDonationByUserId($user_id) {
-		$this->db->select('f.*, d.amount as donated_amount');
+		$this->db->select('f.*, d.amount as donated_amount,d.status');
 		$this->db->from('donation_for_cause d');
 		$this->db->join('individualform f', 'd.cause_id = f.id'); // Assuming 'id' is the primary key in the fundraisers table
 		$this->db->where('d.user_id', $user_id); // Match the logged-in user's donations

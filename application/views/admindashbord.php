@@ -189,7 +189,7 @@
             <li class="nav-item py-2">
             <a href="<?=base_url('admin/admindashbord')?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashbord </a></li>
 
-            <li class="nav-item py-2"><a href="<?=base_url('transactionverification')?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction Verification</a></li>
+            <li class="nav-item py-2"><a href="<?=base_url('verifytransaction')?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction Verification</a></li>
 <!--
             <li class="nav-item py-2"><a href="<?=base_url('ponsoft/members')?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;Members</a></li>
 

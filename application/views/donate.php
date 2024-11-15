@@ -24,24 +24,6 @@
     body {
       font-family: 'Sen', sans-serif;
     }
-    .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-  padding: (1rem) var(1rem);
-}
-.navbar-toggler {
-    padding: .25rem .75rem;
-    font-size: 1.25rem;
-    line-height: 1;
-    background-color: transparent;
-    border: 1px solid #4f373766;
-    border-radius: .25rem;
-    transition: box-shadow .15s ease-in-out;
-}
-  #navbarscroll {
-    margin-top: 17px;
-    margin-bottom: 10px;
-    margin-left: 70px;
-  }
 /* carousel */
     .carousel-item {
       height: 100vh;
@@ -98,7 +80,10 @@
       right: 65px;
       transform: translateY(-50%);
     }
-
+    .bg-red-modal {
+  background-color: grey;
+  color: white; /* Adjust the text color if needed for better contrast */
+}
     .imgtext1 strong,
     .imgtext2 strong {
       font-weight: bolder;
@@ -205,10 +190,6 @@
       border: 1px solid rgba(174, 168, 168, 1);
       border-radius: 25px;
     }
-    .btn.card_button:hover {
-    background-color: inherit; /* Or the original background color */
-    color: inherit; /* Keep the text color as it is */
-}
 
     .donate_btn {
       border: 1px solid rgba(224, 26, 43, 1);
@@ -337,9 +318,9 @@
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
                     </li>
-                    <!-- <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li> -->
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>" >Contact Us</a>
                     </li>
@@ -405,32 +386,34 @@
             <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
             <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
                 <div class="card h-100 w-100 fixed-card">
-                    <!-- Set image to take 100% width and auto height -->
-                    <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" class="card-img-top fixed-card-img" alt="no image" style="width: 100%; height: 230px; object-fit: cover;">
+                    <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" width="316px" height="230px" class="card-img-top fixed-card-img" alt="no image">
                     
                     <div class="card-body d-flex flex-column">
                         <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
 
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                            <button type="button" class="btn card_button text-muted ms-auto" style="pointer-events: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                            <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                         </div>
                         
                         <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
                         <div class="progress mb-2">
-                            <?php
-                              // Calculate progress percentage
-                              $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-                            ?>
-                            <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+            <?php
+              // Calculate progress percentage
+              $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+              ?>
+              <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
                         
                         <div class="d-flex align-items-center mt-auto">
                         <?php if ($fundraiser->days_left > 0 &&(!$fundraiser->hide_donation_button)) :?>
-                            <!-- Donate Button -->
-                            <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
-                            <i class="bi bi-share ms-2"></i>
-                        <?php endif; ?>
+        <!-- Donate Button -->
+        <a href="#" class="btn donate_btn no-hover"  onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+
+        <i class="bi bi-share ms-2"></i>
+        <?php endif; ?>
+            
+                           
                         </div>
                     </div>
                 </div>
@@ -442,7 +425,6 @@
     <?php endif; ?>
   </div>
 </div>
-
 <script>
 function setCauseId(causeId) {
   document.getElementById('cause_id').value = causeId;
@@ -639,9 +621,6 @@ function validateAmount() {
     return true;
 }
 
-
-
-
 </script>
 
         <!-- Terms and Privacy Policy -->
@@ -663,6 +642,22 @@ function validateAmount() {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="loginRedirectBtn">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade"  id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-red-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="donationSuccessLabel">Donation Verification</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Thanks for donating us.Please wait for admin verification </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="donationRedirectBtn">OK</button>
       </div>
     </div>
   </div>
@@ -797,8 +792,27 @@ fetch('/kanavuhelp/processDonation', {  // Make sure to use the correct path
         // Display error message in the error4 element
         error4.innerHTML = data.message;
     } else if (data.status === 'success') {
+      
+      
+      var donationModalElement = document.getElementById('donationModal');
+            var donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
+
+            // Check if the modal is visible before hiding it
+            if (donationModalElement.classList.contains('show')) {
+                donationModal.hide();
+            }
         // Redirect to success page if donation is successful
+        var loginModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
+      loginModal.show();
+ 
+      // Redirect to login page with return URL on OK button click
+      document.getElementById('donationRedirectBtn').addEventListener('click', function() {
+        
         window.location.href = data.redirect;
+// Redirect to the login page with the returnUrl parameter
+        
+      });
+        
     }
 })
 .catch(error => {
