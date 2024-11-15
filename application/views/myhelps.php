@@ -324,12 +324,13 @@
                 <div class="card-body">
                     <div class="card_text d-flex justify-content-between">
                         <p class="card-title"><b><?= $cause->cause_heading?></b></p>
+                        <p  ><b>  <?php echo ($cause->status == 0) ? '<span class="badge bg-danger">waiting for admin verification</span>' :' <span class="badge bg-success">verified</span>'; ?></b></p>
                     </div>
                     <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" -->
                     <div class="d-flex justify-content-between align-items-center">
                         <p class="card-text text-muted">Created by <br> <?= $cause->name ?></p>
                         <p class="amount" ><b> ₹ <?= number_format($cause->donated_amount) ?></b></p>
-
+                        
                         <!-- <p class="amount me-4 "><b> ₹ <?= number_format($cause->donated_amount) ?></b></p> -->
                     </div>
                     <!--<p class="card-text"><strong>₹  Total Amount  ₹ <?= number_format($cause->amount) ?></p>-->

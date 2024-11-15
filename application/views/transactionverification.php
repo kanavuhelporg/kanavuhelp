@@ -302,7 +302,7 @@
           <a href="<?=base_url('admindashbord')?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admindashbord</a></li>
 
           <li class="nav-item py-2">
-            <a href="<?=base_url('transactionverification')?>" style="word-break:break-word;font-weight:600;color:black;" class="active-bg rounded-3 text-decoration-none d-flex p-2">
+            <a href="<?=base_url('verifytransaction')?>" style="word-break:break-word;font-weight:600;color:black;" class="active-bg rounded-3 text-decoration-none d-flex p-2">
             <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction verification</a></li>
 <!--
           <li class="nav-item py-2"><a href="<?=base_url('members')?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;Members</a></li>

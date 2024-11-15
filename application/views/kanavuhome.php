@@ -495,7 +495,10 @@
       margin-bottom: 30px;
       /* Space between heading and steps */
     }
-
+    .bg-red-modal {
+  background-color: grey;
+  color: white; /* Adjust the text color if needed for better contrast */
+}
 
     @media (max-width: 1400px) {
       .carousel-item .row {
@@ -1159,6 +1162,22 @@ function setCauseId(causeId) {
     </div>
   </div>
 </div>
+<div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content bg-red-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="donationSuccessLabel">Donation Verification</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Thanks for donating us.Please wait for admin verification </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="donationRedirectBtn">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   // Simulate user login status (from backend or session)
@@ -1282,8 +1301,25 @@ fetch('/kanavuhelp/processDonation', {  // Make sure to use the correct path
         // Display error message in the error4 element
         error4.innerHTML = data.message;
     } else if (data.status === 'success') {
+      var donationModalElement = document.getElementById('donationModal');
+            var donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
+
+            // Check if the modal is visible before hiding it
+            if (donationModalElement.classList.contains('show')) {
+                donationModal.hide();
+            }
         // Redirect to success page if donation is successful
+        var loginModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
+      loginModal.show();
+ 
+      // Redirect to login page with return URL on OK button click
+      document.getElementById('donationRedirectBtn').addEventListener('click', function() {
+        
         window.location.href = data.redirect;
+// Redirect to the login page with the returnUrl parameter
+        
+      });
+        
     }
 })
 .catch(error => {
