@@ -920,7 +920,7 @@
                             </li>
                         </ul>
 
-                        <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data" class="p-3">
+                        <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data">
                             <!-- Step 1 Content -->
                             <section id="step-1" class="form-step col-12">
                                 <h2>Basic Details</h2>
@@ -1033,9 +1033,9 @@
 </div>
 
     <div class="row my-3">
-        <label for="cause_heading" class="col-md-4 col-form-label">Heading:<span class="text-danger">*</label>
+        <label for="cause_heading" class="col-md-4 col-form-label">Cause Title:<span class="text-danger">*</label>
         <div class="col-md-8">
-            <input type="text" id="cause_heading" name="cause_heading" class="form-control my-2" placeholder="Heading" required>
+            <input type="text" id="cause_heading" name="cause_heading" class="form-control my-2" placeholder="Cause Title" required>
             <span id="cause-heading-error" class="text-danger"></span>
         </div>
     </div>

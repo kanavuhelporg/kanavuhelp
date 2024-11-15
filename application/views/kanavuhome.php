@@ -557,6 +557,7 @@
         margin-top: -250px;
       } */
     }
+    
     @media (max-width: 767px) {
     #fundraiserCarousel .carousel-inner .carousel-item {
         display: flex;
@@ -578,9 +579,47 @@
     color: red !important;
     border: 1px solid red !important;
 }
-.btn.card_button:hover {
-    background-color: inherit; /* Or the original background color */
-    color: inherit; /* Keep the text color as it is */
+.fixed-card {
+    width: 100%;
+    max-width: 320px;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px; /* Adds space below each card in mobile view */
+}
+
+.fixed-card-img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Media query for single card display on mobile view */
+@media (max-width: 768px) {
+    .carousel-item .col-12 {
+        max-width: 100%; /* Ensure card takes full width */
+        flex: 0 0 100%;  /* Prevent overflow */
+        padding: 0 10px; /* Add padding to prevent card edges from touching */
+        margin-bottom: 20px; /* Add space between cards */
+    }
+}
+
+/* For larger screens, display three cards per slide */
+@media (min-width: 769px) {
+    .carousel-item .col-4 {
+        max-width: 33.33%; /* Set the width of each card */
+        flex: 0 0 33.33%; /* Ensures equal width for each card */
+        margin-bottom: 20px; /* Adds spacing between cards */
+    }
+}
+.fundraiser-carousel {
+    background-color: #e9ecef; /* Soft light gray, or choose a color that fits your design */
+    padding: 40px 0; /* Add some padding for breathing room */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for a lifted effect */
+    margin-bottom: 30px; /* Extra space below the carousel */
 }
 
   </style>
@@ -709,30 +748,31 @@
   <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
 </div><br>
 
-<div id="fundraiserCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
+<div id="fundraiserCarousel" class="carousel slide mt-5 fundraiser-carousel" data-bs-ride="carousel">
     <div class="carousel-inner">
         <?php if (!empty($fundraisers)): ?>
             <?php
-            // Group items into sets of 3 for desktop view
-            $chunked_fundraisers = array_chunk($fundraisers, 3);
+            $chunked_fundraisers = array_chunk($fundraisers, 3); // Group fundraisers into sets of 3
             foreach ($chunked_fundraisers as $index => $fundraiser_group): ?>
                 <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                     <div class="container">
                         <div class="row">
                             <?php foreach ($fundraiser_group as $fundraiser): ?>
+                                <?php 
+                                    $image_url = !empty($fundraiser->cover_image) 
+                                        ? base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) 
+                                        : base_url('assets/images/no-image-available.png');
+                                ?>
                                 <div class="col-12 col-md-4 d-flex justify-content-center">
                                     <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                                        <div class="card h-100 fixed-card" style="width: 100%; max-width: 320px;">
-                                            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" class="card-img-top fixed-card-img" alt="No image" style="height: 200px; object-fit: cover; width: 100%;">
-                                            
+                                        <div class="card h-100 fixed-card">
+                                            <div class="fixed-card-img" style="background-image: url('<?= $image_url ?>');"></div>
                                             <div class="card-body d-flex flex-column">
                                                 <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
-
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="card-text text-muted mb-0">by <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                                                    <button type="button" class="btn card_button text-muted ms-auto" style="pointer-events: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                                                    <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                                                 </div>
-                                                
                                                 <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
                                                 <div class="progress mb-2">
                                                     <?php
@@ -740,13 +780,11 @@
                                                     ?>
                                                     <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                
                                                 <div class="d-flex align-items-center mt-auto">
-                                                <?php if ($fundraiser->days_left > 0 &&(!$fundraiser->hide_donation_button)) :?>
-        <!-- Donate Button -->
-        <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)" data-bs-toggle="modal" >Donate Now</a>
-        <i class="bi bi-share ms-2"></i>
-        <?php endif; ?>
+                                                    <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)) :?>
+                                                        <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)" data-bs-toggle="modal">Donate Now</a>
+                                                        <i class="bi bi-share ms-2"></i>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -762,9 +800,8 @@
         <?php endif; ?>
     </div>
 
-    <!-- Carousel controls -->
-    <button class="carousel-control-prev" type="button"style="color:black" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true" ></span>
+    <button class="carousel-control-prev" type="button" style="color:black" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="next">
@@ -778,13 +815,6 @@ function setCauseId(causeId) {
   document.getElementById('cause_id').value = causeId;
 }
 </script>
-
-<?php if ($this->session->flashdata('error')) : ?>
-    <div class="alert alert-danger">
-        <?= $this->session->flashdata('error'); ?>
-    </div>
-<?php endif; ?>
-
 
   <div class="position-relative" id="how-it-works-section">
     <div class="container-xxl ">
@@ -1061,106 +1091,67 @@ function setCauseId(causeId) {
       </div>
       <div class="modal-body">
         <!-- Donation Form -->
-        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
+        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
     <!-- Hidden fields to store cause ID and user ID -->
     <input type="hidden" name="cause_id" id="cause_id" value="">
     <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
 
     <!-- Donation Form Fields -->
     <div class="text-center">
-        <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
+      <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
     </div>
     <div class="text-center">
-        <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
+      <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
     </div>
 
     <div class="text-center mt-2">
-        <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
+      <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
+      <!-- <p>Your contribution has the potential <br> to make a greater difference.</p> -->
     </div>
 
     <!-- Currency and Amount -->
     <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
-        <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
-            <option>INR</option>
-            <option>USD</option>
-        </select>
+      <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
+        <option>INR</option>
+        <option>USD</option>
+      </select>
 
-        <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
-        <p id="error5" style="color:red; margin-top: 5px;"></p>
+      <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
+     
     </div>
+  
+    <!-- Name -->
+    <!-- <div class="form-group ms-4">
+      <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
+    
+      <p id="error1" style="color:red"></p>
+    </div> -->
+
+    <!-- Email -->
+   <!-- <div class="form-group ms-4">
+      <input type="email" name="emailid" class="form-control" id="email" placeholder="Enter your email*" style="width:92%;" required>
+      <p id="error2" style="color:red"></p>
+    </div> -->
 
     <!-- Phone Number -->
     <div class="form-group ms-4">
-        <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:92%;" required>
-        <p id="error3" style="color:red; margin-top: 5px;"></p>
+      <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Enter your phone number*" style="width:92%;" required>
+      <p id="error3" style="color:red"></p>
     </div>
 
     <!-- Transaction ID -->
     <div class="form-group ms-4">
-        <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
-        <p id="error4" style="color:red; margin-top: 5px;"></p>
+      <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
+      <p id="error4" style="color:red"></p>
     </div>
 
     <!-- Continue Button -->
     <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
-            Continue to Pay ₹
-        </button>
+      <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+        Continue to Pay ₹
+      </button>
     </div>
-</form>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("phone").addEventListener("input", validatePhoneNumber);
-    document.getElementById("transactionid").addEventListener("input", validateTransactionID);
-    document.getElementById("amount").addEventListener("input", validateAmount);
-});
-
-function validatePhoneNumber() {
-    const phone = document.getElementById("phone").value;
-    const phoneError = document.getElementById("error3");
-
-    // Phone number validation (exactly 10 digits)
-    const regex = /^[0-9]{10}$/;
-    if (!regex.test(phone)) {
-        phoneError.textContent = "Phone number must be exactly 10 digits.";
-        return false;
-    }
-
-    phoneError.textContent = ""; // Clear error if valid
-    return true;
-}
-
-function validateTransactionID() {
-    const transactionID = document.getElementById("transactionid").value;
-    const transactionError = document.getElementById("error4");
-
-    // Transaction ID validation (exactly 12 alphanumeric characters)
-    const regex = /^[A-Za-z0-9]{12}$/;
-    if (!regex.test(transactionID)) {
-        transactionError.textContent = "Transaction ID must be exactly 12 alphanumeric characters.";
-        return false;
-    }
-
-    transactionError.textContent = ""; // Clear error if valid
-    return true;
-}
-
-function validateAmount() {
-    const amount = document.getElementById("amount").value;
-    const amountError = document.getElementById("error5");
-
-    // Amount validation (greater than 0)
-    if (!amount || amount <= 0) {
-        amountError.textContent = "Please enter a valid donation amount greater than 0.";
-        return false;
-    }
-
-    amountError.textContent = ""; // Clear error if valid
-    return true;
-}
-
-</script>
+  </form>
 
         <!-- Terms and Privacy Policy -->
         <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
@@ -1168,62 +1159,23 @@ function validateAmount() {
     </div>
   </div>
 </div>
-<!--login alert modal-->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>You need to log in to continue with the donation.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="loginRedirectBtn">OK</button>
-      </div>
-    </div>
-  </div>
-</div>
-<form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
-    <input type="hidden" name="returnUrl" id="returnUrl" value="">
-</form>
 
 <script>
-  function redirectToLogin() {
-    // Get the current URL
-    var currentUrl = window.location.href;
-    
-    // Encode the current URL
-    var encodedUrl = encodeURIComponent(currentUrl);
-
-    // Set the hidden input value to the encoded current URL
-    document.getElementById('returnUrl').value = encodedUrl;
-
-    // Submit the form to the login page
-    document.getElementById('redirectToLoginForm').submit();
-}
   // Simulate user login status (from backend or session)
   var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
 
   // Handle Donate button click using event delegation
-  document.addEventListener('click', function (event) {
+  document.querySelector('.container').addEventListener('click', function(event) {
     if (event.target.classList.contains('donate_btn')) {
       event.preventDefault(); // Prevent default link behavior
 
       if (!isLoggedIn) {
-        const baseUrl = "<?= base_url('/login') ?>"; 
         // Ask for confirmation before redirecting to the login page
-        var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-      loginModal.show();
- 
-      // Redirect to login page with return URL on OK button click
-      document.getElementById('loginRedirectBtn').addEventListener('click', function() {
-        var currentUrl = window.location.href;
-
-// Redirect to the login page with the returnUrl parameter
-        window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
-      });// Replace with your actual login URL
+        var confirmRedirect = alert("You need to login to donate. Do you want to proceed to the login page?");
+        
+        
+          // Redirect to login page if user clicks "OK"
+          window.location.href = "<?= base_url('/login') ?>"; // Replace with your actual login URL
         
       } else {
         // Show the donation modal if logged in
@@ -1232,7 +1184,6 @@ function validateAmount() {
       }
     }
   });
-  
 
   // Handle modal close event to ensure page is accessible
   var donationModal = document.getElementById('donationModal');
