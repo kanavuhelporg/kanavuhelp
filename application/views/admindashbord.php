@@ -390,6 +390,27 @@
 
  <!-------------------------------chart-end------------------------------------>  
 
+ <h1>Contact Form Submissions</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Message</th>
+        <th>Submitted At</th>
+    </tr>
+    <?php foreach ($submitForm as $submitForm): ?>
+    <tr>
+        <td><?php echo $submitForm->id; ?></td>
+        <td><?php echo $submitForm->name; ?></td>
+        <td><?php echo $submitForm->email; ?></td>
+        <td><?php echo $submitForm->phone; ?></td>
+        <td><?php echo $submitForm->message; ?></td>
+        <td><?php echo $submitForm->submitted_at; ?></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

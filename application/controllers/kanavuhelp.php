@@ -500,4 +500,22 @@ class kanavuhelp extends CI_Controller
         // Redirect to the login page
         redirect(base_url('/login'));
     }
+    // Controller method for viewing the profile
+public function profile() {
+    // Check if user is logged in
+    if (!$this->session->userdata('userId')) {
+        redirect('kanavuhelp/login'); // Redirect to login if not logged in
+    }
+
+    // Get user data from session
+    $userId = $this->session->userdata('userId');
+    $this->load->model('UserModel');
+
+    // Fetch user data from the database
+    $data['user'] = $this->UserModel->getUserById($userId);
+
+    // Load the profile view and pass user data
+    $this->load->view('profile_view', $data);
+}
+
 }

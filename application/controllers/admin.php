@@ -35,7 +35,15 @@ class admin extends CI_Controller
     {
         $this->load->view('admin.php');
     }
+    public function dashboard() {
+        $this->load->view('Contact_model');
 
+        // Get all submissions
+        $data['submitForm'] = $this->Contact_model->get_all_submissions();
+
+        // Load the admin dashboard view
+        $this->load->view('admin', $data);
+    }
     public function adminLogin()
     {
         $postData = $this->input->post(null, true);
