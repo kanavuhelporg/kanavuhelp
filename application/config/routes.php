@@ -82,7 +82,7 @@ $route['admin/dashboard'] = 'admin/dashboard';
 $route['register'] = 'kanavuhelp/register';
 $route['profile'] = 'kanavuhelp/profile';
 $route['login'] = 'kanavuhelp/login';
-$route['profile/edit'] = 'kanavuhelp/editProfile';  // Add this line for editing profile
-
+$route['profile_edit'] = 'kanavuhelp/editProfile';  // Add this line for editing profile
+$route['contact_submissions'] = 'admin/contact_submissions';
 
 

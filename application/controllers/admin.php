@@ -71,6 +71,11 @@ class admin extends CI_Controller
         $this->load->view('transactionverification.php',$data);
     }
 
+    // public function enquiries()
+    // { $data['contactus'] = $this->adminpanel->contctdetails();
+    //     $this->load->view('contactenquiry.php',$data);
+    // }
+
     public function editDonation($id)
 {
     // Fetch donation details by ID
@@ -102,7 +107,15 @@ public function updateDonation()
     // Return JSON response for the AJAX call
     echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
 }
+    public function contact_submissions()
+    {
+        // Fetch data from the contact_form_submissions table
+        $data['submissions'] = $this->db->order_by('created_at', 'DESC')->get('contact_us')->result();
 
-
-
+        // Load the view
+        $this->load->view('contact_submissions', $data);
+    }
 }
+
+
+

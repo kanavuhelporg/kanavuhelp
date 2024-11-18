@@ -424,7 +424,7 @@
   <!-- Name Field -->
   <div class="mb-3">
     <label for="exampleFormControlInput1" class="form-label">Name:<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" name="full-name" id="exampleFormControlInput1" placeholder="Enter your name" required onblur="validateName()">
+    <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Enter your name" required onblur="validateName()">
     <p id="demo" style="color:red"></p>
   </div>
 

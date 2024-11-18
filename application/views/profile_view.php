@@ -23,7 +23,7 @@
                 <!-- Add more user info here -->
 
                 <!-- Edit Profile Button -->
-                <a href="<?= base_url('profile/edit') ?>" class="btn btn-warning">Edit Profile</a>
+                <a href="<?= base_url('profile_edit') ?>" class="btn btn-warning">Edit Profile</a>
             </div>
         </div>
 

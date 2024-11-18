@@ -306,8 +306,7 @@
             <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction verification</a></li>
 
             <li class="nav-item py-2">
-            <a href="<?=base_url('contact_submissions')?>" style="word-break:break-word;font-weight:600;color:black;" class="active-bg rounded-3 text-decoration-none d-flex p-2">
-            <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries</a></li>
+            <li class="nav-item py-2"><a href="<?=base_url('contact_submissions')?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries</a></li>
 <!--
           <li class="nav-item py-2"><a href="<?=base_url('members')?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;Members</a></li>
 
@@ -338,24 +337,19 @@
         <table class="table table-responsive table-borderless">
             <thead>
             <tr class="ps-gray">
-            <th>S.No</th><th>Name</th><th>Email</th><th>Mobile</th><th>Amount</th><th>TransactionId</th><th>Verified status</th><th>Action</th>
+            <th>S.No</th><th>Name</th><th>Email</th><th>Phone Number</th><th>Message</th><th>Created_at</th>
             </tr>
             </thead>
             <tbody id="ps-coords">
-            <?php if (!empty($donations)): ?>
-            <?php foreach ($donations as $index => $donation): ?>
+            <?php if (!empty($submissions)): ?>
+            <?php foreach ($submissions as $index => $submissions): ?>
                 <tr>
                     <td><?php echo $index + 1; ?></td>
-                    <td><?php echo htmlspecialchars($donation->name); ?></td>
-                    <td><?php echo htmlspecialchars($donation->email); ?></td>
-                    <td><?php echo htmlspecialchars($donation->phoneno); ?></td>
-                    <td><?php echo htmlspecialchars($donation->amount); ?></td>
-                    <td><?php echo htmlspecialchars($donation->transactionid); ?></td>
-                    <td><?php echo htmlspecialchars($donation->status == 1 ? 'Yes' : 'No'); ?></td>
-                    <td>
-                    <a href="#" onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDonationModal">
-    Edit
-</a>
+                    <td><?php echo htmlspecialchars($submissions->name); ?></td>
+                    <td><?php echo htmlspecialchars($submissions->email); ?></td>
+                    <td><?php echo htmlspecialchars($submissions->phone); ?></td>
+                    <td><?php echo htmlspecialchars($submissions->message) ?></td>
+                    <td><?php echo htmlspecialchars($submissions->created_at) ?></td>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -368,7 +362,7 @@
             </table>
 
         </div> <!----------------table-end------->
-        <script>
+        <!-- <script>
 function editDonation(donation) {
     // Populate modal fields with donation data
     document.getElementById('donationId').value = donation.donation_id;
@@ -379,8 +373,8 @@ function editDonation(donation) {
     document.getElementById('donationTransactionId').value = donation.transactionid;
     document.getElementById('donationVerified').value = donation.status;
 }
-</script>
-        <div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
+</script> -->
+        <!-- <div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="editDonationForm" action="<?php echo site_url('admin/updateDonation'); ?>" method="post">
@@ -409,49 +403,15 @@ function editDonation(donation) {
                     <label>Transaction ID</label>
                     <input type="text" name="transaction_id" id="donationTransactionId" class="form-control">
 
-                    <label>Verified</label>
-                    <select name="status" id="donationVerified" class="form-control">
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                    </select>
+                    
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
+                
             </form>
         </div>
     </div>
-</div>
+</div> -->
 
-<script>
-$('#editDonationForm').on('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
 
-    $.ajax({
-        url: $(this).attr('action'),
-        type: 'POST',
-        data: $(this).serialize(), // Serialize form data
-        dataType: 'json', // Expect JSON response
-        success: function(response) {
-            console.log('Server Response:', response); // Log server response for debugging
-
-            if (response.status === 'success') {
-                alert('Donation updated successfully');
-                // Optional: Reload the page to show updated data
-                window.location.reload(); // Or redirect to a specific page if needed
-            } else {
-                alert('Failed to update donation');
-            }
-        },
-        error: function(xhr, status, error) {
-            console.log('AJAX Error:', error); // Log any AJAX errors
-            alert('An error occurred. Please try again.');
-        }
-    });
-});
-
-</script>
 
         
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

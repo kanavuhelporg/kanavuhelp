@@ -21,6 +21,16 @@ class adminpanel extends CI_Model
 
     return $query->result(); 
     }
+
+    public function contactdetails(){
+        $this->db->select('contact_us.*, user.name, user.email');  // Select columns from both tables
+    $this->db->from('contact_us');
+    $this->db->join('user', 'user.id = contact_us.user_id', 'left');  // Join user table on user_id
+     // Order by created_at in descending order
+    $query = $this->db->get();
+
+    return $query->result(); 
+    }
     public function getDonationById($id)
 {
     $this->db->select('donation_for_cause.*, user.name, user.email');  // Select columns from both tables
