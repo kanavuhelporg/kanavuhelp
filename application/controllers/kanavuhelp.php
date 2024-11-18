@@ -68,13 +68,19 @@ class kanavuhelp extends CI_Controller
     {
         $this->load->view('login.php');
     }
+    public function login_modal()
+    {
+        $this->load->view('login_modal.php');
+    }
+
+    public function login_modal1()
+    {
+        $this->load->view('login_modal1.php');
+    }
     public function individual()
     {
         if (!$this->session->userdata('userId')) {
-            echo "<script>
-                alert('You must be logged in to access Start A Fundraiser page.');
-                window.location.href = '" . base_url('login') . "';
-              </script>";
+           redirect('login_modal');
             exit;
         }
 
@@ -175,10 +181,8 @@ class kanavuhelp extends CI_Controller
     public function myhelps()
     {
         if (!$this->session->userdata('userId')) {
-            echo "<script>
-                alert('You must be logged in to view My Helps page');
-                window.location.href = '" . base_url('login') . "';
-              </script>";
+            redirect('login_modal1');
+            
             exit;
         }
 
