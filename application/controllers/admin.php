@@ -35,7 +35,15 @@ class admin extends CI_Controller
     {
         $this->load->view('admin.php');
     }
+    public function dashboard() {
+        $this->load->view('Contact_model');
 
+        // Get all submissions
+        $data['submitForm'] = $this->Contact_model->get_all_submissions();
+
+        // Load the admin dashboard view
+        $this->load->view('admin', $data);
+    }
     public function adminLogin()
     {
         $postData = $this->input->post(null, true);
@@ -62,6 +70,11 @@ class admin extends CI_Controller
     { $data['donations'] = $this->adminpanel->transactiondetails();
         $this->load->view('transactionverification.php',$data);
     }
+
+    // public function enquiries()
+    // { $data['contactus'] = $this->adminpanel->contctdetails();
+    //     $this->load->view('contactenquiry.php',$data);
+    // }
 
     public function editDonation($id)
 {
@@ -94,7 +107,15 @@ public function updateDonation()
     // Return JSON response for the AJAX call
     echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
 }
+    public function contact_submissions()
+    {
+        // Fetch data from the contact_form_submissions table
+        $data['submissions'] = $this->db->order_by('created_at', 'DESC')->get('contact_us')->result();
 
-
-
+        // Load the view
+        $this->load->view('contact_submissions', $data);
+    }
 }
+
+
+

@@ -198,5 +198,28 @@ public function loginUser()
         $count = $this->db->query($query);
         return $count->result_array();
     }
+
+    // Method to register user
+    public function registerUser($name, $email, $password) {
+        // Insert user into the database and return the inserted data (e.g., userId)
+        $data = [
+            'name' => $name,
+            'email' => $email,
+            'password' => password_hash($password, PASSWORD_DEFAULT) // Ensure the password is hashed
+        ];
+        
+        $this->db->insert('user', $data);
+        return $this->db->insert_id(); // Return the last inserted user ID
+    }
+
+    // Method to get user data by ID
+    public function getUserById($userId) {
+        $this->db->where('id', $userId);
+        $query = $this->db->get('user');
+        return $query->row_array(); // Return the user data as an array
+    }
+
+
 }
 ?>
+

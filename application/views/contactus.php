@@ -424,7 +424,7 @@
   <!-- Name Field -->
   <div class="mb-3">
     <label for="exampleFormControlInput1" class="form-label">Name:<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" name="full-name" id="exampleFormControlInput1" placeholder="Enter your name" required onblur="validateName()">
+    <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Enter your name" required onblur="validateName()">
     <p id="demo" style="color:red"></p>
   </div>
 
@@ -513,37 +513,37 @@
 
   </section>
   <div class="footer">
-      <footer class="footer mt-auto py-3">
-        <div class="container">
-          <h5 class="text-center">Kanavu.help</h5>
-          <div class="row text-center">
-            <div class="col-12">
-              <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
-                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-                <a class="footer-lable lable" href="#">Terms of Use</a>
-                <a class="footer-lable lable" href="#">Privacy Policy</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="social-icons d-flex justify-content-center text-center my-2">
-          <a href="https://www.facebook.com/" target="_blank" class="mx-2">
-            <img src="assets/img/facebook-f.svg" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-          <a href="https://twitter.com/" target="_blank" class="mx-2">
-            <img src="assets/img/twitter.svg" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-          <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
-            <img src="assets/img/linkedin-in.svg" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-        </div>
-        <img src="assets/img/footer-secured-card 1.svg" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
-          style="max-width: 200px;">
-        <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
-      </footer>
+<footer class="footer mt-auto py-3">
+  <div class="container">
+    <h5 style="text-align:center">kanavu.help</h5>
+    <!-- <span class="text-muted">Your footer content goes here.</span> -->
+    <div class="footer1">
+      <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+      <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
+      <a class="footer-lable lable" href="#">Terms of Use</a>
+      <a class="footer-lable" href="#">Privacy Policy</a>
     </div>
+  </div>
 
+  <div class="social-icons d-flex justify-content-center text-center">
+    <a href="https://www.facebook.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo">
+    </a>
+    <a href="https://twitter.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo">
+    </a>
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/" target="_blank">
+      <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo">
+    </a>
+  </div>
+  <div class="text-center my-3">
+    <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="img-fluid mx-auto d-block" style="width: 200px; display: block;">
+  </div>
+
+  <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
+</footer>
+</div>
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

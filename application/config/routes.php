@@ -74,5 +74,7 @@ $route['admindashbord'] = 'admin/admindashbord';
 $route['admin'] = 'admin/admin';
 $route['verifytransaction'] = 'admin/transactionverification';
 $route['admin/logout'] = 'admin/logout';
+
 $route['login_modal']='kanavuhelp/login_modal';
 $route['login_modal1']='kanavuhelp/login_modal1';
+

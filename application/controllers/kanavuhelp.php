@@ -476,23 +476,46 @@ class kanavuhelp extends CI_Controller
     //         echo 'Failed to register';
     //     }
     // }
-    public function contact_us()
+//     public function contact_us()
+// {
+//     $data['full-name'] = $this->input->post('full-name');
+//     $data['email'] = $this->input->post('email');
+//     $data['phone'] = $this->input->post('phone');
+//     $data['message'] = $this->input->post('message');
+
+//     $this->load->model('UserModel');
+//     $response = $this->UserModel->store($data);
+
+//     if ($response == true) {
+//         $this->session->set_flashdata('success', 'Thanks for contacting us!');
+//         redirect('kanavuhelp/donate');
+//     } else {
+//         $this->session->set_flashdata('error', 'Failed to register.');
+//         redirect('kanavuhelp/contact');
+//     }
+// }
+
+public function contact_us()
 {
-    $data['full-name'] = $this->input->post('full-name');
-    $data['email'] = $this->input->post('email');
-    $data['phone'] = $this->input->post('phone');
-    $data['message'] = $this->input->post('message');
+    // Load the database
+    $this->load->database();
 
-    $this->load->model('UserModel');
-    $response = $this->UserModel->store($data);
+    // Get form data
+    $data = [
+        'name' => $this->input->post('full-name'),
+        'email' => $this->input->post('email'),
+        'phone' => $this->input->post('phone'),
+        'message' => $this->input->post('message')
+    ];
 
-    if ($response == true) {
-        $this->session->set_flashdata('success', 'Thanks for contacting us!');
-        redirect('kanavuhelp/donate');
-    } else {
-        $this->session->set_flashdata('error', 'Failed to register.');
-        redirect('kanavuhelp/contact');
-    }
+    // Insert data into the database
+    $this->db->insert('contact_us', $data);
+
+    // Set a success message
+    $this->session->set_flashdata('success', 'Thanks for contacting us! We will get back to you soon.');
+
+    // Redirect back to the form
+    redirect(base_url('/kanavuhome'));
 }
 
     public function logout()
@@ -504,4 +527,22 @@ class kanavuhelp extends CI_Controller
         // Redirect to the login page
         redirect(base_url('/login'));
     }
+    // Controller method for viewing the profile
+public function profile() {
+    // Check if user is logged in
+    if (!$this->session->userdata('userId')) {
+        redirect('kanavuhelp/login'); // Redirect to login if not logged in
+    }
+
+    // Get user data from session
+    $userId = $this->session->userdata('userId');
+    $this->load->model('UserModel');
+
+    // Fetch user data from the database
+    $data['user'] = $this->UserModel->getUserById($userId);
+
+    // Load the profile view and pass user data
+    $this->load->view('profile_view', $data);
+}
+
 }

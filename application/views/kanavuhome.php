@@ -1,3 +1,11 @@
+<?php if ($this->session->flashdata('success')): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?= $this->session->flashdata('success'); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -582,21 +590,21 @@
     color: red !important;
     border: 1px solid red !important;
 }
-.fixed-card {
+.fixed-card-img-wrapper {
+    position: relative;
     width: 100%;
-    max-width: 320px;
-    min-height: 450px;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px; /* Adds space below each card in mobile view */
+    padding-top: 72%; /* Adjust this value to control aspect ratio (e.g., 16:9 = 56.25%, 4:3 = 75%) */
+    background-color: white; /* Fallback background */
 }
 
 .fixed-card-img {
-    height: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
     object-fit: cover;
-    background-size: cover;
-    background-position: center;
+    display: block;
 }
 
 /* Media query for single card display on mobile view */
@@ -623,6 +631,27 @@
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for a lifted effect */
     margin-bottom: 30px; /* Extra space below the carousel */
+}
+.no-border-hover {
+  border: 1px solid grey !important;
+    box-shadow: none;
+    background-color: transparent;
+    cursor: default; /* Optional: Keeps it looking non-interactive if needed */
+}
+
+.no-border-hover:hover {
+    border: none;
+    box-shadow: none;
+}
+@media (max-width: 768px) {
+    .carousel-item .col-md-4 {
+        flex: 0 0 100%; /* Make each card take full width */
+        max-width: 100%;
+    }
+
+    .fixed-card {
+        margin: 0 auto; /* Center the card */
+    }
 }
 
   </style>
@@ -668,23 +697,25 @@
                     </li>
                 </ul>
                 <div class="d-flex align-items-center ms-auto">
-                <?php if ($this->session->userdata('userId')): ?>
-                  <div class="d-flex align-items-center">
-                    <div class="dropdown" id="userProfile">
-                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                         style="width: 30px; height: 30px; border-radius: 50%;">
-                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                      </div>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <?php else: ?>
-                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-                  <?php endif; ?>
-                </div>
+  <?php if ($this->session->userdata('userId')): ?>
+    <div class="d-flex align-items-center">
+      <div class="dropdown" id="userProfile">
+        <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+            style="width: 30px; height: 30px; border-radius: 50%;">
+          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+          <li><a class="dropdown-item" href="<?= base_url('/profile') ?>"><i class="fas fa-user"></i> View Profile</a></li>
+          <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  <?php else: ?>
+    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+  <?php endif; ?>
+</div>
+
 
           
         </div>
@@ -755,37 +786,41 @@
     <div class="carousel-inner">
         <?php if (!empty($fundraisers)): ?>
             <?php
-            $chunked_fundraisers = array_chunk($fundraisers, 3); // Group fundraisers into sets of 3
+            $chunked_fundraisers = array_chunk($fundraisers, 3); // Group fundraisers into sets of 3 for desktop view
             foreach ($chunked_fundraisers as $index => $fundraiser_group): ?>
                 <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                     <div class="container">
                         <div class="row">
                             <?php foreach ($fundraiser_group as $fundraiser): ?>
-                                <?php 
-                                    $image_url = !empty($fundraiser->cover_image) 
-                                        ? base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) 
-                                        : base_url('assets/images/no-image-available.png');
-                                ?>
-                                <div class="col-12 col-md-4 d-flex justify-content-center">
+                                <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                                     <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                                        <div class="card h-100 fixed-card">
-                                            <div class="fixed-card-img" style="background-image: url('<?= $image_url ?>');"></div>
+                                        <div class="card h-100 w-100 fixed-card">
+                                            <div class="fixed-card-img-wrapper">
+                                                <?php if (!empty($fundraiser->cover_image)): ?>
+                                                    <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
+                                                        alt="No Image" class="fixed-card-img">
+                                                <?php else: ?>
+                                                    <img src="<?= base_url('assets/default-placeholder.png') ?>" 
+                                                        alt="Placeholder Image" class="fixed-card-img">
+                                                <?php endif; ?>
+                                            </div>
+                                            
                                             <div class="card-body d-flex flex-column">
                                                 <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="card-text text-muted mb-0">by <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                                                    <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                                                    <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
+                                                    <button type="button" class="btn card_button text-muted ms-auto no-border-hover"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                                                 </div>
                                                 <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
                                                 <div class="progress mb-2">
                                                     <?php
-                                                    $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+                                                    $progress_percentage = ($fundraiser->amount > 0) ? ($fundraiser->raised_amount / $fundraiser->amount) * 100 : 0;
                                                     ?>
                                                     <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                                 <div class="d-flex align-items-center mt-auto">
-                                                    <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)) :?>
-                                                        <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)" data-bs-toggle="modal">Donate Now</a>
+                                                    <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)) : ?>
+                                                        <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
                                                         <i class="bi bi-share ms-2"></i>
                                                     <?php endif; ?>
                                                 </div>
@@ -803,7 +838,7 @@
         <?php endif; ?>
     </div>
 
-    <button class="carousel-control-prev" type="button" style="color:black" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
@@ -812,6 +847,7 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+
 
 <script>
 function setCauseId(causeId) {
@@ -1094,67 +1130,58 @@ function setCauseId(causeId) {
       </div>
       <div class="modal-body">
         <!-- Donation Form -->
-        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
     <!-- Hidden fields to store cause ID and user ID -->
     <input type="hidden" name="cause_id" id="cause_id" value="">
     <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
 
     <!-- Donation Form Fields -->
     <div class="text-center">
-      <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
+        <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
     </div>
     <div class="text-center">
-      <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
+        <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
     </div>
 
     <div class="text-center mt-2">
-      <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
-      <!-- <p>Your contribution has the potential <br> to make a greater difference.</p> -->
+        <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
     </div>
 
     <!-- Currency and Amount -->
     <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
-      <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
-        <option>INR</option>
-        <option>USD</option>
-      </select>
+        <label for="currency" class="me-2">Currency:</label>
+        <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
+            <option>INR</option>
+            <option>USD</option>
+        </select>
 
-      <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
-     
+        <label for="amount" class="ms-3 me-2">Amount:</label>
+        <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" style="width:40%;" required>
+        <p id="error5" style="color:red; margin-top: 5px;"></p>
     </div>
-  
-    <!-- Name -->
-    <!-- <div class="form-group ms-4">
-      <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
-    
-      <p id="error1" style="color:red"></p>
-    </div> -->
-
-    <!-- Email -->
-   <!-- <div class="form-group ms-4">
-      <input type="email" name="emailid" class="form-control" id="email" placeholder="Enter your email*" style="width:92%;" required>
-      <p id="error2" style="color:red"></p>
-    </div> -->
-
+  <br>
     <!-- Phone Number -->
     <div class="form-group ms-4">
-      <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Enter your phone number*" style="width:92%;" required>
-      <p id="error3" style="color:red"></p>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:92%;" required>
+        <p id="error3" style="color:red; margin-top: 5px;"></p>
     </div>
 
     <!-- Transaction ID -->
     <div class="form-group ms-4">
-      <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
-      <p id="error4" style="color:red"></p>
+        <label for="transactionid">Transaction ID:</label>
+        <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
+        <p id="error4" style="color:red; margin-top: 5px;"></p>
     </div>
 
     <!-- Continue Button -->
     <div class="d-flex justify-content-center">
-      <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
-        Continue to Pay ₹
-      </button>
+        <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+            Continue to Pay ₹
+        </button>
     </div>
-  </form>
+</form>
+
 
         <!-- Terms and Privacy Policy -->
         <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>

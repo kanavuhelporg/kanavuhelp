@@ -190,6 +190,11 @@
             <a href="<?=base_url('admin/admindashbord')?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashbord </a></li>
 
             <li class="nav-item py-2"><a href="<?=base_url('verifytransaction')?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction Verification</a></li>
+            <li class="nav-item py-2"><a href="<?=base_url('contact_submissions')?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries</a></li>
+            <!-- <li class="nav-item">
+    <a class="nav-link" href="<?= base_url('contact_submissions') ?>">Contact Submissions</a>
+</li> -->
+
 <!--
             <li class="nav-item py-2"><a href="<?=base_url('ponsoft/members')?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;Members</a></li>
 
@@ -389,8 +394,6 @@
     </script>
 
  <!-------------------------------chart-end------------------------------------>  
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
