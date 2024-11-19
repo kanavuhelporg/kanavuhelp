@@ -658,70 +658,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg bg-light py-4 fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="#">
-        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title">
-            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center ms-auto">
-  <?php if ($this->session->userdata('userId')): ?>
-    <div class="d-flex align-items-center">
-      <div class="dropdown" id="userProfile">
-        <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-            style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-        </div>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-          <li><a class="dropdown-item" href="<?= base_url('/profile') ?>"><i class="fas fa-user"></i> View Profile</a></li>
-          <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-        </ul>
-      </div>
-    </div>
-  <?php else: ?>
-    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-  <?php endif; ?>
-</div>
-
-
-          
-        </div>
-      </div>
-    </div>
-  </nav>
+<?php include 'header.php'; ?>
 
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">

@@ -461,39 +461,6 @@ class kanavuhelp extends CI_Controller
             }
         }
     }
-    // public function contact_us()
-    // {
-    //     $data['full-name'] = $this->input->post('full-name');
-    //     $data['email'] = $this->input->post('email');
-    //     $data['phone'] = $this->input->post('phone');
-    //     $data['message'] = $this->input->post('message');
-    //     $this->load->model('UserModel');
-    //     $response = $this->UserModel->store($data);
-    //     if ($response == true) {
-    //         echo '<script>alert("Thanks For Contacting Us")</script>';
-    //         $this->load->view('kanavuhelp/donate');
-    //     } else {
-    //         echo 'Failed to register';
-    //     }
-    // }
-//     public function contact_us()
-// {
-//     $data['full-name'] = $this->input->post('full-name');
-//     $data['email'] = $this->input->post('email');
-//     $data['phone'] = $this->input->post('phone');
-//     $data['message'] = $this->input->post('message');
-
-//     $this->load->model('UserModel');
-//     $response = $this->UserModel->store($data);
-
-//     if ($response == true) {
-//         $this->session->set_flashdata('success', 'Thanks for contacting us!');
-//         redirect('kanavuhelp/donate');
-//     } else {
-//         $this->session->set_flashdata('error', 'Failed to register.');
-//         redirect('kanavuhelp/contact');
-//     }
-// }
 
 public function contact_us()
 {
@@ -502,7 +469,7 @@ public function contact_us()
 
     // Get form data
     $data = [
-        'name' => $this->input->post('full-name'),
+        'name' => $this->input->post('name'),
         'email' => $this->input->post('email'),
         'phone' => $this->input->post('phone'),
         'message' => $this->input->post('message')
@@ -517,6 +484,7 @@ public function contact_us()
     // Redirect back to the form
     redirect(base_url('/kanavuhome'));
 }
+
 
     public function logout()
     {

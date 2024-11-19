@@ -192,9 +192,11 @@
     }
 
     .donate_btn {
-      border: 1px solid rgba(224, 26, 43, 1);
-      /* color: rgba(224, 26, 43, 1); */
+      
       border-radius: 25px;
+      background-color: white !important;
+    color: red !important;
+    border: 1px solid red !important;
     }
 
     /* footer */
@@ -271,13 +273,13 @@
         object-fit: cover; /* Ensures the image fills its container */
     }
     }
-    .donate_btn.no-hover {
+    /* .donate_btn.no-hover {
     background-color: white;
     color: red;
     border: 1px solid red;
-}
+} */
 
-.donate_btn.no-hover:hover {
+/* .donate_btn.no-hover:hover {
     background-color: white !important;
     color: red !important;
     border: 1px solid red !important;
@@ -286,13 +288,13 @@
   border: 1px solid grey !important;
     box-shadow: none;
     background-color: transparent;
-    cursor: default; /* Optional: Keeps it looking non-interactive if needed */
+    cursor: default; 
 }
 
 .no-border-hover:hover {
     border: none;
     box-shadow: none;
-}
+} */
 .fixed-card-img-wrapper {
     position: relative;
     width: 100%;
@@ -310,70 +312,20 @@
     display: block;
 }
 
+    .btn.text-danger.bg-white {
+        transition: none !important; /* Disable hover transitions */
+    }
+    .btn.text-danger.bg-white:hover {
+        background-color: white !important; /* Keep the background white */
+        color: red !important; /* Keep the text red */
+        border-color: red !important; /* Keep the border red */
+    }
+
+
     </style>
     </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="<?=base_url('')?>">
-        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title">
-            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color: rgba(235, 45, 50, 1)">Donate</a>
-                    </li>
-                    <li class="nav-item">
-
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" >My Helps</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>" >Contact Us</a>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center ms-auto">
-                <?php if ($this->session->userdata('userId')): ?>
-                  <div class="d-flex align-items-center">
-                    <div class="dropdown" id="userProfile">
-                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                         style="width: 30px; height: 30px; border-radius: 50%;">
-                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                      </div>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <?php else: ?>
-                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-                  <?php endif; ?>
-                </div>
-        
-      </div>
-    </div>
-  </nav>
+<?php include 'header.php'; ?>
   <div class="donate_img mt-5 pt-4">
     <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
   </div>
@@ -441,7 +393,7 @@
                         
                         <div class="d-flex align-items-center mt-auto">
                             <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)) : ?>
-                                <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+                                <a href="#" class="btn donate_btn border-2 text-danger fw-bold bg-white" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
                                 <i class="bi bi-share ms-2"></i>
                             <?php endif; ?>
                         </div>
@@ -503,38 +455,7 @@ function setCauseId(causeId) {
 </script>-->
 
 
-<div class="footer">
-      <footer class="footer mt-auto py-3">
-        <div class="container">
-          <h5 class="text-center">Kanavu.help</h5>
-          <div class="row text-center">
-            <div class="col-12">
-              <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
-                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-                <a class="footer-lable lable" href="#">Terms of Use</a>
-                <a class="footer-lable lable" href="#">Privacy Policy</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="social-icons d-flex justify-content-center text-center my-2">
-          <a href="https://www.facebook.com/" target="_blank" class="mx-2">
-            <img src="<?= base_url('assets/img/facebook-f.svg')?>" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-          <a href="https://twitter.com/" target="_blank" class="mx-2">
-            <img src="<?= base_url('assets/img/twitter.svg')?>" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-          <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
-            <img src="<?= base_url('assets/img/linkedin-in.svg')?>" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-        </div>
-        <img src="<?= base_url('assets/img/footer-secured-card 1.svg')?>" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
-          style="max-width: 200px;">
-        <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
-      </footer>
-    </div>
-
+<?php include 'footer.php'; ?>
 
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
@@ -599,7 +520,7 @@ function setCauseId(causeId) {
 
     <!-- Continue Button -->
     <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+        <button type="submit" class="btn btn-danger border-2 text-danger fw-bold bg-white" style="width:50%; border-radius:10px; background-color:white; color:red;">
             Continue to Pay ₹
         </button>
     </div>
