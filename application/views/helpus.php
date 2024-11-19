@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+<meta property="og:title" content="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>">
+    <meta property="og:description" content="Check out this cause: <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>">
+    <meta property="og:image" content="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>">
+    <meta property="og:url" content="<?= base_url('helpus/' . $fundraiser->id) ?>">
+    <meta property="og:type" content="website">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
@@ -380,8 +385,8 @@
             <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>
             
             <!-- Share Fundraiser Button -->
-            <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B">
-                <i class="bi  bi-share"></i> &nbsp;Share this fundraiser
+            <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>')">
+            <i class="bi bi-share ms-2" ></i> &nbsp;Share this fundraiser
             </button>
             <br>
         </div>
@@ -480,6 +485,42 @@ function toggleDonors(showMore) {
         showLessLink.style.display = 'none';
     }
 }
+function shareCause(url, title) {
+    if (navigator.share) {
+        // Use Web Share API if available
+        navigator.share({
+            title: title,
+            text: `Check out this cause: ${title}`,
+            url: url
+        }).then(() => {
+            console.log('Successfully shared');
+        }).catch((error) => {
+            console.error('Error sharing:', error);
+        });
+    } else {
+        // Fallback to social media links if Web Share API is not supported
+        const encodedUrl = encodeURIComponent(url);
+        const encodedTitle = encodeURIComponent(`Check out this cause: ${title}`);
+
+        // Create share URLs
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+        const instagramUrl = `https://www.instagram.com/?url=${encodedUrl}`;
+
+        // Display the share options to the user (you can use a modal or a dropdown)
+        const shareOptions = `
+            <div>
+                <a href="${whatsappUrl}" target="_blank">Share on WhatsApp</a><br>
+                <a href="${facebookUrl}" target="_blank">Share on Facebook</a><br>
+                <a href="${instagramUrl}" target="_blank">Share on Instagram</a>
+            </div>
+        `;
+
+        // You can append this HTML to a modal or any container you have for sharing options
+        document.body.insertAdjacentHTML('beforeend', shareOptions);
+    }
+}
+
 </script>
     <div class="row mt-4" >
     <!-- Created by Section -->

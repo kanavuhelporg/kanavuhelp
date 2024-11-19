@@ -282,33 +282,6 @@
     color: red !important;
     border: 1px solid red !important;
 }
-.no-border-hover {
-  border: 1px solid grey !important;
-    box-shadow: none;
-    background-color: transparent;
-    cursor: default; /* Optional: Keeps it looking non-interactive if needed */
-}
-
-.no-border-hover:hover {
-    border: none;
-    box-shadow: none;
-}
-.fixed-card-img-wrapper {
-    position: relative;
-    width: 100%;
-    padding-top: 72%; /* Adjust this value to control aspect ratio (e.g., 16:9 = 56.25%, 4:3 = 75%) */
-    background-color: white; /* Fallback background */
-}
-
-.fixed-card-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
 
     </style>
     </head>
@@ -413,37 +386,38 @@
             <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
             <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
                 <div class="card h-100 w-100 fixed-card">
-                    <div class="fixed-card-img-wrapper">
-                        <?php if (!empty($fundraiser->cover_image)): ?>
-                            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
-                                alt="No Image" class="fixed-card-img">
-                        <?php else: ?>
-                            <img src="<?= base_url('assets/default-placeholder.png') ?>" 
-                                alt="Placeholder Image" class="fixed-card-img">
-                        <?php endif; ?>
-                    </div>
+                    <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" width="316px" height="230px" class="card-img-top fixed-card-img" alt="no image">
                     
                     <div class="card-body d-flex flex-column">
                         <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
 
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                            <button type="button" class="btn card_button text-muted ms-auto no-border-hover"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                            <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                         </div>
                         
                         <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
                         <div class="progress mb-2">
-                            <?php
-                              $progress_percentage = ($fundraiser->amount > 0) ? ($fundraiser->raised_amount / $fundraiser->amount) * 100 : 0;
-                            ?>
-                            <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+            <?php
+              // Calculate progress percentage
+              $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+              ?>
+              <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
                         
                         <div class="d-flex align-items-center mt-auto">
-                            <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)) : ?>
-                                <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
-                                <i class="bi bi-share ms-2"></i>
-                            <?php endif; ?>
+                        <?php if ($fundraiser->days_left > 0 &&(!$fundraiser->hide_donation_button)) :?>
+        <!-- Donate Button -->
+        <a href="#" class="btn donate_btn no-hover"  onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+
+        <i class="bi bi-share ms-2" 
+   onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', 
+                       '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
+                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
+</i>
+        <?php endif; ?>
+            
+                           
                         </div>
                     </div>
                 </div>
@@ -455,11 +429,47 @@
     <?php endif; ?>
   </div>
 </div>
-
 <script>
 function setCauseId(causeId) {
   document.getElementById('cause_id').value = causeId;
 }
+function shareCause(url, title, imgurl) {
+    if (navigator.share) {
+        // Use Web Share API if available
+        navigator.share({
+            title: title,
+            text: `Check out this cause: ${title}`,
+            url: url
+        }).then(() => {
+            console.log('Successfully shared');
+        }).catch((error) => {
+            console.error('Error sharing:', error);
+        });
+    } else {
+        // Fallback to social media links if Web Share API is not supported
+        const encodedUrl = encodeURIComponent(url);
+        const encodedTitle = encodeURIComponent(`Check out this cause: ${title}`);
+        const encodedImage = encodeURIComponent(imgurl);
+
+        // Create share URLs
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}%20${encodedImage}`;
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`;
+        const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodedUrl}&media=${encodedImage}&description=${encodedTitle}`;
+
+        // Display the share options to the user (you can use a modal or a dropdown)
+        const shareOptions = `
+            <div>
+                <a href="${whatsappUrl}" target="_blank">Share on WhatsApp</a><br>
+                <a href="${facebookUrl}" target="_blank">Share on Facebook</a><br>
+                <a href="${pinterestUrl}" target="_blank">Share on Pinterest</a>
+            </div>
+        `;
+
+        // You can append this HTML to a modal or any container you have for sharing options
+        document.body.insertAdjacentHTML('beforeend', shareOptions);
+    }
+}
+
 </script>
 
 <?php if ($this->session->flashdata('error')) : ?>
@@ -572,27 +582,23 @@ function setCauseId(causeId) {
 
     <!-- Currency and Amount -->
     <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
-        <label for="currency" class="me-2">Currency:</label>
         <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
             <option>INR</option>
             <option>USD</option>
         </select>
 
-        <label for="amount" class="ms-3 me-2">Amount:</label>
-        <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" style="width:40%;" required>
+        <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
         <p id="error5" style="color:red; margin-top: 5px;"></p>
     </div>
 
     <!-- Phone Number -->
     <div class="form-group ms-4">
-        <label for="phone">Phone Number:</label>
         <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:92%;" required>
         <p id="error3" style="color:red; margin-top: 5px;"></p>
     </div>
 
     <!-- Transaction ID -->
     <div class="form-group ms-4">
-        <label for="transactionid">Transaction ID:</label>
         <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
         <p id="error4" style="color:red; margin-top: 5px;"></p>
     </div>
@@ -604,7 +610,6 @@ function setCauseId(causeId) {
         </button>
     </div>
 </form>
-
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -883,5 +888,6 @@ fetch('/kanavuhelp/processDonation', {  // Make sure to use the correct path
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
+    </html>
     </html>
     
