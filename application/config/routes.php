@@ -74,15 +74,7 @@ $route['admindashbord'] = 'admin/admindashbord';
 $route['admin'] = 'admin/admin';
 $route['verifytransaction'] = 'admin/transactionverification';
 $route['admin/logout'] = 'admin/logout';
-$route['contact'] = 'contact/index';
-$route['contact/submit'] = 'contact/submit';
-$route['contact/success'] = 'contact/success'; // Create a success page or redirect
-$route['contact/failure'] = 'contact/failure'; // Handle form failure
-$route['admin/dashboard'] = 'admin/dashboard';
-$route['register'] = 'kanavuhelp/register';
-$route['profile'] = 'kanavuhelp/profile';
-$route['login'] = 'kanavuhelp/login';
-$route['profile_edit'] = 'kanavuhelp/editProfile';  // Add this line for editing profile
-$route['contact_submissions'] = 'admin/contact_submissions';
 
+$route['login_modal']='kanavuhelp/login_modal';
+$route['login_modal1']='kanavuhelp/login_modal1';
 

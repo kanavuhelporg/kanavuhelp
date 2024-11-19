@@ -43,7 +43,7 @@
 
       // Redirect to the login page when "Login" button is clicked
       document.getElementById('loginRedirectBtn').addEventListener('click', function () {
-        var currentUrl = "<?= base_url('individual') ?>";
+        var currentUrl = "<?= base_url('myhelps') ?>";
 
         // Check if baseUrl is properly defined
         if (baseUrl) {
@@ -64,7 +64,7 @@
   <script>
     function redirectToLogin() {
       // Get the current URL
-      var currentUrl =  "<?= base_url('individual') ?>";
+      var currentUrl =  "<?= base_url('myhelps') ?>";
 
       // Encode the current URL
       var encodedUrl = encodeURIComponent(currentUrl);
