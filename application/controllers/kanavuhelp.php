@@ -361,7 +361,7 @@ class kanavuhelp extends CI_Controller
 
         if ($response) {
             echo '<script>alert("Successfully registered");</script>';
-            redirect('kanavuhelp/donate'); // Redirect to the donate page after successful registration
+            redirect('kanavuhelp/user_causes'); // Redirect to the donate page after successful registration
         } else {
             echo '<script>alert("Failed to register");</script>';
             redirect('kanavuhelp/individual'); // Redirect back if insertion fails

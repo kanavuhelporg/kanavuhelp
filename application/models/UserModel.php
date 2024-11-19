@@ -139,7 +139,7 @@ public function update_raised_amount($fundraiser_id, $raised_amount) {
 		$this->db->select('f.*');
 		$this->db->from('individualform f');
 		$this->db->where('f.user_id', $user_id); // Match the logged-in user's donations
-		$this->db->order_by('d.created_at', 'DESC'); // Optionally order by the donation date
+		$this->db->order_by('f.created_at', 'DESC'); // Optionally order by the donation date
 		
 		// Fetch the results
 		$result = $this->db->get()->result();
@@ -152,9 +152,11 @@ public function update_raised_amount($fundraiser_id, $raised_amount) {
 	
 	public function get_cause_details()
 {
-    $this->db->order_by('created_at', 'DESC'); // Order by 'create_at' in descending order (newest first)
-    $query = $this->db->get('individualform');
-    return $query->result();
+    $this->db->where('verified', 1); // Include only rows where 'verified' is 1
+$this->db->order_by('created_at', 'DESC'); // Order by 'created_at' in descending order (newest first)
+$query = $this->db->get('individualform');
+
+return $query->result();
 }
 public function get_category()
 {

@@ -268,16 +268,20 @@
                 
                 <div class="card-body">
                     <div class="card_text d-flex justify-content-between">
+                      
                         <p class="card-title"><b><?= $cause->cause_heading?></b></p>
+                        
                         <p class="text-muted"> <?= $cause->days_left > 0 ? $cause->days_left . ' days' : 'Expired' ?>left</p>
+                       
                     </div>
+                   
                     <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" -->
                     <div class="d-flex justify-content-between align-items-center">
                         <p class="card-text text-muted">Created by <br> <?= $cause->name ?></p>
                         <!--<p class="ms-4"><b> Your Donation₹ <?= number_format($cause->donated_amount) ?></b></p>-->
                     </div>
                     
-                   
+                    <p  ><b>  <?php echo ($cause->verified == 0) ? '<span class="badge bg-danger">verification pending</span>' :' <span class="badge bg-success">verified</span>'; ?></b></p>                
 
 <p class="card-text">
     <strong>End Date:</strong> <?= htmlspecialchars($cause->end_date) ?><br>
@@ -293,7 +297,7 @@
         </a>
         <?php endforeach; ?>
     <?php else : ?>
-        <p>No causes found for your account.</p>
+        <p><center>No causes found for your account.</center></p>
     <?php endif; ?>
 </div>
 
