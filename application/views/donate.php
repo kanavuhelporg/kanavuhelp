@@ -425,7 +425,7 @@
             </div>
         <?php endforeach; ?>
     <?php else: ?>
-        <p>No fundraisers available at the moment.</p>
+        <p><center>No fundraisers available at the moment.</center></p>
     <?php endif; ?>
   </div>
 </div>
