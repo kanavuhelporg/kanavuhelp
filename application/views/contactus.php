@@ -398,7 +398,13 @@
     <p id="demo3" style="color:red"></p>
   </div>
 
-  <button type="submit" class="btn btn-primary btn-lg msg_btn border-2 text-danger fw-bold bg-white" style="background-color:#E01A2B;border:none;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
+  <button 
+    type="submit" 
+    class="btn btn-primary btn-lg msg_btn border-2 text-danger fw-bold bg-white" 
+    style="background-color:#E01A2B; border: 2px solid red; border-radius: 25px; font-size: 15px; padding: 12px;">
+    Send Us Message
+</button>
+
 </form>
 
 <script>

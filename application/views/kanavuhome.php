@@ -153,6 +153,7 @@
       border: 1px solid rgba(224, 26, 43, 1);
       color: rgba(224, 26, 43, 1);
       border-radius: 25px;
+      
     }
 /* readmore_button in card */
     .readmore_btn {
@@ -583,12 +584,14 @@
     background-color: white;
     color: red;
     border: 1px solid red;
+    border-radius: 25px;
 }
 
 .donate_btn.no-hover:hover {
     background-color: white !important;
     color: red !important;
     border: 1px solid red !important;
+    border-radius: 25px;
 }
 .fixed-card-img-wrapper {
     position: relative;
@@ -626,23 +629,28 @@
     }
 }
 .fundraiser-carousel {
-    background-color: #e9ecef; /* Soft light gray, or choose a color that fits your design */
+    background-color: white; /* Soft light gray, or choose a color that fits your design */
     padding: 40px 0; /* Add some padding for breathing room */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for a lifted effect */
     margin-bottom: 30px; /* Extra space below the carousel */
 }
 .no-border-hover {
-  border: 1px solid grey !important;
-    box-shadow: none;
     background-color: transparent;
-    cursor: default; /* Optional: Keeps it looking non-interactive if needed */
+    cursor: default;
+    box-shadow: none;
+    border: 1px solid grey !important;
+    border-radius: 25px !important;
 }
 
 .no-border-hover:hover {
-    border: none;
+  background-color: transparent;
+    cursor: default;
     box-shadow: none;
+    border: 1px solid grey !important;
+    border-radius: 25px !important;
 }
+
 @media (max-width: 768px) {
     .carousel-item .col-md-4 {
         flex: 0 0 100%; /* Make each card take full width */
@@ -711,15 +719,13 @@
       </div>
     </div>
   </div>
-  <div class="container-xxl mt-5">
+  <div class="container-xxl mt-5 fundraiser-carousel">
   <div class="h4 text-center">BE THE REASON OF<span style="color:#EB2D32"> SOMEONE SMILES</span></div>
   <div style="display: flex; justify-content: center;">
     <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
   </div>
   <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
-</div><br>
-
-<div id="fundraiserCarousel" class="carousel slide mt-5 fundraiser-carousel" data-bs-ride="carousel">
+  <div id="fundraiserCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
     <div class="carousel-inner">
         <?php if (!empty($fundraisers)): ?>
             <?php
@@ -783,6 +789,7 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
+</div>
 </div>
 
 

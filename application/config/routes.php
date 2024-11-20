@@ -87,3 +87,6 @@ $route['profile'] = 'kanavuhelp/profile';
 $route['login'] = 'kanavuhelp/login';
 $route['profile_edit'] = 'kanavuhelp/editProfile';  // Add this line for editing profile
 $route['contact_submissions'] = 'admin/contact_submissions';
+$route['profile/viewProfile'] = 'profile/viewProfile';
+$route['profile/editProfile'] = 'profile/editProfile';
+

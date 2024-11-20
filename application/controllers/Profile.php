@@ -27,26 +27,26 @@ class Profile extends CI_Controller {
         if (!$userId) {
             redirect('login'); // Redirect to login if not logged in
         }
-
+    
         $data['user'] = $this->Profile_model->getUserById($userId);
-
+    
         $this->form_validation->set_rules('name', 'Name', 'required|alpha_numeric_spaces');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'min_length[6]');
-
+    
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('profile_edit', $data);
+            $this->load->view('profile_edit', $data); // Load the profile_edit view
         } else {
             $updatedData = [
                 'name' => $this->input->post('name'),
                 'email' => $this->input->post('email'),
             ];
-
+    
             $password = $this->input->post('password');
             if (!empty($password)) {
                 $updatedData['password'] = password_hash($password, PASSWORD_BCRYPT);
             }
-
+    
             if ($this->Profile_model->updateUser($userId, $updatedData)) {
                 $this->session->set_flashdata('success', 'Profile updated successfully.');
                 redirect('profile/viewProfile');
@@ -56,4 +56,5 @@ class Profile extends CI_Controller {
             }
         }
     }
+    
 }

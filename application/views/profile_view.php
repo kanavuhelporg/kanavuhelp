@@ -4,30 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .profile-container {
+            max-width: 500px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>Profile Page</h2>
+    <div class="profile-container">
+        <h1>User Profile</h1>
 
-        <?php if ($this->session->flashdata('error')): ?>
-            <div class="alert alert-danger">
-                <?= $this->session->flashdata('error'); ?>
-            </div>
-        <?php endif; ?>
+        
 
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Welcome, <?= htmlspecialchars($user['name']); ?></h3>
-                <p>Email: <?= htmlspecialchars($user['email']); ?></p>
-                <!-- Add more user info here -->
+        <!-- User Details -->
+        <h3><?= $user['name'] ?></h3>
+        <p>Email: <?= $user['email'] ?></p>
+        
 
-                <!-- Edit Profile Button -->
-                <a href="<?= base_url('profile_edit') ?>" class="btn btn-warning">Edit Profile</a>
-            </div>
-        </div>
-
-        <a href="<?= base_url('kanavuhelp/logout'); ?>" class="btn btn-danger">Logout</a>
+        <!-- Buttons -->
+        <a href="<?= base_url('profile_edit') ?>" class="btn btn-primary">Update Profile</a>
+        <a href="<?= base_url('logout') ?>" class="btn btn-danger">Logout</a>
     </div>
 </body>
 </html>

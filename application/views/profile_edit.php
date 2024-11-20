@@ -3,35 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Update Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .update-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .avatar-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 10px auto 20px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>Edit Profile</h2>
-        <?php if ($this->session->flashdata('success')): ?>
-            <div class="alert alert-success">
-                <?= $this->session->flashdata('success'); ?>
-            </div>
-        <?php endif; ?>
-        <form action="<?= base_url('profile/editProfile') ?>" method="post">
+    <div class="update-container">
+        <h2 class="text-center">Update Profile</h2>
+
+        <!-- Current Avatar -->
+        <img src="<?= base_url('uploads/' . $user['avatar']) ?>" alt="Avatar" class="avatar-preview">
+
+        <!-- Update Form -->
+        <?= form_open_multipart('user/update_profile'); ?>
             <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" value="<?= set_value('name', $user['name']); ?>">
-                <?= form_error('name'); ?>
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" id="username" class="form-control" value="<?= $user['username'] ?>" required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?= set_value('email', $user['email']); ?>">
-                <?= form_error('email'); ?>
+                <input type="email" name="email" id="email" class="form-control" value="<?= $user['email'] ?>" required>
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password">
-                <?= form_error('password'); ?>
+                <label for="avatar" class="form-label">Upload New Avatar</label>
+                <input type="file" name="avatar" id="avatar" class="form-control">
+                <input type="hidden" name="current_avatar" value="<?= $user['avatar'] ?>">
             </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-        </form>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Save Changes</button>
+                <a href="<?= base_url('user/profile') ?>" class="btn btn-secondary">Cancel</a>
+            </div>
+        <?= form_close(); ?>
     </div>
 </body>
 </html>

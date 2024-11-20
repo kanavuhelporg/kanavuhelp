@@ -8,18 +8,26 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 
   <style>
     body {
       font-family: 'Sen', sans-serif;
     }
-    .logo {
-    margin-left: 65px;
-    font-weight: bolder;
-    font-size: x-large;
-  }
-  /* login_button */
-  .login-button {
+/* carousel img */
+    .carousel-item {
+      height: 100vh;
+    }
+
+    .carousel-item img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+/* login_button */
+    .login-button {
       background-color: #E01A2B;
       color: white;
       font-size: 16px;
@@ -42,24 +50,6 @@
     .offcanvas-body {
       font-size: 17px;
     }
-    .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-  padding: (1rem) var(1rem);
-}
-.navbar-toggler {
-    padding: .25rem .75rem;
-    font-size: 1.25rem;
-    line-height: 1;
-    background-color: transparent;
-    border: 1px solid #4f373766;
-    border-radius: .25rem;
-    transition: box-shadow .15s ease-in-out;
-}
-  #navbarscroll {
-    margin-top: 17px;
-    margin-bottom: 10px;
-    margin-left: 70px;
-  }
 
 
   </style>
@@ -68,7 +58,7 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-light py-4 fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="<?= base_url('/kanavuhome') ?>">
+      <a class="navbar-brand me-auto" href="#">
         <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
       </a>
 

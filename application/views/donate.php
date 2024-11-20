@@ -193,12 +193,12 @@
 
     .donate_btn {
       
-      border-radius: 25px;
+      border-radius: 25px !important;
       background-color: white !important;
     color: red !important;
     border: 1px solid red !important;
     }
-
+    
     /* footer */
 
     .footer {
@@ -295,6 +295,21 @@
     border: none;
     box-shadow: none;
 } */
+.no-border-hover {
+    background-color: transparent;
+    cursor: default;
+    box-shadow: none;
+    border: 1px solid grey !important;
+    border-radius: 25px !important;
+}
+
+.no-border-hover:hover {
+  background-color: transparent;
+    cursor: default;
+    box-shadow: none;
+    border: 1px solid grey !important;
+    border-radius: 25px !important;
+}
 .fixed-card-img-wrapper {
     position: relative;
     width: 100%;
