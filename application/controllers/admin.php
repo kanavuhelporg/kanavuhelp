@@ -8,6 +8,7 @@ class admin extends CI_Controller
         parent::__construct();
         $this->load->library('session');
         $this->load->model('adminpanel');
+        
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('cookie');
@@ -66,16 +67,39 @@ class admin extends CI_Controller
         }
     }
 
+public function causesverification()
+{
+    $data['fundraisers'] = $this->adminpanel->get_cause_details();
+    $this->load->view('causesverification.php',$data);
+}
     public function transactionverification()
     { $data['donations'] = $this->adminpanel->transactiondetails();
         $this->load->view('transactionverification.php',$data);
     }
-
-    // public function enquiries()
-    // { $data['contactus'] = $this->adminpanel->contctdetails();
-    //     $this->load->view('contactenquiry.php',$data);
-    // }
-
+    public function updatecauses()
+    {
+        // Load the model
+        $this->load->model('adminpanel');
+    
+        // Get the POST data
+        $id = $this->input->post('id');
+        $verified = $this->input->post('verified');
+    
+        // Validate input
+        if (empty($id) || $verified === null) {
+            echo json_encode(['status' => 'failure', 'message' => 'Invalid input']);
+            return;
+        }
+    
+        // Update the record
+        $updateSuccess = $this->adminpanel->updatecauses($id, $verified);
+    
+        // Return JSON response
+        header('Content-Type: application/json');
+        echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
+    }
+    
+    
     public function editDonation($id)
 {
     // Fetch donation details by ID

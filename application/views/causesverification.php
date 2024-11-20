@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TransactionVerification</title>
+    <title>causeverification</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
     <!-- <link rel="stylesheet" href="./ponsoft.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -338,20 +338,32 @@
         <table class="table table-responsive table-borderless">
             <thead>
             <tr class="ps-gray">
-            <th>S.No</th><th>Name</th><th>Email</th><th>Mobile</th><th>Amount</th><th>TransactionId</th><th>Verified status</th><th>Action</th>
+            <th>S.No</th><th>Name</th><th>Email</th><th>Mobile</th><th>Amount</th><th>Location</th><th>Age</th>
+            <th>End date </th><th>Cause heading</th><th>Cause description</th>
+           <th>created date</th><th>Created by</th> <th>raised amount</th><th>verified status</th>
+           
+            <th>Action</th>
             </tr>
             </thead>
             <tbody id="ps-coords">
-            <?php if (!empty($donations)): ?>
-            <?php foreach ($donations as $index => $donation): ?>
+            <?php if (!empty($fundraisers)): ?>
+            <?php foreach ($fundraisers as $index => $donation): ?>
                 <tr>
                     <td><?php echo $index + 1; ?></td>
                     <td><?php echo htmlspecialchars($donation->name); ?></td>
                     <td><?php echo htmlspecialchars($donation->email); ?></td>
-                    <td><?php echo htmlspecialchars($donation->phoneno); ?></td>
+                    <td><?php echo htmlspecialchars($donation->phone); ?></td>
                     <td><?php echo htmlspecialchars($donation->amount); ?></td>
-                    <td><?php echo htmlspecialchars($donation->transactionid); ?></td>
-                    <td><?php echo htmlspecialchars($donation->status == 1 ? 'Yes' : 'No'); ?></td>
+                    <td><?php echo htmlspecialchars($donation->location); ?></td>
+                    <td><?php echo htmlspecialchars($donation->age); ?></td>
+                    <td><?php echo htmlspecialchars($donation->end_date); ?></td>
+                    <td><?php echo htmlspecialchars($donation->cause_heading); ?></td>
+                    <td><?php echo htmlspecialchars($donation->cause_description); ?></td>
+                   
+                    <td><?php echo htmlspecialchars($donation->created_at); ?></td>
+                    <td><?php echo htmlspecialchars($donation->username); ?></td>
+                    <td><?php echo htmlspecialchars($donation->raised_amount); ?></td>
+                    <td><?php echo htmlspecialchars($donation->verified == 1 ? 'Yes' : 'No'); ?></td>
                     <td>
                     <a href="#" onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDonationModal">
     Edit
@@ -370,50 +382,113 @@
         </div> <!----------------table-end------->
         <script>
 function editDonation(donation) {
-    // Populate modal fields with donation data
-    document.getElementById('donationId').value = donation.donation_id;
+    document.getElementById('donationId').value = donation.id;
     document.getElementById('donationName').value = donation.name;
     document.getElementById('donationEmail').value = donation.email;
-    document.getElementById('donationMobile').value = donation.phoneno;
+    document.getElementById('donationMobile').value = donation.phone;
     document.getElementById('donationAmount').value = donation.amount;
-    document.getElementById('donationTransactionId').value = donation.transactionid;
-    document.getElementById('donationVerified').value = donation.status;
+    document.getElementById('donationLocation').value = donation.location;
+    document.getElementById('donationAge').value = donation.age;
+    document.getElementById('donationEndDate').value = donation.end_date;
+    document.getElementById('donationCauseHeading').value = donation.cause_heading;
+    document.getElementById('donationCauseDescription').value = donation.cause_description;
+    // No need to set Cover Image input unless you want to show the current image path.
+    document.getElementById('donationUserName').value = donation.username;
+    document.getElementById('donationRaisedAmount').value = donation.raised_amount;
+    document.getElementById('donationVerified').value = donation.verified;
+  //  var imageUrl = "<?= base_url('assets/individualform_img/') ?>" + donation.cover_image;
+   // document.getElementById('donationImagePreview').src = imageUrl;
 }
+
 </script>
-        <div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
+<div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="editDonationForm" action="<?php echo site_url('admin/updateDonation'); ?>" method="post">
+            <form id="editDonationForm" action="<?php echo site_url('admin/updatecauses'); ?>" method="post" >
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editDonationLabel">Edit Donation</h5>
+                    <h5 class="modal-title" id="editDonationLabel">Edit Causes </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                   
-                    <input type="hidden" name="id" id="donationId"  >
+                    <input type="hidden" name="id" id="donationId">
 
-                    <label>Name</label>
-                    <input type="text" name="name" id="donationName" class="form-control">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" name="name" id="donationName" class="form-control">
+                    </div>
 
-                    <label>Email</label>
-                    <input type="email" name="email" id="donationEmail" class="form-control">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" id="donationEmail" class="form-control">
+                    </div>
 
-                    <label>Mobile</label>
-                    <input type="text" name="mobile" id="donationMobile" class="form-control">
+                    <div class="form-group">
+                        <label>Mobile</label>
+                        <input type="text" name="mobile" id="donationMobile" class="form-control">
+                    </div>
 
-                    <label>Amount</label>
-                    <input type="text" name="amount" id="donationAmount" class="form-control">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" name="amount" id="donationAmount" class="form-control">
+                    </div>
 
-                    <label>Transaction ID</label>
-                    <input type="text" name="transaction_id" id="donationTransactionId" class="form-control">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" name="location" id="donationLocation" class="form-control">
+                    </div>
 
-                    <label>Verified</label>
-                    <select name="status" id="donationVerified" class="form-control">
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                    </select>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" name="age" id="donationAge" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date" name="end_date" id="donationEndDate" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cause Heading</label>
+                        <input type="text" name="cause_heading" id="donationCauseHeading" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cause Description</label>
+                        <textarea name="cause_description" id="donationCauseDescription" class="form-control"></textarea>
+                    </div>
+
+                    <!--<div class="form-group">
+                         <!-- Image Preview Section 
+                    <div class="form-group">
+                        <label>Current Cover Image</label>
+                        <div>
+                            <img id="donationImagePreview" src="" alt="Cover Image" width="150" height="150" style="border: 1px solid #ccc; margin-bottom: 10px;">
+                        </div>
+                    </div>
+                      <!--  <label> For Updating Cover Image</label>
+                        <input type="file" name="cover_image" id="donationCoverImage" class="form-control">
+                        <small class="form-text text-muted">Leave empty if you don't want to change the image.</small>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label>Created by</label>
+                        <input type="text" name="username" id="donationUserName" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Raised Amount</label>
+                        <input type="text" name="raised_amount" id="donationRaisedAmount" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Verified</label>
+                        <select name="verified" id="donationVerified" class="form-control">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -425,31 +500,36 @@ function editDonation(donation) {
 </div>
 
 <script>
-$('#editDonationForm').on('submit', function(event) {
+$('#editDonationForm').on('submit', function (event) {
     event.preventDefault(); // Prevent default form submission
 
+    // Create a FormData object for handling file uploads
+    var formData = new FormData(this);
+
     $.ajax({
-        url: $(this).attr('action'),
+        url: $(this).attr('action'), // Ensure the action attribute is correct
         type: 'POST',
-        data: $(this).serialize(), // Serialize form data
-        dataType: 'json', // Expect JSON response
-        success: function(response) {
-            console.log('Server Response:', response); // Log server response for debugging
+        data: formData, // Send the FormData object
+        contentType: false, // Don't set content type for FormData
+        processData: false, // Don't process data, let FormData handle it
+        dataType: 'json', // Expect a JSON response
+        success: function (response) {
+            console.log('Server Response:', response);
 
             if (response.status === 'success') {
-                alert('Donation updated successfully');
-                // Optional: Reload the page to show updated data
-                window.location.reload(); // Or redirect to a specific page if needed
+                alert('verified successfully');
+                window.location.reload(); // Reload the page or redirect as needed
             } else {
-                alert('Failed to update donation');
+                alert('verification failed');
             }
         },
-        error: function(xhr, status, error) {
-            console.log('AJAX Error:', error); // Log any AJAX errors
+        error: function (xhr, status, error) {
+            console.error('AJAX Error:', error); // Log AJAX errors to the console
             alert('An error occurred. Please try again.');
         }
     });
 });
+
 
 </script>
 

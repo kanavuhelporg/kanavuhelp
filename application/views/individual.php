@@ -1083,7 +1083,7 @@
         <span id="cause-description-error" class="text-danger"></span>
     </div>
 </div>
-
+<div style="color:red">Please wait for Admin verification of the cause.It will happen in 24 hours</div>
 
     <div class="text-center mt-3">
         <button type="button" class="btn btn-danger no-hover" onclick="showStep(2)">Back</button>
