@@ -40,6 +40,42 @@
     background-color: red !important;
     color: white !important;
   }
+  .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
   .btn-1 {
     margin-left: 260px !important;
@@ -947,7 +983,7 @@
         <span id="cause-description-error" class="text-danger"></span>
     </div>
 </div>
-
+<div style="color:red">Please wait for Admin verification of the cause.It will happen in 24 hours</div>
 
     <div class="text-center mt-3">
         <button type="button" class="btn btn-danger no-hover" onclick="showStep(2)">Back</button>
@@ -956,7 +992,14 @@
 </section>
 
                         </form>
+                        <div id="thankYouModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('thankYouModal')">&times;</span>
+        <h2>Thank you for submitting!</h2>
+        <p>Your submission has been received. Please wait for admin verification.</p>
+    </div>
                         <script>
+
                         document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("category").addEventListener("change", () => validateField("category", "category-error", "Please select a category."));
     document.getElementById("name").addEventListener("input", () => validateField("name", "name-error", "Please enter the name."));
@@ -1288,16 +1331,29 @@ document.getElementById("submitApprovalButton").addEventListener("click", functi
         const causeDescription = document.getElementById("cause_description").value.trim();
 
         if (coverImage && causeHeading && causeDescription) {
-            alert("Form is ready to be submitted for approval.");
-            document.querySelector("#individualform").submit(); // Proceed with form submission
-        } else {
-            alert("Please complete all required fields.");
-        }
-    });
-    
+          openModal("thankYouModal");
+
+// Wait 3 seconds before redirecting and submitting the form
+setTimeout(() => {
+    document.querySelector("#individualform").submit(); // Proceed with form submission
+    window.location.href = '<?= base_url("kanavuhelp/get_causes_byuser") ?>'; // Redirect to user causes page
+}, 3000);
+} else {
+alert("Please complete all required fields.");
+}
+});
+function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+    }
+
+    // Function to close a modal
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
 </script>
 
 
+</div>
 <div class="footer">
 <footer class="footer mt-auto py-3">
   <div class="container">
