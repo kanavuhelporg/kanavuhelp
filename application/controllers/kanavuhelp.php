@@ -34,16 +34,16 @@ class kanavuhelp extends CI_Controller
         $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
         $data['is_logged_in'] = $is_logged_in;
         $active_fundraisers = [];
-    
+
         // Loop through each fundraiser to check status and calculate days_left
         foreach ($data['fundraisers'] as $fundraiser) {
             $end_date = new DateTime($fundraiser->end_date);
             $current_date = new DateTime();
             $days_left = $end_date->diff($current_date)->days;
-            
+
             // Check if fundraiser has expired by date or target amount reached
             $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
-            
+
             // Only include active fundraisers
             if (!$is_expired) {
                 // If still active, calculate days left and other properties
@@ -51,7 +51,6 @@ class kanavuhelp extends CI_Controller
                 $fundraiser->hide_donation_button = false;
                 $active_fundraisers[] = $fundraiser;
             }
-            
         }
         $data['fundraisers'] = array_slice($active_fundraisers, 0, 10);
         $this->load->view('kanavuhome.php', $data);
@@ -70,17 +69,75 @@ class kanavuhelp extends CI_Controller
     }
     public function login_modal()
     {
-        $this->load->view('login_modal.php');
+        $data['fundraisers'] = $this->UserModel->get_cause_details();
+
+        // Check if user is logged in using CodeIgniter session
+        $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+        $data['is_logged_in'] = $is_logged_in;
+
+        // Initialize an array to store active fundraisers
+        $active_fundraisers = [];
+
+        // Loop through each fundraiser to check status and calculate days_left
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date->diff($current_date)->days;
+
+            // Check if fundraiser has expired by date or target amount reached
+            $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
+
+            // Only include active fundraisers
+            if (!$is_expired) {
+                // If still active, calculate days left and other properties
+                $fundraiser->days_left = $days_left;
+                $fundraiser->hide_donation_button = false;
+                $active_fundraisers[] = $fundraiser;
+            }
+        }
+
+        // Pass only active fundraisers to the view
+        $data['fundraisers'] = $active_fundraisers;
+        $this->load->view('login_modal.php', $data);
     }
 
     public function login_modal1()
     {
-        $this->load->view('login_modal1.php');
+        $data['fundraisers'] = $this->UserModel->get_cause_details();
+
+        // Check if user is logged in using CodeIgniter session
+        $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+        $data['is_logged_in'] = $is_logged_in;
+
+        // Initialize an array to store active fundraisers
+        $active_fundraisers = [];
+
+        // Loop through each fundraiser to check status and calculate days_left
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date->diff($current_date)->days;
+
+            // Check if fundraiser has expired by date or target amount reached
+            $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
+
+            // Only include active fundraisers
+            if (!$is_expired) {
+                // If still active, calculate days left and other properties
+                $fundraiser->days_left = $days_left;
+                $fundraiser->hide_donation_button = false;
+                $active_fundraisers[] = $fundraiser;
+            }
+        }
+
+        // Pass only active fundraisers to the view
+        $data['fundraisers'] = $active_fundraisers;
+        $this->load->view('login_modal1.php', $data);
     }
     public function individual()
     {
         if (!$this->session->userdata('userId')) {
-           redirect('login_modal');
+            redirect('login_modal');
             exit;
         }
 
@@ -130,13 +187,12 @@ class kanavuhelp extends CI_Controller
             'phoneno' => $phoneno,
             'transactionid' => $transactionid,
             'currency_type' => $currency_type
-        ); 
+        );
 
         // Call the model function to save the donation
         if ($this->UserModel->saveDonation($data)) {
             // $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
             echo json_encode(['status' => 'success', 'redirect' => base_url('myhelps')]);
-           
         } else {
             echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your donation.']);
         }
@@ -146,23 +202,23 @@ class kanavuhelp extends CI_Controller
     {
         $data['category'] = $this->UserModel->get_category();
         $data['fundraisers'] = $this->UserModel->get_cause_details();
-    
+
         // Check if user is logged in using CodeIgniter session
         $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
         $data['is_logged_in'] = $is_logged_in;
-    
+
         // Initialize an array to store active fundraisers
         $active_fundraisers = [];
-    
+
         // Loop through each fundraiser to check status and calculate days_left
         foreach ($data['fundraisers'] as $fundraiser) {
             $end_date = new DateTime($fundraiser->end_date);
             $current_date = new DateTime();
             $days_left = $end_date->diff($current_date)->days;
-            
+
             // Check if fundraiser has expired by date or target amount reached
             $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
-            
+
             // Only include active fundraisers
             if (!$is_expired) {
                 // If still active, calculate days left and other properties
@@ -171,18 +227,18 @@ class kanavuhelp extends CI_Controller
                 $active_fundraisers[] = $fundraiser;
             }
         }
-    
+
         // Pass only active fundraisers to the view
         $data['fundraisers'] = $active_fundraisers;
-    
+
         $this->load->view('donate', $data);
     }
-    
+
     public function myhelps()
     {
         if (!$this->session->userdata('userId')) {
             redirect('login_modal1');
-            
+
             exit;
         }
 
@@ -303,11 +359,10 @@ class kanavuhelp extends CI_Controller
             $this->session->set_userdata($userLoggedIn);
             if (!empty($returnUrl)) {
                 redirect($returnUrl);
-            }
-            else{
-            // Redirect to 'kanavuhome' after successful login
-         ;
-        redirect( base_url('/'));
+            } else {
+                    // Redirect to 'kanavuhome' after successful login
+                ;
+                redirect(base_url('/'));
             }
         } else {
             // If login fails, reload the login page with an error message
@@ -316,58 +371,58 @@ class kanavuhelp extends CI_Controller
         }
     }
     public function individualform_data()
-{
-    // Load required model and library
-    $this->load->model('UserModel');
-    $this->load->library('upload');
+    {
+        // Load required model and library
+        $this->load->model('UserModel');
+        $this->load->library('upload');
 
-    // Retrieve form data
-    $data = [
-        'category' => $this->input->post('category'),
-        'name' => $this->input->post('name'),
-        'email' => $this->input->post('email'),
-        'phone' => $this->input->post('phone'),
-        'age' => $this->input->post('age'),
-        'location' => $this->input->post('location'),
-        'form_option' => $this->input->post('form_option'),
-        'amount' => $this->input->post('amount'),
-        'end_date' => $this->input->post('end_date'),
-        'cause_heading' => $this->input->post('cause_heading'),
-        'cause_description' => $this->input->post('cause_description'),
-        'user_id' => $this->session->userdata('userId')
-    ];
+        // Retrieve form data
+        $data = [
+            'category' => $this->input->post('category'),
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'phone' => $this->input->post('phone'),
+            'age' => $this->input->post('age'),
+            'location' => $this->input->post('location'),
+            'form_option' => $this->input->post('form_option'),
+            'amount' => $this->input->post('amount'),
+            'end_date' => $this->input->post('end_date'),
+            'cause_heading' => $this->input->post('cause_heading'),
+            'cause_description' => $this->input->post('cause_description'),
+            'user_id' => $this->session->userdata('userId')
+        ];
 
-    // File upload configuration
-    $config['upload_path'] = './assets/individualform_img/';
-    $config['allowed_types'] = 'jpg|jpeg|png|svg';
-    $config['max_size'] = 2048; // 2MB
-    $config['max_width'] = 1024;
-    $config['max_height'] = 768;
-    $this->upload->initialize($config);
+        // File upload configuration
+        $config['upload_path'] = './assets/individualform_img/';
+        $config['allowed_types'] = 'jpg|jpeg|png|svg';
+        $config['max_size'] = 2048; // 2MB
+        $config['max_width'] = 1024;
+        $config['max_height'] = 768;
+        $this->upload->initialize($config);
 
-    // Handle file upload
-    if (!$this->upload->do_upload('cover_image')) {
-        // Error during file upload
-        $error = $this->upload->display_errors();
-        echo "<script>alert('Upload error: $error');</script>";
-        redirect('kanavuhelp/individual');
-    } else {
-        // File upload successful
-        $file_data = $this->upload->data();
-        $data['cover_image'] = $file_data['file_name'];
-
-        // Insert data into the database
-        $response = $this->UserModel->store3($data);
-
-        if ($response) {
-            echo '<script>alert("Successfully registered");</script>';
-            redirect('kanavuhelp/donate'); // Redirect to the donate page after successful registration
+        // Handle file upload
+        if (!$this->upload->do_upload('cover_image')) {
+            // Error during file upload
+            $error = $this->upload->display_errors();
+            echo "<script>alert('Upload error: $error');</script>";
+            redirect('kanavuhelp/individual');
         } else {
-            echo '<script>alert("Failed to register");</script>';
-            redirect('kanavuhelp/individual'); // Redirect back if insertion fails
+            // File upload successful
+            $file_data = $this->upload->data();
+            $data['cover_image'] = $file_data['file_name'];
+
+            // Insert data into the database
+            $response = $this->UserModel->store3($data);
+
+            if ($response) {
+                echo '<script>alert("Successfully registered");</script>';
+                redirect('kanavuhelp/user_causes'); // Redirect to the donate page after successful registration
+            } else {
+                echo '<script>alert("Failed to register");</script>';
+                redirect('kanavuhelp/individual'); // Redirect back if insertion fails
+            }
         }
     }
-}
 
 
 
@@ -461,62 +516,30 @@ class kanavuhelp extends CI_Controller
             }
         }
     }
-    // public function contact_us()
-    // {
-    //     $data['full-name'] = $this->input->post('full-name');
-    //     $data['email'] = $this->input->post('email');
-    //     $data['phone'] = $this->input->post('phone');
-    //     $data['message'] = $this->input->post('message');
-    //     $this->load->model('UserModel');
-    //     $response = $this->UserModel->store($data);
-    //     if ($response == true) {
-    //         echo '<script>alert("Thanks For Contacting Us")</script>';
-    //         $this->load->view('kanavuhelp/donate');
-    //     } else {
-    //         echo 'Failed to register';
-    //     }
-    // }
-//     public function contact_us()
-// {
-//     $data['full-name'] = $this->input->post('full-name');
-//     $data['email'] = $this->input->post('email');
-//     $data['phone'] = $this->input->post('phone');
-//     $data['message'] = $this->input->post('message');
 
-//     $this->load->model('UserModel');
-//     $response = $this->UserModel->store($data);
+    public function contact_us()
+    {
+        // Load the database
+        $this->load->database();
 
-//     if ($response == true) {
-//         $this->session->set_flashdata('success', 'Thanks for contacting us!');
-//         redirect('kanavuhelp/donate');
-//     } else {
-//         $this->session->set_flashdata('error', 'Failed to register.');
-//         redirect('kanavuhelp/contact');
-//     }
-// }
+        // Get form data
+        $data = [
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'phone' => $this->input->post('phone'),
+            'message' => $this->input->post('message')
+        ];
 
-public function contact_us()
-{
-    // Load the database
-    $this->load->database();
+        // Insert data into the database
+        $this->db->insert('contact_us', $data);
 
-    // Get form data
-    $data = [
-        'name' => $this->input->post('full-name'),
-        'email' => $this->input->post('email'),
-        'phone' => $this->input->post('phone'),
-        'message' => $this->input->post('message')
-    ];
+        // Set a success message
+        $this->session->set_flashdata('success', 'Thanks for contacting us! We will get back to you soon.');
 
-    // Insert data into the database
-    $this->db->insert('contact_us', $data);
+        // Redirect back to the form
+        redirect(base_url('/kanavuhome'));
+    }
 
-    // Set a success message
-    $this->session->set_flashdata('success', 'Thanks for contacting us! We will get back to you soon.');
-
-    // Redirect back to the form
-    redirect(base_url('/kanavuhome'));
-}
 
     public function logout()
     {
@@ -528,21 +551,22 @@ public function contact_us()
         redirect(base_url('/login'));
     }
     // Controller method for viewing the profile
-public function profile() {
-    // Check if user is logged in
-    if (!$this->session->userdata('userId')) {
-        redirect('kanavuhelp/login'); // Redirect to login if not logged in
+    public function profile()
+    {
+        // Check if user is logged in
+        if (!$this->session->userdata('userId')) {
+            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        }
+
+        // Get user data from session
+        $userId = $this->session->userdata('userId');
+        $this->load->model('UserModel');
+
+        // Fetch user data from the database
+        $data['user'] = $this->UserModel->getUserById($userId);
+
+        // Load the profile view and pass user data
+        $this->load->view('profile_view', $data);
     }
-
-    // Get user data from session
-    $userId = $this->session->userdata('userId');
-    $this->load->model('UserModel');
-
-    // Fetch user data from the database
-    $data['user'] = $this->UserModel->getUserById($userId);
-
-    // Load the profile view and pass user data
-    $this->load->view('profile_view', $data);
 }
-
-}
+?>

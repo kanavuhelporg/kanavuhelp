@@ -13,20 +13,26 @@
     body {
       font-family: 'Sen', sans-serif;
     }
-/* carousel */
+
+    /* carousel */
     .carousel-item {
       height: 100vh;
     }
+
     .active {
-  background-color: #f87171; /* For example, a darker red background */
-  color: white; /* White text for contrast */
-}
+      background-color: #f87171;
+      /* For example, a darker red background */
+      color: white;
+      /* White text for contrast */
+    }
+
     .carousel-item img {
       object-fit: cover;
       height: 100%;
       width: 100%;
     }
-/* Login_button */
+
+    /* Login_button */
     .login-button {
       background-color: #E01A2B;
       color: white;
@@ -36,7 +42,8 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-/* Start a kanavu button */
+
+    /* Start a kanavu button */
     .startkanavu-button {
       border: 1px solid #E01A2B;
       color: #E01A2B;
@@ -46,12 +53,13 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-/* nav bar menu size */
+
+    /* nav bar menu size */
     .offcanvas-body {
       font-size: 17px;
     }
 
-/* footer */
+    /* footer */
     .footer {
       height: 250px;
       width: 100%;
@@ -94,7 +102,8 @@
       margin-left: 10px;
 
     }
-/* button above cards */
+
+    /* button above cards */
     .data {
       border: 1px solid #E01A2B;
       color: #E01A2B;
@@ -106,7 +115,8 @@
       background-color: #E01A2B;
       color: white;
     }
-/* card section */
+
+    /* card section */
     .card {
       border: none;
       flex-direction: row;
@@ -123,17 +133,21 @@
     .card-title {
       width: 250px;
     }
-/* progress bar in the card */
+
+    /* progress bar in the card */
     .progress {
       width: 286px;
     }
+
     @media (min-width:768px) and (max-width:990px) {
-  .card{
-    width:auto;
-  }
-}
+      .card {
+        width: auto;
+      }
+    }
+
     @media (max-width: 767px) {
-/* img below nav bar */
+
+      /* img below nav bar */
       .donate_img {
         width: 100%;
         /* Ensure the parent container takes full width */
@@ -147,8 +161,9 @@
         object-fit: cover;
         /* Ensures the image fills its container */
       }
-/* card section */
-.card {
+
+      /* card section */
+      .card {
         flex-direction: column;
         width: auto;
       }
@@ -159,18 +174,27 @@
         height: 167px;
       }
     }
-    #myDonationsButton, #myFundraisersButton {
-    transition: none;
-    color: #dc3545; /* Red color */
-    background-color: #ffffff; /* White background */
-    border-color: #dc3545; /* Red border */
-  }
 
-  #myDonationsButton:hover, #myFundraisersButton:hover {
-    color: #dc3545; /* Keep red color on hover */
-    background-color: #ffffff; /* Keep white background on hover */
-    border-color: #dc3545; /* Keep red border on hover */
-  }
+    #myDonationsButton,
+    #myFundraisersButton {
+      transition: none;
+      color: #dc3545;
+      /* Red color */
+      background-color: #ffffff;
+      /* White background */
+      border-color: #dc3545;
+      /* Red border */
+    }
+
+    #myDonationsButton:hover,
+    #myFundraisersButton:hover {
+      color: #dc3545;
+      /* Keep red color on hover */
+      background-color: #ffffff;
+      /* Keep white background on hover */
+      border-color: #dc3545;
+      /* Keep red border on hover */
+    }
   </style>
 </head>
 
@@ -193,44 +217,44 @@
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
-                    </li>
-                    <!-- <li class="nav-item">
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
+            </li>
+            <!-- <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
                     </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center ms-auto">
-                <?php if ($this->session->userdata('userId')): ?>
-                  <div class="d-flex align-items-center">
-                    <div class="dropdown" id="userProfile">
-                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                         style="width: 30px; height: 30px; border-radius: 50%;">
-                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                      </div>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                      </ul>
-                    </div>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center ms-auto">
+            <?php if ($this->session->userdata('userId')): ?>
+              <div class="d-flex align-items-center">
+                <div class="dropdown" id="userProfile">
+                  <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                      style="width: 30px; height: 30px; border-radius: 50%;">
+                    <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
                   </div>
-                  <?php else: ?>
-                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-                  <?php endif; ?>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+                    <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                  </ul>
                 </div>
+              </div>
+            <?php else: ?>
+              <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+            <?php endif; ?>
+          </div>
         </div>
       </div>
     </div>
@@ -244,58 +268,64 @@
 
   </div> -->
   <div class="mx-auto text-center mt-8 md:ml-20">
-  <button id="myDonationsButton"
-    class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0 mr-2">My Donations</button>
-  <button id="myFundraisersButton"
-    class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0">My Fundraisers</button>
-</div>
-<script>
-  // Adding click event to navigate to 'My Fundraisers' page
-  document.getElementById("myDonationsButton").addEventListener("click", function() {
-    window.location.href = "<?php echo base_url('myhelps'); ?>"; // Correctly quoted and lowercase path
-  });
-</script>
+    <button id="myDonationsButton"
+      class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0 mr-2">My Donations</button>
+    <button id="myFundraisersButton"
+      class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0">My Fundraisers</button>
+  </div>
+  <script>
+    // Adding click event to navigate to 'My Fundraisers' page
+    document.getElementById("myDonationsButton").addEventListener("click", function() {
+      window.location.href = "<?php echo base_url('myhelps'); ?>"; // Correctly quoted and lowercase path
+    });
+  </script>
 
-  
-    <?php if (!empty($fundraisers)) : ?>
-        <?php foreach ($fundraisers as $cause) : ?>
-            
-          <div class="container d-flex justify-content-center align-items-center mt-5">
-          <a href="<?= base_url('helpus/' . $cause->id) ?>" style="text-decoration:none;color:black">
-            <div class="card mb-3">
-                <!-- Use img-fluid and custom inline styles for width and height -->
-                <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top img-fluid" alt="...">
-                
-                <div class="card-body">
-                    <div class="card_text d-flex justify-content-between">
-                        <p class="card-title"><b><?= $cause->cause_heading?></b></p>
-                        <p class="text-muted"> <?= $cause->days_left > 0 ? $cause->days_left . ' days' : 'Expired' ?>left</p>
-                    </div>
-                    <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" -->
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="card-text text-muted">Created by <br> <?= $cause->name ?></p>
-                        <!--<p class="ms-4"><b> Your Donation₹ <?= number_format($cause->donated_amount) ?></b></p>-->
-                    </div>
-                    
-                   
 
-<p class="card-text">
-    <strong>End Date:</strong> <?= htmlspecialchars($cause->end_date) ?><br>
-    
-</p>
+  <?php if (!empty($fundraisers)) : ?>
+    <?php foreach ($fundraisers as $cause) : ?>
 
-                    <!--<div class="progress mb-2">
+      <div class="container d-flex justify-content-center align-items-center mt-5">
+        <a href="<?= base_url('helpus/' . $cause->id) ?>" style="text-decoration:none;color:black">
+          <div class="card mb-3">
+            <!-- Use img-fluid and custom inline styles for width and height -->
+            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top img-fluid" alt="...">
+
+            <div class="card-body">
+              <div class="card_text d-flex justify-content-between">
+
+                <p class="card-title"><b><?= $cause->cause_heading ?></b></p>
+
+                <p class="text-muted"> <?= $cause->days_left > 0 ? $cause->days_left . ' days' : 'Expired' ?>left</p>
+
+              </div>
+
+              <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" -->
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text text-muted">Created by <br> <?= $cause->name ?></p>
+                <!--<p class="ms-4"><b> Your Donation₹ <?= number_format($cause->donated_amount) ?></b></p>-->
+              </div>
+
+              <p><b> <?php echo ($cause->verified == 0) ? '<span class="badge bg-danger">verification pending</span>' : ' <span class="badge bg-success">verified</span>'; ?></b></p>
+
+              <p class="card-text">
+                <strong>End Date:</strong> <?= htmlspecialchars($cause->end_date) ?><br>
+
+              </p>
+
+              <!--<div class="progress mb-2">
                         <div class="progress-bar" role="progressbar" style="width: <?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>%;" aria-valuenow="<?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
                         </div>-->
-                    </div>
-                </div>
             </div>
-        </a>
-        <?php endforeach; ?>
-    <?php else : ?>
-        <p>No causes found for your account.</p>
-    <?php endif; ?>
-</div>
+          </div>
+      </div>
+      </a>
+    <?php endforeach; ?>
+  <?php else : ?>
+    <p>
+      <center>No causes found for your account.</center>
+    </p>
+  <?php endif; ?>
+  </div>
 
 
 
@@ -337,4 +367,3 @@
 </body>
 
 </html>
-

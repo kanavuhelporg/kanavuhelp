@@ -8,23 +8,23 @@ class admin extends CI_Controller
         parent::__construct();
         $this->load->library('session');
         $this->load->model('adminpanel');
+
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('cookie');
-       
     }
     public function index()
     {
         $this->load->view('admin.php');
     }
     public function logout()
-{
-    // Destroy all session data
-    $this->session->sess_destroy();
+    {
+        // Destroy all session data
+        $this->session->sess_destroy();
 
-    // Redirect to the login page
-    redirect('admin'); // Adjust this if your login page is at a different URL
-}
+        // Redirect to the login page
+        redirect('admin'); // Adjust this if your login page is at a different URL
+    }
 
 
     public function admindashbord()
@@ -35,7 +35,8 @@ class admin extends CI_Controller
     {
         $this->load->view('admin.php');
     }
-    public function dashboard() {
+    public function dashboard()
+    {
         $this->load->view('Contact_model');
 
         // Get all submissions
@@ -66,47 +67,71 @@ class admin extends CI_Controller
         }
     }
 
+    public function causesverification()
+    {
+        $data['fundraisers'] = $this->adminpanel->get_cause_details();
+        $this->load->view('causesverification.php', $data);
+    }
     public function transactionverification()
-    { $data['donations'] = $this->adminpanel->transactiondetails();
-        $this->load->view('transactionverification.php',$data);
+    {
+        $data['donations'] = $this->adminpanel->transactiondetails();
+        $this->load->view('transactionverification.php', $data);
+    }
+    public function updatecauses()
+    {
+        // Load the model
+        $this->load->model('adminpanel');
+
+        // Get the POST data
+        $id = $this->input->post('id');
+        $verified = $this->input->post('verified');
+
+        // Validate input
+        if (empty($id) || $verified === null) {
+            echo json_encode(['status' => 'failure', 'message' => 'Invalid input']);
+            return;
+        }
+
+        // Update the record
+        $updateSuccess = $this->adminpanel->updatecauses($id, $verified);
+
+        // Return JSON response
+        header('Content-Type: application/json');
+        echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
     }
 
-    // public function enquiries()
-    // { $data['contactus'] = $this->adminpanel->contctdetails();
-    //     $this->load->view('contactenquiry.php',$data);
-    // }
 
     public function editDonation($id)
-{
-    // Fetch donation details by ID
-    $data['donation'] = $this->adminpanel->getDonationById($id);
+    {
+        // Fetch donation details by ID
+        $data['donation'] = $this->adminpanel->getDonationById($id);
 
-    // Load the edit form view
-    $this->load->view('editDonation', $data);
-}
-public function updateDonation()
-{
-    $id = $this->input->post('id');
-    $status = $this->input->post('status');
-
-    // Get the name from session
-    $verifiedBy = $this->session->userdata('userName');
-    
-    // Load the model and call the update function
-    $this->load->model('adminpanel');
-    $updateSuccess = $this->adminpanel->updateDonationStatus($id, $status, $verifiedBy);
-    if ($updateSuccess && $status == 1) { // assuming 1 represents "Yes"
-        $donationData = $this->adminpanel->getDonationById1($id); // Get donation details for the cause_id and amount
-        if ($donationData) {
-            $this->adminpanel->update_raised_amount($donationData->cause_id, $donationData->amount);
-        }
+        // Load the edit form view
+        $this->load->view('editDonation', $data);
     }
-    // Set content type header to JSON
-    header('Content-Type: application/json');
-    
-    // Return JSON response for the AJAX call
-    echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
-}
+    public function updateDonation()
+    {
+        $id = $this->input->post('id');
+        $status = $this->input->post('status');
+
+        // Get the name from session
+        $verifiedBy = $this->session->userdata('userName');
+
+        // Load the model and call the update function
+        $this->load->model('adminpanel');
+        $updateSuccess = $this->adminpanel->updateDonationStatus($id, $status, $verifiedBy);
+        if ($updateSuccess && $status == 1) { // assuming 1 represents "Yes"
+            $donationData = $this->adminpanel->getDonationById1($id); // Get donation details for the cause_id and amount
+            if ($donationData) {
+                $this->adminpanel->update_raised_amount($donationData->cause_id, $donationData->amount);
+            }
+        }
+        // Set content type header to JSON
+        header('Content-Type: application/json');
+
+        // Return JSON response for the AJAX call
+        echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
+    }
     public function contact_submissions()
     {
         // Fetch data from the contact_form_submissions table
@@ -116,6 +141,3 @@ public function updateDonation()
         $this->load->view('contact_submissions', $data);
     }
 }
-
-
-
