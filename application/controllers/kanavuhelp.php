@@ -69,13 +69,70 @@ class kanavuhelp extends CI_Controller
         $this->load->view('login.php');
     }
     public function login_modal()
-    {
-        $this->load->view('login_modal.php');
+    {$data['fundraisers'] = $this->UserModel->get_cause_details();
+    
+        // Check if user is logged in using CodeIgniter session
+        $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+        $data['is_logged_in'] = $is_logged_in;
+    
+        // Initialize an array to store active fundraisers
+        $active_fundraisers = [];
+    
+        // Loop through each fundraiser to check status and calculate days_left
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date->diff($current_date)->days;
+            
+            // Check if fundraiser has expired by date or target amount reached
+            $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
+            
+            // Only include active fundraisers
+            if (!$is_expired) {
+                // If still active, calculate days left and other properties
+                $fundraiser->days_left = $days_left;
+                $fundraiser->hide_donation_button = false;
+                $active_fundraisers[] = $fundraiser;
+            }
+        }
+    
+        // Pass only active fundraisers to the view
+        $data['fundraisers'] = $active_fundraisers;
+        $this->load->view('login_modal.php',$data);
     }
 
     public function login_modal1()
     {
-        $this->load->view('login_modal1.php');
+        $data['fundraisers'] = $this->UserModel->get_cause_details();
+    
+        // Check if user is logged in using CodeIgniter session
+        $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+        $data['is_logged_in'] = $is_logged_in;
+    
+        // Initialize an array to store active fundraisers
+        $active_fundraisers = [];
+    
+        // Loop through each fundraiser to check status and calculate days_left
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date->diff($current_date)->days;
+            
+            // Check if fundraiser has expired by date or target amount reached
+            $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
+            
+            // Only include active fundraisers
+            if (!$is_expired) {
+                // If still active, calculate days left and other properties
+                $fundraiser->days_left = $days_left;
+                $fundraiser->hide_donation_button = false;
+                $active_fundraisers[] = $fundraiser;
+            }
+        }
+    
+        // Pass only active fundraisers to the view
+        $data['fundraisers'] = $active_fundraisers;
+        $this->load->view('login_modal1.php',$data);
     }
     public function individual()
     {
