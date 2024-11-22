@@ -306,31 +306,32 @@ class kanavuhelp extends CI_Controller
     }
 
     public function registeration()
-    {
-        $data['name'] = $this->input->post('exampleInputName');
-        $data['email'] = $this->input->post('exampleInputEmail1');
-        $data['password'] = $this->input->post('exampleInputPassword1');
+{
+    $data['name'] = $this->input->post('exampleInputName');
+    $data['email'] = $this->input->post('exampleInputEmail1');
+    $data['password'] = $this->input->post('exampleInputPassword1');
 
-        $this->load->model('UserModel');
+    $this->load->model('UserModel');
 
-        // Check if email already exists
-        if ($this->UserModel->isEmailExists($data['email'])) {
-            // Set flash message for the next page load
-            $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
-            redirect('kanavuhelp/register'); // Redirects to the registration page
-        } else {
-            $response = $this->UserModel->register($data);
-            if ($response) {
-                echo "<script>
-                    alert('Registered successfully');
-                    window.location.href = '" . base_url('login') . "';
-                  </script>";
-                exit;
-            } else {
-                echo 'Failed to register';
-            }
+    // Check if email already exists
+    if ($this->UserModel->isEmailExists($data['email'])) {
+        // Set flash message for the next page load
+        $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
+        redirect('/register'); // Redirects to the registration page
+    } else {
+        $response = $this->UserModel->register($data);
+        if ($response) {
+            echo "<script>
+                alert('Registered successfully!');
+                window.location.href = '" . base_url('login') . "';
+            </script>";
+        }else {
+            $this->session->set_flashdata('error', 'Failed to register');
+            redirect('/register');
         }
     }
+}
+
 
     public function get_user_name($user_id)
     {

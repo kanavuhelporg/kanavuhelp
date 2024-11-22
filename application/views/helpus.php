@@ -385,7 +385,10 @@
             <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>
             
             <!-- Share Fundraiser Button -->
-            <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>')">
+            <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', 
+                       '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
+                       '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>', 
+                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
             <i class="bi bi-share ms-2" ></i> &nbsp;Share this fundraiser
             </button>
             <br>
@@ -485,7 +488,7 @@ function toggleDonors(showMore) {
         showLessLink.style.display = 'none';
     }
 }
-function shareCause(url, title) {
+function shareCause(url, title, imgurl) {
     if (navigator.share) {
         // Use Web Share API if available
         navigator.share({
@@ -501,18 +504,19 @@ function shareCause(url, title) {
         // Fallback to social media links if Web Share API is not supported
         const encodedUrl = encodeURIComponent(url);
         const encodedTitle = encodeURIComponent(`Check out this cause: ${title}`);
+        const encodedImage = encodeURIComponent(imgurl);
 
         // Create share URLs
-        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
-        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
-        const instagramUrl = `https://www.instagram.com/?url=${encodedUrl}`;
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}%20${encodedImage}`;
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`;
+        const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodedUrl}&media=${encodedImage}&description=${encodedTitle}`;
 
         // Display the share options to the user (you can use a modal or a dropdown)
         const shareOptions = `
             <div>
                 <a href="${whatsappUrl}" target="_blank">Share on WhatsApp</a><br>
                 <a href="${facebookUrl}" target="_blank">Share on Facebook</a><br>
-                <a href="${instagramUrl}" target="_blank">Share on Instagram</a>
+                <a href="${pinterestUrl}" target="_blank">Share on Pinterest</a>
             </div>
         `;
 
@@ -520,7 +524,6 @@ function shareCause(url, title) {
         document.body.insertAdjacentHTML('beforeend', shareOptions);
     }
 }
-
 </script>
     <div class="row mt-4" >
     <!-- Created by Section -->
