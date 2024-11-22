@@ -521,7 +521,7 @@
 
   .form-stepper .form-stepper-unfinished .form-stepper-circle {
     background-color: #D9D9D9;
-    color: 939292 !important;
+    color: black !important;
   }
 
   .form-stepper .form-stepper-completed .form-stepper-circle {
@@ -561,7 +561,7 @@
     height: 680;
     margin-bottom: 50px;
     padding: 20px;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     border-radius: 10px;
     background-color: white;
     float: right;
@@ -837,6 +837,25 @@
     border-color: #dc3545 !important;
     /* Match border color on hover, focus, and active */
   }
+  /* Ensure the dropdown menu is fully visible on smaller screens */
+@media (max-width: 768px) {
+  #userProfile .dropdown-menu {
+    right: 0 !important; /* Align the dropdown to the right edge */
+    left: auto !important; /* Override default left alignment */
+    min-width: 150px; /* Adjust the width as needed */
+  }
+  
+  #userProfile img {
+    width: 25px; /* Slightly smaller profile image for mobile */
+    height: 25px;
+  }
+  
+  #userProfile .dropdown-item {
+    text-align: center; /* Center-align items for better UX */
+  }
+}
+
+
 </style>
 
 <body>
@@ -885,23 +904,27 @@
 
           <!-- User profile or login -->
           <div class="d-flex align-items-center ms-auto">
-            <?php if ($this->session->userdata('userId')): ?>
-              <div class="d-flex align-items-center">
-                <div class="dropdown" id="userProfile">
-                  <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                      style="width: 30px; height: 30px; border-radius: 50%;">
-                    <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                  </div>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-                    <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                  </ul>
-                </div>
-              </div>
-            <?php else: ?>
-              <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-            <?php endif; ?>
-          </div>
+  <?php if ($this->session->userdata('userId')): ?>
+    <div class="d-flex align-items-center">
+      <div class="dropdown" id="userProfile">
+        <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+            style="width: 30px; height: 30px; border-radius: 50%;">
+          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+          <li>
+            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  <?php else: ?>
+    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+  <?php endif; ?>
+</div>
         </div>
       </div>
     </div>
@@ -1097,11 +1120,11 @@
                 document.addEventListener("DOMContentLoaded", function() {
                   document.getElementById("category").addEventListener("change", () => validateField("category", "category-error", "Please select a category."));
                   document.getElementById("name").addEventListener("input", () => validateField("name", "name-error", "Please enter the name."));
-                  document.getElementById("age").addEventListener("input", () => validateField("age", "age-error", "Please enter a valid age."));
+                  document.getElementById("age").addEventListener("input", () => validateAge("age", "age-error", "Please enter a valid age."));
                   document.getElementById("location").addEventListener("input", () => validateField("location", "location-error", "Please enter a location."));
                   document.getElementById("email").addEventListener("input", () => validateEmail());
                   document.getElementById("phone").addEventListener("input", () => validatePhone());
-                  document.getElementById("amount").addEventListener("input", () => validateField("amount", "amount-error", "Please enter a valid amount."));
+                  document.getElementById("amount").addEventListener("input", () => validateAmount("amount", "amount-error", "Please enter a valid amount."));
                   document.getElementById("end_date").addEventListener("change", () => validateField("end_date", "end-date-error", "Please select an end date."));
                   document.getElementById("cover_image").addEventListener("change", () => validateImage());
                   document.getElementById("cause_heading").addEventListener("input", () => validateField("cause_heading", "cause-heading-error", "Please enter a heading."));
@@ -1193,7 +1216,19 @@
                   phoneError.textContent = "";
                   return true;
                 }
+                function validateAmount() {
+    const amountInput = document.getElementById('amount');
+    const amountError = document.getElementById('amount-error');
+    const amountValue = parseFloat(amountInput.value);
 
+    if (isNaN(amountValue) || amountValue <= 1) {
+        amountError.textContent = "Amount must be greater than 1.";
+        return false;
+    } else {
+        amountError.textContent = ""; // Clear the error message
+        return true;
+    }
+}
                 function validateImage() {
                   const fileInput = document.getElementById("cover_image");
                   const errorSpan = document.getElementById("cover-image-error");
@@ -1295,14 +1330,14 @@
                 function validateStep1() {
                   return validateField("category", "category-error", "Please select a category.") &&
                     validateField("name", "name-error", "Please enter the name.") &&
-                    validateField("age", "age-error", "Please enter a valid age.") &&
+                    validateAge("age", "age-error", "Please enter a valid age.") &&
                     validateField("location", "location-error", "Please enter a location.") &&
                     validateEmail() &&
                     validatePhone();
                 }
 
                 function validateStep2() {
-                  return validateField("amount", "amount-error", "Please enter a valid amount.") &&
+                  return validateAmount("amount", "amount-error", "Please enter a valid amount.") &&
                     validateField("end_date", "end-date-error", "Please select an end date.");
                 }
 
@@ -1445,8 +1480,8 @@
         <div class="footer1">
           <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
           <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-          <a class="footer-lable lable" href="#">Terms of Use</a>
-          <a class="footer-lable" href="#">Privacy Policy</a>
+          <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
+          <a class="footer-lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>
         </div>
       </div>
 

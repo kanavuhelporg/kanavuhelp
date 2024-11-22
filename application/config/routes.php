@@ -90,3 +90,5 @@ $route['profile_edit'] = 'kanavuhelp/editProfile';  // Add this line for editing
 $route['contact_submissions'] = 'admin/contact_submissions';
 $route['profile/viewProfile'] = 'profile/viewProfile';
 $route['profile/editProfile'] = 'profile/editProfile';
+$route['privacy_policy'] = 'kanavuhelp/privacy_policy';
+$route['terms_of_use'] = 'kanavuhelp/terms_of_use';

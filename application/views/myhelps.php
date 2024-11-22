@@ -181,6 +181,23 @@
     background-color: #ffffff; /* Keep white background on hover */
     border-color: #dc3545; /* Keep red border on hover */
   }
+  @media (max-width: 768px) {
+  #userProfile .dropdown-menu {
+    right: 0 !important; /* Align the dropdown to the right edge */
+    left: auto !important; /* Override default left alignment */
+    min-width: 150px; /* Adjust the width as needed */
+  }
+  
+  #userProfile img {
+    width: 25px; /* Slightly smaller profile image for mobile */
+    height: 25px;
+  }
+  
+  #userProfile .dropdown-item {
+    text-align: center; /* Center-align items for better UX */
+  }
+}
+
   </style>
 </head>
 
@@ -224,23 +241,27 @@
                     </li>
                 </ul>
                 <div class="d-flex align-items-center ms-auto">
-                <?php if ($this->session->userdata('userId')): ?>
-                  <div class="d-flex align-items-center">
-                    <div class="dropdown" id="userProfile">
-                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                         style="width: 30px; height: 30px; border-radius: 50%;">
-                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                      </div>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <?php else: ?>
-                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-                  <?php endif; ?>
-                </div>
+  <?php if ($this->session->userdata('userId')): ?>
+    <div class="d-flex align-items-center">
+      <div class="dropdown" id="userProfile">
+        <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+            style="width: 30px; height: 30px; border-radius: 50%;">
+          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+          <li>
+            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  <?php else: ?>
+    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+  <?php endif; ?>
+</div>
         </div>
       </div>
     </div>
@@ -359,8 +380,8 @@
             <div class="footer1">
               <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
               <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
-              <a class="footer-lable lable" href="#">Terms of Use</a>
-              <a class="footer-lable lable" href="#">Privacy Policy</a>
+              <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
+              <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@
     color:white;
    }   */
    .btnsignin {
-    width: 20%;
+    width: 40%;
     border-radius: 10px;
     color: white;
     background-color: #EB2D32;

@@ -282,6 +282,59 @@
     color: red !important;
     border: 1px solid red !important;
 }
+.card_button {
+    border: 1px solid gray !important;
+    background: none;
+    box-shadow: none;
+}
+
+.card_button:hover {
+    border: 1px solid gray !important; /* No border on hover */
+    box-shadow: none; /* Prevent any shadow on hover */
+    background: none; /* Ensure background doesn't change */
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    padding: (1rem) var(1rem);
+  }
+
+  .navbar-toggler {
+    padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid #4f373766;
+    border-radius: .25rem;
+    transition: box-shadow .15s ease-in-out;
+  }
+
+  .img-placeholder {
+    background-color: white; /* Placeholder background color */
+    display: block;
+    width: 100%; /* Ensures the space is consistent */
+    height: 230px; /* Matches the image height */
+    object-fit: cover; /* Maintains the aspect ratio */
+}
+.img-placeholder:not([src]) {
+    background: url('path/to/placeholder-image.jpg') center center/cover no-repeat;
+}
+@media (max-width: 768px) {
+  #userProfile .dropdown-menu {
+    right: 0 !important; /* Align the dropdown to the right edge */
+    left: auto !important; /* Override default left alignment */
+    min-width: 150px; /* Adjust the width as needed */
+  }
+  
+  #userProfile img {
+    width: 25px; /* Slightly smaller profile image for mobile */
+    height: 25px;
+  }
+  
+  #userProfile .dropdown-item {
+    text-align: center; /* Center-align items for better UX */
+  }
+}
+
 
     </style>
     </head>
@@ -318,31 +371,35 @@
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>" >Contact Us</a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center ms-auto">
-                <?php if ($this->session->userdata('userId')): ?>
-                  <div class="d-flex align-items-center">
-                    <div class="dropdown" id="userProfile">
-                      <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                         style="width: 30px; height: 30px; border-radius: 50%;">
-                          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                      </div>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-                        <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <?php else: ?>
-                  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-                  <?php endif; ?>
-                </div>
+  <?php if ($this->session->userdata('userId')): ?>
+    <div class="d-flex align-items-center">
+      <div class="dropdown" id="userProfile">
+        <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+            style="width: 30px; height: 30px; border-radius: 50%;">
+          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
+          <li>
+            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  <?php else: ?>
+    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+  <?php endif; ?>
+</div>
         
       </div>
     </div>
@@ -386,15 +443,20 @@
             <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
             <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
                 <div class="card h-100 w-100 fixed-card">
-                    <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" width="316px" height="230px" class="card-img-top fixed-card-img" alt="no image">
+                <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
+     width="316px" height="230px" 
+     class="card-img-top fixed-card-img img-placeholder" 
+     alt="no image">
+
                     
                     <div class="card-body d-flex flex-column">
                         <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                            <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
-                        </div>
+    <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
+    <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+</div>
+
                         
                         <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
                         <div class="progress mb-2">
@@ -522,8 +584,8 @@ function shareCause(url, title, imgurl) {
               <div class="footer1">
                 <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
                 <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-                <a class="footer-lable lable" href="#">Terms of Use</a>
-                <a class="footer-lable lable" href="#">Privacy Policy</a>
+                <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
+                <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>
               </div>
             </div>
           </div>
@@ -556,120 +618,90 @@ function shareCause(url, title, imgurl) {
 
 <!-- Donation Modal -->
 <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header border-0">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Donation Form -->
-        <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
-    <!-- Hidden fields to store cause ID and user ID -->
-    <input type="hidden" name="cause_id" id="cause_id" value="">
-    <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Donation Form -->
+          <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+  <!-- Hidden fields to store cause ID and user ID -->
+  <input type="hidden" name="cause_id" id="cause_id" value="">
+  <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
 
-    <!-- Donation Form Fields -->
-    <div class="text-center">
-        <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
-    </div>
-    <div class="text-center">
-        <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
-    </div>
+  <!-- Donation Form Fields -->
+  <div class="text-center">
+    <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
+  </div>
+  <div class="text-center">
+    <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
+  </div>
 
-    <div class="text-center mt-2">
-        <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
-    </div>
+  <div class="text-center mt-2">
+    <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
+  </div>
 
-    <!-- Currency and Amount -->
-    <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
-        <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
-            <option>INR</option>
-            <option>USD</option>
-        </select>
-
-        <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
-        <p id="error5" style="color:red; margin-top: 5px;"></p>
+  <!-- Currency and Amount -->
+  <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
+    <label for="currency" class="visually-hidden">Currency Type</label>
+    <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
+      <option value="" disabled selected>Select Currency</option>
+      <option>INR</option>
+      <option>USD</option>
+    </select>
+    <div style="width: 40%; margin-left: 5%;">
+      <label for="amount" class="visually-hidden">Amount</label>
+      <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>
+      <p id="error5" style="color: red; margin: 5px 0 0; font-size: 0.9em;"></p>
     </div>
+  </div>
 
-    <!-- Phone Number -->
-    <div class="form-group ms-4">
-        <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:92%;" required>
-        <p id="error3" style="color:red; margin-top: 5px;"></p>
-    </div>
+  <!-- Phone Number -->
+  <div class="form-group ms-4">
+    <label for="phone" class="form-label">Phone Number</label>
+    <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:92%;" required>
+    <p id="error3" style="color:red; margin-top: 5px;"></p>
+  </div>
 
-    <!-- Transaction ID -->
-    <div class="form-group ms-4">
-        <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
-        <p id="error4" style="color:red; margin-top: 5px;"></p>
-    </div>
+  <!-- Transaction ID -->
+  <div class="form-group ms-4">
+    <label for="transactionid" class="form-label">Transaction ID</label>
+    <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction ID*" style="width:92%;" required>
+    <p id="error4" style="color:red; margin-top: 5px;"></p>
+  </div>
 
-    <!-- Continue Button -->
-    <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
-            Continue to Pay ₹
-        </button>
-    </div>
+  <!-- Continue Button -->
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+      Continue to Pay ₹
+    </button>
+  </div>
 </form>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("phone").addEventListener("input", validatePhoneNumber);
-    document.getElementById("transactionid").addEventListener("input", validateTransactionID);
-    document.getElementById("amount").addEventListener("input", validateAmount);
-});
-
-function validatePhoneNumber() {
-    const phone = document.getElementById("phone").value;
-    const phoneError = document.getElementById("error3");
-
-    // Phone number validation (exactly 10 digits)
-    const regex = /^[0-9]{10}$/;
-    if (!regex.test(phone)) {
-        phoneError.textContent = "Phone number must be exactly 10 digits.";
-        return false;
-    }
-
-    phoneError.textContent = ""; // Clear error if valid
-    return true;
-}
-
-function validateTransactionID() {
-    const transactionID = document.getElementById("transactionid").value;
-    const transactionError = document.getElementById("error4");
-
-    // Transaction ID validation (exactly 12 alphanumeric characters)
-    const regex = /^[A-Za-z0-9]{12}$/;
-    if (!regex.test(transactionID)) {
-        transactionError.textContent = "Transaction ID must be exactly 12 alphanumeric characters.";
-        return false;
-    }
-
-    transactionError.textContent = ""; // Clear error if valid
-    return true;
-}
-
-function validateAmount() {
-    const amount = document.getElementById("amount").value;
-    const amountError = document.getElementById("error5");
-
-    // Amount validation (greater than 0)
-    if (!amount || amount <= 0) {
-        amountError.textContent = "Please enter a valid donation amount greater than 0.";
-        return false;
-    }
-
-    amountError.textContent = ""; // Clear error if valid
-    return true;
-}
-
-</script>
-
-        <!-- Terms and Privacy Policy -->
-        <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
+          <!-- Terms and Privacy Policy -->
+          <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+      <div class="modal-content bg-red-modal">
+        <div class="modal-header">
+          <h5 class="modal-title" id="donationSuccessLabel">Donation Verification</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Thanks for donating us.Please wait for admin verification </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="donationRedirectBtn">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <!--login alert modal-->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -751,116 +783,104 @@ function validateAmount() {
   });
 </script>
 <script>
-document.getElementById('donationForm').onsubmit = function(event) {
+  // Real-time validation function
+  function validateField(fieldId, errorId, validationFn, errorMessage) {
+    const field = document.getElementById(fieldId);
+    const errorElement = document.getElementById(errorId);
 
-event.preventDefault(); // Prevent default form submission
+    field.addEventListener('input', () => {
+      if (!validationFn(field.value)) {
+        errorElement.textContent = errorMessage;
+      } else {
+        errorElement.textContent = ''; // Clear error if validation passes
+      }
+    });
+  }
 
-// document.getElementById("error1").innerHTML="";
-// document.getElementById("error2").innerHTML="";
-document.getElementById("error3").innerHTML ="";
-document.getElementById("error4").innerHTML ="";
-// Validate Name (minimum 3 characters)
-// const name = document.getElementById('name').value.trim();
-// const nameRegex = /^[A-Za-z]+$/;
+  // Validation functions
+  const isCurrencySelected = (value) => value !== '';
+  const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
+  const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
+  const isTransactionIdValid = (value) => value.length === 12;
 
-// if (name.length < 3) {
-// document.getElementById("error1").innerHTML = "Name must be at least 3 characters long.";
-// return false;
-// } else if (!nameRegex.test(name)) {
-// document.getElementById("error1").innerHTML = "Name must contain only alphabetic characters.";
-// return false;
-// } else {
-// document.getElementById("error1").innerHTML = ""; // Clear error if input is valid
+  // Attach real-time validation for each field
+  window.onload = () => {
+    validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
+    validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
+    validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
+    validateField('transactionid', 'error4', isTransactionIdValid, 'Transaction ID must be exactly 12 characters long.');
+  };
 
-// }
+  // Final validation and form submission
+  document.getElementById('donationForm').onsubmit = function (event) {
+    event.preventDefault(); // Prevent form submission for manual handling
 
+    // Clear all error messages
+    document.getElementById('error5').innerText = '';
+    document.getElementById('error3').innerText = '';
+    document.getElementById('error4').innerText = '';
 
-// // Validate Email
-// const email = document.getElementById('email').value.trim();
-// const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// if (!emailPattern.test(email)) {
-//     document.getElementById("error2").innerHTML ="Please enter a valid email address.";
-//     return false;
-// }
-// else{
-// document.getElementById("error2").innerHTML ="";
-// }
-// Validate Amount (decimal)
-const amount = document.getElementById('amount').value.trim();
-if (isNaN(amount) || parseFloat(amount) <= 0) {
-    alert("Please enter a valid amount in decimal format.");
-    return false;
-}
+    let isValid = true;
 
-// Validate Phone Number (10 digits, starts with 6, 7, 8, or 9)
-const phone = document.getElementById('phone').value.trim();
-const phonePattern = /^[6-9]\d{9}$/;
-if (!phonePattern.test(phone)) {
-    document.getElementById("error3").innerHTML ="Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9.";
-    return false;
-}
-else{
-document.getElementById("error3").innerHTML ="";
-}
-
-// Check if the transaction ID already exists message is present on page load
-
-// Validate transaction ID format
-const transactionId = document.getElementById('transactionid').value.trim();
-const transactionPattern = /^\d{12}$/;
-if (!transactionPattern.test(transactionId)) {
-document.getElementById("error4").innerHTML = "Transaction ID must be exactly 12 digits.";
-return false;
-}
-
-
-
-
-// Clear any previous error message
-error4.innerHTML = "";
-
-// Collect form data
-const formData = new FormData(this);
-
-// Send AJAX request
-fetch('/kanavuhelp/processDonation', {  // Make sure to use the correct path
-    method: 'POST',
-    body: formData
-})
-.then(response => response.json())
-.then(data => {
-    if (data.status === 'error') {
-        // Display error message in the error4 element
-        error4.innerHTML = data.message;
-    } else if (data.status === 'success') {
-      
-      
-      var donationModalElement = document.getElementById('donationModal');
-            var donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
-
-            // Check if the modal is visible before hiding it
-            if (donationModalElement.classList.contains('show')) {
-                donationModal.hide();
-            }
-        // Redirect to success page if donation is successful
-        var loginModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
-      loginModal.show();
- 
-      // Redirect to login page with return URL on OK button click
-      document.getElementById('donationRedirectBtn').addEventListener('click', function() {
-        
-        window.location.href = data.redirect;
-// Redirect to the login page with the returnUrl parameter
-        
-      });
-        
+    // Perform final validation
+    if (!isCurrencySelected(document.getElementById('currency').value)) {
+      document.getElementById('error5').innerText = 'Please select a currency.';
+      isValid = false;
     }
-})
-.catch(error => {
-    error4.innerHTML = "An unexpected error occurred. Please try again.";
-});
-};
 
+    if (!isAmountValid(document.getElementById('amount').value)) {
+      document.getElementById('error5').innerText = 'Amount must be greater than 0.';
+      isValid = false;
+    }
+
+    if (!isPhoneNumberValid(document.getElementById('phone').value)) {
+      document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
+      isValid = false;
+    }
+
+    if (!isTransactionIdValid(document.getElementById('transactionid').value)) {
+      document.getElementById('error4').innerText = 'Transaction ID must be exactly 12 characters long.';
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return; // Stop submission if validation fails
+    }
+
+    // Prepare Form Data
+    const formData = new FormData(this);
+
+    // AJAX Request to Server
+    fetch('/kanavuhelp/processDonation', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 'error') {
+          document.getElementById('error4').innerText = data.message; // Show server error
+        } else if (data.status === 'success') {
+          // Hide the donation modal if visible
+          const donationModalElement = document.getElementById('donationModal');
+          const donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
+          if (donationModalElement.classList.contains('show')) {
+            donationModal.hide();
+          }
+
+          // Show success modal
+          const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
+          successModal.show();
+
+          // Redirect on button click in the success modal
+          document.getElementById('donationRedirectBtn').addEventListener('click', function () {
+            window.location.href = data.redirect;
+          });
+        }
+      })
+      .catch(() => {
+        document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
+      });
+  };
 </script>
 
 <form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">

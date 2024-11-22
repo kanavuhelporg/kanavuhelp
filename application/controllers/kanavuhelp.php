@@ -67,6 +67,14 @@ class kanavuhelp extends CI_Controller
     {
         $this->load->view('login.php');
     }
+    public function privacy_policy()
+    {
+        $this->load->view('privacy_policy');
+    }
+    public function terms_of_use()
+    {
+        $this->load->view('terms_of_use');
+    }
     public function login_modal()
     {
         $data['fundraisers'] = $this->UserModel->get_cause_details();
