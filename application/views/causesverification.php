@@ -248,49 +248,13 @@
 
             <div class="col-md-2 border-bottom ps-gray py-3">
 
-                <div class="ps-logo">
+                <div id="kanavuhelplogo" class="ps-logo">
 
-                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#ps-menu" class="ham-menu ms-4 border-0">
-                        <div class="ham-line"></div>
-                        <div class="ham-line"></div>
-                        <div class="ham-line"></div>
-                    </button>
-                    <div class="d-flex align-items-center">
-                        <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
-                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px;">KANAVUHELP</span>
-
-                    </div>
                 </div>
 
             </div>
 
             <div id="search-bar" class="col-md-10 align-items-center justify-content-between border-bottom">
-
-                <div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between ps-gray rounded-2 py-1">
-                    <input id="searchcoords" onkeyup="searchcoordinators(this)" type="text" style="outline-style:none;" class="w-75 ps-3 border-0 ps-gray" placeholder="search">
-                    <span style="cursor:pointer;" class="pe-3">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </span>
-                </div>
-
-                <div class="col-md-3 d-flex align-items-baseline justify-content-evenly">
-
-                    <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
-                        <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
-                        <span style="font-weight:500;"><?php
-                                                        if ($this->session->userdata('userName')) {
-                                                            echo $this->session->userdata('userName');
-                                                        } else {
-                                                            echo "Manager Name";
-                                                        }
-                                                        ?></span>&nbsp;&nbsp;
-                        <i class="fa-solid fa-angle-down"></i>
-
-                    </button>
-
-                    <span> <i class="fa-solid fa-bell"></i> </span>
-
-                </div>
 
             </div>
         </div><!-----------top-bar-end----------------------->
@@ -299,42 +263,6 @@
         <div class="row" style="height: 100vh;"><!----------main-navbar----------->
 
             <div id="menu-bar" class="col-md-2 ps-gray" style="height: 100vh;"><!----------side-bar-------------------->
-                <ul class="d-flex flex-column list-unstyled" style="height: 100vh;">
-
-                    <li class="nav-item py-3 fs-6"><a href="#" style="font-weight:400;color:grey;" class="text-decoration-none d-flex p-2">MENU</a></li>
-
-                    <li class="py-2">
-                        <a href="<?= base_url('admindashbord') ?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admindashbord</a>
-                    </li>
-
-                    <li class="nav-item py-2">
-                        <a href="<?= base_url('verifytransaction') ?>" style="word-break:break-word;font-weight:600;color:black;" class="active-bg rounded-3 text-decoration-none d-flex p-2">
-                            <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction verification</a>
-                    </li>
-
-                    <li class="nav-item py-2">
-                        <a href="<?= base_url('contact_submissions') ?>" style="word-break:break-word;font-weight:600;color:black;" class="active-bg rounded-3 text-decoration-none d-flex p-2">
-                            <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries</a>
-                    </li>
-
-                    <li class="nav-item py-2"><a href="<?= base_url('causesverification') ?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;causesverification</a></li>
-                    <!--
-          <li class="nav-item py-2"><a href="<?= base_url("events") ?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Events</a></li>
-
-          <li class="nav-item py-2">
-            <a href="#" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-regular fa-credit-card"></i>&nbsp;&nbsp;Payments</a></li>
-
-          <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;Donation</a></li>
-
-          <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2"><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Reports</a></li>
- -->
-                    <li class="nav-item py-2">
-                        <a href="<?= base_url('admin/logout') ?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2">
-                            <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
-                        </a>
-
-                </ul>
-
 
             </div><!-----------side-bar-end-------------->
 
@@ -517,7 +445,44 @@
                     </div>
                 </div>
 
-                <script>
+<script>
+
+$.ajax({
+      type:"get",
+      url:"admin/sidemenu",
+      success:(result)=>{
+           document.getElementById("menu-bar").innerHTML = result;
+      },
+      error:(error)=>{
+           document.getElementById("menu-bar").innerHTML = error;
+      }
+    }); 
+
+
+    $.ajax({
+      type:"get",
+      url:"admin/topmenu",
+      success:(result)=>{
+           document.getElementById("search-bar").innerHTML = result;
+          /*  document.getElementById("dashboardsearch").style.display = "flex";
+           document.getElementById("dashboardsubmenu").style.display = "flex"; */
+      },
+      error:(error)=>{
+           document.getElementById("search-bar").innerHTML = error;
+      }
+    }); 
+
+    $.ajax({
+      type:"get",
+      url:"admin/kanavuhelplogo",
+      success:(result)=>{
+           document.getElementById("kanavuhelplogo").innerHTML = result;
+      },
+      error:(error)=>{
+           document.getElementById("kanavuhelplogo").innerHTML = error;
+      }
+    });
+
                     $('#editDonationForm').on('submit', function(event) {
                         event.preventDefault(); // Prevent default form submission
 

@@ -13,10 +13,12 @@ class admin extends CI_Controller
         $this->load->library('form_validation');
         $this->load->helper('cookie');
     }
+
     public function index()
     {
         $this->load->view('admin.php');
     }
+
     public function logout()
     {
         // Destroy all session data
@@ -26,15 +28,30 @@ class admin extends CI_Controller
         redirect('admin'); // Adjust this if your login page is at a different URL
     }
 
-
+   
     public function admindashbord()
     {
-        $this->load->view('admindashbord.php');
+        $this->load->view('admindashbord');
     }
+
+    public function sidemenu(){
+        $this->load->view("sidemenu");
+    }
+
+    public function topmenu(){
+        $this->load->view("searchbar");
+    }
+
+    public function kanavuhelplogo(){
+        $this->load->view("kanavuhelplogo");
+    }
+
+
     public function admin()
     {
         $this->load->view('admin.php');
     }
+
     public function dashboard()
     {
         $this->load->view('Contact_model');
