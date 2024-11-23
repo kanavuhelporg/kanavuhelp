@@ -676,7 +676,7 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-light py-4 fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="#">
+      <a class="navbar-brand me-auto" href="<?= base_url('/') ?>">
         <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
       </a>
 
@@ -1205,8 +1205,9 @@
 
               <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
 
-            </div>
 
+            </div>
+<br>
             <!-- Name -->
             <!-- <div class="form-group ms-4">
       <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
@@ -1263,30 +1264,52 @@
     </div>
   </div>
 
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>You need to log in to continue with the donation.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="loginRedirectBtn">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
   <script>
     // Simulate user login status (from backend or session)
     var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
 
-    // Handle Donate button click using event delegation
-    document.querySelector('.container').addEventListener('click', function(event) {
-      if (event.target.classList.contains('donate_btn')) {
-        event.preventDefault(); // Prevent default link behavior
+// Handle Donate button click using event delegation
+document.querySelector('.container').addEventListener('click', function(event) {
+  if (event.target.classList.contains('donate_btn')) {
+    event.preventDefault(); // Prevent default link behavior
 
-        if (!isLoggedIn) {
-          // Ask for confirmation before redirecting to the login page
-          var confirmRedirect = alert("You need to login to donate. Do you want to proceed to the login page?");
+    if (!isLoggedIn) {
+      const baseUrl = "<?= base_url('/login') ?>"; 
+      // Ask for confirmation before redirecting to the login page
+      var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
 
+    // Redirect to login page with return URL on OK button click
+    document.getElementById('loginRedirectBtn').addEventListener('click', function() {
+      var currentUrl = window.location.href;
 
-          // Redirect to login page if user clicks "OK"
-          window.location.href = "<?= base_url('/login') ?>"; // Replace with your actual login URL
-
-        } else {
-          // Show the donation modal if logged in
-          var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
-          donationModal.show();
-        }
-      }
-    });
+// Redirect to the login page with the returnUrl parameter
+      window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
+    });// Replace with your actual login URL
+      
+    } else {
+      // Show the donation modal if logged in
+      var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+      donationModal.show();
+    }
+  }
+});
 
     // Handle modal close event to ensure page is accessible
     var donationModal = document.getElementById('donationModal');

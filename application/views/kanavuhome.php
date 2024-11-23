@@ -848,7 +848,6 @@
      width="316px" height="230px" 
      class="card-img-top fixed-card-img img-placeholder" 
      alt="no image">
-
                     
                     <div class="card-body d-flex flex-column">
                         <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
@@ -915,41 +914,42 @@
       document.getElementById('cause_id').value = causeId;
     }
 
-    function shareCause(url, title) {
-      if (navigator.share) {
+    function shareCause(url, title, imgurl) {
+    if (navigator.share) {
         // Use Web Share API if available
         navigator.share({
-          title: title,
-          text: `Check out this cause: ${title}`,
-          url: url
+            title: title,
+            text: `Check out this cause: ${title}`,
+            url: url
         }).then(() => {
-          console.log('Successfully shared');
+            console.log('Successfully shared');
         }).catch((error) => {
-          console.error('Error sharing:', error);
+            console.error('Error sharing:', error);
         });
-      } else {
+    } else {
         // Fallback to social media links if Web Share API is not supported
         const encodedUrl = encodeURIComponent(url);
         const encodedTitle = encodeURIComponent(`Check out this cause: ${title}`);
+        const encodedImage = encodeURIComponent(imgurl);
 
         // Create share URLs
-        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
-        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
-        const instagramUrl = `https://www.instagram.com/?url=${encodedUrl}`;
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}%20${encodedImage}`;
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`;
+        const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodedUrl}&media=${encodedImage}&description=${encodedTitle}`;
 
         // Display the share options to the user (you can use a modal or a dropdown)
         const shareOptions = `
             <div>
                 <a href="${whatsappUrl}" target="_blank">Share on WhatsApp</a><br>
                 <a href="${facebookUrl}" target="_blank">Share on Facebook</a><br>
-                <a href="${instagramUrl}" target="_blank">Share on Instagram</a>
+                <a href="${pinterestUrl}" target="_blank">Share on Pinterest</a>
             </div>
         `;
 
         // You can append this HTML to a modal or any container you have for sharing options
         document.body.insertAdjacentHTML('beforeend', shareOptions);
-      }
     }
+}
   </script>
 
   <div class="position-relative" id="how-it-works-section">
@@ -1303,31 +1303,52 @@
       </div>
     </div>
   </div>
-
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>You need to log in to continue with the donation.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="loginRedirectBtn">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
   <script>
     // Simulate user login status (from backend or session)
     var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
 
-    // Handle Donate button click using event delegation
-    document.querySelector('.container').addEventListener('click', function(event) {
-      if (event.target.classList.contains('donate_btn')) {
-        event.preventDefault(); // Prevent default link behavior
+// Handle Donate button click using event delegation
+document.querySelector('.container').addEventListener('click', function(event) {
+  if (event.target.classList.contains('donate_btn')) {
+    event.preventDefault(); // Prevent default link behavior
 
-        if (!isLoggedIn) {
-          // Ask for confirmation before redirecting to the login page
-          var confirmRedirect = alert("You need to login to donate. Do you want to proceed to the login page?");
+    if (!isLoggedIn) {
+      const baseUrl = "<?= base_url('/login') ?>"; 
+      // Ask for confirmation before redirecting to the login page
+      var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
 
+    // Redirect to login page with return URL on OK button click
+    document.getElementById('loginRedirectBtn').addEventListener('click', function() {
+      var currentUrl = window.location.href;
 
-          // Redirect to login page if user clicks "OK"
-          window.location.href = "<?= base_url('/login') ?>"; // Replace with your actual login URL
-
-        } else {
-          // Show the donation modal if logged in
-          var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
-          donationModal.show();
-        }
-      }
-    });
+// Redirect to the login page with the returnUrl parameter
+      window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
+    });// Replace with your actual login URL
+      
+    } else {
+      // Show the donation modal if logged in
+      var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+      donationModal.show();
+    }
+  }
+});
 
     // Handle modal close event to ensure page is accessible
     var donationModal = document.getElementById('donationModal');
