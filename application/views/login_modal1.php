@@ -676,7 +676,7 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-light py-4 fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="#">
+      <a class="navbar-brand me-auto" href="<?= base_url('/') ?>">
         <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
       </a>
 

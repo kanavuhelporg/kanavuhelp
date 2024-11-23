@@ -826,7 +826,10 @@
                           <div class="d-flex align-items-center mt-auto">
                             <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)) : ?>
                               <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)" data-bs-toggle="modal">Donate Now</a>
-                              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <i class="bi bi-share ms-2" style="color:red " onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>')"></i>
+                              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <i class="bi bi-share ms-2" style="color:red " onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', 
+                       '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
+                       '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>', 
+                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')"></i>
                             <?php endif; ?>
                           </div>
                         </div>
@@ -860,41 +863,42 @@
       document.getElementById('cause_id').value = causeId;
     }
 
-    function shareCause(url, title) {
-      if (navigator.share) {
+    function shareCause(url, title, imgurl) {
+    if (navigator.share) {
         // Use Web Share API if available
         navigator.share({
-          title: title,
-          text: `Check out this cause: ${title}`,
-          url: url
+            title: title,
+            text: `Check out this cause: ${title}`,
+            url: url
         }).then(() => {
-          console.log('Successfully shared');
+            console.log('Successfully shared');
         }).catch((error) => {
-          console.error('Error sharing:', error);
+            console.error('Error sharing:', error);
         });
-      } else {
+    } else {
         // Fallback to social media links if Web Share API is not supported
         const encodedUrl = encodeURIComponent(url);
         const encodedTitle = encodeURIComponent(`Check out this cause: ${title}`);
+        const encodedImage = encodeURIComponent(imgurl);
 
         // Create share URLs
-        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
-        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
-        const instagramUrl = `https://www.instagram.com/?url=${encodedUrl}`;
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}%20${encodedImage}`;
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`;
+        const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodedUrl}&media=${encodedImage}&description=${encodedTitle}`;
 
         // Display the share options to the user (you can use a modal or a dropdown)
         const shareOptions = `
             <div>
                 <a href="${whatsappUrl}" target="_blank">Share on WhatsApp</a><br>
                 <a href="${facebookUrl}" target="_blank">Share on Facebook</a><br>
-                <a href="${instagramUrl}" target="_blank">Share on Instagram</a>
+                <a href="${pinterestUrl}" target="_blank">Share on Pinterest</a>
             </div>
         `;
 
         // You can append this HTML to a modal or any container you have for sharing options
         document.body.insertAdjacentHTML('beforeend', shareOptions);
-      }
     }
+}
   </script>
 
   <div class="position-relative" id="how-it-works-section">

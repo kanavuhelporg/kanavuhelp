@@ -89,7 +89,7 @@
                 </a>
                 <br><br><br>
                 <h2 style="margin-left:50px;">Sign in</h2>
-                <p style="margin-left:50px;">Don't have an Account? <a href="<?= base_url('kanavuhelp/register') ?>"><span
+                <p style="margin-left:50px;">Don't have an Account? <a href="<?= base_url('/register') ?>"><span
                             style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p>
                 <form name="login" onsubmit="return loginValidate()" method="post"
                     action="<?= base_url('kanavuhelp/userLogin') ?>" style="" class="login-form">

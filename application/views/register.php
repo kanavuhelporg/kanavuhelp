@@ -67,22 +67,31 @@
             <img class="logo" src="<?= base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help"style="">
           </a><br><br>
             <h2 style="margin-bottom:30px;margin-left:50px;">Register</h2>
+            <?php if ($this->session->flashdata('error')): ?>
+    <div class="alert alert-danger">
+        <?= $this->session->flashdata('error'); ?>
+    </div>
+<?php endif; ?>
+
+<?php if ($this->session->flashdata('success')): ?>
+    <div class="alert alert-success">
+        <?= $this->session->flashdata('success'); ?>
+    </div>
+<?php endif; ?>
             <!-- <p>Don't have an Account?<span style="color:red; text-decoration:underline;margin-left:10px;">Create Now</span></p> -->
             <form name="register" onsubmit="return registerValidate()" method="post" action="<?= base_url('kanavuhelp/registeration') ?>" style="margin-left:50px;margin-right:50px;"  > 
 
         <div class="mb-3" >
                 <label for="exampleInputName" class="form-label">Name</label>
-                <input type="text" class="form-control" id="exampleInputName" name="exampleInputName">
+                <input type="text" class="form-control" id="exampleInputName" name="exampleInputName" value="<?= set_value('exampleInputName'); ?>">
                 <div id="nameerr" class="text-danger"></div>
             </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">E-Mail</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" >
+            <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" value="<?= set_value('exampleInputEmail1'); ?>" >
             <div id="mailerr" class="text-danger"></div>
           </div>
-          <?php if ($this->session->flashdata('error')): ?>
-    <script>alert("<?= $this->session->flashdata('error'); ?>");</script>
-<?php endif; ?>
+       
 
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -99,42 +108,72 @@
         </div>
 </form>
 <script>
+    <?php if ($this->session->flashdata('success')): ?>
+    alert("Registered successfully!");
+<?php endif; ?>
+document.addEventListener("DOMContentLoaded", function () {
+    // Real-time validation for Name
+    document.getElementById('exampleInputName').addEventListener('input', function () {
+        var name = this.value.trim();
+        if (name.length < 3) {
+            document.getElementById("nameerr").innerHTML = "Name must be at least 3 characters long";
+        } else {
+            document.getElementById("nameerr").innerHTML = "";
+        }
+    });
+
+    // Real-time validation for Email
+    document.getElementById('exampleInputEmail1').addEventListener('input', function () {
+        var email = this.value.trim();
+        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(email)) {
+            document.getElementById("mailerr").innerHTML = "You have entered an invalid email address";
+        } else {
+            document.getElementById("mailerr").innerHTML = "";
+        }
+    });
+
+    // Real-time validation for Password
+    document.getElementById('exampleInputPassword1').addEventListener('input', function () {
+        var password = this.value.trim();
+        var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%?&]).{5,10}$/;
+        if (!passwordPattern.test(password)) {
+            document.getElementById("passworderr").innerHTML = "Password must be 5-10 characters long, with at least one letter, one digit, and one special character";
+        } else {
+            document.getElementById("passworderr").innerHTML = "";
+        }
+    });
+});
+
+// Submit form validation
 function registerValidate() {
-    var name = document.register.exampleInputName.value.trim(); // Trim the input value
-    var email = document.register.exampleInputEmail1.value.trim(); // Trim the input value
-    var password = document.register.exampleInputPassword1.value.trim(); // Trim the input value
+    var name = document.register.exampleInputName.value.trim();
+    var email = document.register.exampleInputEmail1.value.trim();
+    var password = document.register.exampleInputPassword1.value.trim();
 
-
-    // Validate name
+    // Validate name (fallback)
     if (name.length < 3) {
         document.getElementById("nameerr").innerHTML = "Name must be at least 3 characters long";
         return false;
-    }  else {
-        document.getElementById("nameerr").innerHTML = "";
     }
 
-    // Validate email
+    // Validate email (fallback)
     var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(email)) {
         document.getElementById("mailerr").innerHTML = "You have entered an invalid email address";
         return false;
-    } else {
-        document.getElementById("mailerr").innerHTML = "";
     }
 
-    // Validate password
+    // Validate password (fallback)
     var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%?&]).{5,10}$/;
-    
     if (!passwordPattern.test(password)) {
         document.getElementById("passworderr").innerHTML = "Password must be 5-10 characters long, with at least one letter, one digit, and one special character";
         return false;
-    } 
-    else {
-        document.getElementById("passworderr").innerHTML = "";
     }
 
-    return true;// Submit the form if all validations pass
+    return true;
 }
 </script>
+
     </body>
     </html>
