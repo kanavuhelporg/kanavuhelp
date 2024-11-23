@@ -1383,14 +1383,14 @@ document.querySelector('.container').addEventListener('click', function(event) {
   const isCurrencySelected = (value) => value !== '';
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
-  const isTransactionIdValid = (value) => value.length === 12;
+  const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
 
   // Attach real-time validation for each field
   window.onload = () => {
     validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
     validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
     validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
-    validateField('transactionid', 'error4', isTransactionIdValid, 'Transaction ID must be exactly 12 characters long.');
+    validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid Transaction ID');
   };
 
   // Final validation and form submission

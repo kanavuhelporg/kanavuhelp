@@ -425,7 +425,7 @@ class kanavuhelp extends CI_Controller
 
             if ($response) {
                 echo '<script>alert("Successfully registered");</script>';
-                redirect('kanavuhelp/user_causes'); // Redirect to the donate page after successful registration
+                redirect('myFundraisers'); // Redirect to the donate page after successful registration
             } else {
                 echo '<script>alert("Failed to register");</script>';
                 redirect('kanavuhelp/individual'); // Redirect back if insertion fails
@@ -546,7 +546,7 @@ class kanavuhelp extends CI_Controller
         $this->session->set_flashdata('success', 'Thanks for contacting us! We will get back to you soon.');
 
         // Redirect back to the form
-        redirect(base_url('/kanavuhome'));
+        redirect(base_url('/'));
     }
 
 
