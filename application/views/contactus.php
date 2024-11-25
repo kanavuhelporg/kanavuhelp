@@ -404,7 +404,7 @@
   </nav>
   <div class="donate_img mt-5 pt-4 text-center">
   <img src="<?= base_url('assets/img/contact.png') ?>" 
-       style="width: 100%; height: 400px; object-fit: cover;">
+       style="width: 100%; height: 250px; ">
 </div>
   
   <div class="row text-center mt-4 mb-5" style="margin-left:0px;margin-right:0px;">

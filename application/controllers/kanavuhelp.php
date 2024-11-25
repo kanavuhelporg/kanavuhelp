@@ -222,10 +222,11 @@ class kanavuhelp extends CI_Controller
         foreach ($data['fundraisers'] as $fundraiser) {
             $end_date = new DateTime($fundraiser->end_date);
             $current_date = new DateTime();
-            $days_left = $end_date->diff($current_date)->days;
+            $date_diff = $end_date->diff($current_date);
 
-            // Check if fundraiser has expired by date or target amount reached
-            $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
+        // Calculate days left and check if the fundraiser is expired
+        $days_left = $date_diff->days;
+        $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount;
 
             // Only include active fundraisers
             if (!$is_expired) {
@@ -292,7 +293,7 @@ class kanavuhelp extends CI_Controller
         $end_date = new DateTime($fundraiser_details->end_date);
         $current_date = new DateTime();
         $days_left = $end_date->diff($current_date)->days . 'days left';
-        if ($end_date < $current_date) {
+        if ($days_left <0) {
             $days_left = 'expired';
         }
         $fundraiser_details->hide_donation_button = $fundraiser_details->raised_amount >= $fundraiser_details->amount;
@@ -393,7 +394,7 @@ class kanavuhelp extends CI_Controller
             'phone' => $this->input->post('phone'),
             'age' => $this->input->post('age'),
             'location' => $this->input->post('location'),
-            'form_option' => $this->input->post('form_option'),
+           
             'amount' => $this->input->post('amount'),
             'end_date' => $this->input->post('end_date'),
             'cause_heading' => $this->input->post('cause_heading'),

@@ -468,7 +468,7 @@
             </div>
                         
                         <div class="d-flex align-items-center mt-auto">
-                        <?php if ($fundraiser->days_left > 0 &&(!$fundraiser->hide_donation_button)) :?>
+                        <?php if ($fundraiser->days_left >= 0 &&(!$fundraiser->hide_donation_button)) :?>
         <!-- Donate Button -->
         <a href="#" class="btn donate_btn no-hover"  onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
 

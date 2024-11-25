@@ -932,7 +932,7 @@
   </nav>
   <div class="donate_img mt-5 pt-4 text-center">
   <img src="<?= base_url('assets/img/fundraiserpage.png') ?>" 
-       style="width: 100%; height: 400px; object-fit: cover;">
+       style="width: 100%; height: 250px; ">
 </div>
 
 
