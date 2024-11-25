@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="loginstyle.css">
-    <title>Login Page</title>
+    <title>Register Page</title>
 <style>
    /* .btnsignin{
     background-color: #EB2D32;
@@ -101,8 +101,8 @@
         <button type="submit" class="btn btnsignin"> Sign Up</button>
         </div>
             <!-- Right side image column -->
-            <div class="col-md-6 d-none d-md-block">
-                <img src="<?= base_url('/assets/img/right.svg'); ?>" alt="Right image" class="right-image">
+            <div class="col-md-6 d-md-block">
+                <img src="<?= base_url('/assets/img/register.jpg'); ?>" alt="Right image" class="right-image">
             </div>
         </div>
         </div>

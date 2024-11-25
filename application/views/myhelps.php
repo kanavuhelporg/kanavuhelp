@@ -300,7 +300,7 @@
   }
 </script>
   <div class="donate_img mt-5 pt-4">
-    <img src="<?= base_url('assets/img/myhelps.png') ?>" width="100%">
+  <img src="<?= base_url('assets/img/funddonate.jpg') ?>" style="width: 100%; height: 400px; object-fit: cover;">
   </div>
   <!-- <div class="handwithheart_img text-center">
     <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">

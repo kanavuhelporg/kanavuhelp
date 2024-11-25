@@ -56,7 +56,7 @@
 
         .right-image {
             width: 100%;
-            height: 100vh; /* Set image height to fill the viewport height */
+            height: 120vh; /* Set image height to fill the viewport height */
             object-fit: cover; /* Ensure the image covers the entire area while maintaining aspect ratio */
         }
 
@@ -114,15 +114,17 @@
                     <button type="submit" name="save" class="btn border btnsignin">Sign in</button>
                     <p style="margin-top:10px;text-align:center;font-size:15px;"><strong>--------------OR-------------</strong></p>
                     <div class="social-icons" style="text-align:center;">
-    <p>Continue with</p>
+    <p>Continue with
+    <button type="button" style="border:none; padding:10px 20px; margin:5px; cursor:pointer;">
+            <img src="<?= base_url('/assets/img/icons8-google 1.png') ?>" alt="Google" style="width:40px; height:40px; vertical-align:middle; margin-right:8px;">
+        </button>
+    </p>
     <!-- <a href="https://facebook.com" target="_blank">
         <button type="button" style="border:none; padding:10px 20px; margin:5px; cursor:pointer;">
             <img src="<?= base_url('/assets/img/vector.png') ?>" alt="Facebook" style="width:40px; height:40px; vertical-align:middle; margin-right:8px;">
         </button>
     </a> -->
-        <button type="button" style="border:none; padding:10px 20px; margin:5px; cursor:pointer;">
-            <img src="<?= base_url('/assets/img/icons8-google 1.png') ?>" alt="Google" style="width:40px; height:40px; vertical-align:middle; margin-right:8px;">
-        </button>
+        
 </div>
 
                 </form>
@@ -130,7 +132,7 @@
 
             <!-- Right side image column -->
             <div class="col-md-6 d-none d-md-block">
-                <img src="<?= base_url('/assets/img/right.svg') ?>" alt="Right image" class="right-image">
+                <img src="<?= base_url('/assets/img/login.jpg') ?>" alt="Right image" class="right-image">
             </div>
         </div>
     </div>

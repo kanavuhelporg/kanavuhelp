@@ -930,9 +930,12 @@
     </div>
     </div>
   </nav>
-  <div class="donate_img mt-5 pt-4">
-    <img src="<?= base_url('assets/img/sthelp.png') ?>" width="100%">
-  </div>
+  <div class="donate_img mt-5 pt-4 text-center">
+  <img src="<?= base_url('assets/img/fundraiserpage.png') ?>" 
+       style="width: 100%; height: 400px; object-fit: cover;">
+</div>
+
+
   <!--<div class="mx-auto text-center mt-8 md:ml-20 ">
     <button id="myDonationsButton" 
       class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 text-red-500 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data"
@@ -955,7 +958,10 @@
             <div class="text-center">
               <h3 class="mt-4"><strong>START YOUR FUNDRAISER</strong></h3>
               <h6>"We make a living by what we get, but we make a life by what we give"</h6>
-              <img src="<?php echo base_url('/assets/img/btfly.png'); ?>" alt="no img" class="img-fluid" style="max-width: 100%; height: auto;">
+              <img src="<?php echo base_url('/assets/img/startyourfund.jpg'); ?>" 
+     alt="no img" 
+     class="img-fluid" 
+     style="max-width: 100%; height: auto; border-radius: 50%;">
             </div>
           </div>
           <!-- Right Column for Form -->
@@ -1179,14 +1185,19 @@
                   }
 
                   if (id === "end_date") {
-                    const selectedDate = new Date(field.value);
-                    const currentDate = new Date();
-                    // Check if the selected date is in the past
-                    if (selectedDate <= currentDate) {
-                      errorElement.textContent = "End date must be a future date.";
-                      return false;
-                    }
-                  }
+  const selectedDate = new Date(field.value);
+  const currentDate = new Date();
+  
+  // Normalize the dates to ensure time is not a factor (consider only the date part)
+  selectedDate.setHours(0, 0, 0, 0);
+  currentDate.setHours(0, 0, 0, 0);
+
+  // Check if the selected date is in the past
+  if (selectedDate < currentDate) {
+    errorElement.textContent = "End date must be today or a future date.";
+    return false;
+  }
+}
 
                   errorElement.textContent = "";
                   return true;
