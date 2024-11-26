@@ -228,17 +228,17 @@
       color:#E01A2B;
       font-size:26px;
     }
-    #phone{
+    /* #phone{
       margin-left:7%
-    }
+    } */
     #phone_icon{
       margin-left:17%;
       color:#E01A2B;
       font-size:26px;
     }
-    #email{
+    /* #email{
       margin-left:-3%;
-    }
+    } */
     #envelope_icon{
       margin-left:35%;
       color:#E01A2B;
@@ -442,95 +442,152 @@
         <h3 class="text-base text-black-500 text-center w-auto"><strong>Submit your inquiry, and we'll respond to you <br>as
             soon as possible!</strong></h3>
             <div class="relative mb-4 mt-5 form1">
-            <form name="contactus" class="form1" id="myForm" onsubmit="return submitForm()" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
+
+            <form name="contactus" class="form1" id="myForm" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
   <!-- Name Field -->
   <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Name:<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Enter your name" required onblur="validateName()">
-    <p id="demo" style="color:red"></p>
+    <label for="name" class="form-label">Name:<span class="text-danger">*</span></label>
+    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" required>
+    <p id="name-error" style="color:red"></p>
   </div>
 
   <!-- Email Field -->
   <div class="mb-3">
-    <label for="exampleFormControlInput2" class="form-label">Mail ID:<span class="text-danger">*</span></label>
-    <input type="email" class="form-control" name="email" id="exampleFormControlInput2" placeholder="Enter your email" required onblur="validateEmail()">
-    <p id="demo1" style="color:red"></p>
+    <label for="email" class="form-label">Mail ID:<span class="text-danger">*</span></label>
+    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+    <p id="email-error" style="color:red"></p>
   </div>
 
   <!-- Phone Field -->
   <div class="mb-3">
-    <label for="exampleFormControlInput3" class="form-label">Phone Number:<span class="text-danger">*</span></label>
-    <input type="tel" class="form-control" name="phone" id="exampleFormControlInput3" placeholder="Enter your phone number" required onblur="validatePhone()">
-    <p id="demo2" style="color:red"></p>
+    <label for="phone" class="form-label">Phone Number:<span class="text-danger">*</span></label>
+    <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter your phone number" required>
+    <p id="phone-error" style="color:red"></p>
   </div>
 
   <!-- Message Field -->
   <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">Message:<span class="text-danger">*</span></label>
-    <textarea class="form-control textarea-reduced-width" name="message" id="exampleFormControlTextarea1" rows="3" placeholder="Enter your message" required onblur="validateMessage()"></textarea>
-    <p id="demo3" style="color:red"></p>
-  </div>
+  <label for="message" class="form-label">Message:<span class="text-danger">*</span></label>
+  <textarea class="form-control textarea-reduced-width" name="message" id="message" rows="3" placeholder="Enter your message" required></textarea>
+  <p id="message-error" style="color:red"></p>
+</div>
 
-  <button type="submit" class="btn btn-primary btn-lg msg_btn" style="background-color:#E01A2B;border:none;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
+
+
+  <button type="submit" id="submitButton" class="btn btn-primary btn-lg" style="background-color:#E01A2B;border:none;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
 </form>
 
-<script>
-  function validateName() {
-    const name = document.getElementById("exampleFormControlInput1").value;
-    const nameRegex = /^[A-Za-z\s]+$/;
-    if (!nameRegex.test(name)) {
-      document.getElementById("demo").innerText = "Please enter a valid name (letters and spaces only).";
-      return false;
+            
+            <script>
+            document.addEventListener("DOMContentLoaded", function () {
+  // Attach validation to fields
+  document.getElementById("name").addEventListener("input", function () {
+    validateName();
+  });
+
+  document.getElementById("email").addEventListener("input", function () {
+    validateEmail();
+  });
+
+  document.getElementById("phone").addEventListener("input", function () {
+    validatePhone();
+  });
+
+  document.getElementById("message").addEventListener("input", function () {
+    validateMessage();
+  });
+
+  // Prevent form submission if validation fails
+  document.getElementById("submitButton").addEventListener("click", function (e) {
+    e.preventDefault(); // Prevent form submission
+    if (validateForm()) {
+      document.getElementById("myForm").submit();
     }
-    document.getElementById("demo").innerText = "";
-    return true;
+  });
+});
+
+// Name Validation
+function validateName() {
+  const name = document.getElementById("name").value.trim();
+  const errorElement = document.getElementById("name-error");
+  const regex = /^[a-zA-Z\s]+$/; // Only letters and spaces allowed
+
+  if (!name) {
+    errorElement.textContent = "Please enter your name.";
+    return false;
+  } else if (!regex.test(name)) {
+    errorElement.textContent = "Name can only contain letters and spaces.";
+    return false;
   }
 
-  function validateEmail() {
-    const email = document.getElementById("exampleFormControlInput2").value;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      document.getElementById("demo1").innerText = "Please enter a valid email address.";
-      return false;
-    }
-    document.getElementById("demo1").innerText = "";
-    return true;
+  errorElement.textContent = "";
+  return true;
+}
+
+// Email Validation
+function validateEmail() {
+  const email = document.getElementById("email").value.trim();
+  const errorElement = document.getElementById("email-error");
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  if (!email) {
+    errorElement.textContent = "Please enter your email.";
+    return false;
+  } else if (!regex.test(email)) {
+    errorElement.textContent = "Please enter a valid email address.";
+    return false;
   }
 
-  function validatePhone() {
-    const phone = document.getElementById("exampleFormControlInput3").value;
-    const phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(phone)) {
-      document.getElementById("demo2").innerText = "Please enter a valid phone number (10 digits).";
-      return false;
-    }
-    document.getElementById("demo2").innerText = "";
-    return true;
+  errorElement.textContent = "";
+  return true;
+}
+
+// Phone Validation
+function validatePhone() {
+  const phone = document.getElementById("phone").value.trim();
+  const errorElement = document.getElementById("phone-error");
+  const regex = /^[0-9]{10}$/;
+
+  if (!phone) {
+    errorElement.textContent = "Please enter your phone number.";
+    return false;
+  } else if (!regex.test(phone)) {
+    errorElement.textContent = "Phone number must be 10 digits.";
+    return false;
   }
 
-  function validateMessage() {
-    const message = document.getElementById("exampleFormControlTextarea1").value;
-    if (message.length < 10) {
-      document.getElementById("demo3").innerText = "Message must be at least 10 characters long.";
-      return false;
-    }
-    document.getElementById("demo3").innerText = "";
-    return true;
+  errorElement.textContent = "";
+  return true;
+}
+
+// Message Validation
+function validateMessage() {
+  const message = document.getElementById("message").value.trim();
+  const errorElement = document.getElementById("message-error");
+
+  if (!message) {
+    errorElement.textContent = "Message is required.";
+    return false;
+  } else if (message.length < 10) {
+    errorElement.textContent = "Message must be at least 10 characters long.";
+    return false;
   }
 
-  function submitForm() {
-    return validateName() && validateEmail() && validatePhone() && validateMessage();
-  }
+  errorElement.textContent = "";
+  return true;
+}
+
+// Overall Form Validation
+function validateForm() {
+  const isNameValid = validateName();
+  const isEmailValid = validateEmail();
+  const isPhoneValid = validatePhone();
+  const isMessageValid = validateMessage();
+
+  return isNameValid && isEmailValid && isPhoneValid && isMessageValid;
+}
+
 </script>
-
-
-<style>
-  .textarea-reduced-width {
-    max-width: 50%; /* Adjust width as needed */
-  }
-</style>
-
-  
 </div>
 
   </section>
