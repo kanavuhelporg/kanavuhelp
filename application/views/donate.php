@@ -761,7 +761,7 @@ function shareCause(url, title, imgurl) {
     if (event.target.classList.contains('donate_btn')) {
       event.preventDefault(); // Prevent default link behavior
 
-      if (!isLoggedIn) {
+    /*  if (!isLoggedIn) {
         const baseUrl = "<?= base_url('/login') ?>"; 
         // Ask for confirmation before redirecting to the login page
         var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
@@ -775,11 +775,11 @@ function shareCause(url, title, imgurl) {
         window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
       });// Replace with your actual login URL
         
-      } else {
+      } else {*/
         // Show the donation modal if logged in
         var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
         donationModal.show();
-      }
+      //}
     }
   });
   

@@ -808,7 +808,7 @@ function setCauseId(causeId) {
     button.addEventListener('click', function(event) {
       event.preventDefault(); // Prevent default link behavior
 
-      if (!isLoggedIn) {
+    /*  if (!isLoggedIn) {
         // Show login modal if not logged in
         const baseUrl = "<?= base_url('/login') ?>"; 
         var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
@@ -819,11 +819,11 @@ function setCauseId(causeId) {
           var currentUrl = window.location.href;
           window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
         });
-      } else {
+      } else {*/
         // Show the donation modal if logged in
         var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
         donationModal.show();
-      }
+     // }
     });
   });
 

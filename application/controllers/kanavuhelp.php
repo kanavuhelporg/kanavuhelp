@@ -144,13 +144,13 @@ class kanavuhelp extends CI_Controller
     }
     public function individual()
     {
-        if (!$this->session->userdata('userId')) {
-            redirect('login_modal');
-            exit;
-        }
+       // if (!$this->session->userdata('userId')) {
+          //  redirect('login_modal');
+          //  exit;
+      //  }
 
         //category for individudal form
-        else {
+       // else {
             // Load model if not already loaded
             $this->load->model('UserModel');
 
@@ -159,7 +159,7 @@ class kanavuhelp extends CI_Controller
 
             // Load the view and pass the categories
             $this->load->view('individual.php', $data);
-        }
+        //}
     }
     public function charity()
     {
@@ -245,11 +245,11 @@ class kanavuhelp extends CI_Controller
 
     public function myhelps()
     {
-        if (!$this->session->userdata('userId')) {
-            redirect('login_modal1');
+        //if (!$this->session->userdata('userId')) {
+         //   redirect('login_modal1');
 
-            exit;
-        }
+         //   exit;
+      //  }
 
         // Debugging: Check if the userId is available in the session
         $user_id = $this->session->userdata('userId');
