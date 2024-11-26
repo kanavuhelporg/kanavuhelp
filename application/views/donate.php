@@ -159,8 +159,8 @@
     }
     /* card section */
     .card {
-      width: 316px;
-      height:466px;
+      width: 356px;
+      height:480px;
       /* Make the card width responsive */
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
      
@@ -334,6 +334,17 @@
     text-align: center; /* Center-align items for better UX */
   }
 }
+@media (min-width: 769px) and (max-width: 989px)
+  {
+    .card {
+      width: 400px;
+      height:466px;
+      /* Make the card width responsive */
+      box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
+     
+    }
+  }
+
 
 
     </style>
@@ -440,9 +451,9 @@
   <div class="row">
     <?php if (!empty($fundraisers)): ?>
         <?php foreach ($fundraisers as $fundraiser): ?>
-            <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
+            <div class="col-12 col-lg-4 col-md-6  mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
             <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                <div class="card h-100 w-100 fixed-card">
+                <div class="card fixed-card">
                 <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
      width="316px" height="230px" 
      class="card-img-top fixed-card-img img-placeholder" 
@@ -458,7 +469,12 @@
 </div>
 
                         
-                        <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
+<p class="card-text">
+    <strong>
+        ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
+    </strong>
+</p>
+
                         <div class="progress mb-2">
             <?php
               // Calculate progress percentage

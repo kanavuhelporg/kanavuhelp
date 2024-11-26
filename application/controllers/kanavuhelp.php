@@ -453,10 +453,7 @@ class kanavuhelp extends CI_Controller
             $data['fundraisers'] = $this->UserModel->get_user_causes($user_id);
 
             // Check if any fundraisers were retrieved
-            if (!$data['fundraisers']) {
-                show_404(); // Show 404 if no data is returned (optional)
-                return;
-            }
+           
 
             // Calculate days left for each fundraiser
             foreach ($data['fundraisers'] as $fundraiser) {
