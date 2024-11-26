@@ -1049,6 +1049,41 @@
                   </div>
                 </section>
 
+                <div id="myModal1" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <div class="row justify-content-center">
+                <div class="col-12 col-md-6 col-lg-4" style="width:736px;height:530px;">
+                  <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+                    <div class="card-body p-5 text-center">
+                      <h4><b>Enter OTP to verify your account</b></h4>
+                      <p style="font-size:16px;"><b>Enter OTP to verify your account</b></p>
+                      <img src="<?php echo base_url('/assets/img/Group 55.png'); ?>" alt="No Image"
+                        class="h-auto inline-block" style="width:50px;height:50px;">
+                      <p style="font-size:16px;"><b>We have sent OTP to your email, demo@gmail.com</b></p>
+                      <div class="otp-field mb-4">
+                        <input type="number" />
+                        <input type="number" disabled />
+                        <input type="number" disabled />
+                        <input type="number" disabled />
+                        <input type="number" disabled />
+                        <input type="number" disabled />
+                      </div>
+
+                      <div class="text-center mt-3">
+                    <button type="button" class="btn btn-danger no-hover" onclick="if(validateOTP()) showStep(1)">Continue</button>
+                  </div>
+                      <p class="resend text-muted mb-0" style="font-size:17px;">
+                        <b>Didn’t receive the OTP? </b><br>In case you do not receive the OTP on your email id, please
+                        check your spam/junk folders.<br> <a href=""><b>Resend</b></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </section>
+            </div>
+          </div>
                 <!-- Step 2 Content -->
                 <section id="step-2" class="form-step col-12 d-none">
                   <h2>Cause Details</h2>
@@ -1226,6 +1261,9 @@
                   }
                   phoneError.textContent = "";
                   return true;
+                }
+                function validateOTP(){
+                  
                 }
                 function validateAmount() {
     const amountInput = document.getElementById('amount');

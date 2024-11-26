@@ -92,3 +92,4 @@ $route['profile/viewProfile'] = 'profile/viewProfile';
 $route['profile/editProfile'] = 'profile/editProfile';
 $route['privacy_policy'] = 'kanavuhelp/privacy_policy';
 $route['terms_of_use'] = 'kanavuhelp/terms_of_use';
+$route['send'] = 'kanavuhelp/send';

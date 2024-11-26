@@ -23,10 +23,13 @@ class kanavuhelp extends CI_Controller
     {
         parent::__construct();
         $this->load->library('session');
+        $this->load->library('email');
         $this->load->model('UserModel');
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('cookie');
+        // $this->load->config('email');
+        $this->config->load('email');
     }
     public function index()
     {
@@ -224,9 +227,9 @@ class kanavuhelp extends CI_Controller
             $current_date = new DateTime();
             $date_diff = $end_date->diff($current_date);
 
-        // Calculate days left and check if the fundraiser is expired
-        $days_left = $date_diff->days;
-        $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount;
+            // Calculate days left and check if the fundraiser is expired
+            $days_left = $date_diff->days;
+            $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount;
 
             // Only include active fundraisers
             if (!$is_expired) {
@@ -293,7 +296,7 @@ class kanavuhelp extends CI_Controller
         $end_date = new DateTime($fundraiser_details->end_date);
         $current_date = new DateTime();
         $days_left = $end_date->diff($current_date)->days . 'days left';
-        if ($days_left <0) {
+        if ($days_left < 0) {
             $days_left = 'expired';
         }
         $fundraiser_details->hide_donation_button = $fundraiser_details->raised_amount >= $fundraiser_details->amount;
@@ -315,31 +318,31 @@ class kanavuhelp extends CI_Controller
     }
 
     public function registeration()
-{
-    $data['name'] = $this->input->post('exampleInputName');
-    $data['email'] = $this->input->post('exampleInputEmail1');
-    $data['password'] = $this->input->post('exampleInputPassword1');
+    {
+        $data['name'] = $this->input->post('exampleInputName');
+        $data['email'] = $this->input->post('exampleInputEmail1');
+        $data['password'] = $this->input->post('exampleInputPassword1');
 
-    $this->load->model('UserModel');
+        $this->load->model('UserModel');
 
-    // Check if email already exists
-    if ($this->UserModel->isEmailExists($data['email'])) {
-        // Set flash message for the next page load
-        $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
-        redirect('/register'); // Redirects to the registration page
-    } else {
-        $response = $this->UserModel->register($data);
-        if ($response) {
-            echo "<script>
+        // Check if email already exists
+        if ($this->UserModel->isEmailExists($data['email'])) {
+            // Set flash message for the next page load
+            $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
+            redirect('/register'); // Redirects to the registration page
+        } else {
+            $response = $this->UserModel->register($data);
+            if ($response) {
+                echo "<script>
                 alert('Registered successfully!');
                 window.location.href = '" . base_url('login') . "';
             </script>";
-        }else {
-            $this->session->set_flashdata('error', 'Failed to register');
-            redirect('/register');
+            } else {
+                $this->session->set_flashdata('error', 'Failed to register');
+                redirect('/register');
+            }
         }
     }
-}
 
 
     public function get_user_name($user_id)
@@ -394,7 +397,7 @@ class kanavuhelp extends CI_Controller
             'phone' => $this->input->post('phone'),
             'age' => $this->input->post('age'),
             'location' => $this->input->post('location'),
-           
+
             'amount' => $this->input->post('amount'),
             'end_date' => $this->input->post('end_date'),
             'cause_heading' => $this->input->post('cause_heading'),
@@ -575,5 +578,27 @@ class kanavuhelp extends CI_Controller
         // Load the profile view and pass user data
         $this->load->view('profile_view', $data);
     }
+
+    public function send()
+    {
+        // Initialize the email with config settings
+
+        $to = 'prasanthsubramaniyan945@gmail.com';
+        $otp = rand(1000, 9999);
+        $this->session->set_userdata('generated_otp', $otp);
+
+        $message = "Your OTP is $otp to change the new password for your Kanavu Help account.";
+
+
+        $this->email->from('support@kanavu.help', 'Kanavu Help');
+        $this->email->to($to);
+        $this->email->subject('Kanavu Help Foundation');
+        $this->email->message($message);
+
+        if ($this->email->send()) {
+            echo "Email sent successfully!";
+        } else {
+            echo $this->email->print_debugger(); // Print debug info if sending fails
+        }
+    }
 }
-?>
