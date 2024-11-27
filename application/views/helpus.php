@@ -418,7 +418,11 @@
         <!-- Right Sidebar -->
         <div class="col-md-4">
             <!-- Amount Raised and Goal -->
-            <h4>₹ <strong><?= number_format($fundraiser->raised_amount) ?></strong><br> raised out of ₹ <?= number_format($fundraiser->amount) ?></h4>
+            <h4>
+    <strong>
+        ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
+    </strong>
+</h4>
             <div class="progress mb-2">
             <?php
               // Calculate progress percentage
@@ -454,41 +458,53 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="card p-3" style="background-color: #fff0f0; border-radius: 10px; border: none; width: 100%; max-width: 600px; margin: 0 auto;">
-                <h5 style="font-weight: bold;">Top Donors</h5>
+                <h5 style="font-weight: bold;">Our Donors</h5>
                 <ul class="list-group" style="list-style-type: none; padding: 0;">
                
-                  <?php foreach ($fundraiser->topdonars as $donor): ?>
-                        <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
-                            <div class="d-flex align-items-center">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                                    <?= substr($donor->name, 0, 1); ?>
-                                </div>
-                                <span style="margin-left: 10px;"><?= htmlspecialchars($donor->name); ?></span>
-                            </div>
-                            <span style="font-weight: bold;">Rs.<?= number_format($donor->amount); ?></span>
-                        </li>
-                    <?php endforeach; ?>
-                    <!-- Hidden section for top 15 donors -->
-                    <div id="additional-donors" style="display: none;">
-                        <?php foreach ($fundraiser->topdonars15 as $donor): ?>
-                            <li class="d-flex align-items-center justify-content-between" style="padding: 10px 0;">
-                                <div class="d-flex align-items-center">
-                                    <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                                        <?= substr($donor->name, 0, 1); ?>
-                                    </div>
-                                    <span style="margin-left: 10px;"><?= htmlspecialchars($donor->name); ?></span>
-                                </div>
-                                <span style="font-weight: bold;">Rs.<?= number_format($donor->amount); ?></span>
-                            </li>
-                        <?php endforeach; ?>
+                <ul id="donor-list">
+    <?php if (!empty($fundraiser->topdonars)): ?>
+        <?php foreach ($fundraiser->topdonars as $donor): ?>
+            <li class="donor-item d-flex align-items-center justify-content-between" style="padding: 10px 0; display: none;">
+                <div class="d-flex align-items-center">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                        <?= substr($donor->name, 0, 1); ?>
                     </div>
-                    <!-- Toggle Links -->
+                    <span style="margin-left: 10px;"><?= htmlspecialchars($donor->name); ?></span>
+                </div>
+                <span style="font-weight: bold;">Rs.<?= number_format($donor->amount); ?></span>
+            </li>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <li class="no-donors-message" style="padding: 10px 0; font-style: italic; color: #888;list-style:none">
+            No donors available for this cause.
+        </li>
+    <?php endif; ?>
+</ul>
+
+<script>
+    // Prepare a JavaScript array of donors, or an empty array if no donors are available
+    const donors = [
+        <?php if (!empty($fundraiser->topdonars)): ?>
+            <?php foreach ($fundraiser->topdonars as $donor): ?>
+                {
+                    name: "<?= htmlspecialchars($donor->name); ?>",
+                    initial: "<?= substr($donor->name, 0, 1); ?>",
+                    amount: <?= $donor->amount; ?>
+                },
+            <?php endforeach; ?>
+        <?php endif; ?>
+    ];
+</script>
+
+
+                    </div>
+                    <!-- Toggle Links
                     <li class="text-center" id="show-more" style="padding: 10px 0;">
                         <a href="javascript:void(0);" style="color: red; text-decoration: none;" onclick="toggleDonors(true)">Show more <span>&#x25BC;</span></a>
                     </li>
                     <li class="text-center" id="show-less" style="padding: 10px 0; display: none;">
                         <a href="javascript:void(0);" style="color: red; text-decoration: none;" onclick="toggleDonors(false)">Show less <span>&#x25B2;</span></a>
-                    </li>
+                    </li> -->
 
                 </ul>
             </div>
@@ -497,6 +513,71 @@
 </div>
             </div>
             <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const donorList = document.getElementById('donor-list');
+        const displayLimit = 3; // Number of donors to display at a time
+        let displayedDonors = [];
+
+        // Check if donors array is empty
+        if (donors.length === 0) {
+            // If no donors, stop further execution and display a message
+            const noDonorsMessage = document.createElement('li');
+            noDonorsMessage.className = 'no-donors-message';
+            noDonorsMessage.style.padding = '10px 0';
+            noDonorsMessage.style.fontStyle = 'italic';
+            noDonorsMessage.style.color = '#888';
+            
+            return; // Stop further execution
+        }
+
+        // Function to render donors
+        function renderDonors() {
+            donorList.innerHTML = ''; // Clear current list
+
+            displayedDonors.forEach(donor => {
+                const donorItem = document.createElement('li');
+                donorItem.className = 'd-flex align-items-center justify-content-between';
+                donorItem.style.padding = '10px 0';
+                
+                donorItem.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                            ${donor.initial}
+                        </div>
+                        <span style="margin-left: 10px;">${donor.name}</span>
+                    </div>
+                    <span style="font-weight: bold;">Rs.${donor.amount.toLocaleString()}</span>
+                `;
+                donorList.appendChild(donorItem);
+            });
+        }
+
+        // Function to select random donors
+        function selectRandomDonors() {
+            const randomIndexes = [];
+            while (randomIndexes.length < displayLimit) {
+                const randomIndex = Math.floor(Math.random() * donors.length);
+                if (!randomIndexes.includes(randomIndex)) {
+                    randomIndexes.push(randomIndex);
+                }
+            }
+            displayedDonors = randomIndexes.map(index => donors[index]);
+        }
+
+        // Initial render
+        selectRandomDonors();
+        renderDonors();
+
+        // Rotate donors every few seconds
+        setInterval(() => {
+            selectRandomDonors();
+            renderDonors();
+        }, 2000); // Rotate every 2 seconds
+    });
+
+
+
+
 function toggleDonors(showMore) {
     const additionalDonors = document.getElementById('additional-donors');
     const showMoreLink = document.getElementById('show-more');
@@ -727,7 +808,7 @@ function setCauseId(causeId) {
     button.addEventListener('click', function(event) {
       event.preventDefault(); // Prevent default link behavior
 
-      if (!isLoggedIn) {
+    /*  if (!isLoggedIn) {
         // Show login modal if not logged in
         const baseUrl = "<?= base_url('/login') ?>"; 
         var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
@@ -738,11 +819,11 @@ function setCauseId(causeId) {
           var currentUrl = window.location.href;
           window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
         });
-      } else {
+      } else {*/
         // Show the donation modal if logged in
         var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
         donationModal.show();
-      }
+     // }
     });
   });
 

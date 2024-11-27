@@ -38,7 +38,7 @@ class UserModel extends CI_Model
 	}
 
 	//top donars
-	public function get_top_donors_by_cause($cause_id, $limit = 3)
+	public function get_top_donors_by_cause($cause_id)
 	{
 		$this->db->select('user.name, donation_for_cause.amount');
 		$this->db->from('donation_for_cause');
@@ -46,7 +46,7 @@ class UserModel extends CI_Model
 		$this->db->where('donation_for_cause.cause_id', $cause_id);
 		$this->db->where('donation_for_cause.status', 1);
 		$this->db->order_by('donation_for_cause.amount', 'DESC');
-		$this->db->limit($limit);
+		//$this->db->limit($limit);
 
 		$query = $this->db->get();
 		return $query->result();
