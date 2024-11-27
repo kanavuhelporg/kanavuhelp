@@ -17,6 +17,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
 
   <style>
     body {
@@ -710,6 +713,33 @@
     text-align: center; /* Center-align items for better UX */
   }
 }
+.carousel-item {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.carousel-inner {
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black !important;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width: 768px) {
+    .carousel-item .card-container {
+        margin-bottom: 15px;
+    }
+    .carousel-inner {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+    }
+}
 
   </style>
 </head>
@@ -833,75 +863,75 @@
       </div>
     </div>
   </div>
-  <div class="container-xxl mt-5">
+  <div class="container-xxl mt-5" id="fundraiserCarouselContainer">
     <div class="h4 text-center">BE THE REASON OF<span style="color:#EB2D32"> SOMEONE SMILES</span></div>
     <div style="display: flex; justify-content: center;">
-      <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
+        <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
     </div>
     <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
-    <div id="fundraiserCarousel" class="carousel slide mt-5 fundraiser-carousel" data-bs-ride="carousel">
+</div>
+
+<div id="fundraiserCarousel" class="carousel slide mt-5 fundraiser-carousel" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <?php if (!empty($fundraisers)): ?>
-        <?php
-        $chunked_fundraisers = array_chunk($fundraisers, 3); // Group fundraisers into sets of 3
-        foreach ($chunked_fundraisers as $index => $fundraiser_group): ?>
-          <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-            <div class="container">
-              <div class="row">
-                <?php foreach ($fundraiser_group as $fundraiser): ?>
-                  <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
-                    <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                      <div class="card h-100 w-100 fixed-card">
-                        <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
-                             width="316px" height="230px" 
-                             class="card-img-top fixed-card-img img-placeholder" 
-                             alt="no image">
-                        
-                        <div class="card-body d-flex flex-column">
-                          <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
-                          <div class="d-flex justify-content-between align-items-center">
-                            <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                            <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
-                          </div>
-                          <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
-                          <div class="progress mb-2">
-                            <?php
-                              $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-                            ?>
-                            <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="d-flex align-items-center mt-auto">
-                            <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)): ?>
-                              <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
-                              <i class="bi bi-share ms-2" 
-                                 onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', 
-                                                     '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
-                                                     '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
-                              </i>
-                            <?php endif; ?>
-                          </div>
+        <?php if (!empty($fundraisers)): ?>
+            <?php
+            $chunked_fundraisers = array_chunk($fundraisers, 3);
+            foreach ($chunked_fundraisers as $index => $fundraiser_group): ?>
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                    <div class="container">
+                        <div class="row">
+                            <?php foreach ($fundraiser_group as $fundraiser): ?>
+                                <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
+                                    <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
+                                        <div class="card h-100 w-100 fixed-card">
+                                            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
+                                                 width="316px" height="230px" 
+                                                 class="card-img-top fixed-card-img img-placeholder" 
+                                                 alt="no image">
+                                            <div class="card-body d-flex flex-column">
+                                                <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
+                                                    <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                                                </div>
+                                                <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
+                                                <div class="progress mb-2">
+                                                    <?php
+                                                    $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+                                                    ?>
+                                                    <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <div class="d-flex align-items-center mt-auto">
+                                                    <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)): ?>
+                                                        <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+                                                        <i class="bi bi-share ms-2" 
+                                                           onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', 
+                                                                               '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
+                                                                               '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
+                                                        </i>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
-                      </div>
-                    </a>
-                  </div>
-                <?php endforeach; ?>
-              </div>
-            </div>
-          </div>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <p><strong>
-          <center>No fundraisers available at the moment.</center>
-        </strong></p>
-      <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p><strong><center>No fundraisers available at the moment.</center></strong></p>
+        <?php endif; ?>
     </div>
-    <button class="carousel-control-prev" type="button" style="color:black" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
     </button>
 </div>
 
@@ -1244,12 +1274,12 @@
   <!-- Currency and Amount -->
   <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
     <label for="currency" class="visually-hidden">Currency Type</label>
-    <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
+    <select class="form-control" name="currency_type" id="currency" style="width:45%;" required>
       <option value="" disabled selected>Select Currency</option>
       <option>INR</option>
       <option>USD</option>
     </select>
-    <div style="width: 40%; margin-left: 5%;">
+    <div style="width: 42%; margin-left: 2%;">
       <label for="amount" class="visually-hidden">Amount</label>
       <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>
       <p id="error5" style="color: red; margin: 5px 0 0; font-size: 0.9em;"></p>
@@ -1259,14 +1289,14 @@
   <!-- Phone Number -->
   <div class="form-group ms-4">
     <label for="phone" class="form-label">Phone Number</label>
-    <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:92%;" required>
+    <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:95%;" required>
     <p id="error3" style="color:red; margin-top: 5px;"></p>
   </div>
 
   <!-- Transaction ID -->
   <div class="form-group ms-4">
     <label for="transactionid" class="form-label">Transaction ID</label>
-    <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction ID*" style="width:92%;" required>
+    <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
     <p id="error4" style="color:red; margin-top: 5px;"></p>
   </div>
 

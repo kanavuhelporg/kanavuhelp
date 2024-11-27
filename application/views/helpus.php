@@ -743,12 +743,12 @@ function setCauseId(causeId) {
   <!-- Currency and Amount -->
   <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
     <label for="currency" class="visually-hidden">Currency Type</label>
-    <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
+    <select class="form-control" name="currency_type" id="currency" style="width:45%;" required>
       <option value="" disabled selected>Select Currency</option>
       <option>INR</option>
       <option>USD</option>
     </select>
-    <div style="width: 40%; margin-left: 5%;">
+    <div style="width: 42%; margin-left: 2%;">
       <label for="amount" class="visually-hidden">Amount</label>
       <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>
       <p id="error5" style="color: red; margin: 5px 0 0; font-size: 0.9em;"></p>
@@ -758,14 +758,14 @@ function setCauseId(causeId) {
   <!-- Phone Number -->
   <div class="form-group ms-4">
     <label for="phone" class="form-label">Phone Number</label>
-    <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:92%;" required>
+    <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:95%;" required>
     <p id="error3" style="color:red; margin-top: 5px;"></p>
   </div>
 
   <!-- Transaction ID -->
   <div class="form-group ms-4">
     <label for="transactionid" class="form-label">Transaction ID</label>
-    <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction ID*" style="width:92%;" required>
+    <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
     <p id="error4" style="color:red; margin-top: 5px;"></p>
   </div>
 
