@@ -873,56 +873,49 @@
 
 <div id="fundraiserCarousel" class="carousel slide mt-5 fundraiser-carousel" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <?php if (!empty($fundraisers)): ?>
-            <?php
-            $chunked_fundraisers = array_chunk($fundraisers, 3);
-            foreach ($chunked_fundraisers as $index => $fundraiser_group): ?>
-                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                    <div class="container">
-                        <div class="row">
-                            <?php foreach ($fundraiser_group as $fundraiser): ?>
-                                <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
-                                    <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                                        <div class="card h-100 w-100 fixed-card">
-                                            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
-                                                 width="316px" height="230px" 
-                                                 class="card-img-top fixed-card-img img-placeholder" 
-                                                 alt="no image">
-                                            <div class="card-body d-flex flex-column">
-                                                <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                                                    <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
-                                                </div>
-                                                <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
-                                                <div class="progress mb-2">
-                                                    <?php
-                                                    $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-                                                    ?>
-                                                    <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div class="d-flex align-items-center mt-auto">
-                                                    <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)): ?>
-                                                        <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
-                                                        <i class="bi bi-share ms-2" 
-                                                           onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', 
-                                                                               '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
-                                                                               '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
-                                                        </i>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
+      <?php if (!empty($fundraisers)): ?>
+        <?php
+        $chunked_fundraisers = array_chunk($fundraisers, 3); // Group fundraisers into sets of 3
+        foreach ($chunked_fundraisers as $index => $fundraiser_group): ?>
+          <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+            <div class="container">
+              <div class="row">
+                <?php foreach ($fundraiser_group as $fundraiser): ?>
+                  <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
+                  <a href="<?= base_url('helpus/' . $fundraiser->id.'-' .$fundraiser->cause_heading) ?>" style="text-decoration:none;color:black">
+                      <div class="card h-100 w-100 fixed-card">
+                        <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
+                             width="316px" height="230px" 
+                             class="card-img-top fixed-card-img img-placeholder" 
+                             alt="no image">
+                        
+                        <div class="card-body d-flex flex-column">
+                          <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
+                            <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                          </div>
+                          <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
+                          <div class="progress mb-2">
+                            <?php
+                              $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+                            ?>
+                            <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <div class="d-flex align-items-center mt-auto">
+                            <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)): ?>
+                              <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+                              <i class="bi bi-share ms-2" 
+                                 onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', 
+                                                     '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
+                                                     '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
+                              </i>
+                            <?php endif; ?>
+                          </div>
                         </div>
                     </div>
                 </div>
             <?php endforeach; ?>
-        <?php else: ?>
-            <p><strong><center>No fundraisers available at the moment.</center></strong></p>
-        <?php endif; ?>
     </div>
 
     <button class="carousel-control-prev" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">

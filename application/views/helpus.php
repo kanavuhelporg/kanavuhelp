@@ -516,25 +516,12 @@
     document.addEventListener('DOMContentLoaded', function() {
         const donorList = document.getElementById('donor-list');
         const displayLimit = 3; // Number of donors to display at a time
-        let displayedDonors = [];
-
-        // Check if donors array is empty
-        if (donors.length === 0) {
-            // If no donors, stop further execution and display a message
-            const noDonorsMessage = document.createElement('li');
-            noDonorsMessage.className = 'no-donors-message';
-            noDonorsMessage.style.padding = '10px 0';
-            noDonorsMessage.style.fontStyle = 'italic';
-            noDonorsMessage.style.color = '#888';
-            
-            return; // Stop further execution
-        }
 
         // Function to render donors
-        function renderDonors() {
+        function renderDonors(donorsToRender) {
             donorList.innerHTML = ''; // Clear current list
 
-            displayedDonors.forEach(donor => {
+            donorsToRender.forEach(donor => {
                 const donorItem = document.createElement('li');
                 donorItem.className = 'd-flex align-items-center justify-content-between';
                 donorItem.style.padding = '10px 0';
@@ -552,28 +539,48 @@
             });
         }
 
-        // Function to select random donors
-        function selectRandomDonors() {
-            const randomIndexes = [];
-            while (randomIndexes.length < displayLimit) {
-                const randomIndex = Math.floor(Math.random() * donors.length);
-                if (!randomIndexes.includes(randomIndex)) {
-                    randomIndexes.push(randomIndex);
-                }
-            }
-            displayedDonors = randomIndexes.map(index => donors[index]);
+        // Check if donors array is empty
+        if (donors.length === 0) {
+            const noDonorsMessage = document.createElement('li');
+            noDonorsMessage.className = 'no-donors-message';
+            noDonorsMessage.style.padding = '10px 0';
+            noDonorsMessage.style.fontStyle = 'italic';
+            noDonorsMessage.style.color = '#888';
+            noDonorsMessage.textContent = 'No donors available for this cause.';
+            donorList.appendChild(noDonorsMessage);
+            return; // Stop further execution
         }
 
-        // Initial render
-        selectRandomDonors();
-        renderDonors();
+        if (donors.length < 4) {
+            // Directly display all donors if length is less than 4
+            renderDonors(donors);
+        } else {
+            // Rotate donors if length is 4 or more
+            let displayedDonors = [];
 
-        // Rotate donors every few seconds
-        setInterval(() => {
+            function selectRandomDonors() {
+                const randomIndexes = [];
+                while (randomIndexes.length < displayLimit) {
+                    const randomIndex = Math.floor(Math.random() * donors.length);
+                    if (!randomIndexes.includes(randomIndex)) {
+                        randomIndexes.push(randomIndex);
+                    }
+                }
+                displayedDonors = randomIndexes.map(index => donors[index]);
+            }
+
+            // Initial render
             selectRandomDonors();
-            renderDonors();
-        }, 2000); // Rotate every 2 seconds
+            renderDonors(displayedDonors);
+
+            // Rotate donors every few seconds
+            setInterval(() => {
+                selectRandomDonors();
+                renderDonors(displayedDonors);
+            }, 2000); // Rotate every 2 seconds
+        }
     });
+
 
 
 

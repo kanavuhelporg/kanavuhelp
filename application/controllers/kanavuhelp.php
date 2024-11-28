@@ -278,9 +278,9 @@ class kanavuhelp extends CI_Controller
         $this->load->view('abouts.php');
     }
 
-    public function helpus($fundraiser_id = null)
+    public function helpus($fundraiser_id = null,$fundraiser_heading = null)
     {
-        if ($fundraiser_id === null) {
+        if ($fundraiser_id === null|| $fundraiser_heading== null) {
             show_404();
             return;
         }
@@ -311,7 +311,7 @@ class kanavuhelp extends CI_Controller
         $fundraiser_details->supporters_count = $supporters_count;
         $fundraiser_details->username = $username;
         $fundraiser_details->topdonars = $topdonars;
-        $fundraiser_details->topdonars15 = $topdonars15;
+       // $fundraiser_details->topdonars15 = $topdonars15;
         $data['fundraiser'] = $fundraiser_details;
         $data['is_logged_in'] = $this->session->userdata('userId') !== null;
         $this->load->view('helpus', $data);
