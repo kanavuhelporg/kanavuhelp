@@ -1045,7 +1045,7 @@
                   </div>
 
                   <div class="text-center mt-3">
-                    <button type="button" class="btn btn-danger no-hover" onclick="if(validateStep1()) showStep(2)">Continue</button>
+                    <button type="button" id="openModalBtn1" class="btn btn-danger no-hover" onclick="if(validateStep1()) showStep(2)">Continue</button>
                   </div>
                 </section>
 
@@ -1070,9 +1070,9 @@
                         <input type="number" disabled />
                       </div>
 
-                      <div class="text-center mt-3">
-                    <button type="button" class="btn btn-danger no-hover" onclick="if(validateOTP()) showStep(1)">Continue</button>
-                  </div>
+                      <button id="verifyButton" class="button btn-navigate-form-step" step_number="2">
+                        Continue
+                      </button><br><br>
                       <p class="resend text-muted mb-0" style="font-size:17px;">
                         <b>Didn’t receive the OTP? </b><br>In case you do not receive the OTP on your email id, please
                         check your spam/junk folders.<br> <a href=""><b>Resend</b></a>
@@ -1157,6 +1157,7 @@
                 </section>
 
               </form>
+              
               <script>
                 document.addEventListener("DOMContentLoaded", function() {
                   document.getElementById("category").addEventListener("change", () => validateField("category", "category-error", "Please select a category."));
@@ -1455,7 +1456,10 @@
         }
       });
     });
-
+    document.getElementById("verifyButton").addEventListener("click", function () {
+      // Code to close the modal
+      document.getElementById("myModal1").style.display = "none";
+    });
     // Verify OTP and navigate to Step 2 if valid
     document.getElementById("verifyButton").addEventListener("click", function() {
       const otp = Array.from(inputs).map(input => input.value).join("");
