@@ -306,7 +306,7 @@
     <?php foreach ($fundraisers as $cause) : ?>
 
       <div class="container d-flex justify-content-center align-items-center mt-5">
-        <a href="<?= base_url('helpus/' . $cause->id) ?>" style="text-decoration:none;color:black">
+      <a href="<?= base_url('helpus/' . $cause->id.'-' .$cause->cause_heading) ?>" style="text-decoration:none;color:black">
           <div class="card mb-3">
             <!-- Use img-fluid and custom inline styles for width and height -->
             <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top img-fluid" alt="...">
