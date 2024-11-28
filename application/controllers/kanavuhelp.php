@@ -178,8 +178,8 @@ class kanavuhelp extends CI_Controller
         $cause_id = $this->input->post('cause_id');
         $user_id = $this->input->post('user_id');
         $amount = $this->input->post('amount');
-        // $name = $this->input->post('name');
-        // $emailid = $this->input->post('emailid');
+         $name = $this->input->post('name');
+         $emailid = $this->input->post('email');
         $phoneno = $this->input->post('phoneno');
         $transactionid = $this->input->post('transactionid');
         $currency_type = $this->input->post('currency_type');
@@ -193,8 +193,8 @@ class kanavuhelp extends CI_Controller
             'cause_id' => $cause_id,
             'user_id' => $user_id,
             'amount' => $amount,
-            // 'name' => $name,
-            // 'emailid' => $emailid,
+             'name' => $name,
+             'email' => $emailid,
             'phoneno' => $phoneno,
             'transactionid' => $transactionid,
             'currency_type' => $currency_type
@@ -203,7 +203,7 @@ class kanavuhelp extends CI_Controller
         // Call the model function to save the donation
         if ($this->UserModel->saveDonation($data)) {
             // $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
-            echo json_encode(['status' => 'success', 'redirect' => base_url('myhelps')]);
+            echo json_encode(['status' => 'success', 'redirect' => base_url('donate')]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your donation.']);
         }
