@@ -649,16 +649,25 @@
         margin-bottom: 20px;
         /* Add space between cards */
       }
+      #carouselExampleSlidesOnly{
+        height:100%;
+      }
     }
 
     /* For larger screens, display three cards per slide */
     @media (min-width: 769px) {
+      #carouselExampleSlidesOnly{
+        
+        margin-top:30px;
+        
+      }
       .carousel-item .col-4 {
         max-width: 33.33%;
         /* Set the width of each card */
         flex: 0 0 33.33%;
         /* Ensures equal width for each card */
         margin-bottom: 20px;
+        
         /* Adds spacing between cards */
       }
     }
@@ -811,7 +820,7 @@
       </div>
     </div>
   </nav>
-
+<br>
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <!-- Slide 1 -->
@@ -837,7 +846,7 @@
           </div>
         </div>
       </div>
-
+<br>
       <!-- Slide 2 -->
       <div class="carousel-item">
         <img src="<?= base_url('assets/img/2.svg') ?>" class="d-block w-100" alt="Image 2">
@@ -870,7 +879,7 @@
     </div>
     <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
 </div>
-
+  
 <div id="fundraiserCarousel" class="carousel slide mt-5 fundraiser-carousel" data-bs-ride="carousel">
     <div class="carousel-inner">
       <?php if (!empty($fundraisers)): ?>
@@ -878,14 +887,14 @@
         $chunked_fundraisers = array_chunk($fundraisers, 3); // Group fundraisers into sets of 3
         foreach ($chunked_fundraisers as $index => $fundraiser_group): ?>
           <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-            <div class="container">
-              <div class="row">
+            <div class="container-fluid px-5"> <!-- Full-width container -->
+              <div class="row justify-content-center">
                 <?php foreach ($fundraiser_group as $fundraiser): ?>
                   <div class="col-12 col-md-4 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
-                  <a href="<?= base_url('helpus/' . $fundraiser->id.'-' .$fundraiser->cause_heading) ?>" style="text-decoration:none;color:black">
+                    <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
                       <div class="card h-100 w-100 fixed-card">
                         <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
-                             width="316px" height="230px" 
+                             width="100%" height="230px" 
                              class="card-img-top fixed-card-img img-placeholder" 
                              alt="no image">
                         
@@ -913,18 +922,27 @@
                             <?php endif; ?>
                           </div>
                         </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                      </div>
+                    </a>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p><strong>
+          <center>No fundraisers available at the moment.</center>
+        </strong></p>
+      <?php endif; ?>
     </div>
-
-    <button class="carousel-control-prev" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+    <button class="carousel-control-prev" type="button" style="color:black" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
     </button>
 </div>
 

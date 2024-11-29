@@ -377,7 +377,7 @@
                     </li>
                     <li class="nav-item">
 
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" >My Helps</a>
+                    <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
@@ -452,7 +452,7 @@
     <?php if (!empty($fundraisers)): ?>
         <?php foreach ($fundraisers as $fundraiser): ?>
             <div class="col-12 col-lg-4 col-md-6  mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
-            <a href="<?= base_url('helpus/' . $fundraiser->id.'-' .$fundraiser->cause_heading) ?>" style="text-decoration:none;color:black">
+            <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
                 <div class="card fixed-card">
                 <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
      width="316px" height="230px" 
@@ -675,10 +675,21 @@ function shareCause(url, title, imgurl) {
 
   <!-- Phone Number -->
   <div class="form-group ms-4">
+  <label for="name" class="form-label">Name</label>
+    <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" style="width:95%;" required>
+    <p id="error6" style="color:red; margin-top: 5px;"></p>
+    </div>
+  <div class="form-group ms-4">
     <label for="phone" class="form-label">Phone Number</label>
     <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:95%;" required>
     <p id="error3" style="color:red; margin-top: 5px;"></p>
   </div>
+  <div class="form-group ms-4">
+    <label for="phone" class="form-label">Email ID</label>
+    <input type="email" name="email" class="form-control" id="email"  placeholder="Enter your EmailID*" style="width:95%;" required>
+    <p id="error7" style="color:red; margin-top: 5px;"></p>
+  </div>
+  
 
   <!-- Transaction ID -->
   <div class="form-group ms-4">
@@ -805,7 +816,11 @@ function shareCause(url, title, imgurl) {
     const errorElement = document.getElementById(errorId);
 
     field.addEventListener('input', () => {
-      if (!validationFn(field.value)) {
+      if(field.value=='')
+    {
+      errorElement.textContent='Please enter value';
+    }
+     else if (!validationFn(field.value)) {
         errorElement.textContent = errorMessage;
       } else {
         errorElement.textContent = ''; // Clear error if validation passes
@@ -818,11 +833,15 @@ function shareCause(url, title, imgurl) {
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
-
+  const isName = (value) => /^[a-zA-Z]{3,}\s*/.test(value);
+  const isEmail =(value)=> /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // Attach real-time validation for each field
   window.onload = () => {
     validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
     validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
+    validateField('name', 'error6', isName, 'Enter Valid Name');
+    validateField('name', 'error7', isEmail, 'Enter Valid EmailID');
+    
     validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
     validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
   };
@@ -835,7 +854,8 @@ function shareCause(url, title, imgurl) {
     document.getElementById('error5').innerText = '';
     document.getElementById('error3').innerText = '';
     document.getElementById('error4').innerText = '';
-
+    document.getElementById('error6').innerText = '';
+    document.getElementById('error7').innerText = '';
     let isValid = true;
 
     // Perform final validation
@@ -843,12 +863,22 @@ function shareCause(url, title, imgurl) {
       document.getElementById('error5').innerText = 'Please select a currency.';
       isValid = false;
     }
-
-    if (!isAmountValid(document.getElementById('amount').value)) {
+ if(document.getElementById('amount').value!==''){
+    if (!isAmountValid(document.getElementById('amount').value)  ) {
       document.getElementById('error5').innerText = 'Amount must be greater than 0.';
       isValid = false;
     }
-
+  }
+  if(!isName(document.getElementById('name').value))
+  {
+    document.getElementById('error6').innerText = 'Enter Valid Name';
+    isValid = false;
+  }
+  if(!isEmail(document.getElementById('email').value))
+  {
+    document.getElementById('error7').innerText = 'Enter Valid EmailID';
+    isValid = false;
+  }
     if (!isPhoneNumberValid(document.getElementById('phone').value)) {
       document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
       isValid = false;

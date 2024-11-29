@@ -733,7 +733,7 @@
               <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
+            <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
@@ -775,10 +775,12 @@
   </nav>
 
   <div class="container">
+    <br><br><br><br>
+    <div>
         <h1>Privacy Policy</h1>
 
         <p>Effective Date: [Insert Date]</p>
-
+  </div>
         <h2>INTRODUCTION</h2>
         <h5><strong>Welcome to Kanavu’s "Privacy Notice."</strong></h5>
         <p>Kanavu respects your privacy and is committed to protecting your personal data. This Privacy Notice will inform you 

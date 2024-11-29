@@ -242,7 +242,7 @@
               <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
+            <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
@@ -288,12 +288,12 @@
     <p class="mt-3 "><b>"Fundraising is the gentle art of teaching the joy of giving."</b></p>
 
   </div> -->
-  <div class="mx-auto text-center mt-8 md:ml-20">
+ <!-- <div class="mx-auto text-center mt-8 md:ml-20">
     <button id="myDonationsButton"
       class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0 mr-2">My Donations</button>
     <button id="myFundraisersButton"
       class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0">My Fundraisers</button>
-  </div>
+  </div>-->
   <script>
     // Adding click event to navigate to 'My Fundraisers' page
     document.getElementById("myDonationsButton").addEventListener("click", function() {
@@ -306,8 +306,10 @@
     <?php foreach ($fundraisers as $cause) : ?>
 
       <div class="container d-flex justify-content-center align-items-center mt-5">
-      <a href="<?= base_url('helpus/' . $cause->id.'-' .$cause->cause_heading) ?>" style="text-decoration:none;color:black">
-          <div class="card mb-3">
+        
+      <a href="<?= base_url('helpus/' .str_replace(' ','-', $cause->name).'-'. $cause->id ) ?>" style="text-decoration:none;color:black">
+          
+      <div class="card mb-3">
             <!-- Use img-fluid and custom inline styles for width and height -->
             <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top img-fluid" alt="...">
 

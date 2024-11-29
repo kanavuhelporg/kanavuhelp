@@ -14,9 +14,9 @@ class adminpanel extends CI_Model
     }
     public function transactiondetails()
     {
-        $this->db->select('donation_for_cause.*, user.name, user.email');  // Select columns from both tables
+        $this->db->select('donation_for_cause.*');  // Select columns from both tables
         $this->db->from('donation_for_cause');
-        $this->db->join('user', 'user.id = donation_for_cause.user_id', 'left');  // Join user table on user_id
+         // Join user table on user_id
         // Order by created_at in descending order
         $query = $this->db->get();
 

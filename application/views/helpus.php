@@ -344,7 +344,7 @@
               <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color:rgba(235, 45, 50, 1)">Donate</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
+              <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
@@ -546,8 +546,7 @@
             noDonorsMessage.style.padding = '10px 0';
             noDonorsMessage.style.fontStyle = 'italic';
             noDonorsMessage.style.color = '#888';
-            noDonorsMessage.textContent = 'No donors available for this cause.';
-            donorList.appendChild(noDonorsMessage);
+           
             return; // Stop further execution
         }
 
@@ -676,10 +675,10 @@ function setCauseId(causeId) {
           <div class="row text-center">
             <div class="col-12">
               <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
-                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-                <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
-                <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>
+                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>"style="text-decoration:none;color:white">About</a>
+                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>" style="text-decoration:none;color:white">Contact</a>
+                <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>" style="text-decoration:none; color:white">Terms of Use</a>
+                <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>" style="text-decoration:none;color:white">Privacy Policy</a>
               </div>
             </div>
           </div>
@@ -764,10 +763,21 @@ function setCauseId(causeId) {
 
   <!-- Phone Number -->
   <div class="form-group ms-4">
+  <label for="name" class="form-label">Name</label>
+    <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" style="width:95%;" required>
+    <p id="error6" style="color:red; margin-top: 5px;"></p>
+    </div>
+  <div class="form-group ms-4">
     <label for="phone" class="form-label">Phone Number</label>
     <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:95%;" required>
     <p id="error3" style="color:red; margin-top: 5px;"></p>
   </div>
+  <div class="form-group ms-4">
+    <label for="phone" class="form-label">Email ID</label>
+    <input type="text" name="email" class="form-control" id="email"  placeholder="Enter your EmailID*" style="width:95%;" required>
+    <p id="error7" style="color:red; margin-top: 5px;"></p>
+  </div>
+  
 
   <!-- Transaction ID -->
   <div class="form-group ms-4">
@@ -806,6 +816,7 @@ function setCauseId(causeId) {
       </div>
     </div>
   </div>
+
 <script>
   // Simulate user login status (from backend or session)
   var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
@@ -858,7 +869,11 @@ function setCauseId(causeId) {
     const errorElement = document.getElementById(errorId);
 
     field.addEventListener('input', () => {
-      if (!validationFn(field.value)) {
+      if(field.value=='')
+    {
+      errorElement.textContent = "please enter value";
+    }
+     else  if (!validationFn(field.value)) {
         errorElement.textContent = errorMessage;
       } else {
         errorElement.textContent = ''; // Clear error if validation passes
@@ -871,15 +886,19 @@ function setCauseId(causeId) {
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
-
+  const isName = (value) => /^[a-zA-Z]{3,}\s*/.test(value);
+  const isEmail =(value)=> /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value);
   // Attach real-time validation for each field
   window.onload = () => {
     validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
     validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
+    validateField('name', 'error6', isName, 'Enter Valid Name');
+    validateField('email', 'error7', isEmail, 'Enter Valid EmailID');
+    
     validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
-    validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid Transaction ID');
+    validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
   };
-
+  
   // Final validation and form submission
   document.getElementById('donationForm').onsubmit = function (event) {
     event.preventDefault(); // Prevent form submission for manual handling
@@ -888,7 +907,8 @@ function setCauseId(causeId) {
     document.getElementById('error5').innerText = '';
     document.getElementById('error3').innerText = '';
     document.getElementById('error4').innerText = '';
-
+    document.getElementById('error6').innerText = '';
+    document.getElementById('error7').innerText = '';
     let isValid = true;
 
     // Perform final validation
@@ -896,12 +916,22 @@ function setCauseId(causeId) {
       document.getElementById('error5').innerText = 'Please select a currency.';
       isValid = false;
     }
-
-    if (!isAmountValid(document.getElementById('amount').value)) {
+ if(document.getElementById('amount').value!==''){
+    if (!isAmountValid(document.getElementById('amount').value)  ) {
       document.getElementById('error5').innerText = 'Amount must be greater than 0.';
       isValid = false;
     }
-
+  }
+  if(!isName(document.getElementById('name').value))
+  {
+    document.getElementById('error6').innerText = 'Enter Valid Name';
+    isValid = false;
+  }
+  if(!isEmail(document.getElementById('email').value))
+  {
+    document.getElementById('error7').innerText = 'Enter Valid EmailID';
+    isValid = false;
+  }
     if (!isPhoneNumberValid(document.getElementById('phone').value)) {
       document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
       isValid = false;
@@ -915,6 +945,7 @@ function setCauseId(causeId) {
     if (!isValid) {
       return; // Stop submission if validation fails
     }
+
 
     // Prepare Form Data
     const formData = new FormData(this);
