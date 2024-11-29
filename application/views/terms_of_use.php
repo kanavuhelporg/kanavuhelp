@@ -733,7 +733,7 @@
               <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
+              <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
@@ -775,60 +775,66 @@
   </nav>
 
   <div class="container">
-        <h1>Privacy Policy</h1>
+    <br><br>
+    <br><br><div><br>
+        <h1>Start a Fundraiser</h1>
 
-        <p>Effective Date: [Insert Date]</p>
+        <p>Kanavu.org is a platform for giving and charitable donations. We do not provide any financial return in any form whatsoever, including but not limited to financial securities (debt or equity), interest, dividend, profit share, or rewards in cash, to individuals who contribute on Kanavu.org. Any contribution on Kanavu.org,
+           by an individual, should not be construed as an investment in any form whatsoever.</p>
+  </div>
+        <h2>Consolidated Terms of Use and Terms and Conditions</h2>
+        <p>Please read these Terms of Use/Terms and Conditions carefully before using
+           http://www.kanavu.org (the "website" or the "Site"), owned by the parent company Kanavu Social Ventures and its affiliated companies or entities (combined called the "Company"). This agreement sets forth the legally binding terms and conditions for your use of the website. By using the service/services in any manner, including, but not limited to, visiting or browsing the site or contributing content, information, or other materials or services to the site, you agree to be bound by this agreement.
 
-        <h2>1. Introduction</h2>
-        <p>Welcome to [Your Website Name]. We value your privacy and are committed to protecting the personal information you share with us. This Privacy Policy outlines how we collect, use, and safeguard your data.</p>
 
-        <h2>2. Information We Collect</h2>
-        <p>We collect various types of information to provide you with better services:</p>
-        <ul>
-            <li><strong>Personal Information:</strong> When you sign up or interact with our services, we collect personal information such as your name, email address, and contact details.</li>
-            <li><strong>Usage Data:</strong> We collect data about how you interact with our website, including pages viewed, time spent on each page, and actions performed.</li>
-            <li><strong>Cookies:</strong> We use cookies to enhance your experience and analyze website traffic. You can manage cookie preferences through your browser settings.</li>
-        </ul>
+</p>
 
-        <h2>3. How We Use Your Information</h2>
-        <p>We use the information we collect for the following purposes:</p>
-        <ul>
-            <li>To provide, maintain, and improve our services.</li>
-            <li>To communicate with you about updates, promotions, or other relevant information.</li>
-            <li>To analyze website usage and improve user experience.</li>
-            <li>To comply with legal obligations and protect our rights.</li>
-        </ul>
+        <h2>Summary of Service</h2>
+        <p>Kanavu is an online platform where certain users ("Campaigners") run campaigns to raise funds for their creative and innovative projects. They raise funds by asking for contributions from other users ("contributors" or "funders") in return for tangible and intangible rewards. Through the Site, email, websites, and other media, the Company makes accessible various content, including but not limited to videos, photographs, images, artwork, graphics, audio clips, comments, data, text, software, scripts, projects, other material and information, and associated trademarks and copyrightable works (collectively, "Content").
 
-        <h2>4. Sharing Your Information</h2>
-        <p>We will not sell or rent your personal information to third parties. However, we may share your data in the following circumstances:</p>
-        <ul>
-            <li><strong>Service Providers:</strong> We may share information with trusted third-party service providers who assist in operating our services.</li>
-            <li><strong>Legal Compliance:</strong> We may disclose information to comply with legal obligations, such as a court order or government request.</li>
-            <li><strong>Business Transfers:</strong> In case of a merger, acquisition, or sale of assets, your information may be transferred to the new owner.</li>
-        </ul>
 
-        <h2>5. Data Security</h2>
-        <p>We take the security of your personal information seriously and employ industry-standard measures to protect it. However, please note that no method of transmission over the Internet is 100% secure.</p>
+</p>
+        
+        <h2>Acceptance of Terms</h2>
+        <p>The service is offered subject to acceptance of all of the terms 
+          and conditions contained in these Terms of Use, including the Privacy Policy
+           (that can be found on the website) mentioned in this document and all other operating rules,
+            policies, and procedures that may be published on the Site, which are incorporated by
+           reference and may be updated by the Site without notice to you.</p>
+        
 
-        <h2>6. Your Rights</h2>
-        <p>Depending on your location, you may have the following rights regarding your personal data:</p>
-        <ul>
-            <li>The right to access and update your data.</li>
-            <li>The right to request the deletion of your data.</li>
-            <li>The right to object to the processing of your data.</li>
-            <li>The right to withdraw consent for data processing (where applicable).</li>
-        </ul>
+        <h2>Fund Transaction and Accountability</h2>
+        <p>The Site offers various payment gateways to facilitate the transaction of funds for campaigns.
 
-        <h2>7. Changes to This Privacy Policy</h2>
-        <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date. We encourage you to review this policy periodically to stay informed about how we protect your information.</p>
+Kanavu.org does not guarantee that the target funds of a campaign will be raised fully.
 
-        <h2>8. Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy or how we handle your personal information, please contact us at:</p>
-        <p>Email: [Your Contact Email]</p>
-        <p>Phone: [Your Contact Number]</p>
+Kanavu.org deducts its transaction fees and 
+applicable taxes before transferring the funds to the campaigners.</p>
+       
+
+        <h2>Foreign Funds</h2>
+        <p>For NGOs: You have to be registered/approved with FCRA to be able to receive foreign donations. Else, foreign contributions will be restricted on your campaign.
+
+
+
+</p>
+
+        <h2>Taxation</h2>
+        <p>Campaigners must bear any tax liabilities on the funds raised through Kanavu. These taxes
+           may include, but are not limited to, income tax, VAT, and service tax applicable to the funds raised.</p>
+        
+        <h2>Project Completion</h2>
+        <p>Campaigners are responsible for ensuring project completion. Kanavu.org does not guarantee the completion of projects for which funds are raised.
+        </p>
+
+        <h2>Campaign Cancellation</h2>
+        <p>Kanavu reserves the right to reject, cancel, interrupt, or suspend a campaign at any time for any reason.
+
+
+</p>
 
     </div>
-
+<br>
 
   <div class="footer">
     <footer class="footer mt-auto py-3">

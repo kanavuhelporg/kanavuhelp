@@ -261,6 +261,10 @@
     .msg_btn{
       margin-left:15%;
     }
+    .textarea-reduced-width
+  {
+    width:50%;
+  }
     @media (min-width: 767px) and (max-width: 990px) {
       .line{
       margin-left:39%;
@@ -316,6 +320,10 @@
     .msg_btn{
       margin-left:20%;
     }
+    .textarea-reduced-width
+  {
+    width:90%;
+  }
     }
     @media (max-width: 768px) {
   #userProfile .dropdown-menu {
@@ -323,7 +331,10 @@
     left: auto !important; /* Override default left alignment */
     min-width: 150px; /* Adjust the width as needed */
   }
-  
+  .textarea-reduced-width
+  {
+    width:90%;
+  }
   #userProfile img {
     width: 25px; /* Slightly smaller profile image for mobile */
     height: 25px;
@@ -364,7 +375,7 @@
                     </li>
                     <li class="nav-item">
 
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" >My Helps</a>
+                    <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
@@ -467,10 +478,10 @@
 
   <!-- Message Field -->
   <div class="mb-3">
-  <label for="message" class="form-label">Message:<span class="text-danger">*</span></label>
-  <textarea class="form-control textarea-reduced-width" name="message" id="message" rows="3" placeholder="Enter your message" required></textarea>
-  <p id="message-error" style="color:red"></p>
-</div>
+<label for="message" class="form-label">Message:<span class="text-danger">*</span></label>
+<textarea class="form-control textarea-reduced-width" name="message" id="message" rows="3" placeholder="Enter your message" required></textarea>
+<p id="message-error" style="color:red"></p>
+  </div>
 
 
 
@@ -510,7 +521,7 @@
 function validateName() {
   const name = document.getElementById("name").value.trim();
   const errorElement = document.getElementById("name-error");
-  const regex = /^[a-zA-Z\s]+$/; // Only letters and spaces allowed
+  const regex = /^[a-zA-Z]{3,}[/s]*/; // Only letters and spaces allowed
 
   if (!name) {
     errorElement.textContent = "Please enter your name.";

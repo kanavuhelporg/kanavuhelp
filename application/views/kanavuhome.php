@@ -641,16 +641,25 @@
         margin-bottom: 20px;
         /* Add space between cards */
       }
+      #carouselExampleSlidesOnly{
+        height:100%;
+      }
     }
 
     /* For larger screens, display three cards per slide */
     @media (min-width: 769px) {
+      #carouselExampleSlidesOnly{
+        
+        margin-top:30px;
+        
+      }
       .carousel-item .col-4 {
         max-width: 33.33%;
         /* Set the width of each card */
         flex: 0 0 33.33%;
         /* Ensures equal width for each card */
         margin-bottom: 20px;
+        
         /* Adds spacing between cards */
       }
     }
@@ -798,7 +807,7 @@
       </div>
     </div>
   </nav>
-
+<br>
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <!-- Slide 1 -->
@@ -824,7 +833,7 @@
           </div>
         </div>
       </div>
-
+<br>
       <!-- Slide 2 -->
       <div class="carousel-item">
         <img src="<?= base_url('assets/img/2.svg') ?>" class="d-block w-100" alt="Image 2">
@@ -856,17 +865,19 @@
       <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
     </div>
     <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
+
   </div><br>
 
   <div id="fundraiserCarousel" class="carousel slide mt-5 fundraiser-carousel" data-bs-ride="carousel">
+
     <div class="carousel-inner">
       <?php if (!empty($fundraisers)): ?>
         <?php
         $chunked_fundraisers = array_chunk($fundraisers, 3); // Group fundraisers into sets of 3
         foreach ($chunked_fundraisers as $index => $fundraiser_group): ?>
           <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-            <div class="container">
-              <div class="row">
+            <div class="container-fluid px-5"> <!-- Full-width container -->
+              <div class="row justify-content-center">
                 <?php foreach ($fundraiser_group as $fundraiser): ?>
                   <?php
                   $image_url = !empty($fundraiser->cover_image)
@@ -877,6 +888,7 @@
                     <a href="<?= base_url('helpus/' . $fundraiser->id) ?>" style="text-decoration:none;color:black">
                       <div class="card h-100 fixed-card">
                         <div class="fixed-card-img" style="background-image: url('<?= $image_url ?>');"></div>
+
                         <div class="card-body d-flex flex-column">
                           <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
                           <div class="d-flex justify-content-between align-items-center">
@@ -915,7 +927,6 @@
           </strong></p>
       <?php endif; ?>
     </div>
-
     <button class="carousel-control-prev" type="button" style="color:black" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
