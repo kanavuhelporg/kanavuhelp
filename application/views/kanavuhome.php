@@ -802,7 +802,6 @@
             <?php endif; ?>
           </div>
 
-
         </div>
       </div>
     </div>
@@ -868,76 +867,70 @@
 
   </div><br>
 
-  <div id="fundraiserCarousel" class="carousel slide mt-5 fundraiser-carousel" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <?php if (!empty($fundraisers)): ?>
-            <?php
-            $chunked_fundraisers = array_chunk($fundraisers, 3); // Group fundraisers into sets of 3
-            foreach ($chunked_fundraisers as $index => $fundraiser_group): ?>
-                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                    <div class="container-fluid px-5">
-                        <div class="row justify-content-center">
-                            <?php foreach ($fundraiser_group as $fundraiser): ?>
-                                <div class="col-12 col-lg-4 col-md-6 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
-                                    <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>" style="text-decoration: none; color: black;">
-                                        <div class="card fixed-card">
-                                            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
-                                                 width="316px" height="230px" 
-                                                 class="card-img-top fixed-card-img img-placeholder" 
-                                                 alt="no image">
-                                            <div class="card-body d-flex flex-column">
-                                                <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                                                    <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
-                                                </div>
-                                                <p class="card-text">
-                                                    <strong>
-                                                        ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
-                                                    </strong>
-                                                </p>
-                                                <div class="progress mb-2">
-                                                    <?php
-                                                    // Calculate progress percentage
-                                                    $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-                                                    ?>
-                                                    <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div class="d-flex align-items-center mt-auto">
-                                                    <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
-                                                        <!-- Donate Button -->
-                                                        <a href="#" class="btn donate_btn no-hover"  onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
-
-        <i class="bi bi-share ms-2" 
-   onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', 
+  <div id="fundraiserCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <?php if (!empty($fundraisers)): ?>
+        <?php foreach (array_chunk($fundraisers, 3) as $index => $fundraiserGroup): ?>
+            <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                <div class="container">
+                    <div class="row">
+                        <?php foreach ($fundraiserGroup as $fundraiser): ?>
+                            <div class="col-12 col-lg-4 col-md-6 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
+                                <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
+                                    <div class="card fixed-card">
+                                        <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>" 
+                                            width="316px" height="230px" 
+                                            class="card-img-top fixed-card-img img-placeholder" 
+                                            alt="no image">
+                                        <div class="card-body d-flex flex-column">
+                                            <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
+                                                <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                                            </div>
+                                            <p class="card-text">
+                                                <strong>
+                                                    ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
+                                                </strong>
+                                            </p>
+                                            <div class="progress mb-2">
+                                                <?php
+                                                $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+                                                ?>
+                                                <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="d-flex align-items-center mt-auto">
+                                                <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
+                                                    <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+                                                    <i class="bi bi-share ms-2" 
+   onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '?id=' . $fundraiser->id ?>', 
                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                        '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
 </i>
-                                                    <?php endif; ?>
-                                                </div>
+
+                                                <?php endif; ?>
                                             </div>
                                         </div>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p><strong>
-                <center>No fundraisers available at the moment.</center>
-            </strong></p>
-        <?php endif; ?>
-    </div>
-    <button class="carousel-control-prev" type="button" style="color: black;" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No fundraisers available at the moment.</p>
+    <?php endif; ?>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#fundraiserCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
 
 <script>
@@ -982,7 +975,6 @@ function shareCause(url, title, imgurl) {
 }
 
 </script>
-
 
   <div class="position-relative" id="how-it-works-section">
     <div class="container-xxl ">
@@ -1217,7 +1209,6 @@ function shareCause(url, title, imgurl) {
     </div> -->
 
 
-
   <div class="footer">
     <footer class="footer mt-auto py-3">
       <div class="container">
@@ -1372,7 +1363,7 @@ function shareCause(url, title, imgurl) {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Thanks for donating us.Please wait for admin verification </p>
+        <p>Thanks for donating us</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="donationRedirectBtn">OK</button>
@@ -1380,159 +1371,170 @@ function shareCause(url, title, imgurl) {
     </div>
   </div>
 </div>
-  <script>
-    // Simulate user login status (from backend or session)
-    var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
+<script>
+  // Simulate user login status (from backend or session)
+  var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
 
-// Handle Donate button click using event delegation
-document.querySelector('.container').addEventListener('click', function(event) {
-  if (event.target.classList.contains('donate_btn')) {
-    event.preventDefault(); // Prevent default link behavior
+  // Handle Donate button click using event delegation
+  document.querySelector('.container').addEventListener('click', function(event) {
+    if (event.target.classList.contains('donate_btn')) {
+      event.preventDefault(); // Prevent default link behavior
 
-    if (!isLoggedIn) {
-      const baseUrl = "<?= base_url('/login') ?>"; 
-      // Ask for confirmation before redirecting to the login page
-      var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-    loginModal.show();
-
-    // Redirect to login page with return URL on OK button click
-    document.getElementById('loginRedirectBtn').addEventListener('click', function() {
-      var currentUrl = window.location.href;
+    /*  if (!isLoggedIn) {
+        const baseUrl = "<?= base_url('/login') ?>"; 
+        // Ask for confirmation before redirecting to the login page
+        var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+      loginModal.show();
+ 
+      // Redirect to login page with return URL on OK button click
+      document.getElementById('loginRedirectBtn').addEventListener('click', function() {
+        var currentUrl = window.location.href;
 
 // Redirect to the login page with the returnUrl parameter
-      window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
-    });// Replace with your actual login URL
-      
-    } else {
-      // Show the donation modal if logged in
-      var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
-      donationModal.show();
+        window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
+      });// Replace with your actual login URL
+        
+      } else {*/
+        // Show the donation modal if logged in
+        var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+        donationModal.show();
+      //}
     }
-  }
-});
+  });
 
     // Handle modal close event to ensure page is accessible
-    var donationModal = document.getElementById('donationModal');
-    donationModal.addEventListener('hidden.bs.modal', function(event) {
-      // This will trigger when the modal is fully closed
-      document.body.classList.remove('modal-open'); // Ensure body is not still marked as modal-open
-      var modalBackdrop = document.querySelector('.modal-backdrop');
-      if (modalBackdrop) {
-        modalBackdrop.remove(); // Remove backdrop if still present
-      }
+  var donationModal = document.getElementById('donationModal');
+  donationModal.addEventListener('hidden.bs.modal', function (event) {
+    // This will trigger when the modal is fully closed
+    document.body.classList.remove('modal-open'); // Ensure body is not still marked as modal-open
+    var modalBackdrop = document.querySelector('.modal-backdrop');
+    if (modalBackdrop) {
+      modalBackdrop.remove(); // Remove backdrop if still present
+    }
 
-      // Reset form fields when the modal is closed
-      donationModal.querySelector('form').reset();
-    });
-  </script>
-  <script>
-    document.getElementById('donationForm').onsubmit = function(event) {
+    // Reset form fields when the modal is closed
+    donationModal.querySelector('form').reset();
+  });
+</script>
+<script>
+  // Real-time validation function
+  function validateField(fieldId, errorId, validationFn, errorMessage) {
+    const field = document.getElementById(fieldId);
+    const errorElement = document.getElementById(errorId);
 
-      event.preventDefault(); // Prevent default form submission
-
-      // document.getElementById("error1").innerHTML="";
-      // document.getElementById("error2").innerHTML="";
-      document.getElementById("error3").innerHTML = "";
-      document.getElementById("error4").innerHTML = "";
-      // Validate Name (minimum 3 characters)
-      // const name = document.getElementById('name').value.trim();
-      // const nameRegex = /^[A-Za-z]+$/;
-
-      // if (name.length < 3) {
-      // document.getElementById("error1").innerHTML = "Name must be at least 3 characters long.";
-      // return false;
-      // } else if (!nameRegex.test(name)) {
-      // document.getElementById("error1").innerHTML = "Name must contain only alphabetic characters.";
-      // return false;
-      // } else {
-      // document.getElementById("error1").innerHTML = ""; // Clear error if input is valid
-
-      // }
-
-
-      // // Validate Email
-      // const email = document.getElementById('email').value.trim();
-      // const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      // if (!emailPattern.test(email)) {
-      //     document.getElementById("error2").innerHTML ="Please enter a valid email address.";
-      //     return false;
-      // }
-      // else{
-      // document.getElementById("error2").innerHTML ="";
-      // }
-      // Validate Amount (decimal)
-      const amount = document.getElementById('amount').value.trim();
-      if (isNaN(amount) || parseFloat(amount) <= 0) {
-        alert("Please enter a valid amount in decimal format.");
-        return false;
-      }
-
-      // Validate Phone Number (10 digits, starts with 6, 7, 8, or 9)
-      const phone = document.getElementById('phone').value.trim();
-      const phonePattern = /^[6-9]\d{9}$/;
-      if (!phonePattern.test(phone)) {
-        document.getElementById("error3").innerHTML = "Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9.";
-        return false;
+    field.addEventListener('input', () => {
+      if(field.value=='')
+    {
+      errorElement.textContent='Please enter value';
+    }
+     else if (!validationFn(field.value)) {
+        errorElement.textContent = errorMessage;
       } else {
-        document.getElementById("error3").innerHTML = "";
+        errorElement.textContent = ''; // Clear error if validation passes
       }
+    });
+  }
 
-      // Check if the transaction ID already exists message is present on page load
+  // Validation functions
+  const isCurrencySelected = (value) => value !== '';
+  const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
+  const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
+  const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
+  const isName = (value) => /^[a-zA-Z]{3,}\s*/.test(value);
+  const isEmail =(value)=> /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  // Attach real-time validation for each field
+  window.onload = () => {
+    validateField('currency', 'error5', isCurrencySelected, 'Select a currency.');
+    validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
+    validateField('name', 'error6', isName, ' Name must be 3 character');
+    validateField('name', 'error7', isEmail, 'Enter EmailID');
+    
+    validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
+    validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
+  };
 
-      // Validate transaction ID format
-      const transactionId = document.getElementById('transactionid').value.trim();
-      const transactionPattern = /^\d{12}$/;
-      if (!transactionPattern.test(transactionId)) {
-        document.getElementById("error4").innerHTML = "Transaction ID must be exactly 12 digits.";
-        return false;
-      }
+  // Final validation and form submission
+  document.getElementById('donationForm').onsubmit = function (event) {
+    event.preventDefault(); // Prevent form submission for manual handling
 
+    // Clear all error messages
+    document.getElementById('error5').innerText = '';
+    document.getElementById('error3').innerText = '';
+    document.getElementById('error4').innerText = '';
+    document.getElementById('error6').innerText = '';
+    document.getElementById('error7').innerText = '';
+    let isValid = true;
 
+    // Perform final validation
+    if (!isCurrencySelected(document.getElementById('currency').value)) {
+      document.getElementById('error5').innerText = 'Select a currency.';
+      isValid = false;
+    }
+ if(document.getElementById('amount').value!==''){
+    if (!isAmountValid(document.getElementById('amount').value)  ) {
+      document.getElementById('error5').innerText = 'Amount must be greater than 0.';
+      isValid = false;
+    }
+  }
+  if(!isName(document.getElementById('name').value))
+  {
+    document.getElementById('error6').innerText = 'Name must be 3 character';
+    isValid = false;
+  }
+  if(!isEmail(document.getElementById('email').value))
+  {
+    document.getElementById('error7').innerText = 'Enter EmailID';
+    isValid = false;
+  }
+    if (!isPhoneNumberValid(document.getElementById('phone').value)) {
+      document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
+      isValid = false;
+    }
 
+    if (!isTransactionIdValid(document.getElementById('transactionid').value)) {
+      document.getElementById('error4').innerText = 'Transaction ID must be exactly 12 digits';
+      isValid = false;
+    }
 
-      // Clear any previous error message
-      error4.innerHTML = "";
+    if (!isValid) {
+      return; // Stop submission if validation fails
+    }
 
-      // Collect form data
-      const formData = new FormData(this);
+    // Prepare Form Data
+    const formData = new FormData(this);
 
-      // Send AJAX request
-      fetch('/kanavuhelp/processDonation', { // Make sure to use the correct path
-          method: 'POST',
-          body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.status === 'error') {
-            // Display error message in the error4 element
-            error4.innerHTML = data.message;
-          } else if (data.status === 'success') {
-            var donationModalElement = document.getElementById('donationModal');
-            var donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
-
-            // Check if the modal is visible before hiding it
-            if (donationModalElement.classList.contains('show')) {
-              donationModal.hide();
-            }
-            // Redirect to success page if donation is successful
-            var loginModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
-            loginModal.show();
-
-            // Redirect to login page with return URL on OK button click
-            document.getElementById('donationRedirectBtn').addEventListener('click', function() {
-
-              window.location.href = data.redirect;
-              // Redirect to the login page with the returnUrl parameter
-
-            });
-
+    // AJAX Request to Server
+    fetch('/kanavuhelp/processDonation', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 'error') {
+          document.getElementById('error4').innerText = data.message; // Show server error
+        } else if (data.status === 'success') {
+          // Hide the donation modal if visible
+          const donationModalElement = document.getElementById('donationModal');
+          const donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
+          if (donationModalElement.classList.contains('show')) {
+            donationModal.hide();
           }
-        })
-        .catch(error => {
-          error4.innerHTML = "An unexpected error occurred. Please try again.";
-        });
-    };
-  </script>
+
+          // Show success modal
+          const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
+          successModal.show();
+
+          // Redirect on button click in the success modal
+          document.getElementById('donationRedirectBtn').addEventListener('click', function () {
+            window.location.href = data.redirect;
+          });
+        }
+      })
+      .catch(() => {
+        document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
+      });
+  };
+</script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
@@ -1540,3 +1542,4 @@ document.querySelector('.container').addEventListener('click', function(event) {
 </body>
 
 </html>
+

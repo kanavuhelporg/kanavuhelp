@@ -130,7 +130,6 @@
       margin-left: 0px;
     }
 
-
     .imgtext1 span,
     .imgtext2 span {
       color: #EB2D32;
@@ -384,7 +383,6 @@
   </nav>
   
 
-
   
   
  
@@ -406,7 +404,8 @@
             <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>
             
             <!-- Share Fundraiser Button -->
-            <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', 
+            <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" 
+            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '?id=' . $fundraiser->id ?>', 
                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                        '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>', 
                        '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
@@ -496,7 +495,6 @@
     ];
 </script>
 
-
                     </div>
                     <!-- Toggle Links
                     <li class="text-center" id="show-more" style="padding: 10px 0;">
@@ -583,7 +581,6 @@
 
 
 
-
 function toggleDonors(showMore) {
     const additionalDonors = document.getElementById('additional-donors');
     const showMoreLink = document.getElementById('show-more');
@@ -654,7 +651,6 @@ function shareCause(url, title, imgurl) {
         </div>
     </div>
 </div>
-
 
     <!-- Disclaimer Section -->
     <p class="text-muted" style="width:70%">
@@ -808,7 +804,7 @@ function setCauseId(causeId) {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Thanks for donating us.Please wait for admin verification </p>
+          <p>Thanks for donating us</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" id="donationRedirectBtn">OK</button>
@@ -946,7 +942,6 @@ function setCauseId(causeId) {
       return; // Stop submission if validation fails
     }
 
-
     // Prepare Form Data
     const formData = new FormData(this);
 
@@ -1010,3 +1005,4 @@ function setCauseId(causeId) {
   </body>
     </html>
     
+

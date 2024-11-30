@@ -99,7 +99,6 @@
     margin-left: auto; /* Pushes the share icon to the far right in its flex container */
 }
 
-
     .imgtext11,
     .imgtext22 {
       font-size: 18px;
@@ -115,7 +114,6 @@
     .imgtext11 ul li {
       margin-left: 0px;
     }
-
 
     .imgtext1 span,
     .imgtext2 span {
@@ -346,7 +344,6 @@
   }
 
 
-
     </style>
     </head>
 <body>
@@ -489,10 +486,11 @@
         <a href="#" class="btn donate_btn no-hover"  onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
 
         <i class="bi bi-share ms-2" 
-   onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', 
+   onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '?id=' . $fundraiser->id ?>', 
                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                        '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
 </i>
+
         <?php endif; ?>
             
                            
@@ -590,7 +588,6 @@ function shareCause(url, title, imgurl) {
   });
 </script>-->
 
-
 <div class="footer">
       <footer class="footer mt-auto py-3">
         <div class="container">
@@ -622,7 +619,6 @@ function shareCause(url, title, imgurl) {
         <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
       </footer>
     </div>
-
 
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
@@ -754,7 +750,7 @@ function shareCause(url, title, imgurl) {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Thanks for donating us.Please wait for admin verification </p>
+        <p>Thanks for donating us</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="donationRedirectBtn">OK</button>
@@ -957,3 +953,4 @@ function shareCause(url, title, imgurl) {
     </html>
     </html>
     
+
