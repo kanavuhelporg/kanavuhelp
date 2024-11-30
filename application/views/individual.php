@@ -1073,6 +1073,20 @@
         <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for:" readonly>
     </div>
 </div>
+
+<script>
+    function copySelection() {
+        const selectedCategory = document.getElementById("category").value;
+        const formSelectedText = document.getElementById("form_selected_text");
+
+        // If a valid category is selected, copy it to the input field
+        if (selectedCategory) {
+            formSelectedText.value = selectedCategory;
+        } else {
+            formSelectedText.value = ""; // Clear the input if no category is selected
+        }
+    }
+</script>
   <div class="row my-3">
     <label for="amount" class="col-md-4 col-form-label">Amount:<span class="text-danger">*</span></label>
     <div class="col-md-8">
@@ -1289,137 +1303,6 @@
   
 });
 </script> -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multi-Step Form with OTP</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-  <div class="container mt-5">
-    <!-- Multi-Step Form -->
-    <form id="individualform">
-      <!-- Step 1 -->
-      <div id="step-1" class="form-step">
-        <h3>Step 1: Personal Information</h3>
-        <div class="row my-3">
-      <label for="category" class="col-md-4 col-form-label">I am raising fund for:<span class="text-danger">*</span></label>
-      <div class="col-md-8">
-        <div class="custom-dropdown-wrapper">
-        <select name="category" id="category" class="form-control custom-dropdown" onchange="copySelection()" required>
-    <option value="">Select</option>
-    <?php foreach ($result as $row) { ?>
-        <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
-    <?php } ?>
-</select>
-          <i class="fas fa-chevron-down custom-dropdown-icon"></i>
-        </div>
-        <span id="category-error" class="text-danger"></span>
-      </div>
-    </div>
-        <div>
-          <label for="name">Name:</label>
-          <input type="text" id="name" class="form-control">
-          <span id="name-error" class="text-danger"></span>
-        </div>
-        <div>
-          <label for="age">Age:</label>
-          <input type="number" id="age" class="form-control">
-          <span id="age-error" class="text-danger"></span>
-        </div>
-        <div>
-          <label for="email">Email:</label>
-          <input type="email" id="email" class="form-control">
-          <span id="email-error" class="text-danger"></span>
-        </div>
-        <div>
-          <label for="phone">Phone:</label>
-          <input type="text" id="phone" class="form-control">
-          <span id="phone-error" class="text-danger"></span>
-        </div>
-        <button type="button" id="continueToStep2" class="btn btn-primary mt-3">Continue to Step 2</button>
-      </div>
-
-      <!-- Step 2 -->
-      <div id="step-2" class="form-step d-none">
-        <h3>Step 2: Contribution Details</h3>
-        <div class="row my-3">
-    <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for:</label>
-    <div class="col-md-8">
-        <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for:" readonly>
-    </div>
-</div>
-
-<script>
-    function copySelection() {
-        const selectedCategory = document.getElementById("category").value;
-        const formSelectedText = document.getElementById("form_selected_text");
-
-        // If a valid category is selected, copy it to the input field
-        if (selectedCategory) {
-            formSelectedText.value = selectedCategory;
-        } else {
-            formSelectedText.value = ""; // Clear the input if no category is selected
-        }
-    }
-</script>
-        <div>
-          <label for="amount">Amount:</label>
-          <input type="text" id="amount" class="form-control">
-          <span id="amount-error" class="text-danger"></span>
-        </div>
-        <div>
-          <label for="end_date">End Date:</label>
-          <input type="date" id="end_date" class="form-control">
-          <span id="end-date-error" class="text-danger"></span>
-        </div>
-        <button type="button" id="continueToStep3" class="btn btn-primary mt-3">Continue to Step 3</button>
-      </div>
-
-      <!-- Step 3 -->
-      <div id="step-3" class="form-step d-none">
-        <h3>Step 3: Cause Details</h3>
-        <div>
-          <label for="cover_image">Upload Cover Image:</label>
-          <input type="file" id="cover_image" class="form-control">
-          <span id="cover-image-error" class="text-danger"></span>
-        </div>
-        <div>
-          <label for="cause_heading">Cause Title:</label>
-          <input type="text" id="cause_heading" class="form-control">
-          <span id="cause-heading-error" class="text-danger"></span>
-        </div>
-        <div>
-          <label for="cause_description">Cause Description:</label>
-          <textarea id="cause_description" class="form-control"></textarea>
-          <span id="cause-description-error" class="text-danger"></span>
-        </div>
-        <button type="button" id="submitApprovalButton" class="btn btn-success mt-3">Submit for Approval</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- OTP Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">OTP Verification</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <label for="otp">Enter OTP:</label>
-          <input type="text" id="otp" class="form-control">
-          <span id="otp-error" class="text-danger"></span>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="verifyOtpButton" class="btn btn-primary">Verify OTP</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -1458,14 +1341,24 @@
     });
 
     // Submit Approval Button
-    document.getElementById("submitApprovalButton").addEventListener("click", () => {
-      if (validateStep3()) {
-        alert("Form submitted successfully.");
-        document.getElementById("individualform").submit();
-      } else {
-        alert("Please fill in all required fields correctly before submitting.");
-      }
-    });
+    document.getElementById("submitApprovalButton").addEventListener("click", function(event) {
+  event.preventDefault();  // Prevent form submission before validation
+  if (validateStep3()) {
+    alert("Form submitted successfully.");
+    document.getElementById("individualform").submit(); // Proceed with form submission
+  } else {
+    alert("Please fill in all required fields correctly before submitting.");
+  }
+});
+
+    // document.getElementById("submitApprovalButton").addEventListener("click", () => {
+    //   if (validateStep3()) {
+    //     alert("Form submitted successfully.");
+    //     document.getElementById("individualform").submit();
+    //   } else {
+    //     alert("Please fill in all required fields correctly before submitting.");
+    //   }
+    // });
 
     // Show specific step
     function showStep(step) {
@@ -1664,16 +1557,17 @@
     }
 
     function validateCauseDescription() {
-      const description = document.getElementById("cause_description").value.trim();
-      const errorElement = document.getElementById("cause-description-error");
+  const description = document.getElementById("cause_description").value.trim();
+  const errorElement = document.getElementById("cause-description-error");
 
-      if (!description || description.length < 50) {
-        errorElement.textContent = "Description must be at least 50 characters.";
-        return false;
-      }
-      errorElement.textContent = "";
-      return true;
-    }
+  if (!description || description.length < 50) {
+    errorElement.textContent = "Description must be at least 50 characters.";
+    return false;
+  }
+  errorElement.textContent = "";
+  return true;
+}
+
 
     // Function to copy the selected category to Step 2
     function copySelection() {

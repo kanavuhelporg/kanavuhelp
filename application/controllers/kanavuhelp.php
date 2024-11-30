@@ -344,6 +344,7 @@ class kanavuhelp extends CI_Controller
         }
     }
 
+
     public function get_user_name($user_id)
     {
         // Load the User model
@@ -354,6 +355,7 @@ class kanavuhelp extends CI_Controller
 
         return $user_name;
     }
+
 
 
     public function userLogin()
@@ -395,7 +397,7 @@ class kanavuhelp extends CI_Controller
             'phone' => $this->input->post('phone'),
             'age' => $this->input->post('age'),
             'location' => $this->input->post('location'),
-
+            'form_selected_text'=> $this->input->post('form_selected_text'),
             'amount' => $this->input->post('amount'),
             'end_date' => $this->input->post('end_date'),
             'cause_heading' => $this->input->post('cause_heading'),
@@ -406,9 +408,9 @@ class kanavuhelp extends CI_Controller
         // File upload configuration
         $config['upload_path'] = './assets/individualform_img/';
         $config['allowed_types'] = 'jpg|jpeg|png|svg';
-        //$config['max_size'] = 2048; // 2MB
-        $config['max_width'] = 600;
-        $config['max_height'] = 400;
+        $config['max_size'] = 2048; // 2MB
+        $config['max_width'] = 1024;
+        $config['max_height'] = 768;
         $this->upload->initialize($config);
 
         // Handle file upload
@@ -436,14 +438,15 @@ class kanavuhelp extends CI_Controller
     }
 
 
+
     // causes by user id
     public function user_causes()
     {
         // Check session for user ID
         $user_id = $this->session->userdata('userId');
-        // if (!$user_id) {
-        //     redirect('login');
-        // }
+        if (!$user_id) {
+            // redirect('login');
+        }
 
         // Initialize data array
         // $data = ['is_logged_in' => true];
@@ -472,6 +475,7 @@ class kanavuhelp extends CI_Controller
         // Load the view with data if everything is successful
         $this->load->view('myFundraisers', $data);
     }
+
 
 
     public function charityform_data()
@@ -546,6 +550,7 @@ class kanavuhelp extends CI_Controller
         redirect(base_url('/'));
     }
 
+
     public function logout()
     {
         // Clear session data
@@ -584,6 +589,7 @@ class kanavuhelp extends CI_Controller
 
         $message = "Your OTP is $otp to change the new password for your Kanavu Help account.";
 
+
         $this->email->from('support@kanavu.help', 'Kanavu Help');
         $this->email->to($to);
         $this->email->subject('Kanavu Help Foundation');
@@ -596,5 +602,3 @@ class kanavuhelp extends CI_Controller
         }
     }
 }
-
-
