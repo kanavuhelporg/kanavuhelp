@@ -1305,286 +1305,296 @@
 </script> -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Message Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="messageModalLabel">Notification</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="messageModalBody">
+        <!-- Dynamic message will be displayed here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <script>
+
+<script>
   document.addEventListener("DOMContentLoaded", function () {
-    const otpModal = new bootstrap.Modal(document.getElementById('myModal'));
+  const otpModal = new bootstrap.Modal(document.getElementById("myModal"));
+  const messageModal = new bootstrap.Modal(document.getElementById("messageModal"));
 
-    // Continue to Step 2
-    document.getElementById("continueToStep2").addEventListener("click", () => {
-      if (validateStep1()) {
-        sendOtp();
-        otpModal.show();
+  // Function to show popup messages
+  function showPopupMessage(message) {
+    document.getElementById("messageModalBody").textContent = message;
+    messageModal.show();
+  }
+
+  // Continue to Step 2
+  document.getElementById("continueToStep2").addEventListener("click", () => {
+    if (validateStep1()) {
+      sendOtp();
+      otpModal.show();
+    }
+  });
+
+  // Verify OTP
+  document.getElementById("verifyOtpButton").addEventListener("click", () => {
+    const otp = document.getElementById("otp").value.trim();
+    if (otp === "123456") {
+      otpModal.hide();
+      showStep(2);
+    } else {
+      setError("otp-error", "Invalid OTP. Please try again.");
+    }
+  });
+
+  // Continue to Step 3
+  document.getElementById("continueToStep3").addEventListener("click", () => {
+    if (validateStep2()) {
+      showStep(3);
+    } else {
+      showPopupMessage("Please fill in all required fields correctly before continuing.");
+    }
+  });
+
+  // Submit Approval Button
+  document.getElementById("submitApprovalButton").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default form submission
+    if (validateStep3()) {
+      showPopupMessage("Form submitted successfully.");
+      document.getElementById("individualform").submit(); // Proceed with submission
+    } else {
+      showPopupMessage("Please fill in all required fields correctly before submitting.");
+    }
+  });
+
+  // Show specific step
+  function showStep(step) {
+    document.querySelectorAll(".form-step").forEach(section => section.classList.add("d-none"));
+    document.getElementById(`step-${step}`).classList.remove("d-none");
+    updateStepper(step);
+  }
+
+  // Update stepper status
+  function updateStepper(step) {
+    const steppers = document.querySelectorAll(".form-stepper-list");
+    steppers.forEach((stepper, index) => {
+      const stepNum = index + 1;
+
+      if (stepNum < step) {
+        stepper.classList.remove("form-stepper-active", "form-stepper-unfinished");
+        stepper.classList.add("form-stepper-completed");
+      } else if (stepNum === step) {
+        stepper.classList.remove("form-stepper-completed", "form-stepper-unfinished");
+        stepper.classList.add("form-stepper-active");
       } else {
-        alert("Please fill in all required fields correctly before continuing.");
+        stepper.classList.remove("form-stepper-active", "form-stepper-completed");
+        stepper.classList.add("form-stepper-unfinished");
       }
     });
+  }
 
-    // Verify OTP
-    document.getElementById("verifyOtpButton").addEventListener("click", () => {
-      const otp = document.getElementById("otp").value.trim();
-      if (otp === "123456") { // Simulated OTP
-        otpModal.hide();
-        showStep(2);
-      } else {
-        setError("otp-error", "Invalid OTP. Please try again.");
+  // Utility: Set error message
+  function setError(id, message) {
+    document.getElementById(id).textContent = message;
+  }
+
+  // OTP Sending Simulation
+  function sendOtp() {
+    const email = document.getElementById("email").value.trim();
+    showPopupMessage(`OTP sent to email: ${email}`);
+  }
+
+  // Validation Handlers
+  const validationHandlers = {
+    category: validateCategory,
+    name: validateName,
+    age: validateAge,
+    location: validateLocation,
+    email: validateEmail,
+    phone: validatePhone,
+    amount: validateAmount,
+    end_date: validateEndDate,
+    cover_image: validateCoverImage,
+    cause_heading: validateCauseTitle,
+    cause_description: validateCauseDescription,
+  };
+
+  Object.keys(validationHandlers).forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      field.addEventListener("input", validationHandlers[fieldId]);
+      field.addEventListener("blur", validationHandlers[fieldId]);
+    }
+  });
+
+  function validateStep1() {
+    return validateCategory() & validateName() & validateLocation() & validateAge() & validateEmail() & validatePhone();
+  }
+
+  function validateStep2() {
+    return validateAmount() & validateEndDate();
+  }
+
+  function validateStep3() {
+    return validateCoverImage() & validateCauseTitle() & validateCauseDescription();
+  }
+
+  // Individual field validation functions
+  function validateCategory() {
+      const category = document.getElementById("category").value;
+      const errorElement = document.getElementById("category-error");
+      if (!category) {
+        errorElement.textContent = "Please select a category.";
+        return false;
       }
-    });
+      errorElement.textContent = "";
+      return true;
+    }
 
-    // Continue to Step 3
-    document.getElementById("continueToStep3").addEventListener("click", () => {
-      if (validateStep2()) {
-        showStep(3);
-      } else {
-        alert("Please fill in all required fields correctly before continuing.");
+  function validateName() {
+    const nameInput = document.getElementById("name").value.trim();
+    const errorElement = document.getElementById("name-error");
+    const nameRegex = /^[A-Za-z][A-Za-z\s'-]{1,49}$/;
+
+    if (!nameInput) {
+      errorElement.textContent = "Enter your name.";
+      return false;
+    } else if (!nameRegex.test(nameInput)) {
+      errorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
+      return false;
+    }
+    errorElement.textContent = "";
+    return true;
+  }
+
+  function validateAge() {
+    const age = parseInt(document.getElementById("age").value, 10);
+    const errorElement = document.getElementById("age-error");
+
+    if (isNaN(age) || age < 1 || age > 120) {
+      errorElement.textContent = "Enter a valid age between 1 and 120.";
+      return false;
+    }
+    errorElement.textContent = "";
+    return true;
+  }
+  function validateLocation() {
+      const location = document.getElementById("location").value;
+      const errorElement = document.getElementById("location-error");
+      if (!location) {
+        errorElement.textContent = "Please select a location.";
+        return false;
       }
-    });
+      errorElement.textContent = "";
+      return true;
+    }
+  function validateEmail() {
+    const email = document.getElementById("email").value.trim();
+    const errorElement = document.getElementById("email-error");
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    // Submit Approval Button
-    document.getElementById("submitApprovalButton").addEventListener("click", function(event) {
-  event.preventDefault();  // Prevent form submission before validation
-  if (validateStep3()) {
-    alert("Form submitted successfully.");
-    document.getElementById("individualform").submit(); // Proceed with form submission
-  } else {
-    alert("Please fill in all required fields correctly before submitting.");
+    if (!regex.test(email)) {
+      errorElement.textContent = "Enter a valid email address.";
+      return false;
+    }
+    errorElement.textContent = "";
+    return true;
+  }
+
+  function validatePhone() {
+    const phone = document.getElementById("phone").value.trim();
+    const errorElement = document.getElementById("phone-error");
+    const regex = /^[0-9]{10}$/;
+
+    if (!regex.test(phone)) {
+      errorElement.textContent = "Enter a valid 10-digit phone number.";
+      return false;
+    }
+    errorElement.textContent = "";
+    return true;
+  }
+
+  function validateAmount() {
+    const amount = document.getElementById("amount").value.trim();
+    const errorElement = document.getElementById("amount-error");
+
+    if (!amount || isNaN(amount) || parseFloat(amount) <= 10) {
+      errorElement.textContent = "Amount must be greater than 10.";
+      return false;
+    }
+    errorElement.textContent = "";
+    return true;
+  }
+
+  function validateEndDate() {
+    const endDate = document.getElementById("end_date").value;
+    const errorElement = document.getElementById("end-date-error");
+
+    if (!endDate) {
+      errorElement.textContent = "Select an end date.";
+      return false;
+    }
+
+    const selectedDate = new Date(endDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) {
+      errorElement.textContent = "The date must be today or a future date.";
+      return false;
+    }
+    errorElement.textContent = "";
+    return true;
+  }
+
+  function validateCoverImage() {
+    const file = document.getElementById("cover_image").files[0];
+    const errorElement = document.getElementById("cover-image-error");
+
+    if (!file) {
+      errorElement.textContent = "Upload a cover image.";
+      return false;
+    }
+
+    if (!["image/jpeg", "image/png", "image/svg+xml"].includes(file.type)) {
+      errorElement.textContent = "Only JPG, PNG, and SVG formats are allowed.";
+      return false;
+    }
+    errorElement.textContent = "";
+    return true;
+  }
+
+  function validateCauseTitle() {
+    const heading = document.getElementById("cause_heading").value.trim();
+    const errorElement = document.getElementById("cause-heading-error");
+
+    if (!heading) {
+      errorElement.textContent = "Cause title is required.";
+      return false;
+    }
+    errorElement.textContent = "";
+    return true;
+  }
+
+  function validateCauseDescription() {
+    const description = document.getElementById("cause_description").value.trim();
+    const errorElement = document.getElementById("cause-description-error");
+
+    if (!description) {
+      errorElement.textContent = "Cause description is required.";
+      return false;
+    }
+    errorElement.textContent = "";
+    return true;
   }
 });
-
-    // document.getElementById("submitApprovalButton").addEventListener("click", () => {
-    //   if (validateStep3()) {
-    //     alert("Form submitted successfully.");
-    //     document.getElementById("individualform").submit();
-    //   } else {
-    //     alert("Please fill in all required fields correctly before submitting.");
-    //   }
-    // });
-
-    // Show specific step
-    function showStep(step) {
-      // Hide all form steps
-      document.querySelectorAll(".form-step").forEach(section => section.classList.add("d-none"));
-      document.getElementById(`step-${step}`).classList.remove("d-none");
-
-      // Update stepper
-      updateStepper(step);
-    }
-
-    // Update stepper status
-    function updateStepper(step) {
-      const steppers = document.querySelectorAll(".form-stepper-list");
-      steppers.forEach((stepper, index) => {
-        const stepNum = index + 1;
-
-        if (stepNum < step) {
-          stepper.classList.remove("form-stepper-active");
-          stepper.classList.remove("form-stepper-unfinished");
-          stepper.classList.add("form-stepper-completed");
-        } else if (stepNum === step) {
-          stepper.classList.remove("form-stepper-completed");
-          stepper.classList.remove("form-stepper-unfinished");
-          stepper.classList.add("form-stepper-active");
-        } else {
-          stepper.classList.remove("form-stepper-active");
-          stepper.classList.remove("form-stepper-completed");
-          stepper.classList.add("form-stepper-unfinished");
-        }
-      });
-    }
-
-    // Utility: Set error message
-    function setError(id, message) {
-      document.getElementById(id).textContent = message;
-    }
-
-    // OTP Sending Simulation
-    function sendOtp() {
-      const email = document.getElementById("email").value.trim();
-      alert(`OTP sent to email: ${email}`);
-    }
-
-    // Real-Time Validation Handlers
-    const validationHandlers = {
-      name: validateName,
-      age: validateAge,
-      email: validateEmail,
-      phone: validatePhone,
-      amount: validateAmount,
-      end_date: validateEndDate,
-      cover_image: validateCoverImage,
-      cause_heading: validateCauseTitle,
-      cause_description: validateCauseDescription,
-    };
-
-    // Attach real-time validation
-    Object.keys(validationHandlers).forEach(fieldId => {
-      const field = document.getElementById(fieldId);
-      if (field) {
-        field.addEventListener("input", validationHandlers[fieldId]); // Add real-time validation
-        field.addEventListener("blur", validationHandlers[fieldId]); // Validate on blur
-      }
-    });
-
-    // Step Validation
-    function validateStep1() {
-      return validateName() & validateAge() & validateEmail() & validatePhone();
-    }
-
-    function validateStep2() {
-      return validateAmount() & validateEndDate();
-    }
-
-    function validateStep3() {
-      return validateCoverImage() & validateCauseTitle() & validateCauseDescription();
-    }
-
-    // Field Validation Functions
-    function validateName() {
-      const nameInput = document.getElementById("name").value.trim();
-      const errorElement = document.getElementById("name-error");
-      const nameRegex = /^[A-Za-z][A-Za-z\s'-]{1,49}$/;
-
-      if (!nameInput) {
-        errorElement.textContent = "Enter your name.";
-        return false;
-      } else if (!nameRegex.test(nameInput)) {
-        errorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
-        return false;
-      } else {
-        errorElement.textContent = ""; // Clear error
-        return true;
-      }
-    }
-
-    function validateAge() {
-      const age = parseInt(document.getElementById("age").value, 10);
-      const errorElement = document.getElementById("age-error");
-
-      if (isNaN(age) || age < 1 || age > 120) {
-        errorElement.textContent = "Enter a valid age between 1 and 120.";
-        return false;
-      }
-      errorElement.textContent = "";
-      return true;
-    }
-
-    function validateEmail() {
-      const email = document.getElementById("email").value.trim();
-      const errorElement = document.getElementById("email-error");
-      const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-      if (!regex.test(email)) {
-        errorElement.textContent = "Enter a valid email address.";
-        return false;
-      }
-      errorElement.textContent = "";
-      return true;
-    }
-
-    function validatePhone() {
-      const phone = document.getElementById("phone").value.trim();
-      const errorElement = document.getElementById("phone-error");
-      const regex = /^[0-9]{10}$/;
-
-      if (!regex.test(phone)) {
-        errorElement.textContent = "Enter a valid 10-digit phone number.";
-        return false;
-      }
-      errorElement.textContent = "";
-      return true;
-    }
-
-    function validateAmount() {
-      const amount = document.getElementById("amount").value.trim();
-      const errorElement = document.getElementById("amount-error");
-
-      if (!amount || isNaN(amount) || parseFloat(amount) <= 10) {
-        errorElement.textContent = "Amount must be greater than 10.";
-        return false;
-      }
-      errorElement.textContent = "";
-      return true;
-    }
-
-    function validateEndDate() {
-      const endDate = document.getElementById("end_date").value;
-      const errorElement = document.getElementById("end-date-error");
-
-      if (!endDate) {
-        errorElement.textContent = "Select an end date.";
-        return false;
-      }
-
-      const selectedDate = new Date(endDate);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      if (selectedDate < today) {
-        errorElement.textContent = "The date must be today or a future date.";
-        return false;
-      }
-      errorElement.textContent = "";
-      return true;
-    }
-
-    function validateCoverImage() {
-      const file = document.getElementById("cover_image").files[0];
-      const errorElement = document.getElementById("cover-image-error");
-
-      if (!file) {
-        errorElement.textContent = "Upload a cover image.";
-        return false;
-      }
-
-      if (!["image/jpeg", "image/png", "image/svg+xml"].includes(file.type)) {
-        errorElement.textContent = "Only JPG, PNG, and SVG formats are allowed.";
-        return false;
-      }
-      errorElement.textContent = "";
-      return true;
-    }
-
-    function validateCauseTitle() {
-      const heading = document.getElementById("cause_heading").value.trim();
-      const errorElement = document.getElementById("cause-heading-error");
-
-      if (!heading) {
-        errorElement.textContent = "Cause title is required.";
-        return false;
-      }
-      errorElement.textContent = "";
-      return true;
-    }
-
-    function validateCauseDescription() {
-  const description = document.getElementById("cause_description").value.trim();
-  const errorElement = document.getElementById("cause-description-error");
-
-  if (!description || description.length < 50) {
-    errorElement.textContent = "Description must be at least 50 characters.";
-    return false;
-  }
-  errorElement.textContent = "";
-  return true;
-}
-
-
-    // Function to copy the selected category to Step 2
-    function copySelection() {
-      const selectedCategory = document.getElementById("category").value;
-      const formSelectedText = document.getElementById("form_selected_text");
-
-      // If a valid category is selected, copy it to the input field
-      if (selectedCategory) {
-        formSelectedText.value = selectedCategory;
-      } else {
-        formSelectedText.value = ""; // Clear the input if no category is selected
-      }
-    }
-
-    // Listen for changes on the category dropdown
-    document.getElementById("category").addEventListener("change", copySelection);
-  });
 </script>
 
 </body>
