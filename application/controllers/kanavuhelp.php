@@ -589,14 +589,15 @@ class kanavuhelp extends CI_Controller
 
         $message = "Your OTP is $otp to change the new password for your Kanavu Help account.";
 
-
         $this->email->from('support@kanavu.help', 'Kanavu Help');
         $this->email->to($to);
         $this->email->subject('Kanavu Help Foundation');
         $this->email->message($message);
 
         if ($this->email->send()) {
-            echo "Email sent successfully!";
+            // Set a session variable to indicate OTP was sent
+            $this->session->set_flashdata('otp_sent', true);
+            redirect('/individual');// Redirect back to the same page
         } else {
             echo $this->email->print_debugger(); // Print debug info if sending fails
         }
