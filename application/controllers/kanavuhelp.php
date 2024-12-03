@@ -575,7 +575,7 @@ class kanavuhelp extends CI_Controller
     {
         // Initialize the email with config settings
 
-        $to = 'vimals2899@gmail.com';
+        $to = 'prasanthsubramaniyan945@gmail.com';
         $otp = rand(1000, 9999);
         $this->session->set_userdata('generated_otp', $otp);
        
@@ -639,11 +639,13 @@ class kanavuhelp extends CI_Controller
         ];
 
         $form_selected_text = $this->input->post('category');
+        $email = $this->input->post('email');
 
         $this->db->insert('user', $userData);
         $userId = $this->db->insert_id();
         $this->session->set_userdata('currentUserId', $userId);
         $this->session->set_userdata('form_selected_text', $form_selected_text);
+        this->session->set_userdata('userEmail', $email);
 
         $this->db->insert('individualform', $causeData);
         $causeId = $this->db->insert_id();
