@@ -197,7 +197,7 @@
                   <h2>Cause Details</h2>
 
                   <div class="row my-3">
-                    <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
+                    <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: <?php echo $this->session->userdata('form_selected_text'); ?></label>
                     <div class="col-md-8">
                       <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: " readonly>
                     </div>
