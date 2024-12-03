@@ -347,7 +347,7 @@
 
     </style>
     </head>
-<body >
+<body>
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="<?=base_url('')?>">

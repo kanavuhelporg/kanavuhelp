@@ -84,7 +84,7 @@
             <!-- Left side form column -->
             <div class="col-md-6 logi1">
                 <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/') ?>">
-                    <img class="logo" src="<?= base_url('/assets/img/kanavu_help.png') ?>" alt="Kanavu Help"
+                    <img class="logo" src="<?= base_url('/assets/img/Kanavu_help.png') ?>" alt="Kanavu Help"
                         style="">
                 </a>
                 <br><br><br>

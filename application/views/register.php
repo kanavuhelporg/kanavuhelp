@@ -64,7 +64,7 @@
     <div class="row">
     <div class="col-sm-6 logi1">
           <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhome') ?>" >
-            <img class="logo" src="<?= base_url('/assets/img/kanavu_help.png');?>" alt="Kanavu Help"style="">
+            <img class="logo" src="<?= base_url('/assets/img/Kanavu_help.png');?>" alt="Kanavu Help"style="">
           </a><br><br>
             <h2 style="margin-bottom:30px;margin-left:50px;">Register</h2>
             <?php if ($this->session->flashdata('error')): ?>
