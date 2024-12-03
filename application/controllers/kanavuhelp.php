@@ -625,6 +625,7 @@ class kanavuhelp extends CI_Controller
             'phone' => $this->input->post('phone'),
             'age' => $this->input->post('age'),
             'location' => $this->input->post('location'),
+            'form_selected_text' => $this->input->post('category'),
         ];
 
         $userData = [
@@ -634,9 +635,12 @@ class kanavuhelp extends CI_Controller
             'category' => 'user',
         ];
 
+        $form_selected_text = $this->input->post('category');
+
         $this->db->insert('user', $userData);
         $userId = $this->db->insert_id();
         $this->session->set_userdata('currentUserId', $userId);
+        $this->session->set_userdata('form_selected_text', $form_selected_text);
 
         $this->db->insert('individualform', $causeData);
         $causeId = $this->db->insert_id();
