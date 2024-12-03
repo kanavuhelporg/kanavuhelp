@@ -94,11 +94,21 @@ class UserModel extends CI_Model
 		return true;
 	}
 
-	public function store3($data)
+	public function store3($data, $id)
 	{
-		$this->db->insert('individualform', $data);
-		return true;
+		$this->db->where('id', $id); // Specify the condition
+		$success = $this->db->update('individualform', $data); // Update the table with data
+
+		// Debug: Log the query and errors
+		if ($success) {
+			return true;
+		} else {
+			echo $this->db->last_query(); // Print the query for debugging
+			echo $this->db->error();      // Print any database errors
+			return false;
+		}
 	}
+
 	public function saveDonation($data)
 	{
 		return $this->db->insert('donation_for_cause', $data);
@@ -224,6 +234,21 @@ class UserModel extends CI_Model
 		];
 
 		$this->db->insert('user', $data);
+		return $this->db->insert_id(); // Return the last inserted user ID
+	}
+
+	// Method to register user
+	public function registerUserCause($name, $email, $mobileNmuber)
+	{
+		// Insert user into the database and return the inserted data (e.g., userId)
+		$data = [
+			'name' => $name,
+			'email' => $email,
+			'mobileNumber' => $mobileNmuber,
+			'category' => 'user',
+		];
+
+		$this->db->insert('user',$data);
 		return $this->db->insert_id(); // Return the last inserted user ID
 	}
 

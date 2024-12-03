@@ -385,24 +385,15 @@ class kanavuhelp extends CI_Controller
     }
     public function individualform_data()
     {
-        // Load required model and library
         $this->load->model('UserModel');
-        $this->load->library('upload');
+        $this->load->library(['upload', 'form_validation']);
 
-        // Retrieve form data
         $data = [
-            'category' => $this->input->post('category'),
-            'name' => $this->input->post('name'),
-            'email' => $this->input->post('email'),
-            'phone' => $this->input->post('phone'),
-            'age' => $this->input->post('age'),
-            'location' => $this->input->post('location'),
-            'form_selected_text'=> $this->input->post('form_selected_text'),
             'amount' => $this->input->post('amount'),
             'end_date' => $this->input->post('end_date'),
             'cause_heading' => $this->input->post('cause_heading'),
             'cause_description' => $this->input->post('cause_description'),
-            'user_id' => $this->session->userdata('userId')
+            'user_id' => $this->session->userdata('currentUserId')
         ];
 
         // File upload configuration
@@ -415,26 +406,24 @@ class kanavuhelp extends CI_Controller
 
         // Handle file upload
         if (!$this->upload->do_upload('cover_image')) {
-            // Error during file upload
-            $error = $this->upload->display_errors();
-            echo "<script>alert('Upload error: $error');</script>";
+            $this->session->set_flashdata('error', 'Upload error: ' . $this->upload->display_errors());
             redirect('kanavuhelp/individual');
-        } else {
-            // File upload successful
-            $file_data = $this->upload->data();
-            $data['cover_image'] = $file_data['file_name'];
-
-            // Insert data into the database
-            $response = $this->UserModel->store3($data);
-
-            if ($response) {
-                echo '<script>alert("Successfully registered");</script>';
-                redirect('myFundraisers'); // Redirect to the donate page after successful registration
-            } else {
-                echo '<script>alert("Failed to register");</script>';
-                redirect('kanavuhelp/individual'); // Redirect back if insertion fails
-            }
         }
+
+        $file_data = $this->upload->data();
+        $data['cover_image'] = $file_data['file_name'];
+
+        $causeId = $this->session->userdata('currentCauseId');
+        $response = $this->UserModel->store3($data, $causeId);
+        redirect('donate');
+
+        // if ($response) {
+        //     $this->session->set_flashdata('success', 'Successfully registered');
+        //     redirect('donate');
+        // } else {
+        //     $this->session->set_flashdata('error', 'Failed to register');
+        //     redirect('registration');
+        // }
     }
 
 
@@ -586,7 +575,7 @@ class kanavuhelp extends CI_Controller
         $to = 'prasanthsubramaniyan945@gmail.com';
         $otp = rand(1000, 9999);
         $this->session->set_userdata('generated_otp', $otp);
-
+       
         $message = "Your OTP is $otp to change the new password for your Kanavu Help account.";
 
         $this->email->from('support@kanavu.help', 'Kanavu Help');
@@ -602,4 +591,70 @@ class kanavuhelp extends CI_Controller
             echo $this->email->print_debugger(); // Print debug info if sending fails
         }
     }
+
+    public function individualformsubmit()
+    {
+        $causeId = $this->session->userdata('currentCauseId');
+        
+
+        // Prepare data for updating
+        $data = [
+            'amount' => $this->input->post('amount'),
+            'end_date' => $this->input->post('end_date'),
+            'cause_heading' => $this->input->post('cause_heading'),
+            'cause_description' => $this->input->post('cause_description'),
+            'form_selected_text' => $this->input->post('form_selected_text'),
+            'cover_image' => $this->input->post('cover_image'),
+            'user_id' => $this->session->userdata('currentUserId')
+        ];
+
+        $id = 68;
+
+        $this->db->insert('individualform', $causeData);
+        redirect('/donate');
+
+    }
+
+
+    public function insertUser()
+    {
+        $causeData = [
+            'category' => $this->input->post('category'),
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'phone' => $this->input->post('phone'),
+            'age' => $this->input->post('age'),
+            'location' => $this->input->post('location'),
+        ];
+
+        $userData = [
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'mobileNumber' => $this->input->post('phone'),
+            'category' => 'user',
+        ];
+
+        $this->db->insert('user', $userData);
+        $userId = $this->db->insert_id();
+        $this->session->set_userdata('currentUserId', $userId);
+
+        $this->db->insert('individualform', $causeData);
+        $causeId = $this->db->insert_id();
+        $this->session->set_userdata('currentCauseId', $causeId);
+
+        redirect('/send');
+    }
+
+    public function updateCauseStep2(){
+        $data = [
+            'amount' => $this->input->post('amount'),
+            'end_date' => $this->input->post('end_date'),
+        ];
+
+        $id = $this->session->userdata('currentCauseId');
+        $this->db->where('id', $id); // Specify the condition
+        $success = $this->db->update('individualform', $data);
+        redirect('/donate');
+    }
+
 }

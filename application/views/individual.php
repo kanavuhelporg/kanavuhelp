@@ -7,7 +7,7 @@
   <title>fundraiser</title>
   <link rel="stylesheet" href="style.css" />
   <!-- <link href="bootstrap.min.css" rel="stylesheet" />
-         <script src="bootstrap.bundle.min.js"></script> -->
+  <script src="bootstrap.bundle.min.js"></script> -->
   <!-- Bootrap for the demo page -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
@@ -63,7 +63,7 @@
                 </li>
               </ul>
 
-              <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data">
+              <form id="causeStep1" name="causeStep1" method="post" action="<?= base_url('kanavuhelp/insertUser') ?>" enctype="multipart/form-data">
                 <!-- Step 1 Content -->
                 <section id="step-1" class="form-step col-12">
                   <h2>Basic Details</h2>
@@ -120,10 +120,59 @@
                   </div>
 
                   <div class="text-center mt-3">
-                    <button type="button" id="continueToStep2" class="btn btn-danger no-hover">Continue</button>
+                    <button type="submit" id="continueToStep2" class="btn btn-danger no-hover">Continue</button>
                   </div>
                 </section>
+              </form>
 
+              <!-- <form id="causeStep2" name="causeStep2" method="post" action="<?= base_url('kanavuhelp/updateCauseStep2') ?>" enctype="multipart/form-data">
+                <section id="step-2" class="form-step col-12 d-none">
+                  <h2>Cause Details</h2>
+
+                  <div class="row my-3">
+                    <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
+                    <div class="col-md-8">
+                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: <?php echo $this->session->userdata('currentUserId'); ?>, <?php echo $this->session->userdata('currentCauseId'); ?>" readonly>
+                    </div>
+                  </div>
+
+                  <script>
+                    function copySelection() {
+                      const selectedCategory = document.getElementById("category").value;
+                      const formSelectedText = document.getElementById("form_selected_text");
+
+                      // If a valid category is selected, copy it to the input field
+                      if (selectedCategory) {
+                        formSelectedText.value = selectedCategory;
+                      } else {
+                        formSelectedText.value = ""; // Clear the input if no category is selected
+                      }
+                    }
+                  </script>
+                  <div class="row my-3">
+                    <label for="amount" class="col-md-4 col-form-label">Amount:<span class="text-danger">*</span></label>
+                    <div class="col-md-8">
+                      <input type="number" id="amount" name="amount" class="form-control my-2" placeholder="Amount*" required>
+                      <span id="amount-error" class="text-danger"></span>
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="end_date" class="col-md-4 col-form-label">End Date:<span class="text-danger">*</span></label>
+                    <div class="col-md-8">
+                      <input type="date" id="end_date" name="end_date" class="form-control my-2" placeholder="End Date*" required>
+                      <span id="end-date-error" class="text-danger"></span>
+                    </div>
+                  </div>
+
+                  <div class="text-center mt-3">
+                    <button type="button" class="btn btn-danger no-hover btn-back" data-step="1">Back</button>
+                    <button type="button" id="continueToStep3" class="btn btn-danger no-hover">Continue</button>
+                  </div>
+                </section>
+              </form> -->
+
+              <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data">
                 <!-- OTP Modal -->
                 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
@@ -148,9 +197,9 @@
                   <h2>Cause Details</h2>
 
                   <div class="row my-3">
-                    <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for:</label>
+                    <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
                     <div class="col-md-8">
-                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for:" readonly>
+                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: <?php echo $this->session->userdata('currentUserId'); ?>, <?php echo $this->session->userdata('currentCauseId'); ?>" readonly>
                     </div>
                   </div>
 
@@ -253,15 +302,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <!-- Form starts here -->
-        <form id="messageForm" action="<?= base_url('kanavuhelp/send') ?>" method="POST">
-          <div class="modal-body" id="messageModalBody">
-            <!-- Dynamic message will be displayed here -->
-            <input type="hidden" id="hiddenInput" name="hiddenInput" value="defaultValue" />
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Ok</button>
-          </div>
-        </form>
+        <div class="modal-body" id="messageModalBody">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Ok</button>
+        </div>
       </div>
     </div>
   </div>
@@ -336,7 +382,6 @@
       document.getElementById("submitApprovalButton").addEventListener("click", function(event) {
         event.preventDefault(); // Prevent default form submission
         if (validateStep3()) {
-          showPopupMessage("Form submitted successfully.");
           document.getElementById("individualform").submit(); // Proceed with submission
         } else {
           showPopupMessage("Please fill in all required fields correctly before submitting.");
