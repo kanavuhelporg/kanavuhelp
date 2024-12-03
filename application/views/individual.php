@@ -836,24 +836,29 @@
     border-color: #dc3545 !important;
     /* Match border color on hover, focus, and active */
   }
-  /* Ensure the dropdown menu is fully visible on smaller screens */
-@media (max-width: 768px) {
-  #userProfile .dropdown-menu {
-    right: 0 !important; /* Align the dropdown to the right edge */
-    left: auto !important; /* Override default left alignment */
-    min-width: 150px; /* Adjust the width as needed */
-  }
-  
-  #userProfile img {
-    width: 25px; /* Slightly smaller profile image for mobile */
-    height: 25px;
-  }
-  
-  #userProfile .dropdown-item {
-    text-align: center; /* Center-align items for better UX */
-  }
-}
 
+  /* Ensure the dropdown menu is fully visible on smaller screens */
+  @media (max-width: 768px) {
+    #userProfile .dropdown-menu {
+      right: 0 !important;
+      /* Align the dropdown to the right edge */
+      left: auto !important;
+      /* Override default left alignment */
+      min-width: 150px;
+      /* Adjust the width as needed */
+    }
+
+    #userProfile img {
+      width: 25px;
+      /* Slightly smaller profile image for mobile */
+      height: 25px;
+    }
+
+    #userProfile .dropdown-item {
+      text-align: center;
+      /* Center-align items for better UX */
+    }
+  }
 </style>
 
 <body>
@@ -926,9 +931,9 @@
     </div>
   </nav>
   <div class="donate_img mt-5 pt-4 text-center">
-  <img src="<?= base_url('assets/img/fundimage.jpg') ?>" 
-       style="width: 100%; height: 400px; ">
-</div>
+    <img src="<?= base_url('assets/img/fundimage.jpg') ?>"
+      style="width: 100%; height: 400px; ">
+  </div>
 
   <!--<div class="mx-auto text-center mt-8 md:ml-20 ">
     <button id="myDonationsButton" 
@@ -1116,7 +1121,7 @@
                   <div class="row my-3">
                     <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
                     <div class="col-md-8">
-                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: " readonly>
+                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: <?php echo $this->session->userdata('form_selected_text'); ?>" readonly>
                     </div>
                   </div>
 
@@ -1229,7 +1234,7 @@
     </div>
   </div>
 
-  
+
   <?php if ($this->session->flashdata('otp_sent')): ?>
     <script>
       // Automatically trigger the OTP modal when the page loads
@@ -1297,17 +1302,17 @@
       });
 
       // Submit Approval Button
-      document.getElementById("submitApprovalButton").addEventListener("click", function (event) {
-    event.preventDefault();
-    if (validateStep3()) {
-        showPopupMessage("Thanks for raising a cause.");
-        setTimeout(() => {
+      document.getElementById("submitApprovalButton").addEventListener("click", function(event) {
+        event.preventDefault();
+        if (validateStep3()) {
+          showPopupMessage("Thanks for raising a cause.");
+          setTimeout(() => {
             document.getElementById("individualform").submit();
-        }, 2000); // Wait for 2 seconds to show the message before submitting
-    } else {
-        showPopupMessage("Please fill in all required fields correctly before submitting.");
-    }
-});
+          }, 2000); // Wait for 2 seconds to show the message before submitting
+        } else {
+          showPopupMessage("Please fill in all required fields correctly before submitting.");
+        }
+      });
 
       // Show specific step
       function showStep(step) {
@@ -1534,7 +1539,7 @@
     });
   </script>
 
-<div class="footer">
+  <div class="footer">
     <footer class="footer mt-auto py-3">
       <div class="container">
         <h5 style="text-align:center">kanavu.help</h5>
