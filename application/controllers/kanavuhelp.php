@@ -430,40 +430,43 @@ class kanavuhelp extends CI_Controller
 
     // causes by user id
     public function user_causes()
-    {
-        // Check session for user ID
-        $user_id = $this->session->userdata('userId');
-        if (!$user_id) {
-            // redirect('login');
-        }
-
-        // Initialize data array
-        // $data = ['is_logged_in' => true];
-
-        try {
-            // Attempt to retrieve fundraisers from the database
-            $data['fundraisers'] = $this->UserModel->get_user_causes($user_id);
-
-            // Check if any fundraisers were retrieved
-           
-
-            // Calculate days left for each fundraiser
-            foreach ($data['fundraisers'] as $fundraiser) {
-                $end_date = new DateTime($fundraiser->end_date);
-                $current_date = new DateTime();
-                $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
-                $fundraiser->days_left = $days_left;
-            }
-        } catch (Exception $e) {
-            // Handle the error if the database cannot be reached
-            log_message('error', 'Database error: ' . $e->getMessage());
-            show_404(); // Display a 404 error page
-            return;
-        }
-
-        // Load the view with data if everything is successful
-        $this->load->view('myFundraisers', $data);
+{
+    // Check session for user ID
+    $user_id = $this->session->userdata('userId');
+    
+    if (!$user_id) {
+        // Store the current URL (the 'myFundraisers' page) in the session
+        $this->session->set_userdata('redirect_url', current_url());
+        
+        // Redirect to login page
+        redirect('login');
     }
+
+    // Initialize data array
+    $data = ['is_logged_in' => true];
+
+    try {
+        // Attempt to retrieve fundraisers from the database
+        $data['fundraisers'] = $this->UserModel->get_user_causes($user_id);
+
+        // Calculate days left for each fundraiser
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
+            $fundraiser->days_left = $days_left;
+        }
+    } catch (Exception $e) {
+        // Handle the error if the database cannot be reached
+        log_message('error', 'Database error: ' . $e->getMessage());
+        show_404(); // Display a 404 error page
+        return;
+    }
+
+    // Load the view with data if everything is successful
+    $this->load->view('myFundraisers', $data);
+}
+
 
 
 
@@ -517,27 +520,27 @@ class kanavuhelp extends CI_Controller
     }
 
     public function contact_us()
-    {
-        // Load the database
-        $this->load->database();
+{
+    // Load the database
+    $this->load->database();
 
-        // Get form data
-        $data = [
-            'name' => $this->input->post('name'),
-            'email' => $this->input->post('email'),
-            'phone' => $this->input->post('phone'),
-            'message' => $this->input->post('message')
-        ];
+    // Get form data
+    $data = [
+        'name' => $this->input->post('name'),
+        'email' => $this->input->post('email'),
+        'phone' => $this->input->post('phone'),
+        'message' => $this->input->post('message')
+    ];
 
-        // Insert data into the database
-        $this->db->insert('contact_us', $data);
+    // Insert data into the database
+    $this->db->insert('contact_us', $data);
 
-        // Set a success message
-        $this->session->set_flashdata('success', 'Thanks for contacting us! We will get back to you soon.');
+    // Set a success message
+    $this->session->set_flashdata('success', 'Thanks for contacting us!');
 
-        // Redirect back to the form
-        redirect(base_url('/'));
-    }
+    // Redirect back to the homepage
+    redirect(base_url('/'));
+}
 
 
     public function logout()
@@ -572,7 +575,7 @@ class kanavuhelp extends CI_Controller
     {
         // Initialize the email with config settings
 
-        $to = 'prasanthsubramaniyan945@gmail.com';
+        $to = 'vimals2899@gmail.com';
         $otp = rand(1000, 9999);
         $this->session->set_userdata('generated_otp', $otp);
        

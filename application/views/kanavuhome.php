@@ -1,3 +1,48 @@
+<!-- Check if flash data 'success' exists -->
+<?php if ($this->session->flashdata('success')): ?>
+  <script>
+    // Show the success message in a modal when the page loads
+    document.addEventListener("DOMContentLoaded", function() {
+      // Trigger the modal to show
+      var successMessage = "<?php echo $this->session->flashdata('success'); ?>";
+      showSuccessModal(successMessage);
+    });
+
+    // Function to display the modal with the success message
+    function showSuccessModal(message) {
+      // Create modal HTML
+      var modalHTML = `
+        <div class="modal" tabindex="-1" id="successModal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Thank You</h5>
+              </div>
+              <div class="modal-body">
+                <p>${message}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Append the modal to the body
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+      // Show the modal
+      var modal = new bootstrap.Modal(document.getElementById('successModal'));
+      modal.show();
+    }
+  </script>
+<?php endif; ?>
+
+<!-- Your other homepage content here -->
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +54,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
   <style>
     body {
@@ -747,7 +794,35 @@
     max-width: 100%;
   }
 }
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 45%;
+  }
 
+  .custom-dropdown select {
+    appearance: none; /* Remove the default browser styling */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .custom-dropdown::after {
+    content: '▼'; /* Add a dropdown icon */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Make the icon unclickable */
+    font-size: 14px;
+    color: #666;
+  }
   </style>
 </head>
 
@@ -884,7 +959,7 @@
             // Set a fixed dummy image if the cover image is empty or does not exist
             $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
                         ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) 
-                        : base_url('assets/img/blogs.png'); // Dummy image path
+                        : base_url('assets/img/funddonate.jpg'); // Dummy image path
         ?>
             <div class="col-12 col-lg-4 col-md-6 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                 <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
@@ -930,11 +1005,13 @@
   </div>
 
   <!-- See More Button -->
-  <?php if (count($fundraisers) > 3): ?>
-    <div class="text-center mt-3">
-        <button id="seeMoreBtn" class="btn" style="background-color: white; border: 1px solid black; color: red; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" onclick="loadMoreFundraisers()">See More Causes</button>
-    </div>
-  <?php endif; ?>
+  <!-- See More Button -->
+<div class="text-center mt-3">
+  <a href="<?= base_url('/donate') ?>" class="btn" style="background-color: white; border: 1px solid black; color: red; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    See More Causes
+  </a>
+</div>
+
 
 </div><br><br>
 
@@ -1332,11 +1409,13 @@ function shareCause(url, title, imgurl) {
   <!-- Currency and Amount -->
   <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
     <label for="currency" class="visually-hidden">Currency Type</label>
-    <select class="form-control" name="currency_type" id="currency" style="width:45%;" required>
-      <option value="" disabled selected>Select Currency</option>
-      <option>INR</option>
-      <option>USD</option>
-    </select>
+    <div class="custom-dropdown">
+  <select class="form-control" name="currency_type" id="currency" required>
+    <option value="" disabled selected>Select Currency</option>
+    <option>INR</option>
+    <option>USD</option>
+  </select>
+</div>
     <div style="width: 42%; margin-left: 2%;">
       <label for="amount" class="visually-hidden">Amount</label>
       <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>

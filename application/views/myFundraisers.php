@@ -281,7 +281,7 @@
     </div>
   </nav>
   <div class="donate_img mt-5 pt-4">
-  <img src="<?= base_url('assets/img/myhelps.jpg') ?>" style="width: 100%; height: 250px;">
+  <img src="<?= base_url('assets/img/myhelps.jpg') ?>" style="width: 100%; height: 400px;">
   </div>
   <!-- <div class="handwithheart_img text-center">
     <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">

@@ -312,7 +312,35 @@
     text-align: center; /* Center-align items for better UX */
   }
 }
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 45%;
+  }
 
+  .custom-dropdown select {
+    appearance: none; /* Remove the default browser styling */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .custom-dropdown::after {
+    content: '▼'; /* Add a dropdown icon */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Make the icon unclickable */
+    font-size: 14px;
+    color: #666;
+  }
     </style>
     </head>
 <body>
@@ -745,11 +773,13 @@ function setCauseId(causeId) {
   <!-- Currency and Amount -->
   <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
     <label for="currency" class="visually-hidden">Currency Type</label>
-    <select class="form-control" name="currency_type" id="currency" style="width:45%;" required>
-      <option value="" disabled selected>Select Currency</option>
-      <option>INR</option>
-      <option>USD</option>
-    </select>
+    <div class="custom-dropdown">
+  <select class="form-control" name="currency_type" id="currency" required>
+    <option value="" disabled selected>Select Currency</option>
+    <option>INR</option>
+    <option>USD</option>
+  </select>
+</div>
     <div style="width: 42%; margin-left: 2%;">
       <label for="amount" class="visually-hidden">Amount</label>
       <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>
