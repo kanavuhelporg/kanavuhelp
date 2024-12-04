@@ -25,7 +25,10 @@
   body {
     font-family: 'sen', sans-serif;
   }
-
+  html, body {
+  overflow: auto; /* Ensure scrolling is enabled */
+  height: 100%; /* Make sure the body occupies full height */
+}
   .logo {
     margin-left: 65px;
     font-weight: bolder;
@@ -412,7 +415,21 @@
   .d-none {
     display: none;
   }
+  .form-step {
+  width: 100%;
+  overflow: auto; /* Ensure inner sections are scrollable */
+  height: 100vh; /* Viewport height to allow scrolling */
+  min-height: 100vh; /* Ensures the section takes the full height of the viewport */
+  padding: 20px; /* Adds padding for better appearance */
+  box-sizing: border-box; /* Includes padding in width/height calculations */
+  display: flex; /* Ensure layout flexibility */
+  flex-direction: column; /* Columnar layout */
+}
 
+.col-12 {
+  width: 100%;
+  max-width: 100%;
+}
   .form-step {
     border-radius: 20px;
     padding: auto;
@@ -1047,53 +1064,6 @@
                 </section>
               </form>
 
-              <!-- <form id="causeStep2" name="causeStep2" method="post" action="<?= base_url('kanavuhelp/updateCauseStep2') ?>" enctype="multipart/form-data">
-                <section id="step-2" class="form-step col-12 d-none">
-                  <h2>Cause Details</h2>
-
-                  <div class="row my-3">
-                    <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
-                    <div class="col-md-8">
-                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: <?php echo $this->session->userdata('currentUserId'); ?>, <?php echo $this->session->userdata('currentCauseId'); ?>" readonly>
-                    </div>
-                  </div>
-
-                  <script>
-                    function copySelection() {
-                      const selectedCategory = document.getElementById("category").value;
-                      const formSelectedText = document.getElementById("form_selected_text");
-
-                      // If a valid category is selected, copy it to the input field
-                      if (selectedCategory) {
-                        formSelectedText.value = selectedCategory;
-                      } else {
-                        formSelectedText.value = ""; // Clear the input if no category is selected
-                      }
-                    }
-                  </script>
-                  <div class="row my-3">
-                    <label for="amount" class="col-md-4 col-form-label">Amount:<span class="text-danger">*</span></label>
-                    <div class="col-md-8">
-                      <input type="number" id="amount" name="amount" class="form-control my-2" placeholder="Amount*" required>
-                      <span id="amount-error" class="text-danger"></span>
-                    </div>
-                  </div>
-
-                  <div class="row my-3">
-                    <label for="end_date" class="col-md-4 col-form-label">End Date:<span class="text-danger">*</span></label>
-                    <div class="col-md-8">
-                      <input type="date" id="end_date" name="end_date" class="form-control my-2" placeholder="End Date*" required>
-                      <span id="end-date-error" class="text-danger"></span>
-                    </div>
-                  </div>
-
-                  <div class="text-center mt-3">
-                    <button type="button" class="btn btn-danger no-hover btn-back" data-step="1">Back</button>
-                    <button type="button" id="continueToStep3" class="btn btn-danger no-hover">Continue</button>
-                  </div>
-                </section>
-              </form> -->
-
               <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data">
                 <!-- OTP Modal -->
                 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
@@ -1114,7 +1084,8 @@
                     </div>
                   </div>
                 </div>
-
+                
+                
                 <section id="step-2" class="form-step col-12 d-none">
                   <h2>Cause Details</h2>
 
@@ -1268,6 +1239,21 @@
           otpModal.show();
         }
       });
+
+      document.getElementById('verifyOtpButton').addEventListener('click', function () {
+  // Hide OTP Modal
+  const otpModal = new bootstrap.Modal(document.getElementById('myModal'));
+  otpModal.hide();
+
+  // Hide Step 1 and Show Step 2
+  document.getElementById('step-1').classList.add('d-none');
+  const step2 = document.getElementById('step-2');
+  step2.classList.remove('d-none');
+  step2.classList.add('d-flex');
+
+  // Reset body scroll
+  document.body.style.overflow = 'auto';
+});
 
       // Verify OTP
       document.getElementById("verifyOtpButton").addEventListener("click", () => {

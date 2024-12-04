@@ -913,7 +913,8 @@ function setCauseId(causeId) {
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
   const isName = (value) => /^[a-zA-Z]{3,}\s*/.test(value);
-  const isEmail =(value)=> /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value);
+  const isEmailValid = (value) => /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
+
   // Attach real-time validation for each field
   window.onload = () => {
     validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');

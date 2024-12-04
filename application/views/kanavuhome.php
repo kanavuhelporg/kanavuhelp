@@ -1557,124 +1557,113 @@ function shareCause(url, title, imgurl) {
     donationModal.querySelector('form').reset();
   });
 </script>
+
 <script>
-  // Real-time validation function
-  function validateField(fieldId, errorId, validationFn, errorMessage) {
-    const field = document.getElementById(fieldId);
-    const errorElement = document.getElementById(errorId);
+// Real-time validation function
+function validateField(fieldId, errorId, validationFn, errorMessage, eventType = 'input') {
+  const field = document.getElementById(fieldId);
+  const errorElement = document.getElementById(errorId);
 
-    field.addEventListener('input', () => {
-      if(field.value=='')
-    {
-      errorElement.textContent='Please enter value';
+  field.addEventListener(eventType, () => {
+    if (field.value === '') {
+      errorElement.textContent = 'Please enter a value.';
+    } else if (!validationFn(field.value)) {
+      errorElement.textContent = errorMessage;
+    } else {
+      errorElement.textContent = ''; // Clear error if validation passes
     }
-     else if (!validationFn(field.value)) {
-        errorElement.textContent = errorMessage;
-      } else {
-        errorElement.textContent = ''; // Clear error if validation passes
-      }
-    });
-  }
+  });
+}
 
-  // Validation functions
-  const isCurrencySelected = (value) => value !== '';
-  const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
-  const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
-  const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
-  const isName = (value) => /^[a-zA-Z]{3,}\s*/.test(value);
-  const isEmail =(value)=> /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  // Attach real-time validation for each field
-  window.onload = () => {
-    validateField('currency', 'error5', isCurrencySelected, 'Select a currency.');
-    validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
-    validateField('name', 'error6', isName, ' Name must be 3 character');
-    validateField('name', 'error7', isEmail, 'Enter EmailID');
-    
-    validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
-    validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
-  };
+// Validation functions
+const isCurrencySelected = (value) => value !== '';
+const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value);
+const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
+const isTransactionIdValid = (value) => /^[1-9]\d{11}$/.test(value);
+const isNameValid = (value) => /^[a-zA-Z]{3,}\s*$/.test(value);
+const isEmailValid = (value) => /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
 
-  // Final validation and form submission
-  document.getElementById('donationForm').onsubmit = function (event) {
-    event.preventDefault(); // Prevent form submission for manual handling
 
-    // Clear all error messages
-    document.getElementById('error5').innerText = '';
-    document.getElementById('error3').innerText = '';
-    document.getElementById('error4').innerText = '';
-    document.getElementById('error6').innerText = '';
-    document.getElementById('error7').innerText = '';
-    let isValid = true;
+// Attach real-time validation for each field
+window.onload = () => {
+  validateField('currency', 'error5', isCurrencySelected, 'Select a currency.', 'change');
+  validateField('amount', 'error8', isAmountValid, 'Amount must be greater than 0.');
+  validateField('name', 'error6', isNameValid, 'Name must be at least 3 characters long.');
+  validateField('email', 'error7', isEmailValid, 'Enter a valid Email ID.');
+  validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
+  validateField('transactionid', 'error4', isTransactionIdValid, 'Transaction ID must be exactly 12 digits.');
+};
 
-    // Perform final validation
-    if (!isCurrencySelected(document.getElementById('currency').value)) {
-      document.getElementById('error5').innerText = 'Select a currency.';
-      isValid = false;
-    }
- if(document.getElementById('amount').value!==''){
-    if (!isAmountValid(document.getElementById('amount').value)  ) {
-      document.getElementById('error5').innerText = 'Amount must be greater than 0.';
-      isValid = false;
-    }
-  }
-  if(!isName(document.getElementById('name').value))
-  {
-    document.getElementById('error6').innerText = 'Name must be 3 character';
+// Final validation and form submission
+document.getElementById('donationForm').onsubmit = function (event) {
+  event.preventDefault(); // Prevent form submission for manual handling
+  let isValid = true;
+
+  // Perform final validation
+  if (!isCurrencySelected(document.getElementById('currency').value)) {
+    document.getElementById('error5').innerText = 'Select a currency.';
     isValid = false;
   }
-  if(!isEmail(document.getElementById('email').value))
-  {
-    document.getElementById('error7').innerText = 'Enter EmailID';
+  if (document.getElementById('amount').value !== '') {
+    if (!isAmountValid(document.getElementById('amount').value)) {
+      document.getElementById('error8').innerText = 'Amount must be greater than 0.';
+      isValid = false;
+    }
+  }
+  if (!isNameValid(document.getElementById('name').value)) {
+    document.getElementById('error6').innerText = 'Name must be at least 3 characters long.';
     isValid = false;
   }
-    if (!isPhoneNumberValid(document.getElementById('phone').value)) {
-      document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
-      isValid = false;
-    }
+  if (!isEmailValid(document.getElementById('email').value)) {
+    document.getElementById('error7').innerText = 'Enter a valid Email ID.';
+    isValid = false;
+  }
+  if (!isPhoneNumberValid(document.getElementById('phone').value)) {
+    document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
+    isValid = false;
+  }
+  if (!isTransactionIdValid(document.getElementById('transactionid').value)) {
+    document.getElementById('error4').innerText = 'Transaction ID must be exactly 12 digits.';
+    isValid = false;
+  }
 
-    if (!isTransactionIdValid(document.getElementById('transactionid').value)) {
-      document.getElementById('error4').innerText = 'Transaction ID must be exactly 12 digits';
-      isValid = false;
-    }
+  if (!isValid) {
+    return; // Stop submission if validation fails
+  }
 
-    if (!isValid) {
-      return; // Stop submission if validation fails
-    }
+  // AJAX Request to Server
+  const formData = new FormData(this);
 
-    // Prepare Form Data
-    const formData = new FormData(this);
-
-    // AJAX Request to Server
-    fetch('/kanavuhelp/processDonation', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === 'error') {
-          document.getElementById('error4').innerText = data.message; // Show server error
-        } else if (data.status === 'success') {
-          // Hide the donation modal if visible
-          const donationModalElement = document.getElementById('donationModal');
-          const donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
-          if (donationModalElement.classList.contains('show')) {
-            donationModal.hide();
-          }
-
-          // Show success modal
-          const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
-          successModal.show();
-
-          // Redirect on button click in the success modal
-          document.getElementById('donationRedirectBtn').addEventListener('click', function () {
-            window.location.href = data.redirect;
-          });
+  fetch('/kanavuhelp/processDonation', {
+    method: 'POST',
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === 'error') {
+        document.getElementById('error4').innerText = data.message;
+      } else if (data.status === 'success') {
+        // Hide the donation modal if visible
+        const donationModalElement = document.getElementById('donationModal');
+        const donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
+        if (donationModalElement.classList.contains('show')) {
+          donationModal.hide();
         }
-      })
-      .catch(() => {
-        document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
-      });
-  };
+
+        // Show success modal
+        const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
+        successModal.show();
+
+        // Redirect on button click in the success modal
+        document.getElementById('donationRedirectBtn').addEventListener('click', function () {
+          window.location.href = data.redirect;
+        });
+      }
+    })
+    .catch(() => {
+      document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
+    });
+};
 </script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->
