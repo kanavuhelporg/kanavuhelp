@@ -441,7 +441,7 @@
     </div>
   </nav>
   <div class="donate_img mt-5 pt-4">
-    <img src="<?=base_url('assets/img/fundpage.jpg')?>" style="width: 100%; height: 400px;">
+    <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
   </div>
   <div class="handwithheart_img text-center">
     <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">
@@ -918,8 +918,7 @@ function shareCause(url, title, imgurl) {
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
   const isName = (value) => /^[a-zA-Z]{3,}\s*/.test(value);
-  const isEmailValid = (value) => /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
-
+  const isEmail =(value)=> /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // Attach real-time validation for each field
   window.onload = () => {
     validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');

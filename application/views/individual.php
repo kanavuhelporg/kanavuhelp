@@ -948,8 +948,7 @@
     </div>
   </nav>
   <div class="donate_img mt-5 pt-4 text-center">
-    <img src="<?= base_url('assets/img/fundimage.jpg') ?>"
-      style="width: 100%; height: 400px; ">
+    <img src="<?php echo base_url('/assets/img/web4.jpg'); ?>" alt="No Image" class="img-fluid">
   </div>
 
   <!--<div class="mx-auto text-center mt-8 md:ml-20 ">
