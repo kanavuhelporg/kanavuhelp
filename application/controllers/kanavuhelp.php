@@ -67,7 +67,7 @@ class kanavuhelp extends CI_Controller
         $this->load->view('register.php');
     }
     public function login()
-    {
+    { 
         $this->load->view('login.php');
     }
     public function privacy_policy()
@@ -178,8 +178,8 @@ class kanavuhelp extends CI_Controller
         $cause_id = $this->input->post('cause_id');
         $user_id = $this->input->post('user_id');
         $amount = $this->input->post('amount');
-         $name = $this->input->post('name');
-         $emailid = $this->input->post('email');
+        $name = $this->input->post('name');
+        $emailid = $this->input->post('email');
         $phoneno = $this->input->post('phoneno');
         $transactionid = $this->input->post('transactionid');
         $currency_type = $this->input->post('currency_type');
@@ -362,27 +362,50 @@ class kanavuhelp extends CI_Controller
     {
         $postData = $this->input->post(null, true);
         $login = $this->UserModel->loginUser();
-        $returnUrl = $this->input->post('returnUrl');
-        if (isset($login[0]['id'])) {
+        $email = $this->input->post("loginemail");
+        $otp = $this->input->post("loginotp") ?? "";
+        
+        $countotp = strlen($otp);
+        // $returnUrl = $this->input->post('returnUrl');
+        if (isset($login[0]['id'])){
+            if($countotp == 0){
+            $this->session->set_userdata("userEmail",$email);
+            $this->session->set_userdata("path","login");           
+            redirect("send");
+            }
+            else{
+                $userLoggedIn = array(
+                    'userId' => $login[0]['id'],
+                    'userName' => $login[0]['email'],
+                );
+                $this->session->set_userdata($userLoggedIn);
+                redirect(base_url('/'));
+            }
+        } 
             // Set session data for the logged-in user
-            $userLoggedIn = array(
+           /*  $userLoggedIn = array(
                 'userId' => $login[0]['id'],
                 'userName' => $login[0]['name'],
             );
-            $this->session->set_userdata($userLoggedIn);
-            if (!empty($returnUrl)) {
-                redirect($returnUrl);
-            } else {
+            $this->session->set_userdata($userLoggedIn); */
+            // if (!empty($returnUrl)) {
+            //     redirect($returnUrl);
+            // } else {
                     // Redirect to 'kanavuhome' after successful login
-                ;
-                redirect(base_url('/'));
-            }
-        } else {
+                // redirect(base_url('/'));
+            // }
+         else {
             // If login fails, reload the login page with an error message
+            $this->session->unset_userdata("userEmail");
             $this->load->view('login.php');
             echo '<script>alert("Please enter registered credentials.");</script>';
         }
     }
+
+    public function verifiedLogin(){
+
+    }
+
     public function individualform_data()
     {
         $this->load->model('UserModel');
@@ -415,6 +438,11 @@ class kanavuhelp extends CI_Controller
 
         $causeId = $this->session->userdata('currentCauseId');
         $response = $this->UserModel->store3($data, $causeId);
+        $userLoggedIn = array(
+            'userId' => $this->session->userdata("Id"),
+            'userName' => $this->session->userdata('Name'),
+        );
+        $this->session->set_userdata($userLoggedIn);  
         redirect('donate');
 
         // if ($response) {
@@ -579,6 +607,7 @@ class kanavuhelp extends CI_Controller
         $to = $userEmail;
         $otp = rand(1000, 9999);
         $this->session->set_userdata('generated_otp', $otp);
+        $path = $this->session->userdata("path") ?? "individual";
        
         $message = "Your OTP is $otp to change the new password for your Kanavu Help account.";
 
@@ -590,7 +619,14 @@ class kanavuhelp extends CI_Controller
         if ($this->email->send()) {
             // Set a session variable to indicate OTP was sent
             $this->session->set_flashdata('otp_sent', true);
+            if($path == "login"){
+                $this->session->set_userdata("loginemail",$userEmail);
+                $this->session->unset_userdata("path");
+                redirect("/login");
+            }
+            else{
             redirect('/individual');// Redirect back to the same page
+            }
         } else {
             echo $this->email->print_debugger(); // Print debug info if sending fails
         }
@@ -639,20 +675,32 @@ class kanavuhelp extends CI_Controller
             'category' => 'user',
         ];
 
+        $userLoggedIn = array(
+            'Id' => $this->input->post('name'),
+            'Name' => $this->input->post('email'),
+        );
+      
         $form_selected_text = $this->input->post('category');
         $email = $this->input->post('email');
+        $checkregister = $this->UserModel->checkUserexist($email);
 
-        $this->db->insert('user', $userData);
-        $userId = $this->db->insert_id();
-        $this->session->set_userdata('currentUserId', $userId);
-        $this->session->set_userdata('form_selected_text', $form_selected_text);
-        $this->session->set_userdata('userEmail', $email);
-
-        $this->db->insert('individualform', $causeData);
-        $causeId = $this->db->insert_id();
-        $this->session->set_userdata('currentCauseId', $causeId);
-
-        redirect('/send');
+        if($checkregister){
+            $this->session->set_userdata($userLoggedIn);       
+            redirect("/send"); 
+        }
+        else{
+            $this->db->insert('user', $userData);
+            $userId = $this->db->insert_id();
+            $this->session->set_userdata('currentUserId', $userId);
+            $this->session->set_userdata('form_selected_text', $form_selected_text);
+            $this->session->set_userdata('userEmail', $email);
+    
+            $this->db->insert('individualform', $causeData);
+            $causeId = $this->db->insert_id();
+            $this->session->set_userdata('currentCauseId', $causeId);
+            $this->session->set_userdata($userLoggedIn);     
+            redirect("/send"); 
+        }
     }
 
     public function updateCauseStep2(){
