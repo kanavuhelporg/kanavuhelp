@@ -28,19 +28,19 @@
             background-color: #EB2D32;
         } */
         .btnsignin {
-    width: 100%;
-    border-radius: 10px;
-    color: white;
-    background-color: #EB2D32;
-    border: none; /* Ensures no border is applied */
-    transition: none; /* Removes any transition effect */
-}
+         width: 100%;
+         border-radius: 10px;
+         color: white;
+         background-color: #EB2D32;
+         border: none; /* Ensures no border is applied */
+         transition: none; /* Removes any transition effect */
+      }
 
-.btnsignin:hover {
+   .btnsignin:hover {
     background-color: #EB2D32; /* Keep the button color the same on hover */
     color: white; /* Keep text color the same */
     border: none; /* Ensure no border on hover */
-}
+      }
         .atag {
             text-decoration: underline;
             color: #EB2D32;

@@ -216,11 +216,22 @@ class UserModel extends CI_Model
 	public function loginUser()
 	{
 		$postData = $this->input->post(null, true);
-		$Email = $postData['exampleInputEmail1'];
-		$Password = $postData['exampleInputpassword1'];
-		$query = "SELECT * FROM user WHERE email = '$Email' AND password = '$Password'";
-		$count = $this->db->query($query);
-		return $count->result_array();
+		$email = $postData['loginemail'];
+		// $Password = $postData['exampleInputpassword1'];
+		// $query = "SELECT * FROM user WHERE email = '$Email' AND password = '$Password'";
+		// $count = $this->db->query($query);
+		$verifyemail = $this->db->query("SELECT * FROM user WHERE email = '$email'");
+		return $verifyemail->result_array();
+	}
+
+	public function checkUserexist($email){
+		$verifyexist = $this->db->query("SELECT email FROM user WHERE email = '$email'");
+		if($verifyexist->num_rows() > 0){
+			return true;
+		}
+		else{
+			false;
+		}
 	}
 
 	// Method to register user

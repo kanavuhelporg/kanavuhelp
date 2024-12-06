@@ -949,7 +949,7 @@
   </nav>
   <div class="donate_img mt-5 pt-4 text-center">
     <img src="<?= base_url('assets/img/fundimage.jpg') ?>"
-      style="width: 100%; height: 400px; ">
+      style="height: 400px;" class="img-fluid">
   </div>
 
   <!--<div class="mx-auto text-center mt-8 md:ml-20 ">
@@ -1262,7 +1262,7 @@
 
         console.log("Entered OTP:", otp); // Print the entered OTP
         console.log("Generated OTP:", generatedOtp); // Print the generated OTP
-        if (otp === generatedOtp) {
+        if (otp === generatedOtp){
           // Manually hide the modal if the Bootstrap instance is not working
           const myModalElement = document.getElementById('myModal');
           myModalElement.classList.remove('show');

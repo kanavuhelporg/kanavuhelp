@@ -265,6 +265,18 @@
   {
     width:50%;
   }
+
+  input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
     @media (min-width: 767px) and (max-width: 990px) {
       .line{
       margin-left:39%;
@@ -472,7 +484,7 @@
   <!-- Phone Field -->
   <div class="mb-3">
     <label for="phone" class="form-label">Phone Number:<span class="text-danger">*</span></label>
-    <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter your phone number" required>
+    <input type="number" onkeypress="if(this.value.length == 10) return false" class="form-control" name="phone" id="phone" placeholder="Enter your phone number" required>
     <p id="phone-error" style="color:red"></p>
   </div>
 
@@ -597,6 +609,12 @@ function validateForm() {
 
   return isNameValid && isEmailValid && isPhoneValid && isMessageValid;
 }
+
+function maxLengthCheck(object)
+  {
+    if (object.value.length > object.maxLength)
+      object.value = object.value.slice(0, object.maxLength)
+  }
 
 </script>
 </div>
