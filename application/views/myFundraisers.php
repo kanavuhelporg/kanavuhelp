@@ -307,7 +307,7 @@
 
       <div class="container d-flex justify-content-center align-items-center mt-5">
         
-      <a href="<?= base_url('helpus/' .str_replace(' ','-', $cause->name).'-'. $cause->id ) ?>" style="text-decoration:none;color:black">
+      <a href="<?=base_url('helpus/' .str_replace(' ','-', $cause->name).'-'. $cause->id ) ?>" style="text-decoration:none;color:black;">
           
       <div class="card mb-3">
             <!-- Use img-fluid and custom inline styles for width and height -->

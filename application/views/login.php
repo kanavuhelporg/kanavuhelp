@@ -181,6 +181,42 @@
   <?php endif; ?>
   <!---------------------------otp-section-end------------------------------>
 
+  <!----------------------not-registered-modal------------------------------>
+
+  <?php if($this->session->flashdata("not_registered_user")):?>  
+
+    <script>
+      // Automatically trigger the OTP modal when the page loads
+      window.onload = function() {
+        var myModal = new bootstrap.Modal(document.getElementById("newuser"), {
+          backdrop: 'static',
+          keyboard: false
+        });
+        myModal.show();
+      };
+    </script>
+
+    <div id="newuser" class="modal bg-transparent fade">
+         <div class="modal-dialog rounded modal-lg">
+           <div class="modal-content">
+             <div class="modal-header">
+                 <span class="text-danger h4 fw-bolder">This Email Id is not registered yet.</span>
+                 <button data-bs-dismiss="modal" class="btn btn-close"></button>
+             </div>
+
+             <div class="modal-body">
+                  <p class="fs-5 text-secondary">Interested in joining GetFundraiser?</p>
+                 <p style="color:black;" class="d-inline fs-5"><span>Want to start your own fundraising campaign? GetFundraiser makes it easy! Click <span><a class="text-danger h4 fw-bold" href="<?= base_url('/individual') ?>">here</a></span> to create your campaign today.</p>
+             </div>
+           </div>
+         </div>
+    </div>
+   
+     <?php $this->session->unset_flashdata("not_registered_user");?>
+
+  <?php endif;?>
+  <!----------------------not-registered-modal-end-------------------------->
+
 <script>
     
     let otpstatus = false;

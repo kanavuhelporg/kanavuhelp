@@ -96,7 +96,7 @@ class UserModel extends CI_Model
 
 	public function store3($data, $id)
 	{
-		$this->db->where('id', $id); // Specify the condition
+		$this->db->where('user_id', $id); // Specify the condition
 		$success = $this->db->update('individualform', $data); // Update the table with data
 
 		// Debug: Log the query and errors
@@ -132,9 +132,10 @@ class UserModel extends CI_Model
 	// UserModel.php
 	public function get_user_causes($user_id)
 	{
-		$this->db->where('user_id', $user_id);
-		$this->db->order_by('created_at', 'DESC'); // Adjust 'user_id' to match your database field name
-		$query = $this->db->get('individualform'); // Replace with your table name
+		// $this->db->where('user_id', $user_id);
+		// $this->db->order_by('created_at', 'DESC'); // Adjust 'user_id' to match your database field name
+		// $query = $this->db->get('individualform'); // Replace with your table name
+		$query = $this->db->query("SELECT * FROM individualform WHERE user_id = $user_id");
 		return $query->result();
 	}
 
@@ -213,25 +214,28 @@ class UserModel extends CI_Model
 		return $query->row();
 	}
 
-	public function loginUser()
+	public function loginUser($email)
 	{
-		$postData = $this->input->post(null, true);
-		$email = $postData['loginemail'];
-		// $Password = $postData['exampleInputpassword1'];
-		// $query = "SELECT * FROM user WHERE email = '$Email' AND password = '$Password'";
-		// $count = $this->db->query($query);
 		$verifyemail = $this->db->query("SELECT * FROM user WHERE email = '$email'");
-		return $verifyemail->result_array();
+		return $verifyemail;
 	}
 
 	public function checkUserexist($email){
-		$verifyexist = $this->db->query("SELECT email FROM user WHERE email = '$email'");
-		if($verifyexist->num_rows() > 0){
+		$verifyexist = $this->db->query("SELECT * FROM user WHERE email = '$email'");
+		return $verifyexist;
+	}
+
+	public function checkForm($userid){
+		$query = $this->db->query("SELECT user_id FROM individualform WHERE user_id = $userid");
+		if($query->num_rows() > 0){
+			$checkform = $query->row();
+			$causeid = $checkform->user_id;
+            $this->session->set_userdata('currentCauseId', $causeid);
 			return true;
 		}
 		else{
-			false;
-		}
+			return false;
+		};
 	}
 
 	// Method to register user

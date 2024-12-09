@@ -1,47 +1,3 @@
-<!-- Check if flash data 'success' exists -->
-<?php if ($this->session->flashdata('success')): ?>
-  <script>
-    // Show the success message in a modal when the page loads
-    document.addEventListener("DOMContentLoaded", function() {
-      // Trigger the modal to show
-      var successMessage = "<?php echo $this->session->flashdata('success'); ?>";
-      showSuccessModal(successMessage);
-    });
-
-    // Function to display the modal with the success message
-    function showSuccessModal(message) {
-      // Create modal HTML
-      var modalHTML = `
-        <div class="modal" tabindex="-1" id="successModal" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Thank You</h5>
-              </div>
-              <div class="modal-body">
-                <p>${message}</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-
-      // Append the modal to the body
-      document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-      // Show the modal
-      var modal = new bootstrap.Modal(document.getElementById('successModal'));
-      modal.show();
-    }
-  </script>
-<?php endif; ?>
-
-<!-- Your other homepage content here -->
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -1382,7 +1338,7 @@ function shareCause(url, title, imgurl) {
 
   <!-- Donation Modal -->
 <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header border-0">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -1462,6 +1418,8 @@ function shareCause(url, title, imgurl) {
       </div>
     </div>
   </div>
+
+  
   <div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered ">
       <div class="modal-content bg-red-modal">

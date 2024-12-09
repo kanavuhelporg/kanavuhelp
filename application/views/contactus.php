@@ -426,9 +426,8 @@ input[type=number] {
     </div>
   </nav>
   <div class="donate_img mt-5 pt-4 text-center">
-  <img src="<?= base_url('assets/img/contact.png') ?>" 
-       style="width: 100%; height: 400px; ">
-</div>
+    <img src="<?php echo base_url('/assets/img/contact-us.jpg'); ?>" alt="No Image" class="img-fluid">
+  </div>
   
   <div class="row text-center mt-4 mb-5" style="margin-left:0px;margin-right:0px;">
     <!-- Location Section -->

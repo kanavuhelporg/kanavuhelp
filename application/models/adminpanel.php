@@ -30,7 +30,6 @@ class adminpanel extends CI_Model
         $this->db->join('user', 'user.id = individualform.user_id');
         $this->db->order_by('individualform.created_at', 'DESC'); // Order by 'created_at' in descending order (newest first)
         $query = $this->db->get();
-
         return $query->result();
     }
 
