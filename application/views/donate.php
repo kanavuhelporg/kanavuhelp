@@ -19,7 +19,7 @@
 <!-- Bootstrap JS and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <style>
     body {
       font-family: 'Sen', sans-serif;
@@ -81,9 +81,9 @@
       transform: translateY(-50%);
     }
     .bg-red-modal {
-  background-color: grey;
-  color: white; /* Adjust the text color if needed for better contrast */
-}
+     background-color: grey;
+     color: white; /* Adjust the text color if needed for better contrast */
+     }
     .imgtext1 strong,
     .imgtext2 strong {
       font-weight: bolder;
@@ -92,12 +92,12 @@
     margin-right: 10px; 
 } */
 
-.bi-share {
+    .bi-share {
     font-size: 1.3rem; /* Adjust the size of the share icon */
     cursor: pointer;
     color: #E01A2B;
     margin-left: auto; /* Pushes the share icon to the far right in its flex container */
-}
+    }
 
     .imgtext11,
     .imgtext22 {
@@ -149,6 +149,7 @@
       color: white;
       background-color: #EB2D32;
     }
+
     .donatefor {
       border: 1px solid #E01A2B;
       color: #E01A2B;
@@ -175,8 +176,6 @@
       margin-bottom: 20px;
       
     }
-
- 
 
     .card-title {
       font-size: 18px;
@@ -258,7 +257,7 @@
       }
 
     /* donate  image below nav bar */
-          .donate_img {
+    .donate_img {
         width: 100%; /* Ensure the parent container takes full width */
         position: relative;
     }
@@ -375,71 +374,9 @@
     </style>
     </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="<?=base_url('')?>">
-        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title">
-            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color: rgba(235, 45, 50, 1)">Donate</a>
-                    </li>
-                    <li class="nav-item">
-
-                    <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>" >Contact Us</a>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center ms-auto">
-  <?php if ($this->session->userdata('userId')): ?>
-    <div class="d-flex align-items-center">
-      <div class="dropdown" id="userProfile">
-        <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-            style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-        </div>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-          <li>
-            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
-              <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  <?php else: ?>
-    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-  <?php endif; ?>
-</div>
-        
-      </div>
-    </div>
-  </nav>
+<nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    
+</nav>
   <div class="donate_img mt-5 pt-4">
     <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
   </div>
@@ -472,7 +409,7 @@
     <button onclick="location.href='<?php echo site_url('data/fetch/agriculture'); ?>'">Agriculture</button> -->
 
 <!-- Fundraiser Cards with Fixed Size -->
-<div class="container">
+<div class="container pt-4">
   <div class="row" id="fundraiserCards">
     <?php if (!empty($fundraisers)): ?>
         <?php 
@@ -523,7 +460,7 @@
             </div>
         <?php endforeach; ?>
     <?php else: ?>
-        <p>No fundraisers available at the moment.</p>
+        <p class="text-center">No fundraisers available at the moment.</p>
     <?php endif; ?>
   </div>
 
@@ -535,10 +472,39 @@
   <?php endif; ?>
 
 </div><br><br>
-
+<!----------------footer----------------------->
+<div id="footer">
+      
+</div>
+<!----------------footer-end------------------->
 <script>
 let allFundraisers = <?= json_encode($fundraisers) ?>;
 let currentIndex = 3; // Already shown 3 cards
+
+
+$.ajax({
+      type:"get",
+      url:"kanavuhelp/getHeader",
+      success:(result)=>{
+           document.getElementById("header").innerHTML = result;
+           document.getElementById("donatepage").classList.add("text-danger");
+      },
+      error:(error)=>{
+           document.getElementById("header").innerHTML = error;
+      }
+    }); 
+
+    $.ajax({
+      type:"get",
+      url:"kanavuhelp/getFooter",
+      success:(result)=>{
+           document.getElementById("footer").innerHTML = result;
+      },
+      error:(error)=>{
+           document.getElementById("footer").innerHTML = error;
+      }
+    }); 
+
 
 function loadMoreFundraisers() {
     const fundraiserContainer = document.getElementById('fundraiserCards');
@@ -674,37 +640,7 @@ function shareCause(url, title, imgurl) {
   });
 </script>-->
 
-<div class="footer">
-      <footer class="footer mt-auto py-3">
-        <div class="container">
-          <h5 class="text-center">Kanavu.help</h5>
-          <div class="row text-center">
-            <div class="col-12">
-              <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
-                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-                <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
-                <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="social-icons d-flex justify-content-center text-center my-2">
-          <a href="https://www.facebook.com/" target="_blank" class="mx-2">
-            <img src="<?= base_url('assets/img/facebook-f.svg')?>" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-          <a href="https://twitter.com/" target="_blank" class="mx-2">
-            <img src="<?= base_url('assets/img/twitter.svg')?>" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-          <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
-            <img src="<?= base_url('assets/img/linkedin-in.svg')?>" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-        </div>
-        <img src="<?= base_url('assets/img/footer-secured-card 1.svg')?>" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
-          style="max-width: 200px;">
-        <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
-      </footer>
-    </div>
+
 
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
@@ -943,11 +879,11 @@ function shareCause(url, title, imgurl) {
     let isValid = true;
 
     // Perform final validation
-    if (!isCurrencySelected(document.getElementById('currency').value)) {
+  if (!isCurrencySelected(document.getElementById('currency').value)) {
       document.getElementById('error5').innerText = 'Please select a currency.';
       isValid = false;
     }
- if(document.getElementById('amount').value!==''){
+  if(document.getElementById('amount').value!==''){
     if (!isAmountValid(document.getElementById('amount').value)  ) {
       document.getElementById('error5').innerText = 'Amount must be greater than 0.';
       isValid = false;
@@ -958,11 +894,13 @@ function shareCause(url, title, imgurl) {
     document.getElementById('error6').innerText = 'Enter Valid Name';
     isValid = false;
   }
+
   if(!isEmail(document.getElementById('email').value))
   {
     document.getElementById('error7').innerText = 'Enter Valid EmailID';
     isValid = false;
   }
+
     if (!isPhoneNumberValid(document.getElementById('phone').value)) {
       document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
       isValid = false;

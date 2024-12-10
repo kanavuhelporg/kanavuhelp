@@ -16,21 +16,53 @@ class adminpanel extends CI_Model
     {
         $this->db->select('donation_for_cause.*');  // Select columns from both tables
         $this->db->from('donation_for_cause');
+        $this->db->limit(5);
          // Join user table on user_id
         // Order by created_at in descending order
         $query = $this->db->get();
 
         return $query->result();
     }
+
+    public function get_total_transaction(){
+        $query = $this->db->query("SELECT * FROM donation_for_cause");
+        $donation = $query->result_array();
+        return count($donation);
+    }
+
+    public function get_verification_list($counts){
+        $this->db->select('donation_for_cause.*');
+        $this->db->from('donation_for_cause');
+        $this->db->limit(5,$counts);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function get_cause_details()
     {
         // Include only rows where 'verified' is 1
         $this->db->select('individualform.*, user.name as username');
         $this->db->from('individualform');
         $this->db->join('user', 'user.id = individualform.user_id');
-        $this->db->order_by('individualform.created_at', 'DESC'); // Order by 'created_at' in descending order (newest first)
+        $this->db->order_by('individualform.created_at', 'DESC');
+        $this->db->limit(5); // Order by 'created_at' in descending order (newest first)
         $query = $this->db->get();
+        return $query->result();
+    }
 
+    public function get_total_causes(){
+        $query = $this->db->query("SELECT * FROM individualform");
+        $causes = $query->result_array();
+        return count($causes);
+    }
+
+    public function get_causes_list($counts){
+        $this->db->select('individualform.*, user.name as username');
+        $this->db->from('individualform');
+        $this->db->join('user','user.id = individualform.user_id');
+        $this->db->order_by('individualform.created_at', 'DESC');
+        $this->db->limit(5,$counts); // Order by 'created_at' in descending order (newest first)
+        $query = $this->db->get();
         return $query->result();
     }
 
@@ -45,6 +77,7 @@ class adminpanel extends CI_Model
         $result = $this->db->update('individualform', $data);
         return $result;
     }
+
     public function contactdetails()
     {
         $this->db->select('contact_us.*, user.name, user.email');  // Select columns from both tables
@@ -55,6 +88,12 @@ class adminpanel extends CI_Model
 
         return $query->result();
     }
+
+    public function get_enquiries_list($counts){
+        $query = $this->db->query("SELECT * FROM contact_us ORDER BY created_at DESC LIMIT 10 OFFSET $counts");
+        return $query->result();
+    }
+
     public function getDonationById($id)
     {
         $this->db->select('donation_for_cause.*, user.name, user.email');  // Select columns from both tables
@@ -65,6 +104,7 @@ class adminpanel extends CI_Model
         $query = $this->db->get();
         return $query->row();  // Return single row as an object
     }
+
     public function updateDonationStatus($id, $status, $verifiedBy)
     {
 
@@ -77,6 +117,7 @@ class adminpanel extends CI_Model
         $result = $this->db->update('donation_for_cause', $data);
         return $result;  // TRUE on success, FALSE on failure
     }
+
     public function getDonationById1($id)
     {
         $this->db->select('cause_id, amount');
@@ -90,4 +131,6 @@ class adminpanel extends CI_Model
         $this->db->where('id', $cause_id);
         return $this->db->update('individualform');
     }
+
+
 }

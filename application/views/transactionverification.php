@@ -204,6 +204,9 @@
         color:black;
       }
 
+      #bg-transaction{
+        background-color:rgb(248, 245, 245);}
+
       @media screen and (max-width:768px) {
            #search-bar{
             display:none;
@@ -264,35 +267,36 @@
               
          </div><!-----------side-bar-end-------------->
             
-         <div class="col-md-10 h-100"><!-----------main-dashboard------------------------->
-         
-         
-         
+        <div class="col-md-10 h-100"><!-----------main-dashboard------------------------->
+          
         <div style="overflow:auto" class="mt-3 px-4"><!----------------table--------------->
-        <table class="table table-responsive table-borderless">
+        <table class="table table-borderless">
             <thead>
             <tr class="ps-gray">
             <th>S.No</th><th>Name</th><th>Email</th><th>Mobile</th><th>Amount</th><th>TransactionId</th><th>Verified status</th><th>Action</th>
             </tr>
             </thead>
-            <tbody id="ps-coords">
-            <?php if (!empty($donations)): ?>
+            <tbody id="verificationlist">
+            <?php if (!empty($donations)): $i = $sno + 1;?>
             <?php foreach ($donations as $index => $donation): ?>
                 <tr>
-                    <td><?php echo $index + 1; ?></td>
+                    <td><?php echo $i; ?></td>
                     <td><?php echo htmlspecialchars($donation->name); ?></td>
                     <td><?php echo htmlspecialchars($donation->email); ?></td>
                     <td><?php echo htmlspecialchars($donation->phoneno); ?></td>
                     <td><?php echo htmlspecialchars($donation->amount); ?></td>
                     <td><?php echo htmlspecialchars($donation->transactionid); ?></td>
                     <td><?php echo htmlspecialchars($donation->status == 1 ? 'Yes' : 'No'); ?></td>
-                    <td>
-                    <a href="#" onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDonationModal">
-    Edit
-</a>
+                    <td class="d-flex">
+                    <button onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary" data-toggle="modal" data-target="#editDonationModal">
+                    Edit
+                    </button>&nbsp;
+                    <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->name;?>')" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
+                    Status
+                    </button>
                     </td>
                 </tr>
-            <?php endforeach; ?>
+            <?php ++$i; endforeach; ?>
         <?php else: ?>
             <tr>
                 <td colspan="8" style="text-align: center;">No records found.</td>
@@ -302,6 +306,89 @@
             </table>
 
         </div> <!----------------table-end------->
+
+ <!-----------------pagination---------------------->
+ <div class="d-flex justify-content-center">        
+<div class="col-md-6 py-2 d-flex justify-content-around align-items-center">
+
+<?php 
+if(isset($counts)){
+  if($counts > 0){
+  $countsperpage = 5;
+  $noofpages = ceil($counts / $countsperpage) - 1;
+  $totalpagesarr = createarr($noofpages);
+  $totalpages = count($totalpagesarr) ;
+  $initialindex = 0;
+  $lastindex = 5;
+  $pages = array_slice($totalpagesarr,$initialindex,$lastindex);
+  echo "<a href='changeVerificationpagesetup?initialindex=0' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-left-long'></i></a>";
+  $j = 0;
+  foreach ($pages as $key => $value) {
+    $count = $countsperpage * $value;
+    $pageno = $value + 1;
+   
+    if($pageno == 5){
+      echo "<a style='width:35px;height:35px;' href='changeVerificationpagesetup?initialindex=$value' class='".($j==0 ? 'active-page' : '')." active text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$pageno</a>";}
+    else{
+      echo "<button style='width:35px;height:35px;' onclick='displayVerificationpage($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>";
+    }
+    ++$j;
+  }
+
+  echo "<span>...</span>";
+  $totalcount = ($totalpages - $lastindex);
+  echo "<a href='changeVerificationpagesetup?initialindex=$totalcount' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='active-page text-white text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$totalpages</a>";
+  
+  $newindex = $initialindex+$lastindex; 
+  echo "<a href='changeVerificationpagesetup?initialindex=$newindex' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-right-long'></i></a>";
+}
+else{
+  echo "<span>No pages available</span>";
+}
+}
+
+if(isset($initialindex) && isset($newcounts)){
+  
+  $countsperpage = 5;
+  $noofpages = ceil($newcounts / $countsperpage) - 1;
+  $totalpagesarr = createarr($noofpages);
+  $totalpages = count($totalpagesarr);
+  $lastindex = 5;
+  $start = $initialindex > $noofpages ? 0 : $initialindex;
+  $pages = array_slice($totalpagesarr,$start,$lastindex);
+  $start == 0 ? $prevlist = 0 : (($start - $lastindex) < 0 ? $prevlist = 0 : $prevlist = $start - $lastindex) ;
+  echo "<a href='changeVerificationpagesetup?initialindex=$prevlist' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-left-long'></i></a>";
+
+  $j = 0;
+
+  foreach ($pages as $key => $value) {
+    $count = $countsperpage * $value;
+    $pageno = $value + 1;
+    
+    if($pageno == 5 || $pageno - $start == 5){
+      echo $pageno == $totalpages ? "<button style='width:35px;height:35px;'onclick='displayVerificationpage($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>" : "<a href='changeVerificationpagesetup?initialindex=".($pageno - 1)."' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='".($j==0 ? 'active-page' : '')." active text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$pageno</a>"; }
+    else{
+      echo "<button style='width:35px;height:35px;'onclick='displayVerificationpage($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>";
+    }
+    ++$j;
+  }
+
+  echo "<span>...</span>";
+  $totalcount = ($totalpages - $lastindex);
+  echo "<a href='changeVerificationpagesetup?initialindex=$totalcount' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='active-page text-white text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$totalpages</a>";
+  
+  $newindex = $start + $lastindex; 
+  echo "<a href='changeVerificationpagesetup?initialindex=".($totalpages - $start <= $lastindex ? $totalcount : $newindex)."'  style='cursor:pointer;' class='text-decoration-none text-dark'><i class='fa-solid fa-arrow-right-long'></i></a>"; 
+}
+
+function createarr($noofpages){
+  return range(0,$noofpages);
+}
+?>
+
+</div>
+</div><!--------------pagination-end--------------------->
+
         <script>
 function editDonation(donation) {
     // Populate modal fields with donation data
@@ -358,6 +445,36 @@ function editDonation(donation) {
     </div>
 </div>
 
+<!------------------------------send-mail-modal------------------------------>
+
+<div id="sendmail" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+             <h5 id="mailto" class="text-danger">Send Email</h5>
+             <button data-dismiss="modal" class="btn btn-close"></button>
+          </div>
+
+          <div class="modal-body">
+              <div id="statusheading" class="d-flex justify-content-between">
+
+              </div>
+              <div contenteditable style="min-height:50px;max-height:max-xontent;outline:none;"  class="w-100 border p-1" name="sendemail" id="causestatus">
+
+              </div>  
+              <div id="sendmailbtn" class="mt-3">
+                <button class="btn btn-danger fw-bold">Send</button>
+              </div>
+          </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!------------------------------send-mail-end-------------------------------->
+
+
 <script>
 
 $.ajax({
@@ -365,6 +482,7 @@ $.ajax({
       url:"admin/sidemenu",
       success:(result)=>{
            document.getElementById("menu-bar").innerHTML = result;
+          //  document.getElementById("bg-transaction").backgroundColor = "rgb(248, 245, 245)";
       },
       error:(error)=>{
            document.getElementById("menu-bar").innerHTML = error;
@@ -421,6 +539,66 @@ $('#editDonationForm').on('submit', function(event) {
         }
     });
 });
+
+function displayVerificationpage(counts,index){
+
+activepage = document.querySelectorAll(".active");
+let l = activepage.length;
+for(let i=0; i < l ; i++){
+if(i == index ){
+activepage[i].classList.add("active-page");
+}
+else{
+if(activepage[i].classList.contains("active-page")){
+activepage[i].classList.remove("active-page")
+}
+}   
+}   
+
+$.ajax({
+type:"get",
+url:"admin/displayVerificationpage",
+data:{"count":counts},
+success:function(result){
+document.getElementById('verificationlist').innerHTML = result;
+},
+error:function(error){
+document.getElementById('verificationlist').innerHTML = error;
+}
+});
+} 
+
+
+function setUrl(email,username){
+        document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${email}</span>`;
+        document.getElementById("causestatus").innerHTML = "";
+        document.getElementById("statusheading").innerHTML = `<span class="text-danger h5">Verification Status</span>
+                <div>
+                <label for="verified" class="text-success h5">Verified</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="verified" type="radio" name="status">&nbsp;&nbsp;
+                <label for="verified" class="text-warning h5">Rejected</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="unverified" type="radio" name="status"></div>`;
+        document.getElementById("sendmailbtn").innerHTML = `<button onclick='sendEmail("${email}")' class='btn btn-danger'>Send</button>`;
+    }
+
+    function sendEmail(email){
+        let message = document.getElementById("causestatus").innerText;
+        let a = document.createElement("a");
+        a.href = `sendcauseVerficationstatus?email=${email}&message=${message}`;
+        a.dispatchEvent(new MouseEvent("click"));
+    }
+
+
+    function setAutomail(mailfor,username){
+        let status = mailfor.value;
+        if(status == "verified"){
+        document.getElementById("causestatus").innerHTML = `
+        <p>Hai!, <span class="text-success">${username}</span></p>Thank you for supporting our Kanavu Help campaign. Your transaction ID is [Transaction ID]."
+        Your transaction received thank you.
+        `;
+        }
+        else{
+            document.getElementById("causestatus").innerHTML = `<p>Hai!, <span class="text-success">${username}</span>The transaction ID you entered does not match our records.</p>`;
+        }
+    }
 
 </script>
 

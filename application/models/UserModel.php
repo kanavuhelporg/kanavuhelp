@@ -96,7 +96,7 @@ class UserModel extends CI_Model
 
 	public function store3($data, $id)
 	{
-		$this->db->where('id', $id); // Specify the condition
+		$this->db->where('user_id', $id); // Specify the condition
 		$success = $this->db->update('individualform', $data); // Update the table with data
 
 		// Debug: Log the query and errors
@@ -132,9 +132,10 @@ class UserModel extends CI_Model
 	// UserModel.php
 	public function get_user_causes($user_id)
 	{
-		$this->db->where('user_id', $user_id);
-		$this->db->order_by('created_at', 'DESC'); // Adjust 'user_id' to match your database field name
-		$query = $this->db->get('individualform'); // Replace with your table name
+		// $this->db->where('user_id', $user_id);
+		// $this->db->order_by('created_at', 'DESC'); // Adjust 'user_id' to match your database field name
+		// $query = $this->db->get('individualform'); // Replace with your table name
+		$query = $this->db->query("SELECT * FROM individualform WHERE user_id = $user_id");
 		return $query->result();
 	}
 
@@ -173,11 +174,13 @@ class UserModel extends CI_Model
 	public function get_cause_details()
 	{
 		$this->db->where('verified', 1); // Include only rows where 'verified' is 1
-		$this->db->order_by('created_at', 'DESC'); // Order by 'created_at' in descending order (newest first)
+		$this->db->order_by('created_at', 'DESC');
+		$this->db->limit(10); // Order by 'created_at' in descending order (newest first)
 		$query = $this->db->get('individualform');
-
+       
 		return $query->result();
 	}
+
 	public function get_category()
 	{
 		$query = $this->db->get('category');
@@ -213,15 +216,34 @@ class UserModel extends CI_Model
 		return $query->row();
 	}
 
-	public function loginUser()
-	{
-		$postData = $this->input->post(null, true);
-		$Email = $postData['exampleInputEmail1'];
-		$Password = $postData['exampleInputpassword1'];
-		$query = "SELECT * FROM user WHERE email = '$Email' AND password = '$Password'";
-		$count = $this->db->query($query);
-		return $count->result_array();
+	public function get_enquiries_list($counts){
+		
 	}
+
+	public function loginUser($email)
+	{
+		$verifyemail = $this->db->query("SELECT * FROM user WHERE email = '$email'");
+		return $verifyemail;
+	}
+
+	public function checkUserexist($email){
+		$verifyexist = $this->db->query("SELECT * FROM user WHERE email = '$email'");
+		return $verifyexist;
+	}
+
+	/* public function checkForm($userid){
+		$query = $this->db->query("SELECT user_id FROM individualform WHERE user_id = $userid");
+		if($query->num_rows() > 0){
+			$checkform = $query->row();
+			$causeid = $checkform->user_id;
+            $this->session->set_userdata('currentCauseId', $causeid);
+			return true;
+		}
+		else{
+			$this->session->set_userdata('currentCauseId', $userid);
+			return true;
+		};
+	} */
 
 	// Method to register user
 	public function registerUser($name, $email, $password)

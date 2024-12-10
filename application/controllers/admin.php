@@ -8,7 +8,6 @@ class admin extends CI_Controller
         parent::__construct();
         $this->load->library('session');
         $this->load->model('adminpanel');
-
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('cookie');
@@ -46,7 +45,6 @@ class admin extends CI_Controller
         $this->load->view("kanavuhelplogo");
     }
 
-
     public function admin()
     {
         $this->load->view('admin.php');
@@ -62,6 +60,7 @@ class admin extends CI_Controller
         // Load the admin dashboard view
         $this->load->view('admin', $data);
     }
+
     public function adminLogin()
     {
         $postData = $this->input->post(null, true);
@@ -86,14 +85,150 @@ class admin extends CI_Controller
 
     public function causesverification()
     {
+
+        if (!$this->session->userdata('userId')) {
+            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        }
         $data['fundraisers'] = $this->adminpanel->get_cause_details();
+        $data['counts'] = $this->adminpanel->get_total_causes();
+        $data['sno'] = 0;
+        $this->session->set_userdata('causescounts',$data['counts']);
         $this->load->view('causesverification.php', $data);
     }
+
+    public function displayCauses(){
+        $counts = $this->input->get("count");
+        $fundraisers = $this->adminpanel->get_causes_list($counts);
+        if(!empty($fundraisers)){    
+        foreach ($fundraisers as $index => $donation){
+               echo "<tr>
+                    <td>".($counts + 1)."</td>
+                    <td>$donation->name</td>
+                    <td>$donation->email</td>
+                    <td>$donation->phone</td>
+                    <td>$donation->amount</td>
+                    <td>$donation->location</td>
+                    <td>$donation->age</td>
+                    <td>$donation->end_date</td>
+                    <td>$donation->cause_heading</td>
+                    <td>$donation->cause_description</td>
+                    <td>$donation->created_at</td>
+                    <td>$donation->username</td>
+                    <td>$donation->raised_amount</td>
+                    <td>".($donation->verified == 1 ? 'Yes' : 'No')."</td>
+                    <td class='d-flex'>
+                        
+                        <button onclick='editDonation(".json_encode($donation).")' class='btn btn-primary fw-bold' data-toggle='modal' data-target='#editDonationModal'>
+                            Edit
+                        </button>&nbsp;&nbsp;
+                        <button onclick='setUrl(`$donation->email`,`$donation->username`)' class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
+                            Status
+                        </button>
+                </td>
+            </tr>";     
+               ++$counts;
+            }
+            }
+            else{
+               echo "<tr><td colspan='14'>No causes found</td></tr>";
+            }
+        }
+
+    public function changeCausespagepagesetup(){
+        if (!$this->session->userdata('userId')) {
+            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        }
+            $initialindex = $this->input->get('initialindex');
+            if($initialindex < 0){
+               $data['initialindex'] = 0;
+               echo "<script>
+                  window.alert('No pages are available to show.')
+                    </script>";
+            } 
+            $counts = $initialindex * 5;
+            $this->session->set_userdata('causescounts',$counts);
+            $totalcauses = $this->adminpanel->get_total_causes();
+            if($counts > $totalcauses){
+                echo "<script>
+                  window.alert('No pages are available to show.')
+                     </script>";
+                $counts = 0;  
+                $this->session->set_userdata('causescounts',$counts);   
+            }
+            $causeslist = $this->adminpanel->get_causes_list($counts);
+            $this->load->view('causesverification',array("fundraisers"=>$causeslist,"newcounts"=>$totalcauses,"initialindex"=>$initialindex,"sno"=>$counts));         
+    }    
+
     public function transactionverification()
     {
+        if (!$this->session->userdata('userId')) {
+            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        }
         $data['donations'] = $this->adminpanel->transactiondetails();
+        $data['counts'] = $this->adminpanel->get_total_transaction();
+        $data['sno'] = 0;
+        $this->session->set_userdata('verificationpagecounts',$data['counts']);
         $this->load->view('transactionverification.php', $data);
     }
+
+    public function displayVerificationpage(){
+        
+        $counts = $this->input->get("count");
+        $verification = $this->adminpanel->get_verification_list($counts);
+        if(!empty($verification)){    
+            $i = $counts + 1;
+        foreach ($verification as $index => $donation){
+            
+               echo "<tr>
+                    <td> $i</td>
+                    <td>".($donation->name)."</td>
+                    <td>".($donation->email)."</td>
+                    <td>".($donation->phoneno)."</td>
+                    <td>".($donation->amount)."</td>
+                    <td>".($donation->transactionid)."</td>
+                    <td>".($donation->status == 1 ? 'Yes' : 'No')."</td>
+                    <td>
+                    <button onclick='editDonation(".(json_encode($donation)).")' class='btn btn-primary' data-toggle='modal' data-target='#editDonationModal'>
+                    Edit
+                    </button>
+                    <button onclick='setUrl(`$donation->email`,`$donation->name`)' class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
+                    Status
+                    </button>
+                    </td>
+                </tr>";     
+               ++$i;
+            }
+            }
+            else{
+               echo "<tr><td colspan='14'>No causes found</td></tr>";
+            }
+    }
+
+    public function changeVerificationpagesetup(){
+        if (!$this->session->userdata('userId')) {
+            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        }
+        $initialindex = $this->input->get('initialindex');
+        if($initialindex < 0){
+           $data['initialindex'] = 0;
+           echo "<script>
+              window.alert('No pages are available to show.')
+                </script>";
+        } 
+        $counts = $initialindex * 5;
+        $this->session->set_userdata('verificationpagecounts',$counts);
+        $totalverification = $this->adminpanel->get_total_transaction();
+        if($counts > $totalverification){
+            echo "<script>
+              window.alert('No pages are available to show.')
+                 </script>";
+            $counts = 0;  
+            $this->session->set_userdata('verificationpagecounts',$counts);   
+        }
+        $verificationlist = $this->adminpanel->get_verification_list($counts);
+        $this->load->view('transactionverification.php',array("donations"=>$verificationlist,"newcounts"=>$totalverification,"initialindex"=>$initialindex,"sno"=>$counts)); 
+    }
+
     public function updatecauses()
     {
         // Load the model
@@ -149,12 +284,61 @@ class admin extends CI_Controller
         // Return JSON response for the AJAX call
         echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
     }
+
     public function contact_submissions()
     {
         // Fetch data from the contact_form_submissions table
-        $data['submissions'] = $this->db->order_by('created_at', 'DESC')->get('contact_us')->result();
-
+        $data["sno"] = 0;
+        $data["counts"] = count($this->db->get('contact_us')->result());
+        $data['submissions'] = $this->db->order_by('created_at', 'DESC')->limit(10)->get('contact_us')->result();
         // Load the view
         $this->load->view('contact_submissions', $data);
+    }
+
+    public function displayContactsubmissions(){
+        $counts = $this->input->get("count");
+        $submissions = $this->adminpanel->get_enquiries_list($counts);
+        $this->session->set_userdata('enquirypagecounts',$counts); 
+        // $this->db->order_by('created_at', 'DESC')->limit(10)->get('contact_us')->result_array();
+        if(!empty($submissions)){    
+            $i = $counts + 1;
+        foreach ($submissions as $index => $submissions){
+            
+               echo "<tr>
+                    <td>$i</td>
+                    <td>".($submissions->name)."</td>
+                    <td>".($submissions->email)."</td>
+                    <td>".($submissions->phone)."</td>
+                    <td>".($submissions->message)."</td>
+                    <td>".($submissions->created_at)."</td>
+                </tr>";     
+               ++$i;
+            }
+            }
+            else{
+               echo "<tr><td colspan='6'>No causes found</td></tr>";
+            }        
+    }
+
+    public function changeContactpagesetup(){
+        $initialindex = $this->input->get('initialindex');
+        if($initialindex < 0){
+           $data['initialindex'] = 0;
+           echo "<script>
+              window.alert('No pages are available to show.')
+                </script>";
+        } 
+        $counts = $initialindex * 10;
+        $this->session->set_userdata('enquirypagecounts',$counts);
+        $totalenquiries = count($this->db->get('contact_us')->result());
+        if($counts > $totalenquiries){
+            echo "<script>
+              window.alert('No pages are available to show.')
+                 </script>";
+            $counts = 0;  
+            $this->session->set_userdata('enquirypagecounts',$counts);   
+        }
+        $enquirieslist = $this->adminpanel->get_enquiries_list($counts);
+        $this->load->view('contact_submissions',array("submissions"=>$enquirieslist,"newcounts"=>$totalenquiries,"initialindex"=>$initialindex,"sno"=>$counts)); 
     }
 }

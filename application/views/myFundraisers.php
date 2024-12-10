@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <style>
     body {
       font-family: 'Sen', sans-serif;
@@ -216,69 +216,8 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
-        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title">
-            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
-            </li>
-            <!-- <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li> -->
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
-            </li>
-          </ul>
-          <div class="d-flex align-items-center ms-auto">
-  <?php if ($this->session->userdata('userId')): ?>
-    <div class="d-flex align-items-center">
-      <div class="dropdown" id="userProfile">
-        <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-            style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-        </div>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-          <li>
-            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
-              <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  <?php else: ?>
-    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-  <?php endif; ?>
-</div>
-        </div>
-      </div>
-    </div>
+  <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    
   </nav>
   <div class="donate_img mt-5 pt-4">
   <img src="<?= base_url('assets/img/myhelps.jpg') ?>" style="width: 100%; height: 400px;">
@@ -305,15 +244,16 @@
   <?php if (!empty($fundraisers)) : ?>
     <?php foreach ($fundraisers as $cause) : ?>
 
-      <div class="container d-flex justify-content-center align-items-center mt-5">
+      <div class="container d-flex justify-content-center mt-5">
         
-      <a href="<?= base_url('helpus/' .str_replace(' ','-', $cause->name).'-'. $cause->id ) ?>" style="text-decoration:none;color:black">
+      <a href="<?=base_url('helpus/' .str_replace(' ','-', $cause->name).'-'. $cause->id ) ?>" style="text-decoration:none;color:black;">
           
-      <div class="card mb-3">
+      <div style="width:500px;" class="card mb-3">
             <!-- Use img-fluid and custom inline styles for width and height -->
-            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top img-fluid" alt="...">
+            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" class="w-100 p-2" alt="...">
 
             <div class="card-body">
+
               <div class="card_text d-flex justify-content-between">
 
                 <p class="card-title"><b><?= $cause->cause_heading ?></b></p>
@@ -340,8 +280,9 @@
                         </div>-->
             </div>
           </div>
+          </a>
       </div>
-      </a>
+      
     <?php endforeach; ?>
   <?php else : ?>
     <p>
@@ -350,39 +291,35 @@
   <?php endif; ?>
   </div>
 
-
-
-  <div class="footer">
-    <footer class="footer mt-auto py-3">
-      <div class="container">
-        <h5 class="text-center">Kanavu.help</h5>
-        <div class="row text-center">
-          <div class="col-12">
-            <div class="footer1">
-              <a class="footer-lable lable" href="<?= base_url('kanavuhelp/abouts') ?>">About</a>
-              <a class="footer-lable lable" href="<?= base_url('kanavuhelp/contactus') ?>">Contact</a>
-              <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
-              <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="social-icons d-flex justify-content-center text-center my-2">
-        <a href="https://www.facebook.com/" target="_blank" class="mx-2">
-          <img src="assets/img/facebook-f.svg" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
-        </a>
-        <a href="https://twitter.com/" target="_blank" class="mx-2">
-          <img src="assets/img/twitter.svg" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
-        </a>
-        <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
-          <img src="assets/img/linkedin-in.svg" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
-        </a>
-      </div>
-      <img src="assets/img/footer-secured-card 1.svg" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
-        style="max-width: 200px;">
-      <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
-    </footer>
+<!-------------------------footer------------------>
+  <div id="footer">
+    
   </div>
+<!------------------------footer-end--------------->
+<script>
+  $.ajax({
+      type:"get",
+      url:"kanavuhelp/getHeader",
+      success:(result)=>{
+           document.getElementById("header").innerHTML = result;
+           document.getElementById("myfrpage").classList.add("text-danger");
+      },
+      error:(error)=>{
+           document.getElementById("header").innerHTML = error;
+      }
+    }); 
+
+    $.ajax({
+      type:"get",
+      url:"kanavuhelp/getFooter",
+      success:(result)=>{
+           document.getElementById("footer").innerHTML = result;
+      },
+      error:(error)=>{
+           document.getElementById("footer").innerHTML = error;
+      }
+    }); 
+</script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
