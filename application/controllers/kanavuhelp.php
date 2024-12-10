@@ -74,6 +74,15 @@ class kanavuhelp extends CI_Controller
     {
         $this->load->view('privacy_policy');
     }
+
+    public function getHeader(){
+        $this->load->view("header");
+    }
+
+    public function getFooter(){
+        $this->load->view("footer");
+    }
+
     public function terms_of_use()
     {
         $this->load->view('terms_of_use');
@@ -365,7 +374,7 @@ class kanavuhelp extends CI_Controller
         $login = $this->UserModel->loginUser($email);
         $otp = $this->input->post("loginotp") ?? "";
         $countotp = strlen($otp);
-        
+
         if ($login->num_rows() == 0){
             $this->session->unset_userdata("userEmail");
             $this->session->set_flashdata("not_registered_user", true);
@@ -420,7 +429,9 @@ class kanavuhelp extends CI_Controller
 
         // Handle file upload
         if (!$this->upload->do_upload('cover_image')) {
-            $this->session->set_flashdata('error', 'Upload error: ' . $this->upload->display_errors());
+            // $this->session->set_flashdata('error', 'Upload error: ' . $this->upload->display_errors());
+            $this->session->set_userdata("filestatus","failed");
+            echo "<script>File is not upload. Please try again.</script>";
             redirect('kanavuhelp/individual');
         }
 
@@ -613,7 +624,18 @@ class kanavuhelp extends CI_Controller
             redirect('/individual');// Redirect back to the same page
             }
         } else {
-            echo $this->email->print_debugger(); // Print debug info if sending fails
+            if($path == "login"){
+                $this->session->set_userdata("mailstatus","failed");
+                echo "<script>OTP is not sent to your email. please try again.</script>";
+                redirect("/login");
+
+            }
+            else{
+                $this->session->set_userdata("mailstatus","failed");
+                echo "<script>OTP is not sent to your email. please try again.</script>";
+                redirect('/individual');
+            }
+            // echo $this->email->print_debugger(); // Print debug info if sending fails
         }
     }
 
@@ -642,7 +664,11 @@ class kanavuhelp extends CI_Controller
 
 
     public function insertUser()
+    
     {
+        $causeData = ""; 
+        $step = $this->input->post("step");
+        
         $causeData = [
             'category' => $this->input->post('category'),
             'name' => $this->input->post('name'),
@@ -652,23 +678,23 @@ class kanavuhelp extends CI_Controller
             'location' => $this->input->post('location'),
             'form_selected_text' => $this->input->post('category'),
         ];
-
+        
         $userData = [
             'name' => $this->input->post('name'),
             'email' => $this->input->post('email'),
             'mobileNumber' => $this->input->post('phone'),
             'category' => 'user',
         ];
-
+        $this->session->set_userdata('form_selected_text',$causeData['form_selected_text']);
         $email = $this->input->post('email');
         $checkregister = $this->UserModel->checkUserexist($email);
         
         if($checkregister->num_rows() > 0){
             $userdata = $checkregister->row();
-            $userid = $userdata->id;
-            $checkform = $this->UserModel->checkForm($userid);
+            $user_id = $userdata->id;
+            $this->session->set_userdata('currentCauseId', $userid);
             $this->session->set_userdata("userEmail",$email);
-            $this->session->set_userdata('currentUserId', $userid);
+            $this->session->set_userdata('currentUserId', $user_id);
             // $this->session->set_userdata($userLoggedIn);       
             redirect("/send"); 
         }
@@ -676,13 +702,13 @@ class kanavuhelp extends CI_Controller
             $this->db->insert('user', $userData);
             $userId = $this->db->insert_id();
             $this->session->set_userdata('currentUserId', $userId);
+            $causeData["user_id"] = $userId;
             $this->session->set_userdata('form_selected_text', $form_selected_text);
             $this->session->set_userdata('userEmail', $email);
-    
             $this->db->insert('individualform', $causeData);
-            $causeId = $this->db->insert_id();
-            $this->session->set_userdata('currentCauseId', $causeId);
-            $this->session->set_userdata($userLoggedIn);     
+            // $causeId = $this->db->insert_id();
+            $this->session->set_userdata('currentCauseId', $userId);
+            // $this->session->set_userdata($userLoggedIn);     
             redirect("/send"); 
         }
     }
@@ -708,7 +734,9 @@ class kanavuhelp extends CI_Controller
             $this->session->set_flashdata('causemailsend', true);
                 redirect("/causesverification");
         } else {
-            echo $this->email->print_debugger(); // Print debug info if sending fails
+            echo "<script>Email not sent please try again.</script>";
+            // $this->session->set_userdata("emailstatus","failed");
+            // echo $this->email->print_debugger(); // Print debug info if sending fails
         }   
     }
 

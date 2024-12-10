@@ -94,3 +94,6 @@ $route['privacy_policy'] = 'kanavuhelp/privacy_policy';
 $route['terms_of_use'] = 'kanavuhelp/terms_of_use';
 $route['send'] = 'kanavuhelp/send';
 $route['sendcauseVerficationstatus'] = 'kanavuhelp/sendcauseVerficationstatus';
+$route['changeCausespagepagesetup'] = 'admin/changeCausespagepagesetup';
+$route['changeVerificationpagesetup'] = 'admin/changeVerificationpagesetup';
+$route['changeContactpagesetup'] = 'admin/changeContactpagesetup';

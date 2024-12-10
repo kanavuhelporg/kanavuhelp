@@ -96,6 +96,15 @@
 <body>
 
     <div class="container-fluid">
+                  <?php 
+                   if(!empty($mailstatus)){
+                     echo "<div class=alert alert-danger>
+                                OTP sent failed. Please try agin. 
+                           </div>";
+                   }
+                   $this->session->unset_userdata("mailstatus");
+                 ?>
+                 
         <div class="row">
             <!-- Left side form column -->
             <div class="col-md-6 logi1">
@@ -104,9 +113,10 @@
                         style="">
                 </a>
                 <br><br><br>
-                <h2 style="margin-left:50px;">Sign in</h2>
+                <h2 style="margin-left:50px;" class="text-danger">Sign in</h2>
                 <!-- <p style="margin-left:50px;">Don't have an Account? <a href="<?= base_url('/register') ?>"><span
                             style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p> -->
+                <div style="height:60%;" class="d-flex flex-column justify-content-between">           
                 <form id="loginform" onsubmit="return loginValidate()" name="login" method="post"
                     action="<?= base_url('kanavuhelp/userLogin') ?>" style="" class="login-form">
                     <div class="mb-3">
@@ -155,6 +165,16 @@
 </div> -->
 
                 </form>
+
+        <!-----------------quotes------------------------------>
+          <div class="text-center text-danger fw-bold">
+            <span class="text-muted fs-5">Together, we can make a difference !.</span>
+          <p class="fs-5">"Be the change you wish to see in the world." - Mahatma Gandhi</p> 
+          <p class="fs-5"> "The only way to do great work is to love what you do." - Steve Jobs
+          </div>
+          </div> 
+        <!-----------------quotes-end-------------------------->
+
             </div>
 
             <!-- Right side image column -->

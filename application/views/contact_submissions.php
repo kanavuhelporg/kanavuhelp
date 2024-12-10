@@ -266,17 +266,17 @@
          
          
         <div style="overflow:auto" class="mt-3 px-4"><!----------------table--------------->
-        <table class="table table-responsive table-borderless">
+        <table class="table table-borderless">
             <thead>
             <tr class="ps-gray">
             <th>S.No</th><th>Name</th><th>Email</th><th>Phone Number</th><th>Message</th><th>Created_at</th>
             </tr>
             </thead>
-            <tbody id="ps-coords">
-            <?php if (!empty($submissions)): ?>
+            <tbody id="enquiries">
+            <?php if (!empty($submissions)): $i = $sno + 1;?>
             <?php foreach ($submissions as $index => $submissions): ?>
                 <tr>
-                    <td><?php echo $index + 1; ?></td>
+                    <td><?php echo $i; ?></td>
                     <td><?php echo htmlspecialchars($submissions->name); ?></td>
                     <td><?php echo htmlspecialchars($submissions->email); ?></td>
                     <td><?php echo htmlspecialchars($submissions->phone); ?></td>
@@ -284,7 +284,7 @@
                     <td><?php echo htmlspecialchars($submissions->created_at) ?></td>
                     </td>
                 </tr>
-            <?php endforeach; ?>
+            <?php ++$i; endforeach; ?>
         <?php else: ?>
             <tr>
                 <td colspan="8" style="text-align: center;">No records found.</td>
@@ -294,6 +294,92 @@
             </table>
 
         </div> <!----------------table-end------->
+
+<!-----------------pagination---------------------->
+<div class="d-flex justify-content-center">        
+<div class="col-md-6 py-2 d-flex justify-content-around align-items-center">
+
+<?php 
+
+if(isset($counts)){
+  if($counts > 0){
+  $countsperpage = 10;
+  $noofpages = ceil($counts / $countsperpage) - 1;
+  $totalpagesarr = createarr($noofpages);
+  $totalpages = count($totalpagesarr) ;
+  $initialindex = 0;
+  $lastindex = 5;
+  $pages = array_slice($totalpagesarr,$initialindex,$lastindex);
+  echo "<a href='changeContactpagesetup?initialindex=0' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-left-long'></i></a>";
+  $j = 0;
+  foreach ($pages as $key => $value) {
+    $count = $countsperpage * $value;
+    $pageno = $value + 1;
+   
+    if($pageno == 5){
+      echo "<a style='width:35px;height:35px;' href='changeContactpagesetup?initialindex=$value' class='".($j==0 ? 'active-page' : '')." active text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$pageno</a>";}
+    else{
+      echo "<button style='width:35px;height:35px;' onclick='displayContactsubmissions($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>";
+    }
+    ++$j;
+  }
+
+  echo "<span>...</span>";
+  $totalcount = ($totalpages - $lastindex);
+  echo "<a href='changeContactpagesetup?initialindex=$totalcount' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='active-page text-white text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$totalpages</a>";
+  
+  $newindex = $initialindex+$lastindex; 
+  echo "<a href='changeContactpagesetup?initialindex=$newindex' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-right-long'></i></a>";
+}
+else{
+  echo "<span>No pages available</span>";
+}
+}
+
+if(isset($initialindex) && isset($newcounts)){
+  
+  $countsperpage = 10;
+  $noofpages = ceil($newcounts / $countsperpage) - 1;
+  $totalpagesarr = createarr($noofpages);
+  $totalpages = count($totalpagesarr);
+  $lastindex = 5;
+  $start = $initialindex > $noofpages ? 0 : $initialindex;
+  $pages = array_slice($totalpagesarr,$start,$lastindex);
+  $start == 0 ? $prevlist = 0 : (($start - $lastindex) < 0 ? $prevlist = 0 : $prevlist = $start - $lastindex) ;
+  echo "<a href='changeContactpagesetup?initialindex=$prevlist' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-left-long'></i></a>";
+
+  $j = 0;
+
+  foreach ($pages as $key => $value) {
+    $count = $countsperpage * $value;
+    $pageno = $value + 1;
+    
+    if($pageno == 5 || $pageno - $start == 5){
+      echo $pageno == $totalpages ? "<button style='width:35px;height:35px;'onclick='displayContactsubmissions($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>" : "<a href='changeContactpagesetup?initialindex=".($pageno - 1)."' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='".($j==0 ? 'active-page' : '')." active text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$pageno</a>"; }
+    else{
+      echo "<button style='width:35px;height:35px;'onclick='displayContactsubmissions($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>";
+    }
+    ++$j;
+  }
+
+  echo "<span>...</span>";
+  $totalcount = ($totalpages - $lastindex);
+  echo "<a href='changeContactpagesetup?initialindex=$totalcount' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='active-page text-white text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$totalpages</a>";
+  
+  $newindex = $start + $lastindex; 
+  echo "<a href='changeContactpagesetup?initialindex=".($totalpages - $start <= $lastindex ? $totalcount : $newindex)."'  style='cursor:pointer;' class='text-decoration-none text-dark'><i class='fa-solid fa-arrow-right-long'></i></a>"; 
+}
+
+function createarr($noofpages){
+  return range(0,$noofpages);
+}
+
+
+?>
+
+</div>
+</div><!--------------pagination-end--------------------->
+
         <!-- <script>
 function editDonation(donation) {
     // Populate modal fields with donation data
@@ -344,6 +430,7 @@ function editDonation(donation) {
 </div> -->
 
 <script>
+
   $.ajax({
       type:"get",
       url:"admin/sidemenu",
@@ -378,7 +465,36 @@ function editDonation(donation) {
       error:(error)=>{
            document.getElementById("kanavuhelplogo").innerHTML = error;
       }
-    });
+});
+
+function displayContactsubmissions(counts,index){
+console.log(counts)
+activepage = document.querySelectorAll(".active");
+let l = activepage.length;
+for(let i=0; i < l ; i++){
+if(i == index ){
+activepage[i].classList.add("active-page");
+}
+else{
+if(activepage[i].classList.contains("active-page")){
+activepage[i].classList.remove("active-page")
+}
+}   
+}   
+
+$.ajax({
+type:"get",
+url:"admin/displayContactsubmissions",
+data:{"count":counts},
+success:function(result){
+document.getElementById("enquiries").innerHTML = result;
+},
+error:function(error){
+document.getElementById("enquiries").innerHTML = error;
+}
+});
+
+}
 </script>
 
         

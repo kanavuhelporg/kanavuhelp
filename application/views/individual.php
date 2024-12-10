@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>fundraiser</title>
-  <link rel="stylesheet" href="style.css" />
+  <!-- <link rel="stylesheet" href="style.css" /> -->
   <!-- <link href="bootstrap.min.css" rel="stylesheet" />
          <script src="bootstrap.bundle.min.js"></script> -->
   <!-- Bootrap for the demo page -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+ <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
   <!--wizard-->
   <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet"
     type="text/css" />
@@ -20,6 +20,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <style>
   body {
@@ -117,7 +118,7 @@
   }
 
   .nav-item a {
-    color: black !important;
+    /* color: black !important; */
   }
 
   .dropdown-toggle:hover,
@@ -418,8 +419,8 @@
   .form-step {
   width: 100%;
   overflow: auto; /* Ensure inner sections are scrollable */
-  height: 100vh; /* Viewport height to allow scrolling */
-  min-height: 100vh; /* Ensures the section takes the full height of the viewport */
+  /* height: 100vh; Viewport height to allow scrolling */
+  /* min-height: 100vh; Ensures the section takes the full height of the viewport */
   padding: 20px; /* Adds padding for better appearance */
   box-sizing: border-box; /* Includes padding in width/height calculations */
   display: flex; /* Ensure layout flexibility */
@@ -573,8 +574,8 @@
   }
 
   body #multi-step-form-container {
-    width: 700px;
-    height: 680;
+    /* width: 700px; */
+    height: fit-content;
     margin-bottom: 50px;
     padding: 20px;
     /* border: 2px solid black; */
@@ -785,6 +786,10 @@
     }
   }
 
+  .active-individual{
+    color:red !important;
+  }
+
   @media (max-width: 767px) {
 
     /* donate  image below nav bar */
@@ -879,79 +884,16 @@
 </style>
 
 <body>
-  <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
-    <div class="container-fluid">
-      <!-- Navbar brand -->
-      <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
-        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help" style="max-width: 150px;">
-      </a>
-
-      <!-- Navbar toggler (for mobile view) -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Offcanvas (for mobile navigation) -->
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
-            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help" style="max-width: 120px;">
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <!-- Navbar links -->
-          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('/individual') ?>" style="color: rgba(235, 45, 50, 1)">Start a Fundraiser</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
-            </li>
-            <!-- <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li> -->
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
-            </li>
-          </ul>
-
-          <!-- User profile or login -->
-          <div class="d-flex align-items-center ms-auto">
-            <?php if ($this->session->userdata('userId')): ?>
-              <div class="d-flex align-items-center">
-                <div class="dropdown" id="userProfile">
-                  <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-                      style="width: 30px; height: 30px; border-radius: 50%;">
-                    <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
-                  </div>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-                    <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                  </ul>
-                </div>
-              </div>
-            <?php else: ?>
-              <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
-            <?php endif; ?>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    </div>
+  <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    
   </nav>
-  <div class="donate_img mt-5 pt-4 text-center">
+
+
+  <!-- <div class="donate_img mt-5 pt-4 text-center">
     <img src="<?= base_url('assets/img/fundimage.jpg') ?>"
       style="height: 400px;" class="img-fluid">
   </div>
-
+ -->
   <!--<div class="mx-auto text-center mt-8 md:ml-20 ">
     <button id="myDonationsButton" 
       class="inline-flex items-center bg-gray-100 border-red-500 py-2 px-6 text-red-500 focus:outline-none hover:text-red-200 rounded-full text-base p-4 mt-4 md:mt-0 mr-2 data"
@@ -981,7 +923,7 @@
             </div>
           </div>
           <!-- Right Column for Form -->
-          <div class="col-md-6">
+          <div class="col-md-6 mt-4">
             <div id="multi-step-form-container" class="mt-auto py-3 w-100">
               <!-- Form Steps / Progress Bar -->
               <ul class="form-stepper form-stepper-horizontal text-center mx-auto col-md-10 flex-wrap">
@@ -1004,9 +946,27 @@
 
               <form id="causeStep1" name="causeStep1" method="post" action="<?= base_url('kanavuhelp/insertUser') ?>" enctype="multipart/form-data">
                 <!-- Step 1 Content -->
+                 <?php 
+                   if(!empty($mailstatus)){
+                     echo "<div class=alert alert-danger>
+                                OTP sent failed. Please try agin. 
+                           </div>";
+                   }
+                   $this->session->unset_userdata("mailstatus");
+                 ?>
+
+                  <?php 
+                   if(!empty($filestatus)){
+                     echo "<div class=alert alert-danger>
+                                File not upload. Please try again. 
+                           </div>";
+                   }
+                   $this->session->unset_userdata("filestatus");
+                 ?>
                 <section id="step-1" class="form-step col-12">
                   <h2>Basic Details</h2>
                   <div class="row my-3">
+                    <input hidden type="text" name="step" value="stepone">
                     <label for="category" class="col-md-4 col-form-label">I am raising fund for:<span class="text-danger">*</span></label>
                     <div class="col-md-8">
                       <div class="custom-dropdown-wrapper">
@@ -1088,7 +1048,7 @@
                 
                 <section id="step-2" class="form-step col-12 d-none">
                   <h2>Cause Details</h2>
-
+                  <input hidden type="text" name="step" value="steptwo">
                   <div class="row my-3">
                     <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
                     <div class="col-md-8">
@@ -1134,7 +1094,7 @@
                 <!-- Step 3 Content -->
                 <section id="step-3" class="form-step col-12 d-none">
                   <h2>Elaborate Cause Details</h2>
-
+                 
                   <!-- Cover Image Field -->
                   <div class="row my-3">
                     <label for="cover_image" class="col-md-4 col-form-label">Cover Image:<span class="text-danger">*</span></label>
@@ -1183,9 +1143,19 @@
     </div>
   </div>
 
+  <!----------------banner---------------------->
+  <!-- <div class="donate_img mt-5 pt-4 text-center">
+    <img src="<?= base_url('assets/img/fundimage.jpg') ?>"
+      style="height: 400px;" class="img-fluid">
+  </div> -->
+  <!----------------banner-end--------------------->
 
+<!----------------------------footer----------------------->
+  <div id="footer">
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </div>
+ <!--------------------------footer-end-------------------->
+
   <!-- Message Modal -->
   <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -1219,16 +1189,41 @@
     </script>
   <?php endif; ?>
 
-
+  
 
   <script>
+
+    $.ajax({
+      type:"get",
+      url:"kanavuhelp/getHeader",
+      success:(result)=>{
+           document.getElementById("header").innerHTML = result;
+           document.getElementById("individualpage").classList.add("text-danger");
+      },
+      error:(error)=>{
+           document.getElementById("header").innerHTML = error;
+      }
+    }); 
+
+    $.ajax({
+      type:"get",
+      url:"kanavuhelp/getFooter",
+      success:(result)=>{
+           document.getElementById("footer").innerHTML = result;
+      },
+      error:(error)=>{
+           document.getElementById("footer").innerHTML = error;
+      }
+    }); 
+
+
     document.addEventListener("DOMContentLoaded", function() {
       const otpModal = new bootstrap.Modal(document.getElementById("myModal"));
       const messageModal = new bootstrap.Modal(document.getElementById("messageModal"));
 
       // Function to show popup messages
       function showPopupMessage(message) {
-        document.getElementById("messageModalBody").textContent = message;
+        document.getElementById("messageModalBody").innerHTML = message;
         messageModal.show();
       }
 
@@ -1334,7 +1329,10 @@
       // OTP Sending Simulation
       function sendOtp() {
         const email = document.getElementById("email").value.trim();
-        showPopupMessage(`OTP sent to email: ${email}`);
+        showPopupMessage(`
+                    <span>Please wait OTP is sent to your email ${email}</span>&nbsp;
+                    <span class="spinner-border text-danger"></span>
+                    `);
       }
 
       // Validation Handlers
@@ -1525,38 +1523,8 @@
     });
   </script>
 
-  <div class="footer">
-    <footer class="footer mt-auto py-3">
-      <div class="container">
-        <h5 style="text-align:center">kanavu.help</h5>
-        <!-- <span class="text-muted">Your footer content goes here.</span> -->
-        <div class="footer1">
-          <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
-          <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-          <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
-          <a class="footer-lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>
-        </div>
-      </div>
 
-      <div class="social-icons d-flex justify-content-center text-center">
-        <a href="https://www.facebook.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo">
-        </a>
-        <a href="https://twitter.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo">
-        </a>
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/" target="_blank">
-          <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo">
-        </a>
-      </div>
-      <div class="text-center my-3">
-        <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="img-fluid mx-auto d-block" style="width: 200px; display: block;">
-      </div>
-
-      <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
-    </footer>
-  </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

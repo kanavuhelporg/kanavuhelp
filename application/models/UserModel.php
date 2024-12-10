@@ -174,11 +174,13 @@ class UserModel extends CI_Model
 	public function get_cause_details()
 	{
 		$this->db->where('verified', 1); // Include only rows where 'verified' is 1
-		$this->db->order_by('created_at', 'DESC'); // Order by 'created_at' in descending order (newest first)
+		$this->db->order_by('created_at', 'DESC');
+		$this->db->limit(10); // Order by 'created_at' in descending order (newest first)
 		$query = $this->db->get('individualform');
-
+       
 		return $query->result();
 	}
+
 	public function get_category()
 	{
 		$query = $this->db->get('category');
@@ -214,6 +216,10 @@ class UserModel extends CI_Model
 		return $query->row();
 	}
 
+	public function get_enquiries_list($counts){
+		
+	}
+
 	public function loginUser($email)
 	{
 		$verifyemail = $this->db->query("SELECT * FROM user WHERE email = '$email'");
@@ -225,7 +231,7 @@ class UserModel extends CI_Model
 		return $verifyexist;
 	}
 
-	public function checkForm($userid){
+	/* public function checkForm($userid){
 		$query = $this->db->query("SELECT user_id FROM individualform WHERE user_id = $userid");
 		if($query->num_rows() > 0){
 			$checkform = $query->row();
@@ -234,9 +240,10 @@ class UserModel extends CI_Model
 			return true;
 		}
 		else{
-			return false;
+			$this->session->set_userdata('currentCauseId', $userid);
+			return true;
 		};
-	}
+	} */
 
 	// Method to register user
 	public function registerUser($name, $email, $password)

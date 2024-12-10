@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
 <style>
     body {
         font-family: 'sen', sans-serif;
@@ -247,7 +255,6 @@
    
 } */
 </style>
-<div class="footer">
     <footer class="footer mt-auto py-3">
         <div class="container">
             <h5 style="text-align:center">kanavu.help</h5>
@@ -278,4 +285,6 @@
 
         <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
     </footer>
-</div>
+
+    </body>
+</html>

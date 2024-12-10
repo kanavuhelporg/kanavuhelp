@@ -7,6 +7,7 @@
   <title>Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
   <style>
     .ps-logo {
       display: flex;
@@ -204,37 +205,39 @@
     <div class="row"><!----------main-navbar----------->
 
       <div id="menu-bar" style="height:inherit;" class="col-md-2 ps-gray"><!----------side-bar-------------------->
-        <ul class="d-grid list-unstyled">
+      <ul class="d-grid list-unstyled">
 
-          <li class="nav-item py-3 fs-6"><a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a></li>
+<li class="nav-item py-3 fs-6"><a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a></li>
 
-          <li class="nav-item py-2">
-            <a href="<?= base_url('admin/admindashbord') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashbord </a>
-          </li>
+<li class="nav-item py-2">
+  <a href="<?= base_url('admin/admindashbord') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none ps-gray rounded"><i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashbord </a>
+</li>
 
-          <li class="nav-item py-2"><a href="<?= base_url('verifytransaction') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction Verification</a></li>
-          <li class="nav-item py-2"><a href="<?= base_url('contact_submissions') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries</a></li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('causesverification') ?>">Causesverification</a>
-          </li>
+<li class="nav-item py-2"><a href="<?= base_url('verifytransaction') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction</a></li>
 
-          <!--
-            <li class="nav-item py-2"><a href="<?= base_url('ponsoft/members') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;Members</a></li>
+<li class="nav-item py-2"><a href="<?= base_url('contact_submissions') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries</a></li>
 
-            <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Funds</a></li>
+<li class="nav-item">
+  <a style="font-weight:400;color:black;" class="nav-link text-decoration-none" href="<?= base_url('causesverification') ?>"><i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causesverification</a>
+</li>
 
-            <li class="nav-item py-2">
-              <a href="#" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-regular fa-credit-card"></i>&nbsp;&nbsp;Payments</a></li>
+<!--
+  <li class="nav-item py-2"><a href="<?= base_url('ponsoft/members') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;Members</a></li>
 
-            <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;Donation</a></li>
+  <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Funds</a></li>
 
-            <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Reports</a></li>
- -->
-          <li class="nav-item py-2">
-            <a href="<?= base_url('admin/logout') ?>" style="font-weight:400;color:black;" class="text-decoration-none d-flex p-2">
-              <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
-            </a>
-        </ul>
+  <li class="nav-item py-2">
+    <a href="#" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-regular fa-credit-card"></i>&nbsp;&nbsp;Payments</a></li>
+
+  <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;Donation</a></li>
+
+  <li class="nav-item py-2"><a href="#" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Reports</a></li>
+-->
+<li class="nav-item py-2">
+  <a href="<?= base_url('admin/logout') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none">
+    <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
+  </a>
+</ul>
 
       </div><!-----------side-bar-end-------------->
 

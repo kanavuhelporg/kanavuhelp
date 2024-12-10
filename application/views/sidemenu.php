@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
 <ul class="d-grid list-unstyled">
 
           <li class="nav-item py-3 fs-6"><a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a></li>
@@ -6,7 +14,7 @@
             <a href="<?= base_url('admin/admindashbord') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashbord </a>
           </li>
 
-          <li class="nav-item py-2"><a href="<?= base_url('verifytransaction') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction</a></li>
+          <li class="nav-item py-2"><a href="<?= base_url('verifytransaction') ?>" id="bg-transaction" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction</a></li>
 
           <li class="nav-item py-2"><a href="<?= base_url('contact_submissions') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries</a></li>
 
@@ -31,3 +39,5 @@
               <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
             </a>
         </ul>
+        </body>
+        </html>        
