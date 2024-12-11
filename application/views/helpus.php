@@ -433,7 +433,7 @@
             
             <!-- Share Fundraiser Button -->
             <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" 
-            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '?id=' . $fundraiser->id ?>', 
+            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '?id=' . $fundraiser->id ?>'
                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                        '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>', 
                        '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
@@ -466,7 +466,12 @@
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong></p>
            <?php if ($fundraiser->days_left >= 0&&(!$fundraiser->hide_donation_button)): ?>
         <!-- Donate Button -->
-        <a href="#" class="btn donate_btn no-hover"  onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+           <?php if($fundraiser->verified == 1){
+            echo "<a href='#' class='btn donate_btn no-hover'  onclick='setCauseId(<?= $fundraiser->id ?>)'>Donate Now</a>";
+           }
+           else{
+               echo "<span class='text-danger fw-bold'>Verification pending</span>";
+           } ?>
     <?php endif; ?>
     <?php if ($this->session->flashdata('error')) : ?>
     <div class="alert alert-danger">

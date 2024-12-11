@@ -1201,7 +1201,7 @@
            document.getElementById("individualpage").classList.add("text-danger");
       },
       error:(error)=>{
-           document.getElementById("header").innerHTML = error;
+           document.getElementById("header").innerHTML = "";
       }
     }); 
 
@@ -1212,7 +1212,7 @@
            document.getElementById("footer").innerHTML = result;
       },
       error:(error)=>{
-           document.getElementById("footer").innerHTML = error;
+           document.getElementById("footer").innerHTML = "";
       }
     }); 
 

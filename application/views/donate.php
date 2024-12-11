@@ -490,7 +490,7 @@ $.ajax({
            document.getElementById("donatepage").classList.add("text-danger");
       },
       error:(error)=>{
-           document.getElementById("header").innerHTML = error;
+           document.getElementById("header").innerHTML = "";
       }
     }); 
 
@@ -501,7 +501,7 @@ $.ajax({
            document.getElementById("footer").innerHTML = result;
       },
       error:(error)=>{
-           document.getElementById("footer").innerHTML = error;
+           document.getElementById("footer").innerHTML = "";
       }
     }); 
 

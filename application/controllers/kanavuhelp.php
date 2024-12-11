@@ -30,6 +30,7 @@ class kanavuhelp extends CI_Controller
         $this->load->helper('cookie');
         // $this->load->config('email');
         $this->config->load('email');
+        $this->load->helper('url');
     }
     public function index()
     {
@@ -442,10 +443,11 @@ class kanavuhelp extends CI_Controller
         $response = $this->UserModel->store3($data, $causeId);
         $userLoggedIn = array(
             'userId' => $this->session->userdata("currentUserId"),
-            'userName' => $this->session->userdata('userEmail'),
+            'userName' => $this->session->userdata('userName'),
         );
         $this->session->set_userdata($userLoggedIn);  
-        redirect('donate');
+        $this->session->set_flashdata("logged_in", true);
+        redirect('myFundraisers');
 
     }
 
@@ -685,6 +687,7 @@ class kanavuhelp extends CI_Controller
             'mobileNumber' => $this->input->post('phone'),
             'category' => 'user',
         ];
+
         $this->session->set_userdata('form_selected_text',$causeData['form_selected_text']);
         $email = $this->input->post('email');
         $checkregister = $this->UserModel->checkUserexist($email);
@@ -692,15 +695,24 @@ class kanavuhelp extends CI_Controller
         if($checkregister->num_rows() > 0){
             $userdata = $checkregister->row();
             $user_id = $userdata->id;
-            $this->session->set_userdata('currentCauseId', $userid);
+            $user_name = $userdata->name;
+            $userLoggedIn = array(
+                'userId' => $user_id,
+                'userName' => $user_name,
+            );
+            $this->session->set_userdata('currentCauseId', $user_id);
             $this->session->set_userdata("userEmail",$email);
             $this->session->set_userdata('currentUserId', $user_id);
-            // $this->session->set_userdata($userLoggedIn);       
+            $this->session->set_userdata($userLoggedIn);       
             redirect("/send"); 
         }
         else{
             $this->db->insert('user', $userData);
             $userId = $this->db->insert_id();
+            $userLoggedIn = array(
+                'userId' => $userId,
+                'userName' => $userData["name"],
+            );
             $this->session->set_userdata('currentUserId', $userId);
             $causeData["user_id"] = $userId;
             $this->session->set_userdata('form_selected_text', $form_selected_text);
@@ -708,36 +720,9 @@ class kanavuhelp extends CI_Controller
             $this->db->insert('individualform', $causeData);
             // $causeId = $this->db->insert_id();
             $this->session->set_userdata('currentCauseId', $userId);
-            // $this->session->set_userdata($userLoggedIn);     
+            $this->session->set_userdata($userLoggedIn);     
             redirect("/send"); 
         }
-    }
-
-    public function sendcauseVerficationstatus(){
-        if (!$this->session->userdata('userId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
-        }
-        $userEmail = $this->input->get("email");
-        $message = $this->input->get("message");
-        $to = $userEmail;
-
-        $this->email->from('support@kanavu.help', 'Kanavu Help');
-        $this->email->to($to);
-        $this->email->subject('Kanavu Help Foundation');
-        $this->email->message($message);
-        // $this->email->set_mailtype("html");
-        // $this->email->set_header("MIME-Version", "1.0");
-        // $this->email->set_header("Content-Type: text/html", "charset=UTF-8\r\n");
-
-        if ($this->email->send()) {
-            // Set a session variable to indicate OTP was sent
-            $this->session->set_flashdata('causemailsend', true);
-                redirect("/causesverification");
-        } else {
-            echo "<script>Email not sent please try again.</script>";
-            // $this->session->set_userdata("emailstatus","failed");
-            // echo $this->email->print_debugger(); // Print debug info if sending fails
-        }   
     }
 
     public function updateCauseStep2(){

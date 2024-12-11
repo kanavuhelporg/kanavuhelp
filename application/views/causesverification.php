@@ -313,7 +313,7 @@
                                             <button onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">
                                                 Edit
                                             </button>&nbsp;&nbsp;
-                                            <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->username;?>')" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
+                                            <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->user_id;?>','<?php echo $donation->username;?>',<?php echo $donation->Verifyemailcount;?>,<?php echo $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
                                                 Status
                                             </button>
                                         </td>
@@ -427,7 +427,7 @@ function createarr($noofpages){
               <div id="statusheading" class="d-flex justify-content-between">
 
               </div>
-              <div contenteditable style="min-height:50px;max-height:max-xontent;outline:none;"  class="w-100 border p-1" name="sendemail" id="causestatus">
+              <div contenteditable style="min-height:50px;max-height:max-content;outline:none;"  class="w-100 border p-1" name="sendemail" id="causestatus">
 
               </div>  
               <div id="sendmailbtn" class="mt-3">
@@ -441,6 +441,41 @@ function createarr($noofpages){
 </div>
 
 <!------------------------------send-mail-end-------------------------------->
+
+<!-------------------------------mail-data-modal------------------------------>
+
+<div id="emaildata" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="text-danger">Email sending details:</h5>
+             <button data-bs-dismiss="modal" class="btn btn-close"></button>
+          </div>
+
+          <div class="modal-body">
+              <div id="emaildataheading" class="d-flex justify-content-between">
+
+              </div>
+              <div class="w-100">
+                <table class="table table-borderred">
+                    <thead><tr><th>Sno</th><th>Email count</th><th>Sender</th><th>Sending Date time</th></tr></thead>
+                    <tbody id="emaildatatable">
+ 
+                    </tbody>
+                </table>
+
+              </div>  
+              <div id="sendmailbtn" class="mt-3">
+                <button data-bs-dismiss="modal" class="btn btn-danger fw-bold">Ok</button>
+              </div>
+          </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-------------------------------mail-data-end-------------------------------->
 
 
                 <script>
@@ -571,6 +606,8 @@ function createarr($noofpages){
 
 <script>
 
+let status = "";
+
 $.ajax({
       type:"get",
       url:"admin/sidemenu",
@@ -663,29 +700,32 @@ $.ajax({
         error:function(error){
         document.getElementById('causeslist').innerHTML = error;
         }
-    });
+        });
     }  
 
-    function setUrl(email,username){
+    function setUrl(email,id,username,verifycount,rejectcount){
         document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${email}</span>`;
         document.getElementById("causestatus").innerHTML = "";
+        let adminname = "<?php echo $this->session->userdata("adminName");?>";
         document.getElementById("statusheading").innerHTML = `<span class="text-danger h5">Verification Status</span>
                 <div>
-                <label for="verified" class="text-success h5">Verified</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="verified" type="radio" name="status">&nbsp;&nbsp;
-                <label for="verified" class="text-warning h5">Rejected</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="unverified" type="radio" name="status"></div>`;
-        document.getElementById("sendmailbtn").innerHTML = `<button onclick='sendEmail("${email}")' class='btn btn-danger'>Send</button>`;
+                <input hidden type="radio" id='useridforemail' value='${id}'>
+                <label data-bs-toggle="modal" data-bs-target="#emaildata" type="button" onclick="showVerifyemaildata(${id})" for="verified" class="text-success h5">Verified [${verifycount}]</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="verified" type="radio" name="status">&nbsp;&nbsp;
+                <label data-bs-toggle="modal" data-bs-target="#emaildata" onclick="showRejectemaildata(${id})" role="button" for="verified" class="text-warning h5">Rejected [${rejectcount}]</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="unverified" type="radio" name="status"></div>`;
+        document.getElementById("sendmailbtn").innerHTML = `<button onclick='sendEmail("${email}","${username}","${adminname}")' class='btn btn-danger'>Send</button>`;
     }
 
-    function sendEmail(email){
+    function sendEmail(email,username,adminname){
         let message = document.getElementById("causestatus").innerText;
+        let userid = document.getElementById("useridforemail").value;
         let a = document.createElement("a");
-        a.href = `sendcauseVerficationstatus?email=${email}&message=${message}`;
+        a.href = `sendcauseVerficationstatus?email=${email}&message=${message}&userid=${userid}&username=${username}&adminname=${adminname}&status=${status}`;
         a.dispatchEvent(new MouseEvent("click"));
     }
 
 
     function setAutomail(mailfor,username){
-        let status = mailfor.value;
+        status = mailfor.value;
         if(status == "verified"){
         document.getElementById("causestatus").innerHTML = `<!DOCTYPE html>
         <html lang="en">
@@ -703,6 +743,36 @@ $.ajax({
         else{
             document.getElementById("causestatus").innerHTML = `<p>Hai!, <span class="text-success">${username}</span></p>Help us verify our cause! Please provide the necessary documentation to ensure your trust. Your support is crucial.We need your help! To strengthen our credibility, we require specific documents. Let's work together to make a difference.`;
         }
+    }
+
+
+    function showVerifyemaildata(id){
+        console.log(id)
+        $.ajax({
+        type:"get",
+        url:"admin/showEmaildata",
+        data:{"userid":id,"status":"verified"},
+        success:function(result){
+        document.getElementById('emaildatatable').innerHTML = result;
+        },
+        error:function(error){
+        document.getElementById('emaildatatable').innerHTML = error;
+        }
+        });    
+    }
+
+    function showRejectemaildata(id){
+        $.ajax({
+        type:"get",
+        url:"admin/showEmaildata",
+        data:{"userid":id,"status":"unverified"},
+        success:function(result){
+        document.getElementById('emaildatatable').innerHTML = result;
+        },
+        error:function(error){
+        document.getElementById('emaildatatable').innerHTML = "";
+        }
+        });    
     }
                 </script>
 

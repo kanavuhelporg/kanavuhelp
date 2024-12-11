@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <style>
@@ -233,12 +233,12 @@
     <button id="myFundraisersButton"
       class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0">My Fundraisers</button>
   </div>-->
-  <script>
+ <!--  <script>
     // Adding click event to navigate to 'My Fundraisers' page
     document.getElementById("myDonationsButton").addEventListener("click", function() {
       window.location.href = "<?php echo base_url('myhelps'); ?>"; // Correctly quoted and lowercase path
     });
-  </script>
+  </script> -->
 
 
   <?php if (!empty($fundraisers)) : ?>
@@ -296,6 +296,40 @@
     
   </div>
 <!------------------------footer-end--------------->
+
+<!---------------loggin-modal---------------------->
+<?php if($this->session->flashdata("logged_in")) :?>
+  <script>
+      // Automatically trigger the OTP modal when the page loads
+      window.onload = function() {
+        var myModal = new bootstrap.Modal(document.getElementById("loggin"), {
+          backdrop: 'static',
+          keyboard: false
+        });
+        myModal.show();
+      };
+    </script>
+
+<div id="loggin" class="modal fade show" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+           <div class="modal-header">
+              <span class="h5 text-danger">Welcome ! <span class="text-success"><?=$this->session->userdata("userName");?></span></span> 
+              <button data-bs-dismiss="modal" class="btn btn-close"></button>              
+           </div>
+           <div class="modal-body">
+              <p class="text-muted">We will inform you after verification is complete.</p>
+           </div>
+           <div class="px-2">
+           <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
+           </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+
+<!---------------login-modal-end---------------------->
 <script>
   $.ajax({
       type:"get",
@@ -305,7 +339,7 @@
            document.getElementById("myfrpage").classList.add("text-danger");
       },
       error:(error)=>{
-           document.getElementById("header").innerHTML = error;
+           document.getElementById("header").innerHTML = "";
       }
     }); 
 
@@ -316,7 +350,7 @@
            document.getElementById("footer").innerHTML = result;
       },
       error:(error)=>{
-           document.getElementById("footer").innerHTML = error;
+           document.getElementById("footer").innerHTML = "";
       }
     }); 
 </script>

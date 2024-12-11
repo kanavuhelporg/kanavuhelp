@@ -125,6 +125,41 @@ class adminpanel extends CI_Model
         $this->db->where('donation_id', $id);
         return $this->db->get()->row();
     }
+
+    public function emailStatus($status,$userId,$userName,$userEmail,$message,$adminName){
+        date_default_timezone_set('Asia/Kolkata');
+        $createdate = new DateTime(); 
+        $datetime = $createdate->format('d-m-Y h:i:s A'); 
+        $getemailcount = "";
+        $newcount = "";
+        if($status == "verified"){
+            $getemailcount = $this->db->query("SELECT count(Emailcount) AS Emailcount FROM emailstatus WHERE user_id = $userId AND Status = 'verified'");
+            $emailcount = $getemailcount->row();
+            $count = $emailcount->Emailcount;
+            $newcount = $count + 1;
+            $updatequery = $this->db->query("UPDATE individualform SET Verifyemailcount = $newcount WHERE user_id = $userId");
+        }
+        else{
+            $getemailcount = $this->db->query("SELECT count(Emailcount) AS Emailcount FROM emailstatus WHERE user_id = $userId AND Status = 'unverified'");
+            $emailcount = $getemailcount->row();
+            $count = $emailcount->Emailcount;
+            $newcount = $count + 1;
+            $updatequery = $this->db->query("UPDATE individualform SET Rejectemailcount = $newcount WHERE user_id = $userId");
+        }
+            $query = $this->db->query("INSERT INTO emailstatus (Emailcount,Emailed_date,Who_send,Message, user_id ,user_name,status) VALUES($newcount,'$datetime','$adminName','$message',$userId,'$userName','$status')");
+    }
+
+    public function getEmaildata($userid,$status){
+        if($status == "verified"){
+            $query = $this->db->query("SELECT * FROM emailstatus WHERE user_id = $userid AND Status = '$status'");
+            return $query->result_array();
+        }
+        else{
+            $query = $this->db->query("SELECT * FROM emailstatus WHERE user_id = $userid AND Status = '$status'");
+            return $query->result_array();
+        }
+    }
+
     public function update_raised_amount($cause_id, $amount)
     {
         $this->db->set('raised_amount', 'raised_amount + ' . (int) $amount, FALSE);

@@ -1396,7 +1396,7 @@ function shareCause(url, title, imgurl) {
            document.getElementById("kanavuhomepage").classList.add("text-danger");
       },
       error:(error)=>{
-           document.getElementById("header").innerHTML = error;
+           document.getElementById("header").innerHTML = "";
       }
     }); 
 
@@ -1407,7 +1407,7 @@ function shareCause(url, title, imgurl) {
            document.getElementById("footer").innerHTML = result;
       },
       error:(error)=>{
-           document.getElementById("footer").innerHTML = error;
+           document.getElementById("footer").innerHTML = "";
       }
     }); 
 

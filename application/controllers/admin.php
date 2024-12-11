@@ -11,6 +11,8 @@ class admin extends CI_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('cookie');
+        $this->load->library('email');
+        $this->config->load('email');
     }
 
     public function index()
@@ -70,7 +72,7 @@ class admin extends CI_Controller
             // Set session data for the logged-in user
             $userLoggedIn = array(
                 'userId' => $login[0]['id'],
-                'userName' => $login[0]['name'],
+                'adminName' => $login[0]['name'],
             );
             $this->session->set_userdata($userLoggedIn);
 
@@ -284,6 +286,63 @@ class admin extends CI_Controller
         // Return JSON response for the AJAX call
         echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
     }
+
+    public function sendcauseVerficationstatus(){
+        if (!$this->session->userdata('userId')) {
+            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        }
+        $userEmail = $this->input->get("email");
+        $status = $this->input->get("status");
+        $userId = $this->input->get("userid");
+        $userName = $this->input->get("username");
+        $message = $this->input->get("message");
+        $adminName = $this->input->get("adminname");
+        $to = $userEmail;
+
+        $this->email->from('support@kanavu.help', 'Kanavu Help');
+        $this->email->to($to);
+        $this->email->subject('Kanavu Help Foundation');
+        $this->email->message($message);
+        // $this->email->set_mailtype("html");
+        // $this->email->set_header("MIME-Version", "1.0");
+        // $this->email->set_header("Content-Type: text/html", "charset=UTF-8\r\n");
+
+        if ($this->email->send()) {
+            // Set a session variable to indicate OTP was sent
+            $find = array(",","!",".","'");
+            $replace = array("");
+            $message = str_replace($find,$replace,$message);
+            $this->adminpanel->emailStatus($status,$userId,$userName,$userEmail,$message,$adminName);
+            $this->session->set_flashdata('causemailsend', true);
+                redirect("/causesverification");
+        } else {
+            echo "<script>Email not sent please try again.</script>";
+            // $this->session->set_userdata("emailstatus","failed");
+            // echo $this->email->print_debugger(); // Print debug info if sending fails
+        }   
+    }
+
+    public function showEmaildata(){
+        if (!$this->session->userdata('userId')) {
+            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        }
+        if($this->input->is_ajax_request()){
+           $userid = $this->input->get("userid");
+           $status = $this->input->get("status");
+           $emaildata = $this->adminpanel->getEmaildata($userid,$status);
+                foreach ($emaildata as $key => $value) {
+                    echo "<tr>
+                          <td>".($key + 1)."</td>
+                          <td>$value[Emailcount]</td>
+                          <td>$value[Who_send]</td>
+                          <td>$value[Emailed_date]</td>
+                          </tr>";
+                }
+            
+           
+        }
+    }
+
 
     public function contact_submissions()
     {

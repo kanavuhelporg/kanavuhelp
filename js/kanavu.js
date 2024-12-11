@@ -1,67 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanavu_help</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <style>
-        body {
-            font-family: 'Sen', sans-serif;
-        }
-
-        /* carousel img */
-        .carousel-item {
-            height: 100vh;
-        }
-
-        .carousel-item img {
-            object-fit: cover;
-            height: 100%;
-            width: 100%;
-        }
-
-        /* login_button */
-        .login-button {
-            background-color: #E01A2B;
-            color: white;
-            font-size: 16px;
-            padding: 8px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            transition: 0.3s background-color;
-        }
-
-        /* start a kanavu button */
-        .startkanavu-button {
-            border: 1px solid #E01A2B;
-            color: #E01A2B;
-            font-size: 16px;
-            padding: 8px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            transition: 0.3s background-color;
-        }
-
-        /* navigation bar  menu size */
-        .offcanvas-body {
-            font-size: 17px;
-        }
-        .nav-item a:hover{
-          color:#d9534f;
-        }
-    </style>
-</head>
-
-<body>
-    
-<div class="container-fluid">
+document.getElementById("header").innerHTML = `<div class="container-fluid">
       <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
         <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
       </a>
@@ -106,7 +43,7 @@
         <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown">
           <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
             style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="ms-2"><?= $this->session->userdata('userName');?></span>
+          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
         </div>
         <ul class="dropdown-menu dropdown-menu-end">
           <li>
@@ -124,13 +61,36 @@
 </div>
         </div>
       </div>
-    </div>
-    
-    
+    </div>`;
 
-    <!-- Bootstrap JS and dependencies (Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+document.getElementById("footer").innerHTML = `<footer class="footer mt-auto py-3">
+        <div class="container">
+            <h5 style="text-align:center">kanavu.help</h5>
+            <!-- <span class="text-muted">Your footer content goes here.</span> -->
+            <div class="footer1">
+                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
+                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
+                <a class="footer-lable lable" href="#">Terms of Use</a>
+                <a class="footer-lable" href="#">Privacy Policy</a>
+            </div>
+        </div>
 
-</html>
+        <div class="social-icons d-flex justify-content-center text-center">
+            <a href="https://www.facebook.com/" target="_blank">
+                <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo">
+            </a>
+            <a href="https://twitter.com/" target="_blank">
+                <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo">
+            </a>
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/" target="_blank">
+                <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo">
+            </a>
+        </div>
+        <div class="text-center my-3">
+            <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="img-fluid mx-auto d-block" style="width: 200px; display: block;">
+        </div>
+
+        <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
+    </footer>
+`;    
