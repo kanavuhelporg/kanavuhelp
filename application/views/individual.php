@@ -84,7 +84,7 @@
     margin-left: 70px;
   }
 
-  .btn {
+  /* .btn {
     color: #EB2D32 !important;
     font-weight: bolder !important;
     border-radius: 50px !important;
@@ -94,7 +94,7 @@
   .btn:hover {
     background-color: red !important;
     color: white !important;
-  }
+  } */
 
   .btn-1 {
     margin-left: 260px !important;
@@ -956,17 +956,16 @@
                  ?>
 
                   <?php 
-                   if(!empty($filestatus)){
-                     echo "<div class=alert alert-danger>
-                                File not upload. Please try again. 
-                           </div>";
+                   if($this->session->flashdata("fileuploadfailed")){
+                     echo "<script>
+                     console.log(hi');
+                                window.alert(File not upload. Please try again.) 
+                           </script>";
                    }
-                   $this->session->unset_userdata("filestatus");
                  ?>
                 <section id="step-1" class="form-step col-12">
                   <h2>Basic Details</h2>
                   <div class="row my-3">
-                    <input hidden type="text" name="step" value="stepone">
                     <label for="category" class="col-md-4 col-form-label">I am raising fund for:<span class="text-danger">*</span></label>
                     <div class="col-md-8">
                       <div class="custom-dropdown-wrapper">
@@ -1052,7 +1051,7 @@
                   <div class="row my-3">
                     <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
                     <div class="col-md-8">
-                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: <?php echo $this->session->userdata('form_selected_text'); ?>" readonly>
+                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: <?= $this->session->userdata('form_selected_text'); ?>" readonly>
                     </div>
                   </div>
 
@@ -1134,8 +1133,6 @@
                 </section>
               </form>
 
-
-
             </div>
           </div>
         </div>
@@ -1187,9 +1184,37 @@
         myModal.show();
       };
     </script>
+    
   <?php endif; ?>
 
-  
+  <?php if($this->session->flashdata("fundraisinglive")): ?>
+  <script>
+      window.onload = function() {
+        var myModal = new bootstrap.Modal(document.getElementById('fundraisinglive'),{
+          backdrop: 'static',
+          keyboard: false
+        });
+        myModal.show();
+      };
+    </script>
+
+<div id="fundraisinglive" class="modal fade show">
+    <div class="modal-dialog">
+        <div class="modal-content">
+           <div class="modal-header">
+              <span class="h5 text-danger">Sorry !<span class="text-success"></span></span> 
+              <button data-bs-dismiss="modal" class="btn btn-close"></button>              
+           </div>
+           <div class="modal-body">
+              <p class="text-muted">Your previous fundraising is not completed.</p>
+           </div>
+           <div class="p-3">
+           <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
+           </div>
+        </div>
+    </div>
+  </div>
+  <?php endif; ?>
 
   <script>
 
@@ -1227,15 +1252,89 @@
         messageModal.show();
       }
 
+      let steponeform = document.getElementById("causeStep1");
+
+      steponeform.addEventListener("submit",(e)=>{
+           if(!stepOnevalidation()){
+            e.preventDefault()
+           }
+      })
+
       // Continue to Step 2
       document.getElementById("continueToStep2").addEventListener("click", () => {
-        if (validateStep1()) {
+        if (stepOnevalidation()) {
           sendOtp();
           otpModal.show();
         }
-      });
+      }); 
 
-      document.getElementById('verifyOtpButton').addEventListener('click', function () {
+    function stepOnevalidation(){
+       let category = document.forms["causeStep1"]["category"].value.trim();
+       let name = document.forms["causeStep1"]["name"].value.trim();
+       let age = document.forms["causeStep1"]["age"].value.trim();
+       let location = document.forms["causeStep1"]["location"].value.trim();
+       let email = document.forms["causeStep1"]["email"].value.trim();
+       let phone = document.forms["causeStep1"]["phone"].value.trim();
+       const categoryerrorElement = document.getElementById("category-error");
+       const nameerrorElement = document.getElementById("name-error");
+       const ageerrorElement = document.getElementById("age-error");
+       const locationerrorElement = document.getElementById("location-error");
+       const emailerrorElement = document.getElementById("email-error");
+       const phoneerrorElement = document.getElementById("phone-error");
+       
+       let validatename = /^([A-Za-z\s]{1,49})+$/;
+       let validatelocation = /^(?![0-9]*$)[a-zA-Z0-9]+$/;
+       let validateemail = /^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/;
+       let validatephone = /^([0-9]{10})+$/;
+       console.log((!validatephone.test(phone)))
+       if(category == ""){
+        return false;          
+       }
+        
+        if(name == "" || !name.match(validatename)){
+          nameerrorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
+          return false;
+        }
+        else{
+          nameerrorElement.textContent = ""
+        }
+        
+        if(age == "" || age < 1 || age > 120){
+          ageerrorElement.textContent = "Enter a valid age between 1 and 120.";
+          return false;
+        }
+        else{
+          ageerrorElement.textContent = "";
+        }  
+
+        if(location == "" || !location.match(validatelocation)){
+          locationerrorElement.textContent = "Please enter a location in correct format.";
+          return false;
+        }
+        else{
+          locationerrorElement.textContent = ""
+        }
+
+        if(email == "" || !email.match(validateemail)){
+          emailerrorElement.textContent = "Enter a valid email address.";
+          return false;
+        }
+        else{
+          emailerrorElement.textContent = "";
+        }
+        
+        if(phone == "" || !phone.match(validatephone)){
+          console.log("hi")
+          phoneerrorElement.textContent = "Enter a valid 10-digit phone number.";
+          return false;
+        }
+        else{
+          phoneerrorElement.textContent = "";
+        }
+        return true;
+       }
+      
+  document.getElementById('verifyOtpButton').addEventListener('click', function () {
   // Hide OTP Modal
   const otpModal = new bootstrap.Modal(document.getElementById('myModal'));
   otpModal.hide();
@@ -1255,8 +1354,8 @@
         const otp = document.getElementById("otp").value.trim();
         const generatedOtp = "<?php echo $this->session->userdata('generated_otp'); ?>";
 
-        console.log("Entered OTP:", otp); // Print the entered OTP
-        console.log("Generated OTP:", generatedOtp); // Print the generated OTP
+        // console.log("Entered OTP:", otp); // Print the entered OTP
+        // console.log("Generated OTP:", generatedOtp); // Print the generated OTP
         if (otp === generatedOtp){
           // Manually hide the modal if the Bootstrap instance is not working
           const myModalElement = document.getElementById('myModal');
@@ -1264,7 +1363,6 @@
           myModalElement.style.display = 'none';
           document.body.classList.remove('modal-open');
           document.querySelector('.modal-backdrop').remove();
-
           console.log("OTP verified and modal hidden.");
           showStep(2); // Move to the next step
         } else {
@@ -1359,7 +1457,12 @@
       });
 
       function validateStep1() {
-        return validateCategory() & validateName() & validateLocation() & validateAge() & validateEmail() & validatePhone();
+        if(validateCategory() && validateName() && validateLocation() && validateAge() && validateEmail() && validatePhone()){
+          return true;
+        }
+        else{
+          return false;
+        }
       }
 
       function validateStep2() {
@@ -1385,18 +1488,21 @@
       function validateName() {
         const nameInput = document.getElementById("name").value.trim();
         const errorElement = document.getElementById("name-error");
-        const nameRegex = /^[A-Za-z][A-Za-z\s'-]{1,49}$/;
-
+        const nameRegex = /^([A-Za-z\s'-]{1,49})+$/;
         if (!nameInput) {
           errorElement.textContent = "Enter your name.";
           return false;
-        } else if (!nameRegex.test(nameInput)) {
-          errorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
-          return false;
+        } else{
+            if(!nameInput.match(nameRegex)){
+            errorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
+            return false;
+            }
+            else{
+            return true;
+            }
         }
         errorElement.textContent = "";
-        return true;
-      }
+        }
 
       function validateAge() {
         const age = parseInt(document.getElementById("age").value, 10);

@@ -273,7 +273,7 @@
         <table class="table table-borderless">
             <thead>
             <tr class="ps-gray">
-            <th>S.No</th><th>Name</th><th>Email</th><th>Mobile</th><th>Amount</th><th>TransactionId</th><th>Verified status</th><th>Action</th>
+            <th>S.No</th><th>Name</th><th>Email</th><th>Mobile</th><th>Amount</th><th>TransactionId</th><th>Fundraiser_id</th><th>Fundraiser_name</th><th>Fundraiser_email</th><th>Fundraiser_phone</th><th>Verified status</th><th>Action</th>
             </tr>
             </thead>
             <tbody id="verificationlist">
@@ -286,11 +286,15 @@
                     <td><?php echo htmlspecialchars($donation->phoneno); ?></td>
                     <td><?php echo htmlspecialchars($donation->amount); ?></td>
                     <td><?php echo htmlspecialchars($donation->transactionid); ?></td>
+                    <td><?php echo htmlspecialchars($donation->fundraiser_id); ?></td>
+                    <td><?php echo htmlspecialchars($donation->fundraiser_name); ?></td>
+                    <td><?php echo htmlspecialchars($donation->fundraiser_email); ?></td>
+                    <td><?php echo htmlspecialchars($donation->fundraiser_phone); ?></td>
                     <td><?php echo htmlspecialchars($donation->status == 1 ? 'Yes' : 'No'); ?></td>
                     <td class="d-flex">
                     <button onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary" data-toggle="modal" data-target="#editDonationModal">
                     Edit
-                    </button>&nbsp;
+                    </button>&nbsp;&nbsp;
                     <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->name;?>')" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
                     Status
                     </button>
@@ -299,7 +303,7 @@
             <?php ++$i; endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="8" style="text-align: center;">No records found.</td>
+                <td colspan="12" style="text-align: center;">No records found.</td>
             </tr>
         <?php endif; ?>
             </tbody>
@@ -582,7 +586,7 @@ function setUrl(email,username){
     function sendEmail(email){
         let message = document.getElementById("causestatus").innerText;
         let a = document.createElement("a");
-        a.href = `sendcauseVerficationstatus?email=${email}&message=${message}`;
+        a.href = `sendtransactionVerficationstatus?email=${email}&message=${message}`;
         a.dispatchEvent(new MouseEvent("click"));
     }
 

@@ -71,7 +71,7 @@ class admin extends CI_Controller
         if (isset($login[0]['id'])) {
             // Set session data for the logged-in user
             $userLoggedIn = array(
-                'userId' => $login[0]['id'],
+                'adminId' => $login[0]['id'],
                 'adminName' => $login[0]['name'],
             );
             $this->session->set_userdata($userLoggedIn);
@@ -85,10 +85,16 @@ class admin extends CI_Controller
         }
     }
 
+    public function adminlogout(){
+         $this->session->unset_userdata("adminId");
+         $this->session->unset_userdata("adminName");
+         redirect("admin");
+    }
+
     public function causesverification()
     {
 
-        if (!$this->session->userdata('userId')) {
+        if (!$this->session->userdata('adminId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
         $data['fundraisers'] = $this->adminpanel->get_cause_details();
@@ -99,45 +105,16 @@ class admin extends CI_Controller
     }
 
     public function displayCauses(){
+        if($this->input->is_ajax_request()){
         $counts = $this->input->get("count");
         $fundraisers = $this->adminpanel->get_causes_list($counts);
-        if(!empty($fundraisers)){    
-        foreach ($fundraisers as $index => $donation){
-               echo "<tr>
-                    <td>".($counts + 1)."</td>
-                    <td>$donation->name</td>
-                    <td>$donation->email</td>
-                    <td>$donation->phone</td>
-                    <td>$donation->amount</td>
-                    <td>$donation->location</td>
-                    <td>$donation->age</td>
-                    <td>$donation->end_date</td>
-                    <td>$donation->cause_heading</td>
-                    <td>$donation->cause_description</td>
-                    <td>$donation->created_at</td>
-                    <td>$donation->username</td>
-                    <td>$donation->raised_amount</td>
-                    <td>".($donation->verified == 1 ? 'Yes' : 'No')."</td>
-                    <td class='d-flex'>
-                        
-                        <button onclick='editDonation(".json_encode($donation).")' class='btn btn-primary fw-bold' data-toggle='modal' data-target='#editDonationModal'>
-                            Edit
-                        </button>&nbsp;&nbsp;
-                        <button onclick='setUrl(`$donation->email`,`$donation->username`)' class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
-                            Status
-                        </button>
-                </td>
-            </tr>";     
-               ++$counts;
-            }
-            }
-            else{
-               echo "<tr><td colspan='14'>No causes found</td></tr>";
-            }
+        $data = $this->load->view("causesverificationlist",array("fundraisers"=>$fundraisers,"counts"=>$counts),true);
+        echo $data;
+        }
         }
 
     public function changeCausespagepagesetup(){
-        if (!$this->session->userdata('userId')) {
+        if (!$this->session->userdata('adminId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
             $initialindex = $this->input->get('initialindex');
@@ -163,7 +140,7 @@ class admin extends CI_Controller
 
     public function transactionverification()
     {
-        if (!$this->session->userdata('userId')) {
+        if (!$this->session->userdata('adminId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
         $data['donations'] = $this->adminpanel->transactiondetails();
@@ -188,8 +165,12 @@ class admin extends CI_Controller
                     <td>".($donation->phoneno)."</td>
                     <td>".($donation->amount)."</td>
                     <td>".($donation->transactionid)."</td>
+                    <td>$donation->fundraiser_id</td>
+                    <td>$donation->fundraiser_name</td>
+                    <td>$donation->fundraiser_email</td>
+                    <td>$donation->fundraiser_phone</td>
                     <td>".($donation->status == 1 ? 'Yes' : 'No')."</td>
-                    <td>
+                    <td class='d-flex'>
                     <button onclick='editDonation(".(json_encode($donation)).")' class='btn btn-primary' data-toggle='modal' data-target='#editDonationModal'>
                     Edit
                     </button>
@@ -207,7 +188,7 @@ class admin extends CI_Controller
     }
 
     public function changeVerificationpagesetup(){
-        if (!$this->session->userdata('userId')) {
+        if (!$this->session->userdata('adminId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
         $initialindex = $this->input->get('initialindex');
@@ -288,7 +269,7 @@ class admin extends CI_Controller
     }
 
     public function sendcauseVerficationstatus(){
-        if (!$this->session->userdata('userId')) {
+        if (!$this->session->userdata('adminId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
         $userEmail = $this->input->get("email");
@@ -314,22 +295,25 @@ class admin extends CI_Controller
             $message = str_replace($find,$replace,$message);
             $this->adminpanel->emailStatus($status,$userId,$userName,$userEmail,$message,$adminName);
             $this->session->set_flashdata('causemailsend', true);
+            $this->session->set_userdata("emailsuccessstatus","Email sent to ".$to."");
                 redirect("/causesverification");
         } else {
-            echo "<script>Email not sent please try again.</script>";
+            $this->session->set_userdata("emailsuccessstatus","Email not sent please try again.");
+            // echo "<script>Email not sent please try again.</script>";
             // $this->session->set_userdata("emailstatus","failed");
             // echo $this->email->print_debugger(); // Print debug info if sending fails
         }   
     }
 
     public function showEmaildata(){
-        if (!$this->session->userdata('userId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        if (!$this->session->userdata('adminId')) {
+            redirect('kanavuhelp/adminlogin'); // Redirect to login if not logged in
         }
         if($this->input->is_ajax_request()){
            $userid = $this->input->get("userid");
            $status = $this->input->get("status");
            $emaildata = $this->adminpanel->getEmaildata($userid,$status);
+           if(!empty($emaildata)){
                 foreach ($emaildata as $key => $value) {
                     echo "<tr>
                           <td>".($key + 1)."</td>
@@ -338,11 +322,13 @@ class admin extends CI_Controller
                           <td>$value[Emailed_date]</td>
                           </tr>";
                 }
-            
+           }
+           else{
+                echo "<tr><td class='text-center' colspan='4'>No emails sent.</td></tr>";
+           }
            
         }
     }
-
 
     public function contact_submissions()
     {

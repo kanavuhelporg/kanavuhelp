@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>causeverification</title>
+    <title>cause verification</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="./ponsoft.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -242,7 +242,68 @@
 
 <body>
 
-    <div class="container-fluid">
+<div style="overflow:hidden;position:absolute;" class="container-fluid">
+<!---------------------email-send-toast---------------------->
+ 
+<div id='emailsendtoast' style='z-index:2;border:4px solid rgb(132, 250, 132);border-radius:10px;position:absolute;top:10%;right:-380px;transition:0.5s;background-color:rgb(18, 155, 18);' class=' toast show'>
+  <div style="border-radius:10px;background-color:rgb(18, 155, 18);" class='toast-header'>
+    <strong class='me-auto text-white fs-6'>Success</strong>
+    <button type='button' class='btn-close float-end' data-bs-dismiss='toast'></button>
+  </div>
+  <div id="emailsendstatus" class='toast-body text-white fs-6 py-2'>
+    
+  </div>
+  </div>
+
+<?php  if(isset($_SESSION["emailsuccessstatus"])){
+     $status = $_SESSION['emailsuccessstatus'];
+echo "<script>
+       document.getElementById('emailsendstatus').innerHTML = '$status';
+       document.getElementById('emailsendtoast').style.right = '50px';
+       setTimeout(()=>{
+       document.getElementById('emailsendtoast').style.right = '-380px';
+       },3000);
+       
+      </script>"; 
+
+unset($_SESSION["emailsuccessstatus"]);
+
+} 
+
+?>
+<!---------------------add-toast-end------------------>
+
+<!---------------------email-error-toast---------------------->
+
+<div id='emailerrortoast' style='z-index:2;border:4px solid rgb(254, 91, 91);border-radius:10px;position:absolute;top:10%;right:-380px;transition:0.5s;background-color:rgb(250,51,51);' class='toast show'>
+  <div style="background-color:rgb(250,51,51);" class='toast-header'>
+    <strong class='me-auto text-white fs-6'>Error</strong>
+    <button type='button' class='btn-close float-end' data-bs-dismiss='toast'></button>
+  </div>
+  <div id="emailerrormessage" class='toast-body text-white fs-6 py-2'>
+    
+  </div>
+  </div>
+
+<?php 
+
+if(isset($_SESSION["emailerrorstatus"])){
+  $status = $_SESSION['emailerrorstatus'];
+echo "<script>
+       document.getElementById('emailerrormessage').innerHTML = '$status';
+       document.getElementById('emailerrortoast').style.right = '50px';
+       setTimeout(()=>{
+       document.getElementById('emailerrortoast').style.right = '-380px';
+       },3000)
+       
+      </script>"; 
+
+unset($_SESSION["emailerrorstatus"]);
+
+}
+
+?>
+<!---------------------email-error-toast-end--------------------->
 
         <div id="side-bar" class="row"><!-----top-bar--------------->
 
@@ -444,7 +505,7 @@ function createarr($noofpages){
 
 <!-------------------------------mail-data-modal------------------------------>
 
-<div id="emaildata" class="modal fade">
+<div id="emaildata" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -704,6 +765,7 @@ $.ajax({
     }  
 
     function setUrl(email,id,username,verifycount,rejectcount){
+    console.log(id,verifycount,rejectcount);
         document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${email}</span>`;
         document.getElementById("causestatus").innerHTML = "";
         let adminname = "<?php echo $this->session->userdata("adminName");?>";

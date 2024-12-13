@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Login Page</title>
     <style>
         * {
             /* overflow: hidden; */
-            background-color: #FEF2F2;
+            /* background-color: #FEF2F2; */
             font-family: 'Sen', sans-serif;
         }
 
@@ -89,11 +90,140 @@
           margin-left:50px;margin-right:50px;
 
         }
+
+        .carousel-item {
+      height: 100vh;
+    }
+
+    .active {
+      background-color: #f87171;
+      /* For example, a darker red background */
+      color: white;
+      /* White text for contrast */
+    }
+
+    .carousel-item img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Login_button */
+    .login-button {
+      background-color: #E01A2B;
+      color: white;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s background-color;
+    }
+
+    /* Start a kanavu button */
+    .startkanavu-button {
+      border: 1px solid #E01A2B;
+      color: #E01A2B;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s background-color;
+    }
+
+    /* nav bar menu size */
+    .offcanvas-body {
+      font-size: 17px;
+    }
+
+    /* footer */
+    .footer {
+      height: 250px;
+      width: 100%;
+      left: 0;
+      right: 0;
+      background-color: #EB2D32;
+      margin-top: 50px;
+      color: #f0f0f0;
+    }
+
+    .footer1 {
+      text-align: center;
+      padding: 10px;
+      margin-left: 10px;
+    }
+
+    .footer-lable {
+      color: white;
+      text-decoration: none;
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+
+    .lable {
+      border-right: 3px solid #fff;
+    }
+
+    .footer1 a {
+      margin-left: 20x;
+    }
+
+    .footimg {
+      margin-left: 520px;
+      padding: 20px;
+    }
+
+    .social-icons img {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+
+    }
+
+    /* button above cards */
+    .data {
+      border: 1px solid #E01A2B;
+      color: #E01A2B;
+      background-color: #fff;
+      border-radius: 20px;
+    }
+
+    .data:hover {
+      background-color: #E01A2B;
+      color: white;
+    }
+
+    /* card section */
+    .card {
+      border: none;
+      flex-direction: row;
+      width: 873px;
+      box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-top {
+      margin: 20px;
+      width: 152px;
+      height: 167px;
+    }
+
+    .card-title {
+      width: 250px;
+    }
+
+    /* progress bar in the card */
+    .progress {
+      width: 286px;
+    }
+
         
     </style>
 </head>
 
 <body>
+
+<nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    
+  </nav>
 
     <div class="container-fluid">
                   <?php 
@@ -108,10 +238,10 @@
         <div class="row">
             <!-- Left side form column -->
             <div class="col-md-6 logi1">
-                <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/') ?>">
+                <!-- <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/') ?>">
                     <img class="logo" src="<?= base_url('/assets/img/Kanavu_help.png') ?>" alt="Kanavu Help"
                         style="">
-                </a>
+                </a> -->
                 <br><br><br>
                 <h2 style="margin-left:50px;" class="text-danger">Sign in</h2>
                 <!-- <p style="margin-left:50px;">Don't have an Account? <a href="<?= base_url('/register') ?>"><span
@@ -128,7 +258,7 @@
 
                     <div class="mb-3 d-flex align-items-center">
                     <div>    
-                    <button id="otpbtn" type="submit" name="getotp" class="btn border btnotp">Get OTP</button>
+                    <button id="otpbtn" type="submit" name="getotp" class="btn border btn-danger">Get OTP</button>
                     </div>
                     &nbsp;&nbsp;
                     <div id="indicateotp" style="display:none;">
@@ -143,7 +273,7 @@
                     <div class="mb-3">
                         <input type="hidden" name="returnUrl" value="<?= isset($_GET['returnUrl']) ? $_GET['returnUrl'] : '' ?>">
                         <label for="exampleInputPassword1" class="form-label">Enter OTP</label>
-                        <input onkeyup="verifyOtp(this)" type="text" class="form-control" id="loginotp" maxlength="4" name="loginotp">
+                        <input type="text" class="form-control" id="loginotp" maxlength="4" name="loginotp">
                         <div id="otperr" class="text-danger"></div>
                     </div>
                   
@@ -231,16 +361,43 @@
            </div>
          </div>
     </div>
-   
-     <?php $this->session->unset_flashdata("not_registered_user");?>
 
   <?php endif;?>
   <!----------------------not-registered-modal-end-------------------------->
+
+  <!-------------------------footer------------------>
+  <div id="footer">
+    
+  </div>
+<!------------------------footer-end--------------->
 
 <script>
     
     let otpstatus = false;
     let emailstatus = true;
+
+    $.ajax({
+      type:"get",
+      url:"kanavuhelp/getHeader",
+      success:(result)=>{
+           document.getElementById("header").innerHTML = result;
+           document.getElementById("myfrpage").classList.add("text-danger");
+      },
+      error:(error)=>{
+           document.getElementById("header").innerHTML = "";
+      }
+    }); 
+
+    $.ajax({
+      type:"get",
+      url:"kanavuhelp/getFooter",
+      success:(result)=>{
+           document.getElementById("footer").innerHTML = result;
+      },
+      error:(error)=>{
+           document.getElementById("footer").innerHTML = "";
+      }
+    }); 
         function loginValidate(){
             var email = document.login.loginemail.value.trim(); // Trim the input value
             var otp = document.login.loginotp.value.trim();// Trim the input value
@@ -286,7 +443,7 @@
         }
 
 
-        function verifyOtp(inputotp){
+      /*   function verifyOtp(inputotp){
            let otp = inputotp.value;
            let errorbox = document.getElementById("otperr");
            let submitbutton = document.getElementById("loginsubmit")
@@ -295,27 +452,26 @@
            let sendotplength = sendotp.length;
            if(l !== 4){
                errorbox.innerHTML = "";
-            //    submitbutton.setAttribute("disabled","disabled");
                otpstatus = false;  
            }
            else if(l >= 4){
             if(otp !== sendotp){
                  errorbox.innerHTML = "<small style='color:red;'>OTP is Incorrect</small>";
-                //  submitbutton.setAttribute("disabled","disabled");
                  otpstatus = false;  
                }
                else{
                  let errorbox = document.getElementById("otperr");
                  errorbox.innerHTML = "<small style='color:green;'>OTP is Correct</small>";
-                //  submitbutton.removeAttribute("disabled");
                  otpstatus = true;
                }
            }
            console.log(otpstatus)
-        }
+        } */
 
        
     </script> 
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

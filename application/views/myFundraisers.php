@@ -7,8 +7,8 @@
   <title>Kanavu_help</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ 
   <style>
     body {
       font-family: 'Sen', sans-serif;
@@ -258,7 +258,7 @@
 
                 <p class="card-title"><b><?= $cause->cause_heading ?></b></p>
 
-                <p class="text-muted"> <?= $cause->days_left > 0 ? $cause->days_left . ' days left' : 'Expired' ?></p>
+                <p class="text-muted"><?= $cause->days_left > 0 ? $cause->days_left . ' days left' : 'Expired' ?></p>
 
               </div>
 
@@ -300,9 +300,8 @@
 <!---------------loggin-modal---------------------->
 <?php if($this->session->flashdata("logged_in")) :?>
   <script>
-      // Automatically trigger the OTP modal when the page loads
       window.onload = function() {
-        var myModal = new bootstrap.Modal(document.getElementById("loggin"), {
+        let myModal = new bootstrap.Modal(document.getElementById("loggin"), {
           backdrop: 'static',
           keyboard: false
         });
@@ -310,7 +309,7 @@
       };
     </script>
 
-<div id="loggin" class="modal fade show" aria-hidden="true">
+<div id="loggin" class="modal fade show">
     <div class="modal-dialog">
         <div class="modal-content">
            <div class="modal-header">
@@ -320,7 +319,7 @@
            <div class="modal-body">
               <p class="text-muted">We will inform you after verification is complete.</p>
            </div>
-           <div class="px-2">
+           <div class="p-3">
            <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
            </div>
         </div>
@@ -357,7 +356,7 @@
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
