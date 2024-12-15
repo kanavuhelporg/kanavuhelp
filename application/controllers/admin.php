@@ -160,6 +160,8 @@ class admin extends CI_Controller
             
                echo "<tr>
                     <td> $i</td>
+                    <td>".($donation->category)."</td>
+                    <td>".($donation->cause_heading)."</td>
                     <td>".($donation->name)."</td>
                     <td>".($donation->email)."</td>
                     <td>".($donation->phoneno)."</td>
@@ -171,10 +173,10 @@ class admin extends CI_Controller
                     <td>$donation->fundraiser_phone</td>
                     <td>".($donation->status == 1 ? 'Yes' : 'No')."</td>
                     <td class='d-flex'>
-                    <button onclick='editDonation(".(json_encode($donation)).")' class='btn btn-primary' data-toggle='modal' data-target='#editDonationModal'>
+                    <button onclick='editDonation(".(json_encode($donation)).")' class='btn btn-primary fw-bold' data-toggle='modal' data-target='#editDonationModal'>
                     Edit
-                    </button>
-                    <button onclick='setUrl(`$donation->email`,`$donation->name`)' class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
+                    </button>&nbsp;&nbsp;
+                    <button onclick='setUrl(".json_encode($donation).")' class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
                     Status
                     </button>
                     </td>
@@ -268,6 +270,38 @@ class admin extends CI_Controller
         echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
     }
 
+    public function sendtransactionVerficationstatus(){
+        if (!$this->session->userdata('adminId')) {
+            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        }
+        $donaremail = $this->input->get("email");
+        $status = $this->input->get("status");
+        $donationid = $this->input->get("donationid");
+        $donarname = $this->input->get("donarname");
+        $message = $this->input->get("message");
+        $adminName = $this->input->get("adminname");
+        $to = $donaremail;
+
+        $this->email->from('support@kanavu.help', 'Kanavu Help');
+        $this->email->to($to);
+        $this->email->subject('Kanavu Help Foundation');
+        $this->email->message($message);
+
+        if ($this->email->send()) {
+
+            $find = array(",","!",".","'");
+            $replace = array("");
+            $message = str_replace($find,$replace,$message);
+            $this->adminpanel->transactionemailStatus($status,$donationid,$donarname,$donaremail,$message,$adminName);
+            $this->session->set_flashdata('transactionmailsend', true);
+            $this->session->set_userdata("transactionemailsuccessstatus","Email sent to ".$to."");
+                redirect("/transactionverification");
+        } else {
+            $this->session->set_userdata("transactionemailsuccessstatus","Email not sent please try again.");
+            redirect("/transactionverification");
+        }   
+    }
+
     public function sendcauseVerficationstatus(){
         if (!$this->session->userdata('adminId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
@@ -298,11 +332,38 @@ class admin extends CI_Controller
             $this->session->set_userdata("emailsuccessstatus","Email sent to ".$to."");
                 redirect("/causesverification");
         } else {
-            $this->session->set_userdata("emailsuccessstatus","Email not sent please try again.");
+            $this->session->set_userdata("emailerrorstatus","Email not sent please try again.");
+                redirect("/causesverification");
             // echo "<script>Email not sent please try again.</script>";
             // $this->session->set_userdata("emailstatus","failed");
             // echo $this->email->print_debugger(); // Print debug info if sending fails
         }   
+    }
+
+    public function showtransactionEmaildata(){
+        if (!$this->session->userdata('adminId')) {
+            redirect('kanavuhelp/adminlogin'); // Redirect to login if not logged in
+        }
+        if($this->input->is_ajax_request()){
+           $donationid = $this->input->get("donationid");
+           $status = $this->input->get("status");
+           $emaildata = $this->adminpanel->gettransactionEmaildata($donationid,$status);
+           if(!empty($emaildata)){
+                foreach ($emaildata as $key => $value) {
+                    echo "<tr>
+                          <td>".($key + 1)."</td>
+                          <td>$value[Emailcount]</td>
+                          <td>$value[Who_send]</td>
+                          <td>$value[Emailed_date]</td>
+                          <td>$value[Message]</td>
+                          </tr>";
+                }
+           }
+           else{
+                echo "<tr><td class='text-center' colspan='4'>No emails sent.</td></tr>";
+           }
+           
+        }
     }
 
     public function showEmaildata(){
@@ -320,6 +381,7 @@ class admin extends CI_Controller
                           <td>$value[Emailcount]</td>
                           <td>$value[Who_send]</td>
                           <td>$value[Emailed_date]</td>
+                          <td>$value[Message]</td>
                           </tr>";
                 }
            }

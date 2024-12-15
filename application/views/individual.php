@@ -1311,6 +1311,7 @@
           locationerrorElement.textContent = "Please enter a location in correct format.";
           return false;
         }
+        
         else{
           locationerrorElement.textContent = ""
         }

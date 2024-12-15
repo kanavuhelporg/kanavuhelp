@@ -270,7 +270,7 @@
                     </div>
                     
                     <div id="otpsubmit" style="display:none;">
-                    <div class="mb-3">
+                    <div class="mb-3 pb-2">
                         <input type="hidden" name="returnUrl" value="<?= isset($_GET['returnUrl']) ? $_GET['returnUrl'] : '' ?>">
                         <label for="exampleInputPassword1" class="form-label">Enter OTP</label>
                         <input type="text" class="form-control" id="loginotp" maxlength="4" name="loginotp">
@@ -297,7 +297,7 @@
                 </form>
 
         <!-----------------quotes------------------------------>
-          <div class="text-center text-danger fw-bold">
+          <div class="container mt-2 px-5 py-3 border text-center text-danger fw-bold">
             <span class="text-muted fs-5">Together, we can make a difference !.</span>
           <p class="fs-5">"Be the change you wish to see in the world." - Mahatma Gandhi</p> 
           <p class="fs-5"> "The only way to do great work is to love what you do." - Steve Jobs

@@ -255,7 +255,7 @@
   </div>
   </div>
 
-<?php  if(isset($_SESSION["emailsuccessstatus"])){
+<?php if(isset($_SESSION["emailsuccessstatus"])){
      $status = $_SESSION['emailsuccessstatus'];
 echo "<script>
        document.getElementById('emailsendstatus').innerHTML = '$status';
@@ -341,9 +341,9 @@ unset($_SESSION["emailerrorstatus"]);
                                 <th>Location</th>
                                 <th>Age</th>
                                 <th>End date </th>
-                                <th>Cause heading</th>
+                                <th>Cause heading</a></th>
                                 <th>Cause description</th>
-                                <th>Documents</th>
+                                <!-- <th>Documents</th> -->
                                 <th>created date</th>
                                 <th>Created by</th>
                                 <th>raised amount</th>
@@ -363,9 +363,9 @@ unset($_SESSION["emailerrorstatus"]);
                                         <td><?php echo htmlspecialchars($donation->location); ?></td>
                                         <td><?php echo htmlspecialchars($donation->age); ?></td>
                                         <td><?php echo htmlspecialchars($donation->end_date); ?></td>
-                                        <td><?php echo htmlspecialchars($donation->cause_heading); ?></td>
+                                        <td><button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')"><?php echo htmlspecialchars($donation->cause_heading); ?></button></td>
                                         <td><?php echo htmlspecialchars($donation->cause_description); ?></td>
-                                        <td><a href="<?=base_url("assets/individualform_img/"."$donation->cover_image")?>"><img src="<?=base_url("assets/individualform_img/"."$donation->cover_image")?>" style="width:50px;height:50px;" alt="<?=$donation->cover_image?>"></a></td>
+                                        <!-- <td><a href="<?=base_url("assets/individualform_img/"."$donation->cover_image")?>"><img src="<?=base_url("assets/individualform_img/"."$donation->cover_image")?>" style="width:50px;height:50px;" alt="<?=$donation->cover_image?>"></a></td> -->
                                         <td><?php echo htmlspecialchars($donation->created_at); ?></td>
                                         <td><?php echo htmlspecialchars($donation->username); ?></td>
                                         <td><?php echo htmlspecialchars($donation->raised_amount); ?></td>
@@ -506,7 +506,7 @@ function createarr($noofpages){
 <!-------------------------------mail-data-modal------------------------------>
 
 <div id="emaildata" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
              <h5 class="text-danger">Email sending details:</h5>
@@ -519,7 +519,7 @@ function createarr($noofpages){
               </div>
               <div class="w-100">
                 <table class="table table-borderred">
-                    <thead><tr><th>Sno</th><th>Email count</th><th>Sender</th><th>Sending Date time</th></tr></thead>
+                    <thead><tr><th>Sno</th><th>Email count</th><th>Sender</th><th>Sending Date time</th><th>Message</th></tr></thead>
                     <tbody id="emaildatatable">
  
                     </tbody>
@@ -538,6 +538,32 @@ function createarr($noofpages){
 
 <!-------------------------------mail-data-end-------------------------------->
 
+<!------------------------------send-mail-modal------------------------------>
+
+<div id="viewdocuments" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+             <h5 id="mailto" class="text-danger">Documents</h5>
+             <button data-bs-dismiss="modal" class="btn btn-close"></button>
+          </div>
+
+          <div class="modal-body">
+              <div id="causedocuments" class="row">
+
+              </div>
+                
+              <div id="sendmailbtn" class="mt-3">
+                <button data-bs-dismiss="modal" class="btn btn-danger fw-bold">Close</button>
+              </div>
+          </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!------------------------------send-mail-end-------------------------------->
 
                 <script>
                     function editDonation(donation) {
@@ -763,6 +789,10 @@ $.ajax({
         }
         });
     }  
+
+    function viewDocuments(imageUrl){
+           document.getElementById("causedocuments").innerHTML = `<div class="col-md-6"><a href="assets/individualform_img/${imageUrl}"><img src="assets/individualform_img/${imageUrl}"></a></div>`; 
+    }
 
     function setUrl(email,id,username,verifycount,rejectcount){
     console.log(id,verifycount,rejectcount);

@@ -18,9 +18,9 @@
                     <td><?=$donation->location?></td>
                     <td><?=$donation->age?></td>
                     <td><?=$donation->end_date?></td>
-                    <td><?=$donation->cause_heading?></td>
+                    <td><button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')"><?php echo htmlspecialchars($donation->cause_heading); ?></button></td>
                     <td><?=$donation->cause_description?></td>
-                    <td><a href="<?=base_url('assets/individualform_img/'.$donation->cover_image)?>"><img src="<?=base_url('assets/individualform_img/'.$donation->cover_image)?>" style='width:50px;height:50px;' alt='<?=$donation->cover_image?>'></a></td>
+                    <!-- <td><a href="<?=base_url('assets/individualform_img/'.$donation->cover_image)?>"><img src="<?=base_url('assets/individualform_img/'.$donation->cover_image)?>" style='width:50px;height:50px;' alt='<?=$donation->cover_image?>'></a></td> -->
                     <td><?=$donation->created_at?></td>
                     <td><?=$donation->username?></td>
                     <td><?=$donation->raised_amount?></td>

@@ -191,7 +191,6 @@ class UserModel extends CI_Model
 		$this->db->order_by('created_at', 'DESC');
 		$this->db->limit(10); // Order by 'created_at' in descending order (newest first)
 		$query = $this->db->get('individualform');
-       
 		return $query->result();
 	}
 

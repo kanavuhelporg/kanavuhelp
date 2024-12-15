@@ -197,7 +197,8 @@ class kanavuhelp extends CI_Controller
         $transactionid = $this->input->post('transactionid');
         $currency_type = $this->input->post('currency_type');
         $causedata = $this->UserModel->get_cause_data($cause_id);
-        $cause_name = $causedata->category;
+        $category = $causedata->category;
+        $cause_heading = $causedata->cause_heading;
         $fundraiser_id =  $causedata->id;
         $fundraiser_name =  $causedata->name;
         $fundraiser_email =  $causedata->email;
@@ -215,6 +216,8 @@ class kanavuhelp extends CI_Controller
              'name' => $name,
              'email' => $emailid,
             'phoneno' => $phoneno,
+            'category' => $category,
+            'cause_heading' => $cause_heading,
             'transactionid' => $transactionid,
             'currency_type' => $currency_type,
             'fundraiser_id' => $fundraiser_id,
@@ -383,7 +386,6 @@ class kanavuhelp extends CI_Controller
 
     public function userLogin()
     {
-    
         $email = $this->input->post("loginemail");
         $login = $this->UserModel->loginUser($email);
         $otp = $this->input->post("loginotp") ?? "";
@@ -397,7 +399,6 @@ class kanavuhelp extends CI_Controller
         } 
            
          else {
-        
             if($countotp == 0){
                 $this->session->set_userdata("userEmail",$email);
                 $this->session->set_userdata("path","login");           

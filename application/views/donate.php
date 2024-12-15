@@ -426,7 +426,7 @@
                     <div class="card fixed-card">
                         <img src="<?= $imageSrc ?>" 
                             width="316px" height="230px" 
-                            class="card-img-top fixed-card-img img-placeholder">
+                            class="card-img-top fixed-card-img p-2 img-placeholder">
                         <div class="card-body d-flex flex-column">
                             <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
                             <div class="d-flex justify-content-between align-items-center">
@@ -448,7 +448,7 @@
                                 <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
                                     <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
                                     <i class="bi bi-share ms-2" 
-                                    onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '?id=' . $fundraiser->id ?>', 
+                                    onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '-' . $fundraiser->id ?>', 
                                                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                                                        '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
                                     </i>
@@ -659,7 +659,7 @@ function shareCause(url, title, imgurl) {
         </div>
         <div class="modal-body">
           <!-- Donation Form -->
-          <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+  <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
   <!-- Hidden fields to store cause ID and user ID -->
   <input type="hidden" name="cause_id" id="cause_id" value="">
   <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
@@ -699,18 +699,19 @@ function shareCause(url, title, imgurl) {
     <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" style="width:95%;" required>
     <p id="error6" style="color:red; margin-top: 5px;"></p>
     </div>
+    
   <div class="form-group ms-4">
     <label for="phone" class="form-label">Phone Number</label>
     <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:95%;" required>
     <p id="error3" style="color:red; margin-top: 5px;"></p>
   </div>
+
   <div class="form-group ms-4">
     <label for="phone" class="form-label">Email ID</label>
     <input type="email" name="email" class="form-control" id="email"  placeholder="Enter your EmailID*" style="width:95%;" required>
     <p id="error7" style="color:red; margin-top: 5px;"></p>
   </div>
   
-
   <!-- Transaction ID -->
   <div class="form-group ms-4">
     <label for="transactionid" class="form-label">Transaction ID</label>
@@ -720,7 +721,7 @@ function shareCause(url, title, imgurl) {
 
   <!-- Continue Button -->
   <div class="d-flex justify-content-center">
-    <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+    <button id="donatenowbtn" type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
       Continue to Pay ₹
     </button>
   </div>
@@ -853,14 +854,14 @@ function shareCause(url, title, imgurl) {
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
-  const isName = (value) => /^[a-zA-Z]{3,}\s*/.test(value);
-  const isEmail =(value)=> /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const isName = (value) => /^([A-Za-z]{3,})+$/.test(value);
+  const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field
   window.onload = () => {
     validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
     validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
     validateField('name', 'error6', isName, 'Enter Valid Name');
-    validateField('name', 'error7', isEmail, 'Enter Valid EmailID');
+    validateField('email', 'error7', isEmail, 'Enter Valid EmailID');
     
     validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
     validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
