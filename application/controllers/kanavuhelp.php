@@ -434,8 +434,8 @@ class kanavuhelp extends CI_Controller
         $config['upload_path'] = './assets/individualform_img/';
         $config['allowed_types'] = 'jpg|jpeg|png|svg';
         $config['max_size'] = 2048; // 2MB
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
+        // $config['max_width'] = 1024;
+        // $config['max_height'] = 768;
         $this->upload->initialize($config);
 
         // Handle file upload
