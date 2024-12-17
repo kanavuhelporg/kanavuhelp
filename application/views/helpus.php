@@ -430,10 +430,10 @@
             
             <!-- Share Fundraiser Button -->
             <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" 
-            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '?id=' . $fundraiser->id ?>'
+            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '-' . $fundraiser->id ?>',
                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                        '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>', 
-                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
+                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
             <i class="bi bi-share ms-2" ></i> &nbsp;Share this fundraiser
             </button>
             <br>

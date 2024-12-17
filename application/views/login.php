@@ -309,7 +309,7 @@
 
             <!-- Right side image column -->
             <div class="col-md-6 d-none d-md-block">
-                <img src="<?= base_url('/assets/img/login.jpg') ?>" alt="Right image" class="right-image">
+                <img src="<?= base_url('/assets/img/login_img.png') ?>" alt="Right image" class="right-image">
             </div>
         </div>
     </div>
