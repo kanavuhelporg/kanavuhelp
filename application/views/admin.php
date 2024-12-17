@@ -121,7 +121,7 @@
 
             <!-- Right side image column -->
             <div class="col-md-6 d-none d-md-block">
-                <img src="<?= base_url('/assets/img/right.svg') ?>" alt="Right image" class="right-image">
+                <img src="<?= base_url('/assets/img/admin_login.png') ?>" alt="Right image" class="right-image">
             </div>
         </div>
     </div>
