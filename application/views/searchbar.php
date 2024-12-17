@@ -13,8 +13,8 @@
                                               session_start();
                                             }
 
-                                            if ($this->session->userdata('userName')) {
-                                              echo $this->session->userdata('userName');
+                                            if ($this->session->userdata('adminName')) {
+                                              echo $this->session->userdata('adminName');
                                             } else {
                                               echo "Manager Name";
                                             }
@@ -22,6 +22,14 @@
             <i class="fa-solid fa-angle-down"></i>
 
           </button>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="<?= base_url('/adminlogout') ?>">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+          </ul>
 
           <span> <i class="fa-solid fa-bell"></i> </span>
 

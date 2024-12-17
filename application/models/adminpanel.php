@@ -16,6 +16,7 @@ class adminpanel extends CI_Model
     {
         $this->db->select('donation_for_cause.*');  // Select columns from both tables
         $this->db->from('donation_for_cause');
+        $this->db->order_by('donation_for_cause.created_at', 'DESC');
         $this->db->limit(5);
          // Join user table on user_id
         // Order by created_at in descending order
@@ -33,6 +34,7 @@ class adminpanel extends CI_Model
     public function get_verification_list($counts){
         $this->db->select('donation_for_cause.*');
         $this->db->from('donation_for_cause');
+        $this->db->order_by('donation_for_cause.created_at', 'DESC');
         $this->db->limit(5,$counts);
         $query = $this->db->get();
         return $query->result();
@@ -125,6 +127,75 @@ class adminpanel extends CI_Model
         $this->db->where('donation_id', $id);
         return $this->db->get()->row();
     }
+
+    public function transactionemailStatus($status,$donationid,$donarname,$donaremail,$message,$adminName){
+        date_default_timezone_set('Asia/Kolkata');
+        $createdate = new DateTime(); 
+        $datetime = $createdate->format('d-m-Y h:i:s A'); 
+        $getemailcount = "";
+        $newcount = "";
+        if($status == "verified"){
+            $getemailcount = $this->db->query("SELECT count(Emailcount) AS Emailcount FROM transactionemailstatus WHERE Donation_id = $donationid AND Status = 'verified'");
+            $emailcount = $getemailcount->row();
+            $count = $emailcount->Emailcount;
+            $newcount = $count + 1;
+            $updatequery = $this->db->query("UPDATE donation_for_cause SET Verifyemailcount = $newcount WHERE Donation_id = $donationid");
+        }
+        else{
+            $getemailcount = $this->db->query("SELECT count(Emailcount) AS Emailcount FROM transactionemailstatus WHERE Donation_id = $donationid AND Status = 'unverified'");
+            $emailcount = $getemailcount->row();
+            $count = $emailcount->Emailcount;
+            $newcount = $count + 1;
+            $updatequery = $this->db->query("UPDATE donation_for_cause SET Rejectemailcount = $newcount WHERE Donation_id = $donationid");
+        }
+            $query = $this->db->query("INSERT INTO transactionemailstatus (Emailcount,Emailed_date,Who_send,Message, Donation_id,Donar_email ,Donar_name,status) VALUES($newcount,'$datetime','$adminName','$message',$donationid,'$donaremail','$donarname','$status')");
+    }
+
+    public function emailStatus($status,$userId,$userName,$userEmail,$message,$adminName){
+        date_default_timezone_set('Asia/Kolkata');
+        $createdate = new DateTime(); 
+        $datetime = $createdate->format('d-m-Y h:i:s A'); 
+        $getemailcount = "";
+        $newcount = "";
+        if($status == "verified"){
+            $getemailcount = $this->db->query("SELECT count(Emailcount) AS Emailcount FROM emailstatus WHERE user_id = $userId AND Status = 'verified'");
+            $emailcount = $getemailcount->row();
+            $count = $emailcount->Emailcount;
+            $newcount = $count + 1;
+            $updatequery = $this->db->query("UPDATE individualform SET Verifyemailcount = $newcount WHERE user_id = $userId");
+        }
+        else{
+            $getemailcount = $this->db->query("SELECT count(Emailcount) AS Emailcount FROM emailstatus WHERE user_id = $userId AND Status = 'unverified'");
+            $emailcount = $getemailcount->row();
+            $count = $emailcount->Emailcount;
+            $newcount = $count + 1;
+            $updatequery = $this->db->query("UPDATE individualform SET Rejectemailcount = $newcount WHERE user_id = $userId");
+        }
+            $query = $this->db->query("INSERT INTO emailstatus (Emailcount,Emailed_date,Who_send,Message, user_id ,user_name,status,Fundraiser_email) VALUES($newcount,'$datetime','$adminName','$message',$userId,'$userName','$status','$userEmail')");
+    }
+
+    public function gettransactionEmaildata($donationid,$status){
+        if($status == "verified"){
+            $query = $this->db->query("SELECT * FROM transactionemailstatus WHERE Donation_id = $donationid AND Status = '$status'");
+            return $query->result_array();
+        }
+        else{
+            $query = $this->db->query("SELECT * FROM transactionemailstatus WHERE Donation_id = $donationid AND Status = '$status'");
+            return $query->result_array();
+        }
+    }
+
+    public function getEmaildata($userid,$status){
+        if($status == "verified"){
+            $query = $this->db->query("SELECT * FROM emailstatus WHERE user_id = $userid AND Status = '$status'");
+            return $query->result_array();
+        }
+        else{
+            $query = $this->db->query("SELECT * FROM emailstatus WHERE user_id = $userid AND Status = '$status'");
+            return $query->result_array();
+        }
+    }
+
     public function update_raised_amount($cause_id, $amount)
     {
         $this->db->set('raised_amount', 'raised_amount + ' . (int) $amount, FALSE);

@@ -183,8 +183,8 @@
                                               session_start();
                                             }
 
-                                            if ($this->session->userdata('userName')) {
-                                              echo $this->session->userdata('userName');
+                                            if ($this->session->userdata('adminName')) {
+                                              echo $this->session->userdata('adminName');
                                             } else {
                                               echo "Manager Name";
                                             }
@@ -192,6 +192,14 @@
             <i class="fa-solid fa-angle-down"></i>
 
           </button>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="<?= base_url('/adminlogout') ?>">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+          </ul>
 
           <span> <i class="fa-solid fa-bell"></i> </span>
 
@@ -218,7 +226,7 @@
 <li class="nav-item py-2"><a href="<?= base_url('contact_submissions') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries</a></li>
 
 <li class="nav-item">
-  <a style="font-weight:400;color:black;" class="nav-link text-decoration-none" href="<?= base_url('causesverification') ?>"><i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causesverification</a>
+  <a style="font-weight:400;color:black;" class="nav-link text-decoration-none" href="<?= base_url('causesverification') ?>"><i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification</a>
 </li>
 
 <!--

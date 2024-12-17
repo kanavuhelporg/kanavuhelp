@@ -409,10 +409,7 @@
       </div>
     </div>
   </nav>
-  
 
-  
-  
  
     <!-- Fundraiser Banner Image -->
     <div class="donate_img mt-5 pt-4">
@@ -433,10 +430,10 @@
             
             <!-- Share Fundraiser Button -->
             <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" 
-            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '?id=' . $fundraiser->id ?>', 
+            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '-' . $fundraiser->id ?>',
                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                        '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>', 
-                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
+                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
             <i class="bi bi-share ms-2" ></i> &nbsp;Share this fundraiser
             </button>
             <br>
@@ -466,7 +463,12 @@
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong></p>
            <?php if ($fundraiser->days_left >= 0&&(!$fundraiser->hide_donation_button)): ?>
         <!-- Donate Button -->
-        <a href="#" class="btn donate_btn no-hover"  onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+           <?php if($fundraiser->verified == 1){
+            echo "<a href='#' class='btn donate_btn no-hover'  onclick='setCauseId($fundraiser->id)'>Donate Now</a>";
+           }
+           else{
+               echo "<span class='text-danger fw-bold'>Verification pending</span>";
+           } ?>
     <?php endif; ?>
     <?php if ($this->session->flashdata('error')) : ?>
     <div class="alert alert-danger">
@@ -897,9 +899,9 @@ function setCauseId(causeId) {
     field.addEventListener('input', () => {
       if(field.value=='')
     {
-      errorElement.textContent = "please enter value";
+      errorElement.textContent='Please enter value';
     }
-     else  if (!validationFn(field.value)) {
+     else if (!validationFn(field.value)) {
         errorElement.textContent = errorMessage;
       } else {
         errorElement.textContent = ''; // Clear error if validation passes
@@ -912,9 +914,8 @@ function setCauseId(causeId) {
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
-  const isName = (value) => /^[a-zA-Z]{3,}\s*/.test(value);
-  const isEmailValid = (value) => /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
-
+  const isName = (value) => /^([A-Za-z]{3,})+$/.test(value);
+  const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field
   window.onload = () => {
     validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
@@ -925,7 +926,7 @@ function setCauseId(causeId) {
     validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
     validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
   };
-  
+
   // Final validation and form submission
   document.getElementById('donationForm').onsubmit = function (event) {
     event.preventDefault(); // Prevent form submission for manual handling
@@ -939,11 +940,11 @@ function setCauseId(causeId) {
     let isValid = true;
 
     // Perform final validation
-    if (!isCurrencySelected(document.getElementById('currency').value)) {
+  if (!isCurrencySelected(document.getElementById('currency').value)) {
       document.getElementById('error5').innerText = 'Please select a currency.';
       isValid = false;
     }
- if(document.getElementById('amount').value!==''){
+  if(document.getElementById('amount').value!==''){
     if (!isAmountValid(document.getElementById('amount').value)  ) {
       document.getElementById('error5').innerText = 'Amount must be greater than 0.';
       isValid = false;
@@ -954,11 +955,13 @@ function setCauseId(causeId) {
     document.getElementById('error6').innerText = 'Enter Valid Name';
     isValid = false;
   }
+
   if(!isEmail(document.getElementById('email').value))
   {
     document.getElementById('error7').innerText = 'Enter Valid EmailID';
     isValid = false;
   }
+
     if (!isPhoneNumberValid(document.getElementById('phone').value)) {
       document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
       isValid = false;

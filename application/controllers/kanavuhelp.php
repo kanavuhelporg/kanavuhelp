@@ -30,6 +30,7 @@ class kanavuhelp extends CI_Controller
         $this->load->helper('cookie');
         // $this->load->config('email');
         $this->config->load('email');
+        $this->load->helper('url');
     }
     public function index()
     {
@@ -55,21 +56,24 @@ class kanavuhelp extends CI_Controller
                 $active_fundraisers[] = $fundraiser;
             }
         }
-        $data['fundraisers'] = array_slice($active_fundraisers, 0, 10);
+    $data['fundraisers'] = array_slice($active_fundraisers, 0, 10);
         $this->load->view('kanavuhome.php', $data);
     }
     public function kanavuhome()
     {
         $this->load->view('kanavuhome.php');
     }
+
     public function register()
     {
         $this->load->view('register.php');
     }
+
     public function login()
     { 
-        $this->load->view('login.php');
+        $this->load->view('login');
     }
+
     public function privacy_policy()
     {
         $this->load->view('privacy_policy');
@@ -154,6 +158,7 @@ class kanavuhelp extends CI_Controller
         $data['fundraisers'] = $active_fundraisers;
         $this->load->view('login_modal1.php', $data);
     }
+
     public function individual()
     {
        // if (!$this->session->userdata('userId')) {
@@ -169,8 +174,7 @@ class kanavuhelp extends CI_Controller
             // Retrieve categories from the database
             $data['result'] = $this->UserModel->get_all_categories();
 
-            // Load the view and pass the categories
-            $this->load->view('individual.php', $data);
+            $this->load->view('individual', $data);
         //}
     }
     public function charity()
@@ -192,6 +196,13 @@ class kanavuhelp extends CI_Controller
         $phoneno = $this->input->post('phoneno');
         $transactionid = $this->input->post('transactionid');
         $currency_type = $this->input->post('currency_type');
+        $causedata = $this->UserModel->get_cause_data($cause_id);
+        $category = $causedata->category;
+        $cause_heading = $causedata->cause_heading;
+        $fundraiser_id =  $causedata->id;
+        $fundraiser_name =  $causedata->name;
+        $fundraiser_email =  $causedata->email;
+        $fundraiser_phone =  $causedata->phone;
         if ($this->UserModel->is_transaction_id_exists($transactionid)) {
             // If it exists, show an error message
             echo json_encode(['status' => 'error', 'message' => 'The transaction ID already exists.']);
@@ -205,8 +216,14 @@ class kanavuhelp extends CI_Controller
              'name' => $name,
              'email' => $emailid,
             'phoneno' => $phoneno,
+            'category' => $category,
+            'cause_heading' => $cause_heading,
             'transactionid' => $transactionid,
-            'currency_type' => $currency_type
+            'currency_type' => $currency_type,
+            'fundraiser_id' => $fundraiser_id,
+            'fundraiser_name' => $fundraiser_name,
+            'fundraiser_email' => $fundraiser_email,
+            'fundraiser_phone' => $fundraiser_phone 
         );
 
         // Call the model function to save the donation
@@ -369,7 +386,6 @@ class kanavuhelp extends CI_Controller
 
     public function userLogin()
     {
-    
         $email = $this->input->post("loginemail");
         $login = $this->UserModel->loginUser($email);
         $otp = $this->input->post("loginotp") ?? "";
@@ -383,7 +399,6 @@ class kanavuhelp extends CI_Controller
         } 
            
          else {
-        
             if($countotp == 0){
                 $this->session->set_userdata("userEmail",$email);
                 $this->session->set_userdata("path","login");           
@@ -393,17 +408,13 @@ class kanavuhelp extends CI_Controller
                     $user = $login->row();
                     $userLoggedIn = array(
                         'userId' => $user->id,
-                        'userName' => $user->email,
+                        'userName' => $user->name,
                     );
                     $this->session->set_userdata($userLoggedIn);
                     redirect(base_url('/'));
                     $this->session->unset_userdata("userEmail");
                 }
         }
-    }
-
-    public function verifiedLogin(){
-
     }
 
     public function individualform_data()
@@ -423,16 +434,15 @@ class kanavuhelp extends CI_Controller
         $config['upload_path'] = './assets/individualform_img/';
         $config['allowed_types'] = 'jpg|jpeg|png|svg';
         $config['max_size'] = 2048; // 2MB
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
+        // $config['max_width'] = 1024;
+        // $config['max_height'] = 768;
         $this->upload->initialize($config);
 
         // Handle file upload
         if (!$this->upload->do_upload('cover_image')) {
             // $this->session->set_flashdata('error', 'Upload error: ' . $this->upload->display_errors());
-            $this->session->set_userdata("filestatus","failed");
-            echo "<script>File is not upload. Please try again.</script>";
-            redirect('kanavuhelp/individual');
+            $this->session->set_flashdata("fileuploadfailed",true);
+            redirect('individual');
         }
 
         $file_data = $this->upload->data();
@@ -442,10 +452,11 @@ class kanavuhelp extends CI_Controller
         $response = $this->UserModel->store3($data, $causeId);
         $userLoggedIn = array(
             'userId' => $this->session->userdata("currentUserId"),
-            'userName' => $this->session->userdata('userEmail'),
+            'userName' => $this->session->userdata('userName'),
         );
         $this->session->set_userdata($userLoggedIn);  
-        redirect('donate');
+        $this->session->set_flashdata("logged_in", true);
+        redirect('myFundraisers');
 
     }
 
@@ -489,9 +500,6 @@ class kanavuhelp extends CI_Controller
     // Load the view with data if everything is successful
     $this->load->view('myFundraisers', array("fundraisers"=>$fundraisers));
 }
-
-
-
 
     public function charityform_data()
     {
@@ -685,59 +693,60 @@ class kanavuhelp extends CI_Controller
             'mobileNumber' => $this->input->post('phone'),
             'category' => 'user',
         ];
-        $this->session->set_userdata('form_selected_text',$causeData['form_selected_text']);
+
         $email = $this->input->post('email');
         $checkregister = $this->UserModel->checkUserexist($email);
         
         if($checkregister->num_rows() > 0){
             $userdata = $checkregister->row();
             $user_id = $userdata->id;
-            $this->session->set_userdata('currentCauseId', $userid);
-            $this->session->set_userdata("userEmail",$email);
-            $this->session->set_userdata('currentUserId', $user_id);
-            // $this->session->set_userdata($userLoggedIn);       
-            redirect("/send"); 
-        }
+            $user_name = $userdata->name;
+            $fundraiser = $this->UserModel->get_user_causes_row($user_id);
+            $end_date = $fundraiser->end_date;
+            $day_diff = 0;
+            if(empty($end_date)){
+                $day_diff = 0;  
+            }
+            else{
+                $end_date = new DateTime($fundraiser->end_date);
+                $current_date = new DateTime();
+                $day_diff = $end_date->diff($current_date);
+            } 
+
+            if($day_diff > 0){
+                $this->session->set_flashdata("fundraisinglive",true);
+                redirect("individual");
+            }
+            else{
+                $userLoggedIn = array(
+                    'userId' => $user_id,
+                    'userName' => $user_name,
+                );
+                $this->session->set_userdata('currentCauseId', $user_id);
+                $this->session->set_userdata("userEmail",$email);
+                $this->session->set_userdata('currentUserId', $user_id);
+                $this->session->set_userdata('form_selected_text',$this->input->post('category'));
+                $this->session->set_userdata($userLoggedIn);       
+                redirect("/send"); 
+            }
+            }
         else{
             $this->db->insert('user', $userData);
             $userId = $this->db->insert_id();
+            $userLoggedIn = array(
+                'userId' => $userId,
+                'userName' => $userData["name"],
+            );
             $this->session->set_userdata('currentUserId', $userId);
             $causeData["user_id"] = $userId;
-            $this->session->set_userdata('form_selected_text', $form_selected_text);
+            $this->session->set_userdata('form_selected_text', $this->input->post('category'));
             $this->session->set_userdata('userEmail', $email);
             $this->db->insert('individualform', $causeData);
             // $causeId = $this->db->insert_id();
             $this->session->set_userdata('currentCauseId', $userId);
-            // $this->session->set_userdata($userLoggedIn);     
+            $this->session->set_userdata($userLoggedIn);     
             redirect("/send"); 
         }
-    }
-
-    public function sendcauseVerficationstatus(){
-        if (!$this->session->userdata('userId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
-        }
-        $userEmail = $this->input->get("email");
-        $message = $this->input->get("message");
-        $to = $userEmail;
-
-        $this->email->from('support@kanavu.help', 'Kanavu Help');
-        $this->email->to($to);
-        $this->email->subject('Kanavu Help Foundation');
-        $this->email->message($message);
-        // $this->email->set_mailtype("html");
-        // $this->email->set_header("MIME-Version", "1.0");
-        // $this->email->set_header("Content-Type: text/html", "charset=UTF-8\r\n");
-
-        if ($this->email->send()) {
-            // Set a session variable to indicate OTP was sent
-            $this->session->set_flashdata('causemailsend', true);
-                redirect("/causesverification");
-        } else {
-            echo "<script>Email not sent please try again.</script>";
-            // $this->session->set_userdata("emailstatus","failed");
-            // echo $this->email->print_debugger(); // Print debug info if sending fails
-        }   
     }
 
     public function updateCauseStep2(){

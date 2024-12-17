@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>causeverification</title>
+    <title>cause verification</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="./ponsoft.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -242,7 +242,68 @@
 
 <body>
 
-    <div class="container-fluid">
+<div style="overflow:hidden;position:absolute;" class="container-fluid">
+<!---------------------email-send-toast---------------------->
+ 
+<div id='emailsendtoast' style='z-index:2;border:4px solid rgb(132, 250, 132);border-radius:10px;position:absolute;top:10%;right:-380px;transition:0.5s;background-color:rgb(18, 155, 18);' class=' toast show'>
+  <div style="border-radius:10px;background-color:rgb(18, 155, 18);" class='toast-header'>
+    <strong class='me-auto text-white fs-6'>Success</strong>
+    <button type='button' class='btn-close float-end' data-bs-dismiss='toast'></button>
+  </div>
+  <div id="emailsendstatus" class='toast-body text-white fs-6 py-2'>
+    
+  </div>
+  </div>
+
+<?php if(isset($_SESSION["emailsuccessstatus"])){
+     $status = $_SESSION['emailsuccessstatus'];
+echo "<script>
+       document.getElementById('emailsendstatus').innerHTML = '$status';
+       document.getElementById('emailsendtoast').style.right = '50px';
+       setTimeout(()=>{
+       document.getElementById('emailsendtoast').style.right = '-380px';
+       },3000);
+       
+      </script>"; 
+
+unset($_SESSION["emailsuccessstatus"]);
+
+} 
+
+?>
+<!---------------------add-toast-end------------------>
+
+<!---------------------email-error-toast---------------------->
+
+<div id='emailerrortoast' style='z-index:2;border:4px solid rgb(254, 91, 91);border-radius:10px;position:absolute;top:10%;right:-380px;transition:0.5s;background-color:rgb(250,51,51);' class='toast show'>
+  <div style="background-color:rgb(250,51,51);" class='toast-header'>
+    <strong class='me-auto text-white fs-6'>Error</strong>
+    <button type='button' class='btn-close float-end' data-bs-dismiss='toast'></button>
+  </div>
+  <div id="emailerrormessage" class='toast-body text-white fs-6 py-2'>
+    
+  </div>
+  </div>
+
+<?php 
+
+if(isset($_SESSION["emailerrorstatus"])){
+  $status = $_SESSION['emailerrorstatus'];
+echo "<script>
+       document.getElementById('emailerrormessage').innerHTML = '$status';
+       document.getElementById('emailerrortoast').style.right = '50px';
+       setTimeout(()=>{
+       document.getElementById('emailerrortoast').style.right = '-380px';
+       },3000)
+       
+      </script>"; 
+
+unset($_SESSION["emailerrorstatus"]);
+
+}
+
+?>
+<!---------------------email-error-toast-end--------------------->
 
         <div id="side-bar" class="row"><!-----top-bar--------------->
 
@@ -280,9 +341,9 @@
                                 <th>Location</th>
                                 <th>Age</th>
                                 <th>End date </th>
-                                <th>Cause heading</th>
+                                <th>Cause heading</a></th>
                                 <th>Cause description</th>
-                                <th>Documents</th>
+                                <!-- <th>Documents</th> -->
                                 <th>created date</th>
                                 <th>Created by</th>
                                 <th>raised amount</th>
@@ -302,9 +363,9 @@
                                         <td><?php echo htmlspecialchars($donation->location); ?></td>
                                         <td><?php echo htmlspecialchars($donation->age); ?></td>
                                         <td><?php echo htmlspecialchars($donation->end_date); ?></td>
-                                        <td><?php echo htmlspecialchars($donation->cause_heading); ?></td>
+                                        <td><button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')"><?php echo htmlspecialchars($donation->cause_heading); ?></button></td>
                                         <td><?php echo htmlspecialchars($donation->cause_description); ?></td>
-                                        <td><a href="<?=base_url("assets/individualform_img/"."$donation->cover_image")?>"><img src="<?=base_url("assets/individualform_img/"."$donation->cover_image")?>" style="width:50px;height:50px;" alt="<?=$donation->cover_image?>"></a></td>
+                                        <!-- <td><a href="<?=base_url("assets/individualform_img/"."$donation->cover_image")?>"><img src="<?=base_url("assets/individualform_img/"."$donation->cover_image")?>" style="width:50px;height:50px;" alt="<?=$donation->cover_image?>"></a></td> -->
                                         <td><?php echo htmlspecialchars($donation->created_at); ?></td>
                                         <td><?php echo htmlspecialchars($donation->username); ?></td>
                                         <td><?php echo htmlspecialchars($donation->raised_amount); ?></td>
@@ -313,7 +374,7 @@
                                             <button onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">
                                                 Edit
                                             </button>&nbsp;&nbsp;
-                                            <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->username;?>')" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
+                                            <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->user_id;?>','<?php echo $donation->username;?>',<?php echo $donation->Verifyemailcount;?>,<?php echo $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
                                                 Status
                                             </button>
                                         </td>
@@ -427,7 +488,7 @@ function createarr($noofpages){
               <div id="statusheading" class="d-flex justify-content-between">
 
               </div>
-              <div contenteditable style="min-height:50px;max-height:max-xontent;outline:none;"  class="w-100 border p-1" name="sendemail" id="causestatus">
+              <div contenteditable style="min-height:50px;max-height:max-content;outline:none;"  class="w-100 border p-1" name="sendemail" id="causestatus">
 
               </div>  
               <div id="sendmailbtn" class="mt-3">
@@ -442,6 +503,67 @@ function createarr($noofpages){
 
 <!------------------------------send-mail-end-------------------------------->
 
+<!-------------------------------mail-data-modal------------------------------>
+
+<div id="emaildata" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="text-danger">Email sending details:</h5>
+             <button data-bs-dismiss="modal" class="btn btn-close"></button>
+          </div>
+
+          <div class="modal-body">
+              <div id="emaildataheading" class="d-flex justify-content-between">
+
+              </div>
+              <div class="w-100">
+                <table class="table table-borderred">
+                    <thead><tr><th>Sno</th><th>Email count</th><th>Sender</th><th>Sending Date time</th><th>Message</th></tr></thead>
+                    <tbody id="emaildatatable">
+ 
+                    </tbody>
+                </table>
+
+              </div>  
+              <div id="sendmailbtn" class="mt-3">
+                <button data-bs-dismiss="modal" class="btn btn-danger fw-bold">Ok</button>
+              </div>
+          </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-------------------------------mail-data-end-------------------------------->
+
+<!------------------------------send-mail-modal------------------------------>
+
+<div id="viewdocuments" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+             <h5 id="mailto" class="text-danger">Documents</h5>
+             <button data-bs-dismiss="modal" class="btn btn-close"></button>
+          </div>
+
+          <div class="modal-body">
+              <div id="causedocuments" class="row">
+
+              </div>
+                
+              <div id="sendmailbtn" class="mt-3">
+                <button data-bs-dismiss="modal" class="btn btn-danger fw-bold">Close</button>
+              </div>
+          </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!------------------------------send-mail-end-------------------------------->
 
                 <script>
                     function editDonation(donation) {
@@ -571,6 +693,8 @@ function createarr($noofpages){
 
 <script>
 
+let status = "";
+
 $.ajax({
       type:"get",
       url:"admin/sidemenu",
@@ -663,29 +787,37 @@ $.ajax({
         error:function(error){
         document.getElementById('causeslist').innerHTML = error;
         }
-    });
+        });
     }  
 
-    function setUrl(email,username){
-        document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${email}</span>`;
-        document.getElementById("causestatus").innerHTML = "";
-        document.getElementById("statusheading").innerHTML = `<span class="text-danger h5">Verification Status</span>
-                <div>
-                <label for="verified" class="text-success h5">Verified</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="verified" type="radio" name="status">&nbsp;&nbsp;
-                <label for="verified" class="text-warning h5">Rejected</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="unverified" type="radio" name="status"></div>`;
-        document.getElementById("sendmailbtn").innerHTML = `<button onclick='sendEmail("${email}")' class='btn btn-danger'>Send</button>`;
+    function viewDocuments(imageUrl){
+           document.getElementById("causedocuments").innerHTML = `<div class="col-md-6"><a href="assets/individualform_img/${imageUrl}"><img src="assets/individualform_img/${imageUrl}"></a></div>`; 
     }
 
-    function sendEmail(email){
+    function setUrl(email,id,username,verifycount,rejectcount){
+    console.log(id,verifycount,rejectcount);
+        document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${email}</span>`;
+        document.getElementById("causestatus").innerHTML = "";
+        let adminname = "<?php echo $this->session->userdata("adminName");?>";
+        document.getElementById("statusheading").innerHTML = `<span class="text-danger h5">Verification Status</span>
+                <div>
+                <input hidden type="radio" id='useridforemail' value='${id}'>
+                <label data-bs-toggle="modal" data-bs-target="#emaildata" type="button" onclick="showVerifyemaildata(${id})" for="verified" class="text-success h5">Verified [${verifycount}]</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="verified" type="radio" name="status">&nbsp;&nbsp;
+                <label data-bs-toggle="modal" data-bs-target="#emaildata" onclick="showRejectemaildata(${id})" role="button" for="verified" class="text-warning h5">Rejected [${rejectcount}]</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="unverified" type="radio" name="status"></div>`;
+        document.getElementById("sendmailbtn").innerHTML = `<button onclick='sendEmail("${email}","${username}","${adminname}")' class='btn btn-danger'>Send</button>`;
+    }
+
+    function sendEmail(email,username,adminname){
         let message = document.getElementById("causestatus").innerText;
+        let userid = document.getElementById("useridforemail").value;
         let a = document.createElement("a");
-        a.href = `sendcauseVerficationstatus?email=${email}&message=${message}`;
+        a.href = `sendcauseVerficationstatus?email=${email}&message=${message}&userid=${userid}&username=${username}&adminname=${adminname}&status=${status}`;
         a.dispatchEvent(new MouseEvent("click"));
     }
 
 
     function setAutomail(mailfor,username){
-        let status = mailfor.value;
+        status = mailfor.value;
         if(status == "verified"){
         document.getElementById("causestatus").innerHTML = `<!DOCTYPE html>
         <html lang="en">
@@ -703,6 +835,36 @@ $.ajax({
         else{
             document.getElementById("causestatus").innerHTML = `<p>Hai!, <span class="text-success">${username}</span></p>Help us verify our cause! Please provide the necessary documentation to ensure your trust. Your support is crucial.We need your help! To strengthen our credibility, we require specific documents. Let's work together to make a difference.`;
         }
+    }
+
+
+    function showVerifyemaildata(id){
+        console.log(id)
+        $.ajax({
+        type:"get",
+        url:"admin/showEmaildata",
+        data:{"userid":id,"status":"verified"},
+        success:function(result){
+        document.getElementById('emaildatatable').innerHTML = result;
+        },
+        error:function(error){
+        document.getElementById('emaildatatable').innerHTML = error;
+        }
+        });    
+    }
+
+    function showRejectemaildata(id){
+        $.ajax({
+        type:"get",
+        url:"admin/showEmaildata",
+        data:{"userid":id,"status":"unverified"},
+        success:function(result){
+        document.getElementById('emaildatatable').innerHTML = result;
+        },
+        error:function(error){
+        document.getElementById('emaildatatable').innerHTML = "";
+        }
+        });    
     }
                 </script>
 

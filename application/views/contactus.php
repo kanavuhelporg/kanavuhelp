@@ -365,7 +365,7 @@ input[type=number] {
     
   </nav>
   <div class="donate_img mt-5 pt-4 text-center">
-    <img src="<?php echo base_url('/assets/img/contact-us.jpg'); ?>" alt="No Image" class="img-fluid">
+    <img src="<?php echo base_url('/assets/img/Contact-us.jpg'); ?>" alt="No Image" class="img-fluid">
   </div>
   
   <div class="row text-center mt-4 mb-5" style="margin-left:0px;margin-right:0px;">
@@ -429,7 +429,7 @@ input[type=number] {
   <!-- Message Field -->
   <div class="mb-3">
 <label for="message" class="form-label">Message:<span class="text-danger">*</span></label>
-<textarea class="form-control textarea-reduced-width" name="message" id="message" rows="3" placeholder="Enter your message" required></textarea>
+<textarea class="form-control" name="message" id="message" cols="50" rows="3" placeholder="Enter your message" required></textarea>
 <p id="message-error" style="color:red"></p>
   </div>
 
@@ -571,7 +571,7 @@ function maxLengthCheck(object)
            document.getElementById("contactuspage").classList.add("text-danger");
       },
       error:(error)=>{
-           document.getElementById("header").innerHTML = error;
+           document.getElementById("header").innerHTML = "";
       }
     }); 
 
@@ -582,9 +582,9 @@ function maxLengthCheck(object)
            document.getElementById("footer").innerHTML = result;
       },
       error:(error)=>{
-           document.getElementById("footer").innerHTML = error;
+           document.getElementById("footer").innerHTML = "";
       }
-    }); 
+    });  
 </script>
       <!-- Bootstrap JS and dependencies (Popper.js) -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

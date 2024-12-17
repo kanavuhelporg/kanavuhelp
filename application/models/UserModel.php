@@ -109,6 +109,11 @@ class UserModel extends CI_Model
 		}
 	}
 
+	public function get_cause_data($cause_id){
+        $query = $this->db->query("SELECT * FROM individualform WHERE id = $cause_id");
+        return $query->row();
+    }
+
 	public function saveDonation($data)
 	{
 		return $this->db->insert('donation_for_cause', $data);
@@ -137,6 +142,15 @@ class UserModel extends CI_Model
 		// $query = $this->db->get('individualform'); // Replace with your table name
 		$query = $this->db->query("SELECT * FROM individualform WHERE user_id = $user_id");
 		return $query->result();
+	}
+
+	public function get_user_causes_row($user_id)
+	{
+		// $this->db->where('user_id', $user_id);
+		// $this->db->order_by('created_at', 'DESC'); // Adjust 'user_id' to match your database field name
+		// $query = $this->db->get('individualform'); // Replace with your table name
+		$query = $this->db->query("SELECT * FROM individualform WHERE user_id = $user_id");
+		return $query->row();
 	}
 
 	public function is_transaction_id_exists($transaction_id)
@@ -177,7 +191,6 @@ class UserModel extends CI_Model
 		$this->db->order_by('created_at', 'DESC');
 		$this->db->limit(10); // Order by 'created_at' in descending order (newest first)
 		$query = $this->db->get('individualform');
-       
 		return $query->result();
 	}
 
