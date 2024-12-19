@@ -422,31 +422,70 @@ class kanavuhelp extends CI_Controller
         $this->load->model('UserModel');
         $this->load->library(['upload', 'form_validation']);
 
+        $dataInfo = array();
+        $cover_image = array();
+        $files = $_FILES;
+        $count = count($_FILES['cover_images']['name']);
+        $this->upload->initialize($this->set_upload_options());
+        if($this->upload->do_upload('cover_image')){
+            $cover_image[] = $this->upload->data();
+        }
+        else{
+            $this->session->set_flashdata("fileuploadfailed",true);
+            redirect('individual'); 
+        }
+
+        try{
+        for($i=0; $i<$count; $i++)
+        {           
+            $_FILES['cover_images']['name']= $files['cover_images']['name'][$i];
+            $_FILES['cover_images']['type']= $files['cover_images']['type'][$i];
+            $_FILES['cover_images']['tmp_name']= $files['cover_images']['tmp_name'][$i];
+            $_FILES['cover_images']['error']= $files['cover_images']['error'][$i];
+            $_FILES['cover_images']['size']= $files['cover_images']['size'][$i];    
+    
+            $this->upload->initialize($this->set_upload_options());
+            $this->upload->do_upload('cover_images');
+            $dataInfo[] = $this->upload->data();
+        }
+        }
+        catch(Exception $e){
+            $this->session->set_flashdata("fileuploadfailed",true);
+            redirect('individual'); 
+        }
+
         $data = [
             'amount' => $this->input->post('amount'),
             'end_date' => $this->input->post('end_date'),
             'cause_heading' => $this->input->post('cause_heading'),
             'cause_description' => $this->input->post('cause_description'),
-            'user_id' => $this->session->userdata('currentUserId')
+            'user_id' => $this->session->userdata('currentUserId'),
+            'cover_image' => $cover_image[0]['file_name'],
+            'cause_image1' => $dataInfo[0]['file_name'],
+            'cause_image2' => $dataInfo[1]['file_name'],
+            'cause_image3' => $dataInfo[2]['file_name'],
+            'cause_image4' => $dataInfo[3]['file_name'],
+            'cause_image5' => $dataInfo[4]['file_name'],
         ];
 
         // File upload configuration
-        $config['upload_path'] = './assets/individualform_img/';
+        /* $config['upload_path'] = './assets/individualform_img/';
         $config['allowed_types'] = 'jpg|jpeg|png|svg';
-        $config['max_size'] = 2048; // 2MB
+        $config['max_size'] = 2048; // 2MB */
         // $config['max_width'] = 1024;
         // $config['max_height'] = 768;
-        $this->upload->initialize($config);
+        // $this->upload->initialize($config);
 
         // Handle file upload
-        if (!$this->upload->do_upload('cover_image')) {
-            // $this->session->set_flashdata('error', 'Upload error: ' . $this->upload->display_errors());
-            $this->session->set_flashdata("fileuploadfailed",true);
-            redirect('individual');
+       /*  if (!$this->upload->do_upload('cover_image')) {
+            $this->session->set_flashdata('error', 'Upload error: ' . $this->upload->display_errors()); */
+            // $this->upload->display_errors();
+           /*  $this->session->set_flashdata("fileuploadfailed",true);*/
+           /*  redirect('individual'); 
         }
-
+ */
         $file_data = $this->upload->data();
-        $data['cover_image'] = $file_data['file_name'];
+        // $data['cover_image'] = $file_data['file_name'];
 
         $causeId = $this->session->userdata('currentCauseId');
         $response = $this->UserModel->store3($data, $causeId);
@@ -456,8 +495,18 @@ class kanavuhelp extends CI_Controller
         );
         $this->session->set_userdata($userLoggedIn);  
         $this->session->set_flashdata("logged_in", true);
-        redirect('myFundraisers');
+        redirect('myFundraisers'); 
+    }
 
+    private function set_upload_options()
+    {   
+    //upload an image options
+    $config = array();
+    $config['upload_path'] = './assets/individualform_img/';
+    $config['allowed_types'] = 'gif|jpg|png|svg';
+    $config['max_size']      = '0';
+    $config['overwrite']     = FALSE;
+    return $config;
     }
 
 

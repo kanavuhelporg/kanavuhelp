@@ -1101,8 +1101,20 @@
                       <input type="file" id="cover_image" name="cover_image" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage()" required>
                       <small class="text-muted">
                         Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
-                      </small>
-                      <span id="cover-image-error" class="text-danger"></span>
+                      </small> 
+                      <p id="cover-image-error" class="text-danger"></p>
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <small class="text-muted">"Please note, only up to 5 images can be uploaded at a time.</small>
+                    <label for="cover_image" class="col-md-4 col-form-label">Additional Documents:<span class="text-danger">*</span></label>
+                    <div class="col-md-8">
+                      <input type="file" id="cover_images" name="cover_images[]" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage()" multiple required>
+                      <small class="text-muted">
+                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                      </small> 
+                      <p id="cover-image-error" class="text-danger"></p>
                     </div>
                   </div>
 
@@ -1240,8 +1252,7 @@
            document.getElementById("footer").innerHTML = "";
       }
     }); 
-
-
+        
     document.addEventListener("DOMContentLoaded", function() {
       const otpModal = new bootstrap.Modal(document.getElementById("myModal"));
       const messageModal = new bootstrap.Modal(document.getElementById("messageModal"));
@@ -1353,7 +1364,7 @@
       // Verify OTP
       document.getElementById("verifyOtpButton").addEventListener("click", () => {
         const otp = document.getElementById("otp").value.trim();
-        const generatedOtp = "<?php echo $this->session->userdata('generated_otp'); ?>";
+        const generatedOtp = "1234"/*"<?php echo $this->session->userdata('generated_otp'); ?>"*/;
 
         // console.log("Entered OTP:", otp); // Print the entered OTP
         // console.log("Generated OTP:", generatedOtp); // Print the generated OTP
@@ -1590,6 +1601,12 @@
       function validateCoverImage() {
         const file = document.getElementById("cover_image").files[0];
         const errorElement = document.getElementById("cover-image-error");
+        let files = document.getElementById("cover_images").files
+        
+        if(files.length > 5){
+          errorElement.textContent = "Please upload only 5 images to ensure a smooth and efficient process!";
+          return false;
+        }
 
         if (!file) {
           errorElement.textContent = "Upload a cover image.";

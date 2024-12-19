@@ -763,8 +763,6 @@
         </ul>
       </div>
     </div>
-  <?php else: ?>
-    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
   <?php endif; ?>
 </div>
 
