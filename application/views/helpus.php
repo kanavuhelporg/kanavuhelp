@@ -423,7 +423,7 @@
             <h1><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
             
             <!-- Fundraiser Image -->
-            <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="80%" height="300px" alt="no image" class="img-fluid mb-3">
+            <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="500px" height="300px" alt="no image" class="img-fluid mb-3">
             
             <!-- Cause Description -->
             <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>

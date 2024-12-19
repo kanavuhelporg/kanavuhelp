@@ -251,7 +251,7 @@
           
       <div class="card mb-3">
             <!-- Use img-fluid and custom inline styles for width and height -->
-            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" class="p-2" alt="...">
+            <img style="width:500px;height:400px;" src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" class="p-2" alt="...">
 
             <div class="card-body">
 

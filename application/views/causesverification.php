@@ -791,7 +791,7 @@ $.ajax({
     }  
 
     function viewDocuments(imageUrl){
-           document.getElementById("causedocuments").innerHTML = `<div class="col-md-6"><a href="assets/individualform_img/${imageUrl}"><img src="assets/individualform_img/${imageUrl}"></a></div>`; 
+           document.getElementById("causedocuments").innerHTML = `<div style="width:300px;height:300px;"><a href="assets/individualform_img/${imageUrl}"><img style="width:300px;height:300px;" src="assets/individualform_img/${imageUrl}"></a></div>`; 
     }
 
     function setUrl(email,id,username,verifycount,rejectcount){
