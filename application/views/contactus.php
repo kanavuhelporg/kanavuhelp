@@ -372,7 +372,7 @@ input[type=number] {
     <!-- Location Section -->
     <div class="col-12 col-md-4 mb-4 mb-md-0">
         <i class="fa-solid fa-location-dot fs-2" style="color: #EB2D32;"></i>
-        <br><strong>The Kanavu Startup Village</strong>
+        <br><strong>Kanavu Startup Village</strong>
         <br><strong>Annamalaikottai, Sivagiri</strong>
     </div>
 

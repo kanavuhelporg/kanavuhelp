@@ -1436,7 +1436,7 @@
       // Verify OTP
       document.getElementById("verifyOtpButton").addEventListener("click", () => {
         const otp = document.getElementById("otp").value.trim();
-        const generatedOtp = "1234"/*"<?php echo $this->session->userdata('generated_otp'); ?>"*/;
+        const generatedOtp = "<?php echo $this->session->userdata('generated_otp'); ?>";
 
         // console.log("Entered OTP:", otp); // Print the entered OTP
         // console.log("Generated OTP:", generatedOtp); // Print the generated OTP
