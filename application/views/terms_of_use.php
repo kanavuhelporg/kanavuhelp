@@ -9,6 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
 
   <style>
     body {
@@ -707,7 +708,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg bg-light py-4 fixed-top">
+  <nav id="header" class="navbar navbar-expand-lg bg-light py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="#">
         <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
@@ -763,8 +764,6 @@
         </ul>
       </div>
     </div>
-  <?php else: ?>
-    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
   <?php endif; ?>
 </div>
 
@@ -836,7 +835,7 @@ applicable taxes before transferring the funds to the campaigners.</p>
     </div>
 <br>
 
-  <div class="footer">
+  <div id="footer" class="footer">
     <footer class="footer mt-auto py-3">
       <div class="container">
         <h5 class="text-center">Kanavu.help</h5>
@@ -867,6 +866,31 @@ applicable taxes before transferring the funds to the campaigners.</p>
       <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
     </footer>
   </div>
+
+  <script>
+    $.ajax({
+      type:"get",
+      url:"kanavuhelp/getHeader",
+      success:(result)=>{
+           document.getElementById("header").innerHTML = result;
+           document.getElementById("individualpage").classList.add("text-danger");
+      },
+      error:(error)=>{
+           document.getElementById("header").innerHTML = "";
+      }
+    }); 
+
+    $.ajax({
+      type:"get",
+      url:"kanavuhelp/getFooter",
+      success:(result)=>{
+           document.getElementById("footer").innerHTML = result;
+      },
+      error:(error)=>{
+           document.getElementById("footer").innerHTML = "";
+      }
+    }); 
+  </script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

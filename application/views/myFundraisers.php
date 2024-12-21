@@ -140,6 +140,51 @@
       width: 286px;
     }
 
+     .donate_btn {
+      border: 1px solid rgba(224, 26, 43, 1);
+      /* color: rgba(224, 26, 43, 1); */
+      border-radius: 25px;
+      }
+
+      .donate_btn.no-hover {
+       background-color: white;
+       color: red;
+       border: 1px solid red;
+       }
+
+      .donate_btn.no-hover:hover {
+       background-color: white !important;
+       color: red !important;
+       border: 1px solid red !important;
+       }
+
+  .typingquotes h1 {
+  width:50%;  
+  color: #fff;
+  font-family: monospace;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: wrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em;
+  text-align:center; /* Adjust as needed */
+ /*  animation: 
+    typing 3.5s steps(30, end),
+    blink-caret .5s step-end infinite; */
+}
+
+/* The typing effect */
+/* @keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+} */
+
+/* The typewriter cursor effect */
+/* @keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: transparent }
+}   */ 
+
     @media (min-width:768px) and (max-width:990px) {
       .card {
         width: auto;
@@ -220,8 +265,11 @@
   <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     
   </nav>
-  <div class="donate_img mt-5 pt-4">
-  <img src="<?= base_url('assets/img/myhelps.jpg') ?>" style="width: 100%; height: 400px;">
+  <div class="donate_img mt-5 pt-4 position-relative">
+  <img src="<?= base_url('assets/img/myfundraiser_ptrst.jpg') ?>" style="width: 100%; height: 400px;">
+  <div id="typeeffectcontainer" style="width:50%;position:absolute;top:25%;left:25%;" class="d-flex flex-column justify-content-center">
+    <span id="typingquotes" class="text-center h1"></span>
+  </div>
   </div>
   <!-- <div class="handwithheart_img text-center">
     <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">
@@ -251,7 +299,7 @@
           
       <div class="card mb-3">
             <!-- Use img-fluid and custom inline styles for width and height -->
-            <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" class="p-2" alt="...">
+            <img style="min-width:250px;max-width:500px;height:400px;" src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" class="p-2" alt="...">
 
             <div class="card-body">
 
@@ -275,6 +323,8 @@
                 <strong>End Date:</strong> <?= htmlspecialchars($cause->end_date) ?><br>
 
               </p>
+
+              <a href="<?=base_url("updatecause")?>" class="btn donate_btn no-hover mt-5">Update Cause</a>
 
               <!--<div class="progress mb-2">
                         <div class="progress-bar" role="progressbar" style="width: <?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>%;" aria-valuenow="<?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
@@ -318,7 +368,7 @@
               <button data-bs-dismiss="modal" class="btn btn-close"></button>              
            </div>
            <div class="modal-body">
-              <p class="text-muted">We will inform you after verification is complete.</p>
+              <p class="text-muted">Your verification process is underway. We will notify you once it is successfully completed.</p>
            </div>
            <div class="p-3">
            <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
@@ -330,13 +380,50 @@
 
 
 <!---------------login-modal-end---------------------->
+
+<!---------------updated-modal---------------------->
+<?php if($this->session->flashdata("updatedindividualform")) :?>
+  <script>
+      window.onload = function() {
+        let myModal = new bootstrap.Modal(document.getElementById("updated"), {
+          backdrop: 'static',
+          keyboard: false
+        });
+        myModal.show();
+      };
+    </script>
+
+<div id="updated" class="modal fade show">
+    <div class="modal-dialog">
+        <div class="modal-content">
+           <div class="modal-header">
+              <span class="h5 text-danger">Success ! <span class="text-success"><?=$this->session->userdata("userName");?></span></span> 
+              <button data-bs-dismiss="modal" class="btn btn-close"></button>              
+           </div>
+           <div class="modal-body">
+              <p class="text-muted">Update form successfully submitted. We will inform you after verification is complete.</p>
+           </div>
+           <div class="p-3">
+           <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
+           </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+
+<!---------------updated-modal-end---------------------->
 <script>
   $.ajax({
       type:"get",
       url:"kanavuhelp/getHeader",
       success:(result)=>{
            document.getElementById("header").innerHTML = result;
+           let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
+           console.log(entry);
+           if(entry > 0){
            document.getElementById("myfrpage").classList.add("text-danger");
+           }
       },
       error:(error)=>{
            document.getElementById("header").innerHTML = "";
@@ -353,6 +440,22 @@
            document.getElementById("footer").innerHTML = "";
       }
     }); 
+
+    var i = 0;
+    var txt = 'Together, we have the power to make a balance.';
+    var speed = 100;
+
+    typeWriter();
+
+    function typeWriter(){  
+    if (i < txt.length) {
+    document.getElementById("typingquotes").innerHTML += txt.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+    }
+   }
+
+   document.getElementById("typeeffectcontainer").innerHTML += `<p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements. By contributing to a cause, you help pave the way for a brighter, more hopeful future. Join us in making a lasting impact, and together, we can empower those who need it most."</p>`;
 </script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->

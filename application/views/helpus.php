@@ -23,6 +23,7 @@
 <!-- Bootstrap JS and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
   <style>
     body {
       font-family: 'Sen', sans-serif;
@@ -341,6 +342,18 @@
     font-size: 14px;
     color: #666;
   }
+  .carousel-inner {
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+}
+
+
+/* .carousel-inner > .carousel-item {
+    -webkit-transition: 0s !important;
+    -o-transition: 0s !important;
+    transition: 0s !important;
+} */
     </style>
     </head>
 <body>
@@ -401,8 +414,6 @@
         </ul>
       </div>
     </div>
-  <?php else: ?>
-    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
   <?php endif; ?>
 </div>
         </div>
@@ -423,17 +434,47 @@
             <h1><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
             
             <!-- Fundraiser Image -->
-            <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="80%" height="300px" alt="no image" class="img-fluid mb-3">
-            
-            <!-- Cause Description -->
-            <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>
+            <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" style="min-width:300px;max-width:500px;height:300px;" alt="no image" class="img-fluid mb-3">
+<!-- Cause Description -->
+    <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>
+    <!-------------------image-sliding----------------------------->
+        <div style="min-width:300px;max-width:500px;height:300px;" id="carouselCausesIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div id="carousel-indicators" class="carousel-indicators">
+
+        </div>
+        <div id="cause-slides" class="carousel-inner" style="margin:0 !important" >
+        <?php
+               $documents = ["$fundraiser->cause_image1","$fundraiser->cause_image2","$fundraiser->cause_image3","$fundraiser->cause_image4","$fundraiser->cause_image5"];
+               $count = count($documents);
+               $slide = 0;
+               for($i = 0;$i < $count ; $i++ ){ ?> 
+               <?php if($documents[$i] == ""){ 
+                       continue;
+                    }?>
+                    <div class='carousel-item <?= $slide == 0 ? 'active' : '';?>' data-bs-interval="2000">
+                    <img style="width:500px;height:300px;" class="d-block" src="<?=base_url("assets/individualform_img/$documents[$i]")?>" alt='<?=$documents[$i]?>'>
+                    </div>
+              <script>
+                document.getElementById("carousel-indicators").innerHTML += "<button type='button' data-bs-target='#carouselCausesIndicators' data-bs-slide-to='<?=$slide?>' class='<?= $slide == 0 ? 'active' : '';?>' aria-current='true' aria-label='Slide <?=$slide+1?>'></button>";
+               </script>
+        <?php ++$slide;  } ?>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselCausesIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselCausesIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+        </button>
+        </div>
+
+            <!-------------------image-sliding----------------------------->
             
             <!-- Share Fundraiser Button -->
-            <button class="btn " style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" 
-            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '-' . $fundraiser->id ?>',
-                       '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
-                       '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>', 
-                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
+            <button class="btn mt-3" style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" 
+            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '-' . $fundraiser->id ?>','<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>','<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
             <i class="bi bi-share ms-2" ></i> &nbsp;Share this fundraiser
             </button>
             <br>
@@ -539,8 +580,14 @@
         </div>
     </div>
 </div>
-            </div>
-            <script>
+</div>
+    <script>
+
+   let cause_slides = document.querySelector(".carousel-inner").children;
+   if(cause_slides.length == 0){
+       document.getElementById("carouselCausesIndicators").style.display = "none";
+   };
+
     document.addEventListener('DOMContentLoaded', function() {
         const donorList = document.getElementById('donor-list');
         const displayLimit = 3; // Number of donors to display at a time

@@ -839,9 +839,10 @@
     </div>
   </div>
   <div class="container-xxl mt-5">
+  
     <div class="h4 text-center">BE THE REASON OF<span style="color:#EB2D32"> SOMEONE SMILES</span></div>
     <div style="display: flex; justify-content: center;">
-      <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
+      <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
     </div>
     <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
 
@@ -898,18 +899,19 @@
             </div>
         <?php endforeach; ?>
     <?php else: ?>
-        <p>No fundraisers available at the moment.</p>
+        <p class="text-center">No fundraisers available at the moment.</p>
     <?php endif; ?>
   </div>
 
   <!-- See More Button -->
   <!-- See More Button -->
+<?php  if (!empty($fundraisers)): ?>   
 <div class="text-center mt-3">
   <a href="<?= base_url('/donate') ?>" class="btn" style="background-color: white; border: 1px solid black; color: red; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     See More Causes
   </a>
 </div>
-
+<?php endif; ?>
 
 </div><br><br>
 
@@ -1015,12 +1017,13 @@ function shareCause(url, title, imgurl) {
 
   <div class="position-relative" id="how-it-works-section">
     <div class="container-xxl ">
-      <div class="h4 worktext" style="text-align:center;">HOW IT WORKS (START A FUNDRAISER IN <span
-          style="color:#EB2D32"> THREE SIMPLE STEPS)</span></div>
-      <div style="display: flex; justify-content: center;">
-        <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
-      </div>
+
+      <div class="h4 worktext" style="text-align:center;">START A FUNDRAISER IN <span
+          style="color:#EB2D32"> THREE SIMPLE STEPS</span></div>
     </div>
+    <div style="display: flex; justify-content: center;">
+        <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
+      </div>
     <!-- <img src="<?= base_url('assets/img/steps.png') ?>" class="steps_img"
       style="object-fit: cover; width: 100%; margin-top: -200px;"> -->
     <div class="container " style="display:flex; justify-content:center">
@@ -1384,6 +1387,7 @@ function shareCause(url, title, imgurl) {
     </div>
   </div>
 </div>
+
 <script>
   // Simulate user login status (from backend or session)
   var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
@@ -1393,7 +1397,11 @@ function shareCause(url, title, imgurl) {
       url:"kanavuhelp/getHeader",
       success:(result)=>{
            document.getElementById("header").innerHTML = result;
+           let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
+           console.log(entry);
+           if(entry > 0){
            document.getElementById("kanavuhomepage").classList.add("text-danger");
+           }
       },
       error:(error)=>{
            document.getElementById("header").innerHTML = "";

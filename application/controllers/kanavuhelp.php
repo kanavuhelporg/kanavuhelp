@@ -56,9 +56,13 @@ class kanavuhelp extends CI_Controller
                 $active_fundraisers[] = $fundraiser;
             }
         }
+
     $data['fundraisers'] = array_slice($active_fundraisers, 0, 10);
+
         $this->load->view('kanavuhome.php', $data);
+        $this->session->set_userdata("entry",1);
     }
+
     public function kanavuhome()
     {
         $this->load->view('kanavuhome.php');
@@ -157,6 +161,15 @@ class kanavuhelp extends CI_Controller
         // Pass only active fundraisers to the view
         $data['fundraisers'] = $active_fundraisers;
         $this->load->view('login_modal1.php', $data);
+    }
+
+    public function updatecause(){
+        if (!$this->session->userdata('userId')) {
+            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        }
+        $userid = $this->session->userdata("userId");
+        $causedetails = $this->UserModel->causeDetailsforupdate($userid);
+        $this->load->view("updatecause",array("causedetails"=>$causedetails));
     }
 
     public function individual()
@@ -270,6 +283,7 @@ class kanavuhelp extends CI_Controller
         $data['fundraisers'] = $active_fundraisers;
 
         $this->load->view('donate', $data);
+        $this->session->set_userdata("entry",1);
     }
 
     public function myhelps()
@@ -397,7 +411,6 @@ class kanavuhelp extends CI_Controller
             redirect("login");
             // echo '<script>alert("Please enter registered credentials.");</script>';
         } 
-           
          else {
             if($countotp == 0){
                 $this->session->set_userdata("userEmail",$email);
@@ -411,6 +424,7 @@ class kanavuhelp extends CI_Controller
                         'userName' => $user->name,
                     );
                     $this->session->set_userdata($userLoggedIn);
+                    $this->session->set_userdata("entry",0);
                     redirect(base_url('/'));
                     $this->session->unset_userdata("userEmail");
                 }
@@ -422,42 +436,161 @@ class kanavuhelp extends CI_Controller
         $this->load->model('UserModel');
         $this->load->library(['upload', 'form_validation']);
 
-        $data = [
-            'amount' => $this->input->post('amount'),
-            'end_date' => $this->input->post('end_date'),
-            'cause_heading' => $this->input->post('cause_heading'),
-            'cause_description' => $this->input->post('cause_description'),
-            'user_id' => $this->session->userdata('currentUserId')
-        ];
+        $dataInfo = array();
+        $documentinfo = array();
+        $data = array();
+        // $cover_image = array();
+        $files = $_FILES;
+        
+        // $this->upload->initialize($this->set_upload_options());
+        $uploadeddocuments = ["cover_image","document_one","document_two","document_three","document_four","document_five","cause_video"];
+        $databasedocuments = ["cover_image","cause_image1","cause_image2","cause_image3","cause_image4","cause_image5","Cause_video"];
+        $count = count($uploadeddocuments);
+        // if($this->upload->do_upload('cover_image')){
+        //     $cover_image[] = $this->upload->data();
+        // }
+        // else{
+        //     $this->session->set_flashdata("fileuploadfailed",true);
+        //     redirect('individual'); 
+        // }
+        try{
+            $insert = 0;
+        for($i=0; $i < $count; $i++)
+        {           
+            $_FILES['documents']['name']= $files[$uploadeddocuments[$i]]['name'];
+            $_FILES['documents']['type']= $files[$uploadeddocuments[$i]]['type'];
+            $_FILES['documents']['tmp_name']= $files[$uploadeddocuments[$i]]['tmp_name'];
+            $_FILES['documents']['error']= $files[$uploadeddocuments[$i]]['error'];
+            $_FILES['documents']['size']= $files[$uploadeddocuments[$i]]['size'];    
+    
+            if($_FILES[$uploadeddocuments[$i]]['name'] == ""){
+                continue;
+            }
+            $this->upload->initialize($this->set_upload_options());
+            $this->upload->do_upload($uploadeddocuments[$i]);
+            $dataInfo[] = $this->upload->data();
+            $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
+            $insert++;
+        }
+        }
+        catch(Exception $e){
+            $this->session->set_flashdata("fileuploadfailed",true);
+            redirect('individual'); 
+        }
+       /*  $receiveddocumentcount = count($dataInfo);
+        
+        for($i = 0;$i < $receiveddocumentcount; $i++){
+        $documentinfo[$databasedocuments[$i]] = $dataInfo[$i]['file_name'];
+        } */
+
+            $data['amount'] = $this->input->post('amount');
+            $data['end_date'] = $this->input->post('end_date');
+            $data['cause_heading'] = $this->input->post('cause_heading');
+            $data['cause_description'] = $this->input->post('cause_description');
+            $data['user_id'] = $this->session->userdata('currentUserId');
+           
+            
 
         // File upload configuration
-        $config['upload_path'] = './assets/individualform_img/';
+        /* $config['upload_path'] = './assets/individualform_img/';
         $config['allowed_types'] = 'jpg|jpeg|png|svg';
-        $config['max_size'] = 2048; // 2MB
+        $config['max_size'] = 2048; // 2MB */
         // $config['max_width'] = 1024;
         // $config['max_height'] = 768;
-        $this->upload->initialize($config);
+        // $this->upload->initialize($config);
 
         // Handle file upload
-        if (!$this->upload->do_upload('cover_image')) {
-            // $this->session->set_flashdata('error', 'Upload error: ' . $this->upload->display_errors());
-            $this->session->set_flashdata("fileuploadfailed",true);
-            redirect('individual');
+       /*  if (!$this->upload->do_upload('cover_image')) {
+            $this->session->set_flashdata('error', 'Upload error: ' . $this->upload->display_errors()); */
+            // $this->upload->display_errors();
+           /*  $this->session->set_flashdata("fileuploadfailed",true);*/
+           /*  redirect('individual'); 
         }
-
+ */
         $file_data = $this->upload->data();
-        $data['cover_image'] = $file_data['file_name'];
+        // $data['cover_image'] = $file_data['file_name'];
 
         $causeId = $this->session->userdata('currentCauseId');
-        $response = $this->UserModel->store3($data, $causeId);
+        $response = $this->UserModel->store3($data,$causeId);
         $userLoggedIn = array(
             'userId' => $this->session->userdata("currentUserId"),
             'userName' => $this->session->userdata('userName'),
         );
         $this->session->set_userdata($userLoggedIn);  
         $this->session->set_flashdata("logged_in", true);
-        redirect('myFundraisers');
+        // $this->session->set_userdata("entry",0);
+        redirect('myFundraisers'); 
+    }
 
+    public function updateindividualform_data()
+    {
+        $this->load->model('UserModel');
+        $this->load->library(['upload', 'form_validation']);
+
+        $data = array();
+        $dataInfo = array();
+        $documentinfo = array();
+        $files = $_FILES;
+        
+        $uploadeddocuments = ["cover_image","document_one","document_two","document_three","document_four","document_five","cause_video"];
+        $databasedocuments = ["cover_image","cause_image1","cause_image2","cause_image3","cause_image4","cause_image5","Cause_video"];
+        $count = count($uploadeddocuments);
+        try{
+            $insert = 0;
+        for($i=0; $i < $count; $i++)
+        {           
+            $_FILES['documents']['name']= $files[$uploadeddocuments[$i]]['name'];
+            $_FILES['documents']['type']= $files[$uploadeddocuments[$i]]['type'];
+            $_FILES['documents']['tmp_name']= $files[$uploadeddocuments[$i]]['tmp_name'];
+            $_FILES['documents']['error']= $files[$uploadeddocuments[$i]]['error'];
+            $_FILES['documents']['size']= $files[$uploadeddocuments[$i]]['size'];    
+    
+            if($_FILES[$uploadeddocuments[$i]]['name'] == ""){
+                continue;
+            }
+            $this->upload->initialize($this->set_upload_options());
+            $this->upload->do_upload($uploadeddocuments[$i]);
+            $dataInfo[] = $this->upload->data();
+            $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
+            $insert++;
+        }
+        }
+        catch(Exception $e){
+            $this->session->set_flashdata("fileuploadfailed",true);
+            redirect('individual'); 
+        }
+
+
+            $data['amount'] = $this->input->post('amount');
+            $data['end_date'] = $this->input->post('end_date');
+            $data['cause_heading'] = $this->input->post('cause_heading');
+            $data['cause_description'] = $this->input->post('cause_description');
+            $data['user_id'] = $this->session->userdata('currentUserId');
+            $data['verified'] = 0;
+           
+       
+        $file_data = $this->upload->data();
+
+        $causeId = $this->session->userdata('currentCauseId');
+        $response = $this->UserModel->store3($data,$causeId);
+        $userLoggedIn = array(
+            'userId' => $this->session->userdata("currentUserId"),
+            'userName' => $this->session->userdata('userName'),
+        );
+        $this->session->set_userdata($userLoggedIn);  
+        $this->session->set_flashdata("updatedindividualform", true);
+        redirect('myFundraisers'); 
+    }
+
+    private function set_upload_options()
+    {   
+    //upload an image options
+    $config = array();
+    $config['upload_path'] = './assets/individualform_img/';
+    $config['allowed_types'] = 'gif|jpg|png|svg|mp4';
+    $config['max_size']      = '0';
+    $config['overwrite']     = FALSE;
+    return $config;
     }
 
 
@@ -499,6 +632,7 @@ class kanavuhelp extends CI_Controller
 
     // Load the view with data if everything is successful
     $this->load->view('myFundraisers', array("fundraisers"=>$fundraisers));
+    $this->session->set_userdata("entry",1);
 }
 
     public function charityform_data()
@@ -582,7 +716,8 @@ class kanavuhelp extends CI_Controller
         $this->session->unset_userdata("userEmail");
 
         // Redirect to the login page
-        redirect(base_url('/login'));
+        $this->session->unset_userdata("entry");
+        redirect(base_url('/'));
     }
     // Controller method for viewing the profile
     public function profile()
@@ -626,21 +761,23 @@ class kanavuhelp extends CI_Controller
             if($path == "login"){
                 $this->session->set_userdata("loginemail",$userEmail);
                 $this->session->unset_userdata("path");
+                $this->session->unset_userdata("entry");
                 redirect("/login");
             }
             else{
+                $this->session->set_userdata("entry",0);
             redirect('/individual');// Redirect back to the same page
             }
         } else {
             if($path == "login"){
                 $this->session->set_userdata("mailstatus","failed");
-                echo "<script>OTP is not sent to your email. please try again.</script>";
+                echo "<script>alert(OTP is not sent to your email. please try again.)</script>";
                 redirect("/login");
 
             }
             else{
                 $this->session->set_userdata("mailstatus","failed");
-                echo "<script>OTP is not sent to your email. please try again.</script>";
+                echo "<script>alert(OTP is not sent to your email. please try again.)</script>";
                 redirect('/individual');
             }
             // echo $this->email->print_debugger(); // Print debug info if sending fails

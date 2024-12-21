@@ -100,3 +100,4 @@ $route['changeCausespagepagesetup'] = 'admin/changeCausespagepagesetup';
 $route['changeVerificationpagesetup'] = 'admin/changeVerificationpagesetup';
 $route['changeContactpagesetup'] = 'admin/changeContactpagesetup';
 $route['sendtransactionVerficationstatus'] = 'admin/sendtransactionVerficationstatus';
+$route['updatecause'] = 'kanavuhelp/updatecause';
