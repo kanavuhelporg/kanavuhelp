@@ -438,22 +438,19 @@
     <!-- Underline Image -->
     <div class="text-center">
     <p class="text-center">
-    <h4>
+    <h2>
             "Mission to make a" 
             <img src="<?php echo base_url('/assets/img/Emoji.png'); ?>" style="display: inline; vertical-align: middle;" alt="Emoji" width="30">
-            </h4>
+            </h2>
             </p>
         <img class="img-fluid" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="Underline" style="max-width: 100%; height: auto;">
     </div>
 
     <!-- About Text Section -->
-    <div class="about mt-4">
-        <p class="text-center">
-            At Kanavu.help, we are driven by a passionate<br> 
-            commitment to make a positive impact in the lives of<br>
-            those in need. We believe in the power of collective action<br>
-            and are committed to creating a better, more<br>
-            compassionate world for everyone.
+    <div class="d-flex justify-content-center about mt-4">
+        <p class="w-75 fs-4 text-center">
+        The mission of Kanavu.Help is to bring together those who wish to lend a helping hand with those who are in need. We offer support in areas such as education, medical emergencies, disaster relief, and the fulfillment of unspoken dreams. Through compassion and transparency, we work to transform aspirations into tangible realities.
+        "Together, we can brighten lives and turn dreams into living truths."
         </p>
     </div>
 

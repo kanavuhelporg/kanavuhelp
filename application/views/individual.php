@@ -1091,33 +1091,101 @@
                 </section>
 
                 <!-- Step 3 Content -->
-                <section id="step-3" class="form-step col-12 d-none">
+                <section id="step-3" style="overflow:auto;" class="form-step col-12 d-none">
                   <h2>Elaborate Cause Details</h2>
                  
                   <!-- Cover Image Field -->
                   <div class="row my-3">
                     <label for="cover_image" class="col-md-4 col-form-label">Cover Image:<span class="text-danger">*</span></label>
                     <div class="col-md-8">
-                      <input type="file" id="cover_image" name="cover_image" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage()" required>
+                      <input type="file" id="cover_image" name="cover_image" accept="image/jpg,/image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)" required>
+                      <p id="cover-image-error" class="text-danger"></p>
                       <small class="text-muted">
                         Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
                       </small> 
-                      <p id="cover-image-error" class="text-danger"></p>
                     </div>
                   </div>
 
                   <div class="row my-3">
+                    <label for="cover_image_one" class="col-md-4 col-form-label">Cause Image One:<span class="text-danger">*</span></label>
+                    <div class="col-md-8">
+                      <input type="file" id="cover_image_one" name="document_one" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
+                      <p id="cover-image-error" class="text-danger"></p>
+                      <small class="text-muted">
+                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                      </small> 
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="cover_image_two" class="col-md-4 col-form-label">Cause Image Two:<span class="text-danger">*</span></label>
+                    <div class="col-md-8">
+                      <input type="file" id="cover_image_two" name="document_two" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
+                      <p id="cover-image-error" class="text-danger"></p>
+                      <small class="text-muted">
+                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                      </small> 
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="cover_image_three" class="col-md-4 col-form-label">Cause Image Three:<span class="text-danger">*</span></label>
+                    <div class="col-md-8">
+                      <input type="file" id="cover_image_three" name="document_three" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
+                      <p id="cover-image-error" class="text-danger"></p>
+                      <small class="text-muted">
+                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                      </small> 
+                     
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="cover_image_four" class="col-md-4 col-form-label">Cause Image Four:<span class="text-danger">*</span></label>
+                    <div class="col-md-8">
+                      <input type="file" id="cover_image_four" name="document_four" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
+                      <p id="cover-image-error" class="text-danger"></p>
+                      <small class="text-muted">
+                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                      </small> 
+                     
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="cover_image_five" class="col-md-4 col-form-label">Cause Image Five:<span class="text-danger">*</span></label>
+                    <div class="col-md-8">
+                      <input type="file" id="cover_image_five" name="document_five" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
+                      <p id="cover-image-error" class="text-danger"></p>
+                      <small class="text-muted">
+                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                      </small> 
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="cause_video" class="col-md-4 col-form-label">Video Document:<span class="text-danger">*</span></label>
+                    <div class="col-md-8">
+                      <input type="file" id="cause_video" name="cause_video" accept="video/mp4" class="form-control my-2" onchange="validateCausevideo()">
+                      <p id="cover-image-error" class="text-danger"></p>
+                      <small class="text-muted">
+                       Upload only mp4 format.
+                      </small> 
+                    </div>
+                  </div>
+
+                  <!-- <div class="row my-3">
                     <small class="text-muted">"Please note, only up to 5 images can be uploaded at a time.</small>
                     <label for="cover_image" class="col-md-4 col-form-label">Additional Documents:<span class="text-danger">*</span></label>
                     <div class="col-md-8">
-                      <input type="file" id="cover_images" name="cover_images[]" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage()" multiple required>
+                      <input type="file" id="cover_images" name="cover_images[]" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)" multiple required>
                       <small class="text-muted">
                         Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
                       </small> 
                       <p id="cover-image-error" class="text-danger"></p>
                     </div>
                   </div>
-
+ -->
                   <!-- Cause Title Field -->
                   <div class="row my-3">
                     <label for="cause_heading" class="col-md-4 col-form-label">Cause Title:<span class="text-danger">*</span></label>
@@ -1218,7 +1286,7 @@
               <button data-bs-dismiss="modal" class="btn btn-close"></button>              
            </div>
            <div class="modal-body">
-              <p class="text-muted">Your previous fundraising is not completed.</p>
+              <p class="text-muted">We regret to inform you that your previous fundraising effort is still incomplete. Please complete it to proceed further.</p>
            </div>
            <div class="p-3">
            <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
@@ -1252,6 +1320,10 @@
            document.getElementById("footer").innerHTML = "";
       }
     }); 
+
+    let headerheight = document.getElementById("header").getBoundingClientRect().height;
+    let displayheight = window.innerHeight;
+    document.getElementById("step-3").style.height = `${displayheight - headerheight}px`;
         
     document.addEventListener("DOMContentLoaded", function() {
       const otpModal = new bootstrap.Modal(document.getElementById("myModal"));
@@ -1261,23 +1333,23 @@
       function showPopupMessage(message) {
         document.getElementById("messageModalBody").innerHTML = message;
         messageModal.show();
-      }
+    }
 
-      let steponeform = document.getElementById("causeStep1");
+    let steponeform = document.getElementById("causeStep1");
 
       steponeform.addEventListener("submit",(e)=>{
            if(!stepOnevalidation()){
             e.preventDefault()
            }
-      })
+    })
 
       // Continue to Step 2
-      document.getElementById("continueToStep2").addEventListener("click", () => {
+    document.getElementById("continueToStep2").addEventListener("click", () => {
         if (stepOnevalidation()) {
           sendOtp();
           otpModal.show();
         }
-      }); 
+    }); 
 
     function stepOnevalidation(){
        let category = document.forms["causeStep1"]["category"].value.trim();
@@ -1440,7 +1512,7 @@
       function sendOtp() {
         const email = document.getElementById("email").value.trim();
         showPopupMessage(`
-                    <span>Please wait OTP is sent to your email ${email}</span>&nbsp;
+                    <span> An OTP has been sent to your email address ${email}. Kindly check your inbox </span>&nbsp;
                     <span class="spinner-border text-danger"></span>
                     `);
       }
@@ -1482,7 +1554,7 @@
       }
 
       function validateStep3() {
-        return validateCoverImage() & validateCauseTitle() & validateCauseDescription();
+        return validateCauseTitle() & validateCauseDescription();
       }
 
       // Individual field validation functions
@@ -1510,10 +1582,10 @@
             return false;
             }
             else{
+            errorElement.textContent = "";
             return true;
             }
         }
-        errorElement.textContent = "";
         }
 
       function validateAge() {
@@ -1598,29 +1670,6 @@
         return true;
       }
 
-      function validateCoverImage() {
-        const file = document.getElementById("cover_image").files[0];
-        const errorElement = document.getElementById("cover-image-error");
-        let files = document.getElementById("cover_images").files
-        
-        if(files.length > 5){
-          errorElement.textContent = "Please upload only 5 images to ensure a smooth and efficient process!";
-          return false;
-        }
-
-        if (!file) {
-          errorElement.textContent = "Upload a cover image.";
-          return false;
-        }
-
-        if (!["image/jpeg", "image/png", "image/svg+xml"].includes(file.type)) {
-          errorElement.textContent = "Only JPG, PNG, and SVG formats are allowed.";
-          return false;
-        }
-        errorElement.textContent = "";
-        return true;
-      }
-
       function validateCauseTitle() {
         const heading = document.getElementById("cause_heading").value.trim();
         const errorElement = document.getElementById("cause-heading-error");
@@ -1645,6 +1694,45 @@
         return true;
       }
     });
+
+    function validateCoverImage(file) {
+        
+        // const errorElement = document.getElementById("cover-image-error");
+        // let files = document.getElementById("cover_images").files
+        
+       /*  if(files.length > 5){
+          errorElement.textContent = "Please upload only 5 images to ensure a smooth and efficient process!";
+          return false;
+        } */
+       console.log(file);
+        let filereader = new FileReader();
+        let fileuploadread = filereader.readAsDataURL(file.files[0]);
+        let imagesize = 2000000;
+        let uploadedimagesize = file.files[0].size;
+        if(uploadedimagesize > imagesize){
+        file.nextElementSibling.textContent = "Image size should below 2MB";
+        filereader.onloadstart = ()=>{
+            file.value = "";
+            return false;
+        }
+            return false;
+        }
+        else{
+          file.nextElementSibling.textContent = "";
+        }
+        
+        if (!file) {
+          file.nextElementSibling.textContent = "Upload a cover image.";
+          return false;
+        }
+
+       /*  if (!["image/jpeg", "image/png", "image/svg+xml"].includes(file.type)) {
+          file.nextElementSibling.textContent = "Only JPG, PNG, and SVG formats are allowed.";
+          return false;
+        } */
+        file.nextElementSibling.textContent = "";
+        return true;
+      }
   </script>
 
 

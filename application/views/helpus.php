@@ -434,15 +434,15 @@
             <h1><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
             
             <!-- Fundraiser Image -->
-            <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" width="500px" height="300px" alt="no image" class="img-fluid mb-3">
+            <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" style="min-width:300px;max-width:500px;height:300px;" alt="no image" class="img-fluid mb-3">
 <!-- Cause Description -->
     <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>
     <!-------------------image-sliding----------------------------->
-        <div style="width:500px;height:300px;" id="carouselCausesIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div style="min-width:300px;max-width:500px;height:300px;" id="carouselCausesIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div id="carousel-indicators" class="carousel-indicators">
 
         </div>
-        <div class="carousel-inner" style="margin:0 !important" >
+        <div id="cause-slides" class="carousel-inner" style="margin:0 !important" >
         <?php
                $documents = ["$fundraiser->cause_image1","$fundraiser->cause_image2","$fundraiser->cause_image3","$fundraiser->cause_image4","$fundraiser->cause_image5"];
                $count = count($documents);
@@ -474,10 +474,7 @@
             
             <!-- Share Fundraiser Button -->
             <button class="btn mt-3" style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" 
-            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '-' . $fundraiser->id ?>',
-                       '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
-                       '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>', 
-                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
+            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '-' . $fundraiser->id ?>','<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>','<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
             <i class="bi bi-share ms-2" ></i> &nbsp;Share this fundraiser
             </button>
             <br>
@@ -583,8 +580,14 @@
         </div>
     </div>
 </div>
-            </div>
-            <script>
+</div>
+    <script>
+
+   let cause_slides = document.querySelector(".carousel-inner").children;
+   if(cause_slides.length == 0){
+       document.getElementById("carouselCausesIndicators").style.display = "none";
+   };
+
     document.addEventListener('DOMContentLoaded', function() {
         const donorList = document.getElementById('donor-list');
         const displayLimit = 3; // Number of donors to display at a time

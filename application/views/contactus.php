@@ -365,7 +365,7 @@ input[type=number] {
     
   </nav>
   <div class="donate_img mt-5 pt-4 text-center">
-    <img src="<?php echo base_url('/assets/img/Contact-us.jpg'); ?>" alt="No Image" class="img-fluid">
+    <img src="<?php echo base_url('/assets/img/contact_page1.png'); ?>" alt="No Image" class="img-fluid">
   </div>
   
   <div class="row text-center mt-4 mb-5" style="margin-left:0px;margin-right:0px;">
@@ -389,16 +389,14 @@ input[type=number] {
     </div>
 </div>
 
-
-
   <section class="text-gray-600 body-font">
     <div class="container px-5 py-6 mx-auto flex flex-wrap items-center">
-      <div class="lg:w-3/7 md:w-1/2 sm:w-1/1 xsm:w-1/1  bg-gray-100 rounded-lg p-8 flex flex-col mx-auto mt-10">
+      <div class="lg:w-3/7 md:w-1/2 sm:w-1/1 xsm:w-1/1 bg-gray-100 rounded-lg p-8 flex flex-col mx-auto mt-10">
       <br><br>  
-      <h4 class="text-gray-900 text-lg font-medium title-font mb-5 text-center"><strong>GET IN TOUCH WITH US</strong>
+      <h4 class="text-gray-900 text-lg font-medium title-font text-center"><strong>GET IN TOUCH WITH US</strong>
         </h4>
-        <div class="flex justify-center" >
-          <img class=" max-w-screen-md line" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="no image">
+        <div class="d-flex justify-content-center" >
+          <img class="" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="no image">
         </div>
         <h3 class="text-base text-black-500 text-center w-auto"><strong>Submit your inquiry, and we'll respond to you <br>as
             soon as possible!</strong></h3>

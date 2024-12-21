@@ -378,7 +378,11 @@
     
 </nav>
   <div class="donate_img mt-5 pt-4">
-    <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
+  <picture>
+  <source media="(max-width:768px)" srcset="<?=base_url('assets/img/formobilethree.png')?>">
+  <img src="<?=base_url('assets/img/donate_one.png')?>" width="100%">
+  </picture>
+    
   </div>
   <div class="handwithheart_img text-center">
     <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">
@@ -487,7 +491,11 @@ $.ajax({
       url:"kanavuhelp/getHeader",
       success:(result)=>{
            document.getElementById("header").innerHTML = result;
+           let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
+           console.log(entry);
+           if(entry > 0){
            document.getElementById("donatepage").classList.add("text-danger");
+           }
       },
       error:(error)=>{
            document.getElementById("header").innerHTML = "";

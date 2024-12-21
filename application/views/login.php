@@ -300,7 +300,7 @@
           <div class="container mt-2 px-5 py-3 border text-center text-danger fw-bold">
             <span class="text-muted fs-5">Together, we can make a difference !.</span>
           <p class="fs-5">"Be the change you wish to see in the world." - Mahatma Gandhi</p> 
-          <p class="fs-5"> "The only way to do great work is to love what you do." - Steve Jobs
+          <p class="fs-5 mt-3"> "The only way to do great work is to love what you do." - Steve Jobs
           </div>
           </div> 
         <!-----------------quotes-end-------------------------->

@@ -78,23 +78,31 @@ class UserModel extends CI_Model
 		$query = $this->db->get('category'); // Replace 'category' with your actual table name
 		return $query->result_array();
 	}
+
 	public function register($data)
 	{
 		$this->db->insert('user', $data);
 		return true;
 	}
+
 	public function store($data)
 	{
 		$this->db->insert('contact_us', $data);
 		return true;
 	}
+
 	public function store2($data)
 	{
 		$this->db->insert('charity', $data);
 		return true;
 	}
 
-	public function store3($data, $id)
+	public function causeDetailsforupdate($userid){
+        $query = $this->db->query("SELECT * FROM individualform WHERE user_id = $userid");
+		return $query->row();
+	}
+
+	public function store3($data,$id)
 	{
 		$this->db->where('user_id', $id); // Specify the condition
 		$success = $this->db->update('individualform', $data); // Update the table with data
