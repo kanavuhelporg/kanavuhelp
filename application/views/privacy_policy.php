@@ -726,6 +726,7 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+          <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
             <li class="nav-item">
               <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
             </li>
@@ -889,7 +890,6 @@ case, we may have to cancel the service you have with us but we will notify you 
         <div class="row text-center">
           <div class="col-12">
             <div class="footer1">
-              <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
               <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
               <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
               <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>

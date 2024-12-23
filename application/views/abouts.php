@@ -261,7 +261,7 @@
     }
     .about p {
     line-height: 1.6; /* Improve readability */
-}
+    }
 @media (max-width: 576px) {
     .about p {
         font-size: 0.9rem; /* Smaller text on mobile */
@@ -386,6 +386,7 @@
         </div>
         <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                    <li class="nav-item"><a id="aboutuspage" class="nav-link text-danger" href="<?= base_url('/abouts') ?>">About us</a></li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
                     </li>
@@ -393,8 +394,11 @@
                         <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
                     </li>
                     <li class="nav-item">
+            <a id="myfrpage" class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
+            </li>
+                    <!-- <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
                     </li>

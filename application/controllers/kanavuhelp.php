@@ -396,8 +396,6 @@ class kanavuhelp extends CI_Controller
         return $user_name;
     }
 
-
-
     public function userLogin()
     {
         $email = $this->input->post("loginemail");
@@ -565,19 +563,18 @@ class kanavuhelp extends CI_Controller
             $data['end_date'] = $this->input->post('end_date');
             $data['cause_heading'] = $this->input->post('cause_heading');
             $data['cause_description'] = $this->input->post('cause_description');
-            $data['user_id'] = $this->session->userdata('currentUserId');
             $data['verified'] = 0;
            
        
         $file_data = $this->upload->data();
 
-        $causeId = $this->session->userdata('currentCauseId');
+        $causeId = $this->session->userdata('userId');
         $response = $this->UserModel->store3($data,$causeId);
         $userLoggedIn = array(
             'userId' => $this->session->userdata("currentUserId"),
             'userName' => $this->session->userdata('userName'),
         );
-        $this->session->set_userdata($userLoggedIn);  
+        // $this->session->set_userdata($userLoggedIn);  
         $this->session->set_flashdata("updatedindividualform", true);
         redirect('myFundraisers'); 
     }

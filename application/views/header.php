@@ -73,6 +73,7 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
             <li class="nav-item">
               <a id="individualpage" class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
             </li>
