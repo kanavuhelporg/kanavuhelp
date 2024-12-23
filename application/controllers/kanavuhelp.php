@@ -533,19 +533,22 @@ class kanavuhelp extends CI_Controller
         $uploadeddocuments = ["cover_image","document_one","document_two","document_three","document_four","document_five","cause_video"];
         $databasedocuments = ["cover_image","cause_image1","cause_image2","cause_image3","cause_image4","cause_image5","Cause_video"];
         $count = count($uploadeddocuments);
+        var_dump($_FILES);
+        echo $this->input->post('amount');
         try{
             $insert = 0;
         for($i=0; $i < $count; $i++)
         {           
+            if($_FILES[$uploadeddocuments[$i]]['name'] == ""){
+                continue;
+            }
             $_FILES['documents']['name']= $files[$uploadeddocuments[$i]]['name'];
             $_FILES['documents']['type']= $files[$uploadeddocuments[$i]]['type'];
             $_FILES['documents']['tmp_name']= $files[$uploadeddocuments[$i]]['tmp_name'];
             $_FILES['documents']['error']= $files[$uploadeddocuments[$i]]['error'];
             $_FILES['documents']['size']= $files[$uploadeddocuments[$i]]['size'];    
     
-            if($_FILES[$uploadeddocuments[$i]]['name'] == ""){
-                continue;
-            }
+           
             $this->upload->initialize($this->set_upload_options());
             $this->upload->do_upload($uploadeddocuments[$i]);
             $dataInfo[] = $this->upload->data();

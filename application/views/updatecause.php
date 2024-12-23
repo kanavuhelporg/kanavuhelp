@@ -1027,7 +1027,7 @@
                   <div class="row my-3">
                     <label for="cause_video" class="col-md-4 col-form-label">Video Document:<span class="text-danger">*</span></label>
                     <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cause_video" name="cause_video" accept="video/mp4" class="form-control my-2" >
+                      <input type="file" id="cause_video" name="cause_video" accept="video/mp4" class="form-control my-2" >
                       <p id="cover-video-error" class="text-danger"></p>
                       <small class="text-muted">
                        Upload only mp4 format.
