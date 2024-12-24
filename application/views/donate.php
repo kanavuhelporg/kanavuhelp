@@ -452,7 +452,7 @@
                                 <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
                                     <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
                                     <i class="bi bi-share ms-2" 
-                                    onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '-' . $fundraiser->id ?>', 
+                                    onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
                                                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                                                        '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
                                     </i>
@@ -570,6 +570,7 @@ function setCauseId(causeId) {
   document.getElementById('cause_id').value = causeId;
 }
 function shareCause(url, title, imgurl) {
+  console.log(url);
     if (navigator.share) {
         // Use Web Share API if available
         navigator.share({

@@ -324,7 +324,8 @@
 
               </p>
 
-              <a href="<?=base_url("kanavuhelp/updatecause")?>" class="btn donate_btn no-hover mt-5">Update Cause</a>
+              <a href="<?=base_url("/updatecause")?>" class="btn donate_btn no-hover mt-5">Update Cause</a>
+
 
               <!--<div class="progress mb-2">
                         <div class="progress-bar" role="progressbar" style="width: <?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>%;" aria-valuenow="<?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
