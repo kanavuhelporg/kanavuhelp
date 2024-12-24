@@ -396,8 +396,6 @@ class kanavuhelp extends CI_Controller
         return $user_name;
     }
 
-
-
     public function userLogin()
     {
         $email = $this->input->post("loginemail");
@@ -535,19 +533,22 @@ class kanavuhelp extends CI_Controller
         $uploadeddocuments = ["cover_image","document_one","document_two","document_three","document_four","document_five","cause_video"];
         $databasedocuments = ["cover_image","cause_image1","cause_image2","cause_image3","cause_image4","cause_image5","Cause_video"];
         $count = count($uploadeddocuments);
+        var_dump($_FILES);
+        echo $this->input->post('amount');
         try{
             $insert = 0;
         for($i=0; $i < $count; $i++)
         {           
+            if($_FILES[$uploadeddocuments[$i]]['name'] == ""){
+                continue;
+            }
             $_FILES['documents']['name']= $files[$uploadeddocuments[$i]]['name'];
             $_FILES['documents']['type']= $files[$uploadeddocuments[$i]]['type'];
             $_FILES['documents']['tmp_name']= $files[$uploadeddocuments[$i]]['tmp_name'];
             $_FILES['documents']['error']= $files[$uploadeddocuments[$i]]['error'];
             $_FILES['documents']['size']= $files[$uploadeddocuments[$i]]['size'];    
     
-            if($_FILES[$uploadeddocuments[$i]]['name'] == ""){
-                continue;
-            }
+           
             $this->upload->initialize($this->set_upload_options());
             $this->upload->do_upload($uploadeddocuments[$i]);
             $dataInfo[] = $this->upload->data();
@@ -565,19 +566,18 @@ class kanavuhelp extends CI_Controller
             $data['end_date'] = $this->input->post('end_date');
             $data['cause_heading'] = $this->input->post('cause_heading');
             $data['cause_description'] = $this->input->post('cause_description');
-            $data['user_id'] = $this->session->userdata('currentUserId');
             $data['verified'] = 0;
            
        
         $file_data = $this->upload->data();
 
-        $causeId = $this->session->userdata('currentCauseId');
+        $causeId = $this->session->userdata('userId');
         $response = $this->UserModel->store3($data,$causeId);
         $userLoggedIn = array(
             'userId' => $this->session->userdata("currentUserId"),
             'userName' => $this->session->userdata('userName'),
         );
-        $this->session->set_userdata($userLoggedIn);  
+        // $this->session->set_userdata($userLoggedIn);  
         $this->session->set_flashdata("updatedindividualform", true);
         redirect('myFundraisers'); 
     }

@@ -1107,7 +1107,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image_one" class="col-md-4 col-form-label">Cause Image One:<span class="text-danger">*</span></label>
+                    <label for="cover_image_one" class="col-md-4 col-form-label">Cause Image One:</label>
                     <div class="col-md-8">
                       <input type="file" id="cover_image_one" name="document_one" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1118,7 +1118,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image_two" class="col-md-4 col-form-label">Cause Image Two:<span class="text-danger">*</span></label>
+                    <label for="cover_image_two" class="col-md-4 col-form-label">Cause Image Two:</label>
                     <div class="col-md-8">
                       <input type="file" id="cover_image_two" name="document_two" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1129,7 +1129,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image_three" class="col-md-4 col-form-label">Cause Image Three:<span class="text-danger">*</span></label>
+                    <label for="cover_image_three" class="col-md-4 col-form-label">Cause Image Three:</label>
                     <div class="col-md-8">
                       <input type="file" id="cover_image_three" name="document_three" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1141,7 +1141,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image_four" class="col-md-4 col-form-label">Cause Image Four:<span class="text-danger">*</span></label>
+                    <label for="cover_image_four" class="col-md-4 col-form-label">Cause Image Four:</label>
                     <div class="col-md-8">
                       <input type="file" id="cover_image_four" name="document_four" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1153,7 +1153,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image_five" class="col-md-4 col-form-label">Cause Image Five:<span class="text-danger">*</span></label>
+                    <label for="cover_image_five" class="col-md-4 col-form-label">Cause Image Five:</label>
                     <div class="col-md-8">
                       <input type="file" id="cover_image_five" name="document_five" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1164,9 +1164,9 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cause_video" class="col-md-4 col-form-label">Video Document:<span class="text-danger">*</span></label>
+                    <label for="cause_video" class="col-md-4 col-form-label">Video Document:</label>
                     <div class="col-md-8">
-                      <input type="file" id="cause_video" name="cause_video" accept="video/mp4" class="form-control my-2" onchange="validateCausevideo()">
+                      <input type="file" onchange="validateCausevideo(this)" id="cause_video" name="cause_video" accept="video/mp4" class="form-control my-2">
                       <p id="cover-image-error" class="text-danger"></p>
                       <small class="text-muted">
                        Upload only mp4 format.
@@ -1704,17 +1704,11 @@
           errorElement.textContent = "Please upload only 5 images to ensure a smooth and efficient process!";
           return false;
         } */
-       console.log(file);
-        let filereader = new FileReader();
-        let fileuploadread = filereader.readAsDataURL(file.files[0]);
         let imagesize = 2000000;
         let uploadedimagesize = file.files[0].size;
         if(uploadedimagesize > imagesize){
         file.nextElementSibling.textContent = "Image size should below 2MB";
-        filereader.onloadstart = ()=>{
             file.value = "";
-            return false;
-        }
             return false;
         }
         else{
@@ -1731,6 +1725,20 @@
           return false;
         } */
         file.nextElementSibling.textContent = "";
+        return true;
+      }
+
+      function validateCausevideo(file){
+        let videosize = 60000000;
+        let uploadedvideosize = file.files[0].size;
+        if(uploadedvideosize > videosize){
+        file.nextElementSibling.textContent = "Video size should below 60MB";
+            file.value = "";
+            return false;
+        }
+        else{
+          file.nextElementSibling.textContent = "";
+        }
         return true;
       }
   </script>

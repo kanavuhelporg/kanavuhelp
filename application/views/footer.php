@@ -260,7 +260,6 @@
             <h5 style="text-align:center">kanavu.help</h5>
             <!-- <span class="text-muted">Your footer content goes here.</span> -->
             <div class="footer1">
-            <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a>
               <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
               <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
               <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>

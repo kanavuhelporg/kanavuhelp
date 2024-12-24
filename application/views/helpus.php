@@ -19,7 +19,7 @@
 
   <!-- Bootstrap CSS -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
 <!-- Bootstrap JS and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -376,6 +376,7 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+          <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
             <li class="nav-item dropdown">
                <a class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start A Fundraiser</a>
               
@@ -438,11 +439,11 @@
 <!-- Cause Description -->
     <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>
     <!-------------------image-sliding----------------------------->
-        <div style="min-width:300px;max-width:500px;height:300px;" id="carouselCausesIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div style="min-width:300px;max-width:500px;height:300px;" id="carouselCausesIndicators" class="carousel slide" data-bs-ride="carousel">
         <div id="carousel-indicators" class="carousel-indicators">
 
         </div>
-        <div id="cause-slides" class="carousel-inner" style="margin:0 !important" >
+        <div id="cause-slides" class="carousel-inner" >
         <?php
                $documents = ["$fundraiser->cause_image1","$fundraiser->cause_image2","$fundraiser->cause_image3","$fundraiser->cause_image4","$fundraiser->cause_image5"];
                $count = count($documents);
@@ -457,7 +458,7 @@
               <script>
                 document.getElementById("carousel-indicators").innerHTML += "<button type='button' data-bs-target='#carouselCausesIndicators' data-bs-slide-to='<?=$slide?>' class='<?= $slide == 0 ? 'active' : '';?>' aria-current='true' aria-label='Slide <?=$slide+1?>'></button>";
                </script>
-        <?php ++$slide;  } ?>
+        <?php ++$slide; } ?>
         </div>
 
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselCausesIndicators" data-bs-slide="prev">
@@ -469,15 +470,24 @@
         <span class="visually-hidden">Next</span>
         </button>
         </div>
+        
+            <!-------------------image-sliding-end---------------------------->
 
-            <!-------------------image-sliding----------------------------->
+            <!-------------------cause-video---------------------------------->
+              <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
+              <?php
+              if(!empty($fundraiser->Cause_video_link)){ 
+              echo $fundraiser->Cause_video_link;
+              }
+              ?> 
+            <!-------------------cause-video-end--------------------------------->
             
+            <div>
             <!-- Share Fundraiser Button -->
-            <button class="btn mt-3" style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" 
-            onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '-' . $fundraiser->id ?>','<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>','<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
+            <button href="#" class="btn mt-3 position-relative" style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" onclick="shareCause('<?= base_url('helpus/' . $fundraiser->name) . '-' . $fundraiser->id ?>','<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>','<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
             <i class="bi bi-share ms-2" ></i> &nbsp;Share this fundraiser
             </button>
-            <br>
+            </div>
         </div>
 
         <!-- Right Sidebar -->
@@ -748,7 +758,6 @@ function setCauseId(causeId) {
           <div class="row text-center">
             <div class="col-12">
               <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('/abouts') ?>"style="text-decoration:none;color:white">About</a>
                 <a class="footer-lable lable" href="<?= base_url('/contactus') ?>" style="text-decoration:none;color:white">Contact</a>
                 <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>" style="text-decoration:none; color:white">Terms of Use</a>
                 <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>" style="text-decoration:none;color:white">Privacy Policy</a>
@@ -1057,6 +1066,8 @@ function setCauseId(causeId) {
         document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
       });
   };
+
+  
 </script>
 
 <form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">

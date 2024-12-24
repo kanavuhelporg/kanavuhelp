@@ -455,7 +455,7 @@
     }
    }
 
-   document.getElementById("typeeffectcontainer").innerHTML += `<p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements. By contributing to a cause, you help pave the way for a brighter, more hopeful future. Join us in making a lasting impact, and together, we can empower those who need it most."</p>`;
+   document.getElementById("typeeffectcontainer").innerHTML += `<p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements."</p>`;
 </script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->
