@@ -895,8 +895,8 @@
           <!-- Left Column for Image and Text -->
           <div class="col-md-6 d-flex justify-content-center mt-3">
             <div class="text-center">
-              <h3 class="mt-4"><strong>START YOUR FUNDRAISER</strong></h3>
-              <h6>"We make a living by what we get, but we make a life by what we give"</h6>
+              <h3 class="mt-4"><strong>LAUNCH YOUR FUNDRAISER</strong></h3>
+              <h6>Our legacy is not what we accumulate, but what we give.</h6>
               <img src="<?php echo base_url('/assets/img/startyourfund.jpg'); ?>"
                 alt="no img"
                 class="img-fluid"
@@ -959,7 +959,7 @@
                  
                   <!-- Cover Image Field -->
                   <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cover Image:<span class="text-danger">*</span></label>
+                    <label for="cover_image" class="col-md-4 col-form-label">Cover Image:</label>
                     <div class="col-md-8">
                       <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="cover_image" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
                       <p id="cover-image-error" class="text-danger"></p>
@@ -970,7 +970,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image One:<span class="text-danger">*</span></label>
+                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image One:</label>
                     <div class="col-md-8">
                       <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_one" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
                       <p id="cover-image-error" class="text-danger"></p>
@@ -981,7 +981,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Two:<span class="text-danger">*</span></label>
+                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Two:</label>
                     <div class="col-md-8">
                       <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_two" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
                       <p id="cover-image-error" class="text-danger"></p>
@@ -992,7 +992,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Three:<span class="text-danger">*</span></label>
+                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Three:</label>
                     <div class="col-md-8">
                       <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_three" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1003,7 +1003,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Four:<span class="text-danger">*</span></label>
+                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Four:</label>
                     <div class="col-md-8">
                       <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_four" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1014,7 +1014,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Five:<span class="text-danger">*</span></label>
+                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Five:</label>
                     <div class="col-md-8">
                       <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_five" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1025,9 +1025,9 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cause_video" class="col-md-4 col-form-label">Video Document:<span class="text-danger">*</span></label>
+                    <label for="cause_video" class="col-md-4 col-form-label">Video Document:</label>
                     <div class="col-md-8">
-                      <input type="file" id="cause_video" name="cause_video" accept="video/mp4" class="form-control my-2" >
+                      <input type="file" onchange="validateCausevideo(this)" id="cause_video" name="cause_video" accept="video/mp4" class="form-control my-2" >
                       <p id="cover-video-error" class="text-danger"></p>
                       <small class="text-muted">
                        Upload only mp4 format.
@@ -1061,7 +1061,7 @@
                     <label for="cause_description" class="col-md-4 col-form-label">Description:<span class="text-danger">*</span></label>
                     <div class="col-md-8">
                       <textarea id="cause_description" name="cause_description" class="form-control my-2" rows="4" placeholder="Description" required oninput="validateCauseDescription()">
-                      <?=$causedetails->cause_description?>
+                      <?=trim($causedetails->cause_description)?>
                       </textarea>
                       <span id="cause-description-error" class="text-danger"></span>
                     </div>
@@ -1428,6 +1428,20 @@ document.addEventListener("DOMContentLoaded", function() {
             file.value = "";
             return false;
         }
+            return false;
+        }
+        else{
+          file.nextElementSibling.textContent = "";
+        }
+        return true;
+      }
+
+      function validateCausevideo(file){
+        let videosize = 60000000;
+        let uploadedvideosize = file.files[0].size;
+        if(uploadedvideosize > videosize){
+        file.nextElementSibling.textContent = "Video size should below 60MB";
+            file.value = "";
             return false;
         }
         else{

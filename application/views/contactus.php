@@ -393,13 +393,13 @@ input[type=number] {
     <div class="container px-5 py-6 mx-auto flex flex-wrap items-center">
       <div class="lg:w-3/7 md:w-1/2 sm:w-1/1 xsm:w-1/1 bg-gray-100 rounded-lg p-8 flex flex-col mx-auto mt-10">
       <br><br>  
-      <h4 class="text-gray-900 text-lg font-medium title-font text-center"><strong>GET IN TOUCH WITH US</strong>
-        </h4>
+      <h2 class="text-gray-900 text-lg font-medium title-font text-center"><strong>GET IN TOUCH WITH US</strong>
+        </h2>
         <div class="d-flex justify-content-center" >
           <img class="" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="no image">
         </div>
-        <h3 class="text-base text-black-500 text-center w-auto"><strong>Submit your inquiry, and we'll respond to you <br>as
-            soon as possible!</strong></h3>
+       <!--  <h3 class="text-base text-black-500 text-center w-auto"><strong>Submit your inquiry, and we'll respond to you <br>as
+            soon as possible!</strong></h3> -->
             <div class="relative mb-4 mt-5 form1">
 
             <form name="contactus" class="form1" id="myForm" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">

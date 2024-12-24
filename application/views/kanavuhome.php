@@ -799,10 +799,10 @@
           <div class="imgtext11">
             <ul>
               <li style="font-weight: bold;margin-left">"Empowering Lives, Defeating diseases & disasters"</li>
-              <li>Join Us in the Fight & Healing.</li><br>
+              <!-- <li>Join Us in the Fight & Healing.</li><br> -->
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
+                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
                     Start a Fundraiser
                   </button>
                 </a>
@@ -823,10 +823,10 @@
           <div class="imgtext22">
             <ul>
               <li style="font-weight: bold;">"Empowering Lives, Defeating diseases & disasters"</li>
-              <li>Join Us in the Fight & Healing.</li><br>
+              <!-- <li>Join Us in the Fight & Healing.</li><br> -->
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
+                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
                     Start a Fundraiser
                   </button>
                 </a>

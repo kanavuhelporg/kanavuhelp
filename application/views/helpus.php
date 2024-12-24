@@ -474,7 +474,12 @@
             <!-------------------image-sliding-end---------------------------->
 
             <!-------------------cause-video---------------------------------->
-              <video width="500px" height="300px" class="mt-2" src="<?=base_url("assets/individualform_img/$fundraiser->Cause_video")?>" controls autoplay loop></video>
+              <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
+              <?php
+              if(!empty($fundraiser->Cause_video_link)){ 
+              echo $fundraiser->Cause_video_link;
+              }
+              ?> 
             <!-------------------cause-video-end--------------------------------->
             
             <div>
@@ -1061,6 +1066,8 @@ function setCauseId(causeId) {
         document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
       });
   };
+
+  
 </script>
 
 <form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
