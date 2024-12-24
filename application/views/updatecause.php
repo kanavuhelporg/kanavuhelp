@@ -1437,10 +1437,10 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       function validateCausevideo(file){
-        let videosize = 60000000;
+        let videosize = 39000000;
         let uploadedvideosize = file.files[0].size;
         if(uploadedvideosize > videosize){
-        file.nextElementSibling.textContent = "Video size should below 60MB";
+        file.nextElementSibling.textContent = "Video size should below 39MB";
             file.value = "";
             return false;
         }
