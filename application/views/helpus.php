@@ -257,6 +257,7 @@
       margin-left: 10px;
 
     }
+
 @media (max-width: 767px) {
 
   /* carousel */
@@ -272,6 +273,15 @@
       }
       .card{
         margin-left: 10%;
+      }
+
+      #cause-image{
+        width:300px;
+      }
+
+      #cause-heading{
+        word-wrap:break-word;
+        font-size:24px;
       }
 
     /* donate  image below nav bar */
@@ -432,14 +442,14 @@
     <div class="row mt-4">
         <div class="col-md-8">
             <!-- Cause Heading -->
-            <h1><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
+            <h1 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
             
-            <!-- Fundraiser Image -->
-            <img src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" style="min-width:300px;max-width:500px;height:300px;" alt="no image" class="img-fluid mb-3">
 <!-- Cause Description -->
-    <p><?= htmlspecialchars($fundraiser->cause_description) ?></p>
+
+     <!-- Fundraiser Image -->
+            <img id="cause-image" src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" style="width:100%;height:300px;" alt="no image" class="img-fluid mt-3"> 
     <!-------------------image-sliding----------------------------->
-        <div style="min-width:300px;max-width:500px;height:300px;" id="carouselCausesIndicators" class="carousel slide" data-bs-ride="carousel">
+     <!--    <div style="min-width:300px;max-width:500px;height:300px;" id="carouselCausesIndicators" class="carousel slide" data-bs-ride="carousel">
         <div id="carousel-indicators" class="carousel-indicators">
 
         </div>
@@ -469,29 +479,31 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
         </button>
-        </div>
+        </div> -->
         
             <!-------------------image-sliding-end---------------------------->
+            <p class="mt-2"><?= htmlspecialchars($fundraiser->cause_description) ?></p>
+            
 
             <!-------------------cause-video---------------------------------->
               <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
               <?php
               if(!empty($fundraiser->Cause_video_link)){ 
-              echo $fundraiser->Cause_video_link;
+              echo "<div style='' class='mt-1'>$fundraiser->Cause_video_link</div>";
               }
               ?> 
             <!-------------------cause-video-end--------------------------------->
             
             <div>
             <!-- Share Fundraiser Button -->
-            <a href="#" class="btn mt-3" style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>','<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>','<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
+            <button class="btn mt-3" style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>','<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>','<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
             <i class="bi bi-share ms-2" ></i> &nbsp;Share this fundraiser
-            </a>
+            </button>
             </div>
         </div>
 
         <!-- Right Sidebar -->
-        <div class="col-md-4">
+        <div class="mt-2 col-md-4">
             <!-- Amount Raised and Goal -->
             <h4>
     <strong>
@@ -514,12 +526,14 @@
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong></p>
            <?php if ($fundraiser->days_left >= 0&&(!$fundraiser->hide_donation_button)): ?>
         <!-- Donate Button -->
+         
            <?php if($fundraiser->verified == 1){
-            echo "<a href='#' class='btn donate_btn no-hover'  onclick='setCauseId($fundraiser->id)'>Donate Now</a>";
+            echo "<a href='#'  style='height:fit-content;' class='btn donate_btn no-hover'  onclick='setCauseId($fundraiser->id)'>Donate Now</a>";
            }
            else{
                echo "<span class='text-danger fw-bold'>Verification pending</span>";
-           } ?>
+           } ?> 
+           
     <?php endif; ?>
     <?php if ($this->session->flashdata('error')) : ?>
     <div class="alert alert-danger">
@@ -591,6 +605,7 @@
     </div>
 </div>
 </div>
+
     <script>
 
    let cause_slides = document.querySelector(".carousel-inner").children;
@@ -728,6 +743,7 @@ function shareCause(url, title, imgurl) {
             <p style="margin: 0;">Created by</p>
             <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->username) ?></strong>
         </div>
+        
     </div>
 
     <!-- Beneficiary Section -->
@@ -737,6 +753,7 @@ function shareCause(url, title, imgurl) {
             <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->name) ?></strong>
             <p style="margin: 0;">from</p>
         </div>
+        
     </div>
 </div>
 
