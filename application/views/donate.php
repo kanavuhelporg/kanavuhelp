@@ -863,7 +863,7 @@ function shareCause(url, title, imgurl) {
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
-  const isName = (value) => /^([A-Za-z]{3,})+$/.test(value);
+  const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value);
   const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field
   window.onload = () => {
