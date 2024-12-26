@@ -109,15 +109,20 @@ class adminpanel extends CI_Model
 
     public function updateDonationStatus($id, $status, $verifiedBy)
     {
-
         $data = array(
             'status' => $status,
             'verified_by' => $verifiedBy,  // Update the 'verifiedby' field with the session name
         );
-
+        $donationdata = $this->db->query("SELECT status FROM donation_for_cause WHERE donation_id = $id");
+        $get_status = $donationdata->row();
+        $current_status = $get_status->status;
+        if($current_status == $status){
+            return false;
+        }    
         $this->db->where('donation_id', $id);
         $result = $this->db->update('donation_for_cause', $data);
         return $result;  // TRUE on success, FALSE on failure
+        
     }
 
     public function getDonationById1($id)
@@ -196,11 +201,18 @@ class adminpanel extends CI_Model
         }
     }
 
-    public function update_raised_amount($cause_id, $amount)
+    public function update_raised_amount($cause_id, $amount,$status)
     {
+        if($status == 1){
         $this->db->set('raised_amount', 'raised_amount + ' . (int) $amount, FALSE);
         $this->db->where('id', $cause_id);
         return $this->db->update('individualform');
+        }
+        else{
+            $this->db->set('raised_amount', 'raised_amount - ' . (int) $amount, FALSE);
+            $this->db->where('id', $cause_id);
+            return $this->db->update('individualform');
+        }
     }
 
 

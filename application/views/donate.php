@@ -427,7 +427,7 @@
         ?>
             <div class="col-12 col-lg-4 col-md-6 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                 <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                    <div class="card fixed-card">
+                    <div class="card h-100 fixed-card">
                         <img src="<?= $imageSrc ?>" 
                             width="316px" height="230px" 
                             class="card-img-top fixed-card-img p-2 img-placeholder">

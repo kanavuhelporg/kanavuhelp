@@ -519,12 +519,12 @@
             </div>
 
             <!-- Supporters and Days Left -->
-            <p><strong><?= isset($fundraiser->supporters_count) ? htmlspecialchars($fundraiser->supporters_count) : '0' ?></strong> Supporters
+            <p><strong><?= isset($fundraiser->supporters_count) ? htmlspecialchars($fundraiser->supporters_count) : '0' ?></strong><?=htmlspecialchars($fundraiser->supporters_count) == 1 ? ' Supporter' : ' Supporters';?> 
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong></p>
-           <?php if ($fundraiser->days_left >= 0&&(!$fundraiser->hide_donation_button)): ?>
+           <?php if ($fundraiser->days_left>= 0&&(!$fundraiser->hide_donation_button)): ?>
         <!-- Donate Button -->
           <div class="d-flex justify-content-between">
            <?php if($fundraiser->verified == 1){
@@ -995,7 +995,7 @@ function setCauseId(causeId) {
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
-  const isName = (value) => /^([A-Za-z]{3,})+$/.test(value);
+  const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value);
   const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field
   window.onload = () => {
