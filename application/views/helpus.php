@@ -850,7 +850,7 @@ function setCauseId(causeId) {
   </div>
 
   <div class="text-center mt-2">
-    <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
+    <h5 class="modal-title py-1 fw-bold text-danger" id="donationModalLabel">Make a Secure Donation</h5>
   </div>
 
   <!-- Currency and Amount -->
@@ -897,14 +897,14 @@ function setCauseId(causeId) {
 
   <!-- Continue Button -->
   <div class="d-flex justify-content-center">
-    <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
-      Continue to Pay ₹
+    <button type="submit" class="btn btn-danger fw-bold" style="width:50%; border-radius:10px; background-color:white; color:red;">
+      Confirm Payment ₹
     </button>
   </div>
 </form>
 
           <!-- Terms and Privacy Policy -->
-          <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
+          <p class="text-center small mt-2">By continuing, you agree to our <a href="<?= base_url('/terms_of_use') ?>">Terms of Service</a> & <a href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a></p>
         </div>
       </div>
     </div>

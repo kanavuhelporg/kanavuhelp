@@ -126,6 +126,7 @@ class UserModel extends CI_Model
 	{
 		return $this->db->insert('donation_for_cause', $data);
 	}
+	
 	public function getCausesDonationByUserId($user_id)
 	{
 		$this->db->select('f.*, d.amount as donated_amount,d.status');

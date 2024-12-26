@@ -269,6 +269,7 @@
   <img src="<?= base_url('assets/img/myfundraiser_ptrst.jpg') ?>" style="width: 100%; height: 400px;">
   <div id="typeeffectcontainer" style="width:50%;position:absolute;top:25%;left:25%;" class="d-flex flex-column justify-content-center">
     <span id="typingquotes" class="text-center h1"></span>
+    <p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements."</p>
   </div>
   </div>
   <!-- <div class="handwithheart_img text-center">
@@ -456,7 +457,7 @@
     }
    }
 
-   document.getElementById("typeeffectcontainer").innerHTML += `<p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements."</p>`;
+   /* document.getElementById("typeeffectcontainer").innerHTML += `<p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements."</p>`; */
 </script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->
