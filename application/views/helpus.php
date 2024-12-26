@@ -562,7 +562,7 @@
                 <h5 style="font-weight: bold;">Our Donors</h5>
                 <ul class="list-group" style="list-style-type: none; padding: 0;">
                
-                <ul id="donor-list">
+                <!-- <ul id="donor-list"> -->
     <?php if (!empty($fundraiser->topdonars)): ?>
         <?php foreach ($fundraiser->topdonars as $donor): ?>
             <li class="donor-item d-flex align-items-center justify-content-between" style="padding: 10px 0; display: none;">
