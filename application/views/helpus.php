@@ -891,7 +891,7 @@ function setCauseId(causeId) {
   <!-- Transaction ID -->
   <div class="form-group ms-4">
     <label for="transactionid" class="form-label">Transaction ID</label>
-    <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
+    <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
     <p id="error4" style="color:red; margin-top: 5px;"></p>
   </div>
 
@@ -994,7 +994,7 @@ function setCauseId(causeId) {
   const isCurrencySelected = (value) => value !== '';
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
-  const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
+  const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
   const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value);
   const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field
