@@ -257,10 +257,10 @@ class admin extends CI_Controller
         // Load the model and call the update function
         $this->load->model('adminpanel');
         $updateSuccess = $this->adminpanel->updateDonationStatus($id, $status, $verifiedBy);
-        if ($updateSuccess && $status == 1) { // assuming 1 represents "Yes"
+        if ($updateSuccess) { // assuming 1 represents "Yes"
             $donationData = $this->adminpanel->getDonationById1($id); // Get donation details for the cause_id and amount
             if ($donationData) {
-                $this->adminpanel->update_raised_amount($donationData->cause_id, $donationData->amount);
+                $this->adminpanel->update_raised_amount($donationData->cause_id, $donationData->amount,$status);
             }
         }
         // Set content type header to JSON

@@ -335,7 +335,7 @@ class kanavuhelp extends CI_Controller
         // Calculate days left (existing code)
         $end_date = new DateTime($fundraiser_details->end_date);
         $current_date = new DateTime();
-        $days_left = $end_date->diff($current_date)->days . 'days left';
+        $days_left = $end_date->diff($current_date)->days . ' Days Left';
         if ($days_left < 0) {
             $days_left = 'expired';
         }

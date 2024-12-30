@@ -554,7 +554,7 @@
         </div>
 
         <!-- Supporters and Days Left -->
-        <p><strong><?= isset($fundraiser->supporters_count) ? htmlspecialchars($fundraiser->supporters_count) : '0' ?></strong> Supporters
+        <p><strong><?= isset($fundraiser->supporters_count) ? htmlspecialchars($fundraiser->supporters_count) : '0' ?></strong><?= htmlspecialchars($fundraiser->supporters_count) == 1 ? ' Supporter' : ' Supporters'; ?>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -567,9 +567,12 @@
             } else {
               echo "<span class='text-danger fw-bold'>Verification pending</span>";
             } ?>
-            <a href="#" class="btn" style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" onclick="shareCause('<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name)) . '-' . $fundraiser->id ?>','<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>','<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
-              <i class="bi bi-share ms-2"></i> &nbsp;Share
-            </a>
+            <span>
+              <i class="bi bi-share ms-2"
+                onclick="shareCause('<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name)) . '-' . $fundraiser->id ?>', 
+                                                       '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
+                                                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
+              </i></span>
           </div>
 
         <?php endif; ?>
@@ -593,39 +596,39 @@
                 <h5 style="font-weight: bold;">Our Donors</h5>
                 <ul class="list-group" style="list-style-type: none; padding: 0;">
 
-                  <ul id="donor-list">
-                    <?php if (!empty($fundraiser->topdonars)): ?>
-                      <?php foreach ($fundraiser->topdonars as $donor): ?>
-                        <li class="donor-item d-flex align-items-center justify-content-between" style="padding: 10px 0; display: none;">
-                          <div class="d-flex align-items-center">
-                            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                              <?= substr($donor->name, 0, 1); ?>
-                            </div>
-                            <span style="margin-left: 10px;"><?= htmlspecialchars($donor->name); ?></span>
+                  <!-- <ul id="donor-list"> -->
+                  <?php if (!empty($fundraiser->topdonars)): ?>
+                    <?php foreach ($fundraiser->topdonars as $donor): ?>
+                      <li class="donor-item d-flex align-items-center justify-content-between" style="padding: 10px 0; display: none;">
+                        <div class="d-flex align-items-center">
+                          <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                            <?= substr($donor->name, 0, 1); ?>
                           </div>
-                          <span style="font-weight: bold;">Rs.<?= number_format($donor->amount); ?></span>
-                        </li>
-                      <?php endforeach; ?>
-                    <?php else: ?>
-                      <li class="no-donors-message" style="padding: 10px 0; font-style: italic; color: #888;list-style:none">
-                        No donors available for this cause.
+                          <span style="margin-left: 10px;"><?= htmlspecialchars($donor->name); ?></span>
+                        </div>
+                        <span style="font-weight: bold;">Rs.<?= number_format($donor->amount); ?></span>
                       </li>
-                    <?php endif; ?>
-                  </ul>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <li class="no-donors-message" style="padding: 10px 0; font-style: italic; color: #888;list-style:none">
+                      No donors available for this cause.
+                    </li>
+                  <?php endif; ?>
+                </ul>
 
-                  <script>
-                    // Prepare a JavaScript array of donors, or an empty array if no donors are available
-                    const donors = [
-                      <?php if (!empty($fundraiser->topdonars)): ?>
-                        <?php foreach ($fundraiser->topdonars as $donor): ?> {
-                            name: "<?= htmlspecialchars($donor->name); ?>",
-                            initial: "<?= substr($donor->name, 0, 1); ?>",
-                            amount: <?= $donor->amount; ?>
-                          },
-                        <?php endforeach; ?>
-                      <?php endif; ?>
-                    ];
-                  </script>
+                <script>
+                  // Prepare a JavaScript array of donors, or an empty array if no donors are available
+                  const donors = [
+                    <?php if (!empty($fundraiser->topdonars)): ?>
+                      <?php foreach ($fundraiser->topdonars as $donor): ?> {
+                          name: "<?= htmlspecialchars($donor->name); ?>",
+                          initial: "<?= substr($donor->name, 0, 1); ?>",
+                          amount: <?= $donor->amount; ?>
+                        },
+                      <?php endforeach; ?>
+                    <?php endif; ?>
+                  ];
+                </script>
 
               </div>
               <!-- Toggle Links
@@ -880,7 +883,7 @@
             </div>
 
             <div class="text-center mt-2">
-              <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
+              <h5 class="modal-title py-1 fw-bold text-danger" id="donationModalLabel">Make a Secure Donation</h5>
             </div>
 
             <!-- Currency and Amount -->
@@ -921,20 +924,20 @@
             <!-- Transaction ID -->
             <div class="form-group ms-4">
               <label for="transactionid" class="form-label">Transaction ID</label>
-              <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
+              <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
               <p id="error4" style="color:red; margin-top: 5px;"></p>
             </div>
 
             <!-- Continue Button -->
             <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
-                Continue to Pay ₹
+              <button type="submit" class="btn btn-danger fw-bold" style="width:50%; border-radius:10px; background-color:white; color:red;">
+                Confirm Payment ₹
               </button>
             </div>
           </form>
 
           <!-- Terms and Privacy Policy -->
-          <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
+          <p class="text-center small mt-2">By continuing, you agree to our <a href="<?= base_url('/terms_of_use') ?>">Terms of Service</a> & <a href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a></p>
         </div>
       </div>
     </div>
@@ -1022,8 +1025,8 @@
     const isCurrencySelected = (value) => value !== '';
     const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
     const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
-    const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
-    const isName = (value) => /^([A-Za-z]{3,})+$/.test(value);
+    const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
+    const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value);
     const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
     // Attach real-time validation for each field
     window.onload = () => {
