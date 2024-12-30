@@ -636,7 +636,7 @@ $('#editDonationForm').on('submit', function(event) {
                 // Optional: Reload the page to show updated data
                 window.location.reload(); // Or redirect to a specific page if needed
             } else {
-                alert('Failed to update donation');
+                alert('The status you choosed is already updated');
             }
         },
         error: function(xhr, status, error) {

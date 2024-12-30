@@ -427,7 +427,7 @@
         ?>
             <div class="col-12 col-lg-4 col-md-6 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                 <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                    <div class="card fixed-card">
+                    <div class="card h-100 fixed-card">
                         <img src="<?= $imageSrc ?>" 
                             width="316px" height="230px" 
                             class="card-img-top fixed-card-img p-2 img-placeholder">
@@ -682,7 +682,7 @@ function shareCause(url, title, imgurl) {
   </div>
 
   <div class="text-center mt-2">
-    <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
+    <h5 class="modal-title text-danger py-1 fw-bold" id="donationModalLabel">Make a Secure Donation</h5>
   </div>
 
   <!-- Currency and Amount -->
@@ -724,20 +724,20 @@ function shareCause(url, title, imgurl) {
   <!-- Transaction ID -->
   <div class="form-group ms-4">
     <label for="transactionid" class="form-label">Transaction ID</label>
-    <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
+    <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
     <p id="error4" style="color:red; margin-top: 5px;"></p>
   </div>
 
   <!-- Continue Button -->
   <div class="d-flex justify-content-center">
-    <button id="donatenowbtn" type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
-      Continue to Pay ₹
+    <button id="donatenowbtn" type="submit" class="btn btn-danger fw-bold" style="width:50%; border-radius:10px; background-color:white; color:red;">
+      Confirm Payment ₹
     </button>
   </div>
 </form>
 
           <!-- Terms and Privacy Policy -->
-          <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
+          <p class="text-center small mt-2">By continuing, you agree to our <a href="<?= base_url('/terms_of_use') ?>">Terms of Service</a> & <a href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a></p>
         </div>
       </div>
     </div>
@@ -862,8 +862,8 @@ function shareCause(url, title, imgurl) {
   const isCurrencySelected = (value) => value !== '';
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
-  const isTransactionIdValid = (value) => /^[1-9]\d{11}/.test(value);
-  const isName = (value) => /^([A-Za-z]{3,})+$/.test(value);
+  const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
+  const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value);
   const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field
   window.onload = () => {
