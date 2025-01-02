@@ -252,7 +252,7 @@ class admin extends CI_Controller
         $status = $this->input->post('status');
 
         // Get the name from session
-        $verifiedBy = $this->session->userdata('userName');
+        $verifiedBy = $this->session->userdata('Kanavu_userName');
 
         // Load the model and call the update function
         $this->load->model('adminpanel');

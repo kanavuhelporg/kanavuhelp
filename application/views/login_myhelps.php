@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>Login Page</title>
+    <title>Myhelps Login Page</title>
     <style>
         * {
             /* overflow: hidden; */
@@ -243,16 +243,16 @@
                         style="">
                 </a> -->
                 <br><br><br>
-                <h2 style="margin-left:50px;" class="text-danger">Fundraiser Sign in</h2>
+                <h2 style="margin-left:50px;" class="text-danger">Donor Sign in</h2>
                 <!-- <p style="margin-left:50px;">Don't have an Account? <a href="<?= base_url('/register') ?>"><span
                             style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p> -->
                 <div style="height:60%;" class="d-flex flex-column justify-content-between">           
                 <form id="loginform" onsubmit="return loginValidate()" name="login" method="post"
-                    action="<?= base_url('kanavuhelp/userLogin') ?>" style="" class="login-form">
+                    action="<?= base_url('donors/donorLogin') ?>" class="login-form">
                     <div class="mb-3">
                             
                         <label for="exampleInputEmail1" class="form-label">email</label>
-                        <input type="email" value="<?php if(isset($_SESSION["userEmail"])){echo $_SESSION["userEmail"];}?>" class="form-control" id="loginemail" name="loginemail">
+                        <input type="email" value="<?php if(isset($_SESSION["donorEmail"])){echo $_SESSION["donorEmail"];}?>" class="form-control" id="loginemail" name="loginemail">
                         <div id="mailerr" class="text-danger"></div>
                     </div>
 
@@ -321,7 +321,7 @@
        document.getElementById("otpbtn").setAttribute("type","button"); 
        document.getElementById("indicateotp").style.display = "block";
        document.getElementById("otpsubmit").style.display = "block";
-       document.getElementById("loginform").setAttribute("action","<?=base_url('kanavuhelp/userLogin')?>");
+       document.getElementById("loginform").setAttribute("action","<?=base_url('donors/donorLogin')?>");
        setTimeout(()=>{
         // document.getElementById("indicateotp").style.display = "none";
         document.getElementById("emailalert").innerHTML = "Please check your email inbox";
@@ -333,12 +333,12 @@
 
   <!----------------------not-registered-modal------------------------------>
 
-  <?php if($this->session->flashdata("not_registered_user")):?>  
+  <?php if($this->session->flashdata("not_registered_donor")):?>  
 
     <script>
       // Automatically trigger the OTP modal when the page loads
       window.onload = function() {
-        var myModal = new bootstrap.Modal(document.getElementById("newuser"), {
+        var myModal = new bootstrap.Modal(document.getElementById("newdonor"), {
           backdrop: 'static',
           keyboard: false
         });
@@ -346,17 +346,17 @@
       };
     </script>
 
-    <div id="newuser" class="modal bg-transparent fade">
+    <div id="newdonor" class="modal bg-transparent fade">
          <div class="modal-dialog rounded modal-lg">
            <div class="modal-content">
              <div class="modal-header">
-                 <span class="text-danger h4 fw-bolder">This Email Id is not registered yet.</span>
+                 <span class="text-danger h4 fw-bolder">This Email Id is not registered as donor.</span>
                  <button data-bs-dismiss="modal" class="btn btn-close"></button>
              </div>
 
              <div class="modal-body">
-                  <p class="fs-5 text-secondary">Interested in joining GetFundraiser?</p>
-                 <p style="color:black;" class="d-inline fs-5"><span>Want to start your own fundraising campaign? GetFundraiser makes it easy! Click <span><a class="text-danger h4 fw-bold" href="<?= base_url('/individual') ?>">here</a></span> to create your campaign today.</p>
+                  <p class="fs-5 text-secondary">Interested in joining Donor?</p>
+                 <p style="color:black;" class="d-inline fs-5"><span>Provide concrete examples of what different donation amounts can achieve. Click <span><a class="text-danger h4 fw-bold" href="<?= base_url('/donate') ?>">here</a></span> to create your contribution.</p>
              </div>
            </div>
          </div>
@@ -381,7 +381,7 @@
       url:"kanavuhelp/getHeader",
       success:(result)=>{
            document.getElementById("header").innerHTML = result;
-           document.getElementById("myfrpage").classList.add("text-danger");
+           document.getElementById("myhelpspage").classList.add("text-danger");
       },
       error:(error)=>{
            document.getElementById("header").innerHTML = "";
@@ -442,32 +442,6 @@
             
         }
 
-
-      /*   function verifyOtp(inputotp){
-           let otp = inputotp.value;
-           let errorbox = document.getElementById("otperr");
-           let submitbutton = document.getElementById("loginsubmit")
-           let sendotp = "<?php echo $this->session->userdata('generated_otp'); ?>";
-           let l = otp.length;
-           let sendotplength = sendotp.length;
-           if(l !== 4){
-               errorbox.innerHTML = "";
-               otpstatus = false;  
-           }
-           else if(l >= 4){
-            if(otp !== sendotp){
-                 errorbox.innerHTML = "<small style='color:red;'>OTP is Incorrect</small>";
-                 otpstatus = false;  
-               }
-               else{
-                 let errorbox = document.getElementById("otperr");
-                 errorbox.innerHTML = "<small style='color:green;'>OTP is Correct</small>";
-                 otpstatus = true;
-               }
-           }
-           console.log(otpstatus)
-        } */
-
        
     </script> 
     
@@ -475,8 +449,4 @@
 </body>
 
 </html>
-  <!-- <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Remember me <a href="#" class="atag"
-                                style="margin-left:25px;">Forgot password?</a></label>
-                    </div> -->
+ 

@@ -263,6 +263,72 @@
 
 <body>
   <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+  <div class="container-fluid">
+      <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
+        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">
+            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item"><a id="myhelpspage" class="nav-link" href="<?= base_url('/myhelps') ?>">My helps</a></li>
+            <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
+            <li class="nav-item">
+              <a id="individualpage" class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+            </li>
+            <li class="nav-item">
+              <a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
+            </li>
+            <li class="nav-item">
+            <a id="myfrpage" class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
+            </li>
+            <li class="nav-item">
+              <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
+            </li>
+            <!-- <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
+                    </li> -->
+            <li class="nav-item">
+              <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center ms-auto">
+  <?php if ($this->session->userdata('Kanavu_userId')): ?>
+    <div class="d-flex align-items-center">
+
+      <div class="dropdown" id="userProfile">
+        <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown">
+          <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+            style="width: 30px; height: 30px; border-radius: 50%;">
+          <span class="ms-2"><?= $this->session->userdata('Kanavu_userName');?></span>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+  <?php else: echo ""; ?>
+   <!--  <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a> -->
+  <?php endif; ?>
+</div>
+        </div>
+      </div>
+    </div>
     
   </nav>
   <div class="donate_img mt-5 pt-4 position-relative">
@@ -314,7 +380,7 @@
 
               <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" -->
               <div class="d-flex justify-content-between align-items-center">
-                <p class="card-text text-muted">Created by <br> <?= $cause->created_by ?></p>
+                <p class="card-text text-muted">Created for <br> <?= $cause->name ?></p>
                 <!--<p class="ms-4"><b> Your Donation₹ <?= number_format($cause->donated_amount) ?></b></p>-->
               </div>
 
@@ -324,10 +390,6 @@
                 <strong>End Date:</strong> <?= htmlspecialchars($cause->end_date) ?><br>
 
               </p>
-
-              <a href="<?=base_url("updatecause")?>" class="btn donate_btn no-hover mt-5">Update Cause</a>
-
-
               <!--<div class="progress mb-2">
                         <div class="progress-bar" role="progressbar" style="width: <?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>%;" aria-valuenow="<?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
                         </div>-->
@@ -346,7 +408,36 @@
 
 <!-------------------------footer------------------>
   <div id="footer">
-    
+  <footer class="footer mt-auto py-3">
+        <div class="container">
+            <h5 style="text-align:center">kanavu.help</h5>
+            <!-- <span class="text-muted">Your footer content goes here.</span> -->
+            <div class="footer1">
+              <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
+              <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
+              <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>
+            </div>
+        </div>
+
+        <div class="social-icons d-flex justify-content-center text-center">
+            <a href="https://www.facebook.com/" target="_blank">
+                <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo">
+            </a>
+            <a href="https://twitter.com/" target="_blank">
+                <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo">
+            </a>
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/" target="_blank">
+                <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo">
+            </a>
+        </div>
+        <div class="text-center my-3">
+            <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="img-fluid mx-auto d-block" style="width: 200px; display: block;">
+        </div>
+
+        <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
+    </footer>
+
   </div>
 <!------------------------footer-end--------------->
 
@@ -416,32 +507,6 @@
 
 <!---------------updated-modal-end---------------------->
 <script>
-  $.ajax({
-      type:"get",
-      url:"kanavuhelp/getHeader",
-      success:(result)=>{
-           document.getElementById("header").innerHTML = result;
-           let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
-           console.log(entry);
-           if(entry > 0){
-           document.getElementById("myfrpage").classList.add("text-danger");
-           }
-      },
-      error:(error)=>{
-           document.getElementById("header").innerHTML = "";
-      }
-    }); 
-
-    $.ajax({
-      type:"get",
-      url:"kanavuhelp/getFooter",
-      success:(result)=>{
-           document.getElementById("footer").innerHTML = result;
-      },
-      error:(error)=>{
-           document.getElementById("footer").innerHTML = "";
-      }
-    }); 
 
     var i = 0;
     var txt = 'Together, we have the power to make a balance.';
@@ -457,7 +522,6 @@
     }
    }
 
-   /* document.getElementById("typeeffectcontainer").innerHTML += `<p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements."</p>`; */
 </script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->

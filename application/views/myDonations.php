@@ -265,77 +265,10 @@
   <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     
   </nav>
-  <div class="donate_img mt-5 pt-4 position-relative">
-  <img src="<?= base_url('assets/img/myfundraiser_ptrst.jpg') ?>" style="width: 100%; height: 400px;">
-  <div id="typeeffectcontainer" style="width:50%;position:absolute;top:25%;left:25%;" class="d-flex flex-column justify-content-center">
-    <span id="typingquotes" class="text-center h1"></span>
-    <p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements."</p>
-  </div>
-  </div>
-  <!-- <div class="handwithheart_img text-center">
-    <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">
-    <p class="mt-3 "><b>"Fundraising is the gentle art of teaching the joy of giving."</b></p>
-
-  </div> -->
- <!-- <div class="mx-auto text-center mt-8 md:ml-20">
-    <button id="myDonationsButton"
-      class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0 mr-2">My Donations</button>
-    <button id="myFundraisersButton"
-      class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0">My Fundraisers</button>
-  </div>-->
- <!--  <script>
-    // Adding click event to navigate to 'My Fundraisers' page
-    document.getElementById("myDonationsButton").addEventListener("click", function() {
-      window.location.href = "<?php echo base_url('myhelps'); ?>"; // Correctly quoted and lowercase path
-    });
-  </script> -->
-
 
   <?php if (!empty($fundraisers)) : ?>
     <?php foreach ($fundraisers as $cause) : ?>
 
-      <div class="container d-flex justify-content-center mt-5">
-        
-      <a href="<?=base_url('helpus/' .str_replace(' ','-', $cause->name).'-'. $cause->id ) ?>" style="text-decoration:none;color:black;">
-          
-      <div class="card mb-3">
-            <!-- Use img-fluid and custom inline styles for width and height -->
-            <img style="min-width:250px;max-width:500px;height:400px;" src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" class="p-2" alt="...">
-
-            <div class="card-body">
-
-              <div class="card_text d-flex justify-content-between">
-
-                <p class="card-title"><b><?= $cause->cause_heading ?></b></p>
-
-                <p class="text-muted"><?= $cause->days_left > 0 ? $cause->days_left . ' days left' : 'Expired' ?></p>
-
-              </div>
-
-              <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" -->
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="card-text text-muted">Created by <br> <?= $cause->created_by ?></p>
-                <!--<p class="ms-4"><b> Your Donation₹ <?= number_format($cause->donated_amount) ?></b></p>-->
-              </div>
-
-              <p><b> <?php echo ($cause->verified == 0) ? '<span class="badge bg-danger">verification pending</span>' : ' <span class="badge bg-success">verified</span>'; ?></b></p>
-
-              <p class="card-text">
-                <strong>End Date:</strong> <?= htmlspecialchars($cause->end_date) ?><br>
-
-              </p>
-
-              <a href="<?=base_url("updatecause")?>" class="btn donate_btn no-hover mt-5">Update Cause</a>
-
-
-              <!--<div class="progress mb-2">
-                        <div class="progress-bar" role="progressbar" style="width: <?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>%;" aria-valuenow="<?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
-                        </div>-->
-            </div>
-          </div>
-          </a>
-      </div>
-      
     <?php endforeach; ?>
   <?php else : ?>
     <p>
@@ -350,71 +283,7 @@
   </div>
 <!------------------------footer-end--------------->
 
-<!---------------loggin-modal---------------------->
-<?php if($this->session->flashdata("logged_in")) :?>
-  <script>
-      window.onload = function() {
-        let myModal = new bootstrap.Modal(document.getElementById("loggin"), {
-          backdrop: 'static',
-          keyboard: false
-        });
-        myModal.show();
-      };
-    </script>
 
-<div id="loggin" class="modal fade show">
-    <div class="modal-dialog">
-        <div class="modal-content">
-           <div class="modal-header">
-              <span class="h5 text-danger">Welcome ! <span class="text-success"><?=$this->session->userdata("userName");?></span></span> 
-              <button data-bs-dismiss="modal" class="btn btn-close"></button>              
-           </div>
-           <div class="modal-body">
-              <p class="text-muted">Your verification process is underway. We will notify you once it is successfully completed.</p>
-           </div>
-           <div class="p-3">
-           <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
-           </div>
-        </div>
-    </div>
-</div>
-<?php endif; ?>
-
-
-<!---------------login-modal-end---------------------->
-
-<!---------------updated-modal---------------------->
-<?php if($this->session->flashdata("updatedindividualform")) :?>
-  <script>
-      window.onload = function() {
-        let myModal = new bootstrap.Modal(document.getElementById("updated"), {
-          backdrop: 'static',
-          keyboard: false
-        });
-        myModal.show();
-      };
-    </script>
-
-<div id="updated" class="modal fade show">
-    <div class="modal-dialog">
-        <div class="modal-content">
-           <div class="modal-header">
-              <span class="h5 text-danger">Success ! <span class="text-success"><?=$this->session->userdata("userName");?></span></span> 
-              <button data-bs-dismiss="modal" class="btn btn-close"></button>              
-           </div>
-           <div class="modal-body">
-              <p class="text-muted">Update form successfully submitted. We will inform you after verification is complete.</p>
-           </div>
-           <div class="p-3">
-           <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
-           </div>
-        </div>
-    </div>
-</div>
-<?php endif; ?>
-
-
-<!---------------updated-modal-end---------------------->
 <script>
   $.ajax({
       type:"get",
@@ -457,7 +326,7 @@
     }
    }
 
-   /* document.getElementById("typeeffectcontainer").innerHTML += `<p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements."</p>`; */
+   
 </script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->

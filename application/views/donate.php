@@ -238,6 +238,17 @@
       margin-left: 10px;
 
     }
+
+    .category-not-active {
+      border:1px solid #9FA6B2;
+      color:#9FA6B2;
+
+    }
+
+    .active-category {
+      border:1px solid #d9534f;
+      color:#d9534f;
+    }
     
 @media (max-width: 767px) {
 
@@ -314,6 +325,12 @@
 }
 .img-placeholder:not([src]) {
     background: url('path/to/placeholder-image.jpg') center center/cover no-repeat;
+}
+
+.btn-outline-secondary:hover {
+     background-color: white;
+     border-color:#d9534f;
+     color: #d9534f !important;
 }
 @media (max-width: 768px) {
   #userProfile .dropdown-menu {
@@ -406,19 +423,24 @@
       <p>No categories available at the moment.</p>
     <?php endif; ?>
   </div> -->
-  <!-- <h1>Select a Category</h1>
-    <button onclick="location.href='<?php echo site_url('data/fetch/medical'); ?>'">Medical</button>
-    <button onclick="location.href='<?php echo site_url('data/fetch/education'); ?>'">Education</button>
-    <button onclick="location.href='<?php echo site_url('data/fetch/crisis'); ?>'">Crisis</button>
-    <button onclick="location.href='<?php echo site_url('data/fetch/agriculture'); ?>'">Agriculture</button> -->
-
+  <h1>Select a Category</h1>
+  <div class="d-flex justify-content-center pb-3">
+  <div class="col-md-5 d-flex justify-content-evenly">
+    <!-----------onclick="location.href='<?php echo site_url('data/fetch/medical'); ?>'"------->
+    <button class="rounded-pill bg-white px-3 py-1 px-4 focus-change category-not-active" onclick="filterCauseswithcategory('All',0)">All</button>
+    <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Medical',1)">Medical</button>
+    <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Education',2)">Education</button>
+    <button class="rounded-pill bg-white px-3 py-1 px-4 focus-change category-not-active" onclick="filterCauseswithcategory('Crisis',3)">Crisis</button>
+    <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Agriculture',4)">Agriculture</button>
+  </div>
+  </div>
 <!-- Fundraiser Cards with Fixed Size -->
 <div class="container pt-4">
   <div class="row" id="fundraiserCards">
     <?php if (!empty($fundraisers)): ?>
         <?php 
         // Show only first 3 fundraisers initially
-        $displayedFundraisers = array_slice($fundraisers, 0, 3);
+        $displayedFundraisers  = array_slice($fundraisers, 0, 3);
         foreach ($displayedFundraisers as $fundraiser): 
             // Set a fixed dummy image if the cover image is empty or does not exist
             $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
@@ -466,14 +488,17 @@
     <?php else: ?>
         <p class="text-center">No fundraisers available at the moment.</p>
     <?php endif; ?>
-  </div>
 
-  <!-- See More Button -->
-  <?php if (count($fundraisers) > 3): ?>
+     <!-- See More Button -->
+    <?php if (count($fundraisers) > 3): ?>
     <div class="text-center mt-3">
         <button id="seeMoreBtn" class="btn" style="background-color: white; border: 1px solid black; color: red; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" onclick="loadMoreFundraisers()">See More Causes</button>
     </div>
   <?php endif; ?>
+  </div>
+
+  
+  
 
 </div><br><br>
 <!----------------footer----------------------->
@@ -513,10 +538,50 @@ $.ajax({
       }
     }); 
 
+    
+  function filterCauseswithcategory(category,index) {
+  
+    changeFocus(index);
+
+    $.ajax({
+      type:"post",
+      url:"donations/filterCauses",
+      data:{"category":category},
+      success:(result)=>{
+         allFundraisers = <?=json_encode($this->session->userdata("fundraisers"))?>;
+         currentIndex = 3;
+         document.getElementById("fundraiserCards").innerHTML = result;
+      },
+      error:(error)=>{
+        console.log(error)
+          document.getElementById("fundraiserCards").innerHTML = "Error fetching causes.";
+      }
+    }); 
+  }
+
+  function changeFocus(index) {
+    console.log(index)
+    let change_focus = document.querySelectorAll(".focus-change");
+    let btn_count = change_focus.length;
+    for(let i = 0;i < btn_count; i++) {
+    if(i == index) {  
+    change_focus[i].classList.remove("category-not-active");
+    change_focus[i].classList.add("active-category");
+    console.log(i == index)
+    }
+    else{
+      if(change_focus[i].classList.contains("active-category")) {
+      change_focus[i].classList.remove("active-category");
+      change_focus[i].classList.add("category-not-active");
+     }    
+    }
+    } 
+  }
+
 
 function loadMoreFundraisers() {
     const fundraiserContainer = document.getElementById('fundraiserCards');
-    
+    console.log(allFundraisers)
     // Display next 3 fundraisers
     const nextFundraisers = allFundraisers.slice(currentIndex, currentIndex + 3);
     nextFundraisers.forEach(fundraiser => {
@@ -530,7 +595,7 @@ function loadMoreFundraisers() {
       card.setAttribute('data-category', fundraiser.category);
       card.innerHTML = `
         <a href="${'<?= base_url('helpus/') ?>' + fundraiser.name.replace(' ', '-') + '-' + fundraiser.id}" style="text-decoration:none;color:black">
-          <div class="card fixed-card">
+          <div class="card h-100 fixed-card">
             <img src="${imageSrc}" width="316px" height="230px" class="card-img-top fixed-card-img img-placeholder" alt="no image">
             <div class="card-body d-flex flex-column">
               <p class="card-title">${fundraiser.cause_heading}</p>
@@ -553,6 +618,9 @@ function loadMoreFundraisers() {
             </div>
           </div>
         </a>
+        ${nextFundraisers.length > 3 ? `<div class="text-center mt-3">
+        <button id="seeMoreBtn" class="btn" style="background-color: white; border: 1px solid black; color: red; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" onclick="loadMoreFundraisers()">See More Causes</button>
+        </div>` : ""}
       `;
       fundraiserContainer.appendChild(card);
     });
@@ -668,7 +736,7 @@ function shareCause(url, title, imgurl) {
         </div>
         <div class="modal-body">
           <!-- Donation Form -->
-  <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+  <form id="donationForm" method="POST" Autocomplete="off" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
   <!-- Hidden fields to store cause ID and user ID -->
   <input type="hidden" name="cause_id" id="cause_id" value="">
   <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
@@ -702,23 +770,32 @@ function shareCause(url, title, imgurl) {
     </div>
   </div>
 
+<!-----------------------email------------------------------->
+  
+<div class="form-group ms-4">
+    <label for="phone" class="form-label">Email ID</label>
+    <input type="email" name="email" class="form-control" id="email"  placeholder="Enter your EmailID*" style="width:95%;" required>
+    <p id="error7" style="color:red; margin-top: 5px;"></p>
+  </div>
+
   <!-- Phone Number -->
   <div class="form-group ms-4">
   <label for="name" class="form-label">Name</label>
     <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" style="width:95%;" required>
     <p id="error6" style="color:red; margin-top: 5px;"></p>
     </div>
-    
+
+  <!-----------------------location---------------------------->  
+  <div class="form-group ms-4">
+  <label for="name" class="form-label">City</label>
+    <input type="text" name="city" class="form-control" id="donorcity" maxlength="40" placeholder="Enter Your City*" style="width:95%;" required>
+    <p id="error8" style="color:red; margin-top: 5px;"></p>
+  </div>
+  <!-----------------------location-end------------------------>
   <div class="form-group ms-4">
     <label for="phone" class="form-label">Phone Number</label>
     <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:95%;" required>
     <p id="error3" style="color:red; margin-top: 5px;"></p>
-  </div>
-
-  <div class="form-group ms-4">
-    <label for="phone" class="form-label">Email ID</label>
-    <input type="email" name="email" class="form-control" id="email"  placeholder="Enter your EmailID*" style="width:95%;" required>
-    <p id="error7" style="color:red; margin-top: 5px;"></p>
   </div>
   
   <!-- Transaction ID -->
@@ -838,6 +915,7 @@ function shareCause(url, title, imgurl) {
     // Reset form fields when the modal is closed
     donationModal.querySelector('form').reset();
   });
+
 </script>
 <script>
   // Real-time validation function
@@ -853,7 +931,58 @@ function shareCause(url, title, imgurl) {
      else if (!validationFn(field.value)) {
         errorElement.textContent = errorMessage;
       } else {
-        errorElement.textContent = ''; // Clear error if validation passes
+        errorElement.innerHTML = "";// Clear error if validation passes
+        if(field.name == "email") {
+          errorElement.innerHTML = `<span class="text-success">Fetching Donor</span> <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                    </div>`;
+          fetchDonordata(field.value)
+        }
+      }
+    });
+  }
+
+  function fetchDonordata(email) {
+    let emailid = email.trim();
+    $.ajax({
+      type:"post",
+      url:"donors/fetchDonordata",
+      data:{"email":emailid},
+      success:(result)=>{
+        let fetchingtimeout = "";
+        if(result.trim() == "notexist") {
+          document.getElementById("name").value = "";
+           document.getElementById("name").removeAttribute("readonly");
+           document.getElementById("donorcity").value = "";
+           document.getElementById("donorcity").removeAttribute("readonly");
+           document.getElementById("phone").value = "";
+           document.getElementById("phone").removeAttribute("readonly");
+           
+           fetchingtimeout = setTimeout(()=>{
+            document.getElementById("error7").innerHTML = "";
+           },2000);
+        } 
+        else{
+          let existdonor = JSON.parse(result);
+          document.getElementById("error7").innerHTML = "";
+           document.getElementById("name").value = existdonor.Name;
+           document.getElementById("name").setAttribute("readonly","readonly");
+           document.getElementById("donorcity").value = existdonor.Location;
+           document.getElementById("donorcity").setAttribute("readonly","readonly");
+           document.getElementById("phone").value = existdonor.Phonenumber;
+           document.getElementById("phone").setAttribute("readonly","readonly");
+           clearTimeout(fetchingtimeout);
+        }
+      },
+      error:(error)=>{
+        console.log(error)
+           document.getElementById("header").innerHTML = "";
       }
     });
   }
@@ -864,6 +993,7 @@ function shareCause(url, title, imgurl) {
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
   const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value);
+  const isCity = (value) => /^([A-Za-z0-9_()\s]{3,})+$/.test(value);
   const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field
   window.onload = () => {
@@ -871,7 +1001,7 @@ function shareCause(url, title, imgurl) {
     validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
     validateField('name', 'error6', isName, 'Enter Valid Name');
     validateField('email', 'error7', isEmail, 'Enter Valid EmailID');
-    
+    validateField('donorcity', 'error8', isCity, 'Enter Valid City');
     validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
     validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
   };
@@ -886,6 +1016,7 @@ function shareCause(url, title, imgurl) {
     document.getElementById('error4').innerText = '';
     document.getElementById('error6').innerText = '';
     document.getElementById('error7').innerText = '';
+    document.getElementById('error8').innerText = '';
     let isValid = true;
 
     // Perform final validation
@@ -902,6 +1033,12 @@ function shareCause(url, title, imgurl) {
   if(!isName(document.getElementById('name').value))
   {
     document.getElementById('error6').innerText = 'Enter Valid Name';
+    isValid = false;
+  }
+
+  if(!isCity(document.getElementById('donorcity').value))
+  {
+    document.getElementById('error8').innerText = 'Enter Valid City Name';
     isValid = false;
   }
 
@@ -959,6 +1096,7 @@ function shareCause(url, title, imgurl) {
         document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
       });
   };
+
 </script>
 
 <form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
