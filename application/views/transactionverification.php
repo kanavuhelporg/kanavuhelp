@@ -704,12 +704,12 @@ function setUrl(donation){
         status = mailfor.value;
         if(status == "verified"){
         document.getElementById("transactionstatus").innerHTML = `
-        <p>Hai!, <span class="text-success">${donarname}</span></p>Thank you for supporting our Kanavu Help campaign. Your transaction ID is [${transactionid}].
-        Your transaction received thank you.
+        <p>Hai!, <span class="text-success">${donarname}</span> Thank you for supporting our Kanavu Help campaign. Your transaction ID is [${transactionid}].
+        Your donation is received thank you.</p>
         `;
         }
         else{
-            document.getElementById("transactionstatus").innerHTML = `<p>Hai!, <span class="text-success">${donarname}</span>The transaction ID you entered does not match our records.</p>`;
+            document.getElementById("transactionstatus").innerHTML = `<p>Hai!, <span class="text-success">${donarname}</span> The transaction ID you entered does not match our records.</p>`;
         }
     }
 

@@ -365,7 +365,7 @@ input[type=number] {
     
   </nav>
   <div class="donate_img mt-5 pt-4 text-center">
-    <img src="<?php echo base_url('/assets/img/contact_page1.png'); ?>" alt="No Image" class="img-fluid">
+    <!-- <img src="<?php echo base_url('/assets/img/contact_page1.png'); ?>" alt="No Image" class="img-fluid"> -->
   </div>
   
   <div class="row text-center mt-4 mb-5" style="margin-left:0px;margin-right:0px;">
@@ -427,7 +427,7 @@ input[type=number] {
   <!-- Message Field -->
   <div class="mb-3">
 <label for="message" class="form-label">Message:<span class="text-danger">*</span></label>
-<textarea class="form-control" name="message" id="message" cols="50" rows="3" placeholder="Enter your message" required></textarea>
+<textarea class="form-control" name="message" id="message" rows="3" placeholder="Enter your message" required></textarea>
 <p id="message-error" style="color:red"></p>
   </div>
 
@@ -435,6 +435,51 @@ input[type=number] {
 
   <button type="submit" id="submitButton" class="btn btn-primary btn-lg" style="background-color:#E01A2B;border:none;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
 </form>
+
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="contactModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                         <div id="submitresponse">
+
+                         </div>
+                         <button type="button" class="btn btn-danger mt-2" data-bs-dismiss="modal" aria-label="Close">Ok</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+<?php if ($this->session->flashdata('submitsuccessstatus')): ?>
+    <script>
+      // Automatically trigger the OTP modal when the page loads
+      window.onload = function() {
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+        });
+        document.getElementById('contactModalLabel').innerHTML = "<span class='text-success'>Success !</p>";
+        document.getElementById('submitresponse').innerHTML = "<p class='fs-5'>Thanks for contacting us</p>";
+        myModal.show();
+      };
+    </script>
+    
+  <?php endif; ?>
+
+  <?php if ($this->session->flashdata('submiterrorstatus')): ?>
+    <script>
+      // Automatically trigger the OTP modal when the page loads
+      window.onload = function() {
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+        });
+        document.getElementById('contactModalLabel').innerHTML = "Error";
+        document.getElementById('submitresponse').innerHTML = "<p class='fs-5'>Unexpected error occured. Please try again.</p>";
+        myModal.show();
+      };
+    </script>
+    
+  <?php endif; ?>
 
             
             <script>

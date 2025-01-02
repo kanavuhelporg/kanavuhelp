@@ -221,7 +221,9 @@
         </div>
         <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                    <li class="nav-item"><a id="myhelpspage" class="nav-link text-danger" href="<?= base_url('/myhelps') ?>">My helps</a></li>
                     <li class="nav-item">
+                    <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
                         <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
                     </li>
                     <li class="nav-item">
@@ -241,13 +243,13 @@
                     </li>
                 </ul>
                 <div class="d-flex align-items-center ms-auto">
-  <?php if ($this->session->userdata('userId')): ?>
+  <?php if ($this->session->userdata('Kanavu_userId')): ?>
     <div class="d-flex align-items-center">
       <div class="dropdown" id="userProfile">
         <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
             style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+          <span class="ms-2"><?= $this->session->userdata('Kanavu_userName') ?></span>
         </div>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
           <li>
@@ -258,8 +260,7 @@
         </ul>
       </div>
     </div>
-  <?php else: ?>
-    <a href="<?= base_url('/login') ?>" class="login-button me-2">Login</a>
+ 
   <?php endif; ?>
 </div>
         </div>
@@ -285,7 +286,7 @@
 </div>
 <script>
   // Check login status from PHP
-  var isLoggedIn = <?= json_encode($is_logged_in); ?>;
+  var isLoggedIn = "<?= json_encode($is_logged_in); ?>";
 
   // If the user is not logged in, show the login modal
   if (!isLoggedIn) {
@@ -300,7 +301,7 @@
   }
 </script>
   <div class="donate_img mt-5 pt-4">
-  <img src="<?= base_url('assets/img/fundpage.jpg') ?>" style="width: 100%; height: 250px; ">
+  <!-- <img src="<?= base_url('assets/img/fundpage.jpg') ?>" style="width: 100%; height: 250px; "> -->
   </div>
   <!-- <div class="handwithheart_img text-center">
     <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">
@@ -308,8 +309,8 @@
 
   </div> -->
   <div class="mx-auto text-center mt-8 md:ml-20">
-  <button id="myDonationsButton"
-    class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0 mr-2">My Donations</button>
+  <!-- <button id="myDonationsButton"
+    class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0 mr-2">My Donations</button> -->
   <button id="myFundraisersButton"
     class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0">My Fundraisers</button>
 </div>
@@ -319,6 +320,10 @@
   // Adding click event to navigate to 'My Fundraisers' page
   document.getElementById("myFundraisersButton").addEventListener("click", function() {
     window.location.href = "<?php echo base_url('myFundraisers'); ?>"; // Correctly quoted and lowercase path
+  });
+
+  document.getElementById("myDonationsButton").addEventListener("click", function() {
+    window.location.href = "<?php echo base_url('myDonations'); ?>"; // Correctly quoted and lowercase path
   });
 </script>
 
@@ -337,7 +342,7 @@
     <?php if (!empty($causes)) : ?>
         <?php foreach ($causes as $cause) : ?>
           <div class="container d-flex justify-content-center align-items-center mt-5">
-          <a href="<?= base_url('helpus/' . $cause->id.'-' .$cause->cause_heading) ?>" style="text-decoration:none;color:black">
+          <a href="<?= base_url('helpus/'.str_replace(' ','-',$cause->name).'-'. $cause->id) ?>" style="text-decoration:none;color:black">
             <div class="card mb-3">
                 <!-- Use img-fluid and custom inline styles for width and height -->
                 <img src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" width="80%" height="200px" class="card-img-top img-fluid" alt="...">
@@ -350,9 +355,9 @@
                     <!-- Flex container to align "Rs.2000" and "Created by Dinesh Kumar" -->
                     <div class="d-flex justify-content-between align-items-center">
                         <p class="card-text text-muted">Created by <br> <?= $cause->name ?></p>
-                        <p class="amount" ><b> ₹ <?= number_format($cause->donated_amount) ?></b></p>
+                        <p class="amount" ><b> ₹ <?= number_format($cause->amount) ?></b></p>
                         
-                        <!-- <p class="amount me-4 "><b> ₹ <?= number_format($cause->donated_amount) ?></b></p> -->
+                        <!-- <p class="amount me-4 "><b> ₹ <?= number_format($cause->amount) ?></b></p> -->
                     </div>
                     <!--<p class="card-text"><strong>₹  Total Amount  ₹ <?= number_format($cause->amount) ?></p>-->
                     <!--<div class="progress mb-2">
@@ -365,7 +370,7 @@
         <?php endforeach; ?>
         
     <?php else : ?>
-        <p>No causes found for your account.</p>
+        <p class="text-center">No causes found for your account.</p>
     <?php endif; ?>
 </div>
 

@@ -210,6 +210,12 @@
       border-radius: 25px;
     }
 
+    .share_btn {
+      border: 1px solid rgba(224, 26, 43, 1);
+      color: rgba(224, 26, 43, 1);
+      border-radius: 25px;
+    }
+
     /* footer */
 
     .footer {
@@ -302,7 +308,13 @@
     border: 1px solid red;
 }
 
-.donate_btn.no-hover:hover {
+.share_btn.no-hover {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+}
+
+.share_btn.no-hover:hover {
     background-color: white !important;
     color: red !important;
     border: 1px solid red !important;
@@ -386,6 +398,7 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+          <li class="nav-item"><a id="myhelpspage" class="nav-link" href="<?= base_url('/myhelps') ?>">My helps</a></li>
           <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
             <li class="nav-item dropdown">
                <a class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start A Fundraiser</a>
@@ -408,13 +421,13 @@
             </li>
           </ul><br>
           <div class="d-flex align-items-center ms-auto">
-  <?php if ($this->session->userdata('userId')): ?>
+  <?php if ($this->session->userdata('Kanavu_userId')): ?>
     <div class="d-flex align-items-center">
       <div class="dropdown" id="userProfile">
         <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
             style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+          <span class="ms-2"><?= $this->session->userdata('Kanavu_userName') ?></span>
         </div>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
           <li>
@@ -437,10 +450,12 @@
     <div class="donate_img mt-5 pt-4">
     <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
   </div>
-    <div class="container mt-5 pt-4">
+    <div class="container-fluid">
+    <div class="row justify-content-center">  
+    <div class="col-11 mt-5 pt-4">
     <!-- Cause Heading and Main Content -->
     <div class="row mt-4">
-        <div class="col-md-8">
+        <div class="col-lg-8">
             <!-- Cause Heading -->
             <h1 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
             
@@ -489,7 +504,7 @@
               <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
               <?php
               if(!empty($fundraiser->Cause_video_link)){ 
-              echo "<div style='' class='mt-1'>$fundraiser->Cause_video_link</div>";
+              echo "<div class='mt-1'>$fundraiser->Cause_video_link</div>";
               }
               ?> 
             <!-------------------cause-video-end--------------------------------->
@@ -503,7 +518,7 @@
         </div>
 
         <!-- Right Sidebar -->
-        <div class="mt-2 col-md-4">
+        <div class="mt-2 col-lg-4">
             <!-- Amount Raised and Goal -->
             <h4>
     <strong>
@@ -534,11 +549,11 @@
                echo "<span class='text-danger fw-bold'>Verification pending</span>";
            } ?> 
              <span>
-             <i class="bi bi-share ms-2" 
+             <button class='btn share_btn no-hover' 
                                     onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
                                                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
-                                                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
-                                    </i></span>
+                                                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">Share now
+                                    </button></span>
             </div>
            
     <?php endif; ?>
@@ -557,22 +572,34 @@
            <!-- Top Donors Section -->
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="card p-3" style="background-color: #fff0f0; border-radius: 10px; border: none; width: 100%; max-width: 600px; margin: 0 auto;">
+        <div class="col-md-12">
+            <div class="card" style="background-color: #fff0f0; border-radius: 10px; border: none; width: 100%; max-width: 600px; margin: 0 0; box-sizing:contnet-box;padding:10px;">
                 <h5 style="font-weight: bold;">Our Donors</h5>
+
                 <ul class="list-group" style="list-style-type: none; padding: 0;">
                
                 <!-- <ul id="donor-list"> -->
     <?php if (!empty($fundraiser->topdonars)): ?>
         <?php foreach ($fundraiser->topdonars as $donor): ?>
-            <li class="donor-item d-flex align-items-center justify-content-between" style="padding: 10px 0; display: none;">
-                <div class="d-flex align-items-center">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+            <li class="d-flex align-items-center" style="padding: 5px 0;">
+                <div class="col-8 d-flex"><!------donor-content----------->
+                  
+                    <div class="col-2 rounded-circle" style="width: 40px; height: 40px;background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
                         <?= substr($donor->name, 0, 1); ?>
                     </div>
-                    <span style="margin-left: 10px;"><?= htmlspecialchars($donor->name); ?></span>
-                </div>
+                    
+                    <div class="col-10">
+                    <ul class="w-100 list-unstyled">
+                    <li style="margin-left: 10px;word-wrap:break-word;"><?= htmlspecialchars($donor->name); ?></li>
+                    <li style="margin-left: 10px;font-weight: bold;word-wrap:break-word;"><?=$donor->donor_location; ?></li>
+                    </ul>
+                    </div>
+                     
+                </div><!------donor-content-end---------->
+
+                <div class="col-4"><!------donor-amount---------->
                 <span style="font-weight: bold;">Rs.<?= number_format($donor->amount); ?></span>
+                </div><!------donor-amount-end---------->
             </li>
         <?php endforeach; ?>
     <?php else: ?>
@@ -615,11 +642,11 @@
 
     <script>
 
-   let cause_slides = document.querySelector(".carousel-inner").children;
+   /* let cause_slides = document.querySelector(".carousel-inner").children;
    if(cause_slides.length == 0){
        document.getElementById("carouselCausesIndicators").style.display = "none";
    };
-
+ */
     document.addEventListener('DOMContentLoaded', function() {
         const donorList = document.getElementById('donor-list');
         const displayLimit = 3; // Number of donors to display at a time
@@ -748,7 +775,7 @@ function shareCause(url, title, imgurl) {
     <div class="col-md-3 col-sm-12justify-content-start d-flex  mb-3 mb-md-0" >
         <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px; ">
             <p style="margin: 0;">Created by</p>
-            <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->username) ?></strong>
+            <strong style="font-size: 14px;"><a style="color:black;" href="fundraiserprofile?id=<?=$fundraiser->user_id?>"><?= htmlspecialchars($fundraiser->created_by) ?></a></strong>
         </div>
         
     </div>
@@ -770,6 +797,8 @@ function shareCause(url, title, imgurl) {
         Content Disclaimer: The views and opinions expressed on the campaign page are those of the campaigner or donors. They do not reflect or represent the company’s views and opinions.
     </p>
 </div>
+            </div>
+            </div>
             </div>
             <script>
 function setCauseId(causeId) {
@@ -836,10 +865,10 @@ function setCauseId(causeId) {
         </div>
         <div class="modal-body">
           <!-- Donation Form -->
-          <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+  <form id="donationForm" method="POST" Autocomplete="off" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
   <!-- Hidden fields to store cause ID and user ID -->
   <input type="hidden" name="cause_id" id="cause_id" value="">
-  <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
+  <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('Kanavu_userId') : ''; ?>">
 
   <!-- Donation Form Fields -->
   <div class="text-center">
@@ -870,24 +899,35 @@ function setCauseId(causeId) {
     </div>
   </div>
 
+  <!-------------------------email-------------------------->
+
+  <div class="form-group ms-4">
+    <label for="phone" class="form-label">Email ID</label>
+    <input type="text" name="email" class="form-control" id="email"  placeholder="Enter your EmailID*" style="width:95%;" required>
+    <p id="error7" style="color:red; margin-top: 5px;"></p>
+  </div>
+
   <!-- Phone Number -->
   <div class="form-group ms-4">
   <label for="name" class="form-label">Name</label>
     <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" style="width:95%;" required>
     <p id="error6" style="color:red; margin-top: 5px;"></p>
     </div>
+
+<!-----------------------location---------------------------->  
+<div class="form-group ms-4">
+  <label for="name" class="form-label">City</label>
+    <input type="text" name="city" class="form-control" id="donorcity" maxlength="40" placeholder="Enter Your City*" style="width:95%;" required>
+    <p id="error8" style="color:red; margin-top: 5px;"></p>
+  </div>
+  <!-----------------------location-end------------------------>
+
   <div class="form-group ms-4">
     <label for="phone" class="form-label">Phone Number</label>
     <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:95%;" required>
     <p id="error3" style="color:red; margin-top: 5px;"></p>
   </div>
-  <div class="form-group ms-4">
-    <label for="phone" class="form-label">Email ID</label>
-    <input type="text" name="email" class="form-control" id="email"  placeholder="Enter your EmailID*" style="width:95%;" required>
-    <p id="error7" style="color:red; margin-top: 5px;"></p>
-  </div>
   
-
   <!-- Transaction ID -->
   <div class="form-group ms-4">
     <label for="transactionid" class="form-label">Transaction ID</label>
@@ -986,6 +1026,58 @@ function setCauseId(causeId) {
         errorElement.textContent = errorMessage;
       } else {
         errorElement.textContent = ''; // Clear error if validation passes
+        if(field.name == "email") {
+          errorElement.innerHTML = `<span class="text-success">Fetching Donor</span> <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                    </div>`;
+          fetchDonordata(field.value)
+      }
+    }
+    });
+  }
+
+  function fetchDonordata(email) {
+    let emailid = email.trim();
+    $.ajax({
+      type:"post",
+      url:"fetchDonordata",
+      data:{"email":emailid},
+      success:(result)=>{
+        let fetchingtimeout = "";
+        console.log(result);
+        if(result.trim() == "notexist") {
+          document.getElementById("name").value = "";
+           document.getElementById("name").removeAttribute("readonly");
+           document.getElementById("donorcity").value = "";
+           document.getElementById("donorcity").removeAttribute("readonly");
+           document.getElementById("phone").value = "";
+           document.getElementById("phone").removeAttribute("readonly");
+           
+           fetchingtimeout = setTimeout(()=>{
+            document.getElementById("error7").innerHTML = "";
+           },2000);
+        } 
+        else{
+          let existdonor = JSON.parse(result);
+           document.getElementById("error7").innerHTML = "";
+           document.getElementById("name").value = existdonor.Name;
+           document.getElementById("name").setAttribute("readonly","readonly");
+           document.getElementById("donorcity").value = existdonor.Location;
+           document.getElementById("donorcity").setAttribute("readonly","readonly");
+           document.getElementById("phone").value = existdonor.Phonenumber;
+           document.getElementById("phone").setAttribute("readonly","readonly");
+           clearTimeout(fetchingtimeout);
+        }
+      },
+      error:(error)=>{
+        console.log(error)
+           document.getElementById("header").innerHTML = "";
       }
     });
   }
@@ -996,6 +1088,7 @@ function setCauseId(causeId) {
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
   const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value);
+  const isCity = (value) => /^([A-Za-z0-9_()\s]{3,})+$/.test(value);
   const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field
   window.onload = () => {
@@ -1003,7 +1096,7 @@ function setCauseId(causeId) {
     validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
     validateField('name', 'error6', isName, 'Enter Valid Name');
     validateField('email', 'error7', isEmail, 'Enter Valid EmailID');
-    
+    validateField('donorcity', 'error8', isCity, 'Enter Valid City');
     validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
     validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
   };
@@ -1018,6 +1111,7 @@ function setCauseId(causeId) {
     document.getElementById('error4').innerText = '';
     document.getElementById('error6').innerText = '';
     document.getElementById('error7').innerText = '';
+    document.getElementById('error8').innerText = '';
     let isValid = true;
 
     // Perform final validation
@@ -1036,6 +1130,13 @@ function setCauseId(causeId) {
     document.getElementById('error6').innerText = 'Enter Valid Name';
     isValid = false;
   }
+
+  if(!isCity(document.getElementById('donorcity').value))
+  {
+    document.getElementById('error8').innerText = 'Enter Valid City Name';
+    isValid = false;
+  }
+
 
   if(!isEmail(document.getElementById('email').value))
   {

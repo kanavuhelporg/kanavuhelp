@@ -40,7 +40,7 @@ class UserModel extends CI_Model
 	//top donars
 	public function get_top_donors_by_cause($cause_id)
 	{
-		$this->db->select('donation_for_cause.name, donation_for_cause.amount');
+		$this->db->select('donation_for_cause.name, donation_for_cause.amount, donation_for_cause.donor_location');
 		$this->db->from('donation_for_cause');
 		
 		$this->db->where('donation_for_cause.cause_id', $cause_id);
@@ -302,6 +302,26 @@ class UserModel extends CI_Model
 		$this->db->where('id', $userId);
 		$query = $this->db->get('user');
 		return $query->row_array(); // Return the user data as an array
+	}
+
+	public function checkDonorexist($emailid) {
+		$check = $this->db->query("SELECT * FROM donor_profiles WHERE Email_id = '$emailid'");
+		return $check;
+	}
+
+	public function registerDonor($name,$phoneno,$city,$emailid) {
+		$register = $this->db->query("INSERT INTO donor_profiles (Name,Phonenumber,Location,Email_id) VALUES('$name','$phoneno','$city','$emailid')");
+	}
+
+	public function filterCauseswithcategory($category) {
+		if($category == "All") {
+		  $getcauses = $this->db->query("SELECT * FROM individualform");
+		}
+		else{
+		  $getcauses = $this->db->query("SELECT * FROM individualform WHERE category = '$category'");
+		}
+		
+		return $getcauses->result();
 	}
 }
 ?>

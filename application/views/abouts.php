@@ -386,6 +386,7 @@
         </div>
         <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                    <li class="nav-item"><a id="myhelpspage" class="nav-link" href="<?= base_url('/myhelps') ?>">My helps</a></li>
                     <li class="nav-item"><a id="aboutuspage" class="nav-link text-danger" href="<?= base_url('/abouts') ?>">About us</a></li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
@@ -410,13 +411,13 @@
                     </li>
                 </ul>
                 <div class="d-flex align-items-center ms-auto">
-  <?php if ($this->session->userdata('userId')): ?>
+  <?php if ($this->session->userdata('Kanavu_userId')): ?>
     <div class="d-flex align-items-center">
       <div class="dropdown" id="userProfile">
         <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
             style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="ms-2"><?= $this->session->userdata('userName') ?></span>
+          <span class="ms-2"><?= $this->session->userdata('Kanavu_userName') ?></span>
         </div>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
           <li>
@@ -443,8 +444,8 @@
     <div class="text-center">
     <p class="text-center">
     <h2>
-            "Mission to make a" 
-            <img src="<?php echo base_url('/assets/img/Emoji.png'); ?>" style="display: inline; vertical-align: middle;" alt="Emoji" width="30">
+            "Mission to make a Smile" 
+            <!-- <img src="<?php echo base_url('/assets/img/Emoji.png'); ?>" style="display: inline; vertical-align: middle;" alt="Emoji" width="30"> -->
             </h2>
             </p>
         <img class="img-fluid" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="Underline" style="max-width: 100%; height: auto;">

@@ -25,6 +25,7 @@ class kanavuhelp extends CI_Controller
         $this->load->library('session');
         $this->load->library('email');
         $this->load->model('UserModel');
+        $this->load->model('DonorprofileModel');
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('cookie');
@@ -32,10 +33,11 @@ class kanavuhelp extends CI_Controller
         $this->config->load('email');
         $this->load->helper('url');
     }
+
     public function index()
     {
         $data['fundraisers'] = $this->UserModel->get_cause_details();
-        $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+        $is_logged_in = $this->session->userdata('Kanavu_userId') !== null; // Check if userId is set
         $data['is_logged_in'] = $is_logged_in;
         $active_fundraisers = [];
 
@@ -100,7 +102,7 @@ class kanavuhelp extends CI_Controller
         $data['fundraisers'] = $this->UserModel->get_cause_details();
 
         // Check if user is logged in using CodeIgniter session
-        $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+        $is_logged_in = $this->session->userdata('Kanavu_userId') !== null; // Check if userId is set
         $data['is_logged_in'] = $is_logged_in;
 
         // Initialize an array to store active fundraisers
@@ -134,7 +136,7 @@ class kanavuhelp extends CI_Controller
         $data['fundraisers'] = $this->UserModel->get_cause_details();
 
         // Check if user is logged in using CodeIgniter session
-        $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+        $is_logged_in = $this->session->userdata('Kanavu_userId') !== null; // Check if userId is set
         $data['is_logged_in'] = $is_logged_in;
 
         // Initialize an array to store active fundraisers
@@ -164,17 +166,17 @@ class kanavuhelp extends CI_Controller
     }
 
     public function updatecause(){
-        if (!$this->session->userdata('userId')) {
+        if (!$this->session->userdata('Kanavu_userId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
-        $userid = $this->session->userdata("userId");
+        $userid = $this->session->userdata("Kanavu_userId");
         $causedetails = $this->UserModel->causeDetailsforupdate($userid);
         $this->load->view("updatecause",array("causedetails"=>$causedetails));
     }
 
     public function individual()
     {
-       // if (!$this->session->userdata('userId')) {
+       // if (!$this->session->userdata('Kanavu_userId')) {
           //  redirect('login_modal');
           //  exit;
       //  }
@@ -205,6 +207,7 @@ class kanavuhelp extends CI_Controller
         $user_id = $this->input->post('user_id');
         $amount = $this->input->post('amount');
         $name = $this->input->post('name');
+        $city = $this->input->post('city');
         $emailid = $this->input->post('email');
         $phoneno = $this->input->post('phoneno');
         $transactionid = $this->input->post('transactionid');
@@ -222,11 +225,24 @@ class kanavuhelp extends CI_Controller
             return; // Redirect to the donation page or any relevant page
         }
         // Prepare data to insert
+        $donor_id = "";
+        $checkdonorexist = $this->UserModel->checkDonorexist($emailid);
+        if($checkdonorexist->num_rows() < 1) {
+            $register_donor = $this->UserModel->registerDonor($name,$phoneno,$city,$emailid);
+            $donor_id = $this->db->insert_id();
+        } 
+        else{
+            $getdonorid = $checkdonorexist->row();
+            $donor_id = $getdonorid->Donor_id;
+        }
+
         $data = array(
             'cause_id' => $cause_id,
             'user_id' => $user_id,
+            'donor_id' => $donor_id,
             'amount' => $amount,
              'name' => $name,
+             'donor_location' => $city,
              'email' => $emailid,
             'phoneno' => $phoneno,
             'category' => $category,
@@ -254,7 +270,7 @@ class kanavuhelp extends CI_Controller
         $data['fundraisers'] = $this->UserModel->get_cause_details();
 
         // Check if user is logged in using CodeIgniter session
-        $is_logged_in = $this->session->userdata('userId') !== null; // Check if userId is set
+        $is_logged_in = $this->session->userdata('Kanavu_userId') !== null; // Check if userId is set
         $data['is_logged_in'] = $is_logged_in;
 
         // Initialize an array to store active fundraisers
@@ -284,25 +300,6 @@ class kanavuhelp extends CI_Controller
 
         $this->load->view('donate', $data);
         $this->session->set_userdata("entry",1);
-    }
-
-    public function myhelps()
-    {
-        //if (!$this->session->userdata('userId')) {
-         //   redirect('login_modal1');
-
-         //   exit;
-      //  }
-
-        // Debugging: Check if the userId is available in the session
-        $user_id = $this->session->userdata('userId');
-        $this->load->model('UserModel');
-
-        // Fetch causes created or donated by the logged-in user
-        $data['causes'] = $this->UserModel->getCausesDonationByUserId($user_id);
-
-        // Load the view and pass the causes data
-        $this->load->view('myhelps.php', $data);
     }
 
     public function blogs()
@@ -353,7 +350,7 @@ class kanavuhelp extends CI_Controller
         $fundraiser_details->topdonars = $topdonars;
        // $fundraiser_details->topdonars15 = $topdonars15;
         $data['fundraiser'] = $fundraiser_details;
-        $data['is_logged_in'] = $this->session->userdata('userId') !== null;
+        $data['is_logged_in'] = $this->session->userdata('Kanavu_userId') !== null;
         $this->load->view('helpus', $data);
     }
 
@@ -418,8 +415,8 @@ class kanavuhelp extends CI_Controller
                 else{
                     $user = $login->row();
                     $userLoggedIn = array(
-                        'userId' => $user->id,
-                        'userName' => $user->name,
+                        'Kanavu_userId' => $user->id,
+                        'Kanavu_userName' => $user->name,
                     );
                     $this->session->set_userdata($userLoggedIn);
                     $this->session->set_userdata("entry",0);
@@ -511,8 +508,8 @@ class kanavuhelp extends CI_Controller
         $causeId = $this->session->userdata('currentCauseId');
         $response = $this->UserModel->store3($data,$causeId);
         $userLoggedIn = array(
-            'userId' => $this->session->userdata("currentUserId"),
-            'userName' => $this->session->userdata('userName'),
+            'Kanavu_userId' => $this->session->userdata("currentUserId"),
+            'Kanavu_userName' => $this->session->userdata('Kanavu_userName'),
         );
         $this->session->set_userdata($userLoggedIn);  
         $this->session->set_flashdata("logged_in", true);
@@ -571,11 +568,11 @@ class kanavuhelp extends CI_Controller
        
         $file_data = $this->upload->data();
 
-        $causeId = $this->session->userdata('userId');
+        $causeId = $this->session->userdata('Kanavu_userId');
         $response = $this->UserModel->store3($data,$causeId);
         $userLoggedIn = array(
-            'userId' => $this->session->userdata("currentUserId"),
-            'userName' => $this->session->userdata('userName'),
+            'Kanavu_userId' => $this->session->userdata("currentUserId"),
+            'Kanavu_userName' => $this->session->userdata('Kanavu_userName'),
         );
         // $this->session->set_userdata($userLoggedIn);  
         $this->session->set_flashdata("updatedindividualform", true);
@@ -599,7 +596,7 @@ class kanavuhelp extends CI_Controller
     public function user_causes()
 {
     // Check session for user ID
-    $user_id = $this->session->userdata('userId');
+    $user_id = $this->session->userdata('Kanavu_userId');
     
     if (!$user_id) {
         // Store the current URL (the 'myFundraisers' page) in the session
@@ -699,20 +696,33 @@ class kanavuhelp extends CI_Controller
 
     // Insert data into the database
     $this->db->insert('contact_us', $data);
+    $userEmail = $this->session->userdata('userEmail');
+    $to = "help.kanavu@gmail.com";
+   
+    $message = $data["message"];
 
+    $this->email->from('support@kanavu.help', 'Kanavu Help');
+    $this->email->to($to);
+    $this->email->subject('Kanavu Help Foundation');
+    $this->email->message($message);
+
+    if($this->email->send()) {
     // Set a success message
-    $this->session->set_flashdata('success', 'Thanks for contacting us!');
-
+        $this->session->set_flashdata('submitsuccessstatus', 'Thanks for contacting us!');
+    }
+    else {
+        $this->session->set_flashdata('submiterrorstatus', 'Unexpected error Occur!');
+    }
     // Redirect back to the homepage
-    redirect(base_url('/'));
+    redirect(base_url('/contactus'));
 }
 
 
     public function logout()
     {
         // Clear session data
-        $this->session->unset_userdata('userId');
-        $this->session->unset_userdata('userName');
+        $this->session->unset_userdata('Kanavu_userId');
+        $this->session->unset_userdata('Kanavu_userName');
         $this->session->unset_userdata("userEmail");
 
         // Redirect to the login page
@@ -723,12 +733,12 @@ class kanavuhelp extends CI_Controller
     public function profile()
     {
         // Check if user is logged in
-        if (!$this->session->userdata('userId')) {
+        if (!$this->session->userdata('Kanavu_userId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
 
         // Get user data from session
-        $userId = $this->session->userdata('userId');
+        $userId = $this->session->userdata('Kanavu_userId');
         $this->load->model('UserModel');
 
         // Fetch user data from the database
@@ -816,6 +826,7 @@ class kanavuhelp extends CI_Controller
         
         $causeData = [
             'category' => $this->input->post('category'),
+            'created_by' => $this->input->post('created_by'),
             'name' => $this->input->post('name'),
             'email' => $this->input->post('email'),
             'phone' => $this->input->post('phone'),
@@ -825,7 +836,7 @@ class kanavuhelp extends CI_Controller
         ];
         
         $userData = [
-            'name' => $this->input->post('name'),
+            'name' => $this->input->post('created_by'),
             'email' => $this->input->post('email'),
             'mobileNumber' => $this->input->post('phone'),
             'category' => 'user',
@@ -856,8 +867,8 @@ class kanavuhelp extends CI_Controller
             }
             else{
                 $userLoggedIn = array(
-                    'userId' => $user_id,
-                    'userName' => $user_name,
+                    'Kanavu_userId' => $user_id,
+                    'Kanavu_userName' => $user_name,
                 );
                 $this->session->set_userdata('currentCauseId', $user_id);
                 $this->session->set_userdata("userEmail",$email);
@@ -871,8 +882,8 @@ class kanavuhelp extends CI_Controller
             $this->db->insert('user', $userData);
             $userId = $this->db->insert_id();
             $userLoggedIn = array(
-                'userId' => $userId,
-                'userName' => $userData["name"],
+                'Kanavu_userId' => $userId,
+                'Kanavu_userName' => $userData["name"],
             );
             $this->session->set_userdata('currentUserId', $userId);
             $causeData["user_id"] = $userId;
@@ -898,4 +909,30 @@ class kanavuhelp extends CI_Controller
         redirect('/donate');
     }
 
+    public function fundraiserProfile() {
+        $user_id = $this->input->get("id");
+    
+        try {
+            // Attempt to retrieve fundraisers from the database
+            $fundraisers = $this->UserModel->get_user_causes($user_id);
+    
+            // Calculate days left for each fundraiser
+            foreach ($fundraisers as $fundraiser) {
+                $end_date = new DateTime($fundraiser->end_date);
+                $current_date = new DateTime();
+                $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
+                $fundraiser->days_left = $days_left;
+            }
+        } catch (Exception $e) {
+            // Handle the error if the database cannot be reached
+            log_message('error', 'Database error: ' . $e->getMessage());
+            show_404(); // Display a 404 error page
+            return;
+        }
+    
+        // Load the view with data if everything is successful
+        $this->load->view('fundraiserprofile', array("fundraisers"=>$fundraisers));
+    }
+
 }
+?>

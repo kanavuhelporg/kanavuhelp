@@ -919,7 +919,7 @@
               <img src="<?php echo base_url('/assets/img/startyourfund.jpg'); ?>"
                 alt="no img"
                 class="img-fluid"
-                style="max-width: 100%; height: auto; border-radius: 50%;">
+                style="max-width: 100%; height: auto;border-radius:50%;">
             </div>
           </div>
           <!-- Right Column for Form -->
@@ -978,6 +978,14 @@
                         <i class="fas fa-chevron-down custom-dropdown-icon"></i>
                       </div>
                       <span id="category-error" class="text-danger"></span>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="created_by" class="col-sm-4 col-form-label">Created by:<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="text" id="created_by" name="created_by" class="form-control my-2" placeholder="Created_by" required>
+                      <span id="created_by_error" class="text-danger"></span>
                     </div>
                   </div>
 
@@ -1353,12 +1361,14 @@
 
     function stepOnevalidation(){
        let category = document.forms["causeStep1"]["category"].value.trim();
+       let created_by = document.forms["causeStep1"]["created_by"].value.trim();
        let name = document.forms["causeStep1"]["name"].value.trim();
        let age = document.forms["causeStep1"]["age"].value.trim();
        let location = document.forms["causeStep1"]["location"].value.trim();
        let email = document.forms["causeStep1"]["email"].value.trim();
        let phone = document.forms["causeStep1"]["phone"].value.trim();
        const categoryerrorElement = document.getElementById("category-error");
+       const createdbyerrorElement = document.getElementById("created_by_error");
        const nameerrorElement = document.getElementById("name-error");
        const ageerrorElement = document.getElementById("age-error");
        const locationerrorElement = document.getElementById("location-error");
@@ -1373,6 +1383,14 @@
        if(category == ""){
         return false;          
        }
+
+       if(created_by == "" || !created_by.match(validatename)){
+          createdbyerrorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
+          return false;
+        }
+        else{
+          createdbyerrorElement.textContent = ""
+        }
         
         if(name == "" || !name.match(validatename)){
           nameerrorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
@@ -1520,6 +1538,7 @@
       // Validation Handlers
       const validationHandlers = {
         category: validateCategory,
+        created_by: validateCreatedby,
         name: validateName,
         age: validateAge,
         location: validateLocation,
@@ -1588,6 +1607,25 @@
         }
         }
 
+        function validateCreatedby() {
+        const nameInput = document.getElementById("created_by").value.trim();
+        const errorElement = document.getElementById("created_by_error");
+        const nameRegex = /^([A-Za-z\s'-]{1,49})+$/;
+        if (!nameInput) {
+          errorElement.textContent = "Enter your name.";
+          return false;
+        } else{
+            if(!nameInput.match(nameRegex)){
+            errorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
+            return false;
+            }
+            else{
+            errorElement.textContent = "";
+            return true;
+            }
+        }
+        }   
+
       function validateAge() {
         const age = parseInt(document.getElementById("age").value, 10);
         const errorElement = document.getElementById("age-error");
@@ -1641,8 +1679,8 @@
         const amount = document.getElementById("amount").value.trim();
         const errorElement = document.getElementById("amount-error");
 
-        if (!amount || isNaN(amount) || parseFloat(amount) <= 10) {
-          errorElement.textContent = "Amount must be greater than 10.";
+        if (!amount || isNaN(amount) || parseFloat(amount) <= 1000) {
+          errorElement.textContent = "Amount must be greater than 1000.";
           return false;
         }
         errorElement.textContent = "";
