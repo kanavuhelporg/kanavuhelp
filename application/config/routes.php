@@ -69,6 +69,7 @@ $route['abouts'] = 'kanavuhelp/abouts';
 $route['logout'] = 'kanavuhelp/logout';
 $route['adminlogout'] = 'admin/adminlogout';
 $route['helpus/(:any)-(:num)'] = 'kanavuhelp/helpus/$2/$1';
+$route['indexpage'] = 'kanavuhelp/indexpage';
 $route['processDonation'] = 'kanavuhelp/processDonation';
 $route['myFundraisers'] = 'kanavuhelp/user_causes';
 $route['myDonations'] = 'donors/mydonations';
@@ -110,3 +111,4 @@ $route['helpus/fetchDonordata'] = 'donors/fetchDonordata';
 $route['donorLogin'] = 'donors/donorLogin';
 $route['donor_otp_email'] = 'donors/donor_otp_email';
 $route['filterCauses'] = 'donations/filterCauses';
+

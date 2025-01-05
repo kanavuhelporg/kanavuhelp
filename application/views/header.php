@@ -73,7 +73,7 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-            <li class="nav-item"><a id="myhelpspage" class="nav-link" href="<?= base_url('/myhelps') ?>">My helps</a></li>
+           <!--  <li class="nav-item"><a id="myhelpspage" class="nav-link" href="<?= base_url('/myhelps') ?>">My helps</a></li> -->
             <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
             <li class="nav-item">
               <a id="individualpage" class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
@@ -92,6 +92,9 @@
                     </li> -->
             <li class="nav-item">
               <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
             </li>
           </ul>
           <div class="d-flex align-items-center ms-auto">

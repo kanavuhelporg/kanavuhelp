@@ -772,7 +772,7 @@ function shareCause(url, title, imgurl) {
 </script>
     <div class="row mt-4" >
     <!-- Created by Section -->
-    <div class="col-md-3 col-sm-12justify-content-start d-flex  mb-3 mb-md-0" >
+    <div class="col-md-3 col-sm-12 justify-content-start d-flex  mb-3 mb-md-0" >
         <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px; ">
             <p style="margin: 0;">Created by</p>
             <strong style="font-size: 14px;"><a style="color:black;" href="fundraiserprofile?id=<?=$fundraiser->user_id?>"><?= htmlspecialchars($fundraiser->created_by) ?></a></strong>

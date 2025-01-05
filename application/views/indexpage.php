@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <style>
-         body {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanavu_help</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ 
+  <style>
+    body {
       font-family: 'Sen', sans-serif;
     }
 
@@ -257,47 +258,112 @@
   }
 }
 
-    </style>
+  </style>
 </head>
+
 <body>
-
-    <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+  <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     
-    </nav>
+  </nav>
+  <div class="donate_img mt-5 pt-4 position-relative">
+  <img src="<?= base_url('assets/img/myfundraiser_ptrst.jpg') ?>" style="width: 100%; height: 400px;">
+  <div id="typeeffectcontainer" style="width:50%;position:absolute;top:25%;left:25%;" class="d-flex flex-column justify-content-center">
+    <span id="typingquotes" class="text-center h1"></span>
+    <p class="text-center">"Every act of kindness holds the power to transform lives. Together, through dedication and support, we can turn dreams into realities.
+    "</p>
+  </div>
+  </div>
+ 
+  <div class="container-fluid d-flex justify-content-center py-4"> 
+  <div class="row col-md-6 justify-content-between">
+  <div class="col-md-3"><a style="text-decoration:none;" href="<?=base_url("/profile")?>" class="h3 fw-bold">Profile</a></div>
+  <div class="col-md-3"><a style="text-decoration:none;" href="<?=base_url("/myhelps")?>" class="h3 fw-bold">Donations</a></div>
+  <div class="col-md-3"><a style="text-decoration:none;" href="<?=base_url("/myFundraisers")?>" class="h3 fw-bold">Fundraising</a></div>
+  </div>
+  </div>
 
-    <div class="container mt-5">
-        <h2>Profile Page</h2>
-
-        <?php if ($this->session->flashdata('error')): ?>
-            <div class="alert alert-danger">
-                <?= $this->session->flashdata('error'); ?>
-            </div>
-        <?php endif; ?>
-
-        <div class="card" style="width:400px;">
-            <div class="card-body">
-                <h3>Welcome, <?= htmlspecialchars($user['name']); ?></h3>
-                <p>Email: <?= htmlspecialchars($user['email']); ?></p>
-                <p>Location: <?= htmlspecialchars($user['location']); ?></p>
-                <a href="<?= base_url('profile_edit') ?>" class="btn btn-warning">Edit Profile</a>
-            </div>
-        </div>
-
-        <a href="<?= base_url('kanavuhelp/logout'); ?>" class="btn btn-danger">Logout</a>
-    </div>
-
-    <!-------------------------footer------------------>
+<!-------------------------footer------------------>
   <div id="footer">
     
+  </div>
+<!------------------------footer-end--------------->
+
+<!---------------loggin-modal---------------------->
+<?php if($this->session->flashdata("logged_in")) :?>
+  <script>
+      window.onload = function() {
+        let myModal = new bootstrap.Modal(document.getElementById("loggin"), {
+          backdrop: 'static',
+          keyboard: false
+        });
+        myModal.show();
+      };
+    </script>
+
+<div id="loggin" class="modal fade show">
+    <div class="modal-dialog">
+        <div class="modal-content">
+           <div class="modal-header">
+              <span class="h5 text-danger">Welcome ! <span class="text-success"><?=$this->session->userdata("userName");?></span></span> 
+              <button data-bs-dismiss="modal" class="btn btn-close"></button>              
+           </div>
+           <div class="modal-body">
+              <p class="text-muted">Your verification process is underway. We will notify you once it is successfully completed.</p>
+           </div>
+           <div class="p-3">
+           <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
+           </div>
+        </div>
     </div>
-  <!------------------------footer-end--------------->
-</body>
+</div>
+<?php endif; ?>
+
+
+<!---------------login-modal-end---------------------->
+
+<!---------------updated-modal---------------------->
+<?php if($this->session->flashdata("updatedindividualform")) :?>
+  <script>
+      window.onload = function() {
+        let myModal = new bootstrap.Modal(document.getElementById("updated"), {
+          backdrop: 'static',
+          keyboard: false
+        });
+        myModal.show();
+      };
+    </script>
+
+<div id="updated" class="modal fade show">
+    <div class="modal-dialog">
+        <div class="modal-content">
+           <div class="modal-header">
+              <span class="h5 text-danger">Success ! <span class="text-success"><?=$this->session->userdata("userName");?></span></span> 
+              <button data-bs-dismiss="modal" class="btn btn-close"></button>              
+           </div>
+           <div class="modal-body">
+              <p class="text-muted">Update form successfully submitted. We will inform you after verification is complete.</p>
+           </div>
+           <div class="p-3">
+           <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
+           </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+
+<!---------------updated-modal-end---------------------->
 <script>
-    $.ajax({
+  $.ajax({
       type:"get",
       url:"kanavuhelp/getHeader",
       success:(result)=>{
            document.getElementById("header").innerHTML = result;
+           let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
+           console.log(entry);
+           if(entry > 0){
+           document.getElementById("myfrpage").classList.add("text-danger");
+           }
       },
       error:(error)=>{
            document.getElementById("header").innerHTML = "";
@@ -314,7 +380,27 @@
            document.getElementById("footer").innerHTML = "";
       }
     }); 
+
+    var i = 0;
+    var txt = 'Together, we have the power to make a balance.';
+    var speed = 100;
+
+    typeWriter();
+
+    function typeWriter(){  
+    if (i < txt.length) {
+    document.getElementById("typingquotes").innerHTML += txt.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+    }
+   }
+
+   /* document.getElementById("typeeffectcontainer").innerHTML += `<p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements."</p>`; */
 </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Bootstrap JS and dependencies (Popper.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

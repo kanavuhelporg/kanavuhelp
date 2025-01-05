@@ -44,7 +44,17 @@ class DonorprofileModel extends CI_Model {
 	}  
 
   public function getMydonations($donor_id) {
-      $getdonations = $this->db->query("SELECT * FROM individualform.*,donation_for_cause.* FROM individualform LEFT JOIN donation_for_cause ON individualform.id = donation_for_cause.donor_id WHERE individualform.id = ");
+      $getdonations = $this->db->query("SELECT * FROM individualform.*,donation_for_cause.* FROM individualform LEFT JOIN donation_for_cause ON individualform.id = donation_for_cause.donor_id WHERE individualform.id = $donor_id");
+  }
+
+  public function registerAsdonor($causeData) {
+      $registerasdonor = $this->db->query("INSERT INTO donor_profiles (Donor_id,Name,Phonenumber,Location,Email_id) VALUES('$causeData[cause_id]','$causeData[name]','$causeData[phone]','$causeData[location]','$causeData[email]')");
+      if(!$registerasdonor) {
+        return false;
+      }
+      else{
+        return true;
+      }
   }
 }
 

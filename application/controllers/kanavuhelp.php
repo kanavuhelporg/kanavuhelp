@@ -65,6 +65,13 @@ class kanavuhelp extends CI_Controller
         $this->session->set_userdata("entry",1);
     }
 
+    public function indexpage() {
+        if(!$this->session->userdata("Kanavu_userId")){
+            redirect("login");
+        }
+        $this->load->view("indexpage");   
+    }
+
     public function kanavuhome()
     {
         $this->load->view('kanavuhome.php');
@@ -420,7 +427,7 @@ class kanavuhelp extends CI_Controller
                     );
                     $this->session->set_userdata($userLoggedIn);
                     $this->session->set_userdata("entry",0);
-                    redirect(base_url('/'));
+                    redirect(base_url('indexpage'));
                     $this->session->unset_userdata("userEmail");
                 }
         }
@@ -890,7 +897,9 @@ class kanavuhelp extends CI_Controller
             $this->session->set_userdata('form_selected_text', $this->input->post('category'));
             $this->session->set_userdata('userEmail', $email);
             $this->db->insert('individualform', $causeData);
-            // $causeId = $this->db->insert_id();
+            $causeId = $this->db->insert_id();
+            $causeData['cause_id'] = $causeId;
+            $this->DonorprofileModel->registerAsdonor($causeData);
             $this->session->set_userdata('currentCauseId', $userId);
             $this->session->set_userdata($userLoggedIn);     
             redirect("/send"); 
