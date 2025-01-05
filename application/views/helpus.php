@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1224,3 +1225,5 @@ function setCauseId(causeId) {
     </html>
     
 
+=======
+>>>>>>> 03d6fe0c1a0ff5b2df9338faa5046aae5a68d486
