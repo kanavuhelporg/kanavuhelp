@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -399,7 +398,6 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-          <li class="nav-item"><a id="myhelpspage" class="nav-link" href="<?= base_url('/myhelps') ?>">My helps</a></li>
           <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
             <li class="nav-item dropdown">
                <a class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start A Fundraiser</a>
@@ -408,9 +406,7 @@
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>" style="color:rgba(235, 45, 50, 1)">Donate</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
-            </li>
+            
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section'); ?>">How it works</a>
             </li>
@@ -419,6 +415,9 @@
             </li> -->
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
             </li>
           </ul><br>
           <div class="d-flex align-items-center ms-auto">
@@ -1067,11 +1066,11 @@ function setCauseId(causeId) {
         else{
           let existdonor = JSON.parse(result);
            document.getElementById("error7").innerHTML = "";
-           document.getElementById("name").value = existdonor.Name;
+           document.getElementById("name").value = existdonor.name;
            document.getElementById("name").setAttribute("readonly","readonly");
-           document.getElementById("donorcity").value = existdonor.Location;
+           document.getElementById("donorcity").value = existdonor.location;
            document.getElementById("donorcity").setAttribute("readonly","readonly");
-           document.getElementById("phone").value = existdonor.Phonenumber;
+           document.getElementById("phone").value = existdonor.mobileNumber;
            document.getElementById("phone").setAttribute("readonly","readonly");
            clearTimeout(fetchingtimeout);
         }
@@ -1225,5 +1224,3 @@ function setCauseId(causeId) {
     </html>
     
 
-=======
->>>>>>> 03d6fe0c1a0ff5b2df9338faa5046aae5a68d486

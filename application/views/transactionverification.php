@@ -675,7 +675,7 @@ document.getElementById('verificationlist').innerHTML = error;
 } 
 
 
-function setUrl(donation){
+function setUrl(donation) {
 
   document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${donation.email}</span>`;
         document.getElementById("transactionstatus").innerHTML = "";

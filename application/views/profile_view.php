@@ -265,7 +265,7 @@
     
     </nav>
 
-    <div class="container mt-5">
+    <div class="container mt-5 pb-3">
         <h2>Profile Page</h2>
 
         <?php if ($this->session->flashdata('error')): ?>
@@ -273,17 +273,27 @@
                 <?= $this->session->flashdata('error'); ?>
             </div>
         <?php endif; ?>
+        <div>
+        <h3>Welcome, <?= htmlspecialchars($user['name']) ?></h3>
+        
+        <div class="card">
+        <img src="<?= base_url('/assets/img/images.jpeg') ?>" style="height:300px;" alt="Profile Image">
 
-        <div class="card" style="width:400px;">
             <div class="card-body">
-                <h3>Welcome, <?= htmlspecialchars($user['name']); ?></h3>
-                <p>Email: <?= htmlspecialchars($user['email']); ?></p>
-                <p>Location: <?= htmlspecialchars($user['location']); ?></p>
-                <a href="<?= base_url('profile_edit') ?>" class="btn btn-warning">Edit Profile</a>
+            
+                <table class="container-fluid table-borderless fs-4">
+                                                                                                                      
+                  <tr><th>Email </th><td>:</td><td><?= htmlspecialchars($user['email']); ?></td></tr>
+                  <tr><th>Location </th><td>:</td><td><?= htmlspecialchars($user['location']); ?></td></tr>
+                  <tr><th>Age </th><td>:</td><td><?= htmlspecialchars($user['age']); ?></td></tr>
+                  <tr><th>Mobile No</th><td>:</td><td><?= htmlspecialchars($user['mobileNumber']); ?></td></tr>
+                  <tr><td colspan="2"><a href="#" onclick="setUpdatedetails('<?=$user['id']?>','<?=$user['name']?>','<?=$user['email']?>','<?=$user['age']?>','<?=$user['location']?>','<?=$user['mobileNumber']?>')" data-bs-toggle="modal" data-bs-target="#updateprofile" class="btn btn-warning fw-bold">Edit Profile</a></td></tr>
+                </table>
+            </div>
             </div>
         </div>
 
-        <a href="<?= base_url('kanavuhelp/logout'); ?>" class="btn btn-danger">Logout</a>
+        <a href="<?= base_url('kanavuhelp/logout'); ?>" class="btn btn-danger mt-3">Logout</a>
     </div>
 
     <!-------------------------footer------------------>
@@ -291,6 +301,103 @@
     
     </div>
   <!------------------------footer-end--------------->
+
+
+  <!----------------------update-profile---------------->
+    <div id="updateprofile" class="modal">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+              <h4 class="text-danger">Update Profile</h4>  
+              <button class="btn btn-close" data-bs-backdrop="static" data-bs-keyboard="false" data-bs-dismiss="modal"></button>
+             </div>
+             <div class="modal-body">
+             <form id="causeStep1" name="causeStep1" method="post" action="<?= base_url('profile/updateUser') ?>" enctype="multipart/form-data">
+                
+                  <h2>Basic Details</h2>
+                  <input type="text" hidden id="userId" name="userId" class="form-control my-2" placeholder="Name of beneficiary" required>
+                  <div class="form-group row">
+                    <label for="name" class="col-sm-4 col-form-label">Name<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="text" id="name" name="name" class="form-control my-2" placeholder="Name of beneficiary" required>
+                      <span id="name-error" class="text-danger"></span>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="email" class="col-sm-4 col-form-label">Mail Id:<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="email" id="email" name="email" class="form-control my-2" placeholder="Mail Id*" readonly required>
+                      <span id="email-error" class="text-danger"></span>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="age" class="col-sm-4 col-form-label">Age of beneficiary:<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="number" id="age" name="age" class="form-control my-2" placeholder="Age of beneficiary" required>
+                      <span id="age-error" class="text-danger"></span>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="location" class="col-sm-4 col-form-label">Location:<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="text" id="location" name="location" class="form-control my-2" placeholder="Location" required>
+                      <span id="location-error" class="text-danger"></span>
+                    </div>
+                  </div>
+                 
+                  <div class="form-group row">
+                    <label for="phone" class="col-sm-4 col-form-label">Phone Number:<span class="text-danger">*</span></label>
+                    <div class="col-sm-8">
+                      <input type="tel" id="phone" name="phone" class="form-control my-2" placeholder="Phone Number*" required>
+                      <span id="phone-error" class="text-danger"></span>
+                    </div>
+                  </div>
+
+                  <div class="text-center mt-3">
+                    <button type="submit" id="continueToStep2" class="btn btn-danger no-hover">Update</button>
+                  </div>
+                </form>
+
+             </div>
+           </div>
+         </div>
+    </div>
+  <!----------------------update-profile-end------------>
+
+  <!----------------------update-status----------------->
+
+    
+       <script>
+            let updatemodal = new bootstrap.Modal(document.getElementById("updateprofilestatus"),{
+            backdrop:"static",
+            keyboard:false
+           });
+           updatemodal.show();
+           document.getElementById("updatestatus").innerHTML = "<?php $_SESSION['updatestatus'];?>";
+           
+       </script>
+       <!-- <?php $this->session->unset_userdata("updatestatus");?> -->
+       <div id="updateprofilestatus" class="modal fade">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+              <h4 class="text-danger">Update status</h4>  
+              <button class="btn btn-close" data-bs-backdrop="static" data-bs-keyboard="false" data-bs-dismiss="modal"></button>
+             </div>
+             <div id="updatestatus" class="modal-body">
+               
+             </div>
+           </div>
+         </div>
+    </div>
+    
+
+    
+  <!----------------------update-status-end------------->
+
 </body>
 <script>
     $.ajax({
@@ -314,6 +421,16 @@
            document.getElementById("footer").innerHTML = "";
       }
     }); 
+
+    function setUpdatedetails(id,name,email,age,location,mobileno) {
+        console.log(id,name,email,age,location,mobileno)
+       document.getElementById("userId").value = id;
+       document.getElementById("name").value = name;
+       document.getElementById("email").value = email;
+       document.getElementById("age").value = age;
+       document.getElementById("location").value = location;
+       document.getElementById("phone").value = mobileno;
+    }
 </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -12,14 +12,14 @@ class Profile extends CI_Controller {
     }
 
     public function viewProfile() {
-        $userId = $this->session->userdata('user_id');
+        $userId = $this->session->userdata('Kanavu_userId');
         if (!$userId) {
             redirect('login'); // Redirect to login if not logged in
         }
 
-        $data['user'] = $this->Profile_model->getUserById($userId);
+        $user = $this->Profile_model->getUserById($userId);
 
-        $this->load->view('profile_view', $data);
+        $this->load->view('profile_view', array("user"=>$user));
     }
 
     public function editProfile() {
@@ -54,6 +54,27 @@ class Profile extends CI_Controller {
                 $this->session->set_flashdata('error', 'Failed to update profile. Please try again.');
                 redirect('profile/editProfile');
             }
+        }
+    }
+
+    public function updateUser() {
+        if(!$this->session->userdata("Kanavu_userId")) {
+            redirect("login");
+        }
+        $userId = $this->input->post("userId");
+        $name = $this->input->post("name");
+        $age = $this->input->post("age");
+        $location = $this->input->post("location");
+        $phoneno = $this->input->post("phone");
+
+        $updateUser = $this->Profile_model->updateUserprofile($userId,$name,$age,$location,$phoneno);
+        if(!$updateUser) {
+            // $this->session->set_userdata("updatestatus","Unexpected error occur please try again");
+            redirect("profile_view");
+        }
+        else {
+            // $this->session->set_userdata("updatestatus","Successfully updated");
+            redirect("profile_view");
         }
     }
 }

@@ -276,7 +276,7 @@
  
   <div class="container-fluid d-flex justify-content-center py-4"> 
   <div class="row col-md-6 justify-content-between">
-  <div class="col-md-3"><a style="text-decoration:none;" href="<?=base_url("/profile")?>" class="h3 fw-bold">Profile</a></div>
+  <div class="col-md-3"><a style="text-decoration:none;" href="<?=base_url("/profile_view")?>" class="h3 fw-bold">Profile</a></div>
   <div class="col-md-3"><a style="text-decoration:none;" href="<?=base_url("/myhelps")?>" class="h3 fw-bold">Donations</a></div>
   <div class="col-md-3"><a style="text-decoration:none;" href="<?=base_url("/myFundraisers")?>" class="h3 fw-bold">Fundraising</a></div>
   </div>

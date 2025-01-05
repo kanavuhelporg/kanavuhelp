@@ -101,7 +101,5 @@ class Donations extends CI_Controller {
       }
       $this->session->set_userdata("fundraisers",$fundraisers);
       }
-
-      
     }    
 ?>

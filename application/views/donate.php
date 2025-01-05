@@ -355,7 +355,9 @@
       height:466px;
       /* Make the card width responsive */
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
-     
+    }
+    .category-buttons {
+      flex-direction:column;
     }
   }
   .custom-dropdown {
@@ -425,7 +427,7 @@
   </div> -->
   <h1>Select a Category</h1>
   <div class="d-flex justify-content-center pb-3">
-  <div class="col-md-5 d-flex justify-content-evenly">
+  <div style="row-gap:10pyx;" class="col-md-5 d-flex justify-content-evenly">
     <!-----------onclick="location.href='<?php echo site_url('data/fetch/medical'); ?>'"------->
     <button class="rounded-pill bg-white px-3 py-1 px-4 focus-change category-not-active" onclick="filterCauseswithcategory('All',0)">All</button>
     <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Medical',1)">Medical</button>
@@ -739,7 +741,7 @@ function shareCause(url, title, imgurl) {
   <form id="donationForm" method="POST" Autocomplete="off" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
   <!-- Hidden fields to store cause ID and user ID -->
   <input type="hidden" name="cause_id" id="cause_id" value="">
-  <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
+  <input type="hidden" name="user_id" id="user_id" value="">
 
   <!-- Donation Form Fields -->
   <div class="text-center">
@@ -955,6 +957,7 @@ function shareCause(url, title, imgurl) {
       url:"donors/fetchDonordata",
       data:{"email":emailid},
       success:(result)=>{
+        console.log(result)
         let fetchingtimeout = "";
         if(result.trim() == "notexist") {
           document.getElementById("name").value = "";
@@ -970,12 +973,13 @@ function shareCause(url, title, imgurl) {
         } 
         else{
           let existdonor = JSON.parse(result);
-          document.getElementById("error7").innerHTML = "";
-           document.getElementById("name").value = existdonor.Name;
+           document.getElementById("user_id").value = existdonor.id;
+           document.getElementById("error7").innerHTML = "";
+           document.getElementById("name").value = existdonor.name;
            document.getElementById("name").setAttribute("readonly","readonly");
-           document.getElementById("donorcity").value = existdonor.Location;
+           document.getElementById("donorcity").value = existdonor.location;
            document.getElementById("donorcity").setAttribute("readonly","readonly");
-           document.getElementById("phone").value = existdonor.Phonenumber;
+           document.getElementById("phone").value = existdonor.mobileNumber;
            document.getElementById("phone").setAttribute("readonly","readonly");
            clearTimeout(fetchingtimeout);
         }

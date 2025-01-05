@@ -78,12 +78,15 @@ class kanavuhelp extends CI_Controller
     }
 
     public function register()
-    {
+    { 
         $this->load->view('register.php');
     }
 
     public function login()
     { 
+        if($this->session->userdata("Kanavu_userId")){
+            redirect("indexpage");
+           }
         $this->load->view('login');
     }
 
@@ -232,21 +235,10 @@ class kanavuhelp extends CI_Controller
             return; // Redirect to the donation page or any relevant page
         }
         // Prepare data to insert
-        $donor_id = "";
-        $checkdonorexist = $this->UserModel->checkDonorexist($emailid);
-        if($checkdonorexist->num_rows() < 1) {
-            $register_donor = $this->UserModel->registerDonor($name,$phoneno,$city,$emailid);
-            $donor_id = $this->db->insert_id();
-        } 
-        else{
-            $getdonorid = $checkdonorexist->row();
-            $donor_id = $getdonorid->Donor_id;
-        }
-
         $data = array(
             'cause_id' => $cause_id,
             'user_id' => $user_id,
-            'donor_id' => $donor_id,
+            'donor_id' => $user_id,
             'amount' => $amount,
              'name' => $name,
              'donor_location' => $city,
@@ -262,6 +254,17 @@ class kanavuhelp extends CI_Controller
             'fundraiser_phone' => $fundraiser_phone 
         );
 
+        $newuser = array(
+            "name" => $name,
+            "email" => $emailid,
+            "mobileNumber" => $phoneno,
+            "location" => $city
+        );
+
+        $checkregister = $this->UserModel->checkUserexist($emailid);
+        if($checkregister->num_rows() == 0){
+            $this->db->insert('user', $newuser);
+        }
         // Call the model function to save the donation
         if ($this->UserModel->saveDonation($data)) {
             // $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
@@ -846,6 +849,8 @@ class kanavuhelp extends CI_Controller
             'name' => $this->input->post('created_by'),
             'email' => $this->input->post('email'),
             'mobileNumber' => $this->input->post('phone'),
+            'age' => $this->input->post('age'),
+            'location' => $this->input->post('location'),
             'category' => 'user',
         ];
 
@@ -899,7 +904,7 @@ class kanavuhelp extends CI_Controller
             $this->db->insert('individualform', $causeData);
             $causeId = $this->db->insert_id();
             $causeData['cause_id'] = $causeId;
-            $this->DonorprofileModel->registerAsdonor($causeData);
+            // $this->DonorprofileModel->registerAsdonor($causeData);
             $this->session->set_userdata('currentCauseId', $userId);
             $this->session->set_userdata($userLoggedIn);     
             redirect("/send"); 

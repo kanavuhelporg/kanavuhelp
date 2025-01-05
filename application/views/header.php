@@ -81,9 +81,9 @@
             <li class="nav-item">
               <a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
             <a id="myfrpage" class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
             </li>
