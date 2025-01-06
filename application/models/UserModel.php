@@ -315,10 +315,10 @@ class UserModel extends CI_Model
 
 	public function filterCauseswithcategory($category) {
 		if($category == "All") {
-		  $getcauses = $this->db->query("SELECT * FROM individualform");
+		  $getcauses = $this->db->query("SELECT * FROM individualform WHERE verified = 1");
 		}
 		else{
-		  $getcauses = $this->db->query("SELECT * FROM individualform WHERE category = '$category'");
+		  $getcauses = $this->db->query("SELECT * FROM individualform WHERE category = '$category' AND verified = 1");
 		}
 		
 		return $getcauses->result();

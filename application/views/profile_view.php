@@ -293,7 +293,7 @@
             </div>
         </div>
 
-        <a href="<?= base_url('kanavuhelp/logout'); ?>" class="btn btn-danger mt-3">Logout</a>
+       <!--  <a href="<?= base_url('kanavuhelp/logout'); ?>" class="btn btn-danger mt-3">Logout</a> -->
     </div>
 
     <!-------------------------footer------------------>

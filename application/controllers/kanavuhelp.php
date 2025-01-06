@@ -261,9 +261,20 @@ class kanavuhelp extends CI_Controller
             "location" => $city
         );
 
+        $individualdata = array(
+            "name" => $name,
+            "email" => $emailid,
+            "phone" => $phoneno,
+            "location" => $city
+        );
+
         $checkregister = $this->UserModel->checkUserexist($emailid);
         if($checkregister->num_rows() == 0){
             $this->db->insert('user', $newuser);
+            $newid = $this->db->insert_id();
+            $individualdata["user_id"] = $newid;
+            $data["user_id"] = $newid;
+            $this->db->insert('individualform', $individualdata);
         }
         // Call the model function to save the donation
         if ($this->UserModel->saveDonation($data)) {

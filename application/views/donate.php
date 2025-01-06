@@ -552,6 +552,7 @@ $.ajax({
       url:"donations/filterCauses",
       data:{"category":category},
       success:(result)=>{
+        console.log(result)
          allFundraisers = <?=json_encode($this->session->userdata("fundraisers"))?>;
          currentIndex = 3;
          document.getElementById("fundraiserCards").innerHTML = result;

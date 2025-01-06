@@ -32,13 +32,14 @@ class DonorprofileModel extends CI_Model {
             redirect("/");
         }
         
-        $getcauseid = $this->db->query("SELECT DISTINCT donation_for_cause.user_id,donation_for_cause.cause_id,user.id FROM user LEFT JOIN donation_for_cause ON user.id = donation_for_cause.user_id WHERE user.id = $user_id");
+        $getcauseid = $this->db->query("SELECT DISTINCT donation_for_cause.user_id,donation_for_cause.cause_id,user.id FROM user LEFT JOIN donation_for_cause ON donation_for_cause.user_id = user.id WHERE donation_for_cause.user_id = $user_id");
 
-        $result = "";
+         $result = "";
         if($getcauseid->num_rows() > 0) {
           $getid = $getcauseid->row();
-          $user_id = $getid->id;
-          $result = $this->db->query("SELECT donation_for_cause.status,donation_for_cause.amount, individualform.id,individualform.name,individualform.cover_image,individualform.cause_heading FROM donation_for_cause LEFT JOIN individualform ON donation_for_cause.user_id = individualform.user_id WHERE donation_for_cause.user_id = $user_id");
+          $user_id = $getid->user_id;
+          $cause_id = $getid->cause_id;
+          $result = $this->db->query("SELECT donation_for_cause.status,donation_for_cause.user_id, donation_for_cause.amount, individualform.id,individualform.name,individualform.cover_image,individualform.cause_heading FROM donation_for_cause LEFT JOIN individualform ON donation_for_cause.cause_id = individualform.id WHERE donation_for_cause.user_id = $user_id AND donation_for_cause.cause_id = $cause_id;");
           return $result->result();
         }
 	}  

@@ -298,7 +298,7 @@
         
       <a href="<?=base_url('helpus/' .str_replace(' ','-', $cause->name).'-'. $cause->id ) ?>" style="text-decoration:none;color:black;">
           
-      <div class="card mb-3">
+      <div <?php if(empty($cause->end_date)) {echo 'hidden';}?> class="card mb-3">
             <!-- Use img-fluid and custom inline styles for width and height -->
             <img style="min-width:250px;max-width:500px;height:400px;" src="<?= base_url('assets/individualform_img/') . htmlspecialchars($cause->cover_image, ENT_QUOTES) ?>" class="p-2" alt="...">
 
