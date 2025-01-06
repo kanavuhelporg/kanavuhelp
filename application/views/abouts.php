@@ -394,9 +394,9 @@
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
             <a id="myfrpage" class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
-            </li>
+            </li> -->
                     <!-- <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>" style="color: rgba(235, 45, 50, 1)">My Helps</a>
                     </li> -->

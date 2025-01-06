@@ -347,6 +347,11 @@
   #userProfile .dropdown-item {
     text-align: center; /* Center-align items for better UX */
   }
+
+  .category-buttons {
+    flex-direction:column;
+
+  }
 }
 @media (min-width: 769px) and (max-width: 989px)
   {
@@ -355,9 +360,6 @@
       height:466px;
       /* Make the card width responsive */
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
-    }
-    .category-buttons {
-      flex-direction:column;
     }
   }
   .custom-dropdown {
@@ -397,10 +399,10 @@
     
 </nav>
   <div class="donate_img mt-5 pt-4">
-  <picture>
+  <!-- <picture>
   <source media="(max-width:768px)" srcset="<?=base_url('assets/img/formobilethree.png')?>">
   <img src="<?=base_url('assets/img/donate_one.png')?>" width="100%">
-  </picture>
+  </picture> -->
     
   </div>
   <div class="handwithheart_img text-center">
@@ -427,7 +429,7 @@
   </div> -->
   <h1>Select a Category</h1>
   <div class="d-flex justify-content-center pb-3">
-  <div style="row-gap:10pyx;" class="col-md-5 d-flex justify-content-evenly">
+  <div style="row-gap:10px;display:flex;justify-content:space-evenly;" class="category-buttons col-md-5">
     <!-----------onclick="location.href='<?php echo site_url('data/fetch/medical'); ?>'"------->
     <button class="rounded-pill bg-white px-3 py-1 px-4 focus-change category-not-active" onclick="filterCauseswithcategory('All',0)">All</button>
     <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Medical',1)">Medical</button>
