@@ -726,7 +726,7 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-          <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
+          
           <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
             <li class="nav-item">
               <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
@@ -734,9 +734,9 @@
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
             <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
             </li>
@@ -745,6 +745,9 @@
                     </li> -->
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
             </li>
           </ul>
           <div class="d-flex align-items-center ms-auto">
@@ -783,30 +786,20 @@
   </div>
         <h2>INTRODUCTION</h2>
         <h5><strong>Welcome to Kanavu’s "Privacy Notice."</strong></h5>
-        <p>Kanavu respects your privacy and is committed to protecting your personal data. This Privacy Notice will inform you 
-          about how we look after your personal data when you visit our website (regardless of where you visit it from) 
-          and about your privacy rights and how the law protects you.</p>
-        <p>This Privacy Notice applies to all/any users accessing or availing of the services on the Platform. Please also use the 
-            Glossary to understand the meaning of some of the terms used in this privacy notice.</p>
+        <p>Kanavu respects your privacy and is committed to protecting your personal data. This Privacy Policy notice explains how we handle your personal data when you visit our website (regardless of where you visit it from) and outlines your privacy rights and how the law protects you.</p>
+        <p>This policy notice applies to all/any users accessing or using services on the Platform. Please refer to the Glossary at the end for definitions of key terms used in this document.</p>
 
         <h4>1.	WHO WE ARE</h4>
         <ul>
             <strong>a.	The Purpose of This Privacy Notice</strong> 
-              <ul><li>This Privacy Notice provides information on how Kanavu collects and processes your personal data through your use of 
-                the Kanavu website and connected services (the website and connected 
-                services are collectively referred to as the “Platform” in this Privacy Notice).</li>
+              <ul><li>This Privacy Notice explains how Kanavu collects, uses, and processes your personal data when you access or interact with the Kanavu website and its associated services (the website and connected services are collectively referred to as the “Platform” in this Privacy Notice).</li>
             <li>The Platform is not intended for children, and we do not knowingly collect data related to children.</li>
-            <li>It is important that you read this Privacy Notice together with any other privacy or fair processing notice we may provide on 
-              specific occasions when we collect or process personal data about you. This ensures you are fully aware of how and why we use your data. 
-              This Privacy Notice supplements those notices and does not override them.</li></ul>
+            <li>o	It is important to read this Privacy Notice alongside any other privacy or data processing notices we may provide at specific times when collecting or processing your personal data. This ensures you have a complete understanding of how and why we use your information. Please note that this Privacy Notice complements those notices and does not replace them.</li></ul>
         </ul>
         <ul>
             <strong>b.	Controllers</strong> 
-              <ul><li>The Kanavu Group is made up of different legal entities. This Privacy Notice is issued on behalf of the Kanavu Group, 
-                so when we mention "Kanavu," "we," "us," or "our" in this Privacy Notice, we are referring 
-                to the relevant company in the Kanavu Group responsible for processing your data.</li>
-            <li>Kanavu Social Ventures is the controller and responsible for this website. We have appointed a Data Privacy Manager 
-              to oversee questions related to this Privacy Notice.</li>
+              <ul><li>The Kanavu Group comprises multiple legal entities. This Privacy Notice is issued on behalf of the entire Kanavu Group. Therefore, when we use terms like "Kanavu," "we," "us," or "our" in this Privacy Notice, we are referring to the specific company within the Kanavu Group that is responsible for processing your personal data.</li>
+            <li>Kanavu Social Ventures is the controller and responsible for this website. We have appointed a Data Privacy Manager to oversee questions related to this Privacy Notice.</li>
               <strong>Contact Details:</strong> 
               <p>1. Name of Data Privacy Manager: Karthi Easwaramoorthy</p>
               <p>2. Email address: help.kanavu@gmail.com</p>
@@ -822,8 +815,7 @@
         </ul>
 
         <h4>2.	THE DATA WE COLLECT ABOUT YOU</h4>
-        <p>Personal data, or personal information, means any information about an individual from which that person can be identified. 
-          It does not include data where the identity has been removed (anonymous data).</p>
+        <p>Personal data, or personal information, means any information about an individual from which that person can be identified. It does not include data where the identity has been removed (anonymous data).</p>
           <p>We may collect, use, store, and transfer various kinds of personal data, grouped as follows:</p>
           <p><strong>We may collect, use, store, and transfer various kinds of personal data, grouped as follows:</strong></p>
           <p>1. Identity Data: First name, last name, username, date of birth, language preferences, and gender.</p>
@@ -831,7 +823,7 @@
           <p>3. Financial Data: Payment card details.</p>
           <p>4. Transaction Data: Details about payments and services purchased.</p>
           <p>5. Technical Data: Geolocation, login data, browser type/version, operating system, and platform.</p>
-          <p>6. Profile Data: Username, preferences, survey responses, and feedback. </p>
+          <p>6. Profile Data: Username, preferences, survey responses, and feedback.</p>
           <p>7. Usage Data: Information about how you use the Platform.</p>
           <p>We also collect, use and share Aggregated Data such as statistical or demographic data for any purpose.</p>
 
@@ -841,19 +833,17 @@
 
 
         <h2>IF YOU FAIL TO PROVIDE PERSONAL DATA:</h2>
-        <p>Where we need to collect personal data by law, or under the terms of a contract we have with you and you
-fail to provide that data when requested, we may not be able to offer the services that we aim to. In this
-case, we may have to cancel the service you have with us but we will notify you if this is the case at the time.
+        <p>Where we need to collect personal data by law, or under the terms of a contract we have with you and you fail to provide that data when requested, we may not be able to offer the services that we aim to. In this case, we may have to cancel the service you have with us but we will notify you if this is the case at the time.
 </p>
 
         <h4>3.	HOW IS YOUR PERSONAL DATA COLLECTED?</h4>
         <h5>We collect data using:</h5>
-        <p>1.	Direct Interactions: You may provide Identity and Contact Data when you: </p>
+        <p>1. Direct Interactions: You may provide Identity and Contact Data when you: </p>
         <ul>
             <li>Create an account.</li>
             <li>Subscribe to newsletters. </li>
             <li>Enter a competition or survey</li>
-            <li>Provide feedback.</li>
+            <li>Providing feedback.</li>
         </ul>
         <p>2.	Automated Technologies or Interactions: We may automatically collect Technical Data using cookies and other technologies.</p>
 
@@ -862,7 +852,7 @@ case, we may have to cancel the service you have with us but we will notify you 
         <p>We will only use your personal data when legally allowed, typically for the following purposes:</p>
         <ul>
             <li>Performance of a Contract: To provide services you request.</li>
-            <li>Legitimate Interests: To improve our services or ensure security</li>
+            <li>Legitimate Interests: To improve our services or ensure security.</li>
             <li>Compliance with Legal Obligations: When required by law.</li>
         </ul>
 
@@ -873,13 +863,18 @@ case, we may have to cancel the service you have with us but we will notify you 
         <p>Under data protection laws, you have rights to: </p>
         <ul>
             <li>Access your personal data.</li>
-            <li>Correct inaccurate data</li>
+            <li>Correct inaccurate or incomplete data.</li>
             <li>Request erasure of your data.</li>
             <li>Object to processing for legitimate interests</li>
-            <li>Restrict processing.</li>
-            <li>To exercise these rights, please contact us.</li>
+            <li>Restrict processing of your data.</li>
+            <li>To exercise any of these rights, please contact us using the details provided in Section 1b.</li>
         </ul>
-        
+        <h4>7. Glossary</h4>
+        <ul>
+          <li><span class="fw-bold">Controller:</span> The entity responsible for determining how and why your personal data is processed.</li>
+          <li><span class="fw-bold">Platform: </span>Refers to the Kanavu website and associated services.</li>
+          <li><span class="fw-bold">Personal Data: </span>Information that identifies an individual.</li>
+        </ul>
 
     </div>
 

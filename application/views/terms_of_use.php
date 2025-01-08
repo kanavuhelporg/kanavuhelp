@@ -727,7 +727,7 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-          <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
+          
           <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
             <li class="nav-item">
               <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
@@ -735,9 +735,9 @@
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
             </li>
-            <li class="nav-item">
+          <!--   <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/myFundraisers') ?>">My Fundraiser</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
             </li>
@@ -746,6 +746,9 @@
                     </li> -->
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
             </li>
           </ul>
           <div class="d-flex align-items-center ms-auto">
@@ -780,28 +783,16 @@
     <br><br><div><br>
         <h1>Start a Fundraiser</h1>
 
-        <p>Kanavu.org is a platform for giving and charitable donations. We do not provide any financial return in any form whatsoever, including but not limited to financial securities (debt or equity), interest, dividend, profit share, or rewards in cash, to individuals who contribute on Kanavu.org. Any contribution on Kanavu.org,
-           by an individual, should not be construed as an investment in any form whatsoever.</p>
+        <p>Kanavu.org is a platform for giving and charitable donations. We do not provide any financial return in any form, including but not limited to financial securities (debt or equity), interest, dividend, profit share, or rewards in cash, to individuals who contribute on Kanavu.org. Any contributions made on Kanavu.org, by an individual, should not be interpreted as an investment in any form whatsoever.</p>
   </div>
         <h2>Consolidated Terms of Use and Terms and Conditions</h2>
-        <p>Please read these Terms of Use/Terms and Conditions carefully before using
-           http://www.kanavu.org (the "website" or the "Site"), owned by the parent company Kanavu Social Ventures and its affiliated companies or entities (combined called the "Company"). This agreement sets forth the legally binding terms and conditions for your use of the website. By using the service/services in any manner, including, but not limited to, visiting or browsing the site or contributing content, information, or other materials or services to the site, you agree to be bound by this agreement.
-
-
-</p>
+        <p>Please read these Terms of Use/Terms and Conditions carefully before using http://www.kanavu.org (the "website" or the "Site"), owned by the parent company Kanavu Social Ventures and its affiliated companies or entities (collectively referred to as the "Company"). This agreement outlines the legally binding terms and conditions governing your use of the Website. By using the service/services in any manner, including, but not limited to, visiting, browsing the site, or contributing content, information, other materials, or services to the site, you agree to be bound by these terms.</p>
 
         <h2>Summary of Service</h2>
-        <p>Kanavu is an online platform where certain users ("Campaigners") run campaigns to raise funds for their creative and innovative projects. They raise funds by asking for contributions from other users ("contributors" or "funders") in return for tangible and intangible rewards. Through the Site, email, websites, and other media, the Company makes accessible various content, including but not limited to videos, photographs, images, artwork, graphics, audio clips, comments, data, text, software, scripts, projects, other material and information, and associated trademarks and copyrightable works (collectively, "Content").
-
-
-</p>
+        <p>Kanavu is an online platform where certain users ("Campaigners") run campaigns to raise funds for their creative and innovative projects. They raise funds by inviting contributions from other users ("Contributors" or "Funders"). Through the platform, including the website, email, and other media, the Company provides access to a variety of content, including but not limited to videos, photographs, images, artwork, graphics, audio clips, comments, data, text, software, scripts, projects, and other materials and information, along with associated trademarks and copyrightable works (collectively referred to as "Content").</p>
         
         <h2>Acceptance of Terms</h2>
-        <p>The service is offered subject to acceptance of all of the terms 
-          and conditions contained in these Terms of Use, including the Privacy Policy
-           (that can be found on the website) mentioned in this document and all other operating rules,
-            policies, and procedures that may be published on the Site, which are incorporated by
-           reference and may be updated by the Site without notice to you.</p>
+        <p>The service is offered subject to your acceptance of all the terms and conditions outlined in these Terms of Use, including our Privacy Policy, which is available on the Website mentioned in this document and all other operating rules, policies, and procedures that may be published on the Site, which are incorporated by reference and may be updated by the Site without notice to you.</p>
         
 
         <h2>Fund Transaction and Accountability</h2>
@@ -814,25 +805,17 @@ applicable taxes before transferring the funds to the campaigners.</p>
        
 
         <h2>Foreign Funds</h2>
-        <p>For NGOs: You have to be registered/approved with FCRA to be able to receive foreign donations. Else, foreign contributions will be restricted on your campaign.
-
-
-
-</p>
+        <p>For NGOs: You must be registered or approved under FCRA regulations to receive foreign donations. If not, foreign contributions will be restricted for your campaign.</p>
 
         <h2>Taxation</h2>
-        <p>Campaigners must bear any tax liabilities on the funds raised through Kanavu. These taxes
-           may include, but are not limited to, income tax, VAT, and service tax applicable to the funds raised.</p>
+        <p>Campaigners are solely responsible for any tax liabilities arising from the funds raised through Kanavu.org. These may include, but are not limited to, income tax, VAT, or service tax, as applicable.</p>
         
         <h2>Project Completion</h2>
-        <p>Campaigners are responsible for ensuring project completion. Kanavu.org does not guarantee the completion of projects for which funds are raised.
+        <p>Campaigners are solely responsible for the completion of their projects. Kanavu.org does not oversee, manage, or guarantee the completion of any project for which funds are raised.
         </p>
 
         <h2>Campaign Cancellation</h2>
-        <p>Kanavu reserves the right to reject, cancel, interrupt, or suspend a campaign at any time for any reason.
-
-
-</p>
+        <p>Kanavu.org reserves the right, at its sole discretion, to reject, cancel, interrupt, or suspend a campaign at any time and for any reason.</p>
 
     </div>
 <br>

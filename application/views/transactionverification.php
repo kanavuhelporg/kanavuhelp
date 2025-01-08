@@ -675,7 +675,7 @@ document.getElementById('verificationlist').innerHTML = error;
 } 
 
 
-function setUrl(donation){
+function setUrl(donation) {
 
   document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${donation.email}</span>`;
         document.getElementById("transactionstatus").innerHTML = "";
@@ -704,12 +704,13 @@ function setUrl(donation){
         status = mailfor.value;
         if(status == "verified"){
         document.getElementById("transactionstatus").innerHTML = `
-        <p>Hai!, <span class="text-success">${donarname}</span> Thank you for supporting our Kanavu Help campaign. Your transaction ID is [${transactionid}].
-        Your donation is received thank you.</p>
+        <p>Hai! <span class="text-success">${donarname}</span>, We sincerely appreciate your generous support for the Kanavu Help campaign. Your transaction has been successfully recorded. Your transaction ID is [${transactionid}].
+        </p>
         `;
         }
         else{
-            document.getElementById("transactionstatus").innerHTML = `<p>Hai!, <span class="text-success">${donarname}</span> The transaction ID you entered does not match our records.</p>`;
+            document.getElementById("transactionstatus").innerHTML = `<p>Hai! <span class="text-success">${donarname}</span>, The transaction ID provided does not match our records. Please verify and try again.
+</p>`;
         }
     }
 

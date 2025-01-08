@@ -29,7 +29,12 @@ class Donations extends CI_Controller {
             $date_diff = $end_date->diff($current_date);
 
             // Calculate days left and check if the fundraiser is expired
-            $days_left = $date_diff->days;
+            if($date_diff->days > 0) {
+                $days_left = $date_diff->days;
+            }
+            else{
+                $days_left = 0;
+            }
             $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount;
 
             // Only include active fundraisers
@@ -39,6 +44,11 @@ class Donations extends CI_Controller {
                 $fundraiser->hide_donation_button = false;
                 $active_fundraisers[] = $fundraiser;
                 $progress_percentage = $fundraiser->raised_amount / $fundraiser->amount * 100;
+            }
+            else{
+                $fundraiser->days_left = $days_left;
+                $fundraiser->hide_donation_button = false;
+                $active_fundraisers[] = $fundraiser;
             }
         }
         
@@ -101,7 +111,5 @@ class Donations extends CI_Controller {
       }
       $this->session->set_userdata("fundraisers",$fundraisers);
       }
-
-      
     }    
 ?>

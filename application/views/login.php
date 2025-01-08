@@ -243,7 +243,7 @@
                         style="">
                 </a> -->
                 <br><br><br>
-                <h2 style="margin-left:50px;" class="text-danger">Fundraiser Sign in</h2>
+                <h2 style="margin-left:50px;" class="text-danger">Sign in</h2>
                 <!-- <p style="margin-left:50px;">Don't have an Account? <a href="<?= base_url('/register') ?>"><span
                             style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p> -->
                 <div style="height:60%;" class="d-flex flex-column justify-content-between">           
@@ -381,7 +381,7 @@
       url:"kanavuhelp/getHeader",
       success:(result)=>{
            document.getElementById("header").innerHTML = result;
-           document.getElementById("myfrpage").classList.add("text-danger");
+           document.getElementById("signinpage").classList.add("text-danger");
       },
       error:(error)=>{
            document.getElementById("header").innerHTML = "";
