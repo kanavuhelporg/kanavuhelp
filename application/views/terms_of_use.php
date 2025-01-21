@@ -783,10 +783,10 @@
     <br><br><div><br>
         <h1>Start a Fundraiser</h1>
 
-        <p>Kanavu.org is a platform for giving and charitable donations. We do not provide any financial return in any form, including but not limited to financial securities (debt or equity), interest, dividend, profit share, or rewards in cash, to individuals who contribute on Kanavu.org. Any contributions made on Kanavu.org, by an individual, should not be interpreted as an investment in any form whatsoever.</p>
+        <p>Kanavu.help is a platform for giving and charitable donations. We do not provide any financial return in any form, including but not limited to financial securities (debt or equity), interest, dividend, profit share, or rewards in cash, to individuals who contribute on Kanavu.help. Any contributions made on Kanavu.help, by an individual, should not be interpreted as an investment in any form whatsoever.</p>
   </div>
         <h2>Consolidated Terms of Use and Terms and Conditions</h2>
-        <p>Please read these Terms of Use/Terms and Conditions carefully before using http://www.kanavu.org (the "website" or the "Site"), owned by the parent company Kanavu Social Ventures and its affiliated companies or entities (collectively referred to as the "Company"). This agreement outlines the legally binding terms and conditions governing your use of the Website. By using the service/services in any manner, including, but not limited to, visiting, browsing the site, or contributing content, information, other materials, or services to the site, you agree to be bound by these terms.</p>
+        <p>Please read these Terms of Use/Terms and Conditions carefully before using http://www.kanavu.help (the "website" or the "Site"), owned by the parent company Kanavu Social Ventures and its affiliated companies or entities (collectively referred to as the "Company"). This agreement outlines the legally binding terms and conditions governing your use of the Website. By using the service/services in any manner, including, but not limited to, visiting, browsing the site, or contributing content, information, other materials, or services to the site, you agree to be bound by these terms.</p>
 
         <h2>Summary of Service</h2>
         <p>Kanavu is an online platform where certain users ("Campaigners") run campaigns to raise funds for their creative and innovative projects. They raise funds by inviting contributions from other users ("Contributors" or "Funders"). Through the platform, including the website, email, and other media, the Company provides access to a variety of content, including but not limited to videos, photographs, images, artwork, graphics, audio clips, comments, data, text, software, scripts, projects, and other materials and information, along with associated trademarks and copyrightable works (collectively referred to as "Content").</p>
@@ -798,9 +798,9 @@
         <h2>Fund Transaction and Accountability</h2>
         <p>The Site offers various payment gateways to facilitate the transaction of funds for campaigns.
 
-Kanavu.org does not guarantee that the target funds of a campaign will be raised fully.
+Kanavu.help does not guarantee that the target funds of a campaign will be raised fully.
 
-Kanavu.org deducts its transaction fees and 
+Kanavu.help deducts its transaction fees and 
 applicable taxes before transferring the funds to the campaigners.</p>
        
 
@@ -808,14 +808,14 @@ applicable taxes before transferring the funds to the campaigners.</p>
         <p>For NGOs: You must be registered or approved under FCRA regulations to receive foreign donations. If not, foreign contributions will be restricted for your campaign.</p>
 
         <h2>Taxation</h2>
-        <p>Campaigners are solely responsible for any tax liabilities arising from the funds raised through Kanavu.org. These may include, but are not limited to, income tax, VAT, or service tax, as applicable.</p>
+        <p>Campaigners are solely responsible for any tax liabilities arising from the funds raised through Kanavu.help. These may include, but are not limited to, income tax, VAT, or service tax, as applicable.</p>
         
         <h2>Project Completion</h2>
-        <p>Campaigners are solely responsible for the completion of their projects. Kanavu.org does not oversee, manage, or guarantee the completion of any project for which funds are raised.
+        <p>Campaigners are solely responsible for the completion of their projects. Kanavu.help does not oversee, manage, or guarantee the completion of any project for which funds are raised.
         </p>
 
         <h2>Campaign Cancellation</h2>
-        <p>Kanavu.org reserves the right, at its sole discretion, to reject, cancel, interrupt, or suspend a campaign at any time and for any reason.</p>
+        <p>Kanavu.help reserves the right, at its sole discretion, to reject, cancel, interrupt, or suspend a campaign at any time and for any reason.</p>
 
     </div>
 <br>

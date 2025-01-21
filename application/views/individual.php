@@ -1454,12 +1454,13 @@
       // Verify OTP
       document.getElementById("verifyOtpButton").addEventListener("click", () => {
         const otp = document.getElementById("otp").value.trim();
-        const generatedOtp = "<?php echo $this->session->userdata('generated_otp'); ?>";
-
-        // console.log("Entered OTP:", otp); // Print the entered OTP
-        // console.log("Generated OTP:", generatedOtp); // Print the generated OTP
-        if (otp === generatedOtp){
-          // Manually hide the modal if the Bootstrap instance is not working
+        
+        $.ajax({
+        type:"post",
+        url:"kanavuhelp/verifyOtp",
+        data:{"otp":otp},
+        success:(result)=> {
+          if(result.trim() == "true"){
           const myModalElement = document.getElementById('myModal');
           myModalElement.classList.remove('show');
           myModalElement.style.display = 'none';
@@ -1467,9 +1468,16 @@
           document.querySelector('.modal-backdrop').remove();
           console.log("OTP verified and modal hidden.");
           showStep(2); // Move to the next step
-        } else {
-          setError("otp-error", "Invalid OTP. Please try again.");
+          }
+          else{
+            setError("otp-error", "Invalid OTP. Please try again.");
+          }
+        },
+        error:(error)=>{
+           setError("Unexpected error occured. Please try again.");
         }
+        }); 
+        
       });
 
 

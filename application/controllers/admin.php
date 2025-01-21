@@ -32,6 +32,8 @@ class admin extends CI_Controller
    
     public function admindashbord()
     {
+        $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+        $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
         $this->load->view('admindashbord');
     }
 
@@ -100,6 +102,8 @@ class admin extends CI_Controller
         $data['fundraisers'] = $this->adminpanel->get_cause_details();
         $data['counts'] = $this->adminpanel->get_total_causes();
         $data['sno'] = 0;
+        $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+        $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
         $this->session->set_userdata('causescounts',$data['counts']);
         $this->load->view('causesverification.php', $data);
     }
@@ -146,6 +150,8 @@ class admin extends CI_Controller
         $data['donations'] = $this->adminpanel->transactiondetails();
         $data['counts'] = $this->adminpanel->get_total_transaction();
         $data['sno'] = 0;
+        $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+        $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
         $this->session->set_userdata('verificationpagecounts',$data['counts']);
         $this->load->view('transactionverification.php', $data);
     }
@@ -446,6 +452,8 @@ class admin extends CI_Controller
             $this->session->set_userdata('enquirypagecounts',$counts);   
         }
         $enquirieslist = $this->adminpanel->get_enquiries_list($counts);
+        $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+        $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
         $this->load->view('contact_submissions',array("submissions"=>$enquirieslist,"newcounts"=>$totalenquiries,"initialindex"=>$initialindex,"sno"=>$counts)); 
     }
 }

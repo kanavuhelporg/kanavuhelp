@@ -215,5 +215,9 @@ class adminpanel extends CI_Model
         }
     }
 
+    public function totalUnverifiedtransactions(){
+        $totalunverifiedtransactions = $this->db->query("SELECT * FROM donation_for_cause WHERE status = 0");
+        return count($totalunverifiedtransactions->result_array());
+    }
 
 }
