@@ -462,7 +462,7 @@
 <!-- Cause Description -->
 
      <!-- Fundraiser Image -->
-            <img id="cause-image" src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" style="width:100%;height:300px;" alt="no image" class="img-fluid mt-3"> 
+            <img id="cause-image" src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" style="width:100%;height:400px;" alt="no image" class="img-fluid mt-3"> 
     <!-------------------image-sliding----------------------------->
      <!--    <div style="min-width:300px;max-width:500px;height:300px;" id="carouselCausesIndicators" class="carousel slide" data-bs-ride="carousel">
         <div id="carousel-indicators" class="carousel-indicators">
@@ -590,8 +590,8 @@
                     
                     <div class="col-10">
                     <ul class="w-100 list-unstyled">
-                    <li style="margin-left: 10px;word-wrap:break-word;"><?= htmlspecialchars($donor->name); ?></li>
-                    <li style="margin-left: 10px;font-weight: bold;word-wrap:break-word;"><?=$donor->donor_location; ?></li>
+                    <li style="margin-left: 10px;word-wrap:break-word;font-weight:600;"><?= htmlspecialchars($donor->name); ?></li>
+                    <li style="margin-left: 10px;word-wrap:break-word;"><?=$donor->donor_location; ?></li>
                     </ul>
                     </div>
                      
@@ -775,7 +775,7 @@ function shareCause(url, title, imgurl) {
     <div class="col-md-3 col-sm-12 justify-content-start d-flex  mb-3 mb-md-0" >
         <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px; ">
             <p style="margin: 0;">Created by</p>
-            <strong style="font-size: 14px;"><a style="color:black;" href="fundraiserprofile?id=<?=$fundraiser->user_id?>"><?= htmlspecialchars($fundraiser->created_by) ?></a></strong>
+            <strong style="font-size: 14px;"><a style="color:black;text-decoration:underline;" href="fundraiserprofile?id=<?=$fundraiser->user_id?>"><?= htmlspecialchars($fundraiser->created_by) ?></a></strong>
         </div>
         
     </div>

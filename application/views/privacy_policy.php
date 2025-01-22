@@ -782,7 +782,7 @@
     <div>
         <h1>Privacy Policy</h1>
 
-        <p>Effective Date: [Insert Date]</p>
+        <p>Effective Date: [12/11/2024]</p>
   </div>
         <h2>INTRODUCTION</h2>
         <h5><strong>Welcome to Kanavu’s "Privacy Notice."</strong></h5>

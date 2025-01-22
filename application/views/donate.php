@@ -460,7 +460,7 @@
                         <div class="card-body d-flex flex-column">
                             <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
+                                <p class="card-text text-muted mb-0">Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?></p>
                                 <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                             </div>
                             <p class="card-text">
@@ -605,7 +605,7 @@ function loadMoreFundraisers() {
             <div class="card-body d-flex flex-column">
               <p class="card-title">${fundraiser.cause_heading}</p>
               <div class="d-flex justify-content-between align-items-center">
-                <p class="card-text text-muted mb-0">for ${fundraiser.name}</p>
+                <p class="card-text text-muted mb-0">Created by ${fundraiser.created_by}</p>
                 <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;">${fundraiser.category}</button>
               </div>
               <p class="card-text">

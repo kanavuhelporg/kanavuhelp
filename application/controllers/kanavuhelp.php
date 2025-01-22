@@ -815,6 +815,19 @@ class kanavuhelp extends CI_Controller
         }
     }
 
+    public function verifyOtp(){
+        if (!$this->session->userdata('Kanavu_userId')) {
+            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+        }
+        $otp = $this->input->post("otp");
+        if($otp == $this->session->userdata('generated_otp')){
+        echo "true"; 
+        }
+        else{
+        echo "false";
+        }
+        }
+
     public function individualformsubmit()
     {
         $causeId = $this->session->userdata('currentCauseId');

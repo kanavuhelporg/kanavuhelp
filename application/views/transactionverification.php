@@ -710,7 +710,7 @@ function setUrl(donation) {
         }
         else{
             document.getElementById("transactionstatus").innerHTML = `<p>Hai! <span class="text-success">${donarname}</span>, The transaction ID provided does not match our records. Please verify and try again.
-</p>`;
+             </p>`;
         }
     }
 
