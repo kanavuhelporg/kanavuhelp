@@ -18,11 +18,11 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Bootstrap CSS -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
 <!-- Bootstrap JS and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
   <style>
     body {
@@ -455,7 +455,7 @@
     <div class="col-11 mt-5 pt-4">
     <!-- Cause Heading and Main Content -->
     <div class="row mt-4">
-        <div class="col-lg-8">
+        <div class="col-lg-7">
             <!-- Cause Heading -->
             <h1 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
             
@@ -464,7 +464,7 @@
      <!-- Fundraiser Image -->
             <img id="cause-image" src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" style="width:100%;height:400px;" alt="no image" class="img-fluid mt-3"> 
     <!-------------------image-sliding----------------------------->
-     <!--    <div style="min-width:300px;max-width:500px;height:300px;" id="carouselCausesIndicators" class="carousel slide" data-bs-ride="carousel">
+       <div style="width:100%;height:400px;" id="carouselCausesIndicators" class="carousel slide mt-4" data-bs-ride="carousel">
         <div id="carousel-indicators" class="carousel-indicators">
 
         </div>
@@ -478,7 +478,7 @@
                        continue;
                     }?>
                     <div class='carousel-item <?= $slide == 0 ? 'active' : '';?>' data-bs-interval="2000">
-                    <img style="width:500px;height:300px;" class="d-block" src="<?=base_url("assets/individualform_img/$documents[$i]")?>" alt='<?=$documents[$i]?>'>
+                    <img style="width:100%;height:400px;" class="d-block" src="<?=base_url("assets/individualform_img/$documents[$i]")?>" alt='<?=$documents[$i]?>'>
                     </div>
               <script>
                 document.getElementById("carousel-indicators").innerHTML += "<button type='button' data-bs-target='#carouselCausesIndicators' data-bs-slide-to='<?=$slide?>' class='<?= $slide == 0 ? 'active' : '';?>' aria-current='true' aria-label='Slide <?=$slide+1?>'></button>";
@@ -494,17 +494,21 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
         </button>
-        </div> -->
+        </div> 
         
             <!-------------------image-sliding-end---------------------------->
             <p class="mt-2"><?= htmlspecialchars($fundraiser->cause_description) ?></p>
-            
-
             <!-------------------cause-video---------------------------------->
               <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
               <?php
               if(!empty($fundraiser->Cause_video_link)){ 
               echo "<div class='mt-1'>$fundraiser->Cause_video_link</div>";
+              }
+              ?> 
+
+              <?php
+              if(!empty($fundraiser->Cause_video_link_eng)){ 
+              echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
               }
               ?> 
             <!-------------------cause-video-end--------------------------------->
@@ -518,7 +522,7 @@
         </div>
 
         <!-- Right Sidebar -->
-        <div class="mt-2 col-lg-4">
+        <div class="mt-2 col-lg-5">
             <!-- Amount Raised and Goal -->
             <h4>
     <strong>
@@ -624,6 +628,7 @@
     ];
 </script>
 
+
                     </div>
                     <!-- Toggle Links
                     <li class="text-center" id="show-more" style="padding: 10px 0;">
@@ -634,6 +639,60 @@
                     </li> -->
 
                 </ul>
+            </div>
+
+            <div class="mt-4">
+             <?php if(!empty($progressdata->progress_description)) {?> 
+             <h3>Current progress status</h3>
+             <div>
+             <?=$progressdata->progress_description?>
+             </div> 
+             <?php }?>
+            <!-------------------image-sliding----------------------------->
+       <div style="width:100%;height:300px;" id="second_carousel" class="carousel slide mt-3" data-bs-ride="carousel">
+        <div id="second_carousel_indicators" class="carousel-indicators">
+
+        </div>
+        <div id="cause-slides" class="carousel-inner" >
+        <?php  if(!empty($progressdata)){
+               $documents = ["$progressdata->cause_status_image1","$progressdata->cause_status_image2","$progressdata->cause_status_image3","$progressdata->cause_status_image4","$progressdata->cause_status_image5"];
+               }
+               else{
+                $documents = [];
+               }
+               $count = count($documents);
+               $slide = 0;
+               for($i = 0;$i < $count ; $i++ ){ ?> 
+               <?php if($documents[$i] == ""){ 
+                       continue;
+                    }?>
+                    <div class='carousel-item <?= $slide == 0 ? 'active' : '';?>' data-bs-interval="2000">
+                    <img style="width:100%;height:300px;" class="d-block" src="<?=base_url("assets/progressdata/$documents[$i]")?>" alt='<?=$documents[$i]?>'>
+                    </div>
+              <script>
+                document.getElementById("second_carousel_indicators").innerHTML += "<button type='button' data-bs-target='#carouselCausesIndicators' data-bs-slide-to='<?=$slide?>' class='<?= $slide == 0 ? 'active' : '';?>' aria-current='true' aria-label='Slide <?=$slide+1?>'></button>";
+               </script>
+        <?php ++$slide; } ?>
+                
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#second_carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#second_carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+        </button>
+        </div> 
+        
+            <!-------------------image-sliding-end---------------------------->
+
+            <?php
+              if(!empty($progressdata->progress_embed_link)){ 
+              echo "<div class='mt-3'>$progressdata->progress_embed_link</div>";
+              }
+              ?> 
             </div>
         </div>
     </div>
