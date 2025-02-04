@@ -792,7 +792,7 @@
     <div class="carousel-inner">
       <!-- Slide 1 -->
       <div class="carousel-item active">
-        <img src="<?= base_url('assets/img/1.svg') ?>" class="d-block w-100" alt="Image 1">
+        <!-- <img src="<?= base_url('assets/img/1.svg') ?>" class="d-block w-100" alt="Image 1"> -->
         <div class="imgtext1 mt-5 pt-5">
           <p>THE <strong>WORLD'S <br>PLATFORM</strong> FOR <br>
             <span>HELP</span>

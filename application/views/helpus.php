@@ -448,7 +448,7 @@
  
     <!-- Fundraiser Banner Image -->
     <div class="donate_img mt-5 pt-4">
-    <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%">
+    <!-- <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%"> -->
   </div>
     <div class="container-fluid">
     <div class="row justify-content-center">  
