@@ -105,6 +105,7 @@ $route['changeVerificationpagesetup'] = 'admin/changeVerificationpagesetup';
 $route['changeContactpagesetup'] = 'admin/changeContactpagesetup';
 $route['sendtransactionVerficationstatus'] = 'admin/sendtransactionVerficationstatus';
 $route['updatecause'] = 'kanavuhelp/updatecause';
+$route['updateprogress'] = 'kanavuhelp/updateprogress';
 $route['fetchDonordata'] = 'donors/fetchDonordata';
 $route['helpus/fetchDonordata'] = 'donors/fetchDonordata';
 $route['donorLogin'] = 'donors/donorLogin';

@@ -324,10 +324,11 @@
                 <strong>End Date:</strong> <?= htmlspecialchars($cause->end_date) ?><br>
 
               </p>
+              <div class="row justify-content-evenly">    
+              <a href="<?=base_url("updatecause")?>" style="width:fit-content;" class="btn donate_btn no-hover mt-5">Update Cause</a>
 
-              <a href="<?=base_url("updatecause")?>" class="btn donate_btn no-hover mt-5">Update Cause</a>
-
-
+              <a href="<?=base_url("updateprogress?cause_id=$cause->id")?>" style="width:fit-content;" class="btn donate_btn no-hover mt-5">Update Progress</a>
+              </div>
               <!--<div class="progress mb-2">
                         <div class="progress-bar" role="progressbar" style="width: <?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>%;" aria-valuenow="<?= ($cause->amount_raised / $cause->goal_amount) * 100 ?>" aria-valuemin="0" aria-valuemax="100">
                         </div>-->
@@ -371,6 +372,35 @@
            </div>
            <div class="modal-body">
               <p class="text-muted">Your verification process is underway. We will notify you once it is successfully completed.</p>
+           </div>
+           <div class="p-3">
+           <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>
+           </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+<?php if($this->session->flashdata("progressupdated")) :?>
+  <script>
+      window.onload = function() {
+        let myModal = new bootstrap.Modal(document.getElementById("progress"), {
+          backdrop: 'static',
+          keyboard: false
+        });
+        myModal.show();
+      };
+    </script>
+
+<div id="progress" class="modal fade show">
+    <div class="modal-dialog">
+        <div class="modal-content">
+           <div class="modal-header">
+              <span class="h5 text-danger">Success ! <span class="text-success"><?=$this->session->userdata("userName");?></span></span> 
+              <button data-bs-dismiss="modal" class="btn btn-close"></button>              
+           </div>
+           <div class="modal-body">
+              <p class="text-muted">The progress data for your cause has been updated.</p>
            </div>
            <div class="p-3">
            <button style="width:fit-content;" data-bs-dismiss="modal" class="btn btn-danger">Ok</button>

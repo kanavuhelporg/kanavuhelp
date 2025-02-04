@@ -887,7 +887,6 @@
   <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     
   </nav>
-<!-- <?php if(!empty($causedetails)) :?> -->
   <div class="container-fluid box mt-auto py-3">
     <div class="row box1 mt-auto py-3">
       <div class="container-fluid mt-5">
@@ -907,61 +906,48 @@
           <div id="step-two-form" style="overflow:auto;" class="col-md-6 mt-4">
             <div id="multi-step-form-container" class="mt-3 py-3 w-100">
 
-              <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/updateindividualform_data') ?>" enctype="multipart/form-data">
-              
-                <section id="step-2" class="form-step col-12">
-                  <h2>Update Cause Details</h2>
-                  <input hidden type="text" name="step" value="steptwo">
-                  <div class="row my-3">
-                    <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
-                    <div class="col-md-8">
-                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: <?=$causedetails->category?>" readonly>
-                    </div>
-                  </div>
-
-                <!--   <script>
-                    function copySelection() {
-                      const selectedCategory = document.getElementById("category").value;
-                      const formSelectedText = document.getElementById("form_selected_text");
-
-                      // If a valid category is selected, copy it to the input field
-                      if (selectedCategory) {
-                        formSelectedText.value = selectedCategory;
-                      } else {
-                        formSelectedText.value = ""; // Clear the input if no category is selected
-                      }
-                    }
-                  </script> -->
-                  <div class="row my-3">
-                    <label for="amount" class="col-md-4 col-form-label">Amount:<span class="text-danger">*</span></label>
-                    <div class="col-md-8">
-                      <input type="number" id="amount" name="amount" value="<?=$causedetails->amount?>" class="form-control my-2" placeholder="Amount*" required>
-                      <span id="amount-error" class="text-danger"></span>
-                    </div>
-                  </div>
-
-                  <div class="row my-3">
-                    <label for="end_date" class="col-md-4 col-form-label">End Date:<span class="text-danger">*</span></label>
-                    <div class="col-md-8">
-                      <input type="date" id="end_date" value="<?=$causedetails->end_date?>" name="end_date" class="form-control my-2" placeholder="End Date*" required>
-                      <span id="end-date-error" class="text-danger"></span>
-                    </div>
-                  </div>
-
-                  <div class="text-center mt-3">
-                    <button type="button" id="continueToStep3" class="btn btn-danger no-hover">Continue</button>
-                  </div>
-                </section>
-
+              <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/updateprogressdata') ?>" enctype="multipart/form-data">
                 <!-- Step 3 Content -->
-                <section id="step-3" class="form-step col-12 d-none">
-                  <h2>Update Elaborate Cause Details</h2>
+                <section id="step-3" class="form-step col-12">
+                  <h2>Update Progress Details</h2>
                  
+                  <input type="text" name="cause_id" value="<?=$cause_id?>" hidden>
+
                   <!-- Cover Image Field -->
                   <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cover Image:</label>
+                    <label for="progress_description" class="col-md-4 col-form-label">Progress description:</label>
                     <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="cover_image" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                      <textarea type="text" name="progress_description" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2"><?php if(!empty($progressdetails)){echo "$progressdetails->progress_description";}?></textarea>
+                      <p id="progress-description-error" class="text-danger"></p>
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="progress_image_one" class="col-md-4 col-form-label">Progress Image One:</label>
+                    <div class="col-md-8">
+                      <input type="file" onchange="validateCoverImage(this)" id="progress_image_one" name="document_one" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                      <p class="text-danger"></p>
+                      <small class="text-muted">
+                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                      </small> 
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="cover_image" class="col-md-4 col-form-label">Progress Image Two:</label>
+                    <div class="col-md-8">
+                      <input type="file" onchange="validateCoverImage(this)" id="progress_image_two" name="document_two" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
+                      <p class="text-danger"></p>
+                      <small class="text-muted">
+                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                      </small> 
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="progress_image_three" class="col-md-4 col-form-label">Progress Image Three:</label>
+                    <div class="col-md-8">
+                      <input type="file" onchange="validateCoverImage(this)" id="progress_image_three" name="document_three" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
                       <p id="cover-image-error" class="text-danger"></p>
                       <small class="text-muted">
                         Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
@@ -970,9 +956,9 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image One:</label>
+                    <label for="cover_image" class="col-md-4 col-form-label">Progress Image Four:</label>
                     <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_one" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                      <input type="file" onchange="validateCoverImage(this)" id="progress_image_four" name="document_four" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
                       <p id="cover-image-error" class="text-danger"></p>
                       <small class="text-muted">
                         Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
@@ -981,9 +967,9 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Two:</label>
+                    <label for="progress_image" class="col-md-4 col-form-label">Progress Image Five:</label>
                     <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_two" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
+                      <input type="file" onchange="validateCoverImage(this)" id="progress_image_five" name="document_five" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
                       <p id="cover-image-error" class="text-danger"></p>
                       <small class="text-muted">
                         Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
@@ -992,43 +978,10 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Three:</label>
+                    <label for="cause_video" class="col-md-4 col-form-label">Progress Video Document:</label>
                     <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_three" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
-                      <p id="cover-image-error" class="text-danger"></p>
-                      <small class="text-muted">
-                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
-                      </small> 
-                    </div>
-                  </div>
-
-                  <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Four:</label>
-                    <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_four" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
-                      <p id="cover-image-error" class="text-danger"></p>
-                      <small class="text-muted">
-                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
-                      </small> 
-                    </div>
-                  </div>
-
-                  <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Five:</label>
-                    <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_five" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
-                      <p id="cover-image-error" class="text-danger"></p>
-                      <small class="text-muted">
-                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
-                      </small> 
-                    </div>
-                  </div>
-
-                  <div class="row my-3">
-                    <label for="cause_video" class="col-md-4 col-form-label">Video Document:</label>
-                    <div class="col-md-8">
-                      <input type="file" onchange="validateCausevideo(this)" id="cause_video" name="cause_video" accept="video/mp4" class="form-control my-2" >
-                      <p id="cover-video-error" class="text-danger"></p>
+                      <input type="file" onchange="validateCausevideo(this)" id="progress_video" name="progress_video" accept="video/mp4" class="form-control my-2" >
+                      <p id="progress-video-error" class="text-danger"></p>
                       <small class="text-muted">
                        Upload only mp4 format.
                       </small> 
@@ -1036,20 +989,13 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cause_video__link_tamil" class="col-md-4 col-form-label">Video Embed Link Tamil:</label>
+                    <label for="cause_video" class="col-md-4 col-form-label">Progress embed video link:</label>
                     <div class="col-md-8">
-                      <input type="text" onchange="validateEmbed(this)" id="cause_video_link" name="cause_embed_link_tamil" value='<?=$causedetails->Cause_video_link?>' class="form-control my-2">
-                      <p id="tamil_embed_error" class="text-danger"></p>
+                      <input type="text" id="progress_video" name="progress_embed_video_link" class="form-control my-2" >
+                      <p id="progress-video-error" class="text-danger"></p> 
                     </div>
                   </div>
 
-                  <div class="row my-3">
-                    <label for="cause_video" class="col-md-4 col-form-label">Video Embed Link English:</label>
-                    <div class="col-md-8">
-                      <input type="text" onchange="validateEmbed(this)" id="cause_video" name="cause_embed_link_english" value='<?=$causedetails->Cause_video_link_eng?>' class="form-control my-2">
-                      <p id="cover-image-error" class="text-danger"></p>
-                    </div>
-                  </div>
 
                   <!-- <div class="row my-3">
                     <small class="text-muted">"Please note, only up to 5 images can be uploaded at a time.</small>
@@ -1063,31 +1009,9 @@
                     </div>
                   </div>
  -->
-                  <!-- Cause Title Field -->
-                  <div class="row my-3">
-                    <label for="cause_heading" class="col-md-4 col-form-label">Cause Title:<span class="text-danger">*</span></label>
-                    <div class="col-md-8">
-                      <input type="text" id="cause_heading" name="cause_heading" class="form-control my-2" value="<?=$causedetails->cause_heading?>" placeholder="Cause Title" required oninput="validateCauseTitle()">
-                      <span id="cause-heading-error" class="text-danger"></span>
-                    </div>
-                  </div>
-
-                  <!-- Cause Description Field -->
-                  <div class="row my-3">
-                    <label for="cause_description" class="col-md-4 col-form-label">Description:<span class="text-danger">*</span></label>
-                    <div class="col-md-8">
-                      <textarea id="cause_description" name="cause_description" class="form-control my-2" rows="4" placeholder="Description" required oninput="validateCauseDescription()">
-                      <?=trim($causedetails->cause_description)?>
-                      </textarea>
-                      <span id="cause-description-error" class="text-danger"></span>
-                    </div>
-                  </div>
-
-                  <div style="color:red">Please wait for Admin verification of the cause. It will happen in 24 hours</div>
 
                   <div class="text-center mt-3">
-                    <button type="button" onclick="backtoSteptwo()" class="btn btn-danger no-hover btn-back" data-step="2">Back</button>
-                    <button type="submit" class="btn btn-success no-hover" id="submitApprovalButton">Submit for Approval</button>
+                    <button type="submit" class="btn btn-success no-hover" id="submitApprovalButton">Submit</button>
                   </div>
                 </section>
               </form>
@@ -1097,7 +1021,7 @@
       </div>
     </div>
   </div>
-  <!-- <?php endif;?> -->
+
 <!----------------------------footer----------------------->
 <div id="footer">
 
@@ -1271,10 +1195,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return true;
       }
   });
-
-  function validateEmbed(text){
-
-  }
 
   // Show specific step
   function showStep(step) {
@@ -1460,7 +1380,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let videosize = 128000000;
         let uploadedvideosize = file.files[0].size;
         if(uploadedvideosize > videosize){
-        file.nextElementSibling.textContent = "Video size should below 39MB";
+        file.nextElementSibling.textContent = "Video size should below 128MB";
             file.value = "";
             return false;
         }

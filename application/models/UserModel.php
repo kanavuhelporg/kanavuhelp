@@ -102,11 +102,37 @@ class UserModel extends CI_Model
 		return $query->row();
 	}
 
+	public function causeDetailsforprogress($cause_id){
+		$query = $this->db->query("SELECT * FROM cause_status_data WHERE cause_id = $cause_id");
+		return $query->row();
+	}
+
 	public function store3($data,$id)
 	{
 		$this->db->where('user_id', $id); // Specify the condition
 		$success = $this->db->update('individualform', $data); // Update the table with data
 
+		// Debug: Log the query and errors
+		if ($success) {
+			return true;
+		} else {
+			echo $this->db->last_query(); // Print the query for debugging
+			echo $this->db->error();      // Print any database errors
+			return false;
+		}
+	}
+
+	public function store4($data,$id)
+	{   
+		$success = "";
+		$checkprogress = $this->db->query("SELECT * FROM cause_status_data WHERE cause_id = $id");
+		if($checkprogress->num_rows() > 0){
+		$this->db->where('cause_id', $id); // Specify the condition
+		$success = $this->db->update('cause_status_data', $data); // Update the table with data
+		}
+		else{
+        $success = $this->db->insert("cause_status_data",$data); 
+		}
 		// Debug: Log the query and errors
 		if ($success) {
 			return true;
@@ -151,6 +177,11 @@ class UserModel extends CI_Model
 		// $query = $this->db->get('individualform'); // Replace with your table name
 		$query = $this->db->query("SELECT * FROM individualform WHERE user_id = $user_id");
 		return $query->result();
+	}
+
+	public function get_user_progress($cause_id){
+		$query = $this->db->query("SELECT * FROM cause_status_data WHERE cause_id = $cause_id");
+		return $query->row();
 	}
 
 	public function get_user_causes_row($user_id)

@@ -1117,7 +1117,7 @@
                   <div class="row my-3">
                     <label for="cover_image_one" class="col-md-4 col-form-label">Cause Image One:</label>
                     <div class="col-md-8">
-                      <input type="file" id="cover_image_one" name="document_one" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
+                      <input type="file" id="cover_image_one" name="document_one" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)" required>
                       <p id="cover-image-error" class="text-danger"></p>
                       <small class="text-muted">
                         Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
@@ -1172,13 +1172,40 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cause_video" class="col-md-4 col-form-label">Video Document:</label>
+                    <label for="cause_video" class="col-md-4 col-form-label">Video Document Tamil:</label>
                     <div class="col-md-8">
                       <input type="file" onchange="validateCausevideo(this)" id="cause_video" name="cause_video" accept="video/mp4" class="form-control my-2">
                       <p id="cover-image-error" class="text-danger"></p>
                       <small class="text-muted">
                        Upload only mp4 format.
                       </small> 
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="cause_video_english" class="col-md-4 col-form-label">Video Document English:</label>
+                    <div class="col-md-8">
+                      <input type="file" onchange="validateCausevideo(this)" id="cause_video" name="cause_video_english" accept="video/mp4" class="form-control my-2">
+                      <p id="english_video_error" class="text-danger"></p>
+                      <small class="text-muted">
+                       Upload only mp4 format.
+                      </small> 
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="cause_video__link_tamil" class="col-md-4 col-form-label">Video Embed Link Tamil:</label>
+                    <div class="col-md-8">
+                      <input type="text" onchange="validateEmbed(this)" id="cause_video_link" name="cause_embed_link_tamil" class="form-control my-2" required>
+                      <p id="tamil_embed_error" class="text-danger"></p>
+                    </div>
+                  </div>
+
+                  <div class="row my-3">
+                    <label for="cause_video" class="col-md-4 col-form-label">Video Embed Link English:</label>
+                    <div class="col-md-8">
+                      <input type="text" onchange="validateEmbed(this)" id="cause_video" name="cause_embed_link_english" class="form-control my-2">
+                      <p id="cover-image-error" class="text-danger"></p>
                     </div>
                   </div>
 
@@ -1192,8 +1219,7 @@
                       </small> 
                       <p id="cover-image-error" class="text-danger"></p>
                     </div>
-                  </div>
- -->
+                  </div>-->
                   <!-- Cause Title Field -->
                   <div class="row my-3">
                     <label for="cause_heading" class="col-md-4 col-form-label">Cause Title:<span class="text-danger">*</span></label>
@@ -1376,7 +1402,7 @@
        const phoneerrorElement = document.getElementById("phone-error");
        
        let validatename = /^([A-Za-z\s]{1,49})+$/;
-       let validatelocation = /^(?![0-9]*$)[a-zA-Z0-9]+$/;
+       let validatelocation = /^(?![0-9]*$)[a-zA-Z0-9\s]+$/;
        let validateemail = /^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/;
        let validatephone = /^([0-9]{10})+$/;
        console.log((!validatephone.test(phone)))
@@ -1615,6 +1641,10 @@
         }
         }
 
+        function validateEmbed() {
+
+        }
+
         function validateCreatedby() {
         const nameInput = document.getElementById("created_by").value.trim();
         const errorElement = document.getElementById("created_by_error");
@@ -1775,7 +1805,7 @@
       }
 
       function validateCausevideo(file){
-        let videosize = 39000000;
+        let videosize = 128000000;
         let uploadedvideosize = file.files[0].size;
         if(uploadedvideosize > videosize){
         file.nextElementSibling.textContent = "Video size should below 39MB";
