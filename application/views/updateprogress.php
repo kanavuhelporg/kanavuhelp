@@ -917,7 +917,7 @@
                   <div class="row my-3">
                     <label for="progress_description" class="col-md-4 col-form-label">Progress description:</label>
                     <div class="col-md-8">
-                      <textarea type="text" name="progress_description" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2"><?php if(!empty($progressdetails)){echo "$progressdetails->progress_description";}?></textarea>
+                      <textarea type="text" name="progress_description" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" required><?php if(!empty($progressdetails)){echo "$progressdetails->progress_description";}?></textarea>
                       <p id="progress-description-error" class="text-danger"></p>
                     </div>
                   </div>

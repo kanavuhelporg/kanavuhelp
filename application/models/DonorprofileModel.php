@@ -39,7 +39,7 @@ class DonorprofileModel extends CI_Model {
           $getid = $getcauseid->row();
           $user_id = $getid->user_id;
           $cause_id = $getid->cause_id;
-          $result = $this->db->query("SELECT donation_for_cause.status,donation_for_cause.user_id, donation_for_cause.amount, individualform.id,individualform.name,individualform.cover_image,individualform.cause_heading FROM donation_for_cause LEFT JOIN individualform ON donation_for_cause.cause_id = individualform.id WHERE donation_for_cause.user_id = $user_id AND donation_for_cause.cause_id = $cause_id;");
+          $result = $this->db->query("SELECT donation_for_cause.status,donation_for_cause.user_id, donation_for_cause.amount, individualform.id,individualform.name,individualform.cover_image,individualform.cause_heading FROM donation_for_cause LEFT JOIN individualform ON donation_for_cause.cause_id = individualform.id WHERE donation_for_cause.user_id = $user_id");
           return $result->result();
         }
 	}  
