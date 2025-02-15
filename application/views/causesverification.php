@@ -608,7 +608,7 @@ function createarr($noofpages){
 
                                    <div class="form-group">
                                        <label>Email</label>
-                                       <input type="email" name="email" id="donationEmail" class="form-control" required>
+                                       <input type="email" name="email" id="donationEmail" class="form-control" readonly required>
                                    </div>
 
                                    <div class="form-group">
