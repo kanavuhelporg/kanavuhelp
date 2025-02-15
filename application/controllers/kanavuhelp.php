@@ -179,8 +179,8 @@ class kanavuhelp extends CI_Controller
         if(!$this->session->userdata('Kanavu_userId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
-        $userid = $this->session->userdata("Kanavu_userId");
-        $causedetails = $this->UserModel->causeDetailsforupdate($userid);
+        $cause_id = $this->input->get("cause_id");
+        $causedetails = $this->UserModel->causeDetailsforupdate($cause_id);
         $this->load->view("updatecause",array("causedetails"=>$causedetails));
     }
 
@@ -642,7 +642,6 @@ class kanavuhelp extends CI_Controller
             redirect('individual'); 
         }
 
-
             $data['amount'] = $this->input->post('amount');
             $data['end_date'] = $this->input->post('end_date');
             $data['cause_heading'] = $this->input->post('cause_heading');
@@ -654,17 +653,10 @@ class kanavuhelp extends CI_Controller
                 $data['Cause_video_link_eng'] = $this->input->post('cause_embed_link_english');
             }
             $data['verified'] = 0;
-           
-       
         $file_data = $this->upload->data();
 
-        $causeId = $this->session->userdata('Kanavu_userId');
-        $response = $this->UserModel->store3($data,$causeId);
-        $userLoggedIn = array(
-            'Kanavu_userId' => $this->session->userdata("currentUserId"),
-            'Kanavu_userName' => $this->session->userdata('Kanavu_userName'),
-        );
-        // $this->session->set_userdata($userLoggedIn);  
+        $causeId = $this->input->post('cause_id');
+        $response = $this->UserModel->store5($data,$causeId);
         $this->session->set_flashdata("updatedindividualform", true);
         redirect('myFundraisers'); 
     }
@@ -984,7 +976,6 @@ class kanavuhelp extends CI_Controller
                     'Kanavu_userId' => $user_id,
                     'Kanavu_userName' => $user_name,
                 );
-                $this->session->set_userdata('currentCauseId', $user_id);
                 $this->session->set_userdata("userEmail",$email);
                 $this->session->set_userdata('currentUserId', $user_id);
                 $this->session->set_userdata('form_selected_text',$this->input->post('category'));
@@ -993,7 +984,7 @@ class kanavuhelp extends CI_Controller
                 $causeId = $this->db->insert_id();
                 $causeData['cause_id'] = $causeId;
                 // $this->DonorprofileModel->registerAsdonor($causeData);
-                $this->session->set_userdata('currentCauseId', $userId);
+                $this->session->set_userdata('currentCauseId', $causeId);
                 $this->session->set_userdata($userLoggedIn);      
                 redirect("/send"); 
             }
