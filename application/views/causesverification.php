@@ -327,7 +327,7 @@ unset($_SESSION["emailerrorstatus"]);
 
             </div><!-----------side-bar-end-------------->
 
-            <div class="col-md-10 h-100"><!-----------main-dashboard------------------------->
+            <div style="overflow:auto" class="col-md-10 h-100"><!-----------main-dashboard------------------------->
 
                 <div style="overflow:auto" class="mt-3 px-4"><!----------------table--------------->
                     <table class="table table-borderless">
