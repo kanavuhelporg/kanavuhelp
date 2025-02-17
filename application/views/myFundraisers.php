@@ -325,7 +325,7 @@
 
               </p>
               <div class="row justify-content-evenly">    
-              <a href="<?=base_url("updatecause")?>" style="width:fit-content;" class="btn donate_btn no-hover mt-5">Update Cause</a>
+              <a href="<?=base_url("updatecause?cause_id=$cause->id")?>" style="width:fit-content;" class="btn donate_btn no-hover mt-5">Update Cause</a>
 
               <a href="<?=base_url("updateprogress?cause_id=$cause->id")?>" style="width:fit-content;" class="btn donate_btn no-hover mt-5">Update Progress</a>
               </div>

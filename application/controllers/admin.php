@@ -227,7 +227,20 @@ class admin extends CI_Controller
 
         // Get the POST data
         $id = $this->input->post('id');
+        $name = $this->input->post('name');
+        $email = $this->input->post('email');
+        $mobile = $this->input->post('mobile');
+        $amount = $this->input->post('amount');
+        $location = $this->input->post('location');
+        $age = $this->input->post('age');
+        $end_date = $this->input->post('end_date');
+        $cause_heading = $this->input->post('cause_heading');
+        $cause_description = $this->input->post('cause_description');
+        $created_by = $this->input->post('username');
+        $raised_amount = $this->input->post('raised_amount');
         $verified = $this->input->post('verified');
+
+        $updatedata = ["name"=>$name,"email"=>$email,"phone"=>$mobile,"age"=>$age,"amount"=>$amount,"location"=>$location,"end_date"=>$end_date,"cause_heading"=>$cause_heading,"cause_description"=>$cause_description,"created_by"=>$created_by,"raised_amount"=>$raised_amount,"verified"=>$verified];
 
         // Validate input
         if (empty($id) || $verified === null) {
@@ -236,7 +249,7 @@ class admin extends CI_Controller
         }
 
         // Update the record
-        $updateSuccess = $this->adminpanel->updatecauses($id, $verified);
+        $updateSuccess = $this->adminpanel->updatecauses($id, $updatedata);
 
         // Return JSON response
         header('Content-Type: application/json');

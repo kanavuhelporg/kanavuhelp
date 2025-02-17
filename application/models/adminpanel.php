@@ -68,15 +68,10 @@ class adminpanel extends CI_Model
         return $query->result();
     }
 
-    public function updatecauses($id, $status)
+    public function updatecauses($id, $updatedata)
     {
-        $data = array(
-            'verified' => $status,
-            // Update the 'verifiedby' field with the session name
-        );
-
         $this->db->where('id', $id);
-        $result = $this->db->update('individualform', $data);
+        $result = $this->db->update('individualform', $updatedata);
         return $result;
     }
 
