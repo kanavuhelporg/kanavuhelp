@@ -850,7 +850,7 @@
   </div><br>
 
   <div class="container">
-  <div class="row" id="fundraiserCards">
+  <div class="row" id="fundraiserCards"><!--kani start alignment-->
     <?php if (!empty($fundraisers)): ?>
         <?php 
         // Show only first 3 fundraisers initially
@@ -869,8 +869,9 @@
                             class="card-img-top fixed-card-img img-placeholder">
                         <div class="card-body d-flex flex-column">
                             <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
+                            <div class="d-flex justify-content-between align-items-center"><!--Kani_start changing createdby-->
+                            <p class="card-text text-muted mb-0">Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?></p>
+                               <!--Kani_end-->
                                 <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                             </div>
                             <p class="card-text">
@@ -902,7 +903,7 @@
     <?php else: ?>
         <p class="text-center">No fundraisers available at the moment.</p>
     <?php endif; ?>
-  </div>
+  </div> <!--kani start alignment-->
 
   <!-- See More Button -->
   <!-- See More Button -->
