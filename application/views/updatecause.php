@@ -1438,36 +1438,59 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function validateCoverImage(file) {
 
-        let filereader = new FileReader();
-        let fileuploadread = filereader.readAsDataURL(file.files[0]);
-        let imagesize = 2000000;
-        let uploadedimagesize = file.files[0].size;
-        if(uploadedimagesize > imagesize){
-        file.nextElementSibling.textContent = "Image size should below 2MB";
-        filereader.onloadstart = ()=>{
-            file.value = "";
-            return false;
-        }
-            return false;
-        }
-        else{
-          file.nextElementSibling.textContent = "";
-        }
-        return true;
+    let filereader = new FileReader();
+    let fileuploadread = filereader.readAsDataURL(file.files[0]);
+    let imagesize = 2000000;
+    let uploadedimagesize = file.files[0].size;
+
+// Check for image size greater than 2MB
+    if(uploadedimagesize > imagesize){
+        file.nextElementSibling.textContent = "Image size should be below 2MB";
+        filereader.onloadstart = () => {
+        file.value = "";  // Clear the file input
+      return false;
+    }
+    return false;
+} else {
+    file.nextElementSibling.textContent = "";
+}
+
+// Check for supported image formats (JPG, JPEG, PNG)
+if (!["image/jpeg", "image/jpg", "image/png"].includes(file.files[0].type)) {
+    file.nextElementSibling.textContent = "Only JPG, JPEG, and PNG formats are allowed.";
+    filereader.onloadstart = () => {
+        file.value = "";  // Clear the file input if format is not supported
+        return false;
+    }
+    return false;
+}
+
+return true;
+
       }
 
       function validateCausevideo(file){
-        let videosize = 128000000;
+        let videosize = 128000000;  // Max size set to 128MB (which is 128,000,000 bytes)
         let uploadedvideosize = file.files[0].size;
-        if(uploadedvideosize > videosize){
-        file.nextElementSibling.textContent = "Video size should below 39MB";
-            file.value = "";
-            return false;
-        }
-        else{
-          file.nextElementSibling.textContent = "";
-        }
-        return true;
+
+// Check for video size greater than 39MB (128MB as in your code)
+    if (uploadedvideosize > videosize) {
+        file.nextElementSibling.textContent = "Video size should be below 39MB";  // Show size error
+        file.value = "";  // Clear the file input
+      return false;
+    } else {
+      file.nextElementSibling.textContent = "";
+    }
+
+// Check for supported video format (only mp4 allowed)
+if (file.files[0].type !== "video/mp4") {
+    file.nextElementSibling.textContent = "Only MP4 video format is allowed.";  // Show format error
+    file.value = "";  // Clear the file input if format is not supported
+    return false;
+}
+
+return true;
+
       }
 </script>
 

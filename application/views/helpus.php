@@ -842,9 +842,9 @@ function shareCause(url, title, imgurl) {
     <!-- Beneficiary Section -->
     <div class="col-md-3 justify-content-start col-sm-12 d-flex ">
         <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px;">
-            <p style="margin: 0;">This fundraiser will benefit</p>
+            <p style="margin: 0;">Your contributions will benefit</p>
             <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->name) ?></strong>
-            <p style="margin: 0;">from</p>
+            <!-- <p style="margin: 0;">from</p> -->
         </div>
         
     </div>
