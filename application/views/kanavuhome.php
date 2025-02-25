@@ -848,13 +848,24 @@
     <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
 
   </div><br>
-
-  <div class="container">
+<!-- Fundraiser Cards with Fixed Size -->  <!--kani-->
+  <div class="container pt-4">
   <div class="row" id="fundraiserCards">
     <?php if (!empty($fundraisers)): ?>
         <?php 
+        // Sort fundraisers by progress percentage in ascending order
+        // Function to calculate the progress percentage
+        function getProgressPercentage($fundraiser) {
+            return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+        }
+
+        // Sort the fundraisers by progress percentage in ascending order
+        usort($fundraisers, function($a, $b) {
+            return getProgressPercentage($a) <=> getProgressPercentage($b);
+        });
+
         // Show only first 3 fundraisers initially
-        $displayedFundraisers = array_slice($fundraisers, 0, 3);
+        $displayedFundraisers  = array_slice($fundraisers, 0, 3);
         foreach ($displayedFundraisers as $fundraiser): 
             // Set a fixed dummy image if the cover image is empty or does not exist
             $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
@@ -863,27 +874,49 @@
         ?>
             <div class="col-12 col-lg-4 col-md-6 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                 <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                    <div class="card fixed-card">
+                    <div class="card h-100 fixed-card">
+                        <!-- Fixed Height for Image -->
                         <img src="<?= $imageSrc ?>" 
                             width="316px" height="230px" 
-                            class="card-img-top fixed-card-img img-placeholder">
+                            class="card-img-top fixed-card-img p-2 img-placeholder">
                         <div class="card-body d-flex flex-column">
-                            <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="card-text text-muted mb-0">for <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                                <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                            <!-- Cause Heading with overflow handling -->
+                            <div class="flex-grow-1" style="min-height: 100px;">
+                                <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                    <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
+                                </p>
                             </div>
-                            <p class="card-text">
-                                <strong>
-                                    ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
-                                </strong>
-                            </p>
-                            <div class="progress mb-2">
-                                <?php
-                                $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-                                ?>
-                                <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+        <!--kani-->
+  <!-- Category and Created By in a separate flexbox -->
+        <div class="d-flex justify-content-between align-items-center">
+    <p class="card-text text-muted mb-0 text-truncate" style="max-width: 60%; flex-shrink: 1;">
+        Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+    </p>
+    <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;">
+        <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
+    </button>
+</div>
+
+<!-- Progress bar and Raised Amount in a separate flexbox -->
+<?php
+// Calculate progress percentage for this fundraiser
+$progress_percentage = getProgressPercentage($fundraiser);
+?>
+<div class="flex-grow-1 mt-2" style="min-height: 80px;">
+    <p class="card-text">
+        <strong>
+            ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
+        </strong>
+    </p>
+    <div class="progress mb-2">
+        <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+</div>
+
+                          
+                            
+
+                            <!-- Donate Button in a separate flexbox to ensure proper alignment -->
                             <div class="d-flex align-items-center mt-auto">
                                 <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
                                     <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
@@ -903,6 +936,10 @@
         <p class="text-center">No fundraisers available at the moment.</p>
     <?php endif; ?>
   </div>
+</div>
+
+  
+ <!--kani start alignment-->
 
   <!-- See More Button -->
   <!-- See More Button -->
@@ -1255,105 +1292,116 @@ function shareCause(url, title, imgurl) {
   </div>
 
   <!-- Donation Modal -->
-<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header border-0">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- Donation Form -->
-          <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
-  <!-- Hidden fields to store cause ID and user ID -->
-  <input type="hidden" name="cause_id" id="cause_id" value="">
-  <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
+  <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Donation Form -->
+        <form id="donationForm" method="POST" autocomplete="off" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+          <!-- Hidden fields to store cause ID and user ID -->
+          <input type="hidden" name="cause_id" id="cause_id" value="">
+          <input type="hidden" name="user_id" id="user_id" value="">
 
-  <!-- Donation Form Fields -->
-  <div class="text-center">
-    <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
-  </div>
-  <div class="text-center">
-    <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
-  </div>
+          <!-- Donation Form Fields -->
+          <div class="text-center mb-3">
+            <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%">
+          </div>
+          <div class="text-center mb-3">
+            <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="HDFC QR Code" width="50%">
+          </div>
 
-  <div class="text-center mt-2">
-    <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
-  </div>
+          <div class="text-center mt-2">
+            <h5 class="modal-title text-danger fw-bold" id="donationModalLabel">Make a Secure Donation</h5>
+          </div>
 
-  <!-- Currency and Amount -->
-  <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
-    <label for="currency" class="visually-hidden">Currency Type</label>
-    <div class="custom-dropdown">
-  <select class="form-control" name="currency_type" id="currency" required>
-    <option value="" disabled selected>Select Currency</option>
-    <option>INR</option>
-    <option>USD</option>
-  </select>
+          <!-- Currency and Amount -->
+          <div class="mb-3 row">
+            <div class="col-md-5 offset-md-1">
+              <label for="currency" class="form-label"></label>
+              <select class="form-select" name="currency_type" id="currency" required>
+                <option value="" disabled selected>Select Currency</option>
+                <option>INR</option>
+                <option>USD</option>
+              </select>
+            </div>
+            <div class="col-md-5">
+              <label for="amount" class="form-label"></label>
+              <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>
+              <p id="error5" class="text-danger small mt-1"></p>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email ID</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Enter your EmailID*" required>
+            <p id="error7" class="text-danger small mt-1"></p>
+          </div>
+
+          <!-- Name -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" required>
+            <p id="error6" class="text-danger small mt-1"></p>
+          </div>
+
+          <!-- City -->
+          <div class="mb-3">
+            <label for="donorcity" class="form-label">City</label>
+            <input type="text" name="city" class="form-control" id="donorcity" maxlength="40" placeholder="Enter Your City*" required>
+            <p id="error8" class="text-danger small mt-1"></p>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" required>
+            <p id="error3" class="text-danger small mt-1"></p>
+          </div>
+
+          <!-- Transaction ID -->
+          <div class="mb-3">
+            <label for="transactionid" class="form-label">Transaction ID</label>
+            <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction ID*" required>
+            <p id="error4" class="text-danger small mt-1"></p>
+          </div>
+
+          <!-- Confirm Button -->
+          <div class="d-flex justify-content-center">
+            <button id="donatenowbtn" type="submit" class="btn btn-danger fw-bold w-50 rounded-3">
+              Confirm Payment ₹
+            </button>
+          </div>
+        </form>
+
+        <!-- Terms and Privacy Policy -->
+        <p class="text-center small mt-2">By continuing, you agree to our <a href="<?= base_url('/terms_of_use') ?>">Terms of Service</a> & <a href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a></p>
+      </div>
+    </div>
+  </div>
 </div>
-    <div style="width: 42%; margin-left: 2%;">
-      <label for="amount" class="visually-hidden">Amount</label>
-      <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>
-      <p id="error5" style="color: red; margin: 5px 0 0; font-size: 0.9em;"></p>
-    </div>
-  </div>
 
-  <!-- Phone Number -->
-  <div class="form-group ms-4">
-  <label for="name" class="form-label">Name</label>
-    <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" style="width:95%;" required>
-    <p id="error6" style="color:red; margin-top: 5px;"></p>
-    </div>
-  <div class="form-group ms-4">
-    <label for="phone" class="form-label">Phone Number</label>
-    <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" style="width:95%;" required>
-    <p id="error3" style="color:red; margin-top: 5px;"></p>
-  </div>
-  <div class="form-group ms-4">
-    <label for="phone" class="form-label">Email ID</label>
-    <input type="email" name="email" class="form-control" id="email"  placeholder="Enter your EmailID*" style="width:95%;" required>
-    <p id="error7" style="color:red; margin-top: 5px;"></p>
-  </div>
-  
-
-  <!-- Transaction ID -->
-  <div class="form-group ms-4">
-    <label for="transactionid" class="form-label">Transaction ID</label>
-    <input type="text" name="transactionid" class="form-control" id="transactionid" maxlength="12" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
-    <p id="error4" style="color:red; margin-top: 5px;"></p>
-  </div>
-
-  <!-- Continue Button -->
-  <div class="d-flex justify-content-center">
-    <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
-      Continue to Pay ₹
-    </button>
-  </div>
-</form>
-
-          <!-- Terms and Privacy Policy -->
-          <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
-        </div>
+<!-- Donation Success Modal -->
+<div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-danger text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="donationSuccessLabel">Donation Verification</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Thanks for donating to us!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="donationRedirectBtn">OK</button>
       </div>
     </div>
   </div>
+</div>
 
-  
-  <div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered ">
-      <div class="modal-content bg-red-modal">
-        <div class="modal-header">
-          <h5 class="modal-title" id="donationSuccessLabel">Donation Verification</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Thanks for donating us</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="donationRedirectBtn">OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 <!--login alert modal-->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">

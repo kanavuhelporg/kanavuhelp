@@ -888,7 +888,6 @@
     
   </nav>
 
-
   <!-- <div class="donate_img mt-5 pt-4 text-center">
     <img src="<?= base_url('assets/img/fundimage.jpg') ?>"
       style="height: 400px;" class="img-fluid">
@@ -984,7 +983,10 @@
                   <div class="form-group row">
                     <label for="created_by" class="col-sm-4 col-form-label">Created by:<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <input type="text" id="created_by" name="created_by" class="form-control my-2" placeholder="Created_by" required>
+
+
+                      
+                      <input type="text" id="created_by" name="created_by" class="form-control my-2" placeholder="Created by" required>
                       <span id="created_by_error" class="text-danger"></span>
                     </div>
                   </div>
@@ -1286,7 +1288,6 @@
     </div>
   </div>
 
-
   <?php if ($this->session->flashdata('otp_sent')): ?>
     <script>
       // Automatically trigger the OTP modal when the page loads
@@ -1505,7 +1506,6 @@
         }); 
         
       });
-
 
       // Continue to Step 3
       document.getElementById("continueToStep3").addEventListener("click", () => {
@@ -1780,45 +1780,99 @@
           errorElement.textContent = "Please upload only 5 images to ensure a smooth and efficient process!";
           return false;
         } */
-        let imagesize = 2000000;
-        let uploadedimagesize = file.files[0].size;
-        if(uploadedimagesize > imagesize){
-        file.nextElementSibling.textContent = "Image size should below 2MB";
-            file.value = "";
-            return false;
-        }
-        else{
-          file.nextElementSibling.textContent = "";
-        }
-        
-        if (!file) {
-          file.nextElementSibling.textContent = "Upload a cover image.";
-          return false;
-        }
+      /*  let imagesize = 2000000;
+let uploadedimagesize = file.files[0].size;
 
-       /*  if (!["image/jpeg", "image/png", "image/svg+xml"].includes(file.type)) {
-          file.nextElementSibling.textContent = "Only JPG, PNG, and SVG formats are allowed.";
-          return false;
-        } */
-        file.nextElementSibling.textContent = "";
-        return true;
+// Check if image size is greater than 2MB
+if (uploadedimagesize > imagesize) {
+    file.nextElementSibling.textContent = "Image size should be below 2MB";
+    file.value = "";  // Clear the file input
+    return false;
+} else {
+    file.nextElementSibling.textContent = "";
+}
+
+// Check if a file is selected
+if (!file) {
+    file.nextElementSibling.textContent = "Upload a cover image.";
+    return false;
+}
+
+// Validate image formats (JPG, JPEG, PNG only)
+ // Only show error message if format is not valid
+if (!["image/jpeg", "image/jpg", "image/png"].includes(file.type)) {
+    file.nextElementSibling.textContent = "Only JPG, JPEG, and PNG formats are allowed.";
+    return false;
+} 
+console.log(file.type);  // Check what the MIME type is being returned
+
+if (!["image/jpeg", "image/png"].includes(file.type) && !file.type.endsWith("/jpg")) {
+    file.nextElementSibling.textContent = "Only JPG, JPEG, and PNG formats are allowed.";
+    return false;
+}
+
+
+return true;*/
+
+let filereader = new FileReader();
+    let fileuploadread = filereader.readAsDataURL(file.files[0]);
+    let imagesize = 2000000;
+    let uploadedimagesize = file.files[0].size;
+
+// Check for image size greater than 2MB
+    if(uploadedimagesize > imagesize){
+        file.nextElementSibling.textContent = "Image size should be below 2MB";
+        filereader.onloadstart = () => {
+        file.value = "";  // Clear the file input
+      return false;
+    }
+    return false;
+} else {
+    file.nextElementSibling.textContent = "";
+}
+
+// Check for supported image formats (JPG, JPEG, PNG)
+if (!["image/jpeg", "image/jpg", "image/png"].includes(file.files[0].type)) {
+    file.nextElementSibling.textContent = "Only JPG, JPEG, and PNG formats are allowed.";
+    filereader.onloadstart = () => {
+        file.value = "";  // Clear the file input if format is not supported
+        return false;
+    }
+    return false;
+}
+
+return true;
+
+
+
+
       }
 
       function validateCausevideo(file){
-        let videosize = 128000000;
-        let uploadedvideosize = file.files[0].size;
-        if(uploadedvideosize > videosize){
-        file.nextElementSibling.textContent = "Video size should below 39MB";
-            file.value = "";
-            return false;
-        }
-        else{
-          file.nextElementSibling.textContent = "";
-        }
-        return true;
+        let videosize = 128000000;  // Max size set to 128MB (which is 128,000,000 bytes)
+let uploadedvideosize = file.files[0].size;
+
+// Check for video size greater than 39MB (128MB as in your code)
+if (uploadedvideosize > videosize) {
+    file.nextElementSibling.textContent = "Video size should be below 39MB";  // Show size error
+    file.value = "";  // Clear the file input
+    return false;
+} else {
+    file.nextElementSibling.textContent = "";
+}
+
+// Check for supported video format (only mp4 allowed)
+if (file.files[0].type !== "video/mp4") {
+    file.nextElementSibling.textContent = "Only MP4 video format is allowed.";  // Show format error
+    file.value = "";  // Clear the file input if format is not supported
+    return false;
+}
+
+return true;
+
+
       }
   </script>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
