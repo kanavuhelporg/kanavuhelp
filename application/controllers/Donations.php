@@ -16,8 +16,10 @@ class Donations extends CI_Controller {
         // $this->load->config('email');
         $this->config->load('email');
         $this->load->helper('url');
+
     }
     public function filterCauses() {
+
         if($this->input->is_ajax_request()){
          $category = $this->input->post("category");
          $fundraisers = $this->UserModel->filterCauseswithcategory($category);   
@@ -111,5 +113,8 @@ class Donations extends CI_Controller {
       }
       $this->session->set_userdata("fundraisers",$fundraisers);
       }
-    }    
+    } 
+    
 ?>
+
+

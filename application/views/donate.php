@@ -438,103 +438,143 @@
     <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Agriculture',4)">Agriculture</button>
   </div>
   </div>
-<!-- Fundraiser Cards with Fixed Size -->  <!--kani-->
+<!-- Fundraiser Cards with Fixed Size  -->
 <div class="container pt-4">
-  <div class="row" id="fundraiserCards">
-    <?php if (!empty($fundraisers)): ?>
-        <?php 
-        // Sort fundraisers by progress percentage in ascending order
-        // Function to calculate the progress percentage
-        function getProgressPercentage($fundraiser) {
-            return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-        }
+    <div class="row g-4" id="fundraiserCards">
+        <?php if (!empty($fundraisers)): ?>
+            <?php 
+            // Sort fundraisers by progress percentage in ascending order
+            function getProgressPercentage($fundraiser) {
+                return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+            }
 
-        // Sort the fundraisers by progress percentage in ascending order
-        usort($fundraisers, function($a, $b) {
-            return getProgressPercentage($a) <=> getProgressPercentage($b);
-        });
+            usort($fundraisers, function($a, $b) {
+                return getProgressPercentage($a) <=> getProgressPercentage($b);
+            });
 
-        // Show only first 3 fundraisers initially
-        $displayedFundraisers  = array_slice($fundraisers, 0, 3);
-        foreach ($displayedFundraisers as $fundraiser): 
-            // Set a fixed dummy image if the cover image is empty or does not exist
-            $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
-                        ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) 
-                        : base_url('assets/img/funddonate.jpg'); // Dummy image path
-        ?>
-            <div class="col-12 col-lg-4 col-md-6 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
-                <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                    <div class="card h-100 fixed-card">
-                        <!-- Fixed Height for Image -->
-                        <img src="<?= $imageSrc ?>" 
-                            width="316px" height="230px" 
-                            class="card-img-top fixed-card-img p-2 img-placeholder">
-                        <div class="card-body d-flex flex-column">
-                            <!-- Cause Heading with overflow handling -->
-                            <div class="flex-grow-1" style="min-height: 100px;">
-                                <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                    <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
-                                </p>
-                            </div>
+            $displayedFundraisers = $fundraisers;  // No limit, show all
+            $lastFundraiser = end($fundraisers);
+            
+            foreach ($displayedFundraisers as $fundraiser): 
+                $is_goal_reached = $fundraiser->raised_amount >= $fundraiser->amount;
+                $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
+                            ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) 
+                            : base_url('assets/img/funddonate.jpg'); // Dummy image path
+            ?>
+                <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>" id="fundraiser-card-<?= $fundraiser->id ?>">
+                    <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
+                        <div class="card h-100 fixed-card">
+                            <!-- Fixed Height for Image -->
+                            <img src="<?= $imageSrc ?>" 
+                                 width="316px" height="230px" 
+                                 class="card-img-top fixed-card-img p-2 img-placeholder">
+                            <div class="card-body d-flex flex-column">
+                                <!-- Cause Heading with overflow handling -->
+                                <div class="flex-grow-1" style="min-height: 100px;">
+                                    <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                        <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
+                                    </p>
+                                </div>
 
-                            <!-- Category and Created By in a separate flexbox -->
-                            <div class="d-flex justify-content-between align-items-center">
-    <p class="card-text text-muted mb-0 text-truncate" style="max-width: 60%; flex-shrink: 1;">
-        Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
-    </p>
-    <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;">
-        <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
-    </button>
-</div>
+                                <!-- Category and Created By in a separate flexbox -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="card-text text-muted mb-0 text-truncate" 
+                                       style="max-width: 60%; flex-shrink: 1; overflow: hidden; 
+                                              display: -webkit-box; -webkit-box-orient: vertical; 
+                                              -webkit-line-clamp: 2; line-height:1.5; 
+                                              height:3em; word-break: break-word; white-space: normal;">
+                                        Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+                                    </p>
+                                    <button type="button" class="btn card_button text-muted ms-auto" 
+                                            style="border: none; background: none; box-shadow: none;">
+                                        <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
+                                    </button>
+                                </div>
 
-<!-- Progress bar and Raised Amount in a separate flexbox -->
-<?php
-// Calculate progress percentage for this fundraiser
-$progress_percentage = getProgressPercentage($fundraiser);
-?>
-<div class="flex-grow-1 mt-2" style="min-height: 60px;">
-    <p class="card-text">
-        <strong>
-            ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
-        </strong>
-    </p>
-    <div class="progress mb-2">
-        <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-</div>
+                                <!-- Progress bar and Raised Amount -->
+                                <?php
+                                $progress_percentage = getProgressPercentage($fundraiser);
+                                ?>
+                                <div class="flex-grow-1 mt-2" style="min-height: 60px;">
+                                    <p class="card-text">
+                                        <strong>
+                                            ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
+                                        </strong>
+                                    </p>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
 
-                            <!-- Donate Button in a separate flexbox to ensure proper alignment -->
-                            <div class="d-flex align-items-center mt-auto">
-                                <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
-                                    <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+                                <!-- Donate Now or Complete Fundraiser Button -->
+                                <div class="d-flex align-items-center mt-auto">
+                                    <?php if ($is_goal_reached): ?>
+                                        <!-- Show "Complete Fundraiser" if raised amount >= goal 
+                                        <button type="button" class="btn donate_btn no-hover" disabled>Complete Fundraiser</button>-->
+                                        <!-- Add a "Completed" badge -->
+                                        <span class="badge bg-success ms-2">Completed</span>
+                                    <?php else: ?>
+                                        <!-- Show "Donate Now" if goal not reached -->
+                                        <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+                                    <?php endif; ?>
                                     <i class="bi bi-share ms-2" 
-                                    onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
-                                                       '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
-                                                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
+                                       onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
+                                                          '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
+                                                          '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
                                     </i>
-                                <?php endif; ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                </a>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p class="text-center">No fundraisers available at the moment.</p>
-    <?php endif; ?>
-  </div>
+                    </a>
+                </div>
+
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="text-center">No fundraisers available at the moment.</p>
+        <?php endif; ?>
+    </div>
 </div>
+<script>
+  
+    document.addEventListener('DOMContentLoaded', function () {
+    const fundraiserCards = document.querySelectorAll('.card-container');
+    
+    fundraiserCards.forEach(function (card) {
+        const fundraiserId = card.id.split('-')[2];  // Extract fundraiser ID
+        
+        // Check if the goal is reached dynamically
+        fetch(`/check_goal_status/${fundraiserId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.goal_reached) {
+                    const donateButton = card.querySelector('.donate_btn');
+                    donateButton.textContent = "Complete Fundraiser";
+                    donateButton.disabled = true;
+                    const badge = card.querySelector('.badge');
+                    badge.textContent = "Completed";
+                }
+            });
+    });
+});
+
+</script>
+
+
+
+
+
+
+
     <!--kani-->
 
 
-     <!-- See More Button -->
+     <!-- See More Button 
     <?php if (count($fundraisers) > 3): ?>
     <div class="text-center mt-3">
         <button id="seeMoreBtn" class="btn" style="background-color: white; border: 1px solid black; color: red; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" onclick="loadMoreFundraisers()">See More Causes</button>
     </div>
   <?php endif; ?>
-  </div>
+  </div>-->
 
   
   
@@ -620,7 +660,7 @@ $.ajax({
 
 
 function loadMoreFundraisers() {
-    const fundraiserContainer = document.getElementById('fundraiserCards');
+    /* const fundraiserContainer = document.getElementById('fundraiserCards');
     console.log(allFundraisers)
     // Display next 3 fundraisers
     const nextFundraisers = allFundraisers.slice(currentIndex, currentIndex + 3);
@@ -663,18 +703,90 @@ function loadMoreFundraisers() {
         </div>` : ""}
       `;
       fundraiserContainer.appendChild(card);
-    });
+    }); 
     
     currentIndex += 3;
     
     // Hide the button if all fundraisers are shown
     if (currentIndex >= allFundraisers.length) {
       document.getElementById('seeMoreBtn').style.display = 'none';
-    }
+    }*/
+
+    if (fundraiser.raised_amount >= fundraiser.amount) {
+  alert('This fundraiser is now complete!');
+}
+
+    const fundraiserContainer = document.getElementById('fundraiserCards');
+console.log(allFundraisers);
+
+// Display next 3 fundraisers
+const nextFundraisers = allFundraisers.slice(currentIndex, currentIndex + 3);
+nextFundraisers.forEach(fundraiser => {
+  // Use the same logic to set the dummy image if the cover image is missing
+  const imageSrc = fundraiser.cover_image 
+    ? '<?= base_url('assets/individualform_img/') ?>' + fundraiser.cover_image 
+    : '<?= base_url('assets/img/blogs.png') ?>'; // Dummy image for missing images
+
+  const card = document.createElement('div');
+  card.classList.add('col-12', 'col-lg-4', 'col-md-6', 'mb-4', 'd-flex', 'card-container');
+  card.setAttribute('data-category', fundraiser.category);
+  card.innerHTML = `
+    <a href="${'<?= base_url('helpus/') ?>' + fundraiser.name.replace(' ', '-') + '-' + fundraiser.id}" style="text-decoration:none;color:black">
+      <div class="card h-100 fixed-card">
+        <img src="${imageSrc}" width="316px" height="230px" class="card-img-top fixed-card-img img-placeholder" alt="no image">
+        <div class="card-body d-flex flex-column">
+          <p class="card-title">${fundraiser.cause_heading}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <p class="card-text text-muted mb-0">Created by ${fundraiser.created_by}</p>
+            <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;">${fundraiser.category}</button>
+          </div>
+          <p class="card-text">
+            <strong>₹ ${new Intl.NumberFormat().format(Math.min(fundraiser.raised_amount, fundraiser.amount))} raised out of ₹ ${new Intl.NumberFormat().format(fundraiser.amount)}</strong>
+          </p>
+          <div class="progress mb-2">
+            <div class="progress-bar" style="width: ${(fundraiser.raised_amount / fundraiser.amount) * 100}%" role="progressbar" aria-valuenow="${(fundraiser.raised_amount / fundraiser.amount) * 100}" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="d-flex align-items-center mt-auto">
+            ${
+              // Check if the fundraiser is complete
+              fundraiser.raised_amount >= fundraiser.amount 
+              ? `
+                <p class="text-success">Fundraiser Complete</p>
+              `
+              : `
+                ${fundraiser.days_left >= 0 && !fundraiser.hide_donation_button ? `
+                  <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(${fundraiser.id})">Donate Now</a>
+                  <i class="bi bi-share ms-2" onclick="shareCause('${'<?= base_url('helpus/') ?>' + fundraiser.name.replace(' ', '-') + '-' + fundraiser.id}', '${fundraiser.cause_heading}', '${imageSrc}')"></i>
+                ` : ''}
+              `
+            }
+          </div>
+        </div>
+      </div>
+    </a>
+  `;
+
+  fundraiserContainer.appendChild(card);
+});
+
+// Update the current index
+currentIndex += 3;
+
+// Hide the "See More Causes" button if all fundraisers are shown
+if (currentIndex >= allFundraisers.length) {
+  const seeMoreBtn = document.getElementById('seeMoreBtn');
+  if (seeMoreBtn) {
+    seeMoreBtn.style.display = 'none';
+  }
+}
+
+
+
+
   }
 </script>
 <script>
-function setCauseId(causeId) {
+function setCauseId(causeId){
   document.getElementById('cause_id').value = causeId;
 }
 function shareCause(url, title, imgurl) {
@@ -1036,7 +1148,8 @@ function shareCause(url, title, imgurl) {
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
-  const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value);
+ /*  const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value); */
+ const isName = (value) => /^[a-zA-Z\s.]+$/.test(value) && value.trim().length >= 3;
   const isCity = (value) => /^([A-Za-z0-9_()\s]{3,})+$/.test(value);
   const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field

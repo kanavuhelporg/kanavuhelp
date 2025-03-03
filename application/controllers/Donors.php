@@ -131,5 +131,5 @@ class Donors extends CI_Controller {
             }
             // echo $this->email->print_debugger(); // Print debug info if sending fails
         }
-  }
+}
 ?>    

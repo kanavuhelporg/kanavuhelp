@@ -352,7 +352,7 @@ class kanavuhelp extends CI_Controller
 
     public function donate()
     {
-        $data['category'] = $this->UserModel->get_category();
+       $data['category'] = $this->UserModel->get_category();
         $data['fundraisers'] = $this->UserModel->get_cause_details();
 
         // Check if user is logged in using CodeIgniter session
@@ -360,7 +360,7 @@ class kanavuhelp extends CI_Controller
         $data['is_logged_in'] = $is_logged_in;
 
         // Initialize an array to store active fundraisers
-        $active_fundraisers = [];
+        /*  $active_fundraisers = [];
 
         // Loop through each fundraiser to check status and calculate days_left
         foreach ($data['fundraisers'] as $fundraiser) {
@@ -385,7 +385,50 @@ class kanavuhelp extends CI_Controller
         $data['fundraisers'] = $active_fundraisers;
 
         $this->load->view('donate', $data);
-        $this->session->set_userdata("entry",1);
+        $this->session->set_userdata("entry",1); */
+/* kani */
+        $active_fundraisers = [];
+
+foreach ($data['fundraisers'] as $fundraiser) {
+    $end_date = new DateTime($fundraiser->end_date);
+    $current_date = new DateTime();
+    $date_diff = $end_date->diff($current_date);
+
+    // Calculate the number of days left
+    $days_left = $date_diff->days;
+    
+    // Check if the fundraiser is expired (end_date passed) or fully funded
+   /*  $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount; */
+//only expire date 
+    $is_expired = ($date_diff->invert === 0 && $days_left > 0);
+
+    // Fundraiser is considered "active" even if fully funded (we only mark it as expired if the end date has passed)
+    if ($fundraiser->raised_amount >= $fundraiser->amount) {
+        // If the fundraiser is fully funded, we allow the donation button to stay visible but change the text
+        $fundraiser->hide_donation_button = false;
+        $fundraiser->donation_button_text = 'Complete Donation';  // New button text for fully funded campaigns
+    } elseif (!$is_expired) {
+        // If the fundraiser is still active and not expired
+        $fundraiser->days_left = $days_left;
+        $fundraiser->hide_donation_button = false; // Show the donation button
+        $fundraiser->donation_button_text = 'Donate Now'; // Default text for donation button
+    }
+
+    // Add the fundraiser to the active list
+     if (!$is_expired) {
+        $active_fundraisers[] = $fundraiser;
+    } 
+}
+
+// Update the fundraisers in the data
+$data['fundraisers'] = $active_fundraisers;
+
+// Pass data to the view
+$this->load->view('donate', $data);
+$this->session->set_userdata("entry", 1);
+/* kani */
+
+        
     }
 
     public function blogs()
