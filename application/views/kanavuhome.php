@@ -526,15 +526,15 @@
       /* Adjust the text color if needed for better contrast */
     }
 
-    @media (max-width: 1400px) {
+     @media (max-width: 1400px) {
       .carousel-item .row {
         margin-left: 0;
         margin-right: 0;
       }
 
-    }
+    } 
 
-    @media (max-width: 767px) {
+     @media (max-width: 767px) {
 
       /* carousel */
       .carousel-item {
@@ -545,7 +545,7 @@
         height: 100%;
         width: 100%;
         object-fit: cover;
-      }
+      } 
       
       /* carousel text */
       .imgtext1,
@@ -780,6 +780,16 @@
     font-size: 14px;
     color: #666;
   }
+  /* kani*/
+  .row {
+    --bs-gutter-x: -4rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1* var(--bs-gutter-y));
+    margin-right: calc(-.5* var(--bs-gutter-x));
+    margin-left: calc(-.5* var(--bs-gutter-x));
+} 
   </style>
 </head>
 
@@ -872,7 +882,7 @@
                         ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) 
                         : base_url('assets/img/funddonate.jpg'); // Dummy image path
         ?>
-            <div class="col-12 col-lg-4 col-md-6 mb-4 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
+            <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                 <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
                     <div class="card h-100 fixed-card">
                         <!-- Fixed Height for Image -->
@@ -887,7 +897,7 @@
                                 </p>
                             </div>
         <!--kani-->
-  <!-- Category and Created By in a separate flexbox -->
+  <!-- Category and Created By in a separate flexbox 
         <div class="d-flex justify-content-between align-items-center">
     <p class="card-text text-muted mb-0 text-truncate" style="max-width: 60%; flex-shrink: 1;">
         Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
@@ -895,14 +905,38 @@
     <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;">
         <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
     </button>
+</div>-->
+<div class="d-flex justify-content-between align-items-center">
+    <p class="card-text text-muted mb-0 text-truncate" 
+       style="max-width: 60%; flex-shrink: 1; overflow: hidden; 
+              display: -webkit-box; -webkit-box-orient: vertical; 
+              -webkit-line-clamp: 2; line-height:1.5; 
+              height:3em; word-break: break-word; white-space: normal;">
+        Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+    </p>
+    <button type="button" class="btn card_button text-muted ms-auto" 
+            style="border: none; background: none; box-shadow: none;">
+        <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
+    </button>
 </div>
+
+
+ <!-- <div class="d-flex justify-content-between align-items-center">
+    <p class="card-text text-muted mb-0" style="max-width: 60%; flex-shrink: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+        Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+    </p>
+    <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;">
+        <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
+    </button>
+</div>  -->
+
 
 <!-- Progress bar and Raised Amount in a separate flexbox -->
 <?php
 // Calculate progress percentage for this fundraiser
 $progress_percentage = getProgressPercentage($fundraiser);
 ?>
-<div class="flex-grow-1 mt-2" style="min-height: 80px;">
+<div class="flex-grow-1 mt-2" style="min-height: 60px;">
     <p class="card-text">
         <strong>
             ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
@@ -912,11 +946,7 @@ $progress_percentage = getProgressPercentage($fundraiser);
         <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
 </div>
-
-                          
-                            
-
-                            <!-- Donate Button in a separate flexbox to ensure proper alignment -->
+<!-- Donate Button in a separate flexbox to ensure proper alignment -->
                             <div class="d-flex align-items-center mt-auto">
                                 <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
                                     <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
@@ -937,8 +967,9 @@ $progress_percentage = getProgressPercentage($fundraiser);
     <?php endif; ?>
   </div>
 </div>
+<!-- kani1 -->
 
-  
+
  <!--kani start alignment-->
 
   <!-- See More Button -->
@@ -1341,12 +1372,34 @@ function shareCause(url, title, imgurl) {
             <p id="error7" class="text-danger small mt-1"></p>
           </div>
 
-          <!-- Name -->
+          <!-- Name 
           <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" required>
             <p id="error6" class="text-danger small mt-1"></p>
-          </div>
+          </div>-->
+
+          <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" required>
+    <p id="error6" class="text-danger small mt-1"></p>
+</div>
+
+<script>
+    /* document.getElementById('name').addEventListener('input', function(e) {
+        // Replace invalid characters with an empty string
+        this.value = this.value.replace(/[^a-zA-Z\s.]/g, '');
+
+        // Optional: Display error message if needed
+        const errorMessage = document.getElementById('error6');
+        if (this.value.length > 0 && !/^[a-zA-Z\s.]*$/.test(this.value)) {
+            errorMessage.textContent = "Name can only contain letters, spaces, and dots.";
+        } else {
+            errorMessage.textContent = "";
+        }
+    }); */
+</script>
+
 
           <!-- City -->
           <div class="mb-3">
@@ -1533,18 +1586,22 @@ const isCurrencySelected = (value) => value !== '';
 const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value);
 const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
 const isTransactionIdValid = (value) => /^[1-9]\d{11}$/.test(value);
-const isNameValid = (value) => /^[a-zA-Z]{3,}\s*$/.test(value);
-const isEmailValid = (value) => /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
+/* const isNameValid = (value) => /^[a-zA-Z]{3,}\s*$/.test(value); */
+const isNameValid = (value) => /^[a-zA-Z\s.]+$/.test(value) && value.trim().length >= 3;
 
+const isEmailValid = (value) => /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
 
 // Attach real-time validation for each field
 window.onload = () => {
   validateField('currency', 'error5', isCurrencySelected, 'Select a currency.', 'change');
   validateField('amount', 'error8', isAmountValid, 'Amount must be greater than 0.');
-  validateField('name', 'error6', isNameValid, 'Name must be at least 3 characters long.');
+  validateField('name', 'error6', isNameValid, 'Enter Valid Name');
   validateField('email', 'error7', isEmailValid, 'Enter a valid Email ID.');
   validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
   validateField('transactionid', 'error4', isTransactionIdValid, 'Transaction ID must be exactly 12 digits.');
+
+
+
 };
 
 // Final validation and form submission
@@ -1564,7 +1621,7 @@ document.getElementById('donationForm').onsubmit = function (event) {
     }
   }
   if (!isNameValid(document.getElementById('name').value)) {
-    document.getElementById('error6').innerText = 'Name must be at least 3 characters long.';
+    document.getElementById('error6').innerText = 'Enter Valid Name';
     isValid = false;
   }
   if (!isEmailValid(document.getElementById('email').value)) {

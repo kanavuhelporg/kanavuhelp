@@ -57,6 +57,17 @@ class DonorprofileModel extends CI_Model {
         return true;
       }
   }
+//kani
+// Fetch all fundraisers from the database
+public function getAllFundraisers() {
+  $query = $this->db->get('individualform'); // Assuming "individualform" holds fundraiser data
+  return $query->result();
+}
+//Function to check if the fundraiser's goal has been met
+public function isGoalReached($fundraiser) {
+  return $fundraiser->raised_amount >= $fundraiser->amount;
+}
+
 }
 
 ?>
