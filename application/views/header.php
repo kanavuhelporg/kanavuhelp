@@ -84,7 +84,6 @@
         <li class="nav-item"><a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a></li>
         <?php endif; ?>
       </ul>
-
       <div class="d-flex align-items-center ms-auto">
         <?php if ($this->session->userdata('Kanavu_userId')): ?>
         <div class="d-flex align-items-center">

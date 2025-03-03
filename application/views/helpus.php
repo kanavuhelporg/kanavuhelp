@@ -417,7 +417,9 @@
               <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
             </li>
             <li class="nav-item">
-              <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
+              <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>"><?php if ($this->session->userdata('Kanavu_userId')) {echo "View Dashboard";}else {
+                echo "Sign In";
+              } ?></a>
             </li>
           </ul><br>
           <div class="d-flex align-items-center ms-auto">
@@ -473,8 +475,10 @@
                $documents = ["$fundraiser->cause_image1","$fundraiser->cause_image2","$fundraiser->cause_image3","$fundraiser->cause_image4","$fundraiser->cause_image5"];
                $count = count($documents);
                $slide = 0;
+               $checkempty = 0;
                for($i = 0;$i < $count ; $i++ ){ ?> 
                <?php if($documents[$i] == ""){ 
+                       $checkempty +=1;
                        continue;
                     }?>
                     <div class='carousel-item <?= $slide == 0 ? 'active' : '';?>' data-bs-interval="2000">
@@ -485,7 +489,15 @@
                </script>
         <?php ++$slide; } ?>
         </div>
-
+        <?php if($slide < 1) {?>
+          <script>
+             document.getElementById("carouselCausesIndicators").style.display = "none";
+          </script>
+        <?php } else {?>
+          <script>
+          document.getElementById("carouselCausesIndicators").style.display = "block";
+          </script>
+        <?php }?>    
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselCausesIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>

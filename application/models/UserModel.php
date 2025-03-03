@@ -97,8 +97,8 @@ class UserModel extends CI_Model
 		return true;
 	}
 
-	public function causeDetailsforupdate($userid){
-        $query = $this->db->query("SELECT * FROM individualform WHERE user_id = $userid");
+	public function causeDetailsforupdate($cause_id){
+        $query = $this->db->query("SELECT * FROM individualform WHERE id = $cause_id");
 		return $query->row();
 	}
 
@@ -109,7 +109,7 @@ class UserModel extends CI_Model
 
 	public function store3($data,$id)
 	{
-		$this->db->where('user_id', $id); // Specify the condition
+		$this->db->where('id', $id); // Specify the condition
 		$success = $this->db->update('individualform', $data); // Update the table with data
 
 		// Debug: Log the query and errors
@@ -133,6 +133,21 @@ class UserModel extends CI_Model
 		else{
         $success = $this->db->insert("cause_status_data",$data); 
 		}
+		// Debug: Log the query and errors
+		if ($success) {
+			return true;
+		} else {
+			echo $this->db->last_query(); // Print the query for debugging
+			echo $this->db->error();      // Print any database errors
+			return false;
+		}
+	}
+
+	public function store5($data,$id)
+	{
+		$this->db->where('id', $id); // Specify the condition
+		$success = $this->db->update('individualform', $data); // Update the table with data
+
 		// Debug: Log the query and errors
 		if ($success) {
 			return true;

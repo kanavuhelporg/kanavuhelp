@@ -912,6 +912,7 @@
                 <section id="step-2" class="form-step col-12">
                   <h2>Update Cause Details</h2>
                   <input hidden type="text" name="step" value="steptwo">
+                  <input hidden type="number" name="cause_id" value="<?=$causedetails->id?>">
                   <div class="row my-3">
                     <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
                     <div class="col-md-8">

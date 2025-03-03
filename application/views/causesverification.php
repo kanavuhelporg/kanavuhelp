@@ -327,7 +327,7 @@ unset($_SESSION["emailerrorstatus"]);
 
             </div><!-----------side-bar-end-------------->
 
-            <div class="col-md-10 h-100"><!-----------main-dashboard------------------------->
+            <div style="overflow:auto" class="col-md-10 h-100"><!-----------main-dashboard------------------------->
 
                 <div style="overflow:auto" class="mt-3 px-4"><!----------------table--------------->
                     <table class="table table-borderless">
@@ -603,47 +603,47 @@ function createarr($noofpages){
 
                                    <div class="form-group">
                                        <label>Name</label>
-                                       <input type="text" name="name" id="donationName" class="form-control">
+                                       <input type="text" name="name" id="donationName" class="form-control" required>
                                    </div>
 
                                    <div class="form-group">
                                        <label>Email</label>
-                                       <input type="email" name="email" id="donationEmail" class="form-control">
+                                       <input type="email" name="email" id="donationEmail" class="form-control" readonly required>
                                    </div>
 
                                    <div class="form-group">
                                        <label>Mobile</label>
-                                       <input type="text" name="mobile" id="donationMobile" class="form-control">
+                                       <input type="text" name="mobile" id="donationMobile" class="form-control" required>
                                    </div>
 
                                    <div class="form-group">
                                        <label>Amount</label>
-                                       <input type="text" name="amount" id="donationAmount" class="form-control">
+                                       <input type="number" name="amount" id="donationAmount" class="form-control" required>
                                    </div>
 
                                    <div class="form-group">
                                        <label>Location</label>
-                                       <input type="text" name="location" id="donationLocation" class="form-control">
+                                       <input type="text" name="location" id="donationLocation" class="form-control" required>
                                    </div>
 
                                    <div class="form-group">
                                        <label>Age</label>
-                                       <input type="number" name="age" id="donationAge" class="form-control">
+                                       <input type="number" name="age" id="donationAge" class="form-control" required>
                                    </div>
 
                                    <div class="form-group">
                                        <label>End Date</label>
-                                       <input type="date" name="end_date" id="donationEndDate" class="form-control">
+                                       <input type="date" name="end_date" id="donationEndDate" class="form-control" required>
                                    </div>
 
                                    <div class="form-group">
                                        <label>Cause Heading</label>
-                                       <input type="text" name="cause_heading" id="donationCauseHeading" class="form-control">
+                                       <input type="text" name="cause_heading" id="donationCauseHeading" class="form-control" required>
                                    </div>
 
                                    <div class="form-group">
                                        <label>Cause Description</label>
-                                       <textarea name="cause_description" id="donationCauseDescription" class="form-control"></textarea>
+                                       <textarea name="cause_description" id="donationCauseDescription" class="form-control" required></textarea>
                                    </div>
 
                                    <!--<div class="form-group">
@@ -655,18 +655,18 @@ function createarr($noofpages){
                        </div>
                    </div>
                      <!--  <label> For Updating Cover Image</label>
-                       <input type="file" name="cover_image" id="donationCoverImage" class="form-control">
+                       <input type="file" name="cover_image" id="donationCoverImage" class="form-control" required>
                        <small class="form-text text-muted">Leave empty if you don't want to change the image.</small>
                    </div>-->
 
                                    <div class="form-group">
                                        <label>Created by</label>
-                                       <input type="text" name="username" id="donationUserName" class="form-control">
+                                       <input type="text" name="username" id="donationUserName" class="form-control" required>
                                    </div>
 
                                    <div class="form-group">
                                        <label>Raised Amount</label>
-                                       <input type="text" name="raised_amount" id="donationRaisedAmount" class="form-control">
+                                       <input type="text" name="raised_amount" id="donationRaisedAmount" class="form-control" required>
                                    </div>
 
                                    <div class="form-group">
