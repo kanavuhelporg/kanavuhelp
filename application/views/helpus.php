@@ -288,7 +288,6 @@
       #cause-heading{
         word-wrap:break-word;
         font-size:24px;
-        line-height:1.5;
       }
 
     /* donate  image below nav bar */
@@ -370,9 +369,7 @@
     padding: 0;
     width: 100% !important;
 }
-.line-height-custom {
-    line-height: 1.5; /* Adjust line gap */
-}
+
 
 /* .carousel-inner > .carousel-item {
     -webkit-transition: 0s !important;
@@ -400,7 +397,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" style="color:#EB2D32"></button>
         </div>
         <div class="offcanvas-body">
-         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
           <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
             <li class="nav-item dropdown">
                <a class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start A Fundraiser</a>
@@ -424,7 +421,7 @@
                 echo "Sign In";
               } ?></a>
             </li>
-          </ul><br> 
+          </ul><br>
           <div class="d-flex align-items-center ms-auto">
   <?php if ($this->session->userdata('Kanavu_userId')): ?>
     <div class="d-flex align-items-center">
@@ -462,7 +459,7 @@
     <div class="row mt-4">
         <div class="col-lg-7">
             <!-- Cause Heading -->
-            <h4 id="cause-heading" class="line-height-custom"><?= htmlspecialchars($fundraiser->cause_heading) ?></h4>
+            <h1 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
             
 <!-- Cause Description -->
 
@@ -473,7 +470,7 @@
         <div id="carousel-indicators" class="carousel-indicators">
 
         </div>
-        <div id="cause-slides" class="carousel-inner">
+        <div id="cause-slides" class="carousel-inner" >
         <?php
                $documents = ["$fundraiser->cause_image1","$fundraiser->cause_image2","$fundraiser->cause_image3","$fundraiser->cause_image4","$fundraiser->cause_image5"];
                $count = count($documents);
@@ -517,113 +514,15 @@
               <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
               <?php
               if(!empty($fundraiser->Cause_video_link)){ 
-             // echo "<div class='mt-1'>$fundraiser->Cause_video_link</div>"; heading hide
+              echo "<div class='mt-1'>$fundraiser->Cause_video_link</div>";
               }
               ?> 
 
               <?php
               if(!empty($fundraiser->Cause_video_link_eng)){ 
-             // echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";heading hide
+              echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
               }
               ?> 
-
-              <?php
-              
-             //self video upload  
-             
-if (!empty($fundraiser->Cause_video_link)) {
-    $video_link = $fundraiser->Cause_video_link;
-    
-    // Check if the video is a direct embed code (iframe, object, etc.)
-    if (strpos($video_link, '<iframe') !== false || strpos($video_link, '<embed') !== false) {
-        // Directly output the embed code heading hide
-      //  echo "<div class='mt-1'>$video_link</div>";
-    } else {
-        // Handle URLs (e.g., YouTube, Vimeo) and convert them into an embed format
-        if (preg_match('/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $video_link, $matches)) {
-            // YouTube link found, create the embed link
-            $video_id = $matches[1];
-            echo "<div class='mt-1'>
-                    <iframe width='560' height='315' src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
-                  </div>";
-        } elseif (preg_match('/vimeo\.com\/(\d+)/', $video_link, $matches)) {
-            // Vimeo link found, create the embed link
-            $video_id = $matches[1];
-            echo "<div class='mt-1'>
-                    <iframe width='560' height='315' src='https://player.vimeo.com/video/$video_id' frameborder='0' allowfullscreen></iframe>
-                  </div>";
-        } elseif (preg_match('/(?:http(s)?:\/\/)?([\w]+\.)+[\w]+(\/[^\s]*)?/', $video_link)) {
-            // Self-hosted video (we'll assume the URL is valid)
-            echo "<div class='mt-1'>
-                    <video width='560' height='315' controls>
-                        <source src='$video_link' type='video/mp4'>
-                        Your browser does not support the video tag.
-                    </video>
-                  </div>";
-        } else {
-            // If the link is neither a YouTube, Vimeo, nor self-hosted video
-            echo "<div class='mt-1'>
-                    <a href='$video_link' target='_blank'>Watch the video</a>
-                  </div>";
-        }
-    }
-}
-
-?>
-              
-              
-            
-
-       <!-- correct code for youtue shorts Or video -->              
-<?php
-      if (!empty($fundraiser->Cause_video_link_eng)) {
-        // If the video is a direct embed code (iframe, object, etc.)
-        if (strpos($fundraiser->Cause_video_link_eng, '<iframe') !== false || strpos($fundraiser->Cause_video_link_eng, '<embed') !== false) {
-            // Directly output the embed code heading hide
-           // echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
-        } else {
-            // Optionally handle URLs (e.g., YouTube, Vimeo) and convert them into an embed format
-            // Example: Convert a YouTube link to an embed link (assuming the URL is valid)
-            if (preg_match('/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $fundraiser->Cause_video_link_eng, $matches)) {
-                $video_id = $matches[1];
-                echo "<div class='mt-1'>
-                        <iframe width='560' height='315' src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
-                      </div>";
-            } 
-            // Check for YouTube Shorts URL (https://youtube.com/shorts/video_id)
-            else if (preg_match('/youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/', $fundraiser->Cause_video_link_eng, $matches)) {
-                $video_id = $matches[1];
-                echo "<div class='mt-1'>
-                        <iframe width='360' height='640' src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
-                      </div>";
-            } 
-            // Handle self-hosted videos (videos uploaded directly to the server)
-            else if (preg_match('/uploads\/videos\/(.+)/', $fundraiser->Cause_video, $matches)) {
-                // Assuming uploaded videos are stored in 'uploads/videos/'
-                $video_url = base_url('uploads/videos/' . $matches[1]); 
-                echo "<div class='mt-1'>
-                        <video width='560' height='315' controls>
-                            <source src='$video_url' type='video/mp4'>
-                            Your browser does not support the video tag.
-                        </video>
-                      </div>";
-            }
-            // Handle other video types (e.g., Vimeo, Dailymotion) or just show the link
-            else {
-                echo "<div class='mt-1'>
-                        <a href='{$fundraiser->Cause_video_link_eng}' target='_blank'>Watch the video</a>
-                      </div>";
-            }
-        }
-    }  
-?>
-
-
-
-
-          
-                    
-                       
             <!-------------------cause-video-end--------------------------------->
             
             <div>
