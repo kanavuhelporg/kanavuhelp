@@ -880,6 +880,12 @@
       text-align: center;
       /* Center-align items for better UX */
     }
+    
+    #form_selected_text {
+    font-weight: bold;
+}
+
+
   }
 </style>
 
@@ -1061,7 +1067,7 @@
                   <div class="row my-3">
                     <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
                     <div class="col-md-8">
-                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: <?= $this->session->userdata('form_selected_text'); ?>" readonly>
+                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="<?= $this->session->userdata('form_selected_text'); ?>" readonly>
                     </div>
                   </div>
 
@@ -1402,7 +1408,8 @@
        const emailerrorElement = document.getElementById("email-error");
        const phoneerrorElement = document.getElementById("phone-error");
        
-       let validatename = /^([A-Za-z\s]{1,49})+$/;
+      // let validatename = /^([A-Za-z\s.]{1,49})+$/;
+      let validatename = /^[a-zA-Z\s.]+$/;
        let validatelocation = /^(?![0-9]*$)[a-zA-Z0-9\s]+$/;
        let validateemail = /^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/;
        let validatephone = /^([0-9]{10})+$/;
@@ -1411,14 +1418,12 @@
         return false;          
        }
 
-       if(created_by == "" || !created_by.match(validatename)){
-          createdbyerrorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
-          return false;
+        if (!created_by.match(validatename)) {
+            createdbyerrorElement.textContent = "Name can only contain letters, spaces, and dots.";
+            return false;
+        } else {
+            createdbyerrorElement.textContent = "";
         }
-        else{
-          createdbyerrorElement.textContent = ""
-        }
-        
         if(name == "" || !name.match(validatename)){
           nameerrorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
           return false;
@@ -1625,7 +1630,7 @@
       function validateName() {
         const nameInput = document.getElementById("name").value.trim();
         const errorElement = document.getElementById("name-error");
-        const nameRegex = /^([A-Za-z\s'-]{1,49})+$/;
+        const nameRegex = /^([A-Za-z\s'-.])+$/;
         if (!nameInput) {
           errorElement.textContent = "Enter your name.";
           return false;
@@ -1648,7 +1653,7 @@
         function validateCreatedby() {
         const nameInput = document.getElementById("created_by").value.trim();
         const errorElement = document.getElementById("created_by_error");
-        const nameRegex = /^([A-Za-z\s'-]{1,49})+$/;
+        const nameRegex = /^([A-Za-z\s'-.])+$/;
         if (!nameInput) {
           errorElement.textContent = "Enter your name.";
           return false;

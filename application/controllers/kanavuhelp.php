@@ -1089,5 +1089,22 @@ $this->session->set_userdata("entry", 1);
         $this->load->view('fundraiserprofile', array("fundraisers"=>$fundraisers));
     }
 
+
+ // Method to handle the delete request
+ public function deleteCause() {
+    if($this->input->is_ajax_request()){
+        $id = $this->input->post("id");
+    // Call the model method to delete the cause by user_id
+    $result = $this->UserModel->deleteCause($id);  // Ensure the method matches the model function
+   // return $id;
+     // Return a JSON response indicating success or failure
+     if ($result) {
+         echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
+     } else {
+         echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
+     } 
+}
+ }
+
 }
 ?>

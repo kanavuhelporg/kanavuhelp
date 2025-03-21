@@ -376,7 +376,12 @@ unset($_SESSION["emailerrorstatus"]);
                                             </button>&nbsp;&nbsp;
                                             <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->user_id;?>','<?php echo $donation->username;?>',<?php echo $donation->Verifyemailcount;?>,<?php echo $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
                                                 Status
+                                            </button>&nbsp;&nbsp;
+                                             <!-- Add Delete Button -->
+                                            <button onclick="deleteCause(<?php echo $donation->id; ?>)" class="btn btn-danger fw-bold">
+                                                Delete
                                             </button>
+                                           
                                         </td>
                                     </tr>
                                     
@@ -866,6 +871,56 @@ $.ajax({
         }
         });    
     }
+    /* dashboard delete id 
+    function deleteDonation(donationId) {
+    if (confirm("Are you sure you want to delete this record?")) {
+        // Send AJAX request to delete the donation
+        $.ajax({
+            url: '<?php echo site_url("Donations/deleteDonation"); ?>',  // Controller method for deleting donation
+            type: 'POST',
+            data: { donation_id: donationId },
+            success: function(response) {
+                if (response === "Record deleted successfully") {
+                    // If deletion is successful, remove the row from the table
+                    $('tr').has('button[onclick="deleteDonation(' + donationId + ')"]').remove();
+                    alert(response);  // Show success message
+                } else {
+                    alert(response);  // Show error message
+                }
+            },
+            error: function() {
+                alert('Error occurred while deleting the record.');
+            }
+        });
+    }
+}*/
+
+function deleteCause(user_id) {
+    if (confirm('Are you sure you want to delete this cause? User ID: ' + user_id)) {
+        $.ajax({
+            url: '<?php echo site_url('kanavuhelp/deleteCause'); ?>',
+            type: 'POST',
+            data: {
+                "id": user_id  // Ensure variable names match
+            },
+            success: function(response) {
+                // Parse the JSON response
+                var result = JSON.parse(response);
+
+                if (result.status === 'success') {
+                    alert('Cause deleted successfully.');
+                    // Remove the table row with the given user_id
+                    $('#cause_row_' + user_id).remove(); 
+                } else {
+                    alert('Error deleting the cause: ' + result.message);
+                }
+            },error:function(err){
+                 console.log(err)
+            }
+        });
+    }
+}
+
                 </script>
 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
