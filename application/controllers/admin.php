@@ -469,4 +469,24 @@ class admin extends CI_Controller
         $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
         $this->load->view('contact_submissions',array("submissions"=>$enquirieslist,"newcounts"=>$totalenquiries,"initialindex"=>$initialindex,"sno"=>$counts)); 
     }
+
+    // Controller method to delete cause kani 
+    public function deleteCause() {
+        // Check if the ID is passed
+        $id = $this->input->post('user_id');
+        
+        if (!$id) {
+            echo 'error';
+            return;
+        }
+
+        // Call the model method to delete the cause
+        $deleteSuccess = $this->Admin_model->deleteCause($id);
+
+        if ($deleteSuccess) {
+            echo 'success'; // Respond with 'success' if the deletion was successful
+        } else {
+            echo 'error'; // Respond with 'error' if something went wrong
+        }
+    }
 }
