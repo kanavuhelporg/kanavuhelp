@@ -531,46 +531,45 @@
               
              //self video upload  
              
-if (!empty($fundraiser->Cause_video_link)) {
-    $video_link = $fundraiser->Cause_video_link;
-    
-    // Check if the video is a direct embed code (iframe, object, etc.)
-    if (strpos($video_link, '<iframe') !== false || strpos($video_link, '<embed') !== false) {
-        // Directly output the embed code heading hide
-      //  echo "<div class='mt-1'>$video_link</div>";
-    } else {
-        // Handle URLs (e.g., YouTube, Vimeo) and convert them into an embed format
-        if (preg_match('/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $video_link, $matches)) {
-            // YouTube link found, create the embed link
-            $video_id = $matches[1];
-            echo "<div class='mt-1'>
-                    <iframe width='560' height='315' src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
-                  </div>";
-        } elseif (preg_match('/vimeo\.com\/(\d+)/', $video_link, $matches)) {
-            // Vimeo link found, create the embed link
-            $video_id = $matches[1];
-            echo "<div class='mt-1'>
-                    <iframe width='560' height='315' src='https://player.vimeo.com/video/$video_id' frameborder='0' allowfullscreen></iframe>
-                  </div>";
-        } elseif (preg_match('/(?:http(s)?:\/\/)?([\w]+\.)+[\w]+(\/[^\s]*)?/', $video_link)) {
-            // Self-hosted video (we'll assume the URL is valid)
-            echo "<div class='mt-1'>
-                    <video width='560' height='315' controls>
-                        <source src='$video_link' type='video/mp4'>
-                        Your browser does not support the video tag.
-                    </video>
-                  </div>";
-        } else {
-            // If the link is neither a YouTube, Vimeo, nor self-hosted video
-            echo "<div class='mt-1'>
-                    <a href='$video_link' target='_blank'>Watch the video</a>
-                  </div>";
-        }
-    }
-}
-
-?>
+             
+             if (!empty($fundraiser->Cause_video_link)) {
+              $video_link = $fundraiser->Cause_video_link;
               
+              // Check if the video is a direct embed code (iframe, object, etc.)
+              if (strpos($video_link, '<iframe') !== false || strpos($video_link, '<embed') !== false) {
+                  // Directly output the embed code
+                  echo "<div class='mt-1'>$video_link</div>";
+              } else {
+                  // Handle URLs (e.g., YouTube, Vimeo) and convert them into an embed format
+                  if (preg_match('/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $video_link, $matches)) {
+                      // YouTube link found, create the embed link
+                      $video_id = $matches[1];
+                      echo "<div class='mt-1'>
+                              <iframe width='560' height='315' src='https://www.youtube.com/embed/$video_id?autoplay=1' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+                          </div>";
+                  } elseif (preg_match('/vimeo\.com\/(\d+)/', $video_link, $matches)) {
+                      // Vimeo link found, create the embed link
+                      $video_id = $matches[1];
+                      echo "<div class='mt-1'>
+                              <iframe width='560' height='315' src='https://player.vimeo.com/video/$video_id' frameborder='0' allowfullscreen></iframe>
+                            </div>";
+                  } elseif (preg_match('/(?:http(s)?:\/\/)?([\w]+\.)+[\w]+(\/[^\s]*)?/', $video_link)) {
+                      // Self-hosted video (we'll assume the URL is valid)
+                      echo "<div class='mt-1'>
+                              <video width='560' height='315' controls>
+                                  <source src='$video_link' type='video/mp4'>
+                                  Your browser does not support the video tag.
+                              </video>
+                            </div>";
+                  } else {
+                      // If the link is neither a YouTube, Vimeo, nor self-hosted video
+                      echo "<div class='mt-1'>
+                              <a href='$video_link' target='_blank'>Watch the video</a>
+                            </div>";
+                  }
+              }
+          }
+?>          
               
             
 
