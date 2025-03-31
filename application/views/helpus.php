@@ -515,7 +515,7 @@
 
      <img id="cause-image" 
      src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" 
-     style="width: 100%;" 
+     style="width: 100%;height:400" 
      alt="no image" 
      class="img-fluid mt-3">
 
