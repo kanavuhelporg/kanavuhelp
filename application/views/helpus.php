@@ -459,7 +459,7 @@
     <div class="row mt-4">
         <div class="col-lg-7">
             <!-- Cause Heading -->
-            <h1 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
+            <h4 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?></h4>
             
 <!-- Cause Description -->
 <!-- video loaded in topsection -->
@@ -568,13 +568,13 @@
               <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
               <?php
               if(!empty($fundraiser->Cause_video_link)){ 
-              echo "<div class='mt-1'>$fundraiser->Cause_video_link</div>";
+            //  echo "<div class='mt-1'>$fundraiser->Cause_video_link</div>";
               }
               ?> 
 
               <?php
               if(!empty($fundraiser->Cause_video_link_eng)){ 
-              echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
+             // echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
               }
               ?> 
 
