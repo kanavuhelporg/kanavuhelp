@@ -288,7 +288,6 @@
       #cause-heading{
         word-wrap:break-word;
         font-size:24px;
-        line-height:1.5;
       }
 
     /* donate  image below nav bar */
@@ -370,9 +369,7 @@
     padding: 0;
     width: 100% !important;
 }
-.line-height-custom {
-    line-height: 1.5; /* Adjust line gap */
-}
+
 
 /* .carousel-inner > .carousel-item {
     -webkit-transition: 0s !important;
@@ -400,7 +397,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" style="color:#EB2D32"></button>
         </div>
         <div class="offcanvas-body">
-         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
           <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
             <li class="nav-item dropdown">
                <a class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start A Fundraiser</a>
@@ -424,7 +421,7 @@
                 echo "Sign In";
               } ?></a>
             </li>
-          </ul><br> 
+          </ul><br>
           <div class="d-flex align-items-center ms-auto">
   <?php if ($this->session->userdata('Kanavu_userId')): ?>
     <div class="d-flex align-items-center">
@@ -462,7 +459,7 @@
     <div class="row mt-4">
         <div class="col-lg-7">
             <!-- Cause Heading -->
-            <h4 id="cause-heading" class="line-height-custom"><?= htmlspecialchars($fundraiser->cause_heading) ?></h4>
+            <h1 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?></h1>
             
 <!-- Cause Description -->
 <!-- video loaded in topsection -->
@@ -527,7 +524,7 @@
         <div id="carousel-indicators" class="carousel-indicators">
 
         </div>
-        <div id="cause-slides" class="carousel-inner">
+        <div id="cause-slides" class="carousel-inner" >
         <?php
                $documents = ["$fundraiser->cause_image1","$fundraiser->cause_image2","$fundraiser->cause_image3","$fundraiser->cause_image4","$fundraiser->cause_image5"];
                $count = count($documents);
@@ -571,13 +568,13 @@
               <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
               <?php
               if(!empty($fundraiser->Cause_video_link)){ 
-             // echo "<div class='mt-1'>$fundraiser->Cause_video_link</div>"; heading hide
+              echo "<div class='mt-1'>$fundraiser->Cause_video_link</div>";
               }
               ?> 
 
               <?php
               if(!empty($fundraiser->Cause_video_link_eng)){ 
-             // echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";heading hide
+              echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
               }
               ?> 
 
@@ -679,7 +676,7 @@
 
           
                     
-                       
+                    
             <!-------------------cause-video-end--------------------------------->
             
             <div>
