@@ -1352,25 +1352,26 @@ function shareCause(url, title, imgurl) {
           <div class="mb-3 row">
             <div class="col-md-5 offset-md-1">
               <label for="currency" class="form-label"></label>
-              <select class="form-select" name="currency_type" id="currency" required>
+              <!-- <select class="form-select" name="currency_type" id="currency" required>
                 <option value="" disabled selected>Select Currency</option>
                 <option>INR</option>
                 <option>USD</option>
-              </select>
+              </select> -->
             </div>
-            <div class="col-md-5">
-              <label for="amount" class="form-label"></label>
+           
+          </div>
+
+          <div class="mb-3">
+              <label for="amount" class="form-label">Enten Amount</label>
               <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>
               <p id="error5" class="text-danger small mt-1"></p>
             </div>
-          </div>
-
-          <!-- Email -->
+          <!-- Email 
           <div class="mb-3">
             <label for="email" class="form-label">Email ID</label>
             <input type="email" name="email" class="form-control" id="email" placeholder="Enter your EmailID*" required>
             <p id="error7" class="text-danger small mt-1"></p>
-          </div>
+          </div>-->
 
           <!-- Name 
           <div class="mb-3">
@@ -1582,21 +1583,21 @@ function validateField(fieldId, errorId, validationFn, errorMessage, eventType =
 }
 
 // Validation functions
-const isCurrencySelected = (value) => value !== '';
+//const isCurrencySelected = (value) => value !== '';
 const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value);
 const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
 const isTransactionIdValid = (value) => /^[1-9]\d{11}$/.test(value);
 /* const isNameValid = (value) => /^[a-zA-Z]{3,}\s*$/.test(value); */
 const isNameValid = (value) => /^[a-zA-Z\s.]+$/.test(value) && value.trim().length >= 3;
 
-const isEmailValid = (value) => /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
+//const isEmailValid = (value) => /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
 
 // Attach real-time validation for each field
 window.onload = () => {
-  validateField('currency', 'error5', isCurrencySelected, 'Select a currency.', 'change');
+ // validateField('currency', 'error5', isCurrencySelected, 'Select a currency.', 'change');
   validateField('amount', 'error8', isAmountValid, 'Amount must be greater than 0.');
   validateField('name', 'error6', isNameValid, 'Enter Valid Name');
-  validateField('email', 'error7', isEmailValid, 'Enter a valid Email ID.');
+ // validateField('email', 'error7', isEmailValid, 'Enter a valid Email ID.');
   validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
   validateField('transactionid', 'error4', isTransactionIdValid, 'Transaction ID must be exactly 12 digits.');
 
@@ -1610,10 +1611,10 @@ document.getElementById('donationForm').onsubmit = function (event) {
   let isValid = true;
 
   // Perform final validation
-  if (!isCurrencySelected(document.getElementById('currency').value)) {
+ /*  if (!isCurrencySelected(document.getElementById('currency').value)) {
     document.getElementById('error5').innerText = 'Select a currency.';
     isValid = false;
-  }
+  } */
   if (document.getElementById('amount').value !== '') {
     if (!isAmountValid(document.getElementById('amount').value)) {
       document.getElementById('error8').innerText = 'Amount must be greater than 0.';
@@ -1624,10 +1625,10 @@ document.getElementById('donationForm').onsubmit = function (event) {
     document.getElementById('error6').innerText = 'Enter Valid Name';
     isValid = false;
   }
-  if (!isEmailValid(document.getElementById('email').value)) {
+ /*  if (!isEmailValid(document.getElementById('email').value)) {
     document.getElementById('error7').innerText = 'Enter a valid Email ID.';
     isValid = false;
-  }
+  } */
   if (!isPhoneNumberValid(document.getElementById('phone').value)) {
     document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
     isValid = false;
