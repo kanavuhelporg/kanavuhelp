@@ -909,25 +909,25 @@ function shareCause(url, title, imgurl) {
           <div class="mb-3 row">
             <div class="col-md-5 offset-md-1">
               <label for="currency" class="form-label"></label>
-              <select class="form-select" name="currency_type" id="currency" required>
+             <!--  <select class="form-select" name="currency_type" id="currency" required>
                 <option value="" disabled selected>Select Currency</option>
                 <option>INR</option>
                 <option>USD</option>
-              </select>
+              </select>  to hide currency selection -->
             </div>
-            <div class="col-md-5">
-              <label for="amount" class="form-label"></label>
+            <div class="mb-3">
+              <label for="amount" class="form-label">Enten Amount</label>
               <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>
               <p id="error5" class="text-danger small mt-1"></p>
             </div>
           </div>
 
-          <!-- Email -->
+          <!-- Email 
           <div class="mb-3">
             <label for="email" class="form-label">Email ID</label>
             <input type="email" name="email" class="form-control" id="email" placeholder="Enter your EmailID*" required>
             <p id="error7" class="text-danger small mt-1"></p>
-          </div>
+          </div>  to remove mailid -->
 
           <!-- Name -->
           <div class="mb-3">
@@ -1102,12 +1102,12 @@ function shareCause(url, title, imgurl) {
     });
   }
 
-  function fetchDonordata(email) {
-    let emailid = email.trim();
+  function fetchDonordata(phone) {
+    let phoneid = phone.trim();
     $.ajax({
       type:"post",
       url:"donors/fetchDonordata",
-      data:{"email":emailid},
+      data:{"phone":phoneid},
       success:(result)=>{
         console.log(result)
         let fetchingtimeout = "";
@@ -1144,20 +1144,20 @@ function shareCause(url, title, imgurl) {
   }
 
   // Validation functions
-  const isCurrencySelected = (value) => value !== '';
+  //const isCurrencySelected = (value) => value !== '';
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
  /*  const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value); */
  const isName = (value) => /^[a-zA-Z\s.]+$/.test(value) && value.trim().length >= 3;
   const isCity = (value) => /^([A-Za-z0-9_()\s]{3,})+$/.test(value);
-  const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
+  //const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field
   window.onload = () => {
     validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
     validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
     validateField('name', 'error6', isName, 'Enter Valid Name');
-    validateField('email', 'error7', isEmail, 'Enter Valid EmailID');
+   // validateField('email', 'error7', isEmail, 'Enter Valid EmailID');
     validateField('donorcity', 'error8', isCity, 'Enter Valid City');
     validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
     validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
@@ -1172,15 +1172,15 @@ function shareCause(url, title, imgurl) {
     document.getElementById('error3').innerText = '';
     document.getElementById('error4').innerText = '';
     document.getElementById('error6').innerText = '';
-    document.getElementById('error7').innerText = '';
+   //document.getElementById('error7').innerText = '';
     document.getElementById('error8').innerText = '';
     let isValid = true;
 
     // Perform final validation
-  if (!isCurrencySelected(document.getElementById('currency').value)) {
+  /* if (!isCurrencySelected(document.getElementById('currency').value)) {
       document.getElementById('error5').innerText = 'Please select a currency.';
       isValid = false;
-    }
+    } */
   if(document.getElementById('amount').value!==''){
     if (!isAmountValid(document.getElementById('amount').value)  ) {
       document.getElementById('error5').innerText = 'Amount must be greater than 0.';
@@ -1199,12 +1199,12 @@ function shareCause(url, title, imgurl) {
     isValid = false;
   }
 
-  if(!isEmail(document.getElementById('email').value))
+ /*  if(!isEmail(document.getElementById('email').value))
   {
     document.getElementById('error7').innerText = 'Enter Valid EmailID';
     isValid = false;
   }
-
+ */
     if (!isPhoneNumberValid(document.getElementById('phone').value)) {
       document.getElementById('error3').innerText = 'Please Enter Correct Phone number';
       isValid = false;
