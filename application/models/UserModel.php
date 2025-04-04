@@ -328,19 +328,25 @@ class UserModel extends CI_Model
 	}
 
 	// Method to register user
-	public function registerUserCause($name, $email, $mobileNmuber)
+//	public function registerUserCause($name, $email, $mobileNmuber)
+ 	public function registerUserCause($name, $mobileNmuber)
 	{
 		// Insert user into the database and return the inserted data (e.g., userId)
 		$data = [
 			'name' => $name,
-			'email' => $email,
+			//'email' => $email,
 			'mobileNumber' => $mobileNmuber,
 			'category' => 'user',
 		];
 
 		$this->db->insert('user',$data);
 		return $this->db->insert_id(); // Return the last inserted user ID
-	}
+		
+	}  
+
+
+
+
 
 	// Method to get user data by ID
 	public function getUserById($userId)
