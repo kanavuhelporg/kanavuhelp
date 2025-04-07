@@ -77,7 +77,9 @@
         <li class="nav-item"><a id="individualpage" class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a></li>
         <li class="nav-item"><a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a></li>
         <li class="nav-item"><a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a></li>
+        <li class="nav-item"><a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a></li>
         <li class="nav-item"><a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a></li>
+        
         <?php if ($this->session->userdata('Kanavu_userId')): ?>
         <li class="nav-item"><a id="logoutpage" class="nav-link mx-lg-2" href="<?= base_url('/logout') ?>">Logout</a></li>
         <?php else: ?>
