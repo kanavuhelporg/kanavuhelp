@@ -921,7 +921,12 @@ function shareCause(url, title, imgurl) {
               <p id="error5" class="text-danger small mt-1"></p>
             </div>
           </div>
-
+            <!-- Transaction ID -->
+          <div class="mb-3">
+            <label for="transactionid" class="form-label">Transaction ID</label>
+            <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction ID*" required>
+            <p id="error4" class="text-danger small mt-1"></p>
+          </div>
           <!-- Email 
           <div class="mb-3">
             <label for="email" class="form-label">Email ID</label>
@@ -950,12 +955,7 @@ function shareCause(url, title, imgurl) {
             <p id="error3" class="text-danger small mt-1"></p>
           </div>
 
-          <!-- Transaction ID -->
-          <div class="mb-3">
-            <label for="transactionid" class="form-label">Transaction ID</label>
-            <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction ID*" required>
-            <p id="error4" class="text-danger small mt-1"></p>
-          </div>
+        
 
           <!-- Confirm Button -->
           <div class="d-flex justify-content-center">
