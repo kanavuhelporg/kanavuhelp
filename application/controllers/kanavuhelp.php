@@ -32,6 +32,8 @@ class kanavuhelp extends CI_Controller
         // $this->load->config('email');
         $this->config->load('email');
         $this->load->helper('url');
+        $this->data['currentPage'] = $this->uri->segment(1) ?: 'home';
+
     }
 
     public function index()
@@ -59,6 +61,8 @@ class kanavuhelp extends CI_Controller
             }
         }
 
+
+        
     $data['fundraisers'] = array_slice($active_fundraisers, 0, 10);
 
         $this->load->view('kanavuhome.php', $data);
@@ -349,7 +353,26 @@ class kanavuhelp extends CI_Controller
             echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your donation.']);
         }
     }
+/* donate fetch based on mobil num  
+public function fetchUserByMobile()
+{
+    $this->load->model('UserModel');
+    $mobile = $this->input->post('phoneno');
 
+    if (!$mobile) {
+        echo json_encode(['status' => 'error', 'message' => 'Mobile number is required.']);
+        return;
+    }
+
+    $userData = $this->UserModel->getUserByMobile($mobile);
+
+    if ($userData) {
+        echo json_encode(['status' => 'success', 'data' => $userData]);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'No user found with this mobile number.']);
+    }
+}
+*/
     public function donate()
     {
        $data['category'] = $this->UserModel->get_category();
@@ -433,7 +456,8 @@ $this->session->set_userdata("entry", 1);
 
     public function blogs()
     {
-        $this->load->view('blogs.php');
+       /*  $this->load->view('blogs.php'); */
+       redirect('https://kanavu.help/blog/', 'location', 301);
     }
     public function contactus()
     {
@@ -444,6 +468,55 @@ $this->session->set_userdata("entry", 1);
         $this->load->view('abouts.php');
     }
 
+/* sitemap adding start */
+public function sitemap()
+    {
+        header("Content-Type: application/xml");
+
+        $urls = [
+            [
+                'loc' => base_url(),
+                'lastmod' => date('Y-m-d'),
+                'changefreq' => 'daily',
+                'priority' => '1.0',
+                'image' => [
+                    'loc' => 'assets/img/Kanavu_help.png', // Relative path to logo
+                    'caption' => 'Kanavu Help Logo',
+                    'title' => 'Logo for Kanavu Help Homepage'
+                ]
+            ],
+            [
+                'loc' => base_url('about'),
+                'lastmod' => date('Y-m-d'),
+                'changefreq' => 'monthly',
+                'priority' => '0.8',
+                'image' => [
+                    'loc' => 'assets/img/Kanavu_help.png',
+                    'caption' => 'Kanavu Help Logo',
+                    'title' => 'Logo for About Page'
+                ]
+            ],
+            [
+                'loc' => base_url('contact'),
+                'lastmod' => date('Y-m-d'),
+                'changefreq' => 'weekly',
+                'priority' => '0.6',
+                'image' => [
+                    'loc' => 'assets/img/Kanavu_help.png',
+                    'caption' => 'Kanavu Help Logo',
+                    'title' => 'Logo for Contact Page'
+                ]
+            ]
+            // Add more URLs as needed
+        ];
+
+        $data['urls'] = $urls;
+        $this->load->view('sitemap', $data);
+    }
+
+
+
+/* sitemap adding end */
     public function helpus($fundraiser_id = null,$fundraiser_heading = null)
     {
         if ($fundraiser_id === null|| $fundraiser_heading== null) {

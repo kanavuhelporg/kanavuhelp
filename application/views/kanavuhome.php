@@ -27,7 +27,7 @@
       font-size: 1.3rem;
       /* Adjust the size of the share icon */
       cursor: pointer;
-      color: #E01A2B;
+      color: #ED3136;
       margin-left: auto;
       /* Pushes the share icon to the far right in its flex container */
     }
@@ -40,7 +40,7 @@
 
     /* login_button */
     .login-button {
-      background-color: #E01A2B;
+      background-color: #ED3136;
       color: white;
       font-size: 16px;
       padding: 8px 20px;
@@ -51,8 +51,8 @@
 
     /* start a kanavu button */
     .startkanavu-button {
-      border: 1px solid #E01A2B;
-      color: #E01A2B;
+      border: 1px solid #ED3136;
+      color: #ED3136;
       font-size: 16px;
       padding: 8px 20px;
       border-radius: 25px;
@@ -115,14 +115,14 @@
 
     .imgtext1 span,
     .imgtext2 span {
-      color: #EB2D32;
+      color: #ED3136;
       font-weight: bolder;
       font-size: 35px;
     }
 
     .btn-3,
     .btn-4 {
-      background-color: #EB2D32;
+      background-color: #ED3136;
       color: white;
       border-radius: 20px;
     }
@@ -164,15 +164,15 @@
     }
 
     .donate_btn {
-      border: 1px solid rgba(224, 26, 43, 1);
-      color: rgba(224, 26, 43, 1);
+      border: 1px solid #ED3136;
+      color: #ED3136;
       border-radius: 25px;
     }
 
     /* readmore_button in card */
     .readmore_btn {
-      border: 1px solid rgba(224, 26, 43, 1);
-      color: rgba(224, 26, 43, 1);
+      border: 1px solid #ED3136;
+      color: #ED3136;
       border-radius: 25px;
     }
 
@@ -297,7 +297,7 @@
       width: 100%;
       left: 0;
       right: 0;
-      background-color: #EB2D32;
+      background-color: #ED3136;
       /* margin-top: -100px; */
       color: #f0f0f0;
     }
@@ -802,7 +802,7 @@
     <div class="carousel-inner">
       <!-- Slide 1 -->
       <div class="carousel-item active">
-        <!-- <img src="<?= base_url('assets/img/1.svg') ?>" class="d-block w-100" alt="Image 1"> -->
+         <img src="<?= base_url('assets/img/old1.png') ?>" class="d-block w-100" alt="Image 1"> 
         <div class="imgtext1 mt-5 pt-5">
           <p>THE <strong>WORLD'S <br>PLATFORM</strong> FOR <br>
             <span>HELP</span>
@@ -813,7 +813,7 @@
               <!-- <li>Join Us in the Fight & Healing.</li><br> -->
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
+                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color:#ED3136 ; color: white; border: none;">
                     Start a Fundraiser
                   </button>
                 </a>
@@ -826,7 +826,7 @@
 <br>
       <!-- Slide 2 -->
       <div class="carousel-item">
-        <img src="<?= base_url('assets/img/2.svg') ?>" class="d-block w-100" alt="Image 2">
+        <img src="<?= base_url('assets/img/old2.png') ?>" class="d-block w-100" alt="Image 2">
         <div class="imgtext2 mt-5 pt-5">
           <p>WE ARE ON A MISSION TO <br>
             <span>HELP THE WORLD</span>
@@ -837,7 +837,7 @@
               <!-- <li>Join Us in the Fight & Healing.</li><br> -->
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
+                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color: #ED3136; color: white; border: none;">
                     Start a Fundraiser
                   </button>
                 </a>
@@ -851,7 +851,7 @@
   </div>
   <div class="container-xxl mt-5">
   
-    <div class="h4 text-center">BE THE REASON OF<span style="color:#EB2D32"> SOMEONE SMILES</span></div>
+    <div class="h4 text-center">BE THE REASON OF<span style="color:#ED3136"> SOMEONE SMILES</span></div>
     <div style="display: flex; justify-content: center;">
       <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
     </div>
@@ -884,11 +884,11 @@
         ?>
             <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                 <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                    <div class="card h-100 fixed-card">
+                    <div class="card h-100 fixed-card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;" >
                         <!-- Fixed Height for Image -->
                         <img src="<?= $imageSrc ?>" 
                             width="316px" height="230px" 
-                            class="card-img-top fixed-card-img p-2 img-placeholder">
+                            class="card-img-top fixed-card-img  img-placeholder" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                         <div class="card-body d-flex flex-column">
                             <!-- Cause Heading with overflow handling -->
                             <div class="flex-grow-1" style="min-height: 100px;">
@@ -914,10 +914,10 @@
               height:3em; word-break: break-word; white-space: normal;">
         Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
     </p>
-    <button type="button" class="btn card_button text-muted ms-auto" 
+   <!--  <button type="button" class="btn card_button text-muted ms-auto" 
             style="border: none; background: none; box-shadow: none;">
         <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
-    </button>
+    </button> -->
 </div>
 
 
@@ -942,19 +942,26 @@ $progress_percentage = getProgressPercentage($fundraiser);
             ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
         </strong>
     </p>
-    <div class="progress mb-2">
-        <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
+    <div class="progress mb-2" style="background-color: #f8d7da;"> <!-- light red background -->
+                                      <div class="progress-bar bg-danger" 
+                                          style="width: <?= $progress_percentage ?>%;" 
+                                          role="progressbar" 
+                                          aria-valuenow="<?= $progress_percentage ?>" 
+                                          aria-valuemin="0" 
+                                          aria-valuemax="100">
+                                      </div>
+                                  </div>
 </div>
 <!-- Donate Button in a separate flexbox to ensure proper alignment -->
                             <div class="d-flex align-items-center mt-auto">
                                 <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
-                                    <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
-                                    <i class="bi bi-share ms-2" 
+                                  <a href="#" class="btn bg-danger text-white" onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">Donate Now</a>
+                                    <i class="bi bi-share fs-4" 
                                     onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
                                                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                                                        '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
-                                    </i>
+                                   <div style="font-size: 0.8rem;">Share</div> 
+                                  </i>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -976,7 +983,7 @@ $progress_percentage = getProgressPercentage($fundraiser);
   <!-- See More Button -->
 <?php  if (!empty($fundraisers)): ?>   
 <div class="text-center mt-3">
-  <a href="<?= base_url('/donate') ?>" class="btn" style="background-color: white; border: 1px solid black; color: red; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+  <a href="<?= base_url('/donate') ?>" class="btn" style="background-color: white; border: 1px solid black; color: #ED3136; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     See More Causes
   </a>
 </div>
@@ -1081,14 +1088,18 @@ function shareCause(url, title, imgurl) {
         document.body.insertAdjacentHTML('beforeend', shareOptions);
     }
 }
-
+function openDonationModal() {
+    // Show the modal using Bootstrap's modal method
+    var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+    donationModal.show();
+}
 </script>
 
   <div class="position-relative" id="how-it-works-section">
     <div class="container-xxl ">
 
       <div class="h4 worktext" style="text-align:center;">START A FUNDRAISER IN <span
-          style="color:#EB2D32"> THREE SIMPLE STEPS</span></div>
+          style="color:#ED3136"> THREE SIMPLE STEPS</span></div>
     </div>
     <div style="display: flex; justify-content: center;">
         <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
@@ -1373,7 +1384,12 @@ function shareCause(url, title, imgurl) {
             <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction ID*" required>
             <p id="error4" class="text-danger small mt-1"></p>
           </div>
-          
+           <!-- Phone Number -->
+           <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" required>
+            <p id="error3" class="text-danger small mt-1"></p>
+          </div>
           <!-- Email 
           <div class="mb-3">
             <label for="email" class="form-label">Email ID</label>
@@ -1417,12 +1433,7 @@ function shareCause(url, title, imgurl) {
             <p id="error8" class="text-danger small mt-1"></p>
           </div>
 
-          <!-- Phone Number -->
-          <div class="mb-3">
-            <label for="phone" class="form-label">Phone Number</label>
-            <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" required>
-            <p id="error3" class="text-danger small mt-1"></p>
-          </div>
+         
 
         
 
@@ -1506,7 +1517,7 @@ function shareCause(url, title, imgurl) {
            let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
            console.log(entry);
            if(entry > 0){
-           document.getElementById("kanavuhomepage").classList.add("text-danger");
+           document.getElementById("kanavuhomepage").classList.add("text-danger","fw-bold");
            }
       },
       error:(error)=>{

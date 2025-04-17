@@ -25,7 +25,23 @@ class Donors extends CI_Controller {
     $this->load->view("footer");
   }
 
-  public function fetchDonordata() {
+/*   public function fetchDonordata() {
+    if($this->input->is_ajax_request()) {
+        $phone = $this->input->post("phone");
+        $getdata = $this->DonorprofileModel->fetchDonordata($phone);
+        if(!$getdata) {
+            echo "notexist";
+        }
+        else {
+            echo json_encode($getdata);
+        }
+        
+    }
+  }  */
+
+ 
+/* old email code start */
+    public function fetchDonordata() {
     if($this->input->is_ajax_request()) {
         $email = $this->input->post("email");
         $getdata = $this->DonorprofileModel->fetchDonordata($email);
@@ -37,8 +53,10 @@ class Donors extends CI_Controller {
         }
         
     }
-  }
+  }  
 
+  /* email old code end */
+ 
   public function myhelps()
     {
         

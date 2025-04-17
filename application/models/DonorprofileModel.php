@@ -3,7 +3,7 @@
 
 class DonorprofileModel extends CI_Model {
 
-  public function fetchDonordata($email){
+   public function fetchDonordata($email){
     $getdonordata = $this->db->query("SELECT * FROM user WHERE email LIKE '%$email%'");
     $donordata = $getdonordata->row_array();
     if($getdonordata->num_rows() > 0){
@@ -17,8 +17,34 @@ class DonorprofileModel extends CI_Model {
     else{
         return false;
     }
-  } 
-
+  }  
+ /*  public function fetchDonordata($phone){
+    $getdonordata = $this->db->query("SELECT * FROM user WHERE mobileNumber LIKE '%$phone%'");
+    $donordata = $getdonordata->row_array();
+    if($getdonordata->num_rows() > 0){
+        if($phone === $donordata["mobileNumber"]){
+            return $donordata;   
+            }
+            else{
+            return false;
+            }
+    }
+    else{
+        return false;
+    }
+  }  */
+ 
+ /* kani change mobile number */
+ /*  public function fetchDonordata($phone) {
+    $this->db->where('mobileNumber', $phone);
+    $query = $this->db->get('user');
+    
+    if ($query->num_rows() > 0) {
+        return $query->row_array();
+    }
+    return false;
+} */
+/* kani change mobile number */
   public function loginUser($email)
 	{
 		$verifyemail = $this->db->query("SELECT * FROM donor_profiles WHERE Email_id = '$email'");

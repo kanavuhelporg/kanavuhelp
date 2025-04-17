@@ -184,6 +184,15 @@ class UserModel extends CI_Model
 
 		return $result;
 	}
+/* fetch mobil number based search 
+public function getUserByMobile($mobile)
+{
+    $this->db->select('name, mobileNumber as phoneno, location as city');
+    $this->db->where('mobileNumber', $mobile);
+    $query = $this->db->get('user');
+    return $query->row_array(); // Returns a single row as an associative array
+}
+*/
 	// UserModel.php
 	public function get_user_causes($user_id)
 	{

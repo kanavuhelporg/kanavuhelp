@@ -391,7 +391,23 @@
     font-size: 14px;
     color: #666;
   }
+  /* select defaullt category all start */
+  .category-not-active {
+    background-color: white !important;
+    color: gray !important;
+  }
 
+  /* Active state for category buttons */
+  .active-category {
+    background-color: #ED3136 !important; /* Bootstrap's bg-danger color */
+    color: white !important;
+  }
+
+  /* Ensure buttons have consistent padding and style */
+  .rounded-pill {
+    border: 1px solid #ccc; /* Optional: Add a border for better visibility */
+  }
+/* select defaullt category all end */
     </style>
     </head>
 <body>
@@ -431,11 +447,12 @@
   <div class="d-flex justify-content-center pb-3">
   <div style="row-gap:10px;display:flex;justify-content:space-evenly;" class="category-buttons col-md-5">
     <!-----------onclick="location.href='<?php echo site_url('data/fetch/medical'); ?>'"------->
-    <button class="rounded-pill bg-white px-3 py-1 px-4 focus-change category-not-active" onclick="filterCauseswithcategory('All',0)">All</button>
-    <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Medical',1)">Medical</button>
-    <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Education',2)">Education</button>
-    <button class="rounded-pill bg-white px-3 py-1 px-4 focus-change category-not-active" onclick="filterCauseswithcategory('Crisis',3)">Crisis</button>
-    <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Agriculture',4)">Agriculture</button>
+  
+    <button class="rounded-pill bg-white px-3 py-1 px-4 focus-change category-not-active" id="all-category" onclick="filterCauseswithcategory('All', 0)">All</button>
+    <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Medical', 1)">Medical</button>
+    <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Education', 2)">Education</button>
+    <button class="rounded-pill bg-white px-3 py-1 px-4 focus-change category-not-active" onclick="filterCauseswithcategory('Crisis', 3)">Crisis</button>
+    <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Agriculture', 4)">Agriculture</button>
   </div>
   </div>
 <!-- Fundraiser Cards with Fixed Size  -->
@@ -463,19 +480,21 @@
             ?>
                 <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>" id="fundraiser-card-<?= $fundraiser->id ?>">
                     <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                        <div class="card h-100 fixed-card">
-                            <!-- Fixed Height for Image -->
-                            <img src="<?= $imageSrc ?>" 
-                                 width="316px" height="230px" 
-                                 class="card-img-top fixed-card-img p-2 img-placeholder">
+                    <div class="card h-100 fixed-card"style="border-top-left-radius: 15px; border-top-right-radius: 15px;" >
+                          <!--    Fixed Height for Image 
+                           <img src="<?= $imageSrc ?>" 
+                             width="316px" height="230px" 
+                            class="card-img-top fixed-card-img p-2 img-placeholder">-->
+                           <img src="<?= $imageSrc ?>" 
+                          width="316px" height="230px" 
+                          class="card-img-top fixed-card-img img-placeholder" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                             <div class="card-body d-flex flex-column">
-                                <!-- Cause Heading with overflow handling -->
+                                <!-- Cause Heading with overflow handling-->
                                 <div class="flex-grow-1" style="min-height: 100px;">
                                     <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                         <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
                                     </p>
-                                </div>
-
+                                </div> 
                                 <!-- Category and Created By in a separate flexbox -->
                                 <div class="d-flex justify-content-between align-items-center">
                                     <p class="card-text text-muted mb-0 text-truncate" 
@@ -485,10 +504,10 @@
                                               height:3em; word-break: break-word; white-space: normal;">
                                         Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
                                     </p>
-                                    <button type="button" class="btn card_button text-muted ms-auto" 
+                                    <!-- <button type="button" class="btn card_button text-muted ms-auto" 
                                             style="border: none; background: none; box-shadow: none;">
                                         <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
-                                    </button>
+                                    </button> -->
                                 </div>
 
                                 <!-- Progress bar and Raised Amount -->
@@ -501,9 +520,19 @@
                                             ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
                                         </strong>
                                     </p>
-                                    <div class="progress mb-2">
+                                   <!--  <div class="progress mb-2">
                                         <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+                                    </div> -->
+                                    <!--  progress bar background color -->
+                                  <div class="progress mb-2" style="background-color: #f8d7da;"> <!-- light red background -->
+                                      <div class="progress-bar bg-danger" 
+                                          style="width: <?= $progress_percentage ?>%;" 
+                                          role="progressbar" 
+                                          aria-valuenow="<?= $progress_percentage ?>" 
+                                          aria-valuemin="0" 
+                                          aria-valuemax="100">
+                                      </div>
+                                  </div>
                                 </div>
 
                                 <!-- Donate Now or Complete Fundraiser Button -->
@@ -515,13 +544,26 @@
                                         <span class="badge bg-success ms-2">Completed</span>
                                     <?php else: ?>
                                         <!-- Show "Donate Now" if goal not reached -->
-                                        <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a>
+                                  <!-- add background color Donate Now button -->
+                                       <!--  <a href="#" class="btn bg-danger text-white" onclick="setCauseId(<?= $fundraiser->id ?>)">Donate Now</a> -->
+                                        <a href="#" class="btn bg-danger text-white" onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">Donate Now</a>
+
                                     <?php endif; ?>
-                                    <i class="bi bi-share ms-2" 
+                                   <!--  <i class="bi bi-share ms-2" 
                                        onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
                                                           '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                                                           '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
-                                    </i>
+                                    </i> -->
+
+                                     <!-- Share Icon with label -->
+       <!--  <div class="text-center"> -->
+            <i class="bi bi-share fs-4" 
+               onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
+                                  '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
+                                  '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
+            
+            <div style="font-size: 0.8rem;">Share</div>
+     <!--    </div> --></i>
                                 </div>
                             </div>
                         </div>
@@ -598,8 +640,9 @@ $.ajax({
            let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
            console.log(entry);
            if(entry > 0){
-           document.getElementById("donatepage").classList.add("text-danger");
-           }
+           /* document.getElementById("donatepage").classList.add("text-danger"); */
+            document.getElementById("donatepage").classList.add("text-danger","fw-bold");
+           } 
       },
       error:(error)=>{
            document.getElementById("header").innerHTML = "";
@@ -618,99 +661,59 @@ $.ajax({
     }); 
 
     
-  function filterCauseswithcategory(category,index) {
-  
-    changeFocus(index);
+/* code for default load start  */
+// Ensure the "All" category is selected when the page loads
+document.addEventListener('DOMContentLoaded', function () {
+  filterCauseswithcategory('All', 0); // Select "All" category by default
+});
 
-    $.ajax({
-      type:"post",
-      url:"donations/filterCauses",
-      data:{"category":category},
-      success:(result)=>{
-        console.log(result)
-         allFundraisers = <?=json_encode($this->session->userdata("fundraisers"))?>;
-         currentIndex = 3;
-         document.getElementById("fundraiserCards").innerHTML = result;
-      },
-      error:(error)=>{
-        console.log(error)
-          document.getElementById("fundraiserCards").innerHTML = "Error fetching causes.";
-      }
-    }); 
-  }
+// Function to filter causes and highlight the selected category
+function filterCauseswithcategory(category, index) {
+  // Step 1: Update the visual focus (highlight the selected button)
+  changeFocus(index);
 
-  function changeFocus(index) {
-    console.log(index)
-    let change_focus = document.querySelectorAll(".focus-change");
-    let btn_count = change_focus.length;
-    for(let i = 0;i < btn_count; i++) {
-    if(i == index) {  
-    change_focus[i].classList.remove("category-not-active");
-    change_focus[i].classList.add("active-category");
-    console.log(i == index)
+  // Step 2: Make the AJAX request to filter causes
+  $.ajax({
+    type: "post",
+    url: "donations/filterCauses",
+    data: { category: category },
+    success: (result) => {
+      allFundraisers = <?= json_encode($this->session->userdata("fundraisers")) ?>;
+      currentIndex = 3;
+      document.getElementById("fundraiserCards").innerHTML = result;
+    },
+    error: (error) => {
+      console.log(error);
+      document.getElementById("fundraiserCards").innerHTML = "Error fetching causes.";
     }
-    else{
-      if(change_focus[i].classList.contains("active-category")) {
-      change_focus[i].classList.remove("active-category");
-      change_focus[i].classList.add("category-not-active");
-     }    
+  });
+}
+
+// Function to handle button highlighting
+function changeFocus(index) {
+  const buttons = document.querySelectorAll(".focus-change");
+
+  buttons.forEach((button, i) => {
+    if (i === index) {
+      // Highlight the selected button
+      button.classList.remove("category-not-active");
+      button.classList.add("active-category");
+    } else {
+      // Reset other buttons to default state
+      button.classList.remove("active-category");
+      button.classList.add("category-not-active");
     }
-    } 
-  }
+  });
+}
+
+
+/* code for default load end  */
+
+ 
 
 
 function loadMoreFundraisers() {
-    /* const fundraiserContainer = document.getElementById('fundraiserCards');
-    console.log(allFundraisers)
-    // Display next 3 fundraisers
-    const nextFundraisers = allFundraisers.slice(currentIndex, currentIndex + 3);
-    nextFundraisers.forEach(fundraiser => {
-      // Use the same logic to set the dummy image if the cover image is missing
-      const imageSrc = fundraiser.cover_image 
-        ? '<?= base_url('assets/individualform_img/') ?>' + fundraiser.cover_image 
-        : '<?= base_url('assets/img/blogs.png') ?>'; // Dummy image for missing images
-
-      const card = document.createElement('div');
-      card.classList.add('col-12', 'col-lg-4', 'col-md-6', 'mb-4', 'd-flex', 'card-container');
-      card.setAttribute('data-category', fundraiser.category);
-      card.innerHTML = `
-        <a href="${'<?= base_url('helpus/') ?>' + fundraiser.name.replace(' ', '-') + '-' + fundraiser.id}" style="text-decoration:none;color:black">
-          <div class="card h-100 fixed-card">
-            <img src="${imageSrc}" width="316px" height="230px" class="card-img-top fixed-card-img img-placeholder" alt="no image">
-            <div class="card-body d-flex flex-column">
-              <p class="card-title">${fundraiser.cause_heading}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="card-text text-muted mb-0">Created by ${fundraiser.created_by}</p>
-                <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;">${fundraiser.category}</button>
-              </div>
-              <p class="card-text">
-                <strong>₹ ${new Intl.NumberFormat().format(Math.min(fundraiser.raised_amount, fundraiser.amount))} raised out of ₹ ${new Intl.NumberFormat().format(fundraiser.amount)}</strong>
-              </p>
-              <div class="progress mb-2">
-                <div class="progress-bar" style="width: ${(fundraiser.raised_amount / fundraiser.amount) * 100}%" role="progressbar" aria-valuenow="${(fundraiser.raised_amount / fundraiser.amount) * 100}" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div class="d-flex align-items-center mt-auto">
-                ${fundraiser.days_left >= 0 && !fundraiser.hide_donation_button ? ` 
-                  <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(${fundraiser.id})">Donate Now</a>
-                  <i class="bi bi-share ms-2" onclick="shareCause('${'<?= base_url('helpus/') ?>' + fundraiser.name.replace(' ', '-') + '-' + fundraiser.id}', '${fundraiser.cause_heading}', '${imageSrc}')"></i>
-                ` : ''}
-              </div>
-            </div>
-          </div>
-        </a>
-        ${nextFundraisers.length > 3 ? `<div class="text-center mt-3">
-        <button id="seeMoreBtn" class="btn" style="background-color: white; border: 1px solid black; color: red; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" onclick="loadMoreFundraisers()">See More Causes</button>
-        </div>` : ""}
-      `;
-      fundraiserContainer.appendChild(card);
-    }); 
-    
-    currentIndex += 3;
-    
-    // Hide the button if all fundraisers are shown
-    if (currentIndex >= allFundraisers.length) {
-      document.getElementById('seeMoreBtn').style.display = 'none';
-    }*/
+   
 
     if (fundraiser.raised_amount >= fundraiser.amount) {
   alert('This fundraiser is now complete!');
@@ -732,7 +735,8 @@ nextFundraisers.forEach(fundraiser => {
   card.setAttribute('data-category', fundraiser.category);
   card.innerHTML = `
     <a href="${'<?= base_url('helpus/') ?>' + fundraiser.name.replace(' ', '-') + '-' + fundraiser.id}" style="text-decoration:none;color:black">
-      <div class="card h-100 fixed-card">
+    
+     <div class="card h-100 fixed-card">
         <img src="${imageSrc}" width="316px" height="230px" class="card-img-top fixed-card-img img-placeholder" alt="no image">
         <div class="card-body d-flex flex-column">
           <p class="card-title">${fundraiser.cause_heading}</p>
@@ -755,14 +759,14 @@ nextFundraisers.forEach(fundraiser => {
               `
               : `
                 ${fundraiser.days_left >= 0 && !fundraiser.hide_donation_button ? `
-                  <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(${fundraiser.id})">Donate Now</a>
+                  <a href="#" class="btn bg-danger text-white" onclick="setCauseId(${fundraiser.id})">Donate Now</a>
                   <i class="bi bi-share ms-2" onclick="shareCause('${'<?= base_url('helpus/') ?>' + fundraiser.name.replace(' ', '-') + '-' + fundraiser.id}', '${fundraiser.cause_heading}', '${imageSrc}')"></i>
                 ` : ''}
               `
             }
           </div>
         </div>
-      </div>
+      </div> 
     </a>
   `;
 
@@ -780,10 +784,14 @@ if (currentIndex >= allFundraisers.length) {
   }
 }
 
-
-
-
   }
+
+  function openDonationModal() {
+    // Show the modal using Bootstrap's modal method
+    var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+    donationModal.show();
+}
+
 </script>
 <script>
 function setCauseId(causeId){
@@ -934,6 +942,13 @@ function shareCause(url, title, imgurl) {
             <p id="error7" class="text-danger small mt-1"></p>
           </div>  to remove mailid -->
 
+          <!-- Phone Number -->
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" required>
+            <p id="error3" class="text-danger small mt-1"></p>
+          </div>
+
           <!-- Name -->
           <div class="mb-3">
             <label for="name" class="form-label">Name</label>
@@ -947,15 +962,6 @@ function shareCause(url, title, imgurl) {
             <input type="text" name="city" class="form-control" id="donorcity" maxlength="40" placeholder="Enter Your City*" required>
             <p id="error8" class="text-danger small mt-1"></p>
           </div>
-
-          <!-- Phone Number -->
-          <div class="mb-3">
-            <label for="phone" class="form-label">Phone Number</label>
-            <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" required>
-            <p id="error3" class="text-danger small mt-1"></p>
-          </div>
-
-        
 
           <!-- Confirm Button -->
           <div class="d-flex justify-content-center">
@@ -1086,7 +1092,7 @@ function shareCause(url, title, imgurl) {
         errorElement.textContent = errorMessage;
       } else {
         errorElement.innerHTML = "";// Clear error if validation passes
-        if(field.name == "email") {
+        if(field.name == "phone") {
           errorElement.innerHTML = `<span class="text-success">Fetching Donor</span> <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                     </div>
@@ -1102,7 +1108,7 @@ function shareCause(url, title, imgurl) {
     });
   }
 
-  function fetchDonordata(phone) {
+   function fetchDonordata($phone) {
     let phoneid = phone.trim();
     $.ajax({
       type:"post",
@@ -1141,7 +1147,9 @@ function shareCause(url, title, imgurl) {
            document.getElementById("header").innerHTML = "";
       }
     });
-  }
+  }  
+ 
+
 
   // Validation functions
   //const isCurrencySelected = (value) => value !== '';
@@ -1254,6 +1262,35 @@ function shareCause(url, title, imgurl) {
       });
   };
 
+/* donation fetch based on mobile number 
+document.getElementById('phone').addEventListener('change', function() {
+    const mobile = this.value;
+    fetch('/kanavuhelp/fetchUserByMobile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'phoneno=' + encodeURIComponent(mobile)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            document.getElementById('name').value = data.data.name || '';
+            document.getElementById('phone').value = data.data.phoneno || '';
+            document.getElementById('donorcity').value = data.data.city || '';
+        } else {
+            alert(data.message);
+            // Clear fields if no data found
+            document.getElementById('name').value = '';
+            document.getElementById('donorcity').value = '';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An unexpected error occurred. Please try again.');
+    });
+});
+*/
 </script>
 
 <form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
@@ -1274,6 +1311,10 @@ function shareCause(url, title, imgurl) {
     // Submit the form to the login page
     document.getElementById('redirectToLoginForm').submit();
 }
+
+
+
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
