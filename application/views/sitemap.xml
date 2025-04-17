@@ -1,0 +1,11 @@
+<url>
+    <loc>https://kanavu.help/</loc>
+    <lastmod>2025-04-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+        <image:loc>https://kanavu.help/assets/img/Kanavu_help.png</image:loc>
+        <image:caption>Kanavu Help Logo</image:caption>
+        <image:title>Logo for Kanavu Help Homepage</image:title>
+    </image:image>
+</url>

@@ -61,7 +61,9 @@ $route['startahelp'] = 'kanavuhelp/startahelp';
 $route['donate'] = 'kanavuhelp/donate';
 $route['myhelps'] = 'donors/myhelps';
 $route['login_myhelps'] = 'donors/login_myhelps';
+/* $route['blogs'] = 'kanavuhelp/blogs'; */
 $route['blogs'] = 'kanavuhelp/blogs';
+/**wordpress blog website */
 $route['contactus'] = 'kanavuhelp/contactus';
 $route['individual'] = 'kanavuhelp/individual';
 $route['charity'] = 'kanavuhelp/charity';
@@ -111,3 +113,4 @@ $route['helpus/fetchDonordata'] = 'donors/fetchDonordata';
 $route['donorLogin'] = 'donors/donorLogin';
 $route['donor_otp_email'] = 'donors/donor_otp_email';
 $route['filterCauses'] = 'donations/filterCauses';
+$route['sitemap.xml'] = 'kanavuhelp/sitemap';

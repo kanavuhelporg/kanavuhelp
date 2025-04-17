@@ -611,7 +611,7 @@ function maxLengthCheck(object)
       url:"kanavuhelp/getHeader",
       success:(result)=>{
            document.getElementById("header").innerHTML = result;
-           document.getElementById("contactuspage").classList.add("text-danger");
+           document.getElementById("contactuspage").classList.add("text-danger","fw-bold");
       },
       error:(error)=>{
            document.getElementById("header").innerHTML = "";

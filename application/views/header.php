@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanavu_help</title>
+    
     <style>
         body {
             font-family: 'Sen', sans-serif;
@@ -23,7 +24,7 @@
 
         /* login_button */
         .login-button {
-            background-color: #E01A2B;
+            background-color: #ED3136;
             color: white;
             font-size: 16px;
             padding: 8px 20px;
@@ -34,8 +35,8 @@
 
         /* start a kanavu button */
         .startkanavu-button {
-            border: 1px solid #E01A2B;
-            color: #E01A2B;
+            border: 1px solid #ED3136;
+            color: #ED3136;
             font-size: 16px;
             padding: 8px 20px;
             border-radius: 25px;
@@ -48,7 +49,8 @@
             font-size: 17px;
         }
         .nav-item a:hover{
-          color:#d9534f;
+         /*  color:#d9534f; */
+          color: #ED3136
         }
     </style>
 </head>
@@ -73,11 +75,12 @@
     </div>
     <div class="offcanvas-body">
       <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+      <li class="nav-item"><a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a></li>
         <li class="nav-item"><a id="aboutuspage" class="nav-link" href="<?= base_url('/abouts') ?>">About us</a></li>
         <li class="nav-item"><a id="individualpage" class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a></li>
         <li class="nav-item"><a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a></li>
-        <li class="nav-item"><a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a></li>
-        <li class="nav-item"><a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a></li>
+       
+        <li class="nav-item"><a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a></li>
         <li class="nav-item"><a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a></li>
         
         <?php if ($this->session->userdata('Kanavu_userId')): ?>
