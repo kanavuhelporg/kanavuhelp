@@ -63,7 +63,9 @@ class kanavuhelp extends CI_Controller
 
 
         
-    $data['fundraisers'] = array_slice($active_fundraisers, 0, 10);
+   /*  $data['fundraisers'] = array_slice($active_fundraisers, 0, 10); */
+    $data['fundraisers'] = $active_fundraisers;
+
 
         $this->load->view('kanavuhome.php', $data);
         $this->session->set_userdata("entry",1);
@@ -139,7 +141,7 @@ class kanavuhelp extends CI_Controller
                 $active_fundraisers[] = $fundraiser;
             }
         }
-
+        
         // Pass only active fundraisers to the view
         $data['fundraisers'] = $active_fundraisers;
         $this->load->view('login_modal.php', $data);

@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
+  <link href="<?php echo base_url(); ?>assets/individualform_img/kanavu-logo-1.png" rel="icon" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -583,10 +584,7 @@
       }
 
       /* how its works section */
-      /* .worktext {
-        margin-bottom: 550px;
-        margin-top: -250px;
-      } */
+     
     }
 
     @media (max-width: 767px) {
@@ -956,12 +954,20 @@ $progress_percentage = getProgressPercentage($fundraiser);
                             <div class="d-flex align-items-center mt-auto">
                                 <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
                                   <a href="#" class="btn bg-danger text-white" onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">Donate Now</a>
-                                    <i class="bi bi-share fs-4" 
+                                    <!-- <i class="bi bi-share fs-4" 
                                     onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
                                                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                                                        '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
                                    <div style="font-size: 0.8rem;">Share</div> 
-                                  </i>
+                                  </i> -->
+                                  <i class="bi bi-share fs-6 fw-bold" 
+                                  
+   onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
+                       '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
+                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')"></i>
+    <!-- <div class="bg-danger text-white p-1 rounded" style="font-size: 0.8rem;">Share</div> --> 
+    <div class="text-danger p-1 rounded ms-2 fw-bold" style="font-size: 1.2rem;">Share</div> 
+
                                 <?php endif; ?>
                             </div>
                         </div>

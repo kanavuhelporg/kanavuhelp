@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>fundraiser</title>
+  <link href="<?php echo base_url(); ?>assets/individualform_img/kanavu-logo-1.png" rel="icon" />
   <!-- <link rel="stylesheet" href="style.css" /> -->
   <!-- <link href="bootstrap.min.css" rel="stylesheet" />
          <script src="bootstrap.bundle.min.js"></script> -->
