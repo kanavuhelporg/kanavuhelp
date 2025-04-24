@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
+  <link href="<?php echo base_url(); ?>assets/individualform_img/kanavu-logo-1.png" rel="icon" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -243,12 +244,14 @@
       border:1px solid #9FA6B2;
       color:#9FA6B2;
 
-    }
+    } 
 
-    .active-category {
+   /*  .active-category {
       border:1px solid #d9534f;
+      background-color: #ED3136 !important; /* Bootstrap's bg-danger color 
+      color: white !important;
       color:#d9534f;
-    }
+    } */
     
 @media (max-width: 767px) {
 
@@ -391,15 +394,15 @@
     font-size: 14px;
     color: #666;
   }
-  /* select defaullt category all start */
+  /* select defaullt category all start 
   .category-not-active {
     background-color: white !important;
     color: gray !important;
-  }
+  }*/
 
   /* Active state for category buttons */
   .active-category {
-    background-color: #ED3136 !important; /* Bootstrap's bg-danger color */
+    background-color: #ED3136 !important; /* Bootstrap's bg-danger color*/
     color: white !important;
   }
 
@@ -407,6 +410,20 @@
   .rounded-pill {
     border: 1px solid #ccc; /* Optional: Add a border for better visibility */
   }
+
+  
+
+h1 {
+    text-align: center;
+}
+.h1, h1 {
+    font-size: 2.5rem;
+}
+/* 
+.rounded-pill {
+    border: 1px solid #ccc;
+} */
+
 /* select defaullt category all end */
     </style>
     </head>
