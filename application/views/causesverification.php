@@ -377,9 +377,11 @@ unset($_SESSION["emailerrorstatus"]);
                                             <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->user_id;?>','<?php echo $donation->username;?>',<?php echo $donation->Verifyemailcount;?>,<?php echo $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
                                                 Status
                                             </button>&nbsp;&nbsp;
+
                                             <button onclick="deleteCause(<?php echo $donation->id; ?>)" class="btn btn-danger fw-bold">
                                                 Delete
                                             </button>
+                                           
 
                                         </td>
                                     </tr>
@@ -870,7 +872,9 @@ $.ajax({
         }
         });    
     }
-/* delete the cause*/
+    
+
+    /* delete the cause*/
 
 function deleteCause(userId) {
     // Confirm the deletion

@@ -374,6 +374,7 @@ public function getUserByMobile($mobile)
 		$register = $this->db->query("INSERT INTO donor_profiles (Name,Phonenumber,Location,Email_id) VALUES('$name','$phoneno','$city','$emailid')");
 	}
 
+	/* filter by all causes */
 	public function filterCauseswithcategory($category) {
 		if($category == "All") {
 		  $getcauses = $this->db->query("SELECT * FROM individualform WHERE verified = 1");
@@ -385,6 +386,7 @@ public function getUserByMobile($mobile)
 		return $getcauses->result();
 	}
 
+
 	// Assuming your donations table is named 'individualform'  kani
     public function deleteCause($userId) {
         // Assuming your causes table is named 'individualform'
@@ -392,6 +394,7 @@ public function getUserByMobile($mobile)
         return $delete;
         
     }
+	
 
 }
 ?>

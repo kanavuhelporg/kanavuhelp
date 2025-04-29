@@ -483,10 +483,7 @@
                 <div class="col-12 col-lg-3 col-md-6 mb-0 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>" id="fundraiser-card-<?= $fundraiser->id ?>">
     <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
     <div class="card h-100 fixed-card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                          <!--    Fixed Height for Image 
-                           <img src="<?= $imageSrc ?>" 
-                             width="316px" height="230px" 
-                            class="card-img-top fixed-card-img p-2 img-placeholder">-->
+                         <!-- cardimage -->
                            <img src="<?= $imageSrc ?>" 
                           width="316px" height="230px" 
                           class="card-img-top fixed-card-img img-placeholder" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
@@ -559,12 +556,13 @@
 
                                      <!-- Share Icon with label -->
        <!--  <div class="text-center"> -->
-            <i class="bi bi-share fs-4" 
-               onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
-                                  '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
-                                  '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
-            
-            <div style="font-size: 0.8rem;">Share</div>
+       <i class="bi bi-share fs-6" 
+                                                onclick="shareCause(\'' . base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) . '\', 
+                                                            \'' . htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) . '\', 
+                                                            \'' . base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) . '\')"></i>
+                                              <div class="fs-5 fw-bold  text-danger  p-1 ms-1 d-inline-block">
+                                            Share
+                                        </div> 
      <!--    </div> --></i>
                                 </div>
                             </div>

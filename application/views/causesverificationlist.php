@@ -33,6 +33,8 @@
                         <button onclick="setUrl(`<?=$donation->email ?>`,<?=$donation->user_id ?>,`<?=$donation->username ?>`,<?=$donation->Verifyemailcount?>,<?php echo $donation->Rejectemailcount?>)" class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
                             Status
                         </button>&nbsp;&nbsp;
+
+                        
                         <button onclick="deleteCause(<?php echo $donation->id; ?>)" class="btn btn-danger fw-bold">
                              Delete
                         </button>
