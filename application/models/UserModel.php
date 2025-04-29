@@ -384,5 +384,14 @@ public function getUserByMobile($mobile)
 		
 		return $getcauses->result();
 	}
+
+	// Assuming your donations table is named 'individualform'  kani
+    public function deleteCause($userId) {
+        // Assuming your causes table is named 'individualform'
+        $delete = $this->db->query("delete from individualform where id=$userId");
+        return $delete;
+        
+    }
+
 }
 ?>
