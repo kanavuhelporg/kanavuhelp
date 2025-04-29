@@ -38,7 +38,7 @@ class kanavuhelp extends CI_Controller
 
     public function index()
     {
-        $data['fundraisers'] = $this->UserModel->get_cause_details();
+         $data['fundraisers'] = $this->UserModel->get_cause_details();
         $is_logged_in = $this->session->userdata('Kanavu_userId') !== null; // Check if userId is set
         $data['is_logged_in'] = $is_logged_in;
         $active_fundraisers = [];
@@ -63,10 +63,13 @@ class kanavuhelp extends CI_Controller
 
 
         
-    $data['fundraisers'] = array_slice($active_fundraisers, 0, 10);
+   
+   $data['fundraisers'] = $active_fundraisers;
 
         $this->load->view('kanavuhome.php', $data);
-        $this->session->set_userdata("entry",1);
+        $this->session->set_userdata("entry",1); 
+
+        
     }
 
     public function indexpage() {
@@ -1161,6 +1164,21 @@ public function sitemap()
         // Load the view with data if everything is successful
         $this->load->view('fundraiserprofile', array("fundraisers"=>$fundraisers));
     }
+ // Method to handle the delete request
+ public function deleteCause() {
+    if($this->input->is_ajax_request()){
+        $id = $this->input->post("id");
+    // Call the model method to delete the cause by user_id
+    $result = $this->UserModel->deleteCause($id);  // Ensure the method matches the model function
+   // return $id;
+     // Return a JSON response indicating success or failure
+     if ($result) {
+         echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
+     } else {
+         echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
+     } 
+}
+ }
 
 }
 ?>

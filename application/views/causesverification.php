@@ -376,7 +376,11 @@ unset($_SESSION["emailerrorstatus"]);
                                             </button>&nbsp;&nbsp;
                                             <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->user_id;?>','<?php echo $donation->username;?>',<?php echo $donation->Verifyemailcount;?>,<?php echo $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
                                                 Status
+                                            </button>&nbsp;&nbsp;
+                                            <button onclick="deleteCause(<?php echo $donation->id; ?>)" class="btn btn-danger fw-bold">
+                                                Delete
                                             </button>
+
                                         </td>
                                     </tr>
                                     
@@ -866,9 +870,36 @@ $.ajax({
         }
         });    
     }
-                </script>
+/* delete the cause*/
 
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+function deleteCause(userId) {
+    // Confirm the deletion
+    if (confirm('Are you sure you want to delete this cause?')) {
+        // Send AJAX request to delete the cause
+        $.ajax({
+            url: '<?php echo site_url('kanavuhelp/deleteCause'); ?>',  // Replace with your controller's deleteCause method URL
+            type: 'POST',
+            data: {id: userId},  // Send the cause ID
+            dataType: 'json',
+            success: function(response) {
+                // Check if deletion was successful
+                if (response.status === 'success') {
+                    alert(response.message);  // Show success message
+                    location.reload();  // Reload the page or remove the deleted cause from DOM
+                } else {
+                    alert(response.message);  // Show error message
+                }
+            },
+            error: function() {
+                alert('Error in deleting the cause!');
+            }
+        });
+    }
+}
+
+</script>             
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 
 
