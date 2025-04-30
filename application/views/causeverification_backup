@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cause verification</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="./ponsoft.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -45,6 +46,7 @@
 
         .ps-user {
             background-color: rgb(254, 213, 163);
+            ;
         }
 
         .align {
@@ -110,8 +112,10 @@
         }
 
         .chartBox {
+            /* height:fit-content; */
             padding: 10px;
             border-radius: 20px;
+            /* border: solid 3px rgba(54, 162, 235, 1); */
             background: white;
         }
 
@@ -131,6 +135,7 @@
             outline: none;
             background-color: rgb(23, 23, 184);
             border-radius: 25px;
+
         }
 
         .active-page {
@@ -222,6 +227,7 @@
         }
 
         @media screen and (max-width:768px) {
+
             #add-coords-form div>input {
                 padding: 5px;
             }
@@ -230,10 +236,6 @@
                 width: 90%;
                 padding: 8%;
             }
-        }
-
-        .priority-modal .modal-dialog {
-            max-width: 400px;
         }
     </style>
 </head>
@@ -328,89 +330,70 @@ unset($_SESSION["emailerrorstatus"]);
             <div style="overflow:auto" class="col-md-10 h-100"><!-----------main-dashboard------------------------->
 
                 <div style="overflow:auto" class="mt-3 px-4"><!----------------table--------------->
-                <table class="table table-borderless">
-    <thead>
-        <tr class="ps-gray">
-            <th>S.No</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th>Amount</th>
-            <th>Location</th>
-            <th>Age</th>
-            <th>End date </th>
-            <th>Cause heading</th>
-            <th>Cause description</th>
-            <th>created date</th>
-            <th>Created by</th>
-            <th>raised amount</th>
-            <th>verified status</th>
-            <th>Priority</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody id="causeslist">
-        <?php if (!empty($fundraisers)): $i = $sno + 1; ?>
-            <?php foreach ($fundraisers as $index => $donation): ?>
-                <tr>
-                    <td><?php echo $i; ?></td>
-                    <td><?php echo htmlspecialchars($donation->name); ?></td>
-                    <td><?php echo htmlspecialchars($donation->email); ?></td>
-                    <td><?php echo htmlspecialchars($donation->phone); ?></td>
-                    <td><?php echo htmlspecialchars($donation->amount); ?></td>
-                    <td><?php echo htmlspecialchars($donation->location); ?></td>
-                    <td><?php echo htmlspecialchars($donation->age); ?></td>
-                    <td><?php echo htmlspecialchars($donation->end_date); ?></td>
-                    <td><button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')"><?php echo htmlspecialchars($donation->cause_heading); ?></button></td>
-                    <td><?php echo htmlspecialchars($donation->cause_description); ?></td>
-                    <td><?php echo htmlspecialchars($donation->created_at); ?></td>
-                    <td><?php echo htmlspecialchars($donation->created_by); ?></td>
-                    <td><?php echo htmlspecialchars($donation->raised_amount); ?></td>
-                    <td><?php echo htmlspecialchars($donation->verified == 1 ? 'Yes' : 'No'); ?></td>
-                    <td>
-                        <?php if ($donation->priority == 0): ?>
-                            <span>No Priority</span>
-                        <?php else: ?>
-                            <span>Priority <?php echo htmlspecialchars($donation->priority); ?></span>
-                        <?php endif; ?>
-                    </td>
-                    <td class="d-flex">
-                        <button onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">
-                            Edit
-                        </button>  
-                        <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->user_id;?>','<?php echo $donation->created_by;?>',<?php echo $donation->Verifyemailcount;?>,<?php echo $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
-                            Status
-                        </button>  
-                        <button onclick="deleteCause(<?php echo $donation->id; ?>)" class="btn btn-danger fw-bold">
-                            Delete
-                        </button>
-                        <?php if ($this->session->userdata('adminName')): ?>
-                            <?php if ($donation->priority == 0): ?>
-                                <button class="btn btn-info fw-bold btn-sm insert-priority-btn" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?php echo $donation->id; ?>)">
-                                    Insert Priority
-                                </button>
-                                <button class="btn btn-warning fw-bold btn-sm no-priority-btn" style="display: none;" onclick="setNoPriority(<?php echo $donation->id; ?>)">
-                                    No Priority
-                                </button>
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr class="ps-gray">
+                                <th>S.No</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Amount</th>
+                                <th>Location</th>
+                                <th>Age</th>
+                                <th>End date </th>
+                                <th>Cause heading</a></th>
+                                <th>Cause description</th>
+                                <!-- <th>Documents</th> -->
+                                <th>created date</th>
+                                <th>Created by</th>
+                                <th>raised amount</th>
+                                <th>verified status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="causeslist">
+                            <?php if (!empty($fundraisers)): $i = $sno + 1; ?>
+                                <?php foreach ($fundraisers as $index => $donation):  ?>
+                                    <tr>
+                                        <td><?php echo $i; ?></td>
+                                        <td><?php echo $donation->name; ?></td>
+                                        <td><?php echo htmlspecialchars($donation->email); ?></td>
+                                        <td><?php echo htmlspecialchars($donation->phone); ?></td>
+                                        <td><?php echo htmlspecialchars($donation->amount); ?></td>
+                                        <td><?php echo htmlspecialchars($donation->location); ?></td>
+                                        <td><?php echo htmlspecialchars($donation->age); ?></td>
+                                        <td><?php echo htmlspecialchars($donation->end_date); ?></td>
+                                        <td><button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')"><?php echo htmlspecialchars($donation->cause_heading); ?></button></td>
+                                        <td><?php echo htmlspecialchars($donation->cause_description); ?></td>
+                                        <!-- <td><a href="<?=base_url("assets/individualform_img/"."$donation->cover_image")?>"><img src="<?=base_url("assets/individualform_img/"."$donation->cover_image")?>" style="width:50px;height:50px;" alt="<?=$donation->cover_image?>"></a></td> -->
+                                        <td><?php echo htmlspecialchars($donation->created_at); ?></td>
+                                        <td><?php echo htmlspecialchars($donation->username); ?></td>
+                                        <td><?php echo htmlspecialchars($donation->raised_amount); ?></td>
+                                        <td><?php echo htmlspecialchars($donation->verified == 1 ? 'Yes' : 'No'); ?></td>
+                                        <td class="d-flex">
+                                            <button onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">
+                                                Edit
+                                            </button>&nbsp;&nbsp;
+                                            <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->user_id;?>','<?php echo $donation->username;?>',<?php echo $donation->Verifyemailcount;?>,<?php echo $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
+                                                Status
+                                            </button>&nbsp;&nbsp;
+
+                                            <button onclick="deleteCause(<?php echo $donation->id; ?>)" class="btn btn-danger fw-bold">
+                                                Delete
+                                            </button>
+                                           
+
+                                        </td>
+                                    </tr>
+                                    
+                                <?php ++$i; endforeach; ?>
                             <?php else: ?>
-                                <button class="btn btn-info fw-bold btn-sm insert-priority-btn" style="display: none;" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?php echo $donation->id; ?>)">
-                                    Insert Priority
-                                </button>
-                                <button class="btn btn-warning fw-bold btn-sm no-priority-btn" onclick="setNoPriority(<?php echo $donation->id; ?>)">
-                                    No Priority
-                                </button>
+                                <tr>
+                                    <td colspan="16" style="text-align: center;">No records found.</td>
+                                </tr>
                             <?php endif; ?>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-            <?php ++$i; endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="16" style="text-align: center;">No records found.</td>
-            </tr>
-        <?php endif; ?>
-    </tbody>
-</table>
+                        </tbody>
+                    </table>
                 </div> <!----------------table-end------->
 
 <!-----------------pagination---------------------->
@@ -588,30 +571,6 @@ function createarr($noofpages){
 
 <!------------------------------send-mail-end-------------------------------->
 
-<!-- Priority Modal -->
-<div id="priorityModal" class="modal fade priority-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Insert Priority</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="priorityForm">
-                    <input type="hidden" id="priorityId" name="id">
-                    <div class="form-group">
-                        <label for="priorityValue">Priority Value (1-8 or 0 for No Priority)</label>
-                        <input type="number" class="form-control" id="priorityValue" name="priority" min="0" max="20" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
                 <script>
                     function editDonation(donation) {
                         document.getElementById('donationId').value = donation.id;
@@ -624,74 +583,13 @@ function createarr($noofpages){
                         document.getElementById('donationEndDate').value = donation.end_date;
                         document.getElementById('donationCauseHeading').value = donation.cause_heading;
                         document.getElementById('donationCauseDescription').value = donation.cause_description;
+                        // No need to set Cover Image input unless you want to show the current image path.
                         document.getElementById('donationUserName').value = donation.username;
                         document.getElementById('donationRaisedAmount').value = donation.raised_amount;
                         document.getElementById('donationVerified').value = donation.verified;
+                        //  var imageUrl = "<?= base_url('assets/individualform_img/') ?>" + donation.cover_image;
+                        // document.getElementById('donationImagePreview').src = imageUrl;
                     }
-
-                    function setPriorityId(id) {
-                        console.log('Selected ID:', id); // Debug
-                        document.getElementById('priorityId').value = id;
-                    }
-
-                    $('#priorityForm').on('submit', function(event) {
-                        event.preventDefault();
-                        var id = $('#priorityId').val();
-                        var priority = $('#priorityValue').val();
-                        console.log('ID:', id, 'Priority:', priority);
-                        $.ajax({
-                            url: 'insert_priority',
-                            type: 'POST',
-                            data: { id: id, priority: priority },
-                            dataType: 'json',
-                            success: function(response) {
-                                if (response.status === 'success') {
-                                    alert('Priority inserted successfully');
-                                    $('#priorityModal').modal('hide');
-                                    // Update the button text for the specific ID
-                                    $('button[onclick*="setPriorityId(' + id + ')"]').text('No Priority');
-                                    location.reload(); // Reload to reflect the updated priority in the table
-                                } else {
-                                    alert('Failed to insert priority: ' + response.message);
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.log('AJAX Error:', xhr, status, error);
-                                alert('Error occurred while inserting priority');
-                            }
-                        });
-                    });
-
-
-                    //nopriority
-                    function setNoPriority(id) {
-                        console.log('Setting No Priority for ID:', id); // Debug
-                        $.ajax({
-                            url: 'kanavuhelp/set_no_priority', // New controller method
-                            type: 'POST',
-                            data: { id: id },
-                            dataType: 'json',
-                            success: function(response) {
-                                if (response.status === 'success') {
-                                    alert('Priority set to No Priority successfully');
-                                    // Update the UI without reloading
-                                    var priorityCell = $('button[onclick="setNoPriority(' + id + ')"]').closest('tr').find('td:nth-child(15)');
-                                    priorityCell.html('<span>No Priority</span>');
-                                    
-                                    // Toggle buttons
-                                    $('button[onclick="setNoPriority(' + id + ')"]').hide(); // Hide No Priority button
-                                    $('button[onclick="setPriorityId(' + id + ')"]').show(); // Show Insert Priority button
-                                } else {
-                                    alert('Failed to set No Priority: ' + response.message);
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.log('AJAX Error:', xhr, status, error);
-                                alert('Error occurred while setting No Priority');
-                            }
-                        });
-                    }
-
                 </script>
                 <div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -699,7 +597,7 @@ function createarr($noofpages){
                         <div class="modal-header">
                                     <h5 class="modal-title" id="editDonationLabel">Edit Causes </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
+                                    <span aria-hidden="true">&times;</span>
                                     </button>   
                         </div>
 
@@ -754,6 +652,19 @@ function createarr($noofpages){
                                        <textarea name="cause_description" id="donationCauseDescription" class="form-control" required></textarea>
                                    </div>
 
+                                   <!--<div class="form-group">
+                        <!-- Image Preview Section 
+                   <div class="form-group">
+                       <label>Current Cover Image</label>
+                       <div>
+                           <img id="donationImagePreview" src="" alt="Cover Image" width="150" height="150" style="border: 1px solid #ccc; margin-bottom: 10px;">
+                       </div>
+                   </div>
+                     <!--  <label> For Updating Cover Image</label>
+                       <input type="file" name="cover_image" id="donationCoverImage" class="form-control" required>
+                       <small class="form-text text-muted">Leave empty if you don't want to change the image.</small>
+                   </div>-->
+
                                    <div class="form-group">
                                        <label>Created by</label>
                                        <input type="text" name="username" id="donationUserName" class="form-control" required>
@@ -807,6 +718,8 @@ $.ajax({
       url:"admin/topmenu",
       success:(result)=>{
            document.getElementById("search-bar").innerHTML = result;
+          /*  document.getElementById("dashboardsearch").style.display = "flex";
+           document.getElementById("dashboardsubmenu").style.display = "flex"; */
       },
       error:(error)=>{
            document.getElementById("search-bar").innerHTML = error;
@@ -854,7 +767,9 @@ $.ajax({
                         });
                     });
 
+
     function displayCauses(counts,index){
+
         activepage = document.querySelectorAll(".active");
         let l = activepage.length;
         for(let i=0; i < l ; i++){
@@ -893,8 +808,8 @@ $.ajax({
         document.getElementById("statusheading").innerHTML = `<span class="text-danger h5">Verification Status</span>
                 <div>
                 <input hidden type="radio" id='useridforemail' value='${id}'>
-                <label data-bs-toggle="modal" data-bs-target="#emaildata" type="button" onclick="showVerifyemaildata(${id})" for="verified" class="text-success h5">Verified [${verifycount}]</label> <input onclick="setAutomail(this,'${username}')" value="verified" type="radio" name="status">  
-                <label data-bs-toggle="modal" data-bs-target="#emaildata" onclick="showRejectemaildata(${id})" role="button" for="verified" class="text-warning h5">Rejected [${rejectcount}]</label> <input onclick="setAutomail(this,'${username}')" value="unverified" type="radio" name="status"></div>`;
+                <label data-bs-toggle="modal" data-bs-target="#emaildata" type="button" onclick="showVerifyemaildata(${id})" for="verified" class="text-success h5">Verified [${verifycount}]</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="verified" type="radio" name="status">&nbsp;&nbsp;
+                <label data-bs-toggle="modal" data-bs-target="#emaildata" onclick="showRejectemaildata(${id})" role="button" for="verified" class="text-warning h5">Rejected [${rejectcount}]</label>&nbsp;<input onclick="setAutomail(this,'${username}')" value="unverified" type="radio" name="status"></div>`;
         document.getElementById("sendmailbtn").innerHTML = `<button onclick='sendEmail("${email}","${username}","${adminname}")' class='btn btn-danger'>Send</button>`;
     }
 
@@ -962,18 +877,21 @@ $.ajax({
     /* delete the cause*/
 
 function deleteCause(userId) {
+    // Confirm the deletion
     if (confirm('Are you sure you want to delete this cause?')) {
+        // Send AJAX request to delete the cause
         $.ajax({
-            url: '<?php echo site_url('kanavuhelp/deleteCause'); ?>',
+            url: '<?php echo site_url('kanavuhelp/deleteCause'); ?>',  // Replace with your controller's deleteCause method URL
             type: 'POST',
-            data: {id: userId},
+            data: {id: userId},  // Send the cause ID
             dataType: 'json',
             success: function(response) {
+                // Check if deletion was successful
                 if (response.status === 'success') {
-                    alert(response.message);
-                    location.reload();
+                    alert(response.message);  // Show success message
+                    location.reload();  // Reload the page or remove the deleted cause from DOM
                 } else {
-                    alert(response.message);
+                    alert(response.message);  // Show error message
                 }
             },
             error: function() {
@@ -986,6 +904,8 @@ function deleteCause(userId) {
 </script>             
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
 
 </body>
 

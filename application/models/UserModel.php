@@ -207,6 +207,7 @@ public function getUserByMobile($mobile)
 		$query = $this->db->query("SELECT * FROM cause_status_data WHERE cause_id = $cause_id");
 		return $query->row();
 	}
+	
 
 	public function get_user_causes_row($user_id)
 	{
@@ -248,15 +249,39 @@ public function getUserByMobile($mobile)
 
 		return $result;
 	}
+//update by periority
+public function get_cause_details() {
+	$this->db->select('*');
+	$this->db->from('individualform');
+	return $this->db->get()->result();
+}
 
-	public function get_cause_details()
-	{
-		$this->db->where('verified', 1); // Include only rows where 'verified' is 1
-		$this->db->order_by('created_at', 'DESC');
-		$this->db->limit(10); // Order by 'created_at' in descending order (newest first)
-		$query = $this->db->get('individualform');
-		return $query->result();
-	}
+public function update_priority($id, $priority) {
+	log_message('debug', 'Updating priority for ID: ' . $id . ' with value: ' . $priority);
+     $data = array('priority' => $priority);
+    $this->db->where('id', $id);
+    $this->db->update('individualform', $data);
+    $affected_rows = $this->db->affected_rows();
+    log_message('debug', 'Affected rows: ' . $affected_rows);
+    return $affected_rows; 
+
+		/* $this->db->where('id', $id);
+		return $this->db->update('individualform', ['priority' => $priority]); */
+	
+	
+}
+public function get_used_priorities() {
+    $this->db->select('priority');
+    $this->db->from('individualform');
+    $this->db->where('priority !=', 0); // Exclude 0
+    $query = $this->db->get();
+    $used_priorities = array_column($query->result_array(), 'priority');
+    return $used_priorities;
+}
+
+public function get_total_fundraisers() {
+    return $this->db->count_all('individualform');
+}
 
 	public function get_category()
 	{
@@ -394,6 +419,7 @@ public function getUserByMobile($mobile)
         return $delete;
         
     }
+
 	
 
 }

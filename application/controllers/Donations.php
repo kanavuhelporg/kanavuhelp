@@ -16,7 +16,6 @@ class Donations extends CI_Controller {
         // $this->load->config('email');
         $this->config->load('email');
         $this->load->helper('url');
-
     }
     
     
@@ -51,11 +50,9 @@ class Donations extends CI_Controller {
                 $active_fundraisers[] = $fundraiser;
             }
     
-            // Sort fundraisers by progress percentage
+            // Sort fundraisers by priority (descending order, higher priority first)
             usort($active_fundraisers, function($a, $b) {
-                $progressA = ($a->raised_amount / $a->amount) * 100;
-                $progressB = ($b->raised_amount / $b->amount) * 100;
-                return $progressA <=> $progressB;
+                return $b->priority <=> $a->priority; // Sort by priority in descending order
             });
     
             // Store all filtered fundraisers in session for "See More" functionality
@@ -82,7 +79,7 @@ class Donations extends CI_Controller {
     
                     // Generate the HTML for each card, matching the original structure
                     $output .= '
-                       <div class="col-12 col-lg-3 col-md-6 mb-0 d-flex card-container" data-category="' . htmlspecialchars($fundraiser->category, ENT_QUOTES) . '" id="fundraiser-card-' . $fundraiser->id . '">
+                       <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" data-category="' . htmlspecialchars($fundraiser->category, ENT_QUOTES) . '" id="fundraiser-card-' . $fundraiser->id . '">
     <a href="' . base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) . '" style="text-decoration:none;color:black">
         <div class="card h-100 fixed-card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                             <img src="' . $imageSrc . '" 
@@ -92,7 +89,7 @@ class Donations extends CI_Controller {
                         <div class="flex-grow-1" style="min-height: 100px;">
                             <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                              ' . htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) . '
-                             </p>
+                            </p>
                         </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="card-text text-muted mb-0 text-truncate" 
@@ -153,8 +150,5 @@ class Donations extends CI_Controller {
         }
     }
     
-    } 
-    
+} 
 ?>
-
-

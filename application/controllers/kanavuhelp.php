@@ -39,7 +39,7 @@ class kanavuhelp extends CI_Controller
     public function index()
     {
         
-        $data['fundraisers'] = $this->UserModel->get_cause_details();
+        /*$data['fundraisers'] = $this->UserModel->get_cause_details();
         $is_logged_in = $this->session->userdata('Kanavu_userId') !== null; // Check if userId is set
         $data['is_logged_in'] = $is_logged_in;
 
@@ -66,9 +66,114 @@ class kanavuhelp extends CI_Controller
         $data['fundraisers'] = $active_fundraisers;
 
         $this->load->view('kanavuhome.php', $data);
-        $this->session->set_userdata("entry",1); 
+        $this->session->set_userdata("entry",1); */
 
+        // Fetch all fundraiser details
+        $data['fundraisers'] = $this->UserModel->get_cause_details();
+        $is_logged_in = $this->session->userdata('Kanavu_userId') !== null;
+        $data['is_logged_in'] = $is_logged_in;
+
+        $active_fundraisers = [];
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date->diff($current_date)->days;
+            $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
+            if (!$is_expired) {
+                $fundraiser->days_left = $days_left;
+                $fundraiser->hide_donation_button = false;
+                $active_fundraisers[] = $fundraiser;
+            }
+        }
+        $data['fundraisers'] = $active_fundraisers;
+       
+        $data['sno'] = 0;
+       // $this->load->view('causesverification', $data);
+        $this->load->view('kanavuhome.php', $data);
+        $this->session->set_userdata("entry", 1);
     }
+
+    
+public function insert_priority() {
+    if ($this->input->method() === 'post') {
+        $id = $this->input->post('id');
+        $priority = $this->input->post('priority');
+      /*    log_message('debug', 'Received ID: ' . $id);
+        log_message('debug', 'Received Priority: ' . $priority);
+        
+        // Or temporary echo for direct checking
+        echo "ID: $id, Priority: $priority";
+        exit;  */
+
+        if (!empty($id) && !empty($priority)) {
+            $this->load->model('UserModel');
+
+            // Check if the priority is already assigned to another ID (skip if priority is 0)
+            if ($priority != 0) {
+                $this->db->where('priority', $priority);
+                $this->db->where('id !=', $id);
+                $query = $this->db->get('individualform');
+
+                if ($query->num_rows() > 0) {
+                    echo json_encode(['status' => 'error', 'message' => 'This priority number is already assigned to another fundraiser.']);
+                    return;
+                }
+            }
+
+            // Proceed with the update
+            $update = $this->UserModel->update_priority($id, $priority);
+
+            if ($update) {
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to update priority in the database.']);
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Please provide both ID and priority.']);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+    }
+}
+
+    // Existing set_priority method (optional, can be removed if not needed)
+    public function set_priority($id) {
+        
+        if ($this->input->is_ajax_request() && $this->input->post('priority')) {
+            $priority = (int)$this->input->post('priority');
+            $result = $this->UserModel->update_priority($id, $priority);
+            if ($result) {
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error']);
+            }
+        } else {
+            echo json_encode(['status' => 'error']);
+        }
+    }
+//set_priority method
+   
+public function set_no_priority() {
+    if ($this->input->method() === 'post') {
+        $id = $this->input->post('id');
+
+        if (!empty($id)) {
+            $this->load->model('UserModel');
+            $update = $this->UserModel->update_priority($id, 0); // Set priority to 0
+
+            if ($update) {
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to set priority to 0 in the database.']);
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Please provide the ID.']);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+    }
+}  
+    
 
     public function indexpage() {
         if(!$this->session->userdata("Kanavu_userId")){
@@ -440,9 +545,13 @@ foreach ($data['fundraisers'] as $fundraiser) {
     }
 
     // Add the fundraiser to the active list
-     if (!$is_expired) {
+      if (!$is_expired) {
         $active_fundraisers[] = $fundraiser;
-    } 
+    }  
+    //
+   /*  if (!$is_expired || $fundraiser->raised_amount >= $fundraiser->amount) {
+        $active_fundraisers[] = $fundraiser;
+    } */
 }
 
 // Update the fundraisers in the data
