@@ -377,13 +377,13 @@ unset($_SESSION["emailerrorstatus"]);
                     <td class="d-flex">
                         <button onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">
                             Edit
-                        </button>  
+                        </button>  &nbsp;&nbsp;
                         <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->user_id;?>','<?php echo $donation->created_by;?>',<?php echo $donation->Verifyemailcount;?>,<?php echo $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
                             Status
-                        </button>  
+                        </button> &nbsp;&nbsp; 
                         <button onclick="deleteCause(<?php echo $donation->id; ?>)" class="btn btn-danger fw-bold">
                             Delete
-                        </button>
+                        </button>&nbsp;&nbsp;
                         <?php if ($this->session->userdata('adminName')): ?>
                             <?php if ($donation->priority == 0): ?>
                                 <button class="btn btn-info fw-bold btn-sm insert-priority-btn" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?php echo $donation->id; ?>)">
@@ -602,7 +602,7 @@ function createarr($noofpages){
                 <form id="priorityForm">
                     <input type="hidden" id="priorityId" name="id">
                     <div class="form-group">
-                        <label for="priorityValue">Priority Value (1-8 or 0 for No Priority)</label>
+                        <label for="priorityValue">Priority Value (1-8 or 0 for No Priority Higher numbers (e.g 8) first priority)</label>
                         <input type="number" class="form-control" id="priorityValue" name="priority" min="0" max="20" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>

@@ -152,7 +152,6 @@ public function insert_priority() {
         }
     }
 //set_priority method
-   
 public function set_no_priority() {
     if ($this->input->method() === 'post') {
         $id = $this->input->post('id');
