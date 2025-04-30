@@ -114,3 +114,4 @@ $route['donorLogin'] = 'donors/donorLogin';
 $route['donor_otp_email'] = 'donors/donor_otp_email';
 $route['filterCauses'] = 'donations/filterCauses';
 $route['sitemap.xml'] = 'kanavuhelp/sitemap';
+$route['insert_priority'] = 'kanavuhelp/insert_priority';

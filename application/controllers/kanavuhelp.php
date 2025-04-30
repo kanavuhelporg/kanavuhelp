@@ -38,9 +38,11 @@ class kanavuhelp extends CI_Controller
 
     public function index()
     {
-         $data['fundraisers'] = $this->UserModel->get_cause_details();
+        
+        /*$data['fundraisers'] = $this->UserModel->get_cause_details();
         $is_logged_in = $this->session->userdata('Kanavu_userId') !== null; // Check if userId is set
         $data['is_logged_in'] = $is_logged_in;
+
         $active_fundraisers = [];
 
         // Loop through each fundraiser to check status and calculate days_left
@@ -61,16 +63,116 @@ class kanavuhelp extends CI_Controller
             }
         }
 
-
-        
-   
-   $data['fundraisers'] = $active_fundraisers;
+        $data['fundraisers'] = $active_fundraisers;
 
         $this->load->view('kanavuhome.php', $data);
-        $this->session->set_userdata("entry",1); 
+        $this->session->set_userdata("entry",1); */
 
-        
+        // Fetch all fundraiser details
+        $data['fundraisers'] = $this->UserModel->get_cause_details();
+        $is_logged_in = $this->session->userdata('Kanavu_userId') !== null;
+        $data['is_logged_in'] = $is_logged_in;
+
+        $active_fundraisers = [];
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date->diff($current_date)->days;
+            $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
+            if (!$is_expired) {
+                $fundraiser->days_left = $days_left;
+                $fundraiser->hide_donation_button = false;
+                $active_fundraisers[] = $fundraiser;
+            }
+        }
+        $data['fundraisers'] = $active_fundraisers;
+       
+        $data['sno'] = 0;
+       // $this->load->view('causesverification', $data);
+        $this->load->view('kanavuhome.php', $data);
+        $this->session->set_userdata("entry", 1);
     }
+
+    
+public function insert_priority() {
+    if ($this->input->method() === 'post') {
+        $id = $this->input->post('id');
+        $priority = $this->input->post('priority');
+      /*    log_message('debug', 'Received ID: ' . $id);
+        log_message('debug', 'Received Priority: ' . $priority);
+        
+        // Or temporary echo for direct checking
+        echo "ID: $id, Priority: $priority";
+        exit;  */
+
+        if (!empty($id) && !empty($priority)) {
+            $this->load->model('UserModel');
+
+            // Check if the priority is already assigned to another ID (skip if priority is 0)
+            if ($priority != 0) {
+                $this->db->where('priority', $priority);
+                $this->db->where('id !=', $id);
+                $query = $this->db->get('individualform');
+
+                if ($query->num_rows() > 0) {
+                    echo json_encode(['status' => 'error', 'message' => 'This priority number is already assigned to another fundraiser.']);
+                    return;
+                }
+            }
+
+            // Proceed with the update
+            $update = $this->UserModel->update_priority($id, $priority);
+
+            if ($update) {
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to update priority in the database.']);
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Please provide both ID and priority.']);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+    }
+}
+
+    // Existing set_priority method (optional, can be removed if not needed)
+    public function set_priority($id) {
+        
+        if ($this->input->is_ajax_request() && $this->input->post('priority')) {
+            $priority = (int)$this->input->post('priority');
+            $result = $this->UserModel->update_priority($id, $priority);
+            if ($result) {
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error']);
+            }
+        } else {
+            echo json_encode(['status' => 'error']);
+        }
+    }
+//set_priority method
+public function set_no_priority() {
+    if ($this->input->method() === 'post') {
+        $id = $this->input->post('id');
+
+        if (!empty($id)) {
+            $this->load->model('UserModel');
+            $update = $this->UserModel->update_priority($id, 0); // Set priority to 0
+
+            if ($update) {
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to set priority to 0 in the database.']);
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Please provide the ID.']);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+    }
+}  
+    
 
     public function indexpage() {
         if(!$this->session->userdata("Kanavu_userId")){
@@ -426,6 +528,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
     // Check if the fundraiser is expired (end_date passed) or fully funded
    /*  $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount; */
 //only expire date 
+   
     $is_expired = ($date_diff->invert === 0 && $days_left > 0);
 
     // Fundraiser is considered "active" even if fully funded (we only mark it as expired if the end date has passed)
@@ -441,17 +544,21 @@ foreach ($data['fundraisers'] as $fundraiser) {
     }
 
     // Add the fundraiser to the active list
-     if (!$is_expired) {
+      if (!$is_expired) {
         $active_fundraisers[] = $fundraiser;
-    } 
+    }  
+    //
+   /*  if (!$is_expired || $fundraiser->raised_amount >= $fundraiser->amount) {
+        $active_fundraisers[] = $fundraiser;
+    } */
 }
 
 // Update the fundraisers in the data
-$data['fundraisers'] = $active_fundraisers;
+    $data['fundraisers'] = $active_fundraisers;
 
-// Pass data to the view
-$this->load->view('donate', $data);
-$this->session->set_userdata("entry", 1);
+    // Pass data to the view
+    $this->load->view('donate', $data);
+    $this->session->set_userdata("entry", 1);
 /* kani */
 
         
@@ -471,55 +578,7 @@ $this->session->set_userdata("entry", 1);
         $this->load->view('abouts.php');
     }
 
-/* sitemap adding start */
-public function sitemap()
-    {
-        header("Content-Type: application/xml");
 
-        $urls = [
-            [
-                'loc' => base_url(),
-                'lastmod' => date('Y-m-d'),
-                'changefreq' => 'daily',
-                'priority' => '1.0',
-                'image' => [
-                    'loc' => 'assets/img/Kanavu_help.png', // Relative path to logo
-                    'caption' => 'Kanavu Help Logo',
-                    'title' => 'Logo for Kanavu Help Homepage'
-                ]
-            ],
-            [
-                'loc' => base_url('about'),
-                'lastmod' => date('Y-m-d'),
-                'changefreq' => 'monthly',
-                'priority' => '0.8',
-                'image' => [
-                    'loc' => 'assets/img/Kanavu_help.png',
-                    'caption' => 'Kanavu Help Logo',
-                    'title' => 'Logo for About Page'
-                ]
-            ],
-            [
-                'loc' => base_url('contact'),
-                'lastmod' => date('Y-m-d'),
-                'changefreq' => 'weekly',
-                'priority' => '0.6',
-                'image' => [
-                    'loc' => 'assets/img/Kanavu_help.png',
-                    'caption' => 'Kanavu Help Logo',
-                    'title' => 'Logo for Contact Page'
-                ]
-            ]
-            // Add more URLs as needed
-        ];
-
-        $data['urls'] = $urls;
-        $this->load->view('sitemap', $data);
-    }
-
-
-
-/* sitemap adding end */
     public function helpus($fundraiser_id = null,$fundraiser_heading = null)
     {
         if ($fundraiser_id === null|| $fundraiser_heading== null) {
@@ -806,37 +865,37 @@ public function sitemap()
 
     // causes by user id
     public function user_causes()
-{
-    // Check session for user ID
-    $user_id = $this->session->userdata('Kanavu_userId');
+    {
+        // Check session for user ID
+         $user_id = $this->session->userdata('Kanavu_userId');
     
-    if (!$user_id) {
+         if (!$user_id) {
         // Store the current URL (the 'myFundraisers' page) in the session
-        $this->session->set_userdata('redirect_url', current_url());
+         $this->session->set_userdata('redirect_url', current_url());
         
         // Redirect to login page
-        redirect('login');
-    }
+         redirect('login');
+         }
 
-    // Initialize data array
-    $data = ['is_logged_in' => true];
+        // Initialize data array
+        $data = ['is_logged_in' => true];
 
-    try {
-        // Attempt to retrieve fundraisers from the database
-        $fundraisers = $this->UserModel->get_user_causes($user_id);
-        // Calculate days left for each fundraiser
-        foreach ($fundraisers as $fundraiser) {
-            $end_date = new DateTime($fundraiser->end_date);
-            $current_date = new DateTime();
-            $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
-            $fundraiser->days_left = $days_left;
+        try {
+            // Attempt to retrieve fundraisers from the database
+            $fundraisers = $this->UserModel->get_user_causes($user_id);
+            // Calculate days left for each fundraiser
+            foreach ($fundraisers as $fundraiser) {
+                $end_date = new DateTime($fundraiser->end_date);
+                $current_date = new DateTime();
+                $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
+                $fundraiser->days_left = $days_left;
+            }
+        } catch (Exception $e) {
+            // Handle the error if the database cannot be reached
+            log_message('error', 'Database error: ' . $e->getMessage());
+            show_404(); // Display a 404 error page
+            return;
         }
-    } catch (Exception $e) {
-        // Handle the error if the database cannot be reached
-        log_message('error', 'Database error: ' . $e->getMessage());
-        show_404(); // Display a 404 error page
-        return;
-    }
 
     // Load the view with data if everything is successful
     $this->load->view('myFundraisers', array("fundraisers"=>$fundraisers));
@@ -1164,21 +1223,22 @@ public function sitemap()
         // Load the view with data if everything is successful
         $this->load->view('fundraiserprofile', array("fundraisers"=>$fundraisers));
     }
- // Method to handle the delete request
+
+     // Method to handle the delete request
  public function deleteCause() {
     if($this->input->is_ajax_request()){
         $id = $this->input->post("id");
-    // Call the model method to delete the cause by user_id
-    $result = $this->UserModel->deleteCause($id);  // Ensure the method matches the model function
-   // return $id;
-     // Return a JSON response indicating success or failure
-     if ($result) {
-         echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
-     } else {
-         echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
-     } 
-}
- }
+        // Call the model method to delete the cause by user_id
+        $result = $this->UserModel->deleteCause($id);  // Ensure the method matches the model function
+    // return $id;
+        // Return a JSON response indicating success or failure
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
+        } 
+        }
+  }
 
 }
 ?>
