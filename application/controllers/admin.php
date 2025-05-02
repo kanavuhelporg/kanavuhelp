@@ -184,6 +184,9 @@ class admin extends CI_Controller
                     </button>&nbsp;&nbsp;
                     <button onclick='setUrl(".json_encode($donation).")' class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
                     Status
+                     </button>&nbsp;&nbsp;
+                    <button onclick=\"deleteDonation(".$donation->donation_id.")\" class='btn btn-danger fw-bold'>
+                        Delete
                     </button>
                     </td>
                 </tr>";     
@@ -469,4 +472,31 @@ class admin extends CI_Controller
         $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
         $this->load->view('contact_submissions',array("submissions"=>$enquirieslist,"newcounts"=>$totalenquiries,"initialindex"=>$initialindex,"sno"=>$counts)); 
     }
+
+    /* public function delete_donation($donation_id)
+    {
+        $this->load->model('adminpanel'); // Load your model
+       log_message('debug', 'Received donation_id: ' . $donation_id);
+        if ($this->adminpanel->delete_by_id($donation_id)) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false]);
+        }
+    } */
+    public function delete_donation() {
+        if($this->input->is_ajax_request()){
+            $id = $this->input->post("donation_id");
+            // Call the model method to delete the cause by user_id
+            $result = $this->adminpanel->delete_by_id($id);  // Ensure the method matches the model function
+        // return $id;
+            // Return a JSON response indicating success or failure
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
+            } 
+            }
+      }
+    
+
 }

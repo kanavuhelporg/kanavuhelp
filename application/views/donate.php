@@ -185,6 +185,7 @@
       
     }
 
+
     .card_button {
       border: 1px solid rgba(174, 168, 168, 1);
       border-radius: 25px;
@@ -463,10 +464,15 @@
         <?php if (!empty($fundraisers)): ?>
             <?php 
             // Sort fundraisers by progress percentage in ascending order
-            function getProgressPercentage($fundraiser) {
-                return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-            }
-
+           
+             function getProgressPercentage($fundraiser) {
+              if ($fundraiser->amount == 0) {
+                  return 0; // Or maybe return null or 'N/A' depending on your UI
+              }
+          
+              return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+          }
+ 
             usort($fundraisers, function($a, $b) {
                 return getProgressPercentage($a) <=> getProgressPercentage($b);
             });
@@ -576,35 +582,9 @@
         <?php endif; ?>
     </div>
 </div>
-<script>
+
   
-    document.addEventListener('DOMContentLoaded', function () {
-    const fundraiserCards = document.querySelectorAll('.card-container');
-    
-    fundraiserCards.forEach(function (card) {
-        const fundraiserId = card.id.split('-')[2];  // Extract fundraiser ID
-        
-        // Check if the goal is reached dynamically
-        fetch(`/check_goal_status/${fundraiserId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.goal_reached) {
-                    const donateButton = card.querySelector('.donate_btn');
-                    donateButton.textContent = "Complete Fundraiser";
-                    donateButton.disabled = true;
-                    const badge = card.querySelector('.badge');
-                    badge.textContent = "Completed";
-                }
-            });
-    });
-});
-
-</script>
-
-
-
-
-
+   
 
 
     <!--kani-->
@@ -663,8 +643,33 @@ $.ajax({
     
 /* code for default load start  */
 // Ensure the "All" category is selected when the page loads
+
+
 document.addEventListener('DOMContentLoaded', function () {
-  filterCauseswithcategory('All', 0); // Select "All" category by default
+  // Select "All" category by default
+  filterCauseswithcategory('All', 0);
+
+// Check goal status for each fundraiser card
+
+    const fundraiserCards = document.querySelectorAll('.card-container');
+    
+    fundraiserCards.forEach(function (card) {
+        const fundraiserId = card.id.split('-')[2];  // Extract fundraiser ID
+
+       
+        // Check if the goal is reached dynamically
+        fetch(`/check_goal_status/${fundraiserId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.goal_reached) {
+                    const donateButton = card.querySelector('.donate_btn');
+                    donateButton.textContent = "Complete Fundraiser";
+                    donateButton.disabled = true;
+                    const badge = card.querySelector('.badge');
+                    badge.textContent = "Completed";
+                }
+            });
+    });
 });
 
 // Function to filter causes and highlight the selected category

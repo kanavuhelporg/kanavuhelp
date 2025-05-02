@@ -279,9 +279,6 @@ public function get_used_priorities() {
     return $used_priorities;
 }
 
-public function get_total_fundraisers() {
-    return $this->db->count_all('individualform');
-}
 
 	public function get_category()
 	{
@@ -333,19 +330,7 @@ public function get_total_fundraisers() {
 		return $verifyexist;
 	}
 
-	/* public function checkForm($userid){
-		$query = $this->db->query("SELECT user_id FROM individualform WHERE user_id = $userid");
-		if($query->num_rows() > 0){
-			$checkform = $query->row();
-			$causeid = $checkform->user_id;
-            $this->session->set_userdata('currentCauseId', $causeid);
-			return true;
-		}
-		else{
-			$this->session->set_userdata('currentCauseId', $userid);
-			return true;
-		};
-	} */
+	
 
 	// Method to register user
 	public function registerUser($name, $email, $password)

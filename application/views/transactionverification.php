@@ -361,6 +361,9 @@ unset($_SESSION["transactionemailerrorstatus"]);
                     </button>&nbsp;&nbsp;
                     <button onclick="setUrl(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
                     Status
+                    </button>&nbsp;&nbsp;
+                    <button onclick="deleteDonation(<?php echo $donation->donation_id; ?>)" class="btn btn-danger fw-bold">
+                        Delete
                     </button>
                     </td>
                 </tr>
@@ -458,6 +461,36 @@ function createarr($noofpages){
 </div><!--------------pagination-end--------------------->
 
         <script>
+
+/*delete transaction */
+
+function deleteDonation(donation_id) {
+    console.log('Deleting donation with ID:', donation_id);
+
+    if (confirm('Are you sure you want to delete this donation?')) {
+        $.ajax({
+            url: '<?php echo site_url(). 'admin/delete_donation'; ?>', // Make sure to replace with your correct controller URL
+            type: 'POST',
+            data: { donation_id: donation_id },
+            dataType: 'json',
+            success: function(response) {
+              if (response.status === 'success') {
+            alert('Donation deleted successfully!');
+            location.reload(); // Reload to reflect changes
+            } else {
+                alert('Error deleting donation.');
+            }
+            },
+            error: function(xhr, status, error) {
+                console.log('AJAX Error:', error);  // Debugging AJAX error
+                alert('Something went wrong.');
+            }
+        });
+    }
+}
+
+
+
 function editDonation(donation) {
     // Populate modal fields with donation data
     document.getElementById('donationId').value = donation.donation_id;
@@ -469,7 +502,7 @@ function editDonation(donation) {
     document.getElementById('donationVerified').value = donation.status;
 }
 </script>
-        <div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
+    <div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="editDonationForm" action="<?php echo site_url('admin/updateDonation'); ?>" method="post">

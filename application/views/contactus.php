@@ -18,16 +18,7 @@
       left:0;
       right:0;
     }
-/* carousel */
-    /* .carousel-item {
-      height: 100vh;
-    }
 
-    .carousel-item img {
-      object-fit: cover;
-      height: 100%;
-      width: 100%;
-    } */
 /* Login_button */
     .login-button {
       background-color: #E01A2B;
@@ -156,9 +147,6 @@
       margin-bottom: 20px;
       
     }
-
- 
-
     .card-title {
       font-size: 18px;
       font-weight: bold;
