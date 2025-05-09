@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -86,6 +86,7 @@
      background-color: grey;
      color: white; /* Adjust the text color if needed for better contrast */
      }
+
     .imgtext1 strong,
     .imgtext2 strong {
       font-weight: bolder;
@@ -460,7 +461,7 @@
   </div>
 <!-- Fundraiser Cards with Fixed Size  -->
 <div class="container pt-4">
-    <div class="row g-4" id="fundraiserCards">
+    <div class="row g-3" id="fundraiserCards">
         <?php if (!empty($fundraisers)): ?>
             <?php 
             // Sort fundraisers by progress percentage in ascending order
@@ -643,7 +644,6 @@ $.ajax({
     
 /* code for default load start  */
 // Ensure the "All" category is selected when the page loads
-
 
 document.addEventListener('DOMContentLoaded', function () {
   // Select "All" category by default
@@ -1123,7 +1123,7 @@ function shareCause(url, title, imgurl) {
         console.log(result)
         let fetchingtimeout = "";
         if(result.trim() == "notexist") {
-          document.getElementById("name").value = "";
+           document.getElementById("name").value = "";
            document.getElementById("name").removeAttribute("readonly");
            document.getElementById("donorcity").value = "";
            document.getElementById("donorcity").removeAttribute("readonly");

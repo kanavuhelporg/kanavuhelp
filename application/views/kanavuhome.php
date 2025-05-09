@@ -132,7 +132,7 @@
     .card {
       width: 100%;
       /* Make the card width responsive */
-      /* box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2); */
+       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2); 
     }
 
     .carousel-item .row {
@@ -876,7 +876,7 @@
         });
 
         // Show only first 3 fundraisers initially
-        $displayedFundraisers  = array_slice($fundraisers, 0, 3);
+        $displayedFundraisers  = array_slice($fundraisers, 0, 8);
         foreach ($displayedFundraisers as $fundraiser): 
             // Set a fixed dummy image if the cover image is empty or does not exist
             $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 

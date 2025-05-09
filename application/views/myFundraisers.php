@@ -272,24 +272,7 @@
     <p class="text-center">"Every act of generosity has the potential to change a life. Through collective effort and unwavering support, we can turn aspirations into achievements."</p>
   </div>
   </div>
-  <!-- <div class="handwithheart_img text-center">
-    <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">
-    <p class="mt-3 "><b>"Fundraising is the gentle art of teaching the joy of giving."</b></p>
-
-  </div> -->
- <!-- <div class="mx-auto text-center mt-8 md:ml-20">
-    <button id="myDonationsButton"
-      class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0 mr-2">My Donations</button>
-    <button id="myFundraisersButton"
-      class="btn btn-outline-danger text-red-500 bg-white border-red-500 rounded-pill px-4 py-2 mt-4 md:mt-0">My Fundraisers</button>
-  </div>-->
- <!--  <script>
-    // Adding click event to navigate to 'My Fundraisers' page
-    document.getElementById("myDonationsButton").addEventListener("click", function() {
-      window.location.href = "<?php echo base_url('myhelps'); ?>"; // Correctly quoted and lowercase path
-    });
-  </script> -->
-
+  
 
   <?php if (!empty($fundraisers)) : ?>
     <?php foreach ($fundraisers as $cause) : ?>
