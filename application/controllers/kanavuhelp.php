@@ -68,6 +68,19 @@ class kanavuhelp extends CI_Controller
         $this->load->view('kanavuhome.php', $data);
         $this->session->set_userdata("entry",1); */
 
+/* all supporters start 
+
+$this->db->select('f.*, (SELECT COUNT(*) FROM donation_for_cause d WHERE d.fundraiser_id = f.id) as supporters_count', FALSE);
+    $this->db->from('fundraisers f');
+    if ($category !== 'All') {
+        $this->db->where('f.category', $category);
+        $category = $this->input->get('category');
+        echo $category;
+    }
+    $query = $this->db->get();
+    return $query->result();
+
+/* all supporters end */
         // Fetch all fundraiser details
         $data['fundraisers'] = $this->UserModel->get_cause_details();
         $is_logged_in = $this->session->userdata('Kanavu_userId') !== null;
@@ -82,6 +95,9 @@ class kanavuhelp extends CI_Controller
             if (!$is_expired) {
                 $fundraiser->days_left = $days_left;
                 $fundraiser->hide_donation_button = false;
+
+                 $fundraiser->supporters_count = $this->UserModel->count_supporters($fundraiser->id); // or use $fundraiser->cause_id if needed
+
                 $active_fundraisers[] = $fundraiser;
             }
         }

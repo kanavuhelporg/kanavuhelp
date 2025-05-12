@@ -412,7 +412,158 @@
     border: 1px solid #ccc; /* Optional: Add a border for better visibility */
   }
 /* select defaullt category all end */
+
+
+
+
+/* Card Styling */
+.card-container {
+    transition: transform 0.2s;
+}
+.card-container:hover {
+    transform: translateY(-5px);
+}
+.card {
+    width: 100%;
+    max-width: 356px;
+    height: 480px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 8px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+.card:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+.card-img-top {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+.card-body {
+    padding: 15px;
+}
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.card-text {
+    font-size: 14px;
+}
+.progress {
+    height: 10px;
+    border-radius: 5px;
+}
+.progress-bar {
+    background-color: #EB2D32;
+}
+.btn.bg-danger {
+    border-radius: 25px;
+    font-size: 14px;
+    padding: 5px 15px;
+}
+
+/* Single Row for Supporters and Created by */
+.supporters-section, .created-by-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+.supporters-section p, .created-by-section .name-container {
+    font-size: 14px;
+}
+
+/* Truncate Text with Ellipsis and Show Full Text on Hover */
+.truncate-text {
+    position: relative;
+    cursor: pointer;
+}
+.truncate-text:hover:after {
+    content: attr(data-fulltext);
+    position: absolute;
+    top: -30px;
+    left: 0;
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 10;
+    font-size: 14px;
+}
+
+/* Supporters Section Truncation */
+.supporters-section .truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* Created by Section - Split Name Styling */
+.created-by-section .name-container {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+}
+.created-by-section .name-part {
+    color: #6c757d; /* Same as text-muted */
+    white-space: nowrap;
+}
+.created-by-section .truncate-part {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px; /* Adjust this value based on your layout */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 767px) {
+    .card {
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto 15px;
+    }
+    .card-img-top {
+        height: 200px;
+    }
+    .card-title {
+        font-size: 16px;
+    }
+    .card-text {
+        font-size: 12px;
+    }
+    .supporters-section p, .created-by-section .name-container {
+        font-size: 12px;
+    }
+    .supporters-section i, .created-by-section i {
+        font-size: 14px;
+    }
+    .created-by-section .rounded-circle {
+        width: 30px;
+        height: 30px;
+    }
+    .created-by-section .bi-person-fill {
+        font-size: 16px;
+    }
+    .created-by-section .truncate-part {
+        max-width: 60px; /* Smaller width on mobile */
+    }
+    .btn.bg-danger {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+    .fs-5 {
+        font-size: 16px !important;
+    }
+}
     </style>
+
+    <?php foreach ($fundraisers as $fundraiser): ?>
+        <?php if (!empty($fundraiser->cover_image)): ?>
+            <link rel="preload" href="<?= base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) ?>" as="image">
+        <?php endif; ?>
+    <?php endforeach; ?>
+    
     </head>
 <body>
 <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
@@ -483,18 +634,24 @@
             
             foreach ($displayedFundraisers as $fundraiser): 
                 $is_goal_reached = $fundraiser->raised_amount >= $fundraiser->amount;
-                $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
+
+                $imageSrc = !empty($fundraiser->cover_image) && file_exists(FCPATH . 'assets/individualform_img/' . $fundraiser->cover_image)
+    ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES))
+    : base_url('assets/img/funddonate.jpg');
+               /*  $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
                             ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) 
-                            : base_url('assets/img/funddonate.jpg'); // Dummy image path
+                            : base_url('assets/img/funddonate.jpg'); // Dummy image path */
             ?>
                 <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>" id="fundraiser-card-<?= $fundraiser->id ?>">
     <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
     <div class="card h-100 fixed-card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                          <!-- cardimage -->
-                           <img src="<?= $imageSrc ?>" 
-                          width="316px" height="230px" 
-                          class="card-img-top fixed-card-img img-placeholder" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                            <div class="card-body d-flex flex-column">
+                           <img src="<?= base_url('assets/img/low-res-placeholder.jpg') ?>" 
+     data-src="<?= $imageSrc ?>" 
+     width="316px" height="230px" 
+     class="card-img-top fixed-card-img img-placeholder lazyload" 
+     style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                             <div class="card-body d-flex flex-column">
                                 <!-- Cause Heading with overflow handling-->
                                 <div class="flex-grow-1" style="min-height: 100px;">
                                     <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">

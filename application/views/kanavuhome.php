@@ -791,6 +791,129 @@
     margin-right: calc(-.5* var(--bs-gutter-x));
     margin-left: calc(-.5* var(--bs-gutter-x));
 } 
+
+
+
+
+/* Card Styling */
+.card-container {
+    transition: transform 0.2s;
+}
+.card-container:hover {
+    transform: translateY(-5px);
+}
+.card {
+    width: 100%;
+    max-width: 356px;
+    height: 480px;
+    border-radius: 15px;
+    /* Enhanced box shadow with a layered effect */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 8px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+.card:hover {
+    /* Slightly stronger shadow on hover */
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+.card-img-top {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+.card-body {
+    padding: 15px;
+}
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.card-text {
+    font-size: 14px;
+}
+.progress {
+    height: 10px;
+    border-radius: 5px;
+}
+.progress-bar {
+    background-color: #EB2D32;
+}
+.btn.bg-danger {
+    border-radius: 25px;
+    font-size: 14px;
+    padding: 5px 15px;
+}
+
+/* Single Row for Supporters and Created by */
+.supporters-section, .created-by-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+.supporters-section p, .created-by-section p {
+    font-size: 14px;
+}
+
+/* Truncate Text with Ellipsis and Show Full Text on Hover */
+.truncate-text {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    cursor: pointer;
+}
+.truncate-text:hover:after {
+    content: attr(data-fulltext);
+    position: absolute;
+    top: -30px;
+    left: 0;
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 10;
+    font-size: 14px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 767px) {
+    .card {
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto 15px;
+    }
+    .card-img-top {
+        height: 200px;
+    }
+    .card-title {
+        font-size: 16px;
+    }
+    .card-text {
+        font-size: 12px;
+    }
+    .supporters-section p, .created-by-section p {
+        font-size: 12px;
+    }
+    .supporters-section i, .created-by-section i {
+        font-size: 14px;
+    }
+    .created-by-section .rounded-circle {
+        width: 30px;
+        height: 30px;
+    }
+    .created-by-section .bi-person-fill {
+        font-size: 16px;
+    }
+    .btn.bg-danger {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+    .fs-5 {
+        font-size: 16px !important;
+    }
+}
   </style>
 </head>
 
@@ -860,14 +983,13 @@
 
   </div><br>
 <!-- Fundraiser Cards with Fixed Size -->  <!--kani-->
-  <div class="container pt-4">
-  <div class="row" id="fundraiserCards">
+ <div class="container pt-4">
+  <div class="row g-4" id="fundraiserCards">
     <?php if (!empty($fundraisers)): ?>
         <?php 
         // Sort fundraisers by progress percentage in ascending order
-        // Function to calculate the progress percentage
         function getProgressPercentage($fundraiser) {
-            return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+            return $fundraiser->amount == 0 ? 0 : ($fundraiser->raised_amount / $fundraiser->amount) * 100;
         }
 
         // Sort the fundraisers by progress percentage in ascending order
@@ -875,96 +997,87 @@
             return getProgressPercentage($a) <=> getProgressPercentage($b);
         });
 
-        // Show only first 3 fundraisers initially
-        $displayedFundraisers  = array_slice($fundraisers, 0, 6);
+        // Show only first 6 fundraisers initially
+        $displayedFundraisers = array_slice($fundraisers, 0, 6);
         foreach ($displayedFundraisers as $fundraiser): 
             // Set a fixed dummy image if the cover image is empty or does not exist
             $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
                         ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) 
                         : base_url('assets/img/funddonate.jpg'); // Dummy image path
         ?>
-            <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
+            <div class="col-12 col-lg-4 col-md-6 mb-3 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                 <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                    <div class="card h-100 fixed-card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;" >
+                    <div class="card h-100 fixed-card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                         <!-- Fixed Height for Image -->
                         <img src="<?= $imageSrc ?>" 
-                            width="316px" height="230px" 
-                            class="card-img-top fixed-card-img  img-placeholder" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                             width="316px" height="230px" 
+                             class="card-img-top fixed-card-img img-placeholder" 
+                             style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                         <div class="card-body d-flex flex-column">
                             <!-- Cause Heading with overflow handling -->
-                            <div class="flex-grow-1" style="min-height: 100px;">
+                            <div class="flex-grow-1" style="min-height: 80px;">
                                 <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                     <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
                                 </p>
                             </div>
-        <!--kani-->
-  <!-- Category and Created By in a separate flexbox 
-        <div class="d-flex justify-content-between align-items-center">
-    <p class="card-text text-muted mb-0 text-truncate" style="max-width: 60%; flex-shrink: 1;">
-        Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
-    </p>
-    <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;">
-        <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
-    </button>
-</div>-->
-<div class="d-flex justify-content-between align-items-center">
-    <p class="card-text text-muted mb-0 text-truncate" 
-       style="max-width: 80%; flex-shrink: 1; overflow: hidden; 
-              display: -webkit-box; -webkit-box-orient: vertical; 
-              -webkit-line-clamp: 2; line-height:1.5; 
-              height:3em; word-break: break-word; white-space: normal;">
-        Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
-    </p>
-   <!--  <button type="button" class="btn card_button text-muted ms-auto" 
-            style="border: none; background: none; box-shadow: none;">
-        <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
-    </button> -->
-</div>
 
+                            <!-- Supporters and Created by in a Single Row -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <!-- Supporters Section -->
+                                <div class="d-flex align-items-center supporters-section">
+                                    <i class="bi bi-heart-fill me-2" style="color: #ED3136;"></i>
+                                    <p class="mb-0 text-muted truncate-text" 
+                                       data-fulltext="<?= htmlspecialchars($fundraiser->supporters_count ?? 0) . ((int)($fundraiser->supporters_count ?? 0) === 1 ? ' Supporter' : ' Supporters') ?>">
+                                        <strong><?= htmlspecialchars($fundraiser->supporters_count ?? 0) ?></strong>
+                                        <?= (int)($fundraiser->supporters_count ?? 0) === 1 ? ' Supporter' : ' Supporters' ?>
+                                    </p>
+                                </div>
 
- <!-- <div class="d-flex justify-content-between align-items-center">
-    <p class="card-text text-muted mb-0" style="max-width: 60%; flex-shrink: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-        Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
-    </p>
-    <button type="button" class="btn card_button text-muted ms-auto" style="border: none; background: none; box-shadow: none;">
-        <?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>
-    </button>
-</div>  -->
+                                <!-- Created by Section -->
+                                <div class="d-flex align-items-center created-by-section">
+                                    <div class="d-flex align-items-center justify-content-center rounded-circle me-2" 
+                                         style="width: 30px; height: 30px; background-color: #ED3136;">
+                                        <i class="bi bi-person-fill" style="color: white; font-size: 18px;"></i>
+                                    </div>
+                                    <p class="mb-0 text-muted truncate-text" 
+                                       data-fulltext="Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>">
+                                        Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+                                    </p>
+                                </div>
+                            </div>
 
+                            <!-- Progress Bar and Raised Amount -->
+                            <?php
+                            $progress_percentage = getProgressPercentage($fundraiser);
+                            ?>
+                            <div class="flex-grow-1 mt-2" style="min-height: 40px;">
+                                <p class="card-text">
+                                    <strong>
+                                        ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
+                                    </strong>
+                                </p>
+                                <div class="progress mb-2" style="background-color: #f8d7da;">
+                                    <div class="progress-bar bg-danger" 
+                                         style="width: <?= $progress_percentage ?>%;" 
+                                         role="progressbar" 
+                                         aria-valuenow="<?= $progress_percentage ?>" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
 
-<!-- Progress bar and Raised Amount in a separate flexbox -->
-<?php
-// Calculate progress percentage for this fundraiser
-$progress_percentage = getProgressPercentage($fundraiser);
-?>
-<div class="flex-grow-1 mt-2" style="min-height: 60px;">
-    <p class="card-text">
-        <strong>
-            ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
-        </strong>
-    </p>
-    <div class="progress mb-2" style="background-color: #f8d7da;"> <!-- light red background -->
-                                      <div class="progress-bar bg-danger" 
-                                          style="width: <?= $progress_percentage ?>%;" 
-                                          role="progressbar" 
-                                          aria-valuenow="<?= $progress_percentage ?>" 
-                                          aria-valuemin="0" 
-                                          aria-valuemax="100">
-                                      </div>
-                                  </div>
-</div>
-<!-- Donate Button in a separate flexbox to ensure proper alignment -->
+                            <!-- Donate Button and Share -->
                             <div class="d-flex align-items-center mt-auto">
                                 <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
-                                  <a href="#" class="btn bg-danger text-white" onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">Donate Now</a>
-                                  <i class="bi bi-share fs-6" 
-                                              onclick="shareCause(\'' . base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) . '\', 
-                                                            \'' . htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) . '\', 
-                                                            \'' . base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) . '\')"></i>
-                                              <div class="fs-5 fw-bold  text-danger  p-1 ms-1 d-inline-block">
-                                            Share
-                                        </div> 
-                                 
+                                    <a href="#" class="btn bg-danger text-white btn-sm px-3 py-1" onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">Donate Now</a>
+                                    <i class="bi bi-share fs-6 ms-auto" 
+                                       onclick="shareCause('<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>', 
+                                                          '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
+                                                          '<?= $imageSrc ?>')"></i>
+                                    <div class="fs-5 fw-bold text-danger p-1 ms-1 d-inline-block">
+                                        Share
+                                    </div>
                                 <?php endif; ?>
                             </div>
                         </div>
