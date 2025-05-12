@@ -876,7 +876,7 @@
         });
 
         // Show only first 3 fundraisers initially
-        $displayedFundraisers  = array_slice($fundraisers, 0, 8);
+        $displayedFundraisers  = array_slice($fundraisers, 0, 6);
         foreach ($displayedFundraisers as $fundraiser): 
             // Set a fixed dummy image if the cover image is empty or does not exist
             $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
@@ -958,10 +958,10 @@ $progress_percentage = getProgressPercentage($fundraiser);
                                 <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
                                   <a href="#" class="btn bg-danger text-white" onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">Donate Now</a>
                                   <i class="bi bi-share fs-6" 
-                                                onclick="shareCause(\'' . base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) . '\', 
+                                              onclick="shareCause(\'' . base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) . '\', 
                                                             \'' . htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) . '\', 
                                                             \'' . base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) . '\')"></i>
-                                               <div class="fs-4 fw-bold  text-danger p-2 d-inline-block">
+                                              <div class="fs-5 fw-bold  text-danger  p-1 ms-1 d-inline-block">
                                             Share
                                         </div> 
                                  
@@ -1031,7 +1031,7 @@ function loadMoreFundraisers() {
               <div class="d-flex align-items-center mt-auto">
                 ${fundraiser.days_left >= 0 && !fundraiser.hide_donation_button ? ` 
                   <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(${fundraiser.id})">Donate Now</a>
-                  <i class="bi bi-share ms-2" onclick="shareCause('${'<?= base_url('helpus/') ?>' + fundraiser.name.replace(' ', '-') + '-' + fundraiser.id}', '${fundraiser.cause_heading}', '${imageSrc}')"></i>
+                   <i class="bi bi-share ms-2" onclick="shareCause('${'<?= base_url('helpus/') ?>' + fundraiser.name.replace(' ', '-') + '-' + fundraiser.id}', '${fundraiser.cause_heading}', '${imageSrc}')"></i>
                 ` : ''}
               </div>
             </div>
@@ -1048,10 +1048,7 @@ function loadMoreFundraisers() {
       document.getElementById('seeMoreBtn').style.display = 'none';
     }
   }
-</script>
 
-
-<script>
 function setCauseId(causeId) {
   document.getElementById('cause_id').value = causeId;
 }

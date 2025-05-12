@@ -59,7 +59,7 @@ class Donations extends CI_Controller {
             $this->session->set_userdata("fundraisers", $active_fundraisers);
     
             // Prepare HTML output
-            $output = '<div class="row g-4" id="fundraiserCards">'; // Start with the correct Bootstrap row
+            $output = '<div class="row g-3" id="fundraiserCards">'; // Start with the correct Bootstrap row
     
             if (!empty($active_fundraisers)) {
                 // Show all fundraisers directly (no limit)
@@ -79,7 +79,7 @@ class Donations extends CI_Controller {
     
                     // Generate the HTML for each card, matching the original structure
                     $output .= '
-                       <div class="col-12 col-lg-3 col-md-6 mb-0 d-flex card-container" data-category="' . htmlspecialchars($fundraiser->category, ENT_QUOTES) . '" id="fundraiser-card-' . $fundraiser->id . '">
+                       <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" data-category="' . htmlspecialchars($fundraiser->category, ENT_QUOTES) . '" id="fundraiser-card-' . $fundraiser->id . '">
     <a href="' . base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) . '" style="text-decoration:none;color:black">
         <div class="card h-100 fixed-card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                             <img src="' . $imageSrc . '" 
