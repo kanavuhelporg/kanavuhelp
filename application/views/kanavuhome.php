@@ -782,15 +782,7 @@
     color: #666;
   }
   /* kani*/
-  .row {
-    --bs-gutter-x: -4rem;
-    --bs-gutter-y: 0;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: calc(-1* var(--bs-gutter-y));
-    margin-right: calc(-.5* var(--bs-gutter-x));
-    margin-left: calc(-.5* var(--bs-gutter-x));
-} 
+ 
 
 
 
@@ -804,7 +796,7 @@
 }
 .card {
     width: 100%;
-    max-width: 356px;
+    max-width: 280px;
     height: 480px;
     border-radius: 15px;
     /* Enhanced box shadow with a layered effect */
@@ -854,6 +846,17 @@
     font-size: 14px;
 }
 
+
+/* Truncate Text with Ellipsis and Show Full Text on Hover */
+
+.supporters-section .truncate-text {
+    max-width: 60px; /* Adjusted for smaller card */
+}
+.created-by-section .truncate-text {
+    max-width: 100px; /* Adjusted for smaller card */
+}
+
+
 /* Truncate Text with Ellipsis and Show Full Text on Hover */
 .truncate-text {
     position: relative;
@@ -872,9 +875,11 @@
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
-    white-space: nowrap;
+    white-space: normal;  /*  allow line breaks */
     z-index: 10;
     font-size: 14px;
+    max-width: 250px;      /*  prevent going too wide */
+    word-break: break-word;/*  handle long words/emails */
 }
 
 /* Mobile Responsiveness */
@@ -998,14 +1003,14 @@
         });
 
         // Show only first 6 fundraisers initially
-        $displayedFundraisers = array_slice($fundraisers, 0, 6);
+        $displayedFundraisers = array_slice($fundraisers, 0, 8);
         foreach ($displayedFundraisers as $fundraiser): 
             // Set a fixed dummy image if the cover image is empty or does not exist
             $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
                         ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) 
                         : base_url('assets/img/funddonate.jpg'); // Dummy image path
         ?>
-            <div class="col-12 col-lg-4 col-md-6 mb-3 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
+            <div class="col-12 col-lg-3 col-md-6 mb-3 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                 <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
                     <div class="card h-100 fixed-card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                         <!-- Fixed Height for Image -->
@@ -1016,7 +1021,7 @@
                         <div class="card-body d-flex flex-column">
                             <!-- Cause Heading with overflow handling -->
                             <div class="flex-grow-1" style="min-height: 80px;">
-                                <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                     <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
                                 </p>
                             </div>
@@ -1036,7 +1041,7 @@
                                 <!-- Created by Section -->
                                 <div class="d-flex align-items-center created-by-section">
                                     <div class="d-flex align-items-center justify-content-center rounded-circle me-2" 
-                                         style="width: 30px; height: 30px; background-color: #ED3136;">
+                                         style="width: 25px; height: 25px; background-color: #ED3136;">
                                         <i class="bi bi-person-fill" style="color: white; font-size: 18px;"></i>
                                     </div>
                                     <p class="mb-0 text-muted truncate-text" 

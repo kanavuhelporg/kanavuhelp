@@ -473,9 +473,21 @@
     font-size: 14px;
 }
 
+.amount-text {
+    font-size: 14px; /* Adjusted size for the amount text */
+    line-height: 1.5; /* Improve readability */
+    color: #333; /* Slightly darker color for better contrast */
+}
+.amount-text strong {
+    font-weight: 600; /* Slightly less bold than default strong (700) */
+}
+
 /* Truncate Text with Ellipsis and Show Full Text on Hover */
 .truncate-text {
     position: relative;
+    white-space: nowrap;
+    /* overflow: hidden; */
+    text-overflow: ellipsis;
     cursor: pointer;
 }
 .truncate-text:hover:after {
@@ -487,19 +499,23 @@
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
-    white-space: nowrap;
+    white-space: normal;
     z-index: 10;
     font-size: 14px;
 }
 
 /* Supporters Section Truncation */
-.supporters-section .truncate-text {
+/* .supporters-section .truncate-text {
     white-space: nowrap;
-    overflow: hidden;
+   /*  overflow: hidden; 
     text-overflow: ellipsis;
     max-width: 100%;
-}
-
+} */
+/* .supporters-section, .created-by-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+} */
 /* Created by Section - Split Name Styling */
 .created-by-section .name-container {
     display: flex;

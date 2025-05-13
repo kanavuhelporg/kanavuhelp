@@ -21,6 +21,7 @@ class Donations extends CI_Controller {
     
     public function filterCauses() {
        
+
     if ($this->input->is_ajax_request()) {
         // Get the category from the POST request
         $category = $this->input->post("category");
@@ -46,8 +47,7 @@ class Donations extends CI_Controller {
             // Add properties to the fundraiser object
             $fundraiser->days_left = $days_left;
             $fundraiser->hide_donation_button = $is_expired;
-            
- $fundraiser->supporters_count = $this->UserModel->count_supporters($fundraiser->id); // or use $fundraiser->cause_id if needed
+
             // Add to active fundraisers
             $active_fundraisers[] = $fundraiser;
         }
@@ -79,9 +79,12 @@ class Donations extends CI_Controller {
                 // Determine if the goal is reached
                 $is_goal_reached = $fundraiser->raised_amount >= $fundraiser->amount;
 
-                // Generate the HTML for each card, matching the updated view structure
+                // Fallback for created_by
+                $created_by = !empty($fundraiser->created_by) ? htmlspecialchars($fundraiser->created_by, ENT_QUOTES) : 'Unknown';
+
+                // Generate the HTML for each card
                 $output .= '
-                    <div class="col-12 col-lg-4 col-md-6 mb-3 d-flex card-container" data-category="' . htmlspecialchars($fundraiser->category, ENT_QUOTES) . '" id="fundraiser-card-' . $fundraiser->id . '">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3 d-flex card-container" data-category="' . htmlspecialchars($fundraiser->category, ENT_QUOTES) . '" id="fundraiser-card-' . $fundraiser->id . '">
                         <a href="' . base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) . '" style="text-decoration:none;color:black">
                             <div class="card h-100 fixed-card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                                 <img src="' . $imageSrc . '" 
@@ -90,14 +93,14 @@ class Donations extends CI_Controller {
                                      style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                                 <div class="card-body d-flex flex-column">
                                     <div class="flex-grow-1" style="min-height: 80px;">
-                                        <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                        <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                             ' . htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) . '
                                         </p>
                                     </div>
 
                                     <!-- Supporters and Created by in a Single Row -->
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <!-- Supporters Section -->
+                                        <!-- Supporters Section (Left) -->
                                         <div class="d-flex align-items-center supporters-section">
                                             <i class="bi bi-heart-fill me-2" style="color: #ED3136;"></i>
                                             <p class="mb-0 text-muted truncate-text" 
@@ -107,21 +110,21 @@ class Donations extends CI_Controller {
                                             </p>
                                         </div>
 
-                                        <!-- Created by Section -->
+                                        <!-- Created by Section (Right) -->
                                         <div class="d-flex align-items-center created-by-section">
                                             <div class="d-flex align-items-center justify-content-center rounded-circle me-2" 
-                                                 style="width: 30px; height: 30px; background-color: #ED3136;">
-                                                <i class="bi bi-person-fill" style="color: white; font-size: 18px;"></i>
-                                            </div>
-                                            <p class="mb-0 text-muted truncate-text" 
-                                               data-fulltext="Created by ' . htmlspecialchars($fundraiser->created_by, ENT_QUOTES) . '">
-                                                Created by ' . htmlspecialchars($fundraiser->created_by, ENT_QUOTES) . '
+                                            style="width: 20px; height: 20px; background-color: #ED3136;">
+                                            <i class="bi bi-person-fill" style="color: white; font-size: 14px;"></i>
+                                        </div>
+                                            <p class="card-text text-muted mb-0 truncate-text" 
+                                               data-fulltext="Created by ' . $created_by . '">
+                                                 by ' . $created_by . '
                                             </p>
                                         </div>
                                     </div>
 
-                                    <div class="flex-grow-1 mt-2" style="min-height: 40px;">
-                                        <p class="card-text">
+                                    <div class="flex-grow-1 mt-2" style="min-height: 60px;">
+                                        <p class="amount-text mb-0">
                                             <strong>
                                                 ₹ ' . number_format(min($fundraiser->raised_amount, $fundraiser->amount)) . ' raised out of ₹ ' . number_format($fundraiser->amount) . '
                                             </strong>
@@ -150,7 +153,7 @@ class Donations extends CI_Controller {
                                            onclick="shareCause(\'' . base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) . '\', 
                                                               \'' . htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) . '\', 
                                                               \'' . $imageSrc . '\')"></i>
-                                        <div class="fs-5 fw-bold text-danger p-1 ms-1 d-inline-block">
+                                        <div class="fs-6 fw-bold text-danger p-1 ms-1 d-inline-block">
                                             Share
                                         </div>
                                     </div>
