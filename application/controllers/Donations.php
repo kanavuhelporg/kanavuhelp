@@ -98,37 +98,40 @@ class Donations extends CI_Controller {
                                         </p>
                                     </div>
 
-                                    <!-- Supporters and Created by in a Single Row -->
+                                      <!-- Supporters and Created by in a Single Row -->
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <!-- Supporters Section (Left) -->
-                                        <div class="d-flex align-items-center supporters-section">
-                                            <i class="bi bi-heart-fill me-2" style="color: #ED3136;"></i>
-                                            <p class="mb-0 text-muted truncate-text" 
-                                               data-fulltext="' . htmlspecialchars($fundraiser->supporters_count ?? 0) . ((int)($fundraiser->supporters_count ?? 0) === 1 ? ' Supporter' : ' Supporters') . '">
-                                                <strong>' . htmlspecialchars($fundraiser->supporters_count ?? 0) . '</strong>
-                                                ' . ((int)($fundraiser->supporters_count ?? 0) === 1 ? ' Supporter' : ' Supporters') . '
+                                        <!-- Supporters Section -->
+                                        <div class="d-flex align-items-center supporters-section" style="min-width: 0; margin-right:6px;">
+                                            <img src="' . base_url('assets/img/heart1.svg') . '" width="16" height="16" alt="Heart Icon" style="margin-right: 6px;">
+                                            <p class="mb-0 text-muted">
+                                                <span class="supporter-count">' . htmlspecialchars($fundraiser->supporters_count ?? 0) . '</span>
+                                                ' . ((int)($fundraiser->supporters_count ?? 0) === 1 ? 'Supporter' : 'Supporters') . '
                                             </p>
                                         </div>
 
-                                        <!-- Created by Section (Right) -->
-                                        <div class="d-flex align-items-center created-by-section">
-                                            <div class="d-flex align-items-center justify-content-center rounded-circle me-2" 
-                                            style="width: 20px; height: 20px; background-color: #ED3136;">
-                                            <i class="bi bi-person-fill" style="color: white; font-size: 14px;"></i>
-                                        </div>
-                                            <p class="card-text text-muted mb-0 truncate-text" 
-                                               data-fulltext="Created by ' . $created_by . '">
-                                                 by ' . $created_by . '
-                                            </p>
+                                        <!-- Created by Section -->
+                                        <div class="d-flex align-items-center created-by-section" style="min-width: 0;">
+                                            <div class="d-flex align-items-center justify-content-center rounded-circle me-2">
+                                                <img src="' . base_url('assets/img/Frame1000003573.svg') . '" width="24" height="24" alt="Person Icon">
+                                            </div>
+                                            <p class="mb-0 text-muted truncate-text1" 
+                                                                        data-fulltext="Created by"'.htmlspecialchars($fundraiser->created_by, ENT_QUOTES) .'">
+                                                                            <span style="font-size: 12px; color: #888;">Created by</span><br>
+                                                                            '. htmlspecialchars($fundraiser->created_by, ENT_QUOTES).'
+                                                                        </p>
                                         </div>
                                     </div>
 
-                                    <div class="flex-grow-1 mt-2" style="min-height: 60px;">
-                                        <p class="amount-text mb-0">
+
+                                    <div class="flex-grow-1 mt-0" style="min-height: 60px;">
+                                       <p class="amount-text mb-2">
                                             <strong>
-                                                ₹ ' . number_format(min($fundraiser->raised_amount, $fundraiser->amount)) . ' raised out of ₹ ' . number_format($fundraiser->amount) . '
+                                                ₹ ' . number_format(min($fundraiser->raised_amount, $fundraiser->amount)) . '
                                             </strong>
-                                        </p>
+                                            <span style="color:#666;">
+                                                raised out of ₹ ' . number_format($fundraiser->amount) . '
+                                            </span>
+                                         </p>
                                         <div class="progress mb-2" style="background-color: #f8d7da;">
                                             <div class="progress-bar bg-danger" 
                                                  style="width: ' . $progress_percentage . '%;" 

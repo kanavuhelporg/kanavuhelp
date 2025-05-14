@@ -445,7 +445,7 @@
 .card-title {
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 .card-text {
     font-size: 14px;
@@ -465,30 +465,55 @@
 
 /* Single Row for Supporters and Created by */
 .supporters-section, .created-by-section {
-    flex: 1;
+   
     display: flex;
     align-items: center;
+ 
 }
-.supporters-section p, .created-by-section .name-container {
+.supporters-section {
+    flex: 12; /* Give more space to Supporters */
+    min-width: 0;
+    overflow: hidden; /* Prevent overflow */
+}
+.created-by-section {
+    flex: 10; /* Minimize space for Created by */
+    justify-content: flex-end;
+   min-width: 0;
+}
+
+.supporters-section p, .created-by-section p {
     font-size: 14px;
+   /* color: #6c757d;  Muted text color */
+   color:black;
 }
-
-.amount-text {
-    font-size: 14px; /* Adjusted size for the amount text */
-    line-height: 1.5; /* Improve readability */
-    color: #333; /* Slightly darker color for better contrast */
+.supporters-section p {
+    display: flex;
+    align-items: center;
+    white-space: normal; /* Allow wrapping if needed */
 }
-.amount-text strong {
-    font-weight: 600; /* Slightly less bold than default strong (700) */
+.supporters-section .supporter-count {
+    font-weight: bold;
+    font-size: 16px;
+    color:black; /* Bold the number */
+    margin-right: 4px; /* Space between number and "Supporters" */
 }
-
-/* Truncate Text with Ellipsis and Show Full Text on Hover */
+/* Truncate Text with Ellipsis */
 .truncate-text {
     position: relative;
     white-space: nowrap;
-    /* overflow: hidden; */
+    overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 60px;
     cursor: pointer;
+}
+.truncate-text1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    text-align: center;
 }
 .truncate-text:hover:after {
     content: attr(data-fulltext);
@@ -502,74 +527,43 @@
     white-space: normal;
     z-index: 10;
     font-size: 14px;
+    max-width: 250px;
+    word-break: break-word;
 }
-
-/* Supporters Section Truncation */
-/* .supporters-section .truncate-text {
-    white-space: nowrap;
-   /*  overflow: hidden; 
-    text-overflow: ellipsis;
-    max-width: 100%;
+.amount-text {
+ margin-top: 5px;
+    font-size: 14px; /* Adjusted size for the amount text */
+    line-height: 1.5; /* Improve readability */
+    color: #333; /* Slightly darker color for better contrast */
+}
+.amount-text strong {
+    font-weight: 600; /* Slightly less bold than default strong (700) */
+}
+/* /* Supporters Section Truncation 
+.supporters-section .truncate-text {
+    max-width: 60px; /* Adjust for supporters section 
 } */
-/* .supporters-section, .created-by-section {
-    flex: 1;
-    display: flex;
-    align-items: center;
-} */
-/* Created by Section - Split Name Styling */
-.created-by-section .name-container {
-    display: flex;
-    align-items: center;
-    max-width: 100%;
-}
-.created-by-section .name-part {
-    color: #6c757d; /* Same as text-muted */
-    white-space: nowrap;
-}
-.created-by-section .truncate-part {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 80px; /* Adjust this value based on your layout */
-}
 
 /* Mobile Responsiveness */
 @media (max-width: 767px) {
-    .card {
-        max-width: 100%;
-        height: auto;
-        margin: 0 auto 15px;
-    }
-    .card-img-top {
-        height: 200px;
-    }
-    .card-title {
-        font-size: 16px;
-    }
-    .card-text {
-        font-size: 12px;
-    }
-    .supporters-section p, .created-by-section .name-container {
+    .supporters-section p, .created-by-section p {
         font-size: 12px;
     }
     .supporters-section i, .created-by-section i {
         font-size: 14px;
     }
     .created-by-section .rounded-circle {
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
     }
     .created-by-section .bi-person-fill {
-        font-size: 16px;
+        font-size: 14px;
     }
-    .created-by-section .truncate-part {
-        max-width: 60px; /* Smaller width on mobile */
+    .truncate-text {
+        max-width: 80px; /* Smaller width on mobile */
     }
-    .btn.bg-danger {
-        font-size: 12px;
-        padding: 4px 10px;
-    }
-    .fs-5 {
-        font-size: 16px !important;
+    .supporters-section .truncate-text {
+        max-width: 50px; /* Smaller width for supporters on mobile */
     }
 }
     </style>
