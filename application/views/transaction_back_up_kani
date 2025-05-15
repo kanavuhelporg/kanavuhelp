@@ -313,11 +313,13 @@ unset($_SESSION["transactionemailerrorstatus"]);
                    </div>
        
       </div>
-       
-               <div id="search-bar" class="col-md-10 align-items-center justify-content-between border-bottom">
+       <!-- old search bar -->
+             <div id="search-bar" class="col-md-10 align-items-center justify-content-between border-bottom">
        
                      
-               </div>
+               </div> 
+               <!-- to add multi search box -->
+
         </div><!-----------top-bar-end----------------------->
 
 

@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -86,6 +86,7 @@
      background-color: grey;
      color: white; /* Adjust the text color if needed for better contrast */
      }
+
     .imgtext1 strong,
     .imgtext2 strong {
       font-weight: bolder;
@@ -184,6 +185,7 @@
       font-weight: bold;
       
     }
+
 
     .card_button {
       border: 1px solid rgba(174, 168, 168, 1);
@@ -410,7 +412,168 @@
     border: 1px solid #ccc; /* Optional: Add a border for better visibility */
   }
 /* select defaullt category all end */
+
+
+
+
+/* Card Styling */
+.card-container {
+    transition: transform 0.2s;
+}
+.card-container:hover {
+    transform: translateY(-5px);
+}
+.card {
+    width: 100%;
+    max-width: 356px;
+    height: 480px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 8px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+.card:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+.card-img-top {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+.card-body {
+    padding: 15px;
+}
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    /* margin-bottom: 10px; */
+}
+.card-text {
+    font-size: 14px;
+}
+.progress {
+    height: 10px;
+    border-radius: 5px;
+}
+.progress-bar {
+    background-color: #EB2D32;
+}
+.btn.bg-danger {
+    border-radius: 25px;
+    font-size: 14px;
+    padding: 5px 15px;
+}
+
+/* Single Row for Supporters and Created by */
+.supporters-section, .created-by-section {
+   
+    display: flex;
+    align-items: center;
+ 
+}
+.supporters-section {
+    flex: 12; /* Give more space to Supporters */
+    min-width: 0;
+    overflow: hidden; /* Prevent overflow */
+}
+.created-by-section {
+    flex: 10; /* Minimize space for Created by */
+    justify-content: flex-end;
+   min-width: 0;
+}
+
+.supporters-section p, .created-by-section p {
+    font-size: 14px;
+   /* color: #6c757d;  Muted text color */
+   color:black;
+}
+.supporters-section p {
+    display: flex;
+    align-items: center;
+    white-space: normal; /* Allow wrapping if needed */
+}
+.supporters-section .supporter-count {
+    font-weight: bold;
+    font-size: 16px;
+    color:black; /* Bold the number */
+    margin-right: 4px; /* Space between number and "Supporters" */
+}
+/* Truncate Text with Ellipsis */
+.truncate-text {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60px;
+    cursor: pointer;
+}
+.truncate-text1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    text-align: center;
+}
+.truncate-text:hover:after {
+    content: attr(data-fulltext);
+    position: absolute;
+    top: -30px;
+    left: 0;
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: normal;
+    z-index: 10;
+    font-size: 14px;
+    max-width: 250px;
+    word-break: break-word;
+}
+.amount-text {
+ margin-top: 5px;
+    font-size: 14px; /* Adjusted size for the amount text */
+    line-height: 1.5; /* Improve readability */
+    color: #333; /* Slightly darker color for better contrast */
+}
+.amount-text strong {
+    font-weight: 600; /* Slightly less bold than default strong (700) */
+}
+/* /* Supporters Section Truncation 
+.supporters-section .truncate-text {
+    max-width: 60px; /* Adjust for supporters section 
+} */
+
+/* Mobile Responsiveness */
+@media (max-width: 767px) {
+    .supporters-section p, .created-by-section p {
+        font-size: 12px;
+    }
+    .supporters-section i, .created-by-section i {
+        font-size: 14px;
+    }
+    .created-by-section .rounded-circle {
+        width: 20px;
+        height: 20px;
+    }
+    .created-by-section .bi-person-fill {
+        font-size: 14px;
+    }
+    .truncate-text {
+        max-width: 80px; /* Smaller width on mobile */
+    }
+    .supporters-section .truncate-text {
+        max-width: 50px; /* Smaller width for supporters on mobile */
+    }
+}
     </style>
+
+    <?php foreach ($fundraisers as $fundraiser): ?>
+        <?php if (!empty($fundraiser->cover_image)): ?>
+            <link rel="preload" href="<?= base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) ?>" as="image">
+        <?php endif; ?>
+    <?php endforeach; ?>
+    
     </head>
 <body>
 <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
@@ -459,14 +622,19 @@
   </div>
 <!-- Fundraiser Cards with Fixed Size  -->
 <div class="container pt-4">
-    <div class="row g-4" id="fundraiserCards">
+    <div class="row g-3" id="fundraiserCards">
         <?php if (!empty($fundraisers)): ?>
             <?php 
             // Sort fundraisers by progress percentage in ascending order
-            function getProgressPercentage($fundraiser) {
-                return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-            }
-
+           
+             function getProgressPercentage($fundraiser) {
+              if ($fundraiser->amount == 0) {
+                  return 0; // Or maybe return null or 'N/A' depending on your UI
+              }
+          
+              return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+          }
+ 
             usort($fundraisers, function($a, $b) {
                 return getProgressPercentage($a) <=> getProgressPercentage($b);
             });
@@ -476,18 +644,24 @@
             
             foreach ($displayedFundraisers as $fundraiser): 
                 $is_goal_reached = $fundraiser->raised_amount >= $fundraiser->amount;
-                $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
+
+                $imageSrc = !empty($fundraiser->cover_image) && file_exists(FCPATH . 'assets/individualform_img/' . $fundraiser->cover_image)
+    ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES))
+    : base_url('assets/img/funddonate.jpg');
+               /*  $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
                             ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) 
-                            : base_url('assets/img/funddonate.jpg'); // Dummy image path
+                            : base_url('assets/img/funddonate.jpg'); // Dummy image path */
             ?>
-                <div class="col-12 col-lg-3 col-md-6 mb-0 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>" id="fundraiser-card-<?= $fundraiser->id ?>">
+                <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>" id="fundraiser-card-<?= $fundraiser->id ?>">
     <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
     <div class="card h-100 fixed-card" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
                          <!-- cardimage -->
-                           <img src="<?= $imageSrc ?>" 
-                          width="316px" height="230px" 
-                          class="card-img-top fixed-card-img img-placeholder" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                            <div class="card-body d-flex flex-column">
+                           <img src="<?= base_url('assets/img/low-res-placeholder.jpg') ?>" 
+     data-src="<?= $imageSrc ?>" 
+     width="316px" height="230px" 
+     class="card-img-top fixed-card-img img-placeholder lazyload" 
+     style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                             <div class="card-body d-flex flex-column">
                                 <!-- Cause Heading with overflow handling-->
                                 <div class="flex-grow-1" style="min-height: 100px;">
                                     <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
@@ -576,35 +750,9 @@
         <?php endif; ?>
     </div>
 </div>
-<script>
+
   
-    document.addEventListener('DOMContentLoaded', function () {
-    const fundraiserCards = document.querySelectorAll('.card-container');
-    
-    fundraiserCards.forEach(function (card) {
-        const fundraiserId = card.id.split('-')[2];  // Extract fundraiser ID
-        
-        // Check if the goal is reached dynamically
-        fetch(`/check_goal_status/${fundraiserId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.goal_reached) {
-                    const donateButton = card.querySelector('.donate_btn');
-                    donateButton.textContent = "Complete Fundraiser";
-                    donateButton.disabled = true;
-                    const badge = card.querySelector('.badge');
-                    badge.textContent = "Completed";
-                }
-            });
-    });
-});
-
-</script>
-
-
-
-
-
+   
 
 
     <!--kani-->
@@ -663,8 +811,32 @@ $.ajax({
     
 /* code for default load start  */
 // Ensure the "All" category is selected when the page loads
+
 document.addEventListener('DOMContentLoaded', function () {
-  filterCauseswithcategory('All', 0); // Select "All" category by default
+  // Select "All" category by default
+  filterCauseswithcategory('All', 0);
+
+// Check goal status for each fundraiser card
+
+    const fundraiserCards = document.querySelectorAll('.card-container');
+    
+    fundraiserCards.forEach(function (card) {
+        const fundraiserId = card.id.split('-')[2];  // Extract fundraiser ID
+
+       
+        // Check if the goal is reached dynamically
+        fetch(`/check_goal_status/${fundraiserId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.goal_reached) {
+                    const donateButton = card.querySelector('.donate_btn');
+                    donateButton.textContent = "Complete Fundraiser";
+                    donateButton.disabled = true;
+                    const badge = card.querySelector('.badge');
+                    badge.textContent = "Completed";
+                }
+            });
+    });
 });
 
 // Function to filter causes and highlight the selected category
@@ -1118,7 +1290,7 @@ function shareCause(url, title, imgurl) {
         console.log(result)
         let fetchingtimeout = "";
         if(result.trim() == "notexist") {
-          document.getElementById("name").value = "";
+           document.getElementById("name").value = "";
            document.getElementById("name").removeAttribute("readonly");
            document.getElementById("donorcity").value = "";
            document.getElementById("donorcity").removeAttribute("readonly");

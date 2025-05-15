@@ -68,6 +68,19 @@ class kanavuhelp extends CI_Controller
         $this->load->view('kanavuhome.php', $data);
         $this->session->set_userdata("entry",1); */
 
+/* all supporters start 
+
+$this->db->select('f.*, (SELECT COUNT(*) FROM donation_for_cause d WHERE d.fundraiser_id = f.id) as supporters_count', FALSE);
+    $this->db->from('fundraisers f');
+    if ($category !== 'All') {
+        $this->db->where('f.category', $category);
+        $category = $this->input->get('category');
+        echo $category;
+    }
+    $query = $this->db->get();
+    return $query->result();
+
+/* all supporters end */
         // Fetch all fundraiser details
         $data['fundraisers'] = $this->UserModel->get_cause_details();
         $is_logged_in = $this->session->userdata('Kanavu_userId') !== null;
@@ -82,6 +95,10 @@ class kanavuhelp extends CI_Controller
             if (!$is_expired) {
                 $fundraiser->days_left = $days_left;
                 $fundraiser->hide_donation_button = false;
+
+                
+                $fundraiser->supporters_count = $this->UserModel->count_supporters($fundraiser->id); // or use $fundraiser->cause_id if needed
+
                 $active_fundraisers[] = $fundraiser;
             }
         }
@@ -458,26 +475,7 @@ public function set_no_priority() {
             echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your donation.']);
         }
     }
-/* donate fetch based on mobil num  
-public function fetchUserByMobile()
-{
-    $this->load->model('UserModel');
-    $mobile = $this->input->post('phoneno');
 
-    if (!$mobile) {
-        echo json_encode(['status' => 'error', 'message' => 'Mobile number is required.']);
-        return;
-    }
-
-    $userData = $this->UserModel->getUserByMobile($mobile);
-
-    if ($userData) {
-        echo json_encode(['status' => 'success', 'data' => $userData]);
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'No user found with this mobile number.']);
-    }
-}
-*/
     public function donate()
     {
        $data['category'] = $this->UserModel->get_category();
@@ -488,32 +486,7 @@ public function fetchUserByMobile()
         $data['is_logged_in'] = $is_logged_in;
 
         // Initialize an array to store active fundraisers
-        /*  $active_fundraisers = [];
-
-        // Loop through each fundraiser to check status and calculate days_left
-        foreach ($data['fundraisers'] as $fundraiser) {
-            $end_date = new DateTime($fundraiser->end_date);
-            $current_date = new DateTime();
-            $date_diff = $end_date->diff($current_date);
-
-            // Calculate days left and check if the fundraiser is expired
-            $days_left = $date_diff->days;
-            $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount;
-
-            // Only include active fundraisers
-            if (!$is_expired) {
-                // If still active, calculate days left and other properties
-                $fundraiser->days_left = $days_left;
-                $fundraiser->hide_donation_button = false;
-                $active_fundraisers[] = $fundraiser;
-            }
-        }
-
-        // Pass only active fundraisers to the view
-        $data['fundraisers'] = $active_fundraisers;
-
-        $this->load->view('donate', $data);
-        $this->session->set_userdata("entry",1); */
+        
 /* kani */
         $active_fundraisers = [];
 
@@ -705,13 +678,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $uploadeddocuments = ["cover_image","document_one","document_two","document_three","document_four","document_five","cause_video","cause_video_english"];
         $databasedocuments = ["cover_image","cause_image1","cause_image2","cause_image3","cause_image4","cause_image5","Cause_video","Cause_video_english","Cause_video_link"];
         $count = count($uploadeddocuments);
-        // if($this->upload->do_upload('cover_image')){
-        //     $cover_image[] = $this->upload->data();
-        // }
-        // else{
-        //     $this->session->set_flashdata("fileuploadfailed",true);
-        //     redirect('individual'); 
-        // }
+        
         try{
             $insert = 0;
         for($i=0; $i < $count; $i++)
@@ -736,10 +703,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
             $this->session->set_flashdata("fileuploadfailed",true);
             redirect('individual'); 
         }
-       /*  $receiveddocumentcount = count($dataInfo);        
-        for($i = 0;$i < $receiveddocumentcount; $i++){
-        $documentinfo[$databasedocuments[$i]] = $dataInfo[$i]['file_name'];
-        } */
+     
             $data['amount'] = $this->input->post('amount');
             $data['end_date'] = $this->input->post('end_date');
             $data['cause_heading'] = $this->input->post('cause_heading');
@@ -748,22 +712,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
             $data['Cause_video_link_eng'] = $this->input->post('cause_embed_link_english');
             $data['user_id'] = $this->session->userdata('currentUserId');
            
-        // File upload configuration
-        /* $config['upload_path'] = './assets/individualform_img/';
-        $config['allowed_types'] = 'jpg|jpeg|png|svg';
-        $config['max_size'] = 2048; // 2MB */
-        // $config['max_width'] = 1024;
-        // $config['max_height'] = 768;
-        // $this->upload->initialize($config);
-
-        // Handle file upload
-       /*  if (!$this->upload->do_upload('cover_image')) {
-            $this->session->set_flashdata('error', 'Upload error: ' . $this->upload->display_errors()); */
-            // $this->upload->display_errors();
-           /*  $this->session->set_flashdata("fileuploadfailed",true);*/
-           /*  redirect('individual'); 
-        }
- */
+       
         $file_data = $this->upload->data();
         // $data['cover_image'] = $file_data['file_name'];
 

@@ -18,6 +18,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
     <style>
         .ps-logo {
             display: flex;
@@ -313,9 +315,14 @@ unset($_SESSION["emailerrorstatus"]);
 
             </div>
 
-            <div id="search-bar" class="col-md-10 align-items-center justify-content-between border-bottom">
+           
+           <!-- <div id="search-bar" class="col-md-10 align-items-center justify-content-between border-bottom" >
+              
+            </div> -->
+            <input type="text" class="form-control col-md-4 mb-3" id="search-input" placeholder="Search..." onkeyup="searchTable()" autocomplete="off">
+           <!--  <input type="text"class="col-md-4 align-items-center justify-content-between border-bottom" id="search-input" placeholder="Search..." onkeyup="searchTable()"> -->
 
-            </div>
+            
         </div><!-----------top-bar-end----------------------->
 
 
@@ -328,7 +335,7 @@ unset($_SESSION["emailerrorstatus"]);
             <div style="overflow:auto" class="col-md-10 h-100"><!-----------main-dashboard------------------------->
 
                 <div style="overflow:auto" class="mt-3 px-4"><!----------------table--------------->
-                <table class="table table-borderless">
+                <table class="table table-borderless" id="search_table">
     <thead>
         <tr class="ps-gray">
             <th>S.No</th>
@@ -340,7 +347,7 @@ unset($_SESSION["emailerrorstatus"]);
             <th>Age</th>
             <th>End date </th>
             <th>Cause heading</th>
-            <th>Cause description</th>
+           <!--  <th>Cause description</th> -->
             <th>created date</th>
             <th>Created by</th>
             <th>raised amount</th>
@@ -362,7 +369,7 @@ unset($_SESSION["emailerrorstatus"]);
                     <td><?php echo htmlspecialchars($donation->age); ?></td>
                     <td><?php echo htmlspecialchars($donation->end_date); ?></td>
                     <td><button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')"><?php echo htmlspecialchars($donation->cause_heading); ?></button></td>
-                    <td><?php echo htmlspecialchars($donation->cause_description); ?></td>
+                   <!--  <td><?php echo htmlspecialchars($donation->cause_description); ?></td> -->
                     <td><?php echo htmlspecialchars($donation->created_at); ?></td>
                     <td><?php echo htmlspecialchars($donation->created_by); ?></td>
                     <td><?php echo htmlspecialchars($donation->raised_amount); ?></td>
@@ -982,6 +989,35 @@ function deleteCause(userId) {
         });
     }
 }
+
+
+/* const input = document.getElementById("search-input");
+input.addEventListener("input",function(){
+    const searchValue=this.value.toLowerCase();
+    const rows=document.querySelectorAll("#table tbody tr");
+    rows.foreach(row=>{
+        const cells=row.querySelectorAll("td");
+        let containsValue=fasle;
+        cells.foreach(cell=>{
+            if(cell.textContent.toLowerCase().includes(searchValue)){
+                containsValue=true;
+            }
+        });
+        if(containsValue){row.style.display="";}
+        else{row.style.display="none";}
+    })
+}) */
+
+function searchTable() {
+      const input = document.getElementById("search-input").value.toLowerCase();
+      const table = document.getElementById("search_table");
+      const tr = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < tr.length; i++) {
+        let rowText = tr[i].textContent.toLowerCase();
+        tr[i].style.display = rowText.includes(input) ? "" : "none";
+      }
+    }
 
 </script>             
 

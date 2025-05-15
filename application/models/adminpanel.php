@@ -214,5 +214,14 @@ class adminpanel extends CI_Model
         $totalunverifiedtransactions = $this->db->query("SELECT * FROM donation_for_cause WHERE status = 0");
         return count($totalunverifiedtransactions->result_array());
     }
+//delete transaction
+    
+    public function delete_by_id($donation_id) {
+        // Use  delete the donation 'donation_id'table colunm name $donation_id variable
+        $this->db->where('donation_id', $donation_id);
+        $delete = $this->db->delete('donation_for_cause');  // 'individualform' is the table name
+    
+        return $delete;
+    }
 
 }
