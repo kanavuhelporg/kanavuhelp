@@ -96,7 +96,8 @@ $this->db->select('f.*, (SELECT COUNT(*) FROM donation_for_cause d WHERE d.fundr
                 $fundraiser->days_left = $days_left;
                 $fundraiser->hide_donation_button = false;
 
-                 $fundraiser->supporters_count = $this->UserModel->count_supporters($fundraiser->id); // or use $fundraiser->cause_id if needed
+                
+                $fundraiser->supporters_count = $this->UserModel->count_supporters($fundraiser->id); // or use $fundraiser->cause_id if needed
 
                 $active_fundraisers[] = $fundraiser;
             }

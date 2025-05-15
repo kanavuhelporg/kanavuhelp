@@ -830,6 +830,7 @@
     margin-bottom: 10px;
     line-height: 1.3;
     color:rgb(22, 24, 26); 
+    
 }
 .card-text {
     font-size: 16px;
@@ -1056,9 +1057,16 @@
         }
 
         // Sort the fundraisers by progress percentage in ascending order
-        usort($fundraisers, function($a, $b) {
+       /*  usort($fundraisers, function($a, $b) {
             return getProgressPercentage($a) <=> getProgressPercentage($b);
-        });
+        }); */
+
+ usort($fundraisers, function($a, $b) {
+        return $b->priority <=> $a->priority; // High priority first
+     });
+
+       
+
 
         // Show only first 8 fundraisers initially
         $displayedFundraisers = array_slice($fundraisers, 0, 8);
@@ -1077,7 +1085,8 @@
                         <div class="card-body d-flex flex-column">
                             <!-- Cause Heading with overflow handling -->
                             <div class="flex-grow-1" style="min-height: 50px;">
-                                <p class="card-title">
+                                <!-- <p class="card-title"> -->
+                                  <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                     <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
                                 </p>
                             </div>
@@ -1171,7 +1180,7 @@
   <!-- See More Button -->
 <?php  if (!empty($fundraisers)): ?>   
 <div class="text-center mt-3">
-  <a href="<?= base_url('/donate') ?>" class="btn" style="background-color: white; border: 1px solid black; color: #ED3136; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+  <a href="<?= base_url('/donate') ?>" class="btn" style="background-color: white; border: 1px solid #ED3136; color: #ED3136; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     See More Causes
   </a>
 </div>
