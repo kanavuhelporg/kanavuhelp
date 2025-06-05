@@ -10,7 +10,8 @@
    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Login Page</title>
-    <link href="<?php echo base_url(); ?>assets/img/LOGO_KSV.png"  rel="icon" />
+    <!-- <link href="<?php echo base_url(); ?>assets/img/LOGO_KSV.png"  rel="icon" /> -->
+     <link href="<?php echo base_url(); ?>assets/img/Kanavu_help2.png"  rel="icon" />
     <style>
         * {
             /* overflow: hidden; */

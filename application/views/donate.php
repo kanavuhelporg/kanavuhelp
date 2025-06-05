@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
-  <link href="<?php echo base_url(); ?>assets/img/LOGO_KSV.png"  rel="icon" />
+  <!-- <link href="<?php echo base_url(); ?>assets/img/LOGO_KSV.png"  rel="icon" /> -->
+   <link href="<?php echo base_url(); ?>assets/img/Kanavu_help2.png"  rel="icon" /> 
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -722,27 +723,22 @@
                                         <a href="#" class="btn bg-danger text-white" onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">Donate Now</a>
 
                                     <?php endif; ?>
-                                   <!--  <i class="bi bi-share ms-2" 
-                                       onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
-                                                          '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
-                                                          '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
-                                    </i> -->
-
-                                     <!-- Share Icon with label -->
-       <!--  <div class="text-center"> -->
+                                  
+         <!-- Share Icon with label -->
+      
        <i class="bi bi-share fs-6" 
-                                                onclick="shareCause(\'' . base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) . '\', 
-                                                            \'' . htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) . '\', 
-                                                            \'' . base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) . '\')"></i>
-                                              <div class="fs-5 fw-bold  text-danger  p-1 ms-1 d-inline-block">
-                                            Share
-                                        </div> 
-     <!--    </div> --></i>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                      onclick="shareCause(\'' . base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) . '\', 
+                     \'' . htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) . '\', 
+                     \'' . base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) . '\')"></i>
+                    <div class="fs-5 fw-bold  text-danger  p-1 ms-1 d-inline-block">
+                     Share
+                    </div> 
+         </i>
                 </div>
+                  </div>
+                  </div>
+                  </a>
+              </div>
 
             <?php endforeach; ?>
         <?php else: ?>

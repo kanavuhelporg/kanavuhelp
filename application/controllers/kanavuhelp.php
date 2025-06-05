@@ -106,6 +106,16 @@ $this->db->select('f.*, (SELECT COUNT(*) FROM donation_for_cause d WHERE d.fundr
        
         $data['sno'] = 0;
        // $this->load->view('causesverification', $data);
+
+
+       // Fetch data from model
+        $data['total_donors'] = $this->UserModel->get_total_donors();
+        $data['total_events'] = $this->UserModel->get_total_events();
+        $data['total_fund'] = $this->UserModel->get_total_fund();
+        $data['total_volunteers'] = 550; // Static for now, update if you have a table
+
+        // Load view and pass data
+        //$this->load->view('kanavuhome', $data);
         $this->load->view('kanavuhome.php', $data);
         $this->session->set_userdata("entry", 1);
     }

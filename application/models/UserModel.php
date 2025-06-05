@@ -404,8 +404,41 @@ public function get_used_priorities() {
         return $delete;
         
     }
+//kani
+	  // Get total donors (count of donation_id from donation_for_cause)
+    public function get_total_donors() {
+        $query = $this->db->select('COUNT(donation_id) as total_donors')
+                          ->from('donation_for_cause')
+                          ->get();
+        return $query->row()->total_donors;
+    }
 
-	
+    // Get total events (count of id from individualform)
+    public function get_total_events() {
+        $query = $this->db->select('COUNT(id) as total_events')
+                          ->from('individualform')
+                          ->get();
+        return $query->row()->total_events;
+    }
+
+     // Get total fund raised (sum of amount from donation_for_cause)
+    
+public function get_total_fund()
+{
+    $this->db->select('SUM(amount) as total_fund');
+    $this->db->from('donation_for_cause');
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+        $row = $query->row();
+        return $row->total_fund;  // This will be DECIMAL value
+    } else {
+        return 0;  // If no rows, return 0
+    }
+}
+
+
+
 
 }
 ?>
