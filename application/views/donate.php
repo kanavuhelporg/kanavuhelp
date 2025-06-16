@@ -604,7 +604,7 @@
           <button
               class="filter-btn inline-flex items-center border-2 border-gray-400 text-gray-400 py-1 px-3 focus:outline-none rounded-full text-base mt-4 mr-3 md:mt-0 donatefor"
               data-filter="<?= htmlspecialchars($cat->name, ENT_QUOTES) ?>"><?= htmlspecialchars($cat->name, ENT_QUOTES) ?></button>
-      <?php endforeach; ?>
+      <?php endforeach; ?>  
     <?php else: ?>
       <p>No categories available at the moment.</p>
     <?php endif; ?>
@@ -1430,35 +1430,6 @@ function shareCause(url, title, imgurl) {
       });
   };
 
-/* donation fetch based on mobile number 
-document.getElementById('phone').addEventListener('change', function() {
-    const mobile = this.value;
-    fetch('/kanavuhelp/fetchUserByMobile', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'phoneno=' + encodeURIComponent(mobile)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            document.getElementById('name').value = data.data.name || '';
-            document.getElementById('phone').value = data.data.phoneno || '';
-            document.getElementById('donorcity').value = data.data.city || '';
-        } else {
-            alert(data.message);
-            // Clear fields if no data found
-            document.getElementById('name').value = '';
-            document.getElementById('donorcity').value = '';
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An unexpected error occurred. Please try again.');
-    });
-});
-*/
 </script>
 
 <form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
@@ -1486,8 +1457,8 @@ document.getElementById('phone').addEventListener('change', function() {
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

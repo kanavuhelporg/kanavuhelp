@@ -23,13 +23,7 @@
     html {
       scroll-behavior: smooth;
     }
-    .stat-box {
-      padding: 20px;
-      transition: background-color 0.3s;
-    }
-    .stat-box:hover {
-      background-color: #f9f9f9;
-    }
+  
     .stat-box img {
       width: 50px;
       height: 50px;
@@ -998,6 +992,31 @@
         font-size: 12px;
     }
 }
+
+.carousel-indicators {
+  bottom: 10px;
+}
+.carousel-indicators [data-bs-target] {
+  width: 30px;
+  height: 4px;
+  background-color: #A9A9A9;
+  border-radius: 2px;
+  opacity: 0.5;
+  transition: opacity 0.3s, background-color 0.3s;
+}
+.carousel-indicators .active {
+  background-color: #ED3136;
+  opacity: 1;
+}
+@media (max-width: 768px) {
+  .carousel-indicators [data-bs-target] {
+    width: 20px;
+    height: 3px;
+  }
+}
+
+
+
   </style>
 </head>
 
@@ -1007,6 +1026,10 @@
   </nav>
 <br>
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    </div>
     
     <div class="carousel-inner">
       <!-- Slide 1 -->
@@ -1059,7 +1082,15 @@
     </div>
   </div>
 
-
+   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 
 <section class="stats-section py-5">
   <div class="container">
@@ -1147,6 +1178,7 @@
             <div class="col-12 col-lg-3 col-md-6 mb-3 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                 <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
                     <div class="card h-100 fixed-card">
+                      
                         <!-- Fixed Height for Image -->
                         <img src="<?= $imageSrc ?>" 
                              class="card-img-top fixed-card-img img-placeholder">
@@ -1225,7 +1257,7 @@
                                                           '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                                                           '<?= $imageSrc ?>')">
                                         <i class="bi bi-share"></i>
-                                        <span>Share</span>
+                                        <span class="fw-bold">Share</span>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -1985,27 +2017,38 @@ document.getElementById('donationForm').onsubmit = function (event) {
     requestAnimationFrame(update);
   }
 
+
+// Run counter animation once on page load
+document.addEventListener('DOMContentLoaded', () => {
   const counters = document.querySelectorAll('.count-up');
+  counters.forEach(counter => animateCounter(counter));
+});
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCounter(entry.target);
-        observer.unobserve(entry.target); // Prevent re-trigger
-      }
-    });
-  }, {
-    threshold: 0.5
-  });
+function animateCounter(el) {
+  const target = +el.getAttribute('data-target');
+  const prefix = el.getAttribute('data-prefix') || '';
+  const suffix = el.getAttribute('data-suffix') || '';
+  const duration = 2000; // Total duration of the animation in ms
+  const startTime = performance.now();
 
-  counters.forEach(counter => observer.observe(counter));
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const value = Math.floor(progress * target);
+    el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
 
-   // Add hover event listener to each stat-box
-  document.querySelectorAll('.stat-box').forEach(box => {
-    const counter = box.querySelector('.count-up');
-    box.addEventListener('mouseenter', () => animateCounter(counter));
-  });
+  requestAnimationFrame(update);
+}
 
+// Run counter animation once on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const counters = document.querySelectorAll('.count-up');
+  counters.forEach(counter => animateCounter(counter));
+});
 </script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->

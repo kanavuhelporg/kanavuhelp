@@ -65,7 +65,7 @@
 }
 /* Login_button */
     .login-button {
-      background-color: #E01A2B;
+      background-color: #ED3136;
       color: white;
       font-size: 16px;
       padding: 8px 20px;
@@ -75,8 +75,8 @@
     }
 /* start a kanavu button */
     .startkanavu-button {
-      border: 1px solid #E01A2B;
-      color: #E01A2B;
+      border: 1px solid #ED3136;
+      color: #ED3136;
       font-size: 16px;
       padding: 8px 20px;
       border-radius: 25px;
@@ -700,7 +700,7 @@
               // Calculate progress percentage
               $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
               ?>
-              <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress-bar bg-danger" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
             <!-- Supporters and Days Left -->
