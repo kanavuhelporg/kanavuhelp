@@ -6,7 +6,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
-  <link href="<?php echo base_url(); ?>assets/img/LOGO_KSV.png"  rel="icon" />
+  <!-- <link href="<?php echo base_url(); ?>assets/img/LOGO_KSV.png"  rel="icon" /> -->
+   <link href="<?php echo base_url(); ?>assets/img/Kanavu_help2.png"  rel="icon" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -18,7 +19,19 @@
     body {
       font-family: 'Sen', sans-serif;
     }
-
+      /* count running */
+    html {
+      scroll-behavior: smooth;
+    }
+  
+    .stat-box img {
+      width: 50px;
+      height: 50px;
+    }
+    h2.count-up {
+    /*   font-size: 2.5rem; */
+      font-weight: bold;
+    }
     /* carousel img */
     .carousel-item {
       height: 100vh;
@@ -38,7 +51,8 @@
       height: 100%;
       width: 100%;
     }
-
+  
+    
     /* login_button */
     .login-button {
       background-color: #ED3136;
@@ -978,6 +992,31 @@
         font-size: 12px;
     }
 }
+
+.carousel-indicators {
+  bottom: 10px;
+}
+.carousel-indicators [data-bs-target] {
+  width: 30px;
+  height: 4px;
+  background-color: #A9A9A9;
+  border-radius: 2px;
+  opacity: 0.5;
+  transition: opacity 0.3s, background-color 0.3s;
+}
+.carousel-indicators .active {
+  background-color: #ED3136;
+  opacity: 1;
+}
+@media (max-width: 768px) {
+  .carousel-indicators [data-bs-target] {
+    width: 20px;
+    height: 3px;
+  }
+}
+
+
+
   </style>
 </head>
 
@@ -987,6 +1026,11 @@
   </nav>
 <br>
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    </div>
+    
     <div class="carousel-inner">
       <!-- Slide 1 -->
       <div class="carousel-item active">
@@ -1037,6 +1081,61 @@
       </div>
     </div>
   </div>
+
+   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+<section class="stats-section py-5">
+  <div class="container">
+    <div class="row text-center">
+      <!-- Fund Raised Column -->
+      <div class="col-12 col-md-3">
+        <div class="stat-box">
+          <img src="<?= base_url('assets/img/money-bag1.png') ?>" alt="Icon" class="mb-3">
+          <!-- <h2 class="count-up" data-target="3000" data-suffix="M">0</h2> -->
+           <!-- <h2 class="count-up" data-target="<?= $total_fund ?>" data-suffix="M">0</h2> data-prefix="₹"-->
+           <h2 class="count-up" data-target="<?= html_escape($total_fund) ?>"  data-prefix="₹">0</h2>
+          <p>Total fund raised</p>
+        </div>
+      </div>
+      <!-- Successful Events Column -->
+      <div class="col-12 col-md-3">
+        <div class="stat-box">
+            <img src="<?= base_url('assets/img/calendar1.png') ?>" alt="Icon" class="mb-3">
+          <!-- <h2 class="count-up" data-target="250" data-suffix="+">0</h2> -->
+          <h2 class="count-up" data-target="<?= $total_events ?>" data-suffix="+">0</h2>
+          <p>Successful events</p>
+        </div>
+      </div>
+      <!-- Volunteers Column -->
+      <div class="col-12 col-md-3">
+        <div class="stat-box">
+          <img src="<?= base_url('assets/img/hand1.png') ?>" alt="Icon" class="mb-3">
+          <h2 class="count-up" data-target="550" data-suffix="+">0</h2>
+           <!-- <h2 class="count-up" data-target="<?= $total_volunteers ?>" data-suffix="+">0</h2> -->
+          <p>Worldwide volunteers</p>
+        </div>
+      </div>
+      <!-- Donors Column -->
+      <div class="col-12 col-md-3">
+        <div class="stat-box">
+          <img src="<?= base_url('assets/img/volunter1.png') ?>" alt="Icon" class="mb-3">
+          <!-- <h2 class="count-up" data-target="500" data-suffix="+">0</h2> -->
+           <h2 class="count-up" data-target="<?= $total_donors ?>" data-suffix="+">0</h2>
+          <p>Our donors</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
   <div class="container-xxl mt-5">
   
     <div class="h4 text-center">BE THE REASON OF<span style="color:#ED3136"> SOMEONE SMILES</span></div>
@@ -1079,6 +1178,7 @@
             <div class="col-12 col-lg-3 col-md-6 mb-3 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
                 <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
                     <div class="card h-100 fixed-card">
+                      
                         <!-- Fixed Height for Image -->
                         <img src="<?= $imageSrc ?>" 
                              class="card-img-top fixed-card-img img-placeholder">
@@ -1157,7 +1257,7 @@
                                                           '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
                                                           '<?= $imageSrc ?>')">
                                         <i class="bi bi-share"></i>
-                                        <span>Share</span>
+                                        <span class="fw-bold">Share</span>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -1350,10 +1450,10 @@ function openDonationModal() {
     </div>
   </div>
 
-  <section class="stats-section py-5">
+  <!-- <section class="stats-section py-5">
     <div class="container">
       <div class="row text-center">
-        <!-- Fund Raised Column -->
+        <!-- Fund Raised Column 
         <div class="col-12 col-md-3">
           <div class="stat-box">
             <img src="<?= base_url('assets/img/money-bag.svg') ?>" alt="Icon" class="mb-3">
@@ -1361,7 +1461,7 @@ function openDonationModal() {
             <p>Total fund raised</p>
           </div>
         </div>
-        <!-- Successful Events Column -->
+        <!-- Successful Events Column 
         <div class="col-12 col-md-3">
           <div class="stat-box">
             <img src="<?= base_url('assets/img/calendar.svg') ?>" alt="Icon" class="mb-3">
@@ -1369,7 +1469,7 @@ function openDonationModal() {
             <p>Successful events</p>
           </div>
         </div>
-        <!-- Volunteers Column -->
+        <!-- Volunteers Column 
         <div class="col-12 col-md-3">
           <div class="stat-box">
             <img src="<?= base_url('assets/img/hand.svg') ?>" alt="Icon" class="mb-3">
@@ -1377,7 +1477,7 @@ function openDonationModal() {
             <p>Worldwide volunteers</p>
           </div>
         </div>
-        <!-- Donors Column -->
+        <!-- Donors Column 
         <div class="col-12 col-md-3">
           <div class="stat-box">
             <img src="<?= base_url('assets/img/volunter.svg') ?>" alt="Icon" class="mb-3">
@@ -1387,7 +1487,14 @@ function openDonationModal() {
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
+
+
+
+
+ <!-- counters column -->
+
+  
   <!-- <div class="bg-light">
     <div class="container-xxl mt-5 pt-5">
       <div class="h4" style="text-align:center">LAST CHARITY BLOGS</div>
@@ -1883,6 +1990,65 @@ document.getElementById('donationForm').onsubmit = function (event) {
       document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
     });
 };
+
+
+
+//section counter running
+  function animateCounter(el) {
+    const target = +el.getAttribute('data-target');
+     const prefix = el.getAttribute('data-prefix') || '';
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 2000; // Total duration of the animation in ms
+    const startTime = performance.now();
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const value = Math.floor(progress * target);
+
+    //  el.textContent = value.toLocaleString() + suffix;
+   el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+
+// Run counter animation once on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const counters = document.querySelectorAll('.count-up');
+  counters.forEach(counter => animateCounter(counter));
+});
+
+function animateCounter(el) {
+  const target = +el.getAttribute('data-target');
+  const prefix = el.getAttribute('data-prefix') || '';
+  const suffix = el.getAttribute('data-suffix') || '';
+  const duration = 2000; // Total duration of the animation in ms
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const value = Math.floor(progress * target);
+    el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+// Run counter animation once on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const counters = document.querySelectorAll('.count-up');
+  counters.forEach(counter => animateCounter(counter));
+});
 </script>
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->

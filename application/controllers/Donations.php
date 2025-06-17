@@ -28,6 +28,7 @@ class Donations extends CI_Controller {
 
         // Load the fundraisers using the model
         $fundraisers = $this->UserModel->filterCauseswithcategory($category);
+        
 
         // Initialize an array for active fundraisers
         $active_fundraisers = [];
@@ -47,7 +48,7 @@ class Donations extends CI_Controller {
             // Add properties to the fundraiser object
             $fundraiser->days_left = $days_left;
             $fundraiser->hide_donation_button = $is_expired;
-
+            $fundraiser->supporters_count = $this->UserModel->count_supporters($fundraiser->id); // or use $fundraiser->cause_id if needed
             // Add to active fundraisers
             $active_fundraisers[] = $fundraiser;
         }
@@ -96,6 +97,7 @@ class Donations extends CI_Controller {
                                         <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                             ' . htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) . '
                                         </p>
+                                        
                                     </div>
 
                                       <!-- Supporters and Created by in a Single Row -->

@@ -34,6 +34,7 @@
                             <span>Priority <?php echo htmlspecialchars($donation->priority); ?></span>
                         <?php endif; ?>
                     </td>
+                    
                     <td class="d-flex">
                         <button onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">
                             Edit
