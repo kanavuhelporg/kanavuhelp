@@ -373,9 +373,9 @@
 <body >
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="<?=base_url('')?>">
-        <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
-      </a>
+      <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
+                <img src="<?= base_url('assets/img/Kanavu_help2.png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+            </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
