@@ -374,7 +374,7 @@
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
-                <img src="<?= base_url('assets/img/Kanavu_help2.png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+                <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
             </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
@@ -384,7 +384,7 @@
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title">
-            <img src="<?= base_url('assets/img/Kanavu_help.png') ?>" alt="Kanavu_help">
+             <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
