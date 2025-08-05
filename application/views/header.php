@@ -5,7 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanavu_help</title>
-    
+    <!--G4 (google analytics) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0Q147F1Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JF0Q147F1Y');
+</script>
     
     <style>
         body {
