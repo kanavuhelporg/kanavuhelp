@@ -22,7 +22,7 @@
                     <td><?php echo htmlspecialchars($donation->age); ?></td>
                     <td><?php echo htmlspecialchars($donation->end_date); ?></td>
                     <td><button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')"><?php echo htmlspecialchars($donation->cause_heading); ?></button></td>
-                    <td><?php echo htmlspecialchars($donation->cause_description); ?></td>
+                    <!-- <td><?php echo htmlspecialchars($donation->cause_description); ?></td> -->
                     <td><?php echo htmlspecialchars($donation->created_at); ?></td>
                     <td><?php echo htmlspecialchars($donation->created_by); ?></td>
                     <td><?php echo htmlspecialchars($donation->raised_amount); ?></td>

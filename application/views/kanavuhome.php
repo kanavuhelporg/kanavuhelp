@@ -1015,8 +1015,109 @@
   }
 }
 
+  /* Raising the funds css style by poovarasan */
+  .step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #e6e6e6;
+      color: black;
+      text-align: center;
+      line-height: 40px;
+      font-weight: bold;
+    }
 
+    .step-item.active .step-circle {
+      background-color: #ED3136;
+      color: white;
+    }
 
+    .video-box {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      width: fit-content;
+    }
+
+    #progressContainer {
+      width: 100%;
+      height: 8px;
+      background-color: #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    #progressBar {
+      width: 0%;
+      height: 100%;
+      background-color: #ED3136;
+      transition: width 0.1s linear;
+    }
+
+    .step-item i {
+      visibility: hidden;
+    }
+
+    .step-item.active i {
+      visibility: visible;
+    }
+
+    #playPauseBtn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .video-box:hover #playPauseBtn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #playPauseBtn:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+      transform: scale(1.1);
+    }
+
+    video {
+      width: 500px;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+    .raise_video {
+      position: relative;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .step-circle {
+        margin-top: 5px;
+      }
+
+      video {
+        width: 100%;
+        height: auto;
+      }
+    }
   </style>
 </head>
 
@@ -1082,14 +1183,14 @@
     </div>
   </div>
 
-   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="prev">
+   <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
-    </button>
+    </button> -->
   </div>
 
 <section class="stats-section py-5">
@@ -1147,130 +1248,163 @@
   </div><br>
 <!-- Fundraiser Cards with Fixed Size -->  <!--kani-->
 <div class="container pt-4">
-  <div class="row g-4" id="fundraiserCards">
-    <?php if (!empty($fundraisers)): ?>
-        <?php 
-        // Sort fundraisers by progress percentage in ascending order
-        function getProgressPercentage($fundraiser) {
-            return $fundraiser->amount == 0 ? 0 : ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-        }
+    <div class="row g-3" id="fundraiserCards">
+        <?php if (!empty($fundraisers)): ?>
+            <?php 
+            // Helper to calculate progress
+            function getProgressPercentage($fundraiser) {
+                if ($fundraiser->amount == 0) return 0;
+                return min(($fundraiser->raised_amount / $fundraiser->amount) * 100, 100);
+            }
 
-        // Sort the fundraisers by progress percentage in ascending order
-       /*  usort($fundraisers, function($a, $b) {
-            return getProgressPercentage($a) <=> getProgressPercentage($b);
-        }); */
+            // Sort fundraisers by percentage (ascending)
+            usort($fundraisers, function($a, $b) {
+                return getProgressPercentage($a) <=> getProgressPercentage($b);
+            });
 
- usort($fundraisers, function($a, $b) {
-        return $b->priority <=> $a->priority; // High priority first
-     });
+            foreach ($fundraisers as $fundraiser): 
+                $is_goal_reached = $fundraiser->raised_amount >= $fundraiser->amount;
 
-       
+                // Image path fix (case-sensitive safe)
+                $image_path = FCPATH . 'assets/individualform_img/' . $fundraiser->cover_image;
+                if (!empty($fundraiser->cover_image) && is_file($image_path)) {
+                    $imageSrc = base_url('assets/individualform_img/' . rawurlencode($fundraiser->cover_image));
+                } else {
+                    $imageSrc = base_url('assets/img/funddonate.jpg');
+                }
 
-
-        // Show only first 8 fundraisers initially
-        $displayedFundraisers = array_slice($fundraisers, 0, 8);
-        foreach ($displayedFundraisers as $fundraiser): 
-            // Set a fixed dummy image if the cover image is empty or does not exist
-            $imageSrc = !empty($fundraiser->cover_image) && file_exists('assets/individualform_img/' . $fundraiser->cover_image) 
-                        ? base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) 
-                        : base_url('assets/img/funddonate.jpg'); // Dummy image path
-        ?>
-            <div class="col-12 col-lg-3 col-md-6 mb-3 d-flex card-container" data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>">
-                <a href="<?= base_url('helpus/'.str_replace(' ','-',$fundraiser->name).'-'. $fundraiser->id) ?>" style="text-decoration:none;color:black">
-                    <div class="card h-100 fixed-card">
-                      
-                        <!-- Fixed Height for Image -->
+                $progress_percentage = getProgressPercentage($fundraiser);
+            ?>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 d-flex card-container">
+                <div class="card h-100 w-100 d-flex flex-column shadow-sm" style="border-radius: 15px;">
+                    
+                    <!-- Cover Image (clickable, responsive) -->
+                    <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>">
                         <img src="<?= $imageSrc ?>" 
-                             class="card-img-top fixed-card-img img-placeholder">
-                        <div class="card-body d-flex flex-column">
-                            <!-- Cause Heading with overflow handling -->
-                            <div class="flex-grow-1" style="min-height: 50px;">
-                                <!-- <p class="card-title"> -->
-                                  <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                             alt="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>"
+                             class="card-img-top"
+                             style="border-top-left-radius: 15px; border-top-right-radius: 15px; object-fit: cover; aspect-ratio: 4/3;">
+                    </a>
+
+                    <div class="card-body d-flex flex-column p-3">
+                        
+                        <!-- Title -->
+                        <div class="flex-grow-1 mb-3">
+                            <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>" 
+                               class="text-dark text-decoration-none">
+                                <h5 class="card-title text-truncate" style="min-height: 60px;">
                                     <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
-                                </p>
+                                </h5>
+                            </a>
+                        </div>
+
+                        <!-- Supporters & Creator -->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="text-muted small d-flex align-items-center">
+                                <img src="<?= base_url('assets/img/user-icon.png') ?>" alt="Supporter Icon" width="16" height="16" class="me-1">
+                                <?= intval($fundraiser->supporters_count) ?> Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
                             </div>
+                            <div class="text-muted small text-truncate" style="max-width: 50%;">
+                                By <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+                            </div>
+                        </div>
 
-                            <!-- Supporters and Created by in a Single Row -->
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <!-- Supporters Section -->
-                                <!-- <div class="d-flex align-items-center supporters-section">
-                                    <i class="bi bi-heart-fill me-1" style="color: #EB2D32;"></i> -->
-                                    
-                            <div class="d-flex align-items-center supporters-section">
-                                      <img src="<?= base_url('assets//img/heart1.svg') ?>" width="16" height="16" alt="Person Icon"style="margin-right: 6px;" >
-                                    
-                               
-                                    <p class="mb-0 text-muted">
-                                         <span class="supporter-count"><?= htmlspecialchars($fundraiser->supporters_count ?? 0) ?></span>
-                                       <!--  <span class="supporter-count">13</span> -->
-                                        Supporters
-                                    </p>
-                                </div>
-                                <!-- Created by Section (Unchanged) C:\xampp\htdocs\kanavuhelp\assets\img\heart 1.svg-->
-                                <div class="d-flex align-items-center created-by-section">
-                                   
-                                         <!-- <div class="d-flex align-items-center justify-content-center me-2"
-                                           style="width: 30px; height: 25px; background-color: #EB2D32; border-radius: 50%;">
-                                        <i class="bi bi-person-fill" style="color: white; font-size: 16px;"></i> -->
-                                        <div class="d-flex align-items-center justify-content-center me-2">
-                            
-                                      <img src="<?= base_url('assets//img/Frame1000003573.svg') ?>" width="24" height="24" alt="Person Icon">
-
-                
-                                    </div>
-                                    <p class="mb-0 text-muted truncate-text1" 
-                                       data-fulltext="Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>">
-                                        <span style="font-size: 12px; color: #888;">Created by</span><br>
-                                        <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
-                                    </p>
+                        <!-- Raised Amount & Progress Bar -->
+                        <div class="mt-2">
+                            <p class="card-text mb-1 small">
+                                <strong>
+                                    ₹<?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> / ₹<?= number_format($fundraiser->amount) ?>
+                                </strong>
+                            </p>
+                            <div class="progress" style="height: 8px; background-color: #f8d7da;">
+                                <div class="progress-bar bg-danger" 
+                                     style="width: <?= $progress_percentage ?>%;" 
+                                     role="progressbar" 
+                                     aria-valuenow="<?= $progress_percentage ?>" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Progress Bar and Raised Amount -->
-                            <?php
-                            $progress_percentage = getProgressPercentage($fundraiser);
-                            ?>
-                            <div class="flex-grow-1 mt-2" style="min-height: 60px;">
-                                <p class="card-text">
-                                     <strong> 
-                                        ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?></strong> <span style="color:#666;"> raised out of ₹ <?= number_format($fundraiser->amount) ?>
-                                   </span> <!--  -->
-                                </p>
-                                <div class="progress mb-2">
-                                    <div class="progress-bar bg-danger" 
-                                         style="width: <?= $progress_percentage ?>%;" 
-                                         role="progressbar" 
-                                         aria-valuenow="<?= $progress_percentage ?>" 
-                                         aria-valuemin="0" 
-                                         aria-valuemax="100">
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Donate / Completed + Share -->
+                        <div class="d-flex align-items-center mt-3 justify-content-between">
+                            <?php if ($is_goal_reached): ?>
+                                <span class="badge bg-success">Completed</span>
+                            <?php else: ?>
+                                <button type="button" class="btn bg-danger text-white btn-sm donate_btn" 
+                                        onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">
+                                    Donate
+                                </button>
+                            <?php endif; ?>
 
-                            <!-- Donate Button and Share -->
-                            <div class="d-flex align-items-center mt-auto">
-                                <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)) : ?>
-                                    <a href="#" class="btn bg-danger text-white btn-sm" onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">Donate Now</a>
-                                    <div class="share-section ms-auto" 
-                                         onclick="shareCause('<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>', 
-                                                          '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
-                                                          '<?= $imageSrc ?>')">
-                                        <i class="bi bi-share"></i>
-                                        <span class="fw-bold">Share</span>
-                                    </div>
-                                <?php endif; ?>
+                            <!-- Share Icon -->
+                            <div class="d-flex align-items-center text-danger" style="cursor: pointer;"
+                                 onclick="shareCause(
+                                     '<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>',
+                                     '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>',
+                                     '<?= $imageSrc ?>'
+                                 )">
+                                <i class="bi bi-share fs-6"></i>
+                                <span class="fs-6 ms-1">Share</span>
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p class="text-center">No fundraisers available at the moment.</p>
-    <?php endif; ?>
-  </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="text-center">No fundraisers available at the moment.</p>
+        <?php endif; ?>
+    </div>
 </div>
+
+<!-- Responsive styles -->
+<style>
+.card-container {
+    display: flex;
+}
+.card {
+    transition: transform 0.2s;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.card-img-top {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+}
+.card-title {
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+@media (max-width: 767px) {
+    .card-img-top {
+        max-height: 180px;
+    }
+    .card-title {
+        font-size: 1rem;
+        min-height: 50px;
+    }
+    .card-body {
+        padding: 1rem !important;
+    }
+    .btn-sm {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+@media (max-width: 576px) {
+    .card-img-top {
+        max-height: 160px;
+    }
+    .card-title {
+        font-size: 0.9rem;
+        min-height: 40px;
+    }
+}
+</style>
 <!-- kani1 -->
 
 
@@ -1323,10 +1457,8 @@ function loadMoreFundraisers() {
                 <div class="progress-bar" style="width: ${(fundraiser.raised_amount / fundraiser.amount) * 100}%" role="progressbar" aria-valuenow="${(fundraiser.raised_amount / fundraiser.amount) * 100}" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
               <div class="d-flex align-items-center mt-auto">
-                ${fundraiser.days_left >= 0 && !fundraiser.hide_donation_button ? ` 
-                  <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(${fundraiser.id})">Donate Now</a>
-                   <i class="bi bi-share ms-2" onclick="shareCause('${'<?= base_url('helpus/') ?>' + fundraiser.name.replace(' ', '-') + '-' + fundraiser.id}', '${fundraiser.cause_heading}', '${imageSrc}')"></i>
-                ` : ''}
+                <a href="#" class="btn bg-danger text-white donate_btn">Donate Now</a>
+
               </div>
             </div>
           </div>
@@ -1389,25 +1521,25 @@ function openDonationModal() {
 }
 </script>
 
-  <div class="position-relative" id="how-it-works-section">
+  <!-- <div class="position-relative" id="how-it-works-section">
     <div class="container-xxl ">
 
       <div class="h4 worktext" style="text-align:center;">START A FUNDRAISER IN <span
           style="color:#ED3136"> THREE SIMPLE STEPS</span></div>
-    </div>
+      </div>
     <div style="display: flex; justify-content: center;">
         <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
       </div>
     <!-- <img src="<?= base_url('assets/img/steps.png') ?>" class="steps_img"
-      style="object-fit: cover; width: 100%; margin-top: -200px;"> -->
+      style="object-fit: cover; width: 100%; margin-top: -200px;"> --
     <div class="container " style="display:flex; justify-content:center">
       <div class="row justify-content-center" style="margin-top:65px;">
-        <!-- Step 1 -->
+        <!-- Step 1 --
         <div class="col-12 col-lg-4 text-center mb-4">
           <div class="step-container step-1 text-center">
             <div class="background-overlay"></div>
             <div class="step-icon">
-              <!-- Add the corresponding icon here -->
+              <!-- Add the corresponding icon here --
             </div>
             <div class="step_1">
               <h2 class="mt-3">01</h2>
@@ -1417,12 +1549,12 @@ function openDonationModal() {
           </div>
         </div>
 
-        <!-- Step 2 -->
+        <!-- Step 2 --
         <div class="col-12 col-lg-4 text-center mb-4">
           <div class="step-container step-2 text-center">
             <div class="background-overlay"></div>
             <div class="step-icon">
-              <!-- Add the corresponding icon here -->
+              <!-- Add the corresponding icon here --
             </div>
             <div class="step_2">
               <h2 class="mt-3">02</h2>
@@ -1432,12 +1564,12 @@ function openDonationModal() {
           </div>
         </div>
 
-        <!-- Step 3 -->
+        <!-- Step 3 --
         <div class="col-12 col-lg-4 text-center mb-4">
           <div class="step-container step-3 text-center">
             <div class="background-overlay"></div>
             <div class="step-icon">
-              <!-- Add the corresponding icon here -->
+              <!-- Add the corresponding icon here --
             </div>
             <div class="step_3">
               <h2 class="mt-3">03</h2>
@@ -1448,7 +1580,313 @@ function openDonationModal() {
         </div>
       </div>
     </div>
+  </div> -->
+
+  <!-- By Poovarasan for raising funds -->
+  <div class="container py-4">
+    <h2 class="text-center mb-3">
+      START A FUNDRAISER IN <span style="color:#ED3136">THREE SIMPLE STEPS</span>
+    </h2>
+    <div class="text-center mb-4">
+      <img src="underline.svg" width="150" alt="underline">
+    </div>
+
+    <div class="row flex-column flex-lg-row align-items-start">
+      <!-- Video Column -->
+      <div class="col-12 col-lg-6 order-1 order-lg-1">
+        <div class="video-box">
+          <div class="raise_video">
+            <video id="stepVideo" muted autoplay playsinline class="video-small">
+              <source src="<?php echo base_url('assets/video/Help Website 1.mp4'); ?>" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="progressBar"></div>
+            </div>
+          </div>
+          <!-- Play/Pause Button -->
+          <div id="playPauseBtn" class="play-pause-btn">
+            <i class="bi bi-pause-fill"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Steps Column -->
+      <div class="col-12 col-lg-6 order-2 order-lg-2">
+        <ul class="list-unstyled mt-3 mt-lg-0">
+          <li class="step-item mb-1" data-step="1">
+            <div class="d-flex align-items-start">
+              <div class="icon-wrapper text-danger fs-4 me-2">
+                <i class="bi bi-caret-left-fill"></i> <!-- target this -->
+              </div>
+              <div class="step-circle me-3" style="border-radius: 50% !important;">1</div>
+              <div>
+                <h5 class="mb-1"><strong>Use our tools to create your fundraiser</strong></h5>
+                <p class="mb-0">With our easy-to-use tools, you can set up your fundraiser in just minutes. Whether it’s for a personal cause, community project, or charitable initiative, our platform gives you everything you need to share your story, connect with supporters, and start raising funds right away.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item mb-1" data-step="2">
+            <div class="d-flex align-items-start">
+              <div class="icon-wrapper text-danger fs-4 me-2">
+                <i class="bi bi-caret-left-fill"></i>
+              </div>
+              <div class="step-circle me-3">2</div>
+              <div>
+                <h5 class="mb-1"><strong>Reach donors by sharing</strong></h5>
+                <p class="mb-0">Spread the word about your fundraiser with just a click. Share your campaign across social media, email, and messaging apps to reach more donors, inspire support, and grow your impact faster.</p>
+              </div>
+            </div>
+          </li>
+          <li class="step-item" data-step="3">
+            <div class="d-flex align-items-start">
+              <div class="icon-wrapper text-danger fs-4 me-2">
+                <i class="bi bi-caret-left-fill"></i>
+              </div>
+              <div class="step-circle me-3">3</div>
+              <div>
+                <h5 class="mb-1"><strong>Securely receive funds</strong></h5>
+                <p class="mb-0">Receive donations safely and without hassle. Our secure payment system ensures that every contribution goes directly to your fundraiser, giving you and your supporters peace of mind throughout the process.</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <!-- ✅ CSS -->
+  <style>
+    
+    .video-box {
+      position: relative;
+      max-width: 100%;
+    }
+    
+   .video-small {
+      width: 100%;
+      max-height: 750px;
+      height: auto;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .raise_video {
+      position: relative;
+    }
+
+    video {
+      border-radius: 8px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 5px;
+      background-color: #e0e0e0;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: #ED3136;
+      width: 0;
+      transition: width 0.1s linear;
+    }
+
+    .play-pause-btn {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .step-item {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 12px 16px;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .step-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .step-circle {
+      width: 40px !important;
+      height: 40px !important;
+      min-width: 40px !important;
+      min-height: 40px !important;
+      border-radius: 50% !important;
+      border: 2px solid #fbd9d3;
+      color: #ED3136;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+
+    .step-item.active .step-circle {
+      background-color: #ED3136;
+      color: #fff;
+      
+    }
+
+    .step-item:hover .step-circle {
+      background-color: #fceaea;
+      color: #ED3136;
+      border: 2px solid #ED3136;
+    }
+
+    .step-item h5 {
+      transition: color 0.3s ease;
+    }
+
+    .step-item:hover h5,
+    .step-item.active h5 {
+      color: #ED3136;
+    }
+
+    /* ✅ Fix: Show caret icon only on active or hover */
+    .step-item .bi-caret-left-fill {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.3s ease, opacity 0.3s ease;
+    }
+
+    .step-item.active .bi-caret-left-fill,
+    .step-item:hover .bi-caret-left-fill {
+      visibility: visible;
+      opacity: 1;
+    }
+    /* Hide the icon by default */
+    .step-item .icon-wrapper {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    /* Show icon on hover or active step */
+    .step-item:hover .icon-wrapper,
+    .step-item.active .icon-wrapper {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 991px) {
+      .video-box {
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .row {
+        flex-direction: column !important;
+      }
+      .step-circle {
+        /* prevent flex from stretching width/height */
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+      }
+    }
+  </style>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const video = document.getElementById('stepVideo');
+    const videoSource = video.querySelector('source');
+    const stepItems = document.querySelectorAll('.step-item');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const playPauseIcon = playPauseBtn.querySelector('i');
+    const progressBar = document.getElementById('progressBar');
+
+    const baseUrl = "assets/video/";
+    const videoSources = {
+      1: baseUrl + 'Help Website 1.mp4',
+      2: baseUrl + 'Help Website 2.mp4',
+      3: baseUrl + 'Help Website 3.mp4'
+    };
+
+    let currentStep = 1;
+    const totalSteps = 3;
+
+    function updateProgressBar() {
+      if (!video.paused && !video.ended && video.duration) {
+        const progress = (video.currentTime / video.duration) * 100;
+        progressBar.style.width = `${progress}%`;
+      }
+      requestAnimationFrame(updateProgressBar);
+    }
+
+    function updateStep(step) {
+      currentStep = step;
+
+      stepItems.forEach(item => {
+        item.classList.remove('active');
+      });
+
+      const activeItem = document.querySelector(`.step-item[data-step="${step}"]`);
+      if (activeItem) {
+        activeItem.classList.add('active');
+      }
+
+      video.pause();
+      videoSource.src = videoSources[step];
+      progressBar.style.width = '0%';
+      video.load();
+
+      video.onloadedmetadata = () => {
+        video.play().catch(err => console.error("Autoplay failed:", err));
+        playPauseIcon.className = 'bi bi-pause-fill';
+      };
+    }
+
+    requestAnimationFrame(updateProgressBar);
+
+    video.addEventListener('ended', () => {
+      const nextStep = currentStep >= totalSteps ? 1 : currentStep + 1;
+      updateStep(nextStep);
+    });
+
+    playPauseBtn.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+        playPauseIcon.className = 'bi bi-pause-fill';
+      } else {
+        video.pause();
+        playPauseIcon.className = 'bi bi-play-fill';
+      }
+    });
+
+    stepItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const step = parseInt(item.dataset.step);
+        updateStep(step);
+      });
+    });
+
+    updateStep(currentStep);
+  </script>
+
 
   <!-- <section class="stats-section py-5">
     <div class="container">
@@ -1994,35 +2432,52 @@ document.getElementById('donationForm').onsubmit = function (event) {
 
 
 //section counter running
-  function animateCounter(el) {
+ function animateCounter(el) {
+    if (el.classList.contains('counted')) return; // Prevent multiple runs
+
     const target = +el.getAttribute('data-target');
-     const prefix = el.getAttribute('data-prefix') || '';
+    const prefix = el.getAttribute('data-prefix') || '';
     const suffix = el.getAttribute('data-suffix') || '';
-    const duration = 2000; // Total duration of the animation in ms
+    const duration = 2000;
     const startTime = performance.now();
 
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const value = Math.floor(progress * target);
-
-    //  el.textContent = value.toLocaleString() + suffix;
-   el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
+      el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
 
       if (progress < 1) {
         requestAnimationFrame(update);
       }
     }
 
+    el.classList.add('counted'); // Mark as done
     requestAnimationFrame(update);
   }
 
+  document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.count-up');
 
-// Run counter animation once on page load
-document.addEventListener('DOMContentLoaded', () => {
-  const counters = document.querySelectorAll('.count-up');
-  counters.forEach(counter => animateCounter(counter));
-});
+    // ✅ Run once immediately on page load
+    counters.forEach(counter => animateCounter(counter));
+
+    // ✅ Run when section becomes visible (on scroll)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => observer.observe(counter));
+
+    // ✅ Run when hovered (only once)
+    // counters.forEach(counter => {
+    //   counter.addEventListener('mouseenter', () => animateCounter(counter));
+    // });
+  });
 
 function animateCounter(el) {
   const target = +el.getAttribute('data-target');

@@ -1,7 +1,7 @@
-<div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between ps-gray rounded-2 py-1">
-          <input type="text" style="outline-style:none;" class="w-75 ps-3 border-0 ps-gray" placeholder="search">
+<div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between ">
+          <!-- <input type="text" style="outline-style:none;" class="w-75 ps-3 border-0 ps-gray" placeholder="search">
           <span style="cursor:pointer;" class="pe-3">
-            <i class="fa-solid fa-magnifying-glass"></i></span>
+            <i class="fa-solid fa-magnifying-glass"></i></span> -->
         </div>
 
         <div class="col-md-3 d-flex align-items-baseline justify-content-evenly">
@@ -26,7 +26,7 @@
           <ul class="dropdown-menu dropdown-menu-end">
           <li>
             <a class="dropdown-item" href="<?= base_url('/adminlogout') ?>">
-              <i class="fas fa-sign-out-alt"></i> Logout
+              <i class="fas fa-sign-out-alt"></i> Logoutt
             </a>
           </li>
           </ul>

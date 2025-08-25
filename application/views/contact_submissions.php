@@ -3,504 +3,653 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TransactionVerification</title>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
-    <!-- <link rel="stylesheet" href="./ponsoft.css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Bootstrap CSS -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Bootstrap JS and Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>  
+    <title>Contact Submissions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-      .ps-logo{
-        display:flex;
-        align-items:center;
-        justify-content:center;
-      }
+        .ps-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-     .ps-gray{
-        background-color: rgb(248, 245, 245);
-     }
+        .ps-gray {
+            background-color: rgb(248, 245, 245);
+        }
 
-     .active-bg{
-      background-color:rgb(230, 230, 230);
-     }
+        .active-bg {
+            background-color: green;
+        }
 
-     .heading-ponsoft{
-        color: rgb(120, 50, 186);
-        font-weight:800;
-        font-family:sans-serif;
-     }
+        .heading-ponsoft {
+            color: rgb(120, 50, 186);
+            font-weight: 800;
+            font-family: sans-serif;
+        }
 
-     .ps-letter{
-        background-color: rgb(120, 50, 186);
-     }
+        .ps-letter {
+            background-color: rgb(120, 50, 186);
+        }
 
-     .ps-user{
-    background-color: rgb(254, 213, 163);;
-     }
+        .ps-user {
+            background-color: rgb(254, 213, 163);
+        }
 
-     .align{
-        align-self:self-end;
-     }
+        .align {
+            align-self: self-end;
+        }
 
-     .fa-magnifying-glass{
-      color: gray;
-     }
+        .fa-magnifying-glass {
+            color: gray;
+        }
 
-     .dashboard-cards{
-    display:grid;
-    grid-template-columns: repeat(auto-fit,minmax(150px,auto));
-    gap:20px;
-    }
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+            gap: 20px;
+        }
 
-    .card-round{
-      border-radius:20px;
-    }
+        .card-round {
+            border-radius: 20px;
+        }
 
-    ul > li{
-      cursor:pointer;
-    }
+        ul > li {
+            cursor: pointer;
+        }
 
-    .card1{
-    background-color: rgb(88, 194, 255);
-     }
+        .card1 {
+            background-color: rgb(88, 194, 255);
+        }
 
-     .card2{
-      background-color: rgb(233, 153, 3);
-     }
+        .card2 {
+            background-color: rgb(233, 153, 3);
+        }
 
-     .card3{
-      background-color: rgb(124, 9, 232);
-     }
+        .card3 {
+            background-color: rgb(124, 9, 232);
+        }
 
-     .card4{
-      background-color: rgb(35, 154, 43);
-     }
+        .card4 {
+            background-color: rgb(35, 154, 43);
+        }
 
-     .chartMenu {
-        width: 100vw;
-        height: 40px;
-        background: #1A1A1A;
-        color: rgba(54, 162, 235, 1);
-      }
+        .chartMenu {
+            width: 100vw;
+            height: 40px;
+            background: #1A1A1A;
+            color: rgba(54, 162, 235, 1);
+        }
 
-      .chartMenu p {
-        padding: 10px;
-        font-size: 20px;
-      }
+        .chartMenu p {
+            padding: 10px;
+            font-size: 20px;
+        }
 
-      .chartCard {
-        display:grid;
-        grid-template-columns: repeat(auto-fit,minmax(250px,700px)) ;
-        grid-template-rows: repeat(auto-fit,minmax(200px,auto)) ;
-        align-items: center;
-      }
+        .chartCard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 700px));
+            grid-template-rows: repeat(auto-fit, minmax(200px, auto));
+            align-items: center;
+        }
 
-      .ps-table-grid{
-        display:grid;
-        grid-template-columns: repeat(auto-fit,minmax(300px,700px)) ;
-      }
+        .ps-table-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 700px));
+        }
 
-      .chartBox {
-        /* height:fit-content; */
-        padding: 10px;
-        border-radius: 20px;
-        /* border: solid 3px rgba(54, 162, 235, 1); */
-        background: white;
-      }
+        .chartBox {
+            padding: 10px;
+            border-radius: 20px;
+            background: white;
+        }
 
-      #search-bar{
-            display:flex;
-           }
+        #search-bar {
+            display: flex;
+        }
 
-      .ham-line{
-        width:30px;
-        height:6px;
-        background-color: rgb(70, 70, 70);
-        margin-top:5px;
-      }
+        .ham-line {
+            width: 30px;
+            height: 6px;
+            background-color: rgb(70, 70, 70);
+            margin-top: 5px;
+        }
 
-      .ps-add-btn{
-        border:none;
-        outline:none;
-        background-color:rgb(23, 23, 184);
-        border-radius:25px;
+        .ps-add-btn {
+            border: none;
+            outline: none;
+            background-color: rgb(23, 23, 184);
+            border-radius: 25px;
+        }
 
-      }
+        .active-page {
+            background-color: #6495ED;
+            font-weight: 500;
+            color: white;
+        }
 
-      .active-page{
-        background-color:#6495ED;
-        font-weight:500;
-        color:white;
-      }
+        .active {
+            border: none;
+            outline: none;
+            font-weight: 500;
+            font-size: 15px;
+        }
 
-      .active{
-        border:none;
-        outline:none;
-        font-weight:500;
-        font-size:15px;
-      }
+        .ps-page-count {
+            border: none;
+            outline: none;
+            font-weight: 500;
+            color: white;
+            background-color: #6495ED;
+        }
 
-      .ps-page-count{
-        border:none;
-        outline:none;
-        font-weight:500;
-        color:white;
-        background-color:#6495ED;
-      }
+        #coords-form div > input {
+            border-radius: 50px;
+            border: 1px solid rgb(208, 205, 205);
+            outline: none;
+            padding: 13px 0;
+        }
 
-      #coords-form div > input{
-         border-radius:50px;
-         border:1px solid rgb(208, 205, 205);
-         outline:none;
-         padding:13px 0;
-      }
+        #coords-form div > button {
+            border-radius: 50px;
+        }
 
-      #coords-form div > button{
-        border-radius:50px;
-      }
+        #add-coords-form {
+            width: 42%;
+            border-radius: 25px;
+            box-sizing: border-box;
+            padding: 3%;
+            position: relative;
+        }
 
-      #add-coords-form{
-        width:42%;
-        border-radius:25px;
-        box-sizing:border-box;
-        padding:3%;
-        position: relative;
-      }
+        .form-grid {
+            grid-template-rows: repeat(auto-fit, minmax(50px, auto));
+        }
 
-      .form-grid{
-        grid-template-rows:repeat(auto-fit,minmax(50px,auto));
-      }
+        #coords-modal-hide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            transition: 0.4s;
+            transition-timing-function: ease;
+        }
 
-      #coords-modal-hide{
-        position: absolute;
-        width: 100%;
-        height:100%;
-        top:0;
-        left:-100%;
-        transition:0.4s;
-        transition-timing-function:ease;
-      }
+        .coords-modal {
+            padding: 10px 0;
+            background-color: rgba(128, 128, 128, 0.4);
+            overflow: hidden;
+        }
 
-      .coords-modal{
-        padding:10px 0;
-        background-color:rgba(128, 128, 128, 0.4);
-        overflow:hidden;
-      }
+        a {
+            color: black;
+        }
 
-      a{
-        color:black;
-      }
+        a:hover {
+            color: black;
+        }
 
-      a:hover{
-        color:black;
-      }
+        /* Pagination style */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px 0;
+        }
 
-      @media screen and (max-width:768px) {
-           #search-bar{
-            display:none;
-           }
-           #menu-bar{
-            display:none;
-           }
-           .ps-logo{
-            justify-content:space-between;
-          }
-      }
+        .pagination .page-item .page-link {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            text-align: center;
+            line-height: 40px;
+            border: none;
+            background-color: #f1f1f1;
+            color: #000;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
 
-      @media screen and (min-width:768px) {
-          .ham-menu{
-            display:none;
-          }
-      }
+        .pagination .page-item.active .page-link {
+            background-color: #0A517F;
+            color: #fff;
+        }
 
-      @media screen and (max-width:768px) {
-        
-          #add-coords-form div > input{
+        .pagination .page-item.disabled .page-link {
+            background-color: #f1f1f1;
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination .page-item.disabled .page-link:hover {
+            background-color: #f1f1f1;
+        }
+
+        .nav-link.active {
+            background-color: red;
+            color: white !important;
+        }
+
+        /* .nav-link:hover {
+            background-color: rgba(120, 50, 186, 0.1);
+        } */
+
+        /* Mobile styles */
+        .ham-menu {
+            cursor: pointer;
+            background: none;
+            border: none;
             padding: 5px;
-          }
-          #add-coords-form{
-            width:90%;
-            padding:8%;
-          }
-      }
+        }
 
+        .offcanvas-sidebar {
+            background-color: rgb(248, 245, 245);
+        }
+
+        .offcanvas-sidebar .nav-link {
+            color: black;
+            font-weight: 400;
+        }
+
+        .offcanvas-sidebar .nav-link.active {
+            background-color: red;
+            color: white !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            #search-bar {
+                display: none;
+            }
+
+            #menu-bar {
+                display: none;
+            }
+            .hide-mobile{
+                display: none;
+            }
+            .ps-logo {
+                justify-content: space-between;
+            }
+
+            #add-coords-form div > input {
+                padding: 5px;
+            }
+
+            #add-coords-form {
+                width: 90%;
+                padding: 8%;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        @media screen and (min-width: 769px) {
+            .ham-menu {
+                display: none;
+            }
+
+            .hide-mobile {
+                display: none;
+            }
+        }
+        
     </style>
 </head>
 <body>
-        
     <div class="container-fluid">
-      
-      <div id="side-bar" class="row"><!-----top-bar--------------->
-
-      <div class="col-md-2 border-bottom ps-gray py-3">
-               
-               <div id="kanavuhelplogo" class="ps-logo">
-                          
-                   </div>
-       
-               </div>
-       
-               <div id="search-bar" class="col-md-10 align-items-center justify-content-between border-bottom">
-             
-               </div>
-        </div><!-----------top-bar-end----------------------->
-
-
-        <div class="row" style="height: 100vh;"><!----------main-navbar----------->
-
-        <div id="menu-bar" class="col-md-2 ps-gray" style="height: 100vh;"><!----------side-bar-------------------->
-              
-         </div><!-----------side-bar-end-------------->
-            
-         <div class="col-md-10 h-100"><!-----------main-dashboard------------------------->
-         
-         
-         
-        <div style="overflow:auto" class="mt-3 px-4"><!----------------table--------------->
-        <table class="table table-borderless">
-            <thead>
-            <tr class="ps-gray">
-            <th>S.No</th><th>Name</th><th>Email</th><th>Phone Number</th><th>Message</th><th>Created_at</th>
-            </tr>
-            </thead>
-            <tbody id="enquiries">
-            <?php if (!empty($submissions)): $i = $sno + 1;?>
-            <?php foreach ($submissions as $index => $submissions): ?>
-                <tr>
-                    <td><?php echo $i; ?></td>
-                    <td><?php echo htmlspecialchars($submissions->name); ?></td>
-                    <td><?php echo htmlspecialchars($submissions->email); ?></td>
-                    <td><?php echo htmlspecialchars($submissions->phone); ?></td>
-                    <td><?php echo htmlspecialchars($submissions->message) ?></td>
-                    <td><?php echo htmlspecialchars($submissions->created_at) ?></td>
-                    </td>
-                </tr>
-            <?php ++$i; endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="8" style="text-align: center;">No records found.</td>
-            </tr>
-        <?php endif; ?>
-            </tbody>
-            </table>
-
-        </div> <!----------------table-end------->
-
-<!-----------------pagination---------------------->
-<div class="d-flex justify-content-center">        
-<div class="col-md-6 py-2 d-flex justify-content-around align-items-center">
-
-<?php 
-
-if(isset($counts)){
-  if($counts > 0){
-  $countsperpage = 10;
-  $noofpages = ceil($counts / $countsperpage) - 1;
-  $totalpagesarr = createarr($noofpages);
-  $totalpages = count($totalpagesarr) ;
-  $initialindex = 0;
-  $lastindex = 5;
-  $pages = array_slice($totalpagesarr,$initialindex,$lastindex);
-  echo "<a href='changeContactpagesetup?initialindex=0' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-left-long'></i></a>";
-  $j = 0;
-  foreach ($pages as $key => $value) {
-    $count = $countsperpage * $value;
-    $pageno = $value + 1;
-   
-    if($pageno == 5){
-      echo "<a style='width:35px;height:35px;' href='changeContactpagesetup?initialindex=$value' class='".($j==0 ? 'active-page' : '')." active text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$pageno</a>";}
-    else{
-      echo "<button style='width:35px;height:35px;' onclick='displayContactsubmissions($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>";
-    }
-    ++$j;
-  }
-
-  echo "<span>...</span>";
-  $totalcount = ($totalpages - $lastindex);
-  echo "<a href='changeContactpagesetup?initialindex=$totalcount' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='active-page text-white text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$totalpages</a>";
-  
-  $newindex = $initialindex+$lastindex; 
-  echo "<a href='changeContactpagesetup?initialindex=$newindex' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-right-long'></i></a>";
-}
-else{
-  echo "<span>No pages available</span>";
-}
-}
-
-if(isset($initialindex) && isset($newcounts)){
-  
-  $countsperpage = 10;
-  $noofpages = ceil($newcounts / $countsperpage) - 1;
-  $totalpagesarr = createarr($noofpages);
-  $totalpages = count($totalpagesarr);
-  $lastindex = 5;
-  $start = $initialindex > $noofpages ? 0 : $initialindex;
-  $pages = array_slice($totalpagesarr,$start,$lastindex);
-  $start == 0 ? $prevlist = 0 : (($start - $lastindex) < 0 ? $prevlist = 0 : $prevlist = $start - $lastindex) ;
-  echo "<a href='changeContactpagesetup?initialindex=$prevlist' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-left-long'></i></a>";
-
-  $j = 0;
-
-  foreach ($pages as $key => $value) {
-    $count = $countsperpage * $value;
-    $pageno = $value + 1;
-    
-    if($pageno == 5 || $pageno - $start == 5){
-      echo $pageno == $totalpages ? "<button style='width:35px;height:35px;'onclick='displayContactsubmissions($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>" : "<a href='changeContactpagesetup?initialindex=".($pageno - 1)."' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='".($j==0 ? 'active-page' : '')." active text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$pageno</a>"; }
-    else{
-      echo "<button style='width:35px;height:35px;'onclick='displayContactsubmissions($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>";
-    }
-    ++$j;
-  }
-
-  echo "<span>...</span>";
-  $totalcount = ($totalpages - $lastindex);
-  echo "<a href='changeContactpagesetup?initialindex=$totalcount' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='active-page text-white text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$totalpages</a>";
-  
-  $newindex = $start + $lastindex; 
-  echo "<a href='changeContactpagesetup?initialindex=".($totalpages - $start <= $lastindex ? $totalcount : $newindex)."'  style='cursor:pointer;' class='text-decoration-none text-dark'><i class='fa-solid fa-arrow-right-long'></i></a>"; 
-}
-
-function createarr($noofpages){
-  return range(0,$noofpages);
-}
-
-
-?>
-
-</div>
-</div><!--------------pagination-end--------------------->
-
-        <!-- <script>
-function editDonation(donation) {
-    // Populate modal fields with donation data
-    document.getElementById('donationId').value = donation.donation_id;
-    document.getElementById('donationName').value = donation.name;
-    document.getElementById('donationEmail').value = donation.email;
-    document.getElementById('donationMobile').value = donation.phoneno;
-    document.getElementById('donationAmount').value = donation.amount;
-    document.getElementById('donationTransactionId').value = donation.transactionid;
-    document.getElementById('donationVerified').value = donation.status;
-}
-</script> -->
-        <!-- <div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form id="editDonationForm" action="<?php echo site_url('admin/updateDonation'); ?>" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editDonationLabel">Edit Donation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+        <div class="row"><!-----top-bar--------------->
+            <div class="col-md-2 col-12 border-bottom ps-gray py-3">
+                <div class="ps-logo">
+                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" class="ham-menu ms-4 border-0 bg-transparent">
+                        <div class="ham-line"></div>
+                        <div class="ham-line"></div>
+                        <div class="ham-line"></div>
                     </button>
+                    <div class="d-flex align-items-center">
+                        <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
+                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px;">KANAVUHELP</span>
+                    </div>
                 </div>
-                <div class="modal-body">
-                   
-                    <input type="hidden" name="id" id="donationId"  >
-
-                    <label>Name</label>
-                    <input type="text" name="name" id="donationName" class="form-control">
-
-                    <label>Email</label>
-                    <input type="email" name="email" id="donationEmail" class="form-control">
-
-                    <label>Mobile</label>
-                    <input type="text" name="mobile" id="donationMobile" class="form-control">
-
-                    <label>Amount</label>
-                    <input type="text" name="amount" id="donationAmount" class="form-control">
-
-                    <label>Transaction ID</label>
-                    <input type="text" name="transaction_id" id="donationTransactionId" class="form-control">
-
-                    
+            </div>
+            
+            <div id="search-bar" class="col-md-10 col-12 d-flex align-items-center justify-content-between border-bottom">
+                <div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between">
+                    <!-- Search bar can be added here if needed -->
                 </div>
                 
-            </form>
+                <div class="col-md-3 d-none d-md-flex align-items-baseline justify-content-evenly hide-mobile">
+                    <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
+                        <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
+                        <span style="font-weight:500;">
+                        <?php
+                            if (!isset($_SESSION)) {
+                            session_start();
+                            }
+                            if ($this->session->userdata('adminName')) {
+                            echo $this->session->userdata('adminName');
+                            } else {
+                                echo "Manager Name";
+                            }
+                        ?>
+                        </span>&nbsp;&nbsp;
+                        <i class="fa-solid fa-angle-down"></i>
+                    </button>
+                                
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
+                                data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
+                            </a>
+                        </li>
+                    </ul>
+                                
+                    <span class="d-flex justify-content-center">
+                        <i class="fa-solid fa-bell"></i>&nbsp;
+                        <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
+                            <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
+                        </div>
+                    </span>
+                </div>
+
+            </div>
+        </div><!-----------top-bar-end----------------------->
+
+        <div class="row" style="min-height: calc(100vh - 72px);"><!----------main-navbar----------->
+            <!----------side-bar-------------------->
+            <div id="menu-bar" class="col-md-2 ps-gray d-none d-md-block">
+                <ul class="d-grid list-unstyled">
+                    <li class="nav-item py-3 fs-6">
+                        <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
+                    </li>
+                    
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('admindashbord') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashboard
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('transactionverification') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('contact_submissions') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="<?= base_url('causesverification') ?>"
+                          class="nav-link text-decoration-none <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item py-2">
+                        <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
+                          data-bs-toggle="modal" data-bs-target="#logoutModal">
+                          <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!----------Offcanvas Sidebar for Mobile ------------->
+            <div class="offcanvas offcanvas-start offcanvas-sidebar" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasSidebarLabel">MENU</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body p-0">
+                    <ul class="d-grid list-unstyled">
+                        <li class="nav-item py-3 fs-6 px-3">
+                            <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
+                        </li>
+                        
+                        <li class="nav-item py-2 px-3">
+                            <a href="<?= base_url('admindashbord') ?>"
+                              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>"
+                              style="font-weight:400;color:black;">
+                              <i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashboard
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item py-2 px-3">
+                            <a href="<?= base_url('transactionverification') ?>"
+                              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
+                              style="font-weight:400;color:black;">
+                              <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item py-2 px-3">
+                            <a href="<?= base_url('contact_submissions') ?>"
+                              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
+                              style="font-weight:400;color:black;">
+                              <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item px-3">
+                            <a href="<?= base_url('causesverification') ?>"
+                              class="nav-link text-decoration-none <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
+                              style="font-weight:400;color:black;">
+                              <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item py-2 px-3">
+                            <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
+                              data-bs-toggle="modal" data-bs-target="#logoutModal">
+                              <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-----------main-dashboard------------------------->
+            <div class="col-md-10 col-12">
+                <div class="container-fluid px-3 px-md-4 pt-3">
+                    <!-- Search input with ❌ clear button -->
+                    <div class="row mb-3">
+                        <div class="col-md-4 position-relative">
+                            <input type="text" id="searchInput" class="form-control"
+                                  placeholder="Search by Name and press Enter"
+                                  value="<?= htmlspecialchars($search) ?>" autocomplete="off">
+
+                            <?php if (!empty($search)): ?>
+                                <button type="button" onclick="clearSearch()"
+                                        class="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-4 border-0"
+                                        style="z-index: 2; margin-right: -20px;">
+                                    &times;
+                                </button>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="ps-gray">
+                                    <th>S.No</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Message</th>
+                                    <th>Created_at</th>
+                                </tr>
+                            </thead>
+                            <tbody id="enquiries">
+                                <?php if (!empty($submissions)): $i = $sno + 1; ?>
+                                    <?php foreach ($submissions as $submission): ?>
+                                        <tr>
+                                            <td><?= $i ?></td>
+                                            <td><?= htmlspecialchars($submission->name) ?></td>
+                                            <td><?= htmlspecialchars($submission->email) ?></td>
+                                            <td><?= htmlspecialchars($submission->phone) ?></td>
+                                            <td><?= htmlspecialchars($submission->message) ?></td>
+                                            <td><?= htmlspecialchars($submission->created_at) ?></td>
+                                        </tr>
+                                        <?php $i++; endforeach; ?>
+                                <?php else: ?>
+                                    <tr><td colspan="6" style="text-align:center;">No records found.</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <?php
+                        $total_pages = ceil($counts / 10);
+                        $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                    ?>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item <?= ($current_page <= 1) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?page=<?= $current_page - 1 ?>&search=<?= urlencode($search) ?>"><i class='fa-solid fa-arrow-left-long'></i></a>
+                            </li>
+
+                            <?php for ($p = 1; $p <= $total_pages; $p++): ?>
+                                <li class="page-item <?= ($p == $current_page) ? 'active' : '' ?>">
+                                    <a class="page-link" href="?page=<?= $p ?>&search=<?= urlencode($search) ?>"><?= $p ?></a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <li class="page-item <?= ($current_page >= $total_pages) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?page=<?= $current_page + 1 ?>&search=<?= urlencode($search) ?>"> <i class='fa-solid fa-arrow-right-long'></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
     </div>
-</div> -->
 
-<script>
+    <!----------Logout Modal ------------->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="<?= base_url('admin/logout') ?>" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  $.ajax({
-      type:"get",
-      url:"admin/sidemenu",
-      success:(result)=>{
-           document.getElementById("menu-bar").innerHTML = result;
-      },
-      error:(error)=>{
-           document.getElementById("menu-bar").innerHTML = error;
-      }
-    }); 
-
-
-    $.ajax({
-      type:"get",
-      url:"admin/topmenu",
-      success:(result)=>{
-           document.getElementById("search-bar").innerHTML = result;
-          /*  document.getElementById("dashboardsearch").style.display = "flex";
-           document.getElementById("dashboardsubmenu").style.display = "flex"; */
-      },
-      error:(error)=>{
-           document.getElementById("search-bar").innerHTML = error;
-      }
-    }); 
-
-    $.ajax({
-      type:"get",
-      url:"admin/kanavuhelplogo",
-      success:(result)=>{
-           document.getElementById("kanavuhelplogo").innerHTML = result;
-      },
-      error:(error)=>{
-           document.getElementById("kanavuhelplogo").innerHTML = error;
-      }
-});
-
-function displayContactsubmissions(counts,index){
-console.log(counts)
-activepage = document.querySelectorAll(".active");
-let l = activepage.length;
-for(let i=0; i < l ; i++){
-if(i == index ){
-activepage[i].classList.add("active-page");
-}
-else{
-if(activepage[i].classList.contains("active-page")){
-activepage[i].classList.remove("active-page")
-}
-}   
-}   
-
-$.ajax({
-type:"get",
-url:"admin/displayContactsubmissions",
-data:{"count":counts},
-success:function(result){
-document.getElementById("enquiries").innerHTML = result;
-},
-error:function(error){
-document.getElementById("enquiries").innerHTML = error;
-}
-});
-
-}
-</script>
-
-        
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-        
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
+    <script>
+        // Search functionality
+        const input = document.getElementById('searchInput');
+
+        // Trigger search on Enter key only
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                const params = new URLSearchParams(window.location.search);
+                params.set('search', input.value.trim());
+                params.set('page', 1); // reset to first page
+                window.location.search = params.toString();
+            }
+        });
+
+        // Clear search when ❌ clicked
+        function clearSearch() {
+            const params = new URLSearchParams(window.location.search);
+            params.delete('search');
+            params.set('page', 1);
+            window.location.search = params.toString();
+        }
+
+        // Display contact submissions
+        function displayContactsubmissions(counts, index) {
+            console.log(counts)
+            activepage = document.querySelectorAll(".active");
+            let l = activepage.length;
+            for(let i = 0; i < l; i++) {
+                if(i == index) {
+                    activepage[i].classList.add("active-page");
+                } else {
+                    if(activepage[i].classList.contains("active-page")) {
+                        activepage[i].classList.remove("active-page")
+                    }
+                }   
+            }   
+
+            $.ajax({
+                type: "get",
+                url: "admin/displayContactsubmissions",
+                data: {"count": counts},
+                success: function(result) {
+                    document.getElementById("enquiries").innerHTML = result;
+                },
+                error: function(error) {
+                    document.getElementById("enquiries").innerHTML = error;
+                }
+            });
+        }
+
+        // AJAX calls for menu
+        $(document).ready(function() {
+            // $.ajax({
+            //     type: "get",
+            //     url: "admin/topmenu",
+            //     success: function(result) {
+            //         $("#search-bar").html(result);
+            //     },
+            //     error: function(error) {
+            //         $("#search-bar").html(error);
+            //     }
+            // });
+
+            $.ajax({
+                type: "get",
+                url: "admin/kanavuhelplogo",
+                success: function(result) {
+                    $("#kanavuhelplogo").html(result);
+                },
+                error: function(error) {
+                    $("#kanavuhelplogo").html(error);
+                }
+            });
+
+            // Active link highlighting
+            const currentUrl = window.location.href;
+            const navLinks = document.querySelectorAll("#menu-bar .nav-link, #offcanvasSidebar .nav-link");
+
+            navLinks.forEach(l => l.classList.remove("active"));
+
+            navLinks.forEach(link => {
+                if (currentUrl.includes(link.getAttribute('href'))) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
