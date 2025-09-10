@@ -7,57 +7,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <title>Admin Page</title>
     <style>
         * {
-            /* overflow: hidden; */
             background-color: #FEF2F2;
             font-family: 'Sen', sans-serif;
         }
 
         .logi1 {
-            margin-top: 30px;
-            padding: 40px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* .btnsignin {
+        .login-container {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .btnsignin {
             width: 100%;
             border-radius: 10px;
             color: white;
             background-color: #EB2D32;
-        } */
-        .btnsignin {
-         width: 100%;
-         border-radius: 10px;
-         color: white;
-         background-color: #EB2D32;
-         border: none; /* Ensures no border is applied */
-         transition: none; /* Removes any transition effect */
-      }
+            border: none;
+            transition: none;
+            padding: 10px;
+        }
 
-   .btnsignin:hover {
-    background-color: #EB2D32; /* Keep the button color the same on hover */
-    color: white; /* Keep text color the same */
-    border: none; /* Ensure no border on hover */
-      }
+        .btnsignin:hover {
+            background-color: #EB2D32;
+            color: white;
+            border: none;
+            opacity: 0.9;
+        }
+
         .atag {
             text-decoration: underline;
             color: #EB2D32;
         }
 
-        /* .btnsignin a:hover {
-            color: black;
-        } */
-
         form label {
             color: #718096;
+            font-weight: 500;
         }
 
         .right-image {
             width: 100%;
-            height: 100vh; /* Set image height to fill the viewport height */
-            object-fit: cover; /* Ensure the image covers the entire area while maintaining aspect ratio */
+            height: 100vh;
+            object-fit: cover;
         }
 
         .social-icons img {
@@ -65,62 +65,142 @@
             height: 40px;
             margin-left: 10px;
         }
-        .logo{
-          margin-top:10px;
-          margin-left:50px;
-        }
-        .login-form{
-          margin-left:50px;margin-right:50px;
 
+        .logo {
+            width: 180px;
+            margin-bottom: 30px;
+        }
+
+        .login-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: #718096;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .divider::before {
+            margin-right: 15px;
+        }
+
+        .divider::after {
+            margin-left: 15px;
+        }
+
+        .password-toggle {
+            cursor: pointer;
+            background-color: transparent !important;
+        }
+
+        @media (max-width: 767.98px) {
+            .logi1 {
+                padding: 15px;
+            }
+            
+            .logo {
+                width: 150px;
+                margin-left: 0;
+            }
+            
+            .login-form {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .logo {
+                width: 130px;
+            }
+            
+            .social-icons button {
+                padding: 5px 10px;
+            }
         }
     </style>
 </head>
 
 <body>
-
     <div class="container-fluid">
         <div class="row">
             <!-- Left side form column -->
-            <div class="col-md-6 logi1">
-                <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="<?= base_url('/kanavuhelp') ?>">
-                    <img class="logo" src="<?= base_url('/assets/img/kanavu_help.png') ?>" alt="Kanavu Help"
-                        style="">
-                </a>
-                <br><br><br>
-                <h2 style="margin-left:50px;">Sign in</h2>
-                <p style="margin-left:50px;">Don't have an Account? <a href="<?= base_url('kanavuhelp/register') ?>"><span
-                            style="color:red; text-decoration:underline;margin-left:10px;"> Create Now</span></a></p>
-                <form name="login" onsubmit="return loginValidate()" method="post"
-                    action="<?= base_url('admin/adminLogin') ?>" style="" class="login-form">
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">email</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1">
-                        <div id="mailerr" class="text-danger"></div>
-                    </div>
+            <div class="col-lg-6 logi1">
+                <div class="login-container">
+                    <a class="d-flex justify-content-center justify-content-md-start" href="<?= base_url('/kanavuhelp') ?>">
+                        <img class="logo" src="<?= base_url('/assets/img/kanavu_help.png') ?>" alt="Kanavu Help">
+                    </a>
+                    
+                    <div class="login-form">
+                        <h2 class="text-center text-md-start">Sign in</h2>
+                        <p class="text-center text-md-start">Don't have an Account? 
+                            <a href="<?= base_url('kanavuhelp/register') ?>">
+                                <span style="color:red; text-decoration:underline;margin-left:10px;">Create Now</span>
+                            </a>
+                        </p>
+                        
+                        <form name="login" onsubmit="return loginValidate()" method="post" action="<?= base_url('admin/adminLogin') ?>">
+                            <!-- Email Field -->
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1">
+                                <div id="mailerr" class="text-danger"></div>
+                            </div>
 
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">password</label>
-                        <input type="password" class="form-control" id="exampleInputpassword1" name="exampleInputpassword1">
-                        <div id="passworderr" class="text-danger"></div>
+                            <!-- Password Field with Eye Icon -->
+                            <div class="mb-3">
+                                <label for="exampleInputpassword1" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="exampleInputpassword1" name="exampleInputpassword1">
+                                    <button class="btn btn-outline-secondary password-toggle" type="button" id="togglePassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <div id="passworderr" class="text-danger"></div>
+                            </div>
+
+                            <div class="mb-3 d-flex justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                                </div>
+                                <a href="#" class="atag">Forgot password?</a>
+                            </div>
+
+                            <button type="submit" name="save" class="btn btnsignin">Sign in</button>
+                            
+                            <div class="divider my-4">
+                                <span class="px-2">OR</span>
+                            </div>
+                            
+                            <div class="text-center">
+                                <p class="mb-3">Continue with</p>
+                                <button type="button" class="btn p-0 border-0 bg-transparent">
+                                    <img src="<?= base_url('/assets/img/icons8-google 1.png') ?>" alt="Google" style="width:40px; height:40px;">
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Remember me <a href="#" class="atag"
-                                style="margin-left:25px;">Forgot password?</a></label>
-                    </div>
-                    <button type="submit" name="save" class="btn border btnsignin">Sign in</button>
-                    <p style="margin-top:10px;text-align:center;font-size:15px;"><strong>--------------OR-------------</strong></p>
-                    <div class="social-icons" style="text-align:center;">
-                    <p>Continue with</p>
-                    <button type="button" style="border:none; padding:10px 20px; margin:5px; cursor:pointer;">
-            <img src="<?= base_url('/assets/img/icons8-google 1.png') ?>" alt="Google" style="width:40px; height:40px; vertical-align:middle; margin-right:8px;">
-        </button>
-                    </div>
-                </form>
+                </div>
             </div>
 
             <!-- Right side image column -->
-            <div class="col-md-6 d-none d-md-block">
+            <div class="col-lg-6 d-none d-lg-block p-0">
                 <img src="<?= base_url('/assets/img/admin_login.png') ?>" alt="Right image" class="right-image">
             </div>
         </div>
@@ -128,34 +208,73 @@
 
     <script>
         function loginValidate() {
-            var email = document.login.exampleInputEmail1.value.trim(); // Trim the input value
-            var password = document.login.exampleInputpassword1.value.trim(); // Trim the input value
+            var email = document.login.exampleInputEmail1.value.trim();
+            var password = document.login.exampleInputpassword1.value.trim();
+            var isValid = true;
 
-            // Validate email
+            // Email validation
             if (email === "") {
-                var emailsms = "Email must be filled out";
-                document.getElementById("mailerr").innerHTML = emailsms;
-                return false;
+                document.getElementById("mailerr").innerHTML = "Email must be filled out";
+                isValid = false;
             } else if (!/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)) {
                 document.getElementById("mailerr").innerHTML = "You have entered an invalid email address";
-                return false;
+                isValid = false;
             } else {
                 document.getElementById("mailerr").innerHTML = "";
             }
 
-            // Validate password
+            // Password validation
             if (password === "") {
-                var passwordsms = "Password must be filled out";
-                document.getElementById("passworderr").innerHTML = passwordsms;
-                return false;
-            }  else {
+                document.getElementById("passworderr").innerHTML = "Password must be filled out";
+                isValid = false;
+            } else {
                 document.getElementById("passworderr").innerHTML = "";
             }
 
-            return true; // Submit the form if all validations pass
+            return isValid;
         }
-    </script>
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
+        // Password Toggle Script
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('exampleInputpassword1');
+            const icon = this.querySelector('i');
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            }
+        });
+
+        // Real-time validation for email field
+        document.getElementById('exampleInputEmail1').addEventListener('input', function() {
+            var email = this.value.trim();
+            
+            if (email === "") {
+                document.getElementById("mailerr").innerHTML = "Email must be filled out";
+            } else if (!/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)) {
+                document.getElementById("mailerr").innerHTML = "You have entered an invalid email address";
+            } else {
+                document.getElementById("mailerr").innerHTML = "";
+            }
+        });
+
+        // Real-time validation for password field
+        document.getElementById('exampleInputpassword1').addEventListener('input', function() {
+            var password = this.value.trim();
+            
+            if (password === "") {
+                document.getElementById("passworderr").innerHTML = "Password must be filled out";
+            } else {
+                document.getElementById("passworderr").innerHTML = "";
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

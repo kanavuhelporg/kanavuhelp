@@ -93,20 +93,45 @@ class admin extends CI_Controller
          redirect("admin");
     }
 
-    public function causesverification()
-    {
+    // public function causesverification()
+    // {
 
-        if (!$this->session->userdata('adminId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
-        }
-        $data['fundraisers'] = $this->adminpanel->get_cause_details();
-        $data['counts'] = $this->adminpanel->get_total_causes();
-        $data['sno'] = 0;
-        $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
-        $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
-        $this->session->set_userdata('causescounts',$data['counts']);
-        $this->load->view('causesverification.php', $data);
+    //     if (!$this->session->userdata('adminId')) {
+    //         redirect('kanavuhelp/login'); // Redirect to login if not logged in
+    //     }
+    //     $data['fundraisers'] = $this->adminpanel->get_cause_details();
+    //     $data['counts'] = $this->adminpanel->get_total_causes();
+    //     $data['sno'] = 0;
+    //     $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+    //     $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
+    //     $this->session->set_userdata('causescounts',$data['counts']);
+    //     $this->load->view('causesverification.php', $data);
+    // }
+    public function causesverification()
+{
+    if (!$this->session->userdata('adminId')) {
+        redirect('kanavuhelp/login');
     }
+
+    $limit = 5;
+    $page = (int)($this->input->get('page') ?? 1);
+    $offset = ($page - 1) * $limit;
+    $search = $this->input->get('search') ?? '';
+
+    $data['fundraisers'] = $this->adminpanel->get_cause_details($limit, $offset, $search);
+    $data['counts'] = $this->adminpanel->get_total_causes($search);
+    $data['sno'] = $offset;
+    $data['current_page'] = $page;
+    $data['per_page'] = $limit;
+    $data['search'] = $search;
+
+    $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+    $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
+    $this->session->set_userdata('causescounts', $data['counts']);
+
+    $this->load->view('causesverification.php', $data);
+}
+
 
     public function displayCauses(){
         if($this->input->is_ajax_request()){
@@ -143,18 +168,36 @@ class admin extends CI_Controller
     }    
 
     public function transactionverification()
-    {
-        if (!$this->session->userdata('adminId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
-        }
-        $data['donations'] = $this->adminpanel->transactiondetails();
-        $data['counts'] = $this->adminpanel->get_total_transaction();
-        $data['sno'] = 0;
-        $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
-        $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
-        $this->session->set_userdata('verificationpagecounts',$data['counts']);
-        $this->load->view('transactionverification.php', $data);
+{
+    if (!$this->session->userdata('adminId')) {
+        redirect('kanavuhelp/login');
     }
+
+    $search = $this->input->get('search', true); // Get search text
+    $page   = (int) $this->input->get('page');
+    $per_page = 5;
+
+    // Total filtered rows
+    $data['counts'] = $this->adminpanel->get_total_transaction($search);
+
+    // Pagination offset
+    $offset = ($page > 1) ? ($page - 1) * $per_page : 0;
+
+    // Fetch donations with search applied
+    $data['donations'] = $this->adminpanel->transactiondetails($per_page, $offset, $search);
+    $data['sno']       = $offset;
+    $data['page']      = $page;
+    $data['per_page']  = $per_page;
+    $data['search']    = $search;
+
+    // Unverified transactions count
+    $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+    $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
+    $this->session->set_userdata('verificationpagecounts', $data['counts']);
+
+    $this->load->view('transactionverification.php', $data);
+}
+
 
     public function displayVerificationpage(){
         
@@ -415,14 +458,22 @@ class admin extends CI_Controller
     }
 
     public function contact_submissions()
-    {
-        // Fetch data from the contact_form_submissions table
-        $data["sno"] = 0;
-        $data["counts"] = count($this->db->get('contact_us')->result());
-        $data['submissions'] = $this->db->order_by('created_at', 'DESC')->limit(10)->get('contact_us')->result();
-        // Load the view
-        $this->load->view('contact_submissions', $data);
-    }
+{
+    $search = $this->input->get('search');
+    $page = $this->input->get('page');
+    $page = (!empty($page) && is_numeric($page)) ? $page : 1;
+    $limit = 10;
+    $offset = ($page - 1) * $limit;
+
+    $data['search'] = $search;
+    $data['sno'] = $offset;
+    $data['counts'] = $this->adminpanel->get_enquiries_count($search);
+    $data['submissions'] = $this->adminpanel->get_enquiries_list($limit, $offset, $search);
+
+    $this->load->view('contact_submissions', $data);
+}
+
+
 
     public function displayContactsubmissions(){
         $counts = $this->input->get("count");

@@ -12,6 +12,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -237,6 +238,61 @@
         .priority-modal .modal-dialog {
             max-width: 400px;
         }
+
+        /* table content overflow style */
+        .table td {
+            /* max-width: 500px; Adjust width as needed */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+        }
+
+        /* Pagination style */
+        .pagination {
+            gap: 8px;
+        }
+
+        /* Page items as circles */
+        .pagination .page-item .page-link {
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            text-align: center;
+            line-height: 34px;
+            padding: 0;
+            color: #000;
+            border: none;
+            background-color: #f0f0f0;
+            font-weight: 500;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #0A517F;
+            color: #fff;
+        }
+
+        /* Disabled arrows */
+        .pagination .page-item.disabled .page-link {
+            background-color: transparent;
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Hover effect */
+        .pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+            background-color: #d6d6d6;
+        }
+
+        .nav-link.active {
+            background-color: red;
+            color: white !important;
+        }
+
+        /* .nav-link:hover {
+            background-color: rgba(120, 50, 186, 0.1);
+        } */
+
     </style>
 </head>
 
@@ -245,264 +301,476 @@
 <div style="overflow:hidden;position:absolute;" class="container-fluid">
 <!---------------------email-send-toast---------------------->
  
-<div id='emailsendtoast' style='z-index:2;border:4px solid rgb(132, 250, 132);border-radius:10px;position:absolute;top:10%;right:-380px;transition:0.5s;background-color:rgb(18, 155, 18);' class=' toast show'>
-  <div style="border-radius:10px;background-color:rgb(18, 155, 18);" class='toast-header'>
-    <strong class='me-auto text-white fs-6'>Success</strong>
-    <button type='button' class='btn-close float-end' data-bs-dismiss='toast'></button>
-  </div>
-  <div id="emailsendstatus" class='toast-body text-white fs-6 py-2'>
-    
-  </div>
-  </div>
+<?php
+// Determine which toast to show
+$toastType = '';
+$toastMessage = '';
 
-<?php if(isset($_SESSION["emailsuccessstatus"])){
-     $status = $_SESSION['emailsuccessstatus'];
-echo "<script>
-       document.getElementById('emailsendstatus').innerHTML = '$status';
-       document.getElementById('emailsendtoast').style.right = '50px';
-       setTimeout(()=>{
-       document.getElementById('emailsendtoast').style.right = '-380px';
-       },3000);
-       
-      </script>"; 
-
-unset($_SESSION["emailsuccessstatus"]);
-
-} 
-
-?>
-<!---------------------add-toast-end------------------>
-
-<!---------------------email-error-toast---------------------->
-
-<div id='emailerrortoast' style='z-index:2;border:4px solid rgb(254, 91, 91);border-radius:10px;position:absolute;top:10%;right:-380px;transition:0.5s;background-color:rgb(250,51,51);' class='toast show'>
-  <div style="background-color:rgb(250,51,51);" class='toast-header'>
-    <strong class='me-auto text-white fs-6'>Error</strong>
-    <button type='button' class='btn-close float-end' data-bs-dismiss='toast'></button>
-  </div>
-  <div id="emailerrormessage" class='toast-body text-white fs-6 py-2'>
-    
-  </div>
-  </div>
-
-<?php 
-
-if(isset($_SESSION["emailerrorstatus"])){
-  $status = $_SESSION['emailerrorstatus'];
-echo "<script>
-       document.getElementById('emailerrormessage').innerHTML = '$status';
-       document.getElementById('emailerrortoast').style.right = '50px';
-       setTimeout(()=>{
-       document.getElementById('emailerrortoast').style.right = '-380px';
-       },3000)
-       
-      </script>"; 
-
-unset($_SESSION["emailerrorstatus"]);
-
+if (isset($_SESSION["emailsuccessstatus"])) {
+    $toastType = 'success';
+    $toastMessage = $_SESSION["emailsuccessstatus"];
+    unset($_SESSION["emailsuccessstatus"]);
+} elseif (isset($_SESSION["emailerrorstatus"])) {
+    $toastType = 'error';
+    $toastMessage = $_SESSION["emailerrorstatus"];
+    unset($_SESSION["emailerrorstatus"]);
 }
-
 ?>
+
+<?php if (!empty($toastType)): ?>
+    <?php
+        // Set colors and title based on type
+        if ($toastType === 'success') {
+            $borderColor = 'rgb(132, 250, 132)';
+            $bgColor = 'rgb(18, 155, 18)';
+            $title = 'Success';
+        } else {
+            $borderColor = 'rgb(254, 91, 91)';
+            $bgColor = 'rgb(250, 51, 51)';
+            $title = 'Error';
+        }
+    ?>
+    <div id="toastMessage"
+         style="z-index:2; border:4px solid <?= $borderColor ?>; border-radius:10px; position:absolute; top:10%; right:-380px; transition:0.5s; background-color:<?= $bgColor ?>;"
+         class="toast show">
+        <div style="border-radius:10px; background-color:<?= $bgColor ?>;" class="toast-header">
+            <strong class="me-auto text-white fs-6"><?= $title ?></strong>
+            <button type="button" class="btn-close float-end" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body text-white fs-6 py-2">
+            <?= htmlspecialchars($toastMessage, ENT_QUOTES, 'UTF-8') ?>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('toastMessage').style.right = '50px';
+        setTimeout(() => {
+            document.getElementById('toastMessage').style.right = '-380px';
+        }, 3000);
+    </script>
+<?php endif; ?>
+
 <!---------------------email-error-toast-end--------------------->
 
-        <div id="side-bar" class="row"><!-----top-bar--------------->
-
-            <div class="col-md-2 border-bottom ps-gray py-3">
-
-                <div id="kanavuhelplogo" class="ps-logo">
-
+        <div class="row"><!-----top-bar--------------->
+            <div class="col-md-2 col-12 border-bottom ps-gray py-3">
+                <div class="ps-logo">
+                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" class="ham-menu ms-4 border-0 bg-transparent">
+                        <div class="ham-line"></div>
+                        <div class="ham-line"></div>
+                        <div class="ham-line"></div>
+                    </button>
+                    <div class="d-flex align-items-center">
+                        <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
+                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px;">KANAVUHELP</span>
+                    </div>
                 </div>
-
             </div>
-
-           
-           <!-- <div id="search-bar" class="col-md-10 align-items-center justify-content-between border-bottom" >
-              
-            </div> -->
-            <input type="text" class="form-control col-md-4 mb-3" id="search-input" placeholder="Search..." onkeyup="searchTable()" autocomplete="off">
-           <!--  <input type="text"class="col-md-4 align-items-center justify-content-between border-bottom" id="search-input" placeholder="Search..." onkeyup="searchTable()"> -->
-
             
+            <div id="search-bar" class="col-md-10 col-12 d-flex align-items-center justify-content-between border-bottom">
+                <div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between">
+                    <!-- Search bar can be added here if needed -->
+                </div>
+                
+                <div class="col-md-3 d-none d-md-flex align-items-baseline justify-content-evenly">
+                    <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
+                        <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
+                        <span style="font-weight:500;">
+                        <?php
+                            if (!isset($_SESSION)) {
+                            session_start();
+                            }
+                            if ($this->session->userdata('adminName')) {
+                            echo $this->session->userdata('adminName');
+                            } else {
+                                echo "Manager Name";
+                            }
+                        ?>
+                        </span>&nbsp;&nbsp;
+                        <i class="fa-solid fa-angle-down"></i>
+                    </button>
+                                
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
+                              data-bs-toggle="modal" data-bs-target="#logoutModal">
+                              <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
+                            </a>
+                        </li>
+                    </ul>
+                                
+                    <span class="d-flex justify-content-center">
+                        <i class="fa-solid fa-bell"></i>&nbsp;
+                        <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
+                            <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
+                        </div>
+                    </span>
+                </div>
+            </div>
         </div><!-----------top-bar-end----------------------->
 
 
         <div class="row" style="height: 100vh;"><!----------main-navbar----------->
 
-            <div id="menu-bar" class="col-md-2 ps-gray" style="height: 100vh;"><!----------side-bar-------------------->
+            <!----------side-bar-------------------->
+            <div id="menu-bar" style="height:inherit;" class="col-md-2 ps-gray">
+            
+                <ul class="d-grid list-unstyled">
 
-            </div><!-----------side-bar-end-------------->
+                    <li class="nav-item py-3 fs-6">
+                        <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
+                    </li>
 
-            <div style="overflow:auto" class="col-md-10 h-100"><!-----------main-dashboard------------------------->
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('admindashbord') ?>"
+                        class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>"
+                        style="font-weight:400;color:black;">
+                        <i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashboard
+                        </a>
+                    </li>
 
-                <div style="overflow:auto" class="mt-3 px-4"><!----------------table--------------->
-                <table class="table table-borderless" id="search_table">
-    <thead>
-        <tr class="ps-gray">
-            <th>S.No</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th>Amount</th>
-            <th>Location</th>
-            <th>Age</th>
-            <th>End date </th>
-            <th>Cause heading</th>
-           <!--  <th>Cause description</th> -->
-            <th>created date</th>
-            <th>Created by</th>
-            <th>raised amount</th>
-            <th>verified status</th>
-            <th>Priority</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody id="causeslist">
-        <?php if (!empty($fundraisers)): $i = $sno + 1; ?>
-            <?php foreach ($fundraisers as $index => $donation): ?>
-                <tr>
-                    <td><?php echo $i; ?></td>
-                    <td><?php echo htmlspecialchars($donation->name); ?></td>
-                    <td><?php echo htmlspecialchars($donation->email); ?></td>
-                    <td><?php echo htmlspecialchars($donation->phone); ?></td>
-                    <td><?php echo htmlspecialchars($donation->amount); ?></td>
-                    <td><?php echo htmlspecialchars($donation->location); ?></td>
-                    <td><?php echo htmlspecialchars($donation->age); ?></td>
-                    <td><?php echo htmlspecialchars($donation->end_date); ?></td>
-                    <td><button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')"><?php echo htmlspecialchars($donation->cause_heading); ?></button></td>
-                   <!--  <td><?php echo htmlspecialchars($donation->cause_description); ?></td> -->
-                    <td><?php echo htmlspecialchars($donation->created_at); ?></td>
-                    <td><?php echo htmlspecialchars($donation->created_by); ?></td>
-                    <td><?php echo htmlspecialchars($donation->raised_amount); ?></td>
-                    <td><?php echo htmlspecialchars($donation->verified == 1 ? 'Yes' : 'No'); ?></td>
-                    <td>
-                        <?php if ($donation->priority == 0): ?>
-                            <span>No Priority</span>
-                        <?php else: ?>
-                            <span>Priority <?php echo htmlspecialchars($donation->priority); ?></span>
-                        <?php endif; ?>
-                    </td>
-                    <td class="d-flex">
-                        <button onclick="editDonation(<?php echo htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">
-                            Edit
-                        </button>  &nbsp;&nbsp;
-                        <button onclick="setUrl('<?php echo $donation->email?>','<?php echo $donation->user_id;?>','<?php echo $donation->created_by;?>',<?php echo $donation->Verifyemailcount;?>,<?php echo $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">
-                            Status
-                        </button> &nbsp;&nbsp; 
-                        <button onclick="deleteCause(<?php echo $donation->id; ?>)" class="btn btn-danger fw-bold">
-                            Delete
-                        </button>&nbsp;&nbsp;
-                        <?php if ($this->session->userdata('adminName')): ?>
-                            <?php if ($donation->priority == 0): ?>
-                                <button class="btn btn-info fw-bold btn-sm insert-priority-btn" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?php echo $donation->id; ?>)">
-                                    Insert Priority
-                                </button>
-                                <button class="btn btn-warning fw-bold btn-sm no-priority-btn" style="display: none;" onclick="setNoPriority(<?php echo $donation->id; ?>)">
-                                    No Priority
-                                </button>
-                            <?php else: ?>
-                                <button class="btn btn-info fw-bold btn-sm insert-priority-btn" style="display: none;" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?php echo $donation->id; ?>)">
-                                    Insert Priority
-                                </button>
-                                <button class="btn btn-warning fw-bold btn-sm no-priority-btn" onclick="setNoPriority(<?php echo $donation->id; ?>)">
-                                    No Priority
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('transactionverification') ?>"
+                        class="nav-link text-decoration-none <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
+                        style="font-weight:400;color:black;">
+                        <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
+                        </a>
+                    </li>
+
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('contact_submissions') ?>"
+                        class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
+                        style="font-weight:400;color:black;">
+                        <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="<?= base_url('causesverification') ?>"
+                        class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
+                        style="font-weight:400;color:black;">
+                        <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+                        </a>
+                    </li>
+
+                    <li class="nav-item py-2">
+                        <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
+                        data-bs-toggle="modal" data-bs-target="#logoutModal">
+                        <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!----------Offcanvas Sidebar for Mobile ------------->
+            <div class="offcanvas offcanvas-start offcanvas-sidebar" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasSidebarLabel">MENU</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body p-0">
+                    <ul class="d-grid list-unstyled">
+                        <li class="nav-item py-3 fs-6 px-3">
+                            <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
+                        </li>
+                        
+                        <li class="nav-item py-2 px-3">
+                            <a href="<?= base_url('admindashbord') ?>"
+                              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>"
+                              style="font-weight:400;color:black;">
+                              <i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashboard
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item py-2 px-3">
+                            <a href="<?= base_url('transactionverification') ?>"
+                              class="nav-link text-decoration-none <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
+                              style="font-weight:400;color:black;">
+                              <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item py-2 px-3">
+                            <a href="<?= base_url('contact_submissions') ?>"
+                              class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
+                              style="font-weight:400;color:black;">
+                              <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item px-3">
+                            <a href="<?= base_url('causesverification') ?>"
+                              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
+                              style="font-weight:400;color:black;">
+                              <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item py-2 px-3">
+                            <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
+                              data-bs-toggle="modal" data-bs-target="#logoutModal">
+                              <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-----------side-bar-end-------------->
+            <!----------Logout Modal ------------->
+            <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="<?= base_url('admin/logout') ?>" class="btn btn-danger">Logout</a>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <!-----------main-dashboard------------------------->        
+            <div style="overflow:auto" class="col-md-10 h-100">
+
+                <!-- Scrollable content -->
+                <div style="overflow:auto" class="mt-3 px-4">
+                    
+                    <!-- Search -->
+                    <div class="row mb-3"></div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 position-relative">
+                            <input type="text" id="search-input" class="form-control" placeholder="Search by Name and press Enter" value="<?= htmlspecialchars($search) ?>" autocomplete="off">
+                            <?php if (!empty($search)): ?>
+                                <button id="clear-filter" class="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-4" style="z-index:2; margin-right: -20px;">
+                                    &times;
                                 </button>
                             <?php endif; ?>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-            <?php ++$i; endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="16" style="text-align: center;">No records found.</td>
-            </tr>
-        <?php endif; ?>
-    </tbody>
-</table>
-                </div> <!----------------table-end------->
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <table class="table table-bordered table-hover" id="search_table">
+                        <thead>
+                            <tr class="ps-gray">
+                                <th>S.No</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Amount</th>
+                                <th>Location</th>
+                                <th>Age</th>
+                                <th>End date </th>
+                                <th>Cause heading</th>
+                                <th>Created date</th>
+                                <th>Created by</th>
+                                <th>Raised amount</th>
+                                <th>Verified status</th>
+                                <th>Priority</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="causeslist">
+                            <?php if (!empty($fundraisers)): $i = $sno + 1; ?>
+                                <?php foreach ($fundraisers as $index => $donation): ?>
+                                    <tr>
+                                        <td><?= $i; ?></td>
+                                        <td><?= htmlspecialchars($donation->name); ?></td>
+                                        <td><?= htmlspecialchars($donation->email); ?></td>
+                                        <td><?= htmlspecialchars($donation->phone); ?></td>
+                                        <td><?= htmlspecialchars($donation->amount); ?></td>
+                                        <td><?= htmlspecialchars($donation->location); ?></td>
+                                        <td><?= htmlspecialchars($donation->age); ?></td>
+                                        <td><?= htmlspecialchars($donation->end_date); ?></td>
+                                        <td style="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                            <button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')">
+                                                <?= htmlspecialchars($donation->cause_heading); ?>
+                                            </button>
+                                        </td>
+                                        <td><?= htmlspecialchars($donation->created_at); ?></td>
+                                        <td><?= htmlspecialchars($donation->created_by); ?></td>
+                                        <td><?= htmlspecialchars($donation->raised_amount); ?></td>
+                                        <td><?= $donation->verified == 1 ? 'Yes' : 'No'; ?></td>
+                                        <td>
+                                            <?php if ($donation->priority == 0): ?>
+                                                <span>No Priority</span>
+                                            <?php else: ?>
+                                                <span>Priority <?= htmlspecialchars($donation->priority); ?></span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="d-flex">
+                                            <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">Edit</button> &nbsp;&nbsp;
+                                            <button onclick="setUrl('<?= $donation->email?>','<?= $donation->user_id;?>','<?= $donation->created_by;?>',<?= $donation->Verifyemailcount;?>,<?= $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">Status</button> &nbsp;&nbsp; 
+                                            <button onclick="deleteCause(<?= $donation->id; ?>)" class="btn btn-danger fw-bold">Delete</button> &nbsp;&nbsp;
+                                            <?php if ($this->session->userdata('adminName')): ?>
+                                                <?php if ($donation->priority == 0): ?>
+                                                    <button class="btn btn-info fw-bold btn-sm insert-priority-btn" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?= $donation->id; ?>)">Insert Priority</button>
+                                                    <button class="btn btn-warning fw-bold btn-sm no-priority-btn" style="display: none;" onclick="setNoPriority(<?= $donation->id; ?>)">No Priority</button>
+                                                <?php else: ?>
+                                                    <button class="btn btn-info fw-bold btn-sm insert-priority-btn" style="display: none;" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?= $donation->id; ?>)">Insert Priority</button>
+                                                    <button class="btn btn-warning fw-bold btn-sm no-priority-btn" onclick="setNoPriority(<?= $donation->id; ?>)">No Priority</button>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                <?php ++$i; endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="16" style="text-align: center;">No records found.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div> <!-- close scrollable div here -->
+
+                <!-- Pagination OUTSIDE scrollable area -->
+                <?php
+                    $total_pages = ceil($counts / $per_page);
+                    $current = $current_page;
+                    $base_url = "?search=" . urlencode($search) . "&page=";
+                    $visible_pages = 5;
+                    $start = max(2, $current - 2);
+                    $end = min($total_pages - 1, $current + 2);
+                ?>
+
+                <?php if ($total_pages > 1): ?>
+                <div class="px-4 mt-3">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <!-- Prev -->
+                            <li class="page-item <?= ($current <= 1) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="<?= ($current > 1) ? $base_url . ($current - 1) : '#' ?>"><i class='fa-solid fa-arrow-left-long'></i></a>
+                            </li>
+
+                            <!-- First -->
+                            <li class="page-item <?= ($current == 1) ? 'active' : '' ?>">
+                                <a class="page-link" href="<?= $base_url ?>1">1</a>
+                            </li>
+
+                            <!-- Ellipsis Before -->
+                            <?php if ($start > 2): ?>
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            <?php endif; ?>
+
+                            <!-- Middle -->
+                            <?php for ($i = $start; $i <= $end; $i++): ?>
+                                <li class="page-item <?= ($current == $i) ? 'active' : '' ?>">
+                                    <a class="page-link" href="<?= $base_url . $i ?>"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <!-- Ellipsis After -->
+                            <?php if ($end < $total_pages - 1): ?>
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            <?php endif; ?>
+
+                            <!-- Last -->
+                            <?php if ($total_pages > 1): ?>
+                                <li class="page-item <?= ($current == $total_pages) ? 'active' : '' ?>">
+                                    <a class="page-link" href="<?= $base_url . $total_pages ?>"><?= $total_pages ?></a>
+                                </li>
+                            <?php endif; ?>
+
+                            <!-- Next -->
+                            <li class="page-item <?= ($current >= $total_pages) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="<?= ($current < $total_pages) ? $base_url . ($current + 1) : '#' ?>"><i class='fa-solid fa-arrow-right-long'></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <?php endif; ?>
+            </div>
+
+            <!----------------table-end------->
 
 <!-----------------pagination---------------------->
-<div class="d-flex justify-content-center">        
+<!-- <div class="d-flex justify-content-center">        
 <div class="col-md-6 py-2 d-flex justify-content-around align-items-center">
 
 <?php 
 
-if(isset($counts)){
-  if($counts > 0){
-  $countsperpage = 5;
-  $noofpages = ceil($counts / $countsperpage) - 1;
-  $totalpagesarr = createarr($noofpages);
-  $totalpages = count($totalpagesarr) ;
-  $initialindex = 0;
-  $lastindex = 5;
-  $pages = array_slice($totalpagesarr,$initialindex,$lastindex);
-  echo "<a href='changeCausespagepagesetup?initialindex=0' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-left-long'></i></a>";
-  $j = 0;
-  foreach ($pages as $key => $value) {
-    $count = $countsperpage * $value;
-    $pageno = $value + 1;
+// if(isset($counts)){
+//   if($counts > 0){
+//   $countsperpage = 5;
+//   $noofpages = ceil($counts / $countsperpage) - 1;
+//   $totalpagesarr = createarr($noofpages);
+//   $totalpages = count($totalpagesarr) ;
+//   $initialindex = 0;
+//   $lastindex = 5;
+//   $pages = array_slice($totalpagesarr,$initialindex,$lastindex);
+//   echo "<a href='changeCausespagepagesetup?initialindex=0' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-left-long'></i></a>";
+//   $j = 0;
+//   foreach ($pages as $key => $value) {
+//     $count = $countsperpage * $value;
+//     $pageno = $value + 1;
    
-    if($pageno == 5){
-      echo "<a style='width:35px;height:35px;' href='changeCausespagepagesetup?initialindex=$value' class='".($j==0 ? 'active-page' : '')." active text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$pageno</a>";}
-    else{
-      echo "<button style='width:35px;height:35px;' onclick='displayCauses($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>";
-    }
-    ++$j;
-  }
+//     if($pageno == 5){
+//       echo "<a style='width:35px;height:35px;' href='changeCausespagepagesetup?initialindex=$value' class='".($j==0 ? 'active-page' : '')." active text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$pageno</a>";}
+//     else{
+//       echo "<button style='width:35px;height:35px;' onclick='displayCauses($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>";
+//     }
+//     ++$j;
+//   }
 
-  echo "<span>...</span>";
-  $totalcount = ($totalpages - $lastindex);
-  echo "<a href='changeCausespagepagesetup?initialindex=$totalcount' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='active-page text-white text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$totalpages</a>";
+//   echo "<span>...</span>";
+//   $totalcount = ($totalpages - $lastindex);
+//   echo "<a href='changeCausespagepagesetup?initialindex=$totalcount' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='active-page text-white text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$totalpages</a>";
   
-  $newindex = $initialindex+$lastindex; 
-  echo "<a href='changeCausespagepagesetup?initialindex=$newindex' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-right-long'></i></a>";
-}
-else{
-  echo "<span>No pages available</span>";
-}
-}
+//   $newindex = $initialindex+$lastindex; 
+//   echo "<a href='changeCausespagepagesetup?initialindex=$newindex' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-right-long'></i></a>";
+// }
+// else{
+//   echo "<span>No pages available</span>";
+// }
+// }
 
-if(isset($initialindex) && isset($newcounts)){
+// if(isset($initialindex) && isset($newcounts)){
   
-  $countsperpage = 5;
-  $noofpages = ceil($newcounts / $countsperpage) - 1;
-  $totalpagesarr = createarr($noofpages);
-  $totalpages = count($totalpagesarr);
-  $lastindex = 5;
-  $start = $initialindex > $noofpages ? 0 : $initialindex;
-  $pages = array_slice($totalpagesarr,$start,$lastindex);
-  $start == 0 ? $prevlist = 0 : (($start - $lastindex) < 0 ? $prevlist = 0 : $prevlist = $start - $lastindex) ;
-  echo "<a href='changeCausespagepagesetup?initialindex=$prevlist' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-left-long'></i></a>";
+//   $countsperpage = 5;
+//   $noofpages = ceil($newcounts / $countsperpage) - 1;
+//   $totalpagesarr = createarr($noofpages);
+//   $totalpages = count($totalpagesarr);
+//   $lastindex = 5;
+//   $start = $initialindex > $noofpages ? 0 : $initialindex;
+//   $pages = array_slice($totalpagesarr,$start,$lastindex);
+//   $start == 0 ? $prevlist = 0 : (($start - $lastindex) < 0 ? $prevlist = 0 : $prevlist = $start - $lastindex) ;
+//   echo "<a href='changeCausespagepagesetup?initialindex=$prevlist' style='cursor:pointer;' class='text-dark text-decoration-none'><i class='fa-solid fa-arrow-left-long'></i></a>";
 
-  $j = 0;
+//   $j = 0;
 
-  foreach ($pages as $key => $value) {
-    $count = $countsperpage * $value;
-    $pageno = $value + 1;
+//   foreach ($pages as $key => $value) {
+//     $count = $countsperpage * $value;
+//     $pageno = $value + 1;
     
-    if($pageno == 5 || $pageno - $start == 5){
-      echo $pageno == $totalpages ? "<button style='width:35px;height:35px;'onclick='displayCauses($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>" : "<a href='changeCausespagepagesetup?initialindex=".($pageno - 1)."' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='".($j==0 ? 'active-page' : '')." active text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$pageno</a>"; }
-    else{
-      echo "<button style='width:35px;height:35px;'onclick='displayCauses($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>";
-    }
-    ++$j;
-  }
+//     if($pageno == 5 || $pageno - $start == 5){
+//       echo $pageno == $totalpages ? "<button style='width:35px;height:35px;'onclick='displayCauses($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>" : "<a href='changeCausespagepagesetup?initialindex=".($pageno - 1)."' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='".($j==0 ? 'active-page' : '')." active text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$pageno</a>"; }
+//     else{
+//       echo "<button style='width:35px;height:35px;'onclick='displayCauses($count,$j)' class='".($j==0 ? 'active-page' : '')." active rounded-circle'>$pageno</button>";
+//     }
+//     ++$j;
+//   }
 
-  echo "<span>...</span>";
-  $totalcount = ($totalpages - $lastindex);
-  echo "<a href='changeCausespagepagesetup?initialindex=$totalcount' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='active-page text-white text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$totalpages</a>";
+//   echo "<span>...</span>";
+//   $totalcount = ($totalpages - $lastindex);
+//   echo "<a href='changeCausespagepagesetup?initialindex=$totalcount' style='cursor:pointer;width:35px;height:35px;box-sizing:border-box;' class='active-page text-white text-decoration-none d-flex align-items-center justify-content-center ps-gray rounded-circle'>$totalpages</a>";
   
-  $newindex = $start + $lastindex; 
-  echo "<a href='changeCausespagepagesetup?initialindex=".($totalpages - $start <= $lastindex ? $totalcount : $newindex)."'  style='cursor:pointer;' class='text-decoration-none text-dark'><i class='fa-solid fa-arrow-right-long'></i></a>"; 
-}
+//   $newindex = $start + $lastindex; 
+//   echo "<a href='changeCausespagepagesetup?initialindex=".($totalpages - $start <= $lastindex ? $totalcount : $newindex)."'  style='cursor:pointer;' class='text-decoration-none text-dark'><i class='fa-solid fa-arrow-right-long'></i></a>"; 
+// }
 
-function createarr($noofpages){
-  return range(0,$noofpages);
-}
+// function createarr($noofpages){
+//   return range(0,$noofpages);
+// }
 
 ?>
 
 </div>
-</div><!--------------pagination-end--------------------->
+</div>------------pagination-end------------------- -->
 
 <!------------------------------send-mail-modal------------------------------>
 
@@ -797,28 +1065,28 @@ function createarr($noofpages){
 
 let status = "";
 
-$.ajax({
-      type:"get",
-      url:"admin/sidemenu",
-      success:(result)=>{
-           document.getElementById("menu-bar").innerHTML = result;
-      },
-      error:(error)=>{
-           document.getElementById("menu-bar").innerHTML = error;
-      }
-    }); 
+// $.ajax({
+//       type:"get",
+//       url:"admin/sidemenu",
+//       success:(result)=>{
+//            document.getElementById("menu-bar").innerHTML = result;
+//       },
+//       error:(error)=>{
+//            document.getElementById("menu-bar").innerHTML = error;
+//       }
+//     }); 
 
 
-    $.ajax({
-      type:"get",
-      url:"admin/topmenu",
-      success:(result)=>{
-           document.getElementById("search-bar").innerHTML = result;
-      },
-      error:(error)=>{
-           document.getElementById("search-bar").innerHTML = error;
-      }
-    }); 
+    // $.ajax({
+    //   type:"get",
+    //   url:"admin/topmenu",
+    //   success:(result)=>{
+    //        document.getElementById("search-bar").innerHTML = result;
+    //   },
+    //   error:(error)=>{
+    //        document.getElementById("search-bar").innerHTML = error;
+    //   }
+    // }); 
 
     $.ajax({
       type:"get",
@@ -1008,7 +1276,7 @@ input.addEventListener("input",function(){
     })
 }) */
 
-function searchTable() {
+    function searchTable() {
       const input = document.getElementById("search-input").value.toLowerCase();
       const table = document.getElementById("search_table");
       const tr = table.getElementsByTagName("tr");
@@ -1019,9 +1287,28 @@ function searchTable() {
       }
     }
 
-</script>             
+</script>   
+<script>
+    const searchInput = document.getElementById("search-input");
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    // Trigger search on Enter key
+    searchInput.addEventListener("keyup", function (e) {
+        if (e.key === "Enter") {
+            const value = this.value.trim();
+            window.location.href = "?search=" + encodeURIComponent(value);
+        }
+    });
+
+    // Clear filter
+    const clearBtn = document.getElementById("clear-filter");
+    if (clearBtn) {
+        clearBtn.addEventListener("click", function () {
+            window.location.href = "?page=1"; // reset to first page with no filter
+        });
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
 
