@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
   <!-- <link href="<?php echo base_url(); ?>assets/img/LOGO_KSV.png"  rel="icon" /> -->
-   <link href="<?php echo base_url(); ?>assets/img/Kanavu_help2.png"  rel="icon" /> 
+   <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -624,138 +624,138 @@
     <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Agriculture', 4)">Agriculture</button>
   </div>
   </div>
-<!-- Fundraiser Cards with Fixed Size  -->
-<div class="container pt-4">
-    <div class="row g-3" id="fundraiserCards">
-        <?php if (!empty($fundraisers)): ?>
-            <?php 
-            // Helper to calculate progress
-            function getProgressPercentage($fundraiser) {
-                if ($fundraiser->amount == 0) return 0;
-                return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-            }
+  <!-- Fundraiser Cards with Fixed Size  -->
+  <div class="container pt-4">
+      <div class="row g-3" id="fundraiserCards">
+          <?php if (!empty($fundraisers)): ?>
+              <?php 
+              // Helper to calculate progress
+              function getProgressPercentage($fundraiser) {
+                  if ($fundraiser->amount == 0) return 0;
+                  return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+              }
 
-            // Sort fundraisers by percentage (ascending)
-            usort($fundraisers, function($a, $b) {
-                return getProgressPercentage($a) <=> getProgressPercentage($b);
-            });
+              // Sort fundraisers by percentage (ascending)
+              usort($fundraisers, function($a, $b) {
+                  return getProgressPercentage($a) <=> getProgressPercentage($b);
+              });
 
-            foreach ($fundraisers as $fundraiser): 
-                $is_goal_reached = $fundraiser->raised_amount >= $fundraiser->amount;
+              foreach ($fundraisers as $fundraiser): 
+                  $is_goal_reached = $fundraiser->raised_amount >= $fundraiser->amount;
 
-                // Image path fix (case-sensitive safe)
-                $image_path = FCPATH . 'assets/individualform_img/' . $fundraiser->cover_image;
-                if (!empty($fundraiser->cover_image) && is_file($image_path)) {
-                    $imageSrc = base_url('assets/individualform_img/' . rawurlencode($fundraiser->cover_image));
-                } else {
-                    $imageSrc = base_url('assets/img/funddonate.jpg');
-                }
+                  // Image path fix (case-sensitive safe)
+                  $image_path = FCPATH . 'assets/individualform_img/' . $fundraiser->cover_image;
+                  if (!empty($fundraiser->cover_image) && is_file($image_path)) {
+                      $imageSrc = base_url('assets/individualform_img/' . rawurlencode($fundraiser->cover_image));
+                  } else {
+                      $imageSrc = base_url('assets/img/funddonate.jpg');
+                  }
 
-                $progress_percentage = getProgressPercentage($fundraiser);
-            ?>
-            <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" 
-                 data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>" 
-                 id="fundraiser-card-<?= $fundraiser->id ?>">
-                <div class="card h-100 fixed-card w-100 d-flex flex-column" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                    
-                    <!-- Cover Image (clickable, no lazyload) -->
-                    <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>">
-                        <img src="<?= $imageSrc ?>" 
-                             alt="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>"
-                             width="316" height="230"
-                             class="card-img-top fixed-card-img"
-                             style="border-top-left-radius: 15px; border-top-right-radius: 15px; object-fit: cover;">
-                    </a>
+                  $progress_percentage = getProgressPercentage($fundraiser);
+              ?>
+              <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container" 
+                  data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>" 
+                  id="fundraiser-card-<?= $fundraiser->id ?>">
+                  <div class="card h-100 fixed-card w-100 d-flex flex-column" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                      
+                      <!-- Cover Image (clickable, no lazyload) -->
+                      <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>">
+                          <img src="<?= $imageSrc ?>" 
+                              alt="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>"
+                              width="316" height="230"
+                              class="card-img-top fixed-card-img"
+                              style="border-top-left-radius: 15px; border-top-right-radius: 15px; object-fit: cover;">
+                      </a>
 
-                    <div class="card-body d-flex flex-column">
-                        
-                        <!-- Title -->
-                        <div class="flex-grow-1" style="min-height: 100px;">
-                            <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>" 
-                               class="text-dark text-decoration-none">
-                                <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                    <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
-                                </p>
-                            </a>
-                        </div>
+                      <div class="card-body d-flex flex-column">
+                          
+                          <!-- Title -->
+                          <div class="flex-grow-1" style="min-height: 100px;">
+                              <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>" 
+                                class="text-dark text-decoration-none">
+                                  <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                      <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
+                                  </p>
+                              </a>
+                          </div>
 
-                        <!-- Supporters & Creator -->
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                            <div class="text-muted small d-flex align-items-center">
-                                <img src="<?= base_url('assets/img/user-icon.png') ?>" alt="Supporter Icon" width="16" height="16" class="me-1">
-                                <?= intval($fundraiser->supporters_count) ?> Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
-                            </div>
-                            <div class="text-muted small text-truncate" style="max-width: 60%;">
-                                Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
-                            </div>
-                        </div>
+                          <!-- Supporters & Creator -->
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                              <div class="text-muted small d-flex align-items-center">
+                                  <img src="<?= base_url('assets/img/user-icon.png') ?>" alt="Supporter Icon" width="16" height="16" class="me-1">
+                                  <?= intval($fundraiser->supporters_count) ?> Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
+                              </div>
+                              <div class="text-muted small text-truncate" style="max-width: 60%;">
+                                  Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+                              </div>
+                          </div>
 
-                        <!-- Raised Amount & Progress Bar -->
-                        <div class="mt-1">
-                            <p class="card-text mb-1">
-                                <strong>
-                                    ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?>
-                                    raised out of ₹ <?= number_format($fundraiser->amount) ?>
-                                </strong>
-                            </p>
-                            <div class="progress mb-2" style="background-color: #f8d7da;">
-                                <div class="progress-bar bg-danger" 
-                                     style="width: <?= $progress_percentage ?>%;" 
-                                     role="progressbar" 
-                                     aria-valuenow="<?= $progress_percentage ?>" 
-                                     aria-valuemin="0" 
-                                     aria-valuemax="100">
-                                </div>
-                            </div>
-                        </div>
+                          <!-- Raised Amount & Progress Bar -->
+                          <div class="mt-1">
+                              <p class="card-text mb-1">
+                                  <strong>
+                                      ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?>
+                                      raised out of ₹ <?= number_format($fundraiser->amount) ?>
+                                  </strong>
+                              </p>
+                              <div class="progress mb-2" style="background-color: #f8d7da;">
+                                  <div class="progress-bar bg-danger" 
+                                      style="width: <?= $progress_percentage ?>%;" 
+                                      role="progressbar" 
+                                      aria-valuenow="<?= $progress_percentage ?>" 
+                                      aria-valuemin="0" 
+                                      aria-valuemax="100">
+                                  </div>
+                              </div>
+                          </div>
 
-                        <!-- Donate / Completed + Share -->
-                        <div class="d-flex align-items-center mt-auto justify-content-between">
-                            <?php if ($is_goal_reached): ?>
-                                <span class="badge bg-success">Completed</span>
-                            <?php else: ?>
-                                <button type="button" class="btn bg-danger text-white donate_btn" 
-                                        onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">
-                                    Donate Now
-                                </button>
-                            <?php endif; ?>
+                          <!-- Donate / Completed + Share -->
+                          <div class="d-flex align-items-center mt-auto justify-content-between">
+                              <?php if ($is_goal_reached): ?>
+                                  <span class="badge bg-success">Completed</span>
+                              <?php else: ?>
+                                  <button type="button" class="btn bg-danger text-white donate_btn" 
+                                          onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">
+                                      Donate Now
+                                  </button>
+                              <?php endif; ?>
 
-                            <!-- Share Icon -->
-                            <div class="d-flex align-items-center text-danger" style="cursor: pointer;"
-                                 onclick="shareCause(
-                                     '<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>',
-                                     '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>',
-                                     '<?= $imageSrc ?>'
-                                 )">
-                                <i class="bi bi-share fs-6"></i>
-                                <span class="fs-6 fw-bold ms-1">Share</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p class="text-center">No fundraisers available at the moment.</p>
-        <?php endif; ?>
-    </div>
-</div>
+                              <!-- Share Icon -->
+                              <div class="d-flex align-items-center text-danger" style="cursor: pointer;"
+                                  onclick="shareCause(
+                                      '<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>',
+                                      '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>',
+                                      '<?= $imageSrc ?>'
+                                  )">
+                                  <i class="bi bi-share fs-6"></i>
+                                  <span class="fs-6 fw-bold ms-1">Share</span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <?php endforeach; ?>
+          <?php else: ?>
+              <p class="text-center">No fundraisers available at the moment.</p>
+          <?php endif; ?>
+      </div>
+  </div>
 
-<!-- Small style fix to ensure equal card height -->
-<style>
-.fixed-card-img {
-    height: 230px;
-    object-fit: cover;
-}
-.card-container {
-    display: flex;
-}
-.fixed-card {
-    display: flex;
-    flex-direction: column;
-}
-</style>
-<!--kani-->
+  <!-- Small style fix to ensure equal card height -->
+  <style>
+    .fixed-card-img {
+        height: 230px;
+        object-fit: cover;
+    }
+    .card-container {
+        display: flex;
+    }
+    .fixed-card {
+        display: flex;
+        flex-direction: column;
+    }
+  </style>
+  <!--kani-->
 
 
      <!-- See More Button 

@@ -19,8 +19,20 @@ class adminpanel extends CI_Model
 
     if (!empty($search)) {
         $this->db->group_start()
-                ->like('name', $search) // only donor name
-                ->group_end();
+                 ->like('name', $search)
+                 ->or_like('email', $search)
+                 ->or_like('phoneno', $search)
+                 ->or_like('transactionid', $search)
+                 ->or_like('currency_type', $search)
+                 ->or_like('status', $search)
+                 ->or_like('verified_by', $search)
+                 ->or_like('fundraiser_name', $search)
+                 ->or_like('fundraiser_email', $search)
+                 ->or_like('fundraiser_phone', $search)
+                 ->or_like('category', $search)
+                 ->or_like('cause_heading', $search)
+                 ->or_like('donor_location', $search)
+                 ->group_end();
     }
 
     $this->db->order_by('donation_for_cause.created_at', 'DESC');
@@ -28,14 +40,27 @@ class adminpanel extends CI_Model
     return $this->db->get()->result();
 }
 
+
 public function get_total_transaction($search = null)
 {
     $this->db->from('donation_for_cause');
 
     if (!empty($search)) {
         $this->db->group_start()
-                ->like('name', $search) // only donor name
-                ->group_end();
+                 ->like('name', $search)
+                 ->or_like('email', $search)
+                 ->or_like('phoneno', $search)
+                 ->or_like('transactionid', $search)
+                 ->or_like('currency_type', $search)
+                 ->or_like('status', $search)
+                 ->or_like('verified_by', $search)
+                 ->or_like('fundraiser_name', $search)
+                 ->or_like('fundraiser_email', $search)
+                 ->or_like('fundraiser_phone', $search)
+                 ->or_like('category', $search)
+                 ->or_like('cause_heading', $search)
+                 ->or_like('donor_location', $search)
+                 ->group_end();
     }
 
     return $this->db->count_all_results();
@@ -74,7 +99,18 @@ public function get_total_transaction($search = null)
     $this->db->join('user', 'user.id = individualform.user_id');
 
     if (!empty($search)) {
+        $this->db->group_start(); // start grouping WHERE conditions
         $this->db->like('individualform.name', $search);
+        $this->db->or_like('individualform.category', $search);
+        // $this->db->or_like('individualform.email', $search);
+        $this->db->or_like('individualform.phone', $search);
+        $this->db->or_like('individualform.amount', $search);
+        // $this->db->or_like('individualform.location', $search);
+        $this->db->or_like('individualform.cause_heading', $search);
+        $this->db->or_like('individualform.created_by', $search);
+        $this->db->or_like('individualform.cause_description', $search);
+        $this->db->or_like('individualform.form_selected_text', $search);
+        $this->db->group_end();   // end grouping
     }
 
     $this->db->order_by('individualform.created_at', 'DESC');
@@ -84,14 +120,29 @@ public function get_total_transaction($search = null)
     return $query->result();
 }
 
+
 public function get_total_causes($search = '')
 {
+    $this->db->from('individualform');
+
     if (!empty($search)) {
+        $this->db->group_start();
         $this->db->like('name', $search);
+        $this->db->or_like('category', $search);
+        // $this->db->or_like('email', $search);
+        $this->db->or_like('individualform.amount', $search);
+        $this->db->or_like('individualform.created_by', $search);
+        $this->db->or_like('phone', $search);
+        // $this->db->or_like('location', $search);
+        $this->db->or_like('cause_heading', $search);
+        $this->db->or_like('cause_description', $search);
+        $this->db->or_like('form_selected_text', $search);
+        $this->db->group_end();
     }
 
-    return $this->db->count_all_results('individualform');
+    return $this->db->count_all_results();
 }
+
 
 
     public function get_causes_list($counts){
@@ -127,6 +178,9 @@ public function get_enquiries_count($search = null)
 {
     if (!empty($search)) {
         $this->db->like('name', $search);
+        $this->db->or_like('email', $search);
+        $this->db->or_like('phone', $search);
+        $this->db->or_like('message', $search);
     }
     return $this->db->count_all_results('contact_us');
 }
@@ -136,6 +190,9 @@ public function get_enquiries_list($limit, $offset, $search = null)
 {
     if (!empty($search)) {
         $this->db->like('name', $search);
+        $this->db->or_like('email', $search);
+        $this->db->or_like('phone', $search);
+        $this->db->or_like('message', $search);
     }
     $this->db->order_by('created_at', 'DESC');
     $this->db->limit($limit, $offset);
