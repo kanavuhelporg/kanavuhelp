@@ -849,7 +849,9 @@ applicable taxes before transferring the funds to the campaigners.</p>
       </div>
       <img src="<?= base_url('assets/img/footer-secured-card 1.svg') ?>" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
         style="max-width: 200px;">
-      <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
+      <p class="text-center" style="font-size:15px;">
+        Copyright <span id="currentYear"></span> @ kanavu.help. All Rights Reserved.
+      </p>
     </footer>
   </div>
 
@@ -877,7 +879,9 @@ applicable taxes before transferring the funds to the campaigners.</p>
       }
     }); 
   </script>
-
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+  </script>
   <!-- Bootstrap JS and dependencies (Popper.js) -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

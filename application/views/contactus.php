@@ -3,626 +3,609 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kanavu_help</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Contact Us - Kanavu Help</title>
   
-  <!-- <link href="<?php echo base_url(); ?>assets/img/LOGO_KSV.png"  rel="icon" /> -->
-   <link href="<?php echo base_url(); ?>assets/img/Kanavu_help2.png"  rel="icon" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   <style>
+    :root {
+      --primary-red: #EB2D32;
+      --dark-red: #c82333;
+    }
+    
     body {
       font-family: 'Sen', sans-serif;
-      left:0;
-      right:0;
-    }
-
-/* Login_button */
-    .login-button {
-      background-color: #E01A2B;
-      color: white;
-      font-size: 16px;
-      padding: 8px 20px;
-      border-radius: 25px;
-      text-decoration: none;
-      transition: 0.3s background-color;
-    }
-/* start a kanavu button */
-    .startkanavu-button {
-      border: 1px solid #E01A2B;
-      color: #E01A2B;
-      font-size: 16px;
-      padding: 8px 20px;
-      border-radius: 25px;
-      text-decoration: none;
-      transition: 0.3s background-color;
-    }
-/* nav bar menu size */
-    .offcanvas-body {
-      font-size: 17px;
-    }
-/* carousel text */
-    .imgtext1,
-    .imgtext2 {
-      position: absolute;
-      color: #000;
-      width: 30%;
-      font-size: 48px;
-      font-style: normal;
-      padding-bottom: 100px;
-    }
-
-    .imgtext1 {
-      top: 50%;
-      left: 65px;
-      transform: translateY(-50%);
-    }
-
-    .imgtext2 {
-      top: 50%;
-      right: 65px;
-      transform: translateY(-50%);
-    }
-
-    .imgtext1 strong,
-    .imgtext2 strong {
-      font-weight: bolder;
-    }
-
-    .imgtext11,
-    .imgtext22 {
-      font-size: 18px;
-      margin-top: 5px;
-    }
-
-    .imgtext11 ul,
-    .imgtext22 ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-
-    .imgtext11 ul li {
-      margin-left: 0px;
-    }
-
-
-    .imgtext1 span,
-    .imgtext2 span {
-      color: #EB2D32;
-      font-weight: bolder;
-      font-size: 40px;
-    }
-
-    /* filter_button above cards */
-    .filter-btn {
-      background-color: transparent;
-      /* No background color */
-      border-width: 2px;
-      /* Add border width for clarity */
-    }
-
-    .filter-btn.active {
-      border-color: #EB2D32;
-      /* Red border for active button */
-      color: #EB2D32;
-      /* Red text for active button */
-    }
-
-    .filter-btn:not(.active) {
-      border-color: #A9A9A9;
-      /* Grey border for inactive buttons */
-      color: #A9A9A9;
-      /* Grey text for inactive buttons */
-    }
-
-    .filter-btn:hover {
-      border-color: #EB2D32;
-      color: white;
-      background-color: #EB2D32;
-    }
-    .donatefor {
-      border: 1px solid #E01A2B;
-      color: #E01A2B;
-      background-color: #fff;
-      border-radius: 20px;
-    }
-    /* card section */
-    .card {
-      width: 80%;
-      /* Make the card width responsive */
-      box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
-      
-    }
-
-    .carousel-item .row {
-      margin-left: 150px;
-      margin-right: 150px;
-    }
-
-    .carousel-item .col-12.col-md-4 {
-      padding-left: 5px;
-      padding-right: 5px;
-      margin-bottom: 20px;
-      
-    }
-    .card-title {
-      font-size: 18px;
-      font-weight: bold;
-      
-    }
-
-    .card_button {
-      border: 1px solid rgba(174, 168, 168, 1);
-      border-radius: 25px;
-    }
-
-    .donate_btn {
-      border: 1px solid rgba(224, 26, 43, 1);
-      color: rgba(224, 26, 43, 1);
-      border-radius: 25px;
-    }
-
-    /* footer */
-
-    .footer {
-      height: 250px;
+      overflow-x: hidden;
       width: 100%;
-      left: 0;
-      right: 0;
-      background-color: #EB2D32;
-      margin-top: 50px;
-      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      padding-top: 80px; /* Space for fixed navbar */
     }
 
-    .footer1 {
-      text-align: center;
-      padding: 10px;
-      margin-left: 10px;
+    /* Ensure all elements use border-box */
+    * {
+      box-sizing: border-box;
     }
 
-    .footer-lable {
+    img, iframe, video {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Fixed header with proper spacing */
+    
+    .contact-hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                  url('<?= base_url('assets/img/Contact_1.jpg') ?>');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: white;
-      text-decoration: none;
-      padding-right: 20px;
-      padding-left: 20px;
+      text-align: center;
+      width: 100%;
+      margin: 0;
+      padding: 0;
     }
 
-    .lable {
-      border-right: 3px solid #fff;
+    .contact-hero h1 {
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    .footer1 a {
-      margin-left: 20x;
+    .contact-info-card {
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      height: 100%;
+      padding: 20px 15px;
+      text-align: center;
+      margin-bottom: 15px;
+      border: 1px solid #e9ecef;
     }
 
-    .footimg {
-      margin-left: 520px;
-      padding: 20px;
+    .contact-info-card:hover {
+      transform: translateY(-3px);
     }
 
-    .social-icons img {
-      width: 20px;
-      height: 20px;
-      margin-left: 10px;
+    .contact-icon {
+      font-size: 2rem;
+      color: var(--primary-red);
+      margin-bottom: 15px;
+    }
 
+    .contact-form-container {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 25px 20px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      margin: 0 auto;
     }
-    #details{
-      display:block-inline;
+
+    .form-control, .form-select {
+      border-radius: 8px;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      width: 100%;
+      font-size: 16px;
     }
-    #location{
-      margin-left:12%;
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 0.2rem rgba(235, 45, 50, 0.25);
     }
-    #loc_icon{
-      margin-left:25%;
-      color:#E01A2B;
-      font-size:26px;
+
+    .btn-primary {
+      background-color: var(--primary-red);
+      border: none;
+      border-radius: 25px;
+      padding: 15px 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      width: 100%;
     }
-    /* #phone{
-      margin-left:7%
-    } */
-    #phone_icon{
-      margin-left:17%;
-      color:#E01A2B;
-      font-size:26px;
+
+    .btn-primary:hover {
+      background-color: var(--dark-red);
+      transform: translateY(-2px);
     }
-    /* #email{
-      margin-left:-3%;
-    } */
-    #envelope_icon{
-      margin-left:35%;
-      color:#E01A2B;
-      font-size:26px;
+
+    .section-title {
+      position: relative;
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 1.5rem;
+      padding: 0 10px;
     }
-    .line{
-      margin-left:35%;
-      transform:translate(20px,-40px);
+
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background-color: var(--primary-red);
+    }
+
+    .error-message {
+      color: #dc3545;
+      font-size: 0.8rem;
+      margin-top: 5px;
+      display: block;
+    }
+
+    .contact-map {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      height: 300px;
+    }
+
+    .contact-map iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Contact info text sizing */
+    .contact-info-card h4 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .contact-info-card p {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.4;
+      margin: 0;
+      word-wrap: break-word;
+    }
+
+    /* Form label styling */
+    .form-label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    /* Character counter */
+    #message-counter {
+      font-size: 0.8rem;
+    }
+
+
+    /* Tablet styles */
+    @media (min-width: 768px) {
+      .contact-hero {
+        height: 200px;
+      }
+      
+      .contact-form-container {
+        padding: 30px;
+      }
+      
+      .contact-info-card {
+        padding: 25px 20px;
+        margin-bottom: 0;
+      }
+      
+      .btn-primary {
+        width: auto;
+      }
+      
+      .section-title {
+        font-size: 1.75rem;
+      }
+      
+      .contact-info-card h4 {
+        font-size: 1.2rem;
+      }
+      
+      .contact-info-card p {
+        font-size: 1rem;
+      }
+    }
+
+    /* Desktop styles */
+    @media (min-width: 992px) {
+      .contact-hero {
+        height: 300px;
+      }
+      
+      .contact-form-container {
+        padding: 40px;
+      }
+      
+      .contact-info-card {
+        padding: 30px 20px;
+      }
+    }
+
+    /* Mobile-specific fixes */
+    @media (max-width: 576px) {
+      .container, .container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      
+      /* Fix form row spacing */
+      .row {
+        margin-left: -8px;
+        margin-right: -8px;
+      }
+      
+      .col-12, .col-md-6, .col-md-4, .col-lg-8 {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      
+      /* Ensure text doesn't overflow */
+      .contact-info-card p {
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      
+      /* Form field spacing */
+      .mb-4 {
+        margin-bottom: 1rem !important;
+      }
+      
+      /* Button styling */
+      .btn-lg {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 375px) {
+      body {
+        padding-top: 70px;
+      }
+      
+      .contact-hero {
+        height: 200px;
+      }
+      
+      .contact-form-container {
+        padding: 20px 15px;
+      }
+      
+      .contact-info-card {
+        padding: 15px 10px;
+      }
+      
+      .contact-icon {
+        font-size: 1.75rem;
+        margin-bottom: 10px;
+      }
+      
+      .contact-info-card h4 {
+        font-size: 1rem;
+      }
+      
+      .contact-info-card p {
+        font-size: 0.85rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 25px;
+      }
+    }
+
+    /* Prevent horizontal scrolling */
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
     }
     
-    input[type]{
-      width:50%;
+    .container {
+      max-width: 100%;
     }
-    .area{
-      width:50%;
-    }
-    .form1{
-      margin-left:17%;
-    }
-    .msg_btn{
-      margin-left:15%;
-    }
-    .textarea-reduced-width
-  {
-    width:50%;
-  }
+  </style>
+</head>
 
-  input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-    @media (min-width: 767px) and (max-width: 990px) {
-      .line{
-      margin-left:39%;
-      transform:translate(-70px,-50px);
-    }
-    .msg_btn{
-      margin-left:7%;
-    }
-}
-@media (max-width: 767px) {
-
-  /* carousel */
-  .line{
-      margin-left:30%;
-      transform:translate(-70px,-50px);
-    }
-      .carousel-item {
-        position: relative;
-      }
-
-      .carousel-item img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-      }
-      .card{
-        margin-left: 10%;
-      }
-
-    /* donate  image below nav bar */
-          .donate_img {
-        width: 100%; /* Ensure the parent container takes full width */
-        position: relative;
-    }
-
-    .donate_img img {
-        width: 100%;
-        height: 300px; /* Maintain aspect ratio */
-        object-fit: cover; /* Ensures the image fills its container */
-    }
-   
-    
-   
-    .form1{
-      margin-left:2%;
-    }
-    input[type]{
-      width:90%;
-    }
-    .area{
-      width:90%;
-    }
-    .msg_btn{
-      margin-left:20%;
-    }
-    .textarea-reduced-width
-  {
-    width:90%;
-  }
-    }
-    @media (max-width: 768px) {
-  #userProfile .dropdown-menu {
-    right: 0 !important; /* Align the dropdown to the right edge */
-    left: auto !important; /* Override default left alignment */
-    min-width: 150px; /* Adjust the width as needed */
-  }
-  .textarea-reduced-width
-  {
-    width:90%;
-  }
-  #userProfile img {
-    width: 25px; /* Slightly smaller profile image for mobile */
-    height: 25px;
-  }
-  
-  #userProfile .dropdown-item {
-    text-align: center; /* Center-align items for better UX */
-  }
-}
-
-    </style>
-    </head>
 <body>
-  <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
-    
-  </nav>
-  <div class="donate_img mt-5 pt-4 text-center">
-    <!-- <img src="<?php echo base_url('/assets/img/contact_page1.png'); ?>" alt="No Image" class="img-fluid"> -->
+  <!-- Navigation -->
+  <nav id="header" class="navbar navbar-expand-lg bg-white py-3 fixed-top"></nav>
+
+
+  <!-- Hero Section -->
+  <div class="contact-hero mt-5">
+    <div class="container">
+      <h1 class="display-4 fw-bold">Contact Us</h1>
+      <p class="lead">We're here to help and answer any questions you might have</p>
+    </div>
   </div>
-  
-  <div class="row text-center mt-4 mb-5" style="margin-left:0px;margin-right:0px;">
-    <!-- Location Section -->
-    <div class="col-12 col-md-4 mb-4 mb-md-0">
-        <i class="fa-solid fa-location-dot fs-2" style="color: #EB2D32;"></i>
-        <br><strong>Kanavu Startup Village</strong>
-        <br><strong>Annamalaikottai, Sivagiri</strong>
-    </div>
 
-    <!-- Phone Section -->
-    <div class="col-12 col-md-4 mb-3 mb-md-0">
-        <i class="fa-solid fa-phone-volume fs-2" style="color: #EB2D32;"></i>
-        <br><strong>+91 93792 48387</strong>
-    </div>
-
-    <!-- Email Section -->
-    <div class="col-12 col-md-4 mb-3 mb-md-0">
-        <i class="fa-regular fa-envelope fs-2" style="color: #EB2D32;"></i>
-        <br><strong>karthi.easwaramoorthy@gmail.com</strong>
-    </div>
-</div>
-
-  <section class="text-gray-600 body-font">
-    <div class="container px-5 py-6 mx-auto flex flex-wrap items-center">
-      <div class="lg:w-3/7 md:w-1/2 sm:w-1/1 xsm:w-1/1 bg-gray-100 rounded-lg p-8 flex flex-col mx-auto mt-10">
-      <br><br>  
-      <h2 class="text-gray-900 text-lg font-medium title-font text-center"><strong>GET IN TOUCH WITH US</strong>
-        </h2>
-        <div class="d-flex justify-content-center" >
-          <img class="" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="no image">
+  <!-- Contact Information Section -->
+  <section class="py-4">
+    <div class="container">
+      <div class="row g-3">
+        <!-- Address -->
+        <div class="col-12 col-md-4">
+          <div class="contact-info-card">
+            <i class="fas fa-map-marker-alt contact-icon"></i>
+            <h4>Our Location</h4>
+            <p>Kanavu Startup Village<br>Annamalaikottai, Sivagiri</p>
+          </div>
         </div>
-       <!--  <h3 class="text-base text-black-500 text-center w-auto"><strong>Submit your inquiry, and we'll respond to you <br>as
-            soon as possible!</strong></h3> -->
-            <div class="relative mb-4 mt-5 form1">
+        
+        <!-- Phone -->
+        <div class="col-12 col-md-4">
+          <div class="contact-info-card">
+            <i class="fas fa-phone contact-icon"></i>
+            <h4>Phone Number</h4>
+            <p>+91 93792 48387</p>
+          </div>
+        </div>
+        
+        <!-- Email -->
+        <div class="col-12 col-md-4">
+          <div class="contact-info-card">
+            <i class="fas fa-envelope contact-icon"></i>
+            <h4>Email Address</h4>
+            <p>karthi.easwaramoorthy@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <form name="contactus" class="form1" id="myForm" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
-  <!-- Name Field -->
-  <div class="mb-3">
-    <label for="name" class="form-label">Name:<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" required>
-    <p id="name-error" style="color:red"></p>
-  </div>
-
-  <!-- Email Field -->
-  <div class="mb-3">
-    <label for="email" class="form-label">Mail ID:<span class="text-danger">*</span></label>
-    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
-    <p id="email-error" style="color:red"></p>
-  </div>
-
-  <!-- Phone Field -->
-  <div class="mb-3">
-    <label for="phone" class="form-label">Phone Number:<span class="text-danger">*</span></label>
-    <input type="number" onkeypress="if(this.value.length == 10) return false" class="form-control" name="phone" id="phone" placeholder="Enter your phone number" required>
-    <p id="phone-error" style="color:red"></p>
-  </div>
-
-  <!-- Message Field -->
-  <div class="mb-3">
-<label for="message" class="form-label">Message:<span class="text-danger">*</span></label>
-<textarea class="form-control" name="message" id="message" rows="3" placeholder="Enter your message" required></textarea>
-<p id="message-error" style="color:red"></p>
-  </div>
-
-
-
-  <button type="submit" id="submitButton" class="btn btn-primary btn-lg" style="background-color:#E01A2B;border:none;border-radius:25px;font-size:15px;padding:12px">Send Us Message</button>
-</form>
-
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="contactModalLabel"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                         <div id="submitresponse">
-
-                         </div>
-                         <button type="button" class="btn btn-danger mt-2" data-bs-dismiss="modal" aria-label="Close">Ok</button>
-                      </div>
-                    </div>
-                  </div>
+  <!-- Contact Form Section -->
+  <section class="py-4 bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-8">
+          <div class="contact-form-container">
+            <h2 class="section-title">Get In Touch With Us</h2>
+            
+            <form name="contactus" id="myForm" method="post" action="<?= base_url('kanavuhelp/contact_us') ?>">
+              <div class="row">
+                <!-- Name Field -->
+                <div class="col-12 col-md-6 mb-3">
+                  <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" required>
+                  <div id="name-error" class="error-message"></div>
                 </div>
 
-<?php if ($this->session->flashdata('submitsuccessstatus')): ?>
-    <script>
-      // Automatically trigger the OTP modal when the page loads
-      window.onload = function() {
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
-        });
-        document.getElementById('contactModalLabel').innerHTML = "<span class='text-success'>Success !</p>";
-        document.getElementById('submitresponse').innerHTML = "<p class='fs-5'>Thanks for contacting us</p>";
-        myModal.show();
-      };
-    </script>
-    
-  <?php endif; ?>
+                <!-- Email Field -->
+                <div class="col-12 col-md-6 mb-3">
+                  <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+                  <div id="email-error" class="error-message"></div>
+                </div>
+              </div>
 
-  <?php if ($this->session->flashdata('submiterrorstatus')): ?>
-    <script>
-      // Automatically trigger the OTP modal when the page loads
-      window.onload = function() {
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
-        });
-        document.getElementById('contactModalLabel').innerHTML = "Error";
-        document.getElementById('submitresponse').innerHTML = "<p class='fs-5'>Unexpected error occured. Please try again.</p>";
-        myModal.show();
-      };
-    </script>
-    
-  <?php endif; ?>
+              <!-- Phone Field -->
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter your phone number" maxlength="10" required>
+                <div id="phone-error" class="error-message"></div>
+              </div>
 
-            
-            <script>
-            document.addEventListener("DOMContentLoaded", function () {
-  // Attach validation to fields
-  document.getElementById("name").addEventListener("input", function () {
-    validateName();
-  });
+              <!-- Message Field -->
+              <div class="mb-4">
+                <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                <textarea class="form-control" name="message" id="message" rows="4" placeholder="Enter your message" required maxlength="500"></textarea>
+                <div id="message-counter" class="form-text text-end text-muted small">0 / 500 characters</div>
+                <div id="message-error" class="error-message"></div>
+              </div>
 
-  document.getElementById("email").addEventListener("input", function () {
-    validateEmail();
-  });
-
-  document.getElementById("phone").addEventListener("input", function () {
-    validatePhone();
-  });
-
-  document.getElementById("message").addEventListener("input", function () {
-    validateMessage();
-  });
-
-  // Prevent form submission if validation fails
-  document.getElementById("submitButton").addEventListener("click", function (e) {
-    e.preventDefault(); // Prevent form submission
-    if (validateForm()) {
-      document.getElementById("myForm").submit();
-    }
-  });
-});
-
-// Name Validation
-function validateName() {
-  const name = document.getElementById("name").value.trim();
-  const errorElement = document.getElementById("name-error");
-  const regex = /^[a-zA-Z]{3,}[/s]*/; // Only letters and spaces allowed
-
-  if (!name) {
-    errorElement.textContent = "Please enter your name.";
-    return false;
-  } else if (!regex.test(name)) {
-    errorElement.textContent = "Name can only contain letters and spaces.";
-    return false;
-  }
-
-  errorElement.textContent = "";
-  return true;
-}
-
-// Email Validation
-function validateEmail() {
-  const email = document.getElementById("email").value.trim();
-  const errorElement = document.getElementById("email-error");
-  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  if (!email) {
-    errorElement.textContent = "Please enter your email.";
-    return false;
-  } else if (!regex.test(email)) {
-    errorElement.textContent = "Please enter a valid email address.";
-    return false;
-  }
-
-  errorElement.textContent = "";
-  return true;
-}
-
-// Phone Validation
-function validatePhone() {
-  const phone = document.getElementById("phone").value.trim();
-  const errorElement = document.getElementById("phone-error");
-  const regex = /^[0-9]{10}$/;
-
-  if (!phone) {
-    errorElement.textContent = "Please enter your phone number.";
-    return false;
-  } else if (!regex.test(phone)) {
-    errorElement.textContent = "Phone number must be 10 digits.";
-    return false;
-  }
-
-  errorElement.textContent = "";
-  return true;
-}
-
-// Message Validation
-function validateMessage() {
-  const message = document.getElementById("message").value.trim();
-  const errorElement = document.getElementById("message-error");
-
-  if (!message) {
-    errorElement.textContent = "Message is required.";
-    return false;
-  } else if (message.length < 10) {
-    errorElement.textContent = "Message must be at least 10 characters long.";
-    return false;
-  }
-
-  errorElement.textContent = "";
-  return true;
-}
-
-// Overall Form Validation
-function validateForm() {
-  const isNameValid = validateName();
-  const isEmailValid = validateEmail();
-  const isPhoneValid = validatePhone();
-  const isMessageValid = validateMessage();
-
-  return isNameValid && isEmailValid && isPhoneValid && isMessageValid;
-}
-
-function maxLengthCheck(object)
-  {
-    if (object.value.length > object.maxLength)
-      object.value = object.value.slice(0, object.maxLength)
-  }
-
-</script>
-</div>
-
+              <!-- Submit Button -->
+              <div class="text-center">
+                <button type="submit" id="submitButton" class="btn btn-danger btn-lg">Send Message</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
-<div id="footer">
 
-</div>
+  <!-- Map Section -->
+  <section class="py-4">
+    <div class="container">
+      <h2 class="section-title">Find Us</h2>
+      <div class="contact-map">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.320830284834!2d78.48623331479436!3d10.32233369264215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0005b3a5e9c46f%3A0x5a5e5a5e5a5e5a5e!2sAnnamalaikottai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1633084800000!5m2!1sen!2sin" 
+          allowfullscreen="" 
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </section>
 
-<script>
-  $.ajax({
-      type:"get",
-      url:"kanavuhelp/getHeader",
-      success:(result)=>{
-           document.getElementById("header").innerHTML = result;
-           document.getElementById("contactuspage").classList.add("text-danger","fw-bold");
-      },
-      error:(error)=>{
-           document.getElementById("header").innerHTML = "";
+  <!-- Footer -->
+  <div id="footer">
+  </div>
+
+  <!-- Success/Error Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contactModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div id="submitresponse"></div>
+          <button type="button" class="btn btn-danger mt-3" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Mobile viewport fix
+    document.addEventListener('DOMContentLoaded', function() {
+      // Prevent horizontal scrolling
+      document.body.style.overflowX = 'hidden';
+      
+      // Form validation event listeners
+      document.getElementById("name").addEventListener("input", validateName);
+      document.getElementById("email").addEventListener("input", validateEmail);
+      document.getElementById("phone").addEventListener("input", validatePhone);
+      document.getElementById("message").addEventListener("input", validateMessage);
+
+      // Form submission
+      document.getElementById("submitButton").addEventListener("click", function (e) {
+        e.preventDefault();
+        if (validateForm()) {
+          document.getElementById("myForm").submit();
+        }
+      });
+
+      // Character counter
+      document.getElementById("message").addEventListener("input", function () {
+        const maxLength = 500;
+        const currentLength = this.value.length;
+        const counter = document.getElementById("message-counter");
+        counter.textContent = `${currentLength} / ${maxLength} characters`;
+        counter.className = currentLength >= maxLength ? 
+          "form-text text-end text-danger small" : 
+          "form-text text-end text-muted small";
+      });
+    });
+
+    // Validation functions
+    function validateName() {
+      const name = document.getElementById("name").value.trim();
+      const errorElement = document.getElementById("name-error");
+      const regex = /^[a-zA-Z\s]{3,}$/;
+
+      if (!name) {
+        errorElement.textContent = "Please enter your name.";
+        return false;
+      } else if (!regex.test(name)) {
+        errorElement.textContent = "Name must be at least 3 characters and contain only letters.";
+        return false;
       }
-    }); 
+
+      errorElement.textContent = "";
+      return true;
+    }
+
+    function validateEmail() {
+      const email = document.getElementById("email").value.trim();
+      const errorElement = document.getElementById("email-error");
+      const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      if (!email) {
+        errorElement.textContent = "Please enter your email.";
+        return false;
+      } else if (!regex.test(email)) {
+        errorElement.textContent = "Please enter a valid email address.";
+        return false;
+      }
+
+      errorElement.textContent = "";
+      return true;
+    }
+
+    function validatePhone() {
+      const phone = document.getElementById("phone").value.trim();
+      const errorElement = document.getElementById("phone-error");
+      const regex = /^[0-9]{10}$/;
+
+      if (!phone) {
+        errorElement.textContent = "Please enter your phone number.";
+        return false;
+      } else if (!regex.test(phone)) {
+        errorElement.textContent = "Phone number must be 10 digits.";
+        return false;
+      }
+
+      errorElement.textContent = "";
+      return true;
+    }
+
+    function validateMessage() {
+      const message = document.getElementById("message").value.trim();
+      const errorElement = document.getElementById("message-error");
+
+      if (!message) {
+        errorElement.textContent = "Message is required.";
+        return false;
+      } else if (message.length < 10) {
+        errorElement.textContent = "Message must be at least 10 characters long.";
+        return false;
+      }
+
+      errorElement.textContent = "";
+      return true;
+    }
+
+    function validateForm() {
+      return validateName() && validateEmail() && validatePhone() && validateMessage();
+    }
+
+    // Load header and footer via AJAX
+    $.ajax({
+      type: "get",
+      url: "kanavuhelp/getHeader",
+      success: (result) => {
+        document.getElementById("header").innerHTML = result;
+        // Add active class to current page
+        const contactLink = document.querySelector('[href*="contact"]');
+        if (contactLink) {
+          contactLink.classList.add("active", "text-danger");
+        }
+      },
+      error: (error) => {
+        console.error("Header loading error:", error);
+      }
+    });
 
     $.ajax({
-      type:"get",
-      url:"kanavuhelp/getFooter",
-      success:(result)=>{
-           document.getElementById("footer").innerHTML = result;
+      type: "get",
+      url: "kanavuhelp/getFooter",
+      success: (result) => {
+        document.getElementById("footer").innerHTML = result;
       },
-      error:(error)=>{
-           document.getElementById("footer").innerHTML = "";
+      error: (error) => {
+        console.error("Footer loading error:", error);
       }
-    });  
-</script>
-      <!-- Bootstrap JS and dependencies (Popper.js) -->
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
-    </html>
-    
+    });
+
+    // Modal display for success/error messages
+    <?php if ($this->session->flashdata('submitsuccessstatus')): ?>
+      window.onload = function() {
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {});
+        document.getElementById('contactModalLabel').innerHTML = "<span class='text-success'>Success!</span>";
+        document.getElementById('submitresponse').innerHTML = "<p class='fs-5'>Thanks for contacting us. We'll get back to you soon!</p>";
+        myModal.show();
+      };
+    <?php endif; ?>
+
+    <?php if ($this->session->flashdata('submiterrorstatus')): ?>
+      window.onload = function() {
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {});
+        document.getElementById('contactModalLabel').innerHTML = "Error";
+        document.getElementById('submitresponse').innerHTML = "<p class='fs-5'>Unexpected error occurred. Please try again.</p>";
+        myModal.show();
+      };
+    <?php endif; ?>
+  </script>
+</body>
+</html>

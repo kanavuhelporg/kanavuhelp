@@ -1301,7 +1301,7 @@
         margin: 0 !important;
         line-height: 1.2 !important;
     }
-}
+  }
 
   /* Mobile layout (below 768px) */
   @media (max-width: 767px) {
@@ -1336,8 +1336,9 @@
     <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
 
   </div><br>
+
   <!-- Fundraiser Cards with Fixed Size -->  <!--kani-->
-  <div class="container pt-4"> 9
+  <div class="container pt-4"> 
       <div class="row g-4" id="fundraiserCards">
           <?php if (!empty($fundraisers)): ?>
               <?php 
@@ -1365,7 +1366,7 @@
 
                   $progress_percentage = getProgressPercentage($fundraiser);
               ?>
-              <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+              <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3 d-flex card-container">
                   <div class="card h-100 w-100 d-flex flex-column shadow-sm">
                       
                       <!-- Cover Image -->
@@ -1448,7 +1449,6 @@
       </div>
   </div>
 
-
   <!-- Responsive styles -->
   <style>
     
@@ -1459,6 +1459,13 @@
     .card-container {
         display: block; 
         margin-bottom: 20px;
+    }
+    #fundraiserCards {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    #fundraiserCards > div {
+        display: flex;
     }
 
     .card {
@@ -1510,7 +1517,6 @@
     }
   </style>
   <!-- kani1 -->
-
 
  <!--kani start alignment-->
 

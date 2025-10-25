@@ -12,59 +12,84 @@ class adminpanel extends CI_Model
         $count = $this->db->query($query);
         return $count->result_array();
     }
-    public function transactiondetails($limit, $offset, $search = null)
+//     public function transactiondetails($limit, $offset, $search = null)
+// {
+//     $this->db->select('donation_for_cause.*');
+//     $this->db->from('donation_for_cause');
+
+//     if (!empty($search)) {
+//         $this->db->group_start()
+//                  ->like('name', $search)
+//                  ->or_like('email', $search)
+//                  ->or_like('phoneno', $search)
+//                  ->or_like('transactionid', $search)
+//                  ->or_like('currency_type', $search)
+//                  ->or_like('status', $search)
+//                  ->or_like('verified_by', $search)
+//                  ->or_like('fundraiser_name', $search)
+//                  ->or_like('fundraiser_email', $search)
+//                  ->or_like('fundraiser_phone', $search)
+//                  ->or_like('category', $search)
+//                  ->or_like('cause_heading', $search)
+//                  ->or_like('donor_location', $search)
+//                  ->group_end();
+//     }
+
+//     $this->db->order_by('donation_for_cause.created_at', 'DESC');
+//     $this->db->limit($limit, $offset);
+//     return $this->db->get()->result();
+// }
+    public function get_all_transactions()
 {
     $this->db->select('donation_for_cause.*');
     $this->db->from('donation_for_cause');
-
-    if (!empty($search)) {
-        $this->db->group_start()
-                 ->like('name', $search)
-                 ->or_like('email', $search)
-                 ->or_like('phoneno', $search)
-                 ->or_like('transactionid', $search)
-                 ->or_like('currency_type', $search)
-                 ->or_like('status', $search)
-                 ->or_like('verified_by', $search)
-                 ->or_like('fundraiser_name', $search)
-                 ->or_like('fundraiser_email', $search)
-                 ->or_like('fundraiser_phone', $search)
-                 ->or_like('category', $search)
-                 ->or_like('cause_heading', $search)
-                 ->or_like('donor_location', $search)
-                 ->group_end();
-    }
-
     $this->db->order_by('donation_for_cause.created_at', 'DESC');
-    $this->db->limit($limit, $offset);
-    return $this->db->get()->result();
+    // Remove the limit to get all records
+    $query = $this->db->get();
+    return $query->result();
 }
 
-
-public function get_total_transaction($search = null)
+public function transactiondetails()
 {
-    $this->db->from('donation_for_cause');
-
-    if (!empty($search)) {
-        $this->db->group_start()
-                 ->like('name', $search)
-                 ->or_like('email', $search)
-                 ->or_like('phoneno', $search)
-                 ->or_like('transactionid', $search)
-                 ->or_like('currency_type', $search)
-                 ->or_like('status', $search)
-                 ->or_like('verified_by', $search)
-                 ->or_like('fundraiser_name', $search)
-                 ->or_like('fundraiser_email', $search)
-                 ->or_like('fundraiser_phone', $search)
-                 ->or_like('category', $search)
-                 ->or_like('cause_heading', $search)
-                 ->or_like('donor_location', $search)
-                 ->group_end();
-    }
-
-    return $this->db->count_all_results();
+    // Keep this method for backward compatibility, but use get_all_transactions instead
+    return $this->get_all_transactions();
 }
+
+public function get_total_transaction()
+{
+    return $this->db->count_all('donation_for_cause');
+}
+
+
+// public function get_total_transaction($search = null)
+// {
+//     $this->db->from('donation_for_cause');
+
+//     if (!empty($search)) {
+//         $this->db->group_start()
+//                  ->like('name', $search)
+//                  ->or_like('email', $search)
+//                  ->or_like('phoneno', $search)
+//                  ->or_like('transactionid', $search)
+//                  ->or_like('currency_type', $search)
+//                  ->or_like('status', $search)
+//                  ->or_like('verified_by', $search)
+//                  ->or_like('fundraiser_name', $search)
+//                  ->or_like('fundraiser_email', $search)
+//                  ->or_like('fundraiser_phone', $search)
+//                  ->or_like('category', $search)
+//                  ->or_like('cause_heading', $search)
+//                  ->or_like('donor_location', $search)
+//                  ->group_end();
+//     }
+
+//     return $this->db->count_all_results();
+// }
+    // public function get_total_transaction(){
+    //     $query = $this->db->query("SELECT * FROM donation_for_cause");
+    //     $donation = $query->result_array();
+    //     return count($donation);
+    // }
 
 
     public function get_verification_list($counts){
@@ -76,72 +101,78 @@ public function get_total_transaction($search = null)
         return $query->result();
     }
 
-    // public function get_cause_details()
-    // {
-    //     // Include only rows where 'verified' is 1
-    //     $this->db->select('individualform.*, user.name as username');
-    //     $this->db->from('individualform');
-    //     $this->db->join('user', 'user.id = individualform.user_id');
-    //     $this->db->order_by('individualform.created_at', 'DESC');
-    //     $query = $this->db->get();
-    //     return $query->result();
-    // }
-
-    // public function get_total_causes(){
-    //     $query = $this->db->query("SELECT * FROM individualform");
-    //     $causes = $query->result_array();
-    //     return count($causes);
-    // }
-    public function get_cause_details($limit = 5, $offset = 0, $search = '')
+    public function get_all_cause_details()
 {
+    // Include only rows where 'verified' is 1
     $this->db->select('individualform.*, user.name as username');
     $this->db->from('individualform');
     $this->db->join('user', 'user.id = individualform.user_id');
-
-    if (!empty($search)) {
-        $this->db->group_start(); // start grouping WHERE conditions
-        $this->db->like('individualform.name', $search);
-        $this->db->or_like('individualform.category', $search);
-        // $this->db->or_like('individualform.email', $search);
-        $this->db->or_like('individualform.phone', $search);
-        $this->db->or_like('individualform.amount', $search);
-        // $this->db->or_like('individualform.location', $search);
-        $this->db->or_like('individualform.cause_heading', $search);
-        $this->db->or_like('individualform.created_by', $search);
-        $this->db->or_like('individualform.cause_description', $search);
-        $this->db->or_like('individualform.form_selected_text', $search);
-        $this->db->group_end();   // end grouping
-    }
-
     $this->db->order_by('individualform.created_at', 'DESC');
-    $this->db->limit($limit, $offset);
-    
+    // Remove any limits to get all records
     $query = $this->db->get();
     return $query->result();
 }
 
-
-public function get_total_causes($search = '')
+// Keep existing method for backward compatibility
+public function get_cause_details()
 {
-    $this->db->from('individualform');
-
-    if (!empty($search)) {
-        $this->db->group_start();
-        $this->db->like('name', $search);
-        $this->db->or_like('category', $search);
-        // $this->db->or_like('email', $search);
-        $this->db->or_like('individualform.amount', $search);
-        $this->db->or_like('individualform.created_by', $search);
-        $this->db->or_like('phone', $search);
-        // $this->db->or_like('location', $search);
-        $this->db->or_like('cause_heading', $search);
-        $this->db->or_like('cause_description', $search);
-        $this->db->or_like('form_selected_text', $search);
-        $this->db->group_end();
-    }
-
-    return $this->db->count_all_results();
+    return $this->get_all_cause_details();
 }
+
+public function get_total_causes()
+{
+    return $this->db->count_all('individualform');
+}
+//     public function get_cause_details($limit = 5, $offset = 0, $search = '')
+// {
+//     $this->db->select('individualform.*, user.name as username');
+//     $this->db->from('individualform');
+//     $this->db->join('user', 'user.id = individualform.user_id');
+
+//     if (!empty($search)) {
+//         $this->db->group_start(); // start grouping WHERE conditions
+//         $this->db->like('individualform.name', $search);
+//         $this->db->or_like('individualform.category', $search);
+//         // $this->db->or_like('individualform.email', $search);
+//         $this->db->or_like('individualform.phone', $search);
+//         $this->db->or_like('individualform.amount', $search);
+//         // $this->db->or_like('individualform.location', $search);
+//         $this->db->or_like('individualform.cause_heading', $search);
+//         $this->db->or_like('individualform.created_by', $search);
+//         $this->db->or_like('individualform.cause_description', $search);
+//         $this->db->or_like('individualform.form_selected_text', $search);
+//         $this->db->group_end();   // end grouping
+//     }
+
+//     $this->db->order_by('individualform.created_at', 'DESC');
+//     $this->db->limit($limit, $offset);
+    
+//     $query = $this->db->get();
+//     return $query->result();
+// }
+
+
+// public function get_total_causes($search = '')
+// {
+//     $this->db->from('individualform');
+
+//     if (!empty($search)) {
+//         $this->db->group_start();
+//         $this->db->like('name', $search);
+//         $this->db->or_like('category', $search);
+//         // $this->db->or_like('email', $search);
+//         $this->db->or_like('individualform.amount', $search);
+//         $this->db->or_like('individualform.created_by', $search);
+//         $this->db->or_like('phone', $search);
+//         // $this->db->or_like('location', $search);
+//         $this->db->or_like('cause_heading', $search);
+//         $this->db->or_like('cause_description', $search);
+//         $this->db->or_like('form_selected_text', $search);
+//         $this->db->group_end();
+//     }
+
+//     return $this->db->count_all_results();
+// }
 
 
 
