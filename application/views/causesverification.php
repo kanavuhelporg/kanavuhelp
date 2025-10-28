@@ -204,7 +204,8 @@
             color: black;
         }
 
-        @media screen and (max-width:768px) {
+        /* Fix for sidebar display */
+        @media screen and (max-width: 991px) {
             #search-bar {
                 display: none;
             }
@@ -216,15 +217,19 @@
             .ps-logo {
                 justify-content: space-between;
             }
+            
+            .dashboard-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
-        @media screen and (min-width:768px) {
+        @media screen and (min-width: 992px) {
             .ham-menu {
                 display: none;
             }
         }
 
-        @media screen and (max-width:768px) {
+        @media screen and (max-width: 768px) {
             #add-coords-form div>input {
                 padding: 5px;
             }
@@ -353,7 +358,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
 <!---------------------email-error-toast-end--------------------->
 
         <div class="row"><!-----top-bar--------------->
-            <div class="col-md-2 col-12 border-bottom ps-gray py-3">
+            <div class="col-lg-2 col-12 border-bottom ps-gray py-3">
                 <div class="ps-logo">
                     <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" class="ham-menu ms-4 border-0 bg-transparent">
                         <div class="ham-line"></div>
@@ -367,12 +372,12 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                 </div>
             </div>
             
-            <div id="search-bar" class="col-md-10 col-12 d-flex align-items-center justify-content-between border-bottom">
-                <div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between">
+            <div id="search-bar" class="col-lg-10 col-12 d-flex align-items-center justify-content-between border-bottom">
+                <div class="col-lg-7 ms-4 d-flex align-items-baseline justify-content-between">
                     <!-- Search bar can be added here if needed -->
                 </div>
                 
-                <div class="col-md-3 d-none d-md-flex align-items-baseline justify-content-evenly">
+                <div class="col-lg-3 d-none d-lg-flex align-items-baseline justify-content-evenly">
                     <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
                         <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
                         <span style="font-weight:500;">
@@ -413,7 +418,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
         <div class="row" style="height: 100vh;"><!----------main-navbar----------->
 
             <!----------side-bar-------------------->
-            <div id="menu-bar" style="height:inherit;" class="col-md-2 ps-gray">
+            <div id="menu-bar" style="height:inherit;" class="col-lg-2 ps-gray d-none d-lg-block">
             
                 <ul class="d-grid list-unstyled">
 
@@ -536,7 +541,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
             </div>
 
             <!-----------main-dashboard------------------------->        
-            <div style="overflow:auto" class="col-md-10 h-100">
+            <div style="overflow:auto" class="col-lg-10 h-100">
                 <!-- Scrollable content -->
                 <div style="overflow:auto" class="mt-3 px-4">
                     
@@ -593,7 +598,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                                 <?= htmlspecialchars($donation->cause_heading); ?>
                                             </button>
                                         </td>
-                                        <td><?= htmlspecialchars($donation->created_at); ?></td>
+                                        <td><?= date('d-m-Y', strtotime($donation->created_at)); ?></td>
                                         <td><?= htmlspecialchars($donation->username); ?></td>
                                         <td><?= htmlspecialchars($donation->raised_amount); ?></td>
                                         <td><?= $donation->verified == 1 ? 'Yes' : 'No'; ?></td>
@@ -1329,7 +1334,7 @@ let status = "";
     }
 
     function setUrl(email,id,username,verifycount,rejectcount){
-    console.log(id,verifycount,rejectcount);
+        console.log(id,verifycount,rejectcount);
         document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${email}</span>`;
         document.getElementById("causestatus").innerHTML = "";
         let adminname = "<?php echo $this->session->userdata("adminName");?>";

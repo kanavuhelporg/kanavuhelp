@@ -195,11 +195,12 @@
             background-color: rgb(248, 245, 245);
         }
 
-        /* Pagination style */
+        /* Pagination style - UPDATED */
         .pagination {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 5px;
+            flex-wrap: wrap;
         }
 
         .pagination .page-item .page-link {
@@ -213,6 +214,9 @@
             background-color: #f0f0f0;
             color: #000;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .pagination .page-item.active .page-link {
@@ -226,19 +230,31 @@
             cursor: not-allowed;
         }
 
-        /* table content overflow style */
+        /* Table content overflow style - UPDATED */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .table {
+            min-width: 1200px; /* Ensure table has minimum width for content */
+            width: 100%;
+        }
+
         .table td {
-            /* max-width: auto; */
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             vertical-align: middle;
+            max-width: 200px; /* Limit column width */
         }
 
         .table th {
             background-color: #f8f5f5;
             color: #000;
             font-weight: 500;
+            white-space: nowrap;
         }
 
         #menu-bar ul {
@@ -254,6 +270,14 @@
         #menu-bar .nav-link.active {
             background-color: red;
             color: #fff !important;
+        }
+
+        /* Main content centering */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
         }
 
         /* Mobile styles */
@@ -278,7 +302,7 @@
             color: white !important;
         }
 
-        /* FIX: Tablet screen sidebar issue */
+        /* FIXED: Tablet screen sidebar issue - Updated breakpoints */
         @media screen and (max-width: 991px) {
             #menu-bar {
                 display: none;
@@ -305,9 +329,33 @@
                 padding: 8%;
             }
 
-            .table-responsive {
+            /* Improved mobile table styles */
+            .table-container {
+                width: 100%;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
+                border: 1px solid #dee2e6;
+                border-radius: 0.375rem;
+            }
+            
+            .table {
+                margin-bottom: 0;
+            }
+            
+            .main-content {
+                padding: 10px;
+            }
+            
+            /* Improved pagination for mobile */
+            .pagination {
+                gap: 3px;
+            }
+            
+            .pagination .page-item .page-link {
+                width: 35px;
+                height: 35px;
+                line-height: 35px;
+                font-size: 14px;
             }
         }
 
@@ -327,6 +375,43 @@
             right: 20px;
             z-index: 1100;
             max-width: 350px;
+        }
+        
+        /* Action buttons container for mobile */
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .action-buttons .btn {
+            font-size: 12px;
+            padding: 4px 8px;
+        }
+        
+        /* Mobile-specific table improvements */
+        @media screen and (max-width: 768px) {
+            .table th, .table td {
+                padding: 8px 5px;
+                font-size: 12px;
+            }
+            
+            .action-buttons .btn {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+            
+            .main-content {
+                padding: 5px;
+            }
+        }
+        .truncate {
+            white-space: nowrap;         
+            overflow: hidden;            
+            text-overflow: ellipsis;     
+            max-width: 200px;            
+            display: inline-block;      
+            vertical-align: middle;      
         }
     </style>
 </head>
@@ -381,7 +466,7 @@
         <!---------------------email-error-toast-end--------------------->
 
         <div class="row"><!-----top-bar--------------->
-            <div class="col-md-2 col-12 border-bottom ps-gray py-3">
+            <div class="col-lg-2 col-12 border-bottom ps-gray py-3">
                 <div class="ps-logo">
                     <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" class="ham-menu ms-4 border-0 bg-transparent">
                         <div class="ham-line"></div>
@@ -395,12 +480,12 @@
                 </div>
             </div>
             
-            <div id="search-bar" class="col-md-10 col-12 d-flex align-items-center justify-content-between border-bottom">
-                <div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between">
+            <div id="search-bar" class="col-lg-10 col-12 d-flex align-items-center justify-content-between border-bottom">
+                <div class="col-lg-7 ms-4 d-flex align-items-baseline justify-content-between">
                     <!-- Search bar can be added here if needed -->
                 </div>
 
-                <div class="col-md-3 d-none d-md-flex align-items-baseline justify-content-evenly">
+                <div class="col-lg-3 d-none d-lg-flex align-items-baseline justify-content-evenly">
                     <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
                         <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
                         <span style="font-weight:500;">
@@ -439,7 +524,7 @@
 
         <div class="row" style="min-height: calc(100vh - 72px);"><!----------main-navbar----------->
             <!----------side-bar-------------------->
-            <div id="menu-bar" class="col-md-2 ps-gray d-none d-md-block">
+            <div id="menu-bar" class="col-lg-2 ps-gray d-none d-lg-block">
                 <ul class="d-grid list-unstyled">
                     <li class="nav-item py-3 fs-6">
                         <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
@@ -541,8 +626,8 @@
             </div>
 
             <!-----------main-dashboard------------------------->
-            <div class="col-md-10 col-12">
-                <div class="container-fluid px-3 px-md-4 pt-3">
+            <div class="col-lg-10 col-12 main-content">
+                <div class="container-fluid px-3 px-md-4 pt-3 w-100">
                     <!-- Search box -->
                     <div class="row mb-3">
                         <div class="col-md-4 position-relative">
@@ -559,7 +644,8 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive">
+                    <!-- Updated table container -->
+                    <div class="table-container">
                         <table class="table table-bordered table-hover w-100">
                             <thead>
                                 <tr class="ps-gray">
@@ -596,15 +682,17 @@
                                             <td><?= htmlspecialchars($donation->fundraiser_email); ?></td>
                                             <td><?= htmlspecialchars($donation->fundraiser_phone); ?></td>
                                             <td><?= $donation->status == 1 ? 'Yes' : 'No'; ?></td>
-                                            <td class="d-flex gap-2" style="white-space:nowrap;">
-                                                <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" 
-                                                        class="btn btn-primary btn-sm fw-bold" 
-                                                        data-toggle="modal" data-target="#editDonationModal">Edit</button>
-                                                <button onclick="setUrl(<?= htmlspecialchars(json_encode($donation)); ?>)" 
-                                                        class="btn btn-warning btn-sm fw-bold" 
-                                                        data-toggle="modal" data-target="#sendmail">Status</button>
-                                                <button onclick="deleteDonation(<?= $donation->donation_id; ?>)" 
-                                                        class="btn btn-danger btn-sm fw-bold">Delete</button>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" 
+                                                            class="btn btn-primary btn-sm fw-bold" 
+                                                            data-toggle="modal" data-target="#editDonationModal">Edit</button>
+                                                    <button onclick="setUrl(<?= htmlspecialchars(json_encode($donation)); ?>)" 
+                                                            class="btn btn-warning btn-sm fw-bold" 
+                                                            data-toggle="modal" data-target="#sendmail">Status</button>
+                                                    <button onclick="deleteDonation(<?= $donation->donation_id; ?>)" 
+                                                            class="btn btn-danger btn-sm fw-bold">Delete</button>
+                                                </div>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -625,223 +713,7 @@
             </div>
         </div>
     </div>
-    <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const tbody = document.getElementById('donations-tbody');
-                    const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.id.includes('no-results'));
-                    const searchInput = document.getElementById('search-input');
-                    const clearSearch = document.getElementById('clear-filter');
-                    const paginationNav = document.getElementById('pagination-nav');
-                    const paginationUl = document.getElementById('pagination-ul');
-                    const recordsPerPage = 5;
-                    let currentPage = 1;
-                    let filteredRows = rows;
 
-                    console.log('Total rows found:', rows.length); // Debug log
-
-                    // Function to display rows for the current page
-                    function displayPage(page) {
-                        const start = (page - 1) * recordsPerPage;
-                        const end = start + recordsPerPage;
-                        
-                        console.log(`Displaying page ${page}, rows ${start} to ${end}`); // Debug log
-                        
-                        // Hide all rows first
-                        rows.forEach(row => row.style.display = 'none');
-                        
-                        // Show only rows for current page
-                        const pageRows = filteredRows.slice(start, end);
-                        pageRows.forEach(row => {
-                            row.style.display = '';
-                        });
-
-                        // Update serial numbers for current page
-                        pageRows.forEach((row, index) => {
-                            row.cells[0].textContent = start + index + 1;
-                        });
-
-                        // Show/hide no results message
-                        const noResultsRow = document.getElementById('no-results');
-                        if (noResultsRow) {
-                            noResultsRow.style.display = filteredRows.length === 0 ? '' : 'none';
-                        }
-                    }
-
-                    // Function to generate pagination links
-                    function generatePagination() {
-                        paginationUl.innerHTML = '';
-                        const totalPages = Math.ceil(filteredRows.length / recordsPerPage);
-
-                        console.log('Generating pagination for', totalPages, 'pages'); // Debug log
-
-                        if (totalPages <= 1) {
-                            paginationNav.style.display = 'none';
-                            return;
-                        }
-
-                        paginationNav.style.display = 'block';
-
-                        // Previous button
-                        const prevLi = document.createElement('li');
-                        prevLi.classList.add('page-item');
-                        if (currentPage === 1) prevLi.classList.add('disabled');
-                        prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><i class='fa-solid fa-arrow-left-long'></i></a>`;
-                        prevLi.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            if (currentPage > 1) {
-                                currentPage--;
-                                displayPage(currentPage);
-                                generatePagination();
-                            }
-                        });
-                        paginationUl.appendChild(prevLi);
-
-                        // Page numbers
-                        const maxVisiblePages = 5;
-                        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-                        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-                        if (endPage - startPage + 1 < maxVisiblePages) {
-                            startPage = Math.max(1, endPage - maxVisiblePages + 1);
-                        }
-
-                        // First page and ellipsis
-                        if (startPage > 1) {
-                            const firstLi = document.createElement('li');
-                            firstLi.classList.add('page-item');
-                            firstLi.innerHTML = `<a class="page-link" href="#">1</a>`;
-                            firstLi.addEventListener('click', function(e) {
-                                e.preventDefault();
-                                currentPage = 1;
-                                displayPage(currentPage);
-                                generatePagination();
-                            });
-                            paginationUl.appendChild(firstLi);
-
-                            if (startPage > 2) {
-                                const ellipsisLi = document.createElement('li');
-                                ellipsisLi.classList.add('page-item', 'disabled');
-                                ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
-                                paginationUl.appendChild(ellipsisLi);
-                            }
-                        }
-
-                        // Page numbers
-                        for (let i = startPage; i <= endPage; i++) {
-                            const li = document.createElement('li');
-                            li.classList.add('page-item');
-                            if (i === currentPage) li.classList.add('active');
-                            li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-                            li.addEventListener('click', function(e) {
-                                e.preventDefault();
-                                currentPage = i;
-                                displayPage(currentPage);
-                                generatePagination();
-                            });
-                            paginationUl.appendChild(li);
-                        }
-
-                        // Last page and ellipsis
-                        if (endPage < totalPages) {
-                            if (endPage < totalPages - 1) {
-                                const ellipsisLi = document.createElement('li');
-                                ellipsisLi.classList.add('page-item', 'disabled');
-                                ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
-                                paginationUl.appendChild(ellipsisLi);
-                            }
-
-                            const lastLi = document.createElement('li');
-                            lastLi.classList.add('page-item');
-                            lastLi.innerHTML = `<a class="page-link" href="#">${totalPages}</a>`;
-                            lastLi.addEventListener('click', function(e) {
-                                e.preventDefault();
-                                currentPage = totalPages;
-                                displayPage(currentPage);
-                                generatePagination();
-                            });
-                            paginationUl.appendChild(lastLi);
-                        }
-
-                        // Next button
-                        const nextLi = document.createElement('li');
-                        nextLi.classList.add('page-item');
-                        if (currentPage === totalPages) nextLi.classList.add('disabled');
-                        nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><i class='fa-solid fa-arrow-right-long'></i></a>`;
-                        nextLi.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            if (currentPage < totalPages) {
-                                currentPage++;
-                                displayPage(currentPage);
-                                generatePagination();
-                            }
-                        });
-                        paginationUl.appendChild(nextLi);
-                    }
-
-                    // Function to filter rows based on search
-                    function filterRows() {
-                        const searchTerm = searchInput.value.toLowerCase().trim();
-                        
-                        console.log('Filtering with search term:', searchTerm); // Debug log
-
-                        if (searchTerm === '') {
-                            filteredRows = rows;
-                        } else {
-                            filteredRows = rows.filter(row => {
-                                // Search through all table cells in the row
-                                for (let i = 0; i < row.children.length; i++) {
-                                    const cellText = row.children[i]?.textContent.toLowerCase() || '';
-                                    if (cellText.includes(searchTerm)) {
-                                        return true; // Found match in this column
-                                    }
-                                }
-                                return false; // No match found in any column
-                            });
-                        }
-
-                        console.log('Filtered rows:', filteredRows.length); // Debug log
-
-                        // Show/hide clear button
-                        clearSearch.style.display = searchInput.value ? 'block' : 'none';
-
-                        currentPage = 1;
-                        displayPage(currentPage);
-                        generatePagination();
-                    }
-
-                    // Clear search input
-                    clearSearch.addEventListener('click', function() {
-                        searchInput.value = '';
-                        clearSearch.style.display = 'none';
-                        filterRows();
-                        searchInput.focus();
-                    });
-
-                    // Search event listener
-                    searchInput.addEventListener('input', function() {
-                        // Add slight delay to prevent excessive filtering
-                        clearTimeout(this.searchTimeout);
-                        this.searchTimeout = setTimeout(filterRows, 300);
-                    });
-
-                    // Enter key to search
-                    searchInput.addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            filterRows();
-                        }
-                    });
-
-                    // Initial setup
-                    if (rows.length > 0) {
-                        console.log('Initial setup with', rows.length, 'rows'); // Debug log
-                        displayPage(currentPage);
-                        generatePagination();
-                    } else {
-                        console.log('No rows found for initial setup'); // Debug log
-                        paginationNav.style.display = 'none';
-                    }
-                });
-            </script>                                
     <!----------Logout Modal ------------->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -1121,6 +993,223 @@
                     link.classList.add("active");
                 }
             });
+        });
+
+        // Pagination and search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tbody = document.getElementById('donations-tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.id.includes('no-results'));
+            const searchInput = document.getElementById('search-input');
+            const clearSearch = document.getElementById('clear-filter');
+            const paginationNav = document.getElementById('pagination-nav');
+            const paginationUl = document.getElementById('pagination-ul');
+            const recordsPerPage = 5;
+            let currentPage = 1;
+            let filteredRows = rows;
+
+            console.log('Total rows found:', rows.length);
+
+            // Function to display rows for the current page
+            function displayPage(page) {
+                const start = (page - 1) * recordsPerPage;
+                const end = start + recordsPerPage;
+                
+                console.log(`Displaying page ${page}, rows ${start} to ${end}`);
+                
+                // Hide all rows first
+                rows.forEach(row => row.style.display = 'none');
+                
+                // Show only rows for current page
+                const pageRows = filteredRows.slice(start, end);
+                pageRows.forEach(row => {
+                    row.style.display = '';
+                });
+
+                // Update serial numbers for current page
+                pageRows.forEach((row, index) => {
+                    row.cells[0].textContent = start + index + 1;
+                });
+
+                // Show/hide no results message
+                const noResultsRow = document.getElementById('no-results');
+                if (noResultsRow) {
+                    noResultsRow.style.display = filteredRows.length === 0 ? '' : 'none';
+                }
+            }
+
+            // Function to generate pagination links
+            function generatePagination() {
+                paginationUl.innerHTML = '';
+                const totalPages = Math.ceil(filteredRows.length / recordsPerPage);
+
+                console.log('Generating pagination for', totalPages, 'pages');
+
+                if (totalPages <= 1) {
+                    paginationNav.style.display = 'none';
+                    return;
+                }
+
+                paginationNav.style.display = 'block';
+
+                // Previous button - FIXED: Using proper Font Awesome classes
+                const prevLi = document.createElement('li');
+                prevLi.classList.add('page-item');
+                if (currentPage === 1) prevLi.classList.add('disabled');
+                prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><i class="fas fa-arrow-left"></i></a>`;
+                prevLi.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (currentPage > 1) {
+                        currentPage--;
+                        displayPage(currentPage);
+                        generatePagination();
+                    }
+                });
+                paginationUl.appendChild(prevLi);
+
+                // Page numbers
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+
+                // First page and ellipsis
+                if (startPage > 1) {
+                    const firstLi = document.createElement('li');
+                    firstLi.classList.add('page-item');
+                    firstLi.innerHTML = `<a class="page-link" href="#">1</a>`;
+                    firstLi.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = 1;
+                        displayPage(currentPage);
+                        generatePagination();
+                    });
+                    paginationUl.appendChild(firstLi);
+
+                    if (startPage > 2) {
+                        const ellipsisLi = document.createElement('li');
+                        ellipsisLi.classList.add('page-item', 'disabled');
+                        ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+                        paginationUl.appendChild(ellipsisLi);
+                    }
+                }
+
+                // Page numbers
+                for (let i = startPage; i <= endPage; i++) {
+                    const li = document.createElement('li');
+                    li.classList.add('page-item');
+                    if (i === currentPage) li.classList.add('active');
+                    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                    li.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = i;
+                        displayPage(currentPage);
+                        generatePagination();
+                    });
+                    paginationUl.appendChild(li);
+                }
+
+                // Last page and ellipsis
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) {
+                        const ellipsisLi = document.createElement('li');
+                        ellipsisLi.classList.add('page-item', 'disabled');
+                        ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+                        paginationUl.appendChild(ellipsisLi);
+                    }
+
+                    const lastLi = document.createElement('li');
+                    lastLi.classList.add('page-item');
+                    lastLi.innerHTML = `<a class="page-link" href="#">${totalPages}</a>`;
+                    lastLi.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = totalPages;
+                        displayPage(currentPage);
+                        generatePagination();
+                    });
+                    paginationUl.appendChild(lastLi);
+                }
+
+                // Next button - FIXED: Using proper Font Awesome classes
+                const nextLi = document.createElement('li');
+                nextLi.classList.add('page-item');
+                if (currentPage === totalPages) nextLi.classList.add('disabled');
+                nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><i class="fas fa-arrow-right"></i></a>`;
+                nextLi.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        displayPage(currentPage);
+                        generatePagination();
+                    }
+                });
+                paginationUl.appendChild(nextLi);
+            }
+
+            // Function to filter rows based on search
+            function filterRows() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                
+                console.log('Filtering with search term:', searchTerm);
+
+                if (searchTerm === '') {
+                    filteredRows = rows;
+                } else {
+                    filteredRows = rows.filter(row => {
+                        // Search through all table cells in the row
+                        for (let i = 0; i < row.children.length; i++) {
+                            const cellText = row.children[i]?.textContent.toLowerCase() || '';
+                            if (cellText.includes(searchTerm)) {
+                                return true; // Found match in this column
+                            }
+                        }
+                        return false; // No match found in any column
+                    });
+                }
+
+                console.log('Filtered rows:', filteredRows.length);
+
+                // Show/hide clear button
+                clearSearch.style.display = searchInput.value ? 'block' : 'none';
+
+                currentPage = 1;
+                displayPage(currentPage);
+                generatePagination();
+            }
+
+            // Clear search input
+            clearSearch.addEventListener('click', function() {
+                searchInput.value = '';
+                clearSearch.style.display = 'none';
+                filterRows();
+                searchInput.focus();
+            });
+
+            // Search event listener
+            searchInput.addEventListener('input', function() {
+                // Add slight delay to prevent excessive filtering
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = setTimeout(filterRows, 300);
+            });
+
+            // Enter key to search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    filterRows();
+                }
+            });
+
+            // Initial setup
+            if (rows.length > 0) {
+                console.log('Initial setup with', rows.length, 'rows');
+                displayPage(currentPage);
+                generatePagination();
+            } else {
+                console.log('No rows found for initial setup');
+                paginationNav.style.display = 'none';
+            }
         });
     </script>
 </body>

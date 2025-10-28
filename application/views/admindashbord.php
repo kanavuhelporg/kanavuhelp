@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     .ps-logo {
       display: flex;
@@ -30,14 +29,6 @@
 
     .ps-user {
       background-color: rgb(254, 213, 163);
-    }
-
-    .align {
-      align-self: self-end;
-    }
-
-    .fa-magnifying-glass {
-      color: gray;
     }
 
     .dashboard-cards {
@@ -70,29 +61,17 @@
       background-color: rgb(35, 154, 43);
     }
 
-    .chartMenu {
-      width: 100vw;
-      height: 40px;
-      background: #1A1A1A;
-      color: rgba(54, 162, 235, 1);
-    }
-
-    .chartMenu p {
-      padding: 10px;
-      font-size: 20px;
-    }
-
     .chartCard {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 700px));
-      grid-template-rows: repeat(auto-fit, minmax(200px, auto));
-      align-items: center;
+      display: flex;
+      justify-content: center;
     }
 
     .chartBox {
       padding: 10px;
       border-radius: 20px;
       background: white;
+      width: 100%;
+      max-width: 700px;
     }
 
     #search-bar {
@@ -116,10 +95,6 @@
       color: white !important;
     }
     
-    /* .nav-link:hover {
-      background-color: rgba(120, 50, 186, 0.1);
-    } */
-    
     .nav-link.active:hover {
       background-color: red !important;
     }
@@ -138,7 +113,15 @@
       color: white !important;
     }
 
-    @media screen and (max-width: 768px) {
+    /* Main content centering */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    @media screen and (max-width: 991px) {
       #search-bar {
         display: none;
       }
@@ -156,7 +139,7 @@
       }
     }
 
-    @media screen and (min-width: 769px) {
+    @media screen and (min-width: 992px) {
       .ham-menu {
         display: none;
       }
@@ -173,7 +156,7 @@
 <body>
   <div class="container-fluid">
     <div class="row"><!-----top-bar--------------->
-      <div class="col-md-2 col-12 border-bottom ps-gray py-3">
+      <div class="col-lg-2 col-12 border-bottom ps-gray py-3">
         <div class="ps-logo">
           <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" class="ham-menu ms-4 border-0 bg-transparent">
             <div class="ham-line"></div>
@@ -187,12 +170,12 @@
         </div>
       </div>
 
-      <div id="search-bar" class="col-md-10 col-12 d-flex align-items-center justify-content-between border-bottom">
-        <div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between">
+      <div id="search-bar" class="col-lg-10 col-12 d-flex align-items-center justify-content-between border-bottom">
+        <div class="col-lg-7 ms-4 d-flex align-items-baseline justify-content-between">
           <!-- Search bar can be added here if needed -->
         </div>
 
-        <div class="col-md-3 d-none d-md-flex align-items-baseline justify-content-evenly">
+        <div class="col-lg-3 d-none d-lg-flex align-items-baseline justify-content-evenly">
           <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
             <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
             <span style="font-weight:500;">
@@ -231,7 +214,7 @@
 
     <div class="row"><!----------main-navbar----------->
       <!----------side-bar-------------------->
-      <div id="menu-bar" style="height:inherit;" class="col-md-2 ps-gray d-none d-md-block">
+      <div id="menu-bar" style="height:inherit;" class="col-lg-2 ps-gray d-none d-lg-block">
         <ul class="d-grid list-unstyled">
           <li class="nav-item py-3 fs-6">
             <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
@@ -261,9 +244,17 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item py-2">
             <a href="<?= base_url('causesverification') ?>"
               class="nav-link text-decoration-none <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
+              style="font-weight:400;color:black;">
+              <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#"
+              class="nav-link text-decoration-none"
               style="font-weight:400;color:black;">
               <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
             </a>
@@ -293,7 +284,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <a href="<?= base_url('admin/logout') ?>" class="btn btn-danger">Logout</a>
+              <a href="#" class="btn btn-danger">Logout</a>
             </div>
           </div>
         </div>
@@ -353,9 +344,9 @@
         </div>
       </div>
 
-      <div class="col-md-10 col-12 h-100"><!-----------main-dashboard------------------------->
-        <div class="container-fluid px-4 pt-4">
-          <span>Dashboard</span>
+      <div class="col-lg-10 col-12 h-100 main-content"><!-----------main-dashboard------------------------->
+        <div class="container-fluid px-4 pt-4 w-100">
+          <h2>Dashboard</h2>
 
           <div class="dashboard-cards mt-4 border-bottom pb-5">
             <div class="card-round card1 shadow-sm py-5 text-white d-grid align-items-center">
@@ -479,6 +470,6 @@
     });
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

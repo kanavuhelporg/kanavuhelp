@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Submissions</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .ps-logo {
@@ -232,10 +232,6 @@
             color: white !important;
         }
 
-        /* .nav-link:hover {
-            background-color: rgba(120, 50, 186, 0.1);
-        } */
-
         /* Mobile styles */
         .ham-menu {
             cursor: pointer;
@@ -258,7 +254,15 @@
             color: white !important;
         }
 
-        @media screen and (max-width: 768px) {
+        /* Main content centering */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        @media screen and (max-width: 991px) {
             #search-bar {
                 display: none;
             }
@@ -288,7 +292,7 @@
             }
         }
 
-        @media screen and (min-width: 769px) {
+        @media screen and (min-width: 992px) {
             .ham-menu {
                 display: none;
             }
@@ -303,7 +307,7 @@
 <body>
     <div class="container-fluid">
         <div class="row"><!-----top-bar--------------->
-            <div class="col-md-2 col-12 border-bottom ps-gray py-3">
+            <div class="col-lg-2 col-12 border-bottom ps-gray py-3">
                 <div class="ps-logo">
                     <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" class="ham-menu ms-4 border-0 bg-transparent">
                         <div class="ham-line"></div>
@@ -317,12 +321,12 @@
                 </div>
             </div>
             
-            <div id="search-bar" class="col-md-10 col-12 d-flex align-items-center justify-content-between border-bottom">
-                <div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between">
+            <div id="search-bar" class="col-lg-10 col-12 d-flex align-items-center justify-content-between border-bottom">
+                <div class="col-lg-7 ms-4 d-flex align-items-baseline justify-content-between">
                     <!-- Search bar can be added here if needed -->
                 </div>
                 
-                <div class="col-md-3 d-none d-md-flex align-items-baseline justify-content-evenly hide-mobile">
+                <div class="col-lg-3 d-none d-lg-flex align-items-baseline justify-content-evenly hide-mobile">
                     <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
                         <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
                         <span style="font-weight:500;">
@@ -362,7 +366,7 @@
 
         <div class="row" style="min-height: calc(100vh - 72px);"><!----------main-navbar----------->
             <!----------side-bar-------------------->
-            <div id="menu-bar" class="col-md-2 ps-gray d-none d-md-block">
+            <div id="menu-bar" class="col-lg-2 ps-gray d-none d-lg-block">
                 <ul class="d-grid list-unstyled">
                     <li class="nav-item py-3 fs-6">
                         <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
@@ -464,64 +468,65 @@
             </div>
 
             <!-----------main-dashboard------------------------->
-            <div class="col-md-10 col-12">
-    <div class="container-fluid px-3 px-md-4 pt-3">
-        <!-- Search input with ❌ clear button -->
-        <div class="row mb-3">
-            <div class="col-md-4 position-relative">
-                <input type="text" id="searchInput" class="form-control pe-5"
-                      placeholder="Search across all columns..."
-                      autocomplete="off">
-                
-                <button id="clearSearch" 
-                        class="btn position-absolute end-0 top-50 translate-middle-y" 
-                        style="display: none; background: none; border: none; margin-right: 10px;">
-                    <i class="fas fa-times text-danger"></i>
-                </button>
+            <div class="col-lg-10 col-12 main-content">
+                <div class="container-fluid px-3 px-md-4 pt-3 w-100">
+                    <h2 class="mb-4">Contact Submissions</h2>
+
+                    <!-- Search input with ❌ clear button -->
+                    <div class="row mb-3">
+                        <div class="col-md-4 position-relative">
+                            <input type="text" id="searchInput" class="form-control pe-5"
+                                  placeholder="Search across all columns..."
+                                  autocomplete="off">
+                            
+                            <button id="clearSearch" 
+                                    class="btn position-absolute end-0 top-50 translate-middle-y" 
+                                    style="display: none; background: none; border: none; margin-right: 10px;">
+                                <i class="fas fa-times text-danger"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="ps-gray">
+                                    <th>S.No</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Message</th>
+                                    <th>Created_at</th>
+                                </tr>
+                            </thead>
+                            <tbody id="enquiries-tbody">
+                                <?php if (!empty($submissions)): ?>
+                                    <?php foreach ($submissions as $index => $submission): ?>
+                                        <tr>
+                                            <td><?= $index + 1 ?></td>
+                                            <td><?= htmlspecialchars($submission->name) ?></td>
+                                            <td><?= htmlspecialchars($submission->email) ?></td>
+                                            <td><?= htmlspecialchars($submission->phone) ?></td>
+                                            <td><?= htmlspecialchars($submission->message) ?></td>
+                                            <td><?= date('d-m-Y', strtotime($submission->created_at)) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr id="no-results"><td colspan="6" style="text-align:center;">No records found.</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Pagination" class="mt-3" id="pagination-nav">
+                        <ul class="pagination" id="pagination-ul">
+                            <!-- Pagination links will be dynamically generated here -->
+                        </ul>
+                    </nav>
+                </div>
             </div>
-        </div>
-
-        <!-- Table -->
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr class="ps-gray">
-                        <th>S.No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Message</th>
-                        <th>Created_at</th>
-                    </tr>
-                </thead>
-                <tbody id="enquiries-tbody">
-                    <?php if (!empty($submissions)): ?>
-                        <?php foreach ($submissions as $index => $submission): ?>
-                            <tr>
-                                <td><?= $index + 1 ?></td>
-                                <td><?= htmlspecialchars($submission->name) ?></td>
-                                <td><?= htmlspecialchars($submission->email) ?></td>
-                                <td><?= htmlspecialchars($submission->phone) ?></td>
-                                <td><?= htmlspecialchars($submission->message) ?></td>
-                                <td><?= htmlspecialchars($submission->created_at) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr id="no-results"><td colspan="6" style="text-align:center;">No records found.</td></tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Pagination -->
-        <nav aria-label="Pagination" class="mt-3" id="pagination-nav" style="display: none;">
-            <ul class="pagination" id="pagination-ul">
-                <!-- Pagination links will be dynamically generated here -->
-            </ul>
-        </nav>
-    </div>
-</div>
-
         </div>
     </div>
      <script>
@@ -740,7 +745,7 @@
                 paginationNav.style.display = 'none';
             }
         });
-    </script>                           
+    </script> 
     <!----------Logout Modal ------------->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -760,8 +765,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
         // Search functionality
