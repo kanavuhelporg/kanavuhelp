@@ -1171,7 +1171,7 @@ function setCauseId(causeId) {
 </form>
 
           <!-- Terms and Privacy Policy -->
-          <p class="text-center small mt-2">By continuing, you agree to our <a href="<?= base_url('/terms_of_use') ?>">Terms of Service</a> & <a href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a></p>
+          <p class="text-center small mt-2">By continuing, you agree to our <a href="<?= base_url('/terms_of_use') ?>" target="_blank">Terms of Service</a> & <a href="<?= base_url('/privacy_policy') ?>" target="_blank">Privacy Policy</a></p>
         </div>
       </div>
     </div>

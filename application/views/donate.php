@@ -969,9 +969,11 @@
           </form>
 
           <!-- Terms and Privacy Policy -->
-          <p class="text-center small mt-2">By continuing, you agree to our <a
-              href="<?= base_url('/terms_of_use') ?>">Terms of Service</a> & <a
-              href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a></p>
+          <p class="text-center small mt-2">
+            By continuing, you agree to our 
+            <a href="<?= base_url('/terms_of_use') ?>" target="_blank">Terms of Service</a> & 
+            <a href="<?= base_url('/privacy_policy') ?>" target="_blank">Privacy Policy</a>
+          </p>
         </div>
       </div>
     </div>
@@ -1014,7 +1016,7 @@
       document.getElementById('loginRedirectBtn').addEventListener('click', function() {
         var currentUrl = window.location.href;
 
-// Redirect to the login page with the returnUrl parameter
+  // Redirect to the login page with the returnUrl parameter
         window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
       });// Replace with your actual login URL
         
@@ -1246,7 +1248,7 @@
 
     // Submit the form to the login page
     document.getElementById('redirectToLoginForm').submit();
-}
+  }
 
 
 
