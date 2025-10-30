@@ -134,7 +134,7 @@ class admin extends CI_Controller
     public function causesverification()
 {
     if (!$this->session->userdata('adminId')) {
-        redirect('kanavuhelp/login');
+        redirect('admin');
     }
     
     // Fetch all data without limit for client-side pagination
@@ -161,7 +161,7 @@ class admin extends CI_Controller
 
     public function changeCausespagepagesetup(){
         if (!$this->session->userdata('adminId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+            redirect('admin'); // Redirect to login if not logged in
         }
             $initialindex = $this->input->get('initialindex');
             if($initialindex < 0){
@@ -217,7 +217,7 @@ class admin extends CI_Controller
     public function transactionverification()
     {
         if (!$this->session->userdata('adminId')) {
-            redirect('kanavuhelp/login');
+            redirect('admin');
         }
         
         // Remove the limit to get all records for client-side pagination
@@ -276,7 +276,7 @@ class admin extends CI_Controller
 
     public function changeVerificationpagesetup(){
         if (!$this->session->userdata('adminId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+            redirect('admin'); // Redirect to login if not logged in
         }
         $initialindex = $this->input->get('initialindex');
         if($initialindex < 0){
@@ -370,7 +370,7 @@ class admin extends CI_Controller
 
     public function sendtransactionVerficationstatus(){
         if (!$this->session->userdata('adminId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+            redirect('admin'); // Redirect to login if not logged in
         }
         $donaremail = $this->input->get("email");
         $status = $this->input->get("status");
@@ -402,7 +402,7 @@ class admin extends CI_Controller
 
     public function sendcauseVerficationstatus(){
         if (!$this->session->userdata('adminId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
+            redirect('admin'); // Redirect to login if not logged in
         }
         $userEmail = $this->input->get("email");
         $status = $this->input->get("status");

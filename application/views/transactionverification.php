@@ -195,7 +195,7 @@
             background-color: rgb(248, 245, 245);
         }
 
-        /* Pagination style - UPDATED */
+        /* Pagination style  */
         .pagination {
             display: flex;
             justify-content: center;
@@ -230,7 +230,7 @@
             cursor: not-allowed;
         }
 
-        /* Table content overflow style - UPDATED */
+        /* Table style */
         .table-container {
             width: 100%;
             overflow-x: auto;
@@ -238,7 +238,7 @@
         }
         
         .table {
-            min-width: 1200px; /* Ensure table has minimum width for content */
+            min-width: 1200px;
             width: 100%;
         }
 
@@ -377,16 +377,18 @@
             max-width: 350px;
         }
         
-        /* Action buttons container for mobile */
         .action-buttons {
             display: flex;
             gap: 5px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;   
+            justify-content: center;
+            align-items: center;
         }
+
         
         .action-buttons .btn {
-            font-size: 12px;
-            padding: 4px 8px;
+            font-size: bold;
+            padding: 10px;                              
         }
         
         /* Mobile-specific table improvements */
