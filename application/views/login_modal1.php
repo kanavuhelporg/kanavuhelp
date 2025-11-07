@@ -1165,7 +1165,9 @@
       </div>
       <img src="<?= base_url('assets/img/footer-secured-card 1.svg') ?>" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
         style="max-width: 200px;">
-      <p class="text-center ">copyright 2024 @ Kanavu.help. All Rights Reserved.</p>
+      <p class="text-center" style="font-size:15px;">
+        Copyright <span id="currentYear"></span> @ kanavu.help. All Rights Reserved.
+      </p>
     </footer>
   </div>
 
@@ -1506,6 +1508,9 @@ document.querySelector('.container').addEventListener('click', function(event) {
       // Submit the form to the login page
       document.getElementById('redirectToLoginForm').submit();
     }
+  </script>
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
   </script>
 </body>
 

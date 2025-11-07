@@ -5,8 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>fundraiser</title>
+
+
+      <!--G4 (google analytics) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0Q147F1Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JF0Q147F1Y');
+</script>
   <!-- <link href="<?php echo base_url(); ?>assets/img/LOGO_KSV.png"  rel="icon" /> -->
-   <link href="<?php echo base_url(); ?>assets/img/Kanavu_help2.png"  rel="icon" />
+   <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
   <!-- <link rel="stylesheet" href="style.css" /> -->
   <!-- <link href="bootstrap.min.css" rel="stylesheet" />
          <script src="bootstrap.bundle.min.js"></script> -->
@@ -908,7 +919,7 @@
 </button>
 
 </div>-->
-  <div class="container-fluid box mt-auto py-3">
+  <div class="container-fluid box mt-5 py-3">
     <div class="row box1 mt-auto py-3">
       <div class="container-fluid mt-5">
         <div class="row align-items-center w-100">

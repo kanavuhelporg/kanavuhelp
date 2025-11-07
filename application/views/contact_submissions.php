@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Submissions</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .ps-logo {
@@ -232,10 +232,6 @@
             color: white !important;
         }
 
-        /* .nav-link:hover {
-            background-color: rgba(120, 50, 186, 0.1);
-        } */
-
         /* Mobile styles */
         .ham-menu {
             cursor: pointer;
@@ -258,7 +254,15 @@
             color: white !important;
         }
 
-        @media screen and (max-width: 768px) {
+        /* Main content centering */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        @media screen and (max-width: 991px) {
             #search-bar {
                 display: none;
             }
@@ -288,7 +292,7 @@
             }
         }
 
-        @media screen and (min-width: 769px) {
+        @media screen and (min-width: 992px) {
             .ham-menu {
                 display: none;
             }
@@ -303,7 +307,7 @@
 <body>
     <div class="container-fluid">
         <div class="row"><!-----top-bar--------------->
-            <div class="col-md-2 col-12 border-bottom ps-gray py-3">
+            <div class="col-lg-2 col-12 border-bottom ps-gray py-3">
                 <div class="ps-logo">
                     <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" class="ham-menu ms-4 border-0 bg-transparent">
                         <div class="ham-line"></div>
@@ -317,12 +321,12 @@
                 </div>
             </div>
             
-            <div id="search-bar" class="col-md-10 col-12 d-flex align-items-center justify-content-between border-bottom">
-                <div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between">
+            <div id="search-bar" class="col-lg-10 col-12 d-flex align-items-center justify-content-between border-bottom">
+                <div class="col-lg-7 ms-4 d-flex align-items-baseline justify-content-between">
                     <!-- Search bar can be added here if needed -->
                 </div>
                 
-                <div class="col-md-3 d-none d-md-flex align-items-baseline justify-content-evenly hide-mobile">
+                <div class="col-lg-3 d-none d-lg-flex align-items-baseline justify-content-evenly hide-mobile">
                     <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
                         <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
                         <span style="font-weight:500;">
@@ -362,7 +366,7 @@
 
         <div class="row" style="min-height: calc(100vh - 72px);"><!----------main-navbar----------->
             <!----------side-bar-------------------->
-            <div id="menu-bar" class="col-md-2 ps-gray d-none d-md-block">
+            <div id="menu-bar" class="col-lg-2 ps-gray d-none d-lg-block">
                 <ul class="d-grid list-unstyled">
                     <li class="nav-item py-3 fs-6">
                         <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
@@ -464,22 +468,22 @@
             </div>
 
             <!-----------main-dashboard------------------------->
-            <div class="col-md-10 col-12">
-                <div class="container-fluid px-3 px-md-4 pt-3">
+            <div class="col-lg-10 col-12 main-content">
+                <div class="container-fluid px-3 px-md-4 pt-3 w-100">
+                    <h2 class="mb-4">Contact Submissions</h2>
+
                     <!-- Search input with ❌ clear button -->
                     <div class="row mb-3">
                         <div class="col-md-4 position-relative">
-                            <input type="text" id="searchInput" class="form-control"
-                                  placeholder="Search by Name and press Enter"
-                                  value="<?= htmlspecialchars($search) ?>" autocomplete="off">
-
-                            <?php if (!empty($search)): ?>
-                                <button type="button" onclick="clearSearch()"
-                                        class="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-4 border-0"
-                                        style="z-index: 2; margin-right: -20px;">
-                                    &times;
-                                </button>
-                            <?php endif; ?>
+                            <input type="text" id="searchInput" class="form-control pe-5"
+                                  placeholder="Search across all columns..."
+                                  autocomplete="off">
+                            
+                            <button id="clearSearch" 
+                                    class="btn position-absolute end-0 top-50 translate-middle-y" 
+                                    style="display: none; background: none; border: none; margin-right: 10px;">
+                                <i class="fas fa-times text-danger"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -496,52 +500,252 @@
                                     <th>Created_at</th>
                                 </tr>
                             </thead>
-                            <tbody id="enquiries">
-                                <?php if (!empty($submissions)): $i = $sno + 1; ?>
-                                    <?php foreach ($submissions as $submission): ?>
+                            <tbody id="enquiries-tbody">
+                                <?php if (!empty($submissions)): ?>
+                                    <?php foreach ($submissions as $index => $submission): ?>
                                         <tr>
-                                            <td><?= $i ?></td>
+                                            <td><?= $index + 1 ?></td>
                                             <td><?= htmlspecialchars($submission->name) ?></td>
                                             <td><?= htmlspecialchars($submission->email) ?></td>
                                             <td><?= htmlspecialchars($submission->phone) ?></td>
                                             <td><?= htmlspecialchars($submission->message) ?></td>
-                                            <td><?= htmlspecialchars($submission->created_at) ?></td>
+                                            <td><?= date('d-m-Y', strtotime($submission->created_at)) ?></td>
                                         </tr>
-                                        <?php $i++; endforeach; ?>
+                                    <?php endforeach; ?>
                                 <?php else: ?>
-                                    <tr><td colspan="6" style="text-align:center;">No records found.</td></tr>
+                                    <tr id="no-results"><td colspan="6" style="text-align:center;">No records found.</td></tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Pagination -->
-                    <?php
-                        $total_pages = ceil($counts / 10);
-                        $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-                    ?>
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item <?= ($current_page <= 1) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="?page=<?= $current_page - 1 ?>&search=<?= urlencode($search) ?>"><i class='fa-solid fa-arrow-left-long'></i></a>
-                            </li>
-
-                            <?php for ($p = 1; $p <= $total_pages; $p++): ?>
-                                <li class="page-item <?= ($p == $current_page) ? 'active' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $p ?>&search=<?= urlencode($search) ?>"><?= $p ?></a>
-                                </li>
-                            <?php endfor; ?>
-
-                            <li class="page-item <?= ($current_page >= $total_pages) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="?page=<?= $current_page + 1 ?>&search=<?= urlencode($search) ?>"> <i class='fa-solid fa-arrow-right-long'></i></a>
-                            </li>
+                    <nav aria-label="Pagination" class="mt-3" id="pagination-nav">
+                        <ul class="pagination" id="pagination-ul">
+                            <!-- Pagination links will be dynamically generated here -->
                         </ul>
                     </nav>
                 </div>
             </div>
         </div>
     </div>
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tbody = document.getElementById('enquiries-tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.id.includes('no-results'));
+            const searchInput = document.getElementById('searchInput');
+            const clearSearch = document.getElementById('clearSearch');
+            const paginationNav = document.getElementById('pagination-nav');
+            const paginationUl = document.getElementById('pagination-ul');
+            const recordsPerPage = 5;
+            let currentPage = 1;
+            let filteredRows = rows;
 
+            console.log('Total rows found:', rows.length); // Debug log
+
+            // Function to display rows for the current page
+            function displayPage(page) {
+                const start = (page - 1) * recordsPerPage;
+                const end = start + recordsPerPage;
+                
+                console.log(`Displaying page ${page}, rows ${start} to ${end}`); // Debug log
+                
+                // Hide all rows first
+                rows.forEach(row => row.style.display = 'none');
+                
+                // Show only rows for current page
+                const pageRows = filteredRows.slice(start, end);
+                pageRows.forEach(row => {
+                    row.style.display = '';
+                });
+
+                // Update serial numbers for current page
+                pageRows.forEach((row, index) => {
+                    row.cells[0].textContent = start + index + 1;
+                });
+
+                // Show/hide no results message
+                const noResultsRow = document.getElementById('no-results');
+                if (noResultsRow) {
+                    noResultsRow.style.display = filteredRows.length === 0 ? '' : 'none';
+                }
+            }
+
+            // Function to generate pagination links
+            function generatePagination() {
+                paginationUl.innerHTML = '';
+                const totalPages = Math.ceil(filteredRows.length / recordsPerPage);
+
+                console.log('Generating pagination for', totalPages, 'pages'); // Debug log
+
+                if (totalPages <= 1) {
+                    paginationNav.style.display = 'none';
+                    return;
+                }
+
+                paginationNav.style.display = 'block';
+
+                // Previous button
+                const prevLi = document.createElement('li');
+                prevLi.classList.add('page-item');
+                if (currentPage === 1) prevLi.classList.add('disabled');
+                prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><i class='fa-solid fa-arrow-left-long'></i></a>`;
+                prevLi.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (currentPage > 1) {
+                        currentPage--;
+                        displayPage(currentPage);
+                        generatePagination();
+                    }
+                });
+                paginationUl.appendChild(prevLi);
+
+                // Page numbers
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+
+                // First page and ellipsis
+                if (startPage > 1) {
+                    const firstLi = document.createElement('li');
+                    firstLi.classList.add('page-item');
+                    firstLi.innerHTML = `<a class="page-link" href="#">1</a>`;
+                    firstLi.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = 1;
+                        displayPage(currentPage);
+                        generatePagination();
+                    });
+                    paginationUl.appendChild(firstLi);
+
+                    if (startPage > 2) {
+                        const ellipsisLi = document.createElement('li');
+                        ellipsisLi.classList.add('page-item', 'disabled');
+                        ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+                        paginationUl.appendChild(ellipsisLi);
+                    }
+                }
+
+                // Page numbers
+                for (let i = startPage; i <= endPage; i++) {
+                    const li = document.createElement('li');
+                    li.classList.add('page-item');
+                    if (i === currentPage) li.classList.add('active');
+                    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                    li.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = i;
+                        displayPage(currentPage);
+                        generatePagination();
+                    });
+                    paginationUl.appendChild(li);
+                }
+
+                // Last page and ellipsis
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) {
+                        const ellipsisLi = document.createElement('li');
+                        ellipsisLi.classList.add('page-item', 'disabled');
+                        ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+                        paginationUl.appendChild(ellipsisLi);
+                    }
+
+                    const lastLi = document.createElement('li');
+                    lastLi.classList.add('page-item');
+                    lastLi.innerHTML = `<a class="page-link" href="#">${totalPages}</a>`;
+                    lastLi.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = totalPages;
+                        displayPage(currentPage);
+                        generatePagination();
+                    });
+                    paginationUl.appendChild(lastLi);
+                }
+
+                // Next button
+                const nextLi = document.createElement('li');
+                nextLi.classList.add('page-item');
+                if (currentPage === totalPages) nextLi.classList.add('disabled');
+                nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><i class='fa-solid fa-arrow-right-long'></i></a>`;
+                nextLi.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        displayPage(currentPage);
+                        generatePagination();
+                    }
+                });
+                paginationUl.appendChild(nextLi);
+            }
+
+            // Function to filter rows based on search
+            function filterRows() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                
+                console.log('Filtering with search term:', searchTerm); // Debug log
+
+                if (searchTerm === '') {
+                    filteredRows = rows;
+                } else {
+                    filteredRows = rows.filter(row => {
+                        // Search through all table cells in the row
+                        for (let i = 0; i < row.children.length; i++) {
+                            const cellText = row.children[i]?.textContent.toLowerCase() || '';
+                            if (cellText.includes(searchTerm)) {
+                                return true; // Found match in this column
+                            }
+                        }
+                        return false; // No match found in any column
+                    });
+                }
+
+                console.log('Filtered rows:', filteredRows.length); // Debug log
+
+                // Show/hide clear button
+                clearSearch.style.display = searchInput.value ? 'block' : 'none';
+
+                currentPage = 1;
+                displayPage(currentPage);
+                generatePagination();
+            }
+
+            // Clear search input
+            clearSearch.addEventListener('click', function() {
+                searchInput.value = '';
+                clearSearch.style.display = 'none';
+                filterRows();
+                searchInput.focus();
+            });
+
+            // Search event listener
+            searchInput.addEventListener('input', function() {
+                // Add slight delay to prevent excessive filtering
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = setTimeout(filterRows, 300);
+            });
+
+            // Enter key to search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    filterRows();
+                }
+            });
+
+            // Initial setup
+            if (rows.length > 0) {
+                console.log('Initial setup with', rows.length, 'rows'); // Debug log
+                displayPage(currentPage);
+                generatePagination();
+            } else {
+                console.log('No rows found for initial setup'); // Debug log
+                paginationNav.style.display = 'none';
+            }
+        });
+    </script> 
     <!----------Logout Modal ------------->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -561,8 +765,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
         // Search functionality

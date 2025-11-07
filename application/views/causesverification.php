@@ -204,7 +204,8 @@
             color: black;
         }
 
-        @media screen and (max-width:768px) {
+        /* Fix for sidebar display */
+        @media screen and (max-width: 991px) {
             #search-bar {
                 display: none;
             }
@@ -216,15 +217,19 @@
             .ps-logo {
                 justify-content: space-between;
             }
+            
+            .dashboard-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
-        @media screen and (min-width:768px) {
+        @media screen and (min-width: 992px) {
             .ham-menu {
                 display: none;
             }
         }
 
-        @media screen and (max-width:768px) {
+        @media screen and (max-width: 768px) {
             #add-coords-form div>input {
                 padding: 5px;
             }
@@ -353,7 +358,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
 <!---------------------email-error-toast-end--------------------->
 
         <div class="row"><!-----top-bar--------------->
-            <div class="col-md-2 col-12 border-bottom ps-gray py-3">
+            <div class="col-lg-2 col-12 border-bottom ps-gray py-3">
                 <div class="ps-logo">
                     <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" class="ham-menu ms-4 border-0 bg-transparent">
                         <div class="ham-line"></div>
@@ -367,12 +372,12 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                 </div>
             </div>
             
-            <div id="search-bar" class="col-md-10 col-12 d-flex align-items-center justify-content-between border-bottom">
-                <div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between">
+            <div id="search-bar" class="col-lg-10 col-12 d-flex align-items-center justify-content-between border-bottom">
+                <div class="col-lg-7 ms-4 d-flex align-items-baseline justify-content-between">
                     <!-- Search bar can be added here if needed -->
                 </div>
                 
-                <div class="col-md-3 d-none d-md-flex align-items-baseline justify-content-evenly">
+                <div class="col-lg-3 d-none d-lg-flex align-items-baseline justify-content-evenly">
                     <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
                         <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
                         <span style="font-weight:500;">
@@ -413,7 +418,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
         <div class="row" style="height: 100vh;"><!----------main-navbar----------->
 
             <!----------side-bar-------------------->
-            <div id="menu-bar" style="height:inherit;" class="col-md-2 ps-gray">
+            <div id="menu-bar" style="height:inherit;" class="col-lg-2 ps-gray d-none d-lg-block">
             
                 <ul class="d-grid list-unstyled">
 
@@ -536,8 +541,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
             </div>
 
             <!-----------main-dashboard------------------------->        
-            <div style="overflow:auto" class="col-md-10 h-100">
-
+            <div style="overflow:auto" class="col-lg-10 h-100">
                 <!-- Scrollable content -->
                 <div style="overflow:auto" class="mt-3 px-4">
                     
@@ -545,12 +549,14 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     <div class="row mb-3"></div>
                     <div class="row mb-3">
                         <div class="col-md-4 position-relative">
-                            <input type="text" id="search-input" class="form-control" placeholder="Search by Name and press Enter" value="<?= htmlspecialchars($search) ?>" autocomplete="off">
-                            <?php if (!empty($search)): ?>
-                                <button id="clear-filter" class="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-4" style="z-index:2; margin-right: -20px;">
-                                    &times;
-                                </button>
-                            <?php endif; ?>
+                            <input type="text" id="search-input" class="form-control pe-5" 
+                                placeholder="Search across all columns..." autocomplete="off">
+                            
+                            <button id="clear-filter" 
+                                    class="btn position-absolute end-0 top-50 translate-middle-y" 
+                                    style="display: none; background: none; border: none; margin-right: 10px;">
+                                <i class="fas fa-times text-danger"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -565,7 +571,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                 <th>Amount</th>
                                 <th>Location</th>
                                 <th>Age</th>
-                                <th>End date </th>
+                                <th>End date</th>
                                 <th>Cause heading</th>
                                 <th>Created date</th>
                                 <th>Created by</th>
@@ -575,11 +581,11 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="causeslist">
-                            <?php if (!empty($fundraisers)): $i = $sno + 1; ?>
+                        <tbody id="causes-tbody">
+                            <?php if (!empty($fundraisers)): ?>
                                 <?php foreach ($fundraisers as $index => $donation): ?>
                                     <tr>
-                                        <td><?= $i; ?></td>
+                                        <td><?= $index + 1; ?></td>
                                         <td><?= htmlspecialchars($donation->name); ?></td>
                                         <td><?= htmlspecialchars($donation->email); ?></td>
                                         <td><?= htmlspecialchars($donation->phone); ?></td>
@@ -592,8 +598,8 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                                 <?= htmlspecialchars($donation->cause_heading); ?>
                                             </button>
                                         </td>
-                                        <td><?= htmlspecialchars($donation->created_at); ?></td>
-                                        <td><?= htmlspecialchars($donation->created_by); ?></td>
+                                        <td><?= date('d-m-Y', strtotime($donation->created_at)); ?></td>
+                                        <td><?= htmlspecialchars($donation->username); ?></td>
                                         <td><?= htmlspecialchars($donation->raised_amount); ?></td>
                                         <td><?= $donation->verified == 1 ? 'Yes' : 'No'; ?></td>
                                         <td>
@@ -605,7 +611,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                         </td>
                                         <td class="d-flex">
                                             <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">Edit</button> &nbsp;&nbsp;
-                                            <button onclick="setUrl('<?= $donation->email?>','<?= $donation->user_id;?>','<?= $donation->created_by;?>',<?= $donation->Verifyemailcount;?>,<?= $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">Status</button> &nbsp;&nbsp; 
+                                            <button onclick="setUrl('<?= $donation->email?>','<?= $donation->user_id;?>','<?= $donation->username;?>',<?= $donation->Verifyemailcount;?>,<?= $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">Status</button> &nbsp;&nbsp; 
                                             <button onclick="deleteCause(<?= $donation->id; ?>)" class="btn btn-danger fw-bold">Delete</button> &nbsp;&nbsp;
                                             <?php if ($this->session->userdata('adminName')): ?>
                                                 <?php if ($donation->priority == 0): ?>
@@ -618,73 +624,240 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                             <?php endif; ?>
                                         </td>
                                     </tr>
-                                <?php ++$i; endforeach; ?>
+                                <?php endforeach; ?>
                             <?php else: ?>
-                                <tr>
-                                    <td colspan="16" style="text-align: center;">No records found.</td>
+                                <tr id="no-results">
+                                    <td colspan="15" style="text-align: center;">No records found.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
                     </table>
-                </div> <!-- close scrollable div here -->
-
-                <!-- Pagination OUTSIDE scrollable area -->
-                <?php
-                    $total_pages = ceil($counts / $per_page);
-                    $current = $current_page;
-                    $base_url = "?search=" . urlencode($search) . "&page=";
-                    $visible_pages = 5;
-                    $start = max(2, $current - 2);
-                    $end = min($total_pages - 1, $current + 2);
-                ?>
-
-                <?php if ($total_pages > 1): ?>
-                <div class="px-4 mt-3">
-                    <nav>
-                        <ul class="pagination justify-content-center">
-                            <!-- Prev -->
-                            <li class="page-item <?= ($current <= 1) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="<?= ($current > 1) ? $base_url . ($current - 1) : '#' ?>"><i class='fa-solid fa-arrow-left-long'></i></a>
-                            </li>
-
-                            <!-- First -->
-                            <li class="page-item <?= ($current == 1) ? 'active' : '' ?>">
-                                <a class="page-link" href="<?= $base_url ?>1">1</a>
-                            </li>
-
-                            <!-- Ellipsis Before -->
-                            <?php if ($start > 2): ?>
-                                <li class="page-item disabled"><span class="page-link">...</span></li>
-                            <?php endif; ?>
-
-                            <!-- Middle -->
-                            <?php for ($i = $start; $i <= $end; $i++): ?>
-                                <li class="page-item <?= ($current == $i) ? 'active' : '' ?>">
-                                    <a class="page-link" href="<?= $base_url . $i ?>"><?= $i ?></a>
-                                </li>
-                            <?php endfor; ?>
-
-                            <!-- Ellipsis After -->
-                            <?php if ($end < $total_pages - 1): ?>
-                                <li class="page-item disabled"><span class="page-link">...</span></li>
-                            <?php endif; ?>
-
-                            <!-- Last -->
-                            <?php if ($total_pages > 1): ?>
-                                <li class="page-item <?= ($current == $total_pages) ? 'active' : '' ?>">
-                                    <a class="page-link" href="<?= $base_url . $total_pages ?>"><?= $total_pages ?></a>
-                                </li>
-                            <?php endif; ?>
-
-                            <!-- Next -->
-                            <li class="page-item <?= ($current >= $total_pages) ? 'disabled' : '' ?>">
-                                <a class="page-link" href="<?= ($current < $total_pages) ? $base_url . ($current + 1) : '#' ?>"><i class='fa-solid fa-arrow-right-long'></i></a>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
-                <?php endif; ?>
+
+                <!-- Pagination -->
+                <nav aria-label="Pagination" class="mt-3 px-4" id="pagination-nav" style="display: none;">
+                    <ul class="pagination justify-content-center" id="pagination-ul">
+                        <!-- Pagination links will be dynamically generated here -->
+                    </ul>
+                </nav>
             </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const tbody = document.getElementById('causes-tbody');
+                    const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.id.includes('no-results'));
+                    const searchInput = document.getElementById('search-input');
+                    const clearSearch = document.getElementById('clear-filter');
+                    const paginationNav = document.getElementById('pagination-nav');
+                    const paginationUl = document.getElementById('pagination-ul');
+                    const recordsPerPage = 5;
+                    let currentPage = 1;
+                    let filteredRows = rows;
+
+                    console.log('Total rows found:', rows.length);
+
+                    // Function to display rows for the current page
+                    function displayPage(page) {
+                        const start = (page - 1) * recordsPerPage;
+                        const end = start + recordsPerPage;
+                        
+                        console.log(`Displaying page ${page}, rows ${start} to ${end}`);
+                        
+                        // Hide all rows first
+                        rows.forEach(row => row.style.display = 'none');
+                        
+                        // Show only rows for current page
+                        const pageRows = filteredRows.slice(start, end);
+                        pageRows.forEach(row => {
+                            row.style.display = '';
+                        });
+
+                        // Update serial numbers for current page
+                        pageRows.forEach((row, index) => {
+                            row.cells[0].textContent = start + index + 1;
+                        });
+
+                        // Show/hide no results message
+                        const noResultsRow = document.getElementById('no-results');
+                        if (noResultsRow) {
+                            noResultsRow.style.display = filteredRows.length === 0 ? '' : 'none';
+                        }
+                    }
+
+                    // Function to generate pagination links
+                    function generatePagination() {
+                        paginationUl.innerHTML = '';
+                        const totalPages = Math.ceil(filteredRows.length / recordsPerPage);
+
+                        console.log('Generating pagination for', totalPages, 'pages');
+
+                        if (totalPages <= 1) {
+                            paginationNav.style.display = 'none';
+                            return;
+                        }
+
+                        paginationNav.style.display = 'block';
+
+                        // Previous button
+                        const prevLi = document.createElement('li');
+                        prevLi.classList.add('page-item');
+                        if (currentPage === 1) prevLi.classList.add('disabled');
+                        prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><i class='fa-solid fa-arrow-left-long'></i></a>`;
+                        prevLi.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            if (currentPage > 1) {
+                                currentPage--;
+                                displayPage(currentPage);
+                                generatePagination();
+                            }
+                        });
+                        paginationUl.appendChild(prevLi);
+
+                        // Page numbers
+                        const maxVisiblePages = 5;
+                        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+                        if (endPage - startPage + 1 < maxVisiblePages) {
+                            startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                        }
+
+                        // First page and ellipsis
+                        if (startPage > 1) {
+                            const firstLi = document.createElement('li');
+                            firstLi.classList.add('page-item');
+                            firstLi.innerHTML = `<a class="page-link" href="#">1</a>`;
+                            firstLi.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                currentPage = 1;
+                                displayPage(currentPage);
+                                generatePagination();
+                            });
+                            paginationUl.appendChild(firstLi);
+
+                            if (startPage > 2) {
+                                const ellipsisLi = document.createElement('li');
+                                ellipsisLi.classList.add('page-item', 'disabled');
+                                ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+                                paginationUl.appendChild(ellipsisLi);
+                            }
+                        }
+
+                        // Page numbers
+                        for (let i = startPage; i <= endPage; i++) {
+                            const li = document.createElement('li');
+                            li.classList.add('page-item');
+                            if (i === currentPage) li.classList.add('active');
+                            li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                            li.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                currentPage = i;
+                                displayPage(currentPage);
+                                generatePagination();
+                            });
+                            paginationUl.appendChild(li);
+                        }
+
+                        // Last page and ellipsis
+                        if (endPage < totalPages) {
+                            if (endPage < totalPages - 1) {
+                                const ellipsisLi = document.createElement('li');
+                                ellipsisLi.classList.add('page-item', 'disabled');
+                                ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+                                paginationUl.appendChild(ellipsisLi);
+                            }
+
+                            const lastLi = document.createElement('li');
+                            lastLi.classList.add('page-item');
+                            lastLi.innerHTML = `<a class="page-link" href="#">${totalPages}</a>`;
+                            lastLi.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                currentPage = totalPages;
+                                displayPage(currentPage);
+                                generatePagination();
+                            });
+                            paginationUl.appendChild(lastLi);
+                        }
+
+                        // Next button
+                        const nextLi = document.createElement('li');
+                        nextLi.classList.add('page-item');
+                        if (currentPage === totalPages) nextLi.classList.add('disabled');
+                        nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><i class='fa-solid fa-arrow-right-long'></i></a>`;
+                        nextLi.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            if (currentPage < totalPages) {
+                                currentPage++;
+                                displayPage(currentPage);
+                                generatePagination();
+                            }
+                        });
+                        paginationUl.appendChild(nextLi);
+                    }
+
+                    // Function to filter rows based on search
+                    function filterRows() {
+                        const searchTerm = searchInput.value.toLowerCase().trim();
+                        
+                        console.log('Filtering with search term:', searchTerm);
+
+                        if (searchTerm === '') {
+                            filteredRows = rows;
+                        } else {
+                            filteredRows = rows.filter(row => {
+                                // Search through all table cells in the row
+                                for (let i = 0; i < row.children.length; i++) {
+                                    const cellText = row.children[i]?.textContent.toLowerCase() || '';
+                                    if (cellText.includes(searchTerm)) {
+                                        return true;
+                                    }
+                                }
+                                return false;
+                            });
+                        }
+
+                        console.log('Filtered rows:', filteredRows.length);
+
+                        // Show/hide clear button
+                        clearSearch.style.display = searchInput.value ? 'block' : 'none';
+
+                        currentPage = 1;
+                        displayPage(currentPage);
+                        generatePagination();
+                    }
+
+                    // Clear search input
+                    clearSearch.addEventListener('click', function() {
+                        searchInput.value = '';
+                        clearSearch.style.display = 'none';
+                        filterRows();
+                        searchInput.focus();
+                    });
+
+                    // Search event listener
+                    searchInput.addEventListener('input', function() {
+                        clearTimeout(this.searchTimeout);
+                        this.searchTimeout = setTimeout(filterRows, 300);
+                    });
+
+                    // Enter key to search
+                    searchInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            filterRows();
+                        }
+                    });
+
+                    // Initial setup
+                    if (rows.length > 0) {
+                        console.log('Initial setup with', rows.length, 'rows');
+                        displayPage(currentPage);
+                        generatePagination();
+                    } else {
+                        console.log('No rows found for initial setup');
+                        paginationNav.style.display = 'none';
+                    }
+                });
+            </script>
 
             <!----------------table-end------->
 
@@ -1161,7 +1334,7 @@ let status = "";
     }
 
     function setUrl(email,id,username,verifycount,rejectcount){
-    console.log(id,verifycount,rejectcount);
+        console.log(id,verifycount,rejectcount);
         document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${email}</span>`;
         document.getElementById("causestatus").innerHTML = "";
         let adminname = "<?php echo $this->session->userdata("adminName");?>";

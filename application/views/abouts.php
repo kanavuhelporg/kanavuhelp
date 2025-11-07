@@ -5,9 +5,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
-  <!-- <link href="<?php echo base_url(); ?>assets/img/LOGO_KSV.png"  rel="icon" /> -->
-    <link href="<?php echo base_url(); ?>assets/img/Kanavu_help2.png"  rel="icon" />
-    <img src="<?= base_url('assets/img/Kanavu_help2.png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+
+      <!--G4 (google analytics) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0Q147F1Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JF0Q147F1Y');
+</script>
+  <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
+  <img src="<?= base_url('assets/img/Kanavu_help2.png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
    
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,7 +26,7 @@
     body {
       font-family: 'Sen', sans-serif;
     }
-/* carousel */
+    /* carousel */
     .carousel-item {
       height: 100vh;
     }
@@ -27,7 +36,7 @@
       height: 100%;
       width: 100%;
     }
-/* Login_button */
+    /* Login_button */
     .login-button {
       background-color: #E01A2B;
       color: white;
@@ -37,7 +46,7 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-/* start a kanavu button */
+    /* start a kanavu button */
     .startkanavu-button {
       border: 1px solid #E01A2B;
       color: #E01A2B;
@@ -47,11 +56,16 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-/* nav bar menu size */
+    /* nav bar menu size */
     .offcanvas-body {
       font-size: 17px;
     }
-/* carousel text */
+    /* Active page highlight */
+    .nav-link.active {
+      color: #E01A2B !important;
+      font-weight: bold;
+    }
+    /* carousel text */
     .imgtext1,
     .imgtext2 {
       position: absolute;
@@ -369,8 +383,8 @@
 }
 
     </style>
-    </head>
-<body >
+</head>
+<body>
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
@@ -389,53 +403,55 @@
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-        <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">How it Works</a>
-                    </li>
-                    <!-- <li class="nav-item"><a id="myhelpspage" class="nav-link" href="<?= base_url('/myhelps') ?>">My helps</a></li> -->
-                    <li class="nav-item"><a id="aboutuspage" class="nav-link text-danger fw-bold href="<?= base_url('/abouts') ?>">About us</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
-                    </li>
-                  
-                    
-                    <!-- <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blogs</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-                    <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>"><?php if ($this->session->userdata('Kanavu_userId')) {echo "View Dashboard";}else {
-                echo "Sign In";
-              } ?></a>
-            </li>
-                </ul>
-                <div class="d-flex align-items-center ms-auto">
-  <?php if ($this->session->userdata('Kanavu_userId')): ?>
-    <div class="d-flex align-items-center">
-      <div class="dropdown" id="userProfile">
-        <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
-            style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="ms-2"><?= $this->session->userdata('Kanavu_userName') ?></span>
-        </div>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-          <li>
-            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
-              <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  <?php endif; ?>
-</div>
-        </div>
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="aboutuspage" class="nav-link mx-lg-2 active" href="<?= base_url('/abouts') ?>">About us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+                        </li>
+                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
+                            <li class="nav-item">
+                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                    <div class="d-flex align-items-center ms-auto">
+                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown" id="userProfile">
+                                    <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
+                                        <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
+                                    </div>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+                                                <i class="fas fa-sign-out-alt"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
       </div>
     </div>
   </nav>
@@ -471,42 +487,80 @@
 </div>
 
 
-<div class="footer">
-<footer class="footer mt-auto py-3">
-  <div class="container">
-    <h5 style="text-align:center">kanavu.help</h5>
-    <!-- <span class="text-muted">Your footer content goes here.</span> -->
-    <div class="footer1">
-      <!-- <a class="footer-lable lable" href="<?= base_url('/abouts') ?>">About</a> -->
-      <a class="footer-lable lable" href="<?= base_url('/contactus') ?>">Contact</a>
-      <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>">Terms of Use</a>
-      <a class="footer-lable" href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>
+<footer class="footer bg-danger text-white py-4 mt-auto">
+    <div class="container text-center">
+        <h5>kanavu.help</h5>
+
+        <div class="footer-links my-3">
+            <a class="footer-lable border-end pe-3 me-3 text-white text-decoration-none" href="<?= base_url('/contactus') ?>">Contact</a>
+            <a class="footer-lable border-end pe-3 me-3 text-white text-decoration-none" 
+              href="<?= base_url('/terms_of_use') ?>" 
+              target="_blank" 
+              rel="noopener noreferrer">
+              Terms of Use
+            </a>
+            <a class="footer-lable text-white text-decoration-none" 
+              href="<?= base_url('/privacy_policy') ?>" 
+              target="_blank" 
+              rel="noopener noreferrer">
+              Privacy Policy
+            </a>
+        </div>
+
+        <div class="social-icons d-flex justify-content-center mb-3">
+            <a href="https://www.facebook.com/profile.php?id=61574165466676" target="_blank" class="mx-2 text-white">
+                <i class="fab fa-facebook-f me-3" style="font-size:24px"></i>
+            </a>
+            <a href="https://www.instagram.com/kanavu.help/" target="_blank" class="mx-2 text-white">
+                <i class='fab fa-instagram me-3' style='font-size:24px'></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UCA3Za4BS9L1CwPkuhqm260w" target="_blank" class="mx-2 text-white">
+                <i class='fab fa-youtube me-3' style='font-size:24px'></i>
+            </a>
+        </div>
+        
+        <div class="text-center my-3">
+            <img src="<?= base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="Secure Payment" class="img-fluid" style="max-width:300px;">
+        </div>
+
+        <p class="text-center" style="font-size:15px;">
+  Copyright <?= date('Y'); ?> @ kanavu.help. All Rights Reserved.
+</p>
     </div>
-  </div>
-
-  <div class="social-icons d-flex justify-content-center text-center">
-    <a href="https://www.facebook.com/" target="_blank">
-      <img src="<?php echo base_url('/assets/img/facebook-f.svg'); ?>" alt="Facebook Logo">
-    </a>
-    <a href="https://twitter.com/" target="_blank">
-      <img src="<?php echo base_url('/assets/img/twitter.svg'); ?>" alt="Twitter Logo">
-    </a>
-    <!-- LinkedIn -->
-    <a href="https://www.linkedin.com/" target="_blank">
-      <img src="<?php echo base_url('/assets/img/linkedin-in.svg'); ?>" alt="LinkedIn Logo">
-    </a>
-  </div>
-  <div class="text-center my-3">
-    <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="img-fluid mx-auto d-block" style="width: 200px; display: block;">
-  </div>
-
-  <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
 </footer>
-</div>
 
 
 <!-- Bootstrap JS and dependencies (Popper.js) -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-            </body>
-            </html>
+<script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+    
+    // Highlight current page in navigation
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get current page URL
+        const currentUrl = window.location.href;
+        
+        // Get all navigation links
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // Loop through each link
+        navLinks.forEach(link => {
+            // Check if the link's href matches the current URL
+            if (link.href === currentUrl) {
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+                // Add active class to current link
+                link.classList.add('active');
+            }
+        });
+        
+        // Special handling for about page which might have different URL patterns
+        if (currentUrl.includes('/abouts')) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            document.getElementById('aboutuspage').classList.add('active');
+        }
+    });
+</script>
+</body>
+</html>

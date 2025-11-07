@@ -195,11 +195,12 @@
             background-color: rgb(248, 245, 245);
         }
 
-        /* Pagination style */
+        /* Pagination style  */
         .pagination {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 5px;
+            flex-wrap: wrap;
         }
 
         .pagination .page-item .page-link {
@@ -213,6 +214,9 @@
             background-color: #f0f0f0;
             color: #000;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .pagination .page-item.active .page-link {
@@ -226,19 +230,31 @@
             cursor: not-allowed;
         }
 
-        /* table content overflow style */
+        /* Table style */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .table {
+            min-width: 1200px;
+            width: 100%;
+        }
+
         .table td {
-            /* max-width: auto; */
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             vertical-align: middle;
+            max-width: 200px; /* Limit column width */
         }
 
         .table th {
             background-color: #f8f5f5;
             color: #000;
             font-weight: 500;
+            white-space: nowrap;
         }
 
         #menu-bar ul {
@@ -256,9 +272,13 @@
             color: #fff !important;
         }
 
-        /* #menu-bar .nav-link:hover {
-            background-color: rgba(120, 50, 186, 0.1);
-        } */
+        /* Main content centering */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
 
         /* Mobile styles */
         .ham-menu {
@@ -282,15 +302,16 @@
             color: white !important;
         }
 
-        @media screen and (max-width: 768px) {
+        /* FIXED: Tablet screen sidebar issue - Updated breakpoints */
+        @media screen and (max-width: 991px) {
+            #menu-bar {
+                display: none;
+            }
+            
             #search-bar {
                 display: none;
             }
-
-            #menu-bar  {
-                display: none;
-            }
-
+            
             #name_notification {
                 display: none;
             }
@@ -308,13 +329,37 @@
                 padding: 8%;
             }
 
-            .table-responsive {
+            /* Improved mobile table styles */
+            .table-container {
+                width: 100%;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
+                border: 1px solid #dee2e6;
+                border-radius: 0.375rem;
+            }
+            
+            .table {
+                margin-bottom: 0;
+            }
+            
+            .main-content {
+                padding: 10px;
+            }
+            
+            /* Improved pagination for mobile */
+            .pagination {
+                gap: 3px;
+            }
+            
+            .pagination .page-item .page-link {
+                width: 35px;
+                height: 35px;
+                line-height: 35px;
+                font-size: 14px;
             }
         }
 
-        @media screen and (min-width: 769px) {
+        @media screen and (min-width: 992px) {
             .ham-menu {
                 display: none;
             }
@@ -330,6 +375,45 @@
             right: 20px;
             z-index: 1100;
             max-width: 350px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: nowrap;   
+            justify-content: center;
+            align-items: center;
+        }
+
+        
+        .action-buttons .btn {
+            font-size: bold;
+            padding: 10px;                              
+        }
+        
+        /* Mobile-specific table improvements */
+        @media screen and (max-width: 768px) {
+            .table th, .table td {
+                padding: 8px 5px;
+                font-size: 12px;
+            }
+            
+            .action-buttons .btn {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+            
+            .main-content {
+                padding: 5px;
+            }
+        }
+        .truncate {
+            white-space: nowrap;         
+            overflow: hidden;            
+            text-overflow: ellipsis;     
+            max-width: 200px;            
+            display: inline-block;      
+            vertical-align: middle;      
         }
     </style>
 </head>
@@ -384,7 +468,7 @@
         <!---------------------email-error-toast-end--------------------->
 
         <div class="row"><!-----top-bar--------------->
-            <div class="col-md-2 col-12 border-bottom ps-gray py-3">
+            <div class="col-lg-2 col-12 border-bottom ps-gray py-3">
                 <div class="ps-logo">
                     <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" class="ham-menu ms-4 border-0 bg-transparent">
                         <div class="ham-line"></div>
@@ -398,12 +482,12 @@
                 </div>
             </div>
             
-            <div id="search-bar" class="col-md-10 col-12 d-flex align-items-center justify-content-between border-bottom">
-                <div class="col-md-7 ms-4 d-flex align-items-baseline justify-content-between">
+            <div id="search-bar" class="col-lg-10 col-12 d-flex align-items-center justify-content-between border-bottom">
+                <div class="col-lg-7 ms-4 d-flex align-items-baseline justify-content-between">
                     <!-- Search bar can be added here if needed -->
                 </div>
 
-                <div class="col-md-3 d-none d-md-flex align-items-baseline justify-content-evenly">
+                <div class="col-lg-3 d-none d-lg-flex align-items-baseline justify-content-evenly">
                     <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
                         <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
                         <span style="font-weight:500;">
@@ -442,7 +526,7 @@
 
         <div class="row" style="min-height: calc(100vh - 72px);"><!----------main-navbar----------->
             <!----------side-bar-------------------->
-            <div id="menu-bar" class="col-md-2 ps-gray d-none d-md-block">
+            <div id="menu-bar" class="col-lg-2 ps-gray d-none d-lg-block">
                 <ul class="d-grid list-unstyled">
                     <li class="nav-item py-3 fs-6">
                         <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
@@ -544,29 +628,26 @@
             </div>
 
             <!-----------main-dashboard------------------------->
-            <div class="col-md-10 col-12">
-                <div class="container-fluid px-3 px-md-4 pt-3">
+            <div class="col-lg-10 col-12 main-content">
+                <div class="container-fluid px-3 px-md-4 pt-3 w-100">
                     <!-- Search box -->
                     <div class="row mb-3">
                         <div class="col-md-4 position-relative">
                             <input type="text" 
-                                  id="search-input" 
-                                  class="form-control pe-5" 
-                                  placeholder="Search by name and Press Enter" 
-                                  value="<?= htmlspecialchars($search) ?>">
-
-                            <?php if (!empty($search)): ?>
-                                <span id="clear-filter" 
-                                      class="position-absolute top-50 end-0 translate-middle-y me-4" 
-                                      style="cursor:pointer; font-size:18px; color:#888;">
-                                    &times;
-                                </span>
-                            <?php endif; ?>
+                                id="search-input" 
+                                class="form-control pe-5" 
+                                placeholder="Search transactions...">
+                            
+                            <button id="clear-filter" 
+                                    class="btn position-absolute end-0 start-2 top-50 translate-middle-y" 
+                                    style="display: none; background: none; border: none; margin-right: 10px;">
+                                <i class="fas fa-times text-danger"></i>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Table -->
-                    <div class="table-responsive">
+                    <!-- Updated table container -->
+                    <div class="table-container">
                         <table class="table table-bordered table-hover w-100">
                             <thead>
                                 <tr class="ps-gray">
@@ -586,11 +667,11 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php if (!empty($donations)): $i = $sno + 1; ?>
-                                    <?php foreach ($donations as $donation): ?>
+                            <tbody id="donations-tbody">
+                                <?php if (!empty($donations)): ?>
+                                    <?php foreach ($donations as $index => $donation): ?>
                                         <tr>
-                                            <td><?= $i; ?></td>
+                                            <td><?= $index + 1; ?></td>
                                             <td><?= htmlspecialchars($donation->category); ?></td>
                                             <td><?= htmlspecialchars($donation->cause_heading); ?></td>
                                             <td><?= htmlspecialchars($donation->name); ?></td>
@@ -603,65 +684,33 @@
                                             <td><?= htmlspecialchars($donation->fundraiser_email); ?></td>
                                             <td><?= htmlspecialchars($donation->fundraiser_phone); ?></td>
                                             <td><?= $donation->status == 1 ? 'Yes' : 'No'; ?></td>
-                                            <td class="d-flex gap-2" style="white-space:nowrap;">
-                                                <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" 
-                                                        class="btn btn-primary btn-sm fw-bold " 
-                                                        data-toggle="modal" data-target="#editDonationModal">Edit</button>
-
-                                                <button onclick="setUrl(<?= htmlspecialchars(json_encode($donation)); ?>)" 
-                                                        class="btn btn-warning btn-sm fw-bold" 
-                                                        data-toggle="modal" data-target="#sendmail">Status</button>
-
-                                                <button onclick="deleteDonation(<?= $donation->donation_id; ?>)" 
-                                                        class="btn btn-danger btn-sm fw-bold">Delete</button>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" 
+                                                            class="btn btn-primary btn-sm fw-bold" 
+                                                            data-toggle="modal" data-target="#editDonationModal">Edit</button>
+                                                    <button onclick="setUrl(<?= htmlspecialchars(json_encode($donation)); ?>)" 
+                                                            class="btn btn-warning btn-sm fw-bold" 
+                                                            data-toggle="modal" data-target="#sendmail">Status</button>
+                                                    <button onclick="deleteDonation(<?= $donation->donation_id; ?>)" 
+                                                            class="btn btn-danger btn-sm fw-bold">Delete</button>
+                                                </div>
                                             </td>
                                         </tr>
-                                    <?php $i++; endforeach; ?>
+                                    <?php endforeach; ?>
                                 <?php else: ?>
-                                    <tr><td colspan="14" class="text-center">No records found.</td></tr>
+                                    <tr id="no-results"><td colspan="14" class="text-center">No records found.</td></tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Pagination -->
-                    <?php
-                        $total_pages = ceil($counts / $per_page);
-                        if ($total_pages > 1):
-                    ?>
-                    <div class="mt-3">
-                        <nav>
-                            <ul class="pagination">
-                                <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $page-1 ?>&search=<?= urlencode($search) ?>"><i class='fa-solid fa-arrow-left-long'></i></a>
-                                </li>
-
-                                <?php
-                                $start = max(1, $page - 2);
-                                $end   = min($total_pages, $page + 2);
-
-                                if ($start > 1) {
-                                    echo '<li class="page-item"><a class="page-link" href="?page=1&search='.urlencode($search).'">1</a></li>';
-                                    if ($start > 2) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
-                                }
-
-                                for ($i = $start; $i <= $end; $i++) {
-                                    echo '<li class="page-item '.($i == $page ? 'active' : '').'"><a class="page-link" href="?page='.$i.'&search='.urlencode($search).'">'.$i.'</a></li>';
-                                }
-
-                                if ($end < $total_pages) {
-                                    if ($end < $total_pages - 1) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
-                                    echo '<li class="page-item"><a class="page-link" href="?page='.$total_pages.'&search='.urlencode($search).'">'.$total_pages.'</a></li>';
-                                }
-                                ?>
-
-                                <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $page+1 ?>&search=<?= urlencode($search) ?>"><i class='fa-solid fa-arrow-right-long'></i></a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <?php endif; ?>
+                    <nav aria-label="Pagination" class="mt-3" id="pagination-nav" style="display: none;">
+                        <ul class="pagination" id="pagination-ul">
+                            <!-- Pagination links will be dynamically generated here -->
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -946,6 +995,223 @@
                     link.classList.add("active");
                 }
             });
+        });
+
+        // Pagination and search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tbody = document.getElementById('donations-tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.id.includes('no-results'));
+            const searchInput = document.getElementById('search-input');
+            const clearSearch = document.getElementById('clear-filter');
+            const paginationNav = document.getElementById('pagination-nav');
+            const paginationUl = document.getElementById('pagination-ul');
+            const recordsPerPage = 5;
+            let currentPage = 1;
+            let filteredRows = rows;
+
+            console.log('Total rows found:', rows.length);
+
+            // Function to display rows for the current page
+            function displayPage(page) {
+                const start = (page - 1) * recordsPerPage;
+                const end = start + recordsPerPage;
+                
+                console.log(`Displaying page ${page}, rows ${start} to ${end}`);
+                
+                // Hide all rows first
+                rows.forEach(row => row.style.display = 'none');
+                
+                // Show only rows for current page
+                const pageRows = filteredRows.slice(start, end);
+                pageRows.forEach(row => {
+                    row.style.display = '';
+                });
+
+                // Update serial numbers for current page
+                pageRows.forEach((row, index) => {
+                    row.cells[0].textContent = start + index + 1;
+                });
+
+                // Show/hide no results message
+                const noResultsRow = document.getElementById('no-results');
+                if (noResultsRow) {
+                    noResultsRow.style.display = filteredRows.length === 0 ? '' : 'none';
+                }
+            }
+
+            // Function to generate pagination links
+            function generatePagination() {
+                paginationUl.innerHTML = '';
+                const totalPages = Math.ceil(filteredRows.length / recordsPerPage);
+
+                console.log('Generating pagination for', totalPages, 'pages');
+
+                if (totalPages <= 1) {
+                    paginationNav.style.display = 'none';
+                    return;
+                }
+
+                paginationNav.style.display = 'block';
+
+                // Previous button - FIXED: Using proper Font Awesome classes
+                const prevLi = document.createElement('li');
+                prevLi.classList.add('page-item');
+                if (currentPage === 1) prevLi.classList.add('disabled');
+                prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><i class="fas fa-arrow-left"></i></a>`;
+                prevLi.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (currentPage > 1) {
+                        currentPage--;
+                        displayPage(currentPage);
+                        generatePagination();
+                    }
+                });
+                paginationUl.appendChild(prevLi);
+
+                // Page numbers
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+
+                // First page and ellipsis
+                if (startPage > 1) {
+                    const firstLi = document.createElement('li');
+                    firstLi.classList.add('page-item');
+                    firstLi.innerHTML = `<a class="page-link" href="#">1</a>`;
+                    firstLi.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = 1;
+                        displayPage(currentPage);
+                        generatePagination();
+                    });
+                    paginationUl.appendChild(firstLi);
+
+                    if (startPage > 2) {
+                        const ellipsisLi = document.createElement('li');
+                        ellipsisLi.classList.add('page-item', 'disabled');
+                        ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+                        paginationUl.appendChild(ellipsisLi);
+                    }
+                }
+
+                // Page numbers
+                for (let i = startPage; i <= endPage; i++) {
+                    const li = document.createElement('li');
+                    li.classList.add('page-item');
+                    if (i === currentPage) li.classList.add('active');
+                    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                    li.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = i;
+                        displayPage(currentPage);
+                        generatePagination();
+                    });
+                    paginationUl.appendChild(li);
+                }
+
+                // Last page and ellipsis
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) {
+                        const ellipsisLi = document.createElement('li');
+                        ellipsisLi.classList.add('page-item', 'disabled');
+                        ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+                        paginationUl.appendChild(ellipsisLi);
+                    }
+
+                    const lastLi = document.createElement('li');
+                    lastLi.classList.add('page-item');
+                    lastLi.innerHTML = `<a class="page-link" href="#">${totalPages}</a>`;
+                    lastLi.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = totalPages;
+                        displayPage(currentPage);
+                        generatePagination();
+                    });
+                    paginationUl.appendChild(lastLi);
+                }
+
+                // Next button - FIXED: Using proper Font Awesome classes
+                const nextLi = document.createElement('li');
+                nextLi.classList.add('page-item');
+                if (currentPage === totalPages) nextLi.classList.add('disabled');
+                nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><i class="fas fa-arrow-right"></i></a>`;
+                nextLi.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        displayPage(currentPage);
+                        generatePagination();
+                    }
+                });
+                paginationUl.appendChild(nextLi);
+            }
+
+            // Function to filter rows based on search
+            function filterRows() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                
+                console.log('Filtering with search term:', searchTerm);
+
+                if (searchTerm === '') {
+                    filteredRows = rows;
+                } else {
+                    filteredRows = rows.filter(row => {
+                        // Search through all table cells in the row
+                        for (let i = 0; i < row.children.length; i++) {
+                            const cellText = row.children[i]?.textContent.toLowerCase() || '';
+                            if (cellText.includes(searchTerm)) {
+                                return true; // Found match in this column
+                            }
+                        }
+                        return false; // No match found in any column
+                    });
+                }
+
+                console.log('Filtered rows:', filteredRows.length);
+
+                // Show/hide clear button
+                clearSearch.style.display = searchInput.value ? 'block' : 'none';
+
+                currentPage = 1;
+                displayPage(currentPage);
+                generatePagination();
+            }
+
+            // Clear search input
+            clearSearch.addEventListener('click', function() {
+                searchInput.value = '';
+                clearSearch.style.display = 'none';
+                filterRows();
+                searchInput.focus();
+            });
+
+            // Search event listener
+            searchInput.addEventListener('input', function() {
+                // Add slight delay to prevent excessive filtering
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = setTimeout(filterRows, 300);
+            });
+
+            // Enter key to search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    filterRows();
+                }
+            });
+
+            // Initial setup
+            if (rows.length > 0) {
+                console.log('Initial setup with', rows.length, 'rows');
+                displayPage(currentPage);
+                generatePagination();
+            } else {
+                console.log('No rows found for initial setup');
+                paginationNav.style.display = 'none';
+            }
         });
     </script>
 </body>

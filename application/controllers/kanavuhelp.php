@@ -911,41 +911,88 @@ foreach ($data['fundraisers'] as $fundraiser) {
     }
 
     public function contact_us()
-{
-    // Load the database
-    $this->load->database();
+    {
+        // Load the database and email library
+        $this->load->database();
+        $this->load->library('email');
 
-    // Get form data
-    $data = [
-        'name' => $this->input->post('name'),
-        'email' => $this->input->post('email'),
-        'phone' => $this->input->post('phone'),
-        'message' => $this->input->post('message')
-    ];
+        // Get form data safely
+        $data = [
+            'name'    => $this->input->post('name', true),
+            'email'   => $this->input->post('email', true),
+            'phone'   => $this->input->post('phone', true),
+            'message' => $this->input->post('message', true)
+        ];
 
-    // Insert data into the database
-    $this->db->insert('contact_us', $data);
-    $userEmail = $this->session->userdata('userEmail');
-    $to = "help.kanavu@gmail.com";
-   
-    $message = $data["message"];
+        // Insert data into the database
+        $this->db->insert('contact_us', $data);
 
-    $this->email->from('support@kanavu.help', 'Kanavu Help');
-    $this->email->to($to);
-    $this->email->subject('Kanavu Help Foundation');
-    $this->email->message($message);
+        // Basic variables
+        $userEmail = $data['email'];
+        $userName  = $data['name'];
+        $userMsg   = nl2br($data['message']); // Keep line breaks
+        $userPhone = $data['phone'];
+        $adminEmail = 'support@kanavu.help';
 
-    if($this->email->send()) {
-    // Set a success message
-        $this->session->set_flashdata('submitsuccessstatus', 'Thanks for contacting us!');
+        // --- 1️⃣ Send Confirmation Email to the User ---
+        $userSubject = 'Thanks for contacting Kanavu Help Foundation';
+        $userMessage = "
+            <html>
+            <body style='font-family: Arial, sans-serif; line-height: 1.6;'>
+                <h2 style='color:#333;'>Hello {$userName},</h2>
+                <p>Thank you for reaching out to <strong>Kanavu Help Foundation</strong>.</p>
+                <p>We have received your message and our team will get back to you soon.</p>
+                <h3>Your Message:</h3>
+                <div style='background:#f9f9f9; padding:10px; border-left:4px solid #007bff;'>
+                    {$userMsg}
+                </div>
+                <p style='margin-top:20px;'>Best Regards,<br><strong>Kanavu Help Foundation Team</strong></p>
+            </body>
+            </html>
+        ";
+
+        $this->email->from('support@kanavu.help', 'Kanavu Help Foundation');
+        $this->email->to($userEmail);
+        $this->email->subject($userSubject);
+        $this->email->message($userMessage);
+        $this->email->set_mailtype('html');
+        $userEmailSent = $this->email->send();
+
+        // --- 2️⃣ Send Notification Email to Admin ---
+        $adminSubject = 'New Contact Form Submission Received';
+        $adminMessage = "
+            <html>
+            <body style='font-family: Arial, sans-serif; line-height: 1.6;'>
+                <h2 style='color:#007bff;'>New Message from Website Contact Form</h2>
+                <p><strong>Name:</strong> {$userName}</p>
+                <p><strong>Email:</strong> {$userEmail}</p>
+                <p><strong>Phone:</strong> {$userPhone}</p>
+                <h3>Message:</h3>
+                <div style='background:#f9f9f9; padding:10px; border-left:4px solid #007bff;'>
+                    {$userMsg}
+                </div>
+                <p style='margin-top:20px; color:#666;'>This message was submitted via the Kanavu Help website contact form.</p>
+            </body>
+            </html>
+        ";
+
+        $this->email->from('support@kanavu.help', 'Kanavu Help Website');
+        $this->email->to($adminEmail);
+        $this->email->subject($adminSubject);
+        $this->email->message($adminMessage);
+        $this->email->set_mailtype('html');
+        $adminEmailSent = $this->email->send();
+
+        // --- 3️⃣ Flash Message Based on Status ---
+        if ($userEmailSent && $adminEmailSent) {
+            $this->session->set_flashdata('submitsuccessstatus', 'Thanks for contacting us! We have received your message.');
+        } else {
+            $this->session->set_flashdata('submiterrorstatus', 'An error occurred while sending your message. Please try again later.');
+        }
+
+        // --- 4️⃣ Redirect Back ---
+        redirect(base_url('/contactus'));
     }
-    else {
-        $this->session->set_flashdata('submiterrorstatus', 'Unexpected error Occur!');
-    }
-    // Redirect back to the homepage
-    redirect(base_url('/contactus'));
-}
-
 
     public function logout()
     {

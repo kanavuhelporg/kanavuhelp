@@ -872,11 +872,16 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
     <img src="<?php echo base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="no image" class="img-fluid mx-auto d-block" style="width: 200px; display: block;">
   </div>
 
-  <p class="text-center" style="font-size:15px;">copyright 2024 @ kanavu.help. All Rights Reserved.</p>
+  <p class="text-center" style="font-size:15px;">
+    Copyright <span id="currentYear"></span> @ kanavu.help. All Rights Reserved.
+  </p>
 </footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
 
