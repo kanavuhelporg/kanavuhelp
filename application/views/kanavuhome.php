@@ -31,6 +31,13 @@
     body {
       font-family: 'Sen', sans-serif;
     }
+    div[data-testid="resolution-label"],
+  .resolution-label,
+  #resolution-display,
+  .viewport-size,
+  .responsive-viewer-label {
+    display: none !important;
+  }
       /* count running */
     html {
       scroll-behavior: smooth;
@@ -91,7 +98,14 @@
     .offcanvas-body {
       font-size: 17px;
     }
-
+    .nav-link {
+      color: black !important;
+      /* font-weight: bold; */
+    }
+    .nav-link.active {
+      color: #E01A2B !important;
+      font-weight: bold;
+    }
     /* carousel text */
     .imgtext1,
     .imgtext2 {
@@ -250,7 +264,10 @@
       background-color: #FFD700;
       /* Yellow color */
     }
-
+.nav-link.active {
+      color: #E01A2B !important;
+      font-weight: bold;
+    }
     .background-overlay {
       position: absolute;
       top: 0;
@@ -1011,7 +1028,7 @@
 .carousel-indicators [data-bs-target] {
   width: 30px;
   height: 4px;
-  background-color: #A9A9A9;
+  background-color: #ff9999;
   border-radius: 2px;
   opacity: 0.5;
   transition: opacity 0.3s, background-color 0.3s;
@@ -1129,13 +1146,105 @@
         width: 100%;
         height: auto;
       }
+      #userProfile .dropdown-menu {
+    right: 0 !important; /* Align the dropdown to the right edge */
+    left: auto !important; /* Override default left alignment */
+    min-width: 150px; /* Adjust the width as needed */
+  }
+  
+  #userProfile img {
+    width: 25px; /* Slightly smaller profile image for mobile */
+    height: 25px;
+  }
+  
+  #userProfile .dropdown-item {
+    text-align: center; /* Center-align items for better UX */
+  }
     }
+
+  /* .carousel-indicators [data-bs-target] {
+  background-color: #ff9999; /* light red for non-active *
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.carousel-indicators .active {
+  background-color: #ff0000; /* bright red for active *
+}  */
   </style>
 </head>
 
 <body>
-  <nav id="header" class="navbar navbar-expand-lg bg-light py-4 fixed-top">
-    
+  <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
+                <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+            </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">
+             <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a id="kanavuhomepage" class="nav-link mx-lg-2 active" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+                        </li>
+                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
+                            <li class="nav-item">
+                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                    <div class="d-flex align-items-center ms-auto">
+                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown" id="userProfile">
+                                    <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
+                                        <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
+                                    </div>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+                                                <i class="fas fa-sign-out-alt"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+      </div>
+    </div>
   </nav>
 <br>
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
@@ -1167,8 +1276,8 @@
             </ul>
           </div>
         </div>
-      </div>
-<br>
+    </div>
+    <br>
       <!-- Slide 2 -->
       <div class="carousel-item">
         <img src="<?= base_url('assets/img/old2.png') ?>" class="d-block w-100" alt="Image 2">
@@ -1192,7 +1301,7 @@
           </div>
         </div>
       </div>
-    </div>
+  </div>
   </div>
 
    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="prev">
@@ -2395,21 +2504,46 @@ function openDonationModal() {
   // Simulate user login status (from backend or session)
   var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
 
-  $.ajax({
-      type:"get",
-      url:"kanavuhelp/getHeader",
-      success:(result)=>{
-           document.getElementById("header").innerHTML = result;
-           let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
-           console.log(entry);
-           if(entry > 0){
-           document.getElementById("kanavuhomepage").classList.add("text-danger","fw-bold");
-           }
-      },
-      error:(error)=>{
-           document.getElementById("header").innerHTML = "";
-      }
-    }); 
+  // $.ajax({
+  //     type:"get",
+  //     url:"kanavuhelp/getHeader",
+  //     success:(result)=>{
+  //          document.getElementById("header").innerHTML = result;
+  //          let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
+  //          console.log(entry);
+  //          if(entry > 0){
+  //          document.getElementById("kanavuhomepage").classList.add("text-danger","fw-bold");
+  //          }
+  //     },
+  //     error:(error)=>{
+  //          document.getElementById("header").innerHTML = "";
+  //     }
+  //   }); 
+
+  document.addEventListener('DOMContentLoaded', function() {
+        // Get current page URL
+        const currentUrl = window.location.href;
+        
+        // Get all navigation links
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // Loop through each link
+        navLinks.forEach(link => {
+            // Check if the link's href matches the current URL
+            if (link.href === currentUrl) {
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+                // Add active class to current link
+                link.classList.add('active');
+            }
+        });
+        
+        // Special handling for about page which might have different URL patterns
+        if (currentUrl.includes('/kanavuhome#how-it-works-section')) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            document.getElementById('kanavuhomepage').classList.add('active');
+        }
+    });
 
     $.ajax({
       type:"get",

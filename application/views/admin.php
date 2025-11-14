@@ -56,8 +56,10 @@
 
         .right-image {
             width: 100%;
-            height: 100vh;
+            height: 100%;
             object-fit: cover;
+            border-radius: 10px;
+            /* margin-right: 20px; */
         }
 
         .social-icons img {
@@ -148,7 +150,7 @@
                     
                     <div class="login-form">
                         <h2 class="text-center text-md-start">Sign in</h2>
-                        <p class="text-center text-md-start">Don't have an Account? 
+                        <p class="text-center text-md-start">Don't have an Account?
                             <a href="<?= base_url('kanavuhelp/register') ?>">
                                 <span style="color:red; text-decoration:underline;margin-left:10px;">Create Now</span>
                             </a>

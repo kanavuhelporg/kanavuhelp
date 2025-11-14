@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
+  <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
@@ -24,7 +25,7 @@
     }
 
     .ps-letter {
-      background-color: rgb(120, 50, 186);
+      background-color: red;
     }
 
     .ps-user {
@@ -165,7 +166,7 @@
           </button>
           <div class="d-flex align-items-center">
             <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
-            <span class="heading-ponsoft fs-5 position-relative" style="top:1px;">KANAVUHELP</span>
+            <span class="heading-ponsoft fs-5 position-relative " style="top:1px; color:red;">KANAVUHELP</span>
           </div>
         </div>
       </div>
@@ -396,31 +397,16 @@
     // setup 
     const data = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [{
-          label: 'outcome',
+      datasets: [
+        {
+          label: 'Outcome',
           data: [10000, 20000, 30000, 40000, 50000, 60000, 70000, 10000, 20000, 80000, 30000, 12000],
-          backgroundColor: [
-            'pink',
-            'pink',
-            'pink',
-            'pink',
-            'pink',
-            'pink',
-            'pink'
-          ]
+          backgroundColor: Array(12).fill('pink')
         },
         {
           label: 'Income',
           data: [20000, 35000, 40000, 50000, 20000, 10000, 25000, 22000, 24000, 30000, 40000, 42000],
-          backgroundColor: [
-            'orangered',
-            'orangered',
-            'orangered',
-            'orangered',
-            'orangered',
-            'orangered',
-            'orangered'
-          ]
+          backgroundColor: Array(12).fill('orangered')
         }
       ]
     };
@@ -443,6 +429,11 @@
           y: {
             beginAtZero: true
           }
+        },
+        // 👇 Add cursor pointer effect
+        onHover: (event, elements) => {
+          const target = event.native ? event.native.target : event.chart.canvas;
+          target.style.cursor = elements.length ? 'pointer' : 'default';
         }
       }
     };
@@ -469,6 +460,7 @@
       });
     });
   </script>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

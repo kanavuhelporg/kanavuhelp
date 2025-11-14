@@ -61,6 +61,10 @@
       font-size: 17px;
     }
     /* Active page highlight */
+    .nav-link {
+      color: black !important;
+      /* font-weight: bold; */
+    }
     .nav-link.active {
       color: #E01A2B !important;
       font-weight: bold;

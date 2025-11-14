@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cause verification</title>
+    <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- jQuery library -->
@@ -43,7 +44,7 @@
         }
 
         .ps-letter {
-            background-color: rgb(120, 50, 186);
+            background-color: red;
         }
 
         .ps-user {
@@ -298,6 +299,15 @@
             background-color: rgba(120, 50, 186, 0.1);
         } */
 
+        .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+        display: inline-block;
+        vertical-align: middle;
+        }
+
     </style>
 </head>
 
@@ -367,7 +377,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     </button>
                     <div class="d-flex align-items-center">
                         <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
-                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px;">KANAVUHELP</span>
+                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px; color:red;">KANAVUHELP</span>
                     </div>
                 </div>
             </div>
@@ -593,8 +603,15 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                         <td><?= htmlspecialchars($donation->location); ?></td>
                                         <td><?= htmlspecialchars($donation->age); ?></td>
                                         <td><?= htmlspecialchars($donation->end_date); ?></td>
-                                        <td style="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                                            <button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')">
+                                        <td>
+                                            <button data-bs-toggle="modal"
+                                                    data-bs-target="#viewdocuments"
+                                                    style="outline:none;border:none;"
+                                                    class="bg-transparent text-decoration-underline truncate"
+                                                    onclick="viewDocuments('<?= $donation->cover_image ?>')"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="<?= htmlspecialchars($donation->cause_heading); ?>">
                                                 <?= htmlspecialchars($donation->cause_heading); ?>
                                             </button>
                                         </td>
@@ -641,7 +658,16 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     </ul>
                 </nav>
             </div>
+            <script>
+                // ✅ Initialize Bootstrap tooltips globally
+                document.addEventListener("DOMContentLoaded", function() {
+                const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+                });
 
+            </script>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const tbody = document.getElementById('causes-tbody');

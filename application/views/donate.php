@@ -65,7 +65,14 @@
     .offcanvas-body {
       font-size: 17px;
     }
-
+    .nav-link {
+      color: black !important;
+      /* font-weight: bold; */
+    }
+    .nav-link.active {
+      color: #E01A2B !important;
+      font-weight: bold;
+    }
     /* carousel text */
     .imgtext1,
     .imgtext2 {
@@ -560,6 +567,21 @@
       .supporters-section .truncate-text {
         max-width: 50px;
       }
+
+      #userProfile .dropdown-menu {
+    right: 0 !important; /* Align the dropdown to the right edge */
+    left: auto !important; /* Override default left alignment */
+    min-width: 150px; /* Adjust the width as needed */
+  }
+  
+  #userProfile img {
+    width: 25px; /* Slightly smaller profile image for mobile */
+    height: 25px;
+  }
+  
+  #userProfile .dropdown-item {
+    text-align: center; /* Center-align items for better UX */
+  }
     }
 
     .fixed-card-img {
@@ -586,7 +608,78 @@
 </head>
 
 <body>
-  <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+  <!-- <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+  </nav> -->
+
+  <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
+                <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+            </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">
+             <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="donatepage" class="nav-link mx-lg-2 active" href="<?= base_url('/donate') ?>">Donate</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+                        </li>
+                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
+                            <li class="nav-item">
+                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                    <div class="d-flex align-items-center ms-auto">
+                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown" id="userProfile">
+                                    <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
+                                        <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
+                                    </div>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+                                                <i class="fas fa-sign-out-alt"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+      </div>
+    </div>
   </nav>
 
   <div class="donate_img mt-5 pt-4">
@@ -620,7 +713,7 @@
           if ($fundraiser->amount == 0) return 0;
           return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
         }
-
+  
         // Sort fundraisers by percentage (ascending)
         usort($fundraisers, function ($a, $b) {
           return getProgressPercentage($a) <=> getProgressPercentage($b);
@@ -639,7 +732,7 @@
 
           $progress_percentage = getProgressPercentage($fundraiser);
           ?>
-          <div class="col-12 col-lg-4 col-md-6 mb-0 d-flex card-container"
+          <div class="col-12 col-sm-6 col-md-4 mb-0 d-flex card-container"
             data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>"
             id="fundraiser-card-<?= $fundraiser->id ?>">
             <div class="card h-100 fixed-card w-100 d-flex flex-column"
