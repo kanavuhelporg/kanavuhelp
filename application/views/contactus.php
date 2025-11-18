@@ -539,7 +539,8 @@
 
 
   <!-- Footer -->
-  <div id="footer">
+  <div id="footer" class=" mt-5">
+    <!-- Footer content will be loaded here -->
   </div>
 
   <!-- Success/Error Modal -->

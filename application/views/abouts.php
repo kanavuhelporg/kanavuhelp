@@ -25,6 +25,7 @@
   <style>
     body {
       font-family: 'Sen', sans-serif;
+      background-color: #fff;
     }
     /* carousel */
     .carousel-item {
@@ -386,6 +387,158 @@
   }
 }
 
+    /* About page main content style */
+    .about-hero {
+        text-align: center;
+        padding: 120px 20px 80px;
+        /* background: linear-gradient(180deg, #fff, #fde7e7); */
+        background-color: #fff;
+    }
+
+    .about-hero h1 {
+        font-size: 42px;
+        font-weight: 700;
+    }
+
+    .about-hero h1 span {
+        color: #EB2D32;
+    }
+
+    .divider-icon {
+        margin: 15px auto;
+        font-size: 20px;
+        color: #EB2D32;
+    }
+
+    .about-hero p {
+        max-width: 750px;
+        margin: auto;
+        color: #555;
+        font-size: 17px;
+        line-height: 1.7;
+    }
+
+    /* Story Section */
+    .story-section {
+        padding: 80px 20px;
+        background: #FFFDF9;
+    }
+
+    .story-section img {
+        border-radius: 20px;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .story-title {
+        font-weight: 700;
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .story-text {
+        color: #555;
+        line-height: 1.8;
+        font-size: 17px;
+    }
+
+    .story-section .btn {
+        border-radius: 30px;
+        padding: 10px 25px;
+        background: #fff;
+        color: #EB2D32;
+        border: 1px solid #EB2D32;
+        transition: .3s;
+    }
+
+    .story-section .btn:hover {
+        background: #EB2D32;
+        color: #fff;
+    }
+
+    /* Core Values */
+    .core-values {
+        padding: 80px 20px;
+        text-align: center;
+    }
+
+    .core-values h2 {
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .value-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      text-align: center;
+      height: 100%;         /* Make all cards equal height */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;  /* Centers content properly */
+    }
+
+    .value-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .value-card i {
+        font-size: 35px;
+        color: #EB2D32;
+        margin-bottom: 15px;
+    }
+
+    .value-card h4 {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .value-card p {
+        color: #666;
+        font-size: 15px;
+    }
+
+    /* Call to Action */
+    .cta-section {
+        background: linear-gradient(135deg, #ffb3b3, #ff8080, #ff6666);
+        padding: 60px 20px;
+        border-radius: 20px;
+        margin: 60px 20px;
+        color: white;
+        text-align: center;
+    }
+
+    .cta-section h2 {
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .cta-section p {
+        max-width: 700px;
+        margin: auto;
+        font-size: 16px;
+    }
+
+    .cta-section .btn {
+        margin-top: 20px;
+        background: white;
+        color: #EB2D32;
+        font-weight: 600;
+        padding: 12px 30px;
+        border-radius: 30px;
+    }
+
+    @media(max-width:768px) {
+        .about-hero h1 {
+            font-size: 32px;
+        }
+
+        .story-title {
+            font-size: 26px;
+        }
+    }
     </style>
 </head>
 <body>
@@ -459,79 +612,132 @@
       </div>
     </div>
   </nav>
-  
-  
-    
-  <div class="container mt-5">
-    <br><br>
+  <!-- ========== HERO SECTION ========== -->
+  <section class="about-hero">
+      <h1>Our Mission to <span>Make a Smile</span></h1>
+      <div class="divider-icon"><img class="img-fluid" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="Underline" style="max-width: 100%; height: auto;"></div>
+      <p>
+          At Kanavu.Help, we believe every child deserves a future filled with hope,
+          opportunity, and endless smiles. Our mission is to provide underprivileged
+          children with the education, healthcare, and support they need to break the
+          cycle of poverty and realize their dreams.
+      </p>
+  </section>
 
-    <!-- Underline Image -->
-    <div class="text-center">
-    <p class="text-center">
-    <h2>
-            "Mission to make a Smile" 
-            <!-- <img src="<?php echo base_url('/assets/img/Emoji.png'); ?>" style="display: inline; vertical-align: middle;" alt="Emoji" width="30"> -->
-            </h2>
-            </p>
-        <img class="img-fluid" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="Underline" style="max-width: 100%; height: auto;">
-    </div>
+  <!-- ========== STORY SECTION ========== -->
+  <section class="story-section">
+      <div class="container">
+          <div class="row align-items-center g-4">
+              <div class="col-md-6">
+                  <img src="<?= base_url('assets/img/help3.png') ?>" alt="Our Story Image">
+              </div>
+              <div class="col-md-6">
+                  <h2 class="story-title">From a Simple Dream to a Shared Reality</h2>
+                  <p class="story-text">
+                      Kanavu (கனவு), meaning 'dream' in Tamil, started with a simple vision:
+                      to ensure no child's dream is left behind due to circumstances.
+                      We began by supporting a handful of students in a small village, and
+                      today, with the help of compassionate supporters like you, our family
+                      has grown—touching thousands of lives across communities.
+                  </p>
+              </div>
+          </div>
+      </div>
+  </section>
 
-    <!-- About Text Section -->
-    <div class="d-flex justify-content-center about mt-4">
-        <p class="w-75 fs-4 text-center">
-        The mission of Kanavu.Help is to bring together those who wish to lend a helping hand with those who are in need. We offer support in areas such as education, medical emergencies, disaster relief, and the fulfillment of unspoken dreams. Through compassion and transparency, we work to transform aspirations into tangible realities.
-        "Together, we can brighten lives and turn dreams into living truths."
-        </p>
-    </div>
+  <!-- ========== CORE VALUES ========== -->
+  <section class="core-values">
+    <h2>Our Core Values</h2>
+    <p class="text-muted mb-5">The principles that guide every action we take and every life we touch.</p>
 
-    <!-- Group Image -->
-    <div class="text-center my-4">
-        <img class="img-fluid" src="<?php echo base_url('/assets/img/Group 102.svg'); ?>" alt="Group 102" style="max-width: 100%; height: auto;">
-    </div>
-</div>
+    <div class="container">
+        <div class="row g-4">
 
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="value-card">
+                    <i class="fas fa-heart"></i>
+                    <h4>Compassion</h4>
+                    <p>We approach our work with empathy, kindness, and respect for each individual.</p>
+                </div>
+            </div>
 
-<footer class="footer bg-danger text-white py-4 mt-auto">
-    <div class="container text-center">
-        <h5>kanavu.help</h5>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="value-card">
+                    <i class="fas fa-seedling"></i>
+                    <h4>Integrity</h4>
+                    <p>We ensure transparency, honesty, and accountability in all our operations.</p>
+                </div>
+            </div>
 
-        <div class="footer-links my-3">
-            <a class="footer-lable border-end pe-3 me-3 text-white text-decoration-none" href="<?= base_url('/contactus') ?>">Contact</a>
-            <a class="footer-lable border-end pe-3 me-3 text-white text-decoration-none" 
-              href="<?= base_url('/terms_of_use') ?>" 
-              target="_blank" 
-              rel="noopener noreferrer">
-              Terms of Use
-            </a>
-            <a class="footer-lable text-white text-decoration-none" 
-              href="<?= base_url('/privacy_policy') ?>" 
-              target="_blank" 
-              rel="noopener noreferrer">
-              Privacy Policy
-            </a>
+            <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+              <div class="value-card">
+                  <i class="fas fa-hands-helping"></i>
+                  <h4>Impact</h4>
+                  <p>We focus on long-term change that transforms children and communities.</p>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+                <div class="value-card">
+                    <i class="fas fa-users"></i>
+                    <h4>Community</h4>
+                    <p>We believe in the power of working together with volunteers and partners.</p>
+                </div>
+            </div>
+
         </div>
-
-        <div class="social-icons d-flex justify-content-center mb-3">
-            <a href="https://www.facebook.com/profile.php?id=61574165466676" target="_blank" class="mx-2 text-white">
-                <i class="fab fa-facebook-f me-3" style="font-size:24px"></i>
-            </a>
-            <a href="https://www.instagram.com/kanavu.help/" target="_blank" class="mx-2 text-white">
-                <i class='fab fa-instagram me-3' style='font-size:24px'></i>
-            </a>
-            <a href="https://www.youtube.com/channel/UCA3Za4BS9L1CwPkuhqm260w" target="_blank" class="mx-2 text-white">
-                <i class='fab fa-youtube me-3' style='font-size:24px'></i>
-            </a>
-        </div>
-        
-        <div class="text-center my-3">
-            <img src="<?= base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="Secure Payment" class="img-fluid" style="max-width:300px;">
-        </div>
-
-        <p class="text-center" style="font-size:15px;">
-  Copyright <?= date('Y'); ?> @ kanavu.help. All Rights Reserved.
-</p>
     </div>
-</footer>
+</section>
+
+
+  <!-- ========== CTA SECTION ========== -->
+  <div class="cta-section">
+      <h2>Join Us in Spreading Smiles</h2>
+      <p>Your contribution, big or small, can change a child's life forever. Become a part of our story and help us turn more dreams into reality.</p>
+      <a href="<?= base_url('/donate') ?>" class="btn">Become a Volunteer</a>
+  </div>
+
+  <footer class="footer bg-danger text-white py-4 mt-auto">
+      <div class="container text-center">
+          <h5>kanavu.help</h5>
+
+          <div class="footer-links my-3">
+              <a class="footer-lable border-end pe-3 me-3 text-white text-decoration-none" href="<?= base_url('/contactus') ?>">Contact</a>
+              <a class="footer-lable border-end pe-3 me-3 text-white text-decoration-none" 
+                href="<?= base_url('/terms_of_use') ?>" 
+                target="_blank" 
+                rel="noopener noreferrer">
+                Terms of Use
+              </a>
+              <a class="footer-lable text-white text-decoration-none" 
+                href="<?= base_url('/privacy_policy') ?>" 
+                target="_blank" 
+                rel="noopener noreferrer">
+                Privacy Policy
+              </a>
+          </div>
+
+          <div class="social-icons d-flex justify-content-center mb-3">
+              <a href="https://www.facebook.com/profile.php?id=61574165466676" target="_blank" class="mx-2 text-white">
+                  <i class="fab fa-facebook-f me-3" style="font-size:24px"></i>
+              </a>
+              <a href="https://www.instagram.com/kanavu.help/" target="_blank" class="mx-2 text-white">
+                  <i class='fab fa-instagram me-3' style='font-size:24px'></i>
+              </a>
+              <a href="https://www.youtube.com/channel/UCA3Za4BS9L1CwPkuhqm260w" target="_blank" class="mx-2 text-white">
+                  <i class='fab fa-youtube me-3' style='font-size:24px'></i>
+              </a>
+          </div>
+          
+          <div class="text-center my-3">
+              <img src="<?= base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="Secure Payment" class="img-fluid" style="max-width:300px;">
+          </div>
+
+          <p class="text-center" style="font-size:15px;">
+            Copyright <?= date('Y'); ?> @ kanavu.help. All Rights Reserved.
+          </p>
+      </div>
+  </footer>
 
 
 <!-- Bootstrap JS and dependencies (Popper.js) -->

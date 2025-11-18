@@ -31,11 +31,23 @@ class admin extends CI_Controller
 
    
     public function admindashbord()
-    {
-        $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
-        $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
-        $this->load->view('admindashbord');
-    }
+{
+    // Transaction count
+    $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+    $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
+
+    // Enquiry count
+    $enquiryCount = $this->db->count_all('contact_us');
+    $this->session->set_userdata("enquiryCount", $enquiryCount);
+
+    //Causes Verification count
+    $unverifiedCauses = $this->adminpanel->totalUnverifiedCauses();
+    $this->session->set_userdata("unverifiedCauses", $unverifiedCauses);
+
+    // Load dashboard
+    $this->load->view('admindashbord');
+}
+
 
     public function sidemenu(){
         $this->load->view("sidemenu");
@@ -136,18 +148,25 @@ class admin extends CI_Controller
     if (!$this->session->userdata('adminId')) {
         redirect('admin');
     }
-    
-    // Fetch all data without limit for client-side pagination
+
+    // Fetch all causes
     $data['fundraisers'] = $this->adminpanel->get_all_cause_details();
     $data['counts'] = $this->adminpanel->get_total_causes();
     $data['sno'] = 0;
-    
+
+    // Transaction badge (already exists)
     $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
     $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
+
+    // 🚀 NEW: Causes badge
+    $unverifiedCauses = $this->adminpanel->totalUnverifiedCauses();
+    $this->session->set_userdata("unverifiedCauses", $unverifiedCauses);
+
     $this->session->set_userdata('causescounts', $data['counts']);
-    
+
     $this->load->view('causesverification.php', $data);
 }
+
 
 
     public function displayCauses(){
@@ -507,15 +526,19 @@ class admin extends CI_Controller
 // }
 
     public function contact_submissions()
-    {
-        // Fetch all data from the contact_us table without limit
-        $data["counts"] = count($this->db->get('contact_us')->result());
-        $data['submissions'] = $this->db->order_by('created_at', 'DESC')->get('contact_us')->result();
-        $data["sno"] = 0;
-        
-        // Load the view
-        $this->load->view('contact_submissions', $data);
-    }
+{
+    // Fetch all enquiries
+    $data["counts"] = count($this->db->get('contact_us')->result());
+    $data['submissions'] = $this->db->order_by('created_at', 'DESC')->get('contact_us')->result();
+    $data["sno"] = 0;
+
+    // Store enquiry count in session
+    $this->session->set_userdata("enquiryCount", $data["counts"]);
+
+    // Load view
+    $this->load->view('contact_submissions', $data);
+}
+
 
 
 
@@ -530,7 +553,7 @@ class admin extends CI_Controller
             
                echo "<tr>
                     <td>$i</td>
-                    <td>".($submissions->name)."</td>
+                    <td>".($submissions->namee)."</td>
                     <td>".($submissions->email)."</td>
                     <td>".($submissions->phone)."</td>
                     <td>".($submissions->message)."</td>

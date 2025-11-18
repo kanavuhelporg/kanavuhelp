@@ -850,6 +850,7 @@
     height: 480px;
     border-radius: 15px;
     box-shadow: none; /* Explicitly remove default box-shadow */
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
     overflow: hidden;
 }
 .card:hover {
@@ -863,7 +864,7 @@
     border-top-right-radius: 15px;
 }
 .card-body {
-    padding: 15px;
+    /* padding: 15px; */
     display: flex;
     flex-direction: column;
 }
@@ -1451,8 +1452,9 @@
 
   <!-- Fundraiser Cards with Fixed Size -->  <!--kani-->
   <div class="container pt-4"> 
-    <div class="row g-4 raisercard" id="fundraiserCards">
+    <div class="row g-4" id="fundraiserCards">
         <?php if (!empty($fundraisers)): ?>
+
             <?php 
             // Helper to calculate progress
             function getProgressPercentage($fundraiser) {
@@ -1460,7 +1462,7 @@
                 return min(($fundraiser->raised_amount / $fundraiser->amount) * 100, 100);
             }
 
-            // Sort fundraisers by percentage (ascending)
+            // Sort by lowest percentage
             usort($fundraisers, function($a, $b) {
                 return getProgressPercentage($a) <=> getProgressPercentage($b);
             });
@@ -1478,189 +1480,126 @@
 
                 $progress_percentage = getProgressPercentage($fundraiser);
             ?>
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3 d-flex card-container">
-                <div class="card h-100 w-100 d-flex flex-column shadow-sm">
-                    
+
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+
+                <div class="card h-100 shadow-sm">
+
                     <!-- Cover Image -->
                     <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>">
                         <img src="<?= $imageSrc ?>" 
-                            alt="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>"
-                            class="card-img-top">
+                             alt="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>"
+                             class="card-img-top">
                     </a>
 
                     <div class="card-body d-flex flex-column">
-                        
+
                         <!-- Title -->
-                        <div class="flex-grow-1 mb-3">
-                            <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>" 
-                              class="text-dark text-decoration-none">
-                                <h5 class="card-title text-truncate">
-                                    <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
-                                </h5>
-                            </a>
-                        </div>
+                        <h5 class="card-title text-truncate">
+                            <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
+                        </h5>
 
                         <!-- Supporters & Creator -->
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div class="text-muted small d-flex align-items-center">
-                                <img src="<?= base_url('assets/img/heart1.svg') ?>" alt="Supporter Icon" width="16" height="16" class="me-1">
-                                <?= intval($fundraiser->supporters_count) ?> Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
-                            </div>
-                            <div class="text-muted small text-truncate" style="max-width: 50%;">
-                                <img src="<?= base_url('assets/img/Frame.svg') ?>" alt="Created Icon" width="20" height="20">
-                                By <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+                        <div class="d-flex justify-content-between mb-2 small text-muted">
+                            <span>
+                                <img src="<?= base_url('assets/img/heart1.svg') ?>" width="16" class="me-1">
+                                <?= intval($fundraiser->supporters_count) ?> 
+                                Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
+                            </span>
+
+                            <span class="text-truncate" style="max-width: 55%;">
+                                <img src="<?= base_url('assets/img/Frame.svg') ?>" width="16" class="me-1">
+                                Created By <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+                            </span>
+                        </div>
+
+                        <!-- Raised + Progress -->
+                        <p class="mb-1 small">
+                            <strong>₹<?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> / 
+                            ₹<?= number_format($fundraiser->amount) ?></strong>
+                        </p>
+
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-danger" 
+                                 style="width: <?= $progress_percentage ?>%;">
                             </div>
                         </div>
 
-                          <!-- Raised Amount & Progress -->
-                          <div class="mt-2">
-                            <p class="card-text mb-1 small">
-                                <strong>
-                                    ₹<?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> / ₹<?= number_format($fundraiser->amount) ?>
-                                </strong>
-                            </p>
-                            <div class="progress" style="height: 8px; background-color: #f8d7da;">
-                                <div class="progress-bar bg-danger" 
-                                    style="width: <?= $progress_percentage ?>%;" 
-                                    role="progressbar" 
-                                    aria-valuenow="<?= $progress_percentage ?>" 
-                                    aria-valuemin="0" 
-                                    aria-valuemax="100">
-                                </div>
-                            </div>
-                          </div>
-
-                        <!-- Donate Button & Share -->
-                        <div class="d-flex align-items-center mt-3 justify-content-between">
+                        <!-- Donate + Share -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
                             <?php if ($is_goal_reached): ?>
                                 <span class="badge bg-success">Completed</span>
                             <?php else: ?>
-                                <button type="button" class="btn bg-danger text-white btn-sm donate_btn" 
+                                <button class="btn btn-danger btn-sm" 
                                         onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">
                                     Donate
                                 </button>
                             <?php endif; ?>
 
-                            <div class="d-flex align-items-center text-danger" style="cursor: pointer;"
-                                onclick="shareCause(
+                            <div class="text-danger d-flex align-items-center" style="cursor:pointer;"
+                                 onclick="shareCause(
                                     '<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>',
                                     '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>',
                                     '<?= $imageSrc ?>'
-                                )">
+                                 )">
                                 <i class="bi bi-share fs-6"></i>
-                                <span class="fs-6 ms-1">Share</span>
+                                <span class="ms-1 fs-6">Share</span>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
+
             <?php endforeach; ?>
         <?php else: ?>
             <p class="text-center">No fundraisers available at the moment.</p>
         <?php endif; ?>
     </div>
-  </div>
+</div>
+
 
 <!-- Responsive styles -->
 <style>
-  /* FIX FOR TABLET LAYOUT ISSUE */
-  @media (min-width: 768px) and (max-width: 991px) {
-    #fundraiserCards .raisercard {
-      flex-direction: row !important;
-      display: flex !important;
-      flex-wrap: wrap !important;
+  /* Remove forced spacing */
+#fundraiserCards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Card hover */
+.card {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Image FIX – full cover */
+.card-img-top {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Mobile optimizations */
+@media (max-width: 576px) {
+    .card-img-top {
+        height: 180px;
+        object-fit: cover;
+        object-position: center;
     }
-    
-    #fundraiserCards .col-12.col-sm-6.col-md-6.col-lg-3 {
-      flex: 0 0 50% !important;
-      width: 50% !important;
-      max-width: 50% !important;
+    .card-title {
+        font-size: 1rem;
     }
-  }
+}
 
-  /* Desktop layout (992px and above) */
-  @media (min-width: 992px) {
-    #fundraiserCards .col-12.col-sm-6.col-md-6.col-lg-3 {
-      flex: 0 0 25% !important;
-      width: 25% !important;
-      max-width: 25% !important;
-    }
-  }
-
-  /* Mobile layout (below 768px) */
-  @media (max-width: 767px) {
-    #fundraiserCards .col-12.col-sm-6.col-md-6.col-lg-3 {
-      flex: 0 0 100% !important;
-      width: 100% !important;
-      max-width: 100% !important;
-    }
-  }
-
-  /* Base styles */
-  #fundraiserCards .col-12 {
-      padding: 10px; 
-  }
-
-  .card-container {
-      display: block; 
-      margin-bottom: 20px;
-  }
-  
-  #fundraiserCards {
-      display: flex;
-      flex-wrap: wrap;
-  }
-  
-  #fundraiserCards > div {
-      display: flex;
-  }
-
-  .card {
-      height: 100%;
-      transition: transform 0.2s;
-  }
-  
-  .card:hover {
-      transform: translateY(-5px);
-  }
-  
-  .card-img-top {
-      width: 100%;
-      max-height: 200px;
-      object-fit: cover;
-  }
-  
-  .card-title {
-      font-size: 1.1rem;
-      line-height: 1.4;
-  }
-  
-  @media (max-width: 767px) {
-      .card-img-top {
-          max-height: 180px;
-      }
-      .card-title {
-          font-size: 1rem;
-          min-height: 50px;
-      }
-      .card-body {
-          padding: 1rem !important;
-      }
-      .btn-sm {
-          padding: 0.4rem 0.8rem;
-          font-size: 0.8rem;
-      }
-  }
-  
-  @media (max-width: 576px) {
-      .card-img-top {
-          max-height: 160px;
-      }
-      .card-title {
-          font-size: 0.9rem;
-          min-height: 40px;
-      }
-  }
 </style>
   <!-- kani1 -->
 

@@ -203,12 +203,12 @@
             </li>
           </ul>
                     
-          <span class="d-flex justify-content-center">
+          <!-- <span class="d-flex justify-content-center">
             <i class="fa-solid fa-bell"></i>&nbsp;
               <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
                 <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
               </div>
-          </span>
+          </span> -->
         </div>
       </div>
     </div><!-----------top-bar-end----------------------->
@@ -230,36 +230,28 @@
           </li>
 
           <li class="nav-item py-2">
-            <a href="<?= base_url('transactionverification') ?>"
-              class="nav-link text-decoration-none <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
-              style="font-weight:400;color:black;">
-              <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
-            </a>
-          </li>
-
-          <li class="nav-item py-2">
-            <a href="<?= base_url('contact_submissions') ?>"
-              class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
-              style="font-weight:400;color:black;">
-              <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
-            </a>
-          </li>
-
-          <li class="nav-item py-2">
-            <a href="<?= base_url('causesverification') ?>"
-              class="nav-link text-decoration-none <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
-              style="font-weight:400;color:black;">
-              <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="#"
-              class="nav-link text-decoration-none"
-              style="font-weight:400;color:black;">
-              <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
-            </a>
-          </li>
+                        <a href="<?= base_url('transactionverification') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('contact_submissions') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="<?= base_url('causesverification') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black; border-radius: 10px;">
+                          <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+                        </a>
+                    </li>
 
           <li class="nav-item py-2">
             <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
@@ -285,7 +277,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <a href="#" class="btn btn-danger">Logout</a>
+              <a href="<?= base_url('admin/logout') ?>" class="btn btn-danger">Logout</a>
             </div>
           </div>
         </div>
@@ -313,17 +305,67 @@
 
             <li class="nav-item py-2 px-3">
               <a href="<?= base_url('transactionverification') ?>"
-                class="nav-link text-decoration-none <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
-                style="font-weight:400;color:black;">
-                <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction
+                class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
+                style="font-weight:400;color:black; position: relative;">
+
+                  <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
+
+                  <?php 
+                      $unverified = $this->session->userdata("unverifiedtransactions");
+                      if (!empty($unverified) && $unverified > 0): 
+                  ?>
+                      <!-- Perfect round badge with centered number -->
+                      <span style="
+                          background: red;
+                          color: white;
+                          width: 22px;
+                          height: 22px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          border-radius: 50%;
+                          font-size: 12px;
+                          position: absolute;
+                          right: 8px;
+                          top: 6px;
+                          font-weight: bold;
+                      ">
+                          <?= $unverified ?>
+                      </span>
+                  <?php endif; ?>
               </a>
             </li>
 
             <li class="nav-item py-2 px-3">
               <a href="<?= base_url('contact_submissions') ?>"
                 class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
-                style="font-weight:400;color:black;">
-                <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
+                style="font-weight:400;color:black; position: relative;">
+
+                  <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
+
+                  <?php 
+                    $enquiryCount = $this->session->userdata("enquiryCount");
+
+                    if (!empty($enquiryCount) && $enquiryCount > 0): 
+                    ?>
+              <span style="
+                  background: red;
+                  color: white;
+                  width: 22px;
+                  height: 22px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 50%;
+                  font-size: 12px;
+                  position: absolute;
+                  right: 10px;
+                  top: 6px;
+                  font-weight: bold;
+              ">
+                  <?= $enquiryCount ?>
+              </span>
+              <?php endif; ?>
               </a>
             </li>
 

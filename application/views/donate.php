@@ -1,44 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
-
-
       <!--G4 (google analytics) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0Q147F1Y"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-JF0Q147F1Y');
 </script>
   <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon" />
-
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
-
   <style>
     body {
       font-family: 'Sen', sans-serif;
     }
-
     /* carousel */
     .carousel-item {
       height: 100vh;
     }
-
     .carousel-item img {
       object-fit: cover;
       height: 100%;
       width: 100%;
     }
-
     /* Login_button */
     .login-button {
       background-color: #E01A2B;
@@ -49,7 +40,6 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-
     /* start a kanavu button */
     .startkanavu-button {
       border: 1px solid #E01A2B;
@@ -60,7 +50,6 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-
     /* nav bar menu size */
     .offcanvas-body {
       font-size: 17px;
@@ -83,121 +72,100 @@
       font-style: normal;
       padding-bottom: 100px;
     }
-
     .imgtext1 {
       top: 50%;
       left: 65px;
       transform: translateY(-50%);
     }
-
     .imgtext2 {
       top: 50%;
       right: 65px;
       transform: translateY(-50%);
     }
-
     .bg-red-modal {
       background-color: grey;
       color: white;
     }
-
     .imgtext1 strong,
     .imgtext2 strong {
       font-weight: bolder;
     }
-
     .bi-share {
       font-size: 1.3rem;
       cursor: pointer;
       color: #E01A2B;
       margin-left: auto;
     }
-
     .imgtext11,
     .imgtext22 {
       font-size: 18px;
       margin-top: 5px;
     }
-
     .imgtext11 ul,
     .imgtext22 ul {
       list-style-type: none;
       padding-left: 0;
     }
-
     .imgtext11 ul li {
       margin-left: 0px;
     }
-
     .imgtext1 span,
     .imgtext2 span {
       color: #EB2D32;
       font-weight: bolder;
       font-size: 40px;
     }
-
     /* filter_button above cards */
     .filter-btn {
       background-color: transparent;
       border-width: 2px;
     }
-
     .filter-btn.active {
       border-color: #EB2D32;
       color: #EB2D32;
     }
-
     .filter-btn:not(.active) {
       border-color: #A9A9A9;
       color: #A9A9A9;
     }
-
     .filter-btn:hover {
       border-color: #EB2D32;
       color: white;
       background-color: #EB2D32;
     }
-
     .donatefor {
       border: 1px solid #E01A2B;
       color: #E01A2B;
       background-color: #fff;
       border-radius: 20px;
     }
-
     /* card section */
     .card {
       width: 356px;
       height: 480px;
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
     }
-
     .carousel-item .row {
       margin-left: 150px;
       margin-right: 150px;
     }
-
     .carousel-item .col-12.col-md-4 {
       padding-left: 5px;
       padding-right: 5px;
       margin-bottom: 20px;
     }
-
     .card-title {
       font-size: 18px;
       font-weight: bold;
     }
-
     .card_button {
       border: 1px solid rgba(174, 168, 168, 1);
       border-radius: 25px;
     }
-
     .donate_btn {
       border: 1px solid rgba(224, 26, 43, 1);
       border-radius: 25px;
     }
-
     /* footer */
     .footer {
       height: 250px;
@@ -208,109 +176,90 @@
       margin-top: 50px;
       color: #f0f0f0;
     }
-
     .footer1 {
       text-align: center;
       padding: 10px;
       margin-left: 10px;
     }
-
     .footer-lable {
       color: white;
       text-decoration: none;
       padding-right: 20px;
       padding-left: 20px;
     }
-
     .lable {
       border-right: 3px solid #fff;
     }
-
     .footer1 a {
       margin-left: 20x;
     }
-
     .footimg {
       margin-left: 520px;
       padding: 20px;
     }
-
     .social-icons img {
       width: 20px;
       height: 20px;
       margin-left: 10px;
     }
-
     .category-not-active {
       border: 1px solid #9FA6B2;
       color: #9FA6B2;
       background-color: white !important;
     }
-
     .active-category {
       border: 1px solid #d9534f;
       color: #d9534f;
       background-color: white !important;
     }
-
     @media (max-width: 767px) {
       /* carousel */
       .carousel-item {
         position: relative;
       }
-
       .carousel-item img {
         height: 100%;
         width: 100%;
         object-fit: cover;
       }
-
       .card {
         margin-left: 2%;
       }
-
-      /* donate  image below nav bar */
+      /* donate image below nav bar */
       .donate_img {
         width: 100%;
         position: relative;
       }
-
       .donate_img img {
         width: 100%;
         height: 300px;
         object-fit: cover;
       }
     }
-
     .donate_btn.no-hover {
       background-color: white;
       color: red;
       border: 1px solid red;
     }
-
     .donate_btn.no-hover:hover {
       background-color: white !important;
       color: red !important;
       border: 1px solid red !important;
     }
-
     .card_button {
       border: 1px solid gray !important;
       background: none;
       box-shadow: none;
     }
-
     .card_button:hover {
       border: 1px solid gray !important;
       box-shadow: none;
       background: none;
     }
-
     .navbar-toggler-icon {
       background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
       padding: (1rem) var(1rem);
     }
-
     .navbar-toggler {
       padding: .25rem .75rem;
       font-size: 1.25rem;
@@ -320,7 +269,6 @@
       border-radius: .25rem;
       transition: box-shadow .15s ease-in-out;
     }
-
     .img-placeholder {
       background-color: white;
       display: block;
@@ -328,38 +276,31 @@
       height: 230px;
       object-fit: cover;
     }
-
     .img-placeholder:not([src]) {
       background: url('path/to/placeholder-image.jpg') center center/cover no-repeat;
     }
-
     .btn-outline-secondary:hover {
       background-color: white;
       border-color: #d9534f;
       color: #d9534f !important;
     }
-
     @media (max-width: 768px) {
       #userProfile .dropdown-menu {
         right: 0 !important;
         left: auto !important;
         min-width: 150px;
       }
-
       #userProfile img {
         width: 25px;
         height: 25px;
       }
-
       #userProfile .dropdown-item {
         text-align: center;
       }
-
       .category-buttons {
         flex-direction: column;
       }
     }
-
     @media (min-width: 769px) and (max-width: 989px) {
       .card {
         width: 400px;
@@ -367,13 +308,11 @@
         box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
       }
     }
-
     .custom-dropdown {
       position: relative;
       display: inline-block;
       width: 45%;
     }
-
     .custom-dropdown select {
       appearance: none;
       -webkit-appearance: none;
@@ -386,7 +325,6 @@
       font-size: 16px;
       cursor: pointer;
     }
-
     .custom-dropdown::after {
       content: '▼';
       position: absolute;
@@ -397,16 +335,13 @@
       font-size: 14px;
       color: #666;
     }
-
     /* Card Styling */
     .card-container {
       transition: transform 0.2s;
     }
-
     .card-container:hover {
       transform: translateY(-5px);
     }
-
     .card {
       width: 100%;
       max-width: 356px;
@@ -415,83 +350,68 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 8px 30px rgba(0, 0, 0, 0.1);
       overflow: hidden;
     }
-
     .card:hover {
       box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
     }
-
     .card-img-top {
       width: 100%;
       height: 230px;
       object-fit: cover;
     }
-
     .card-body {
       padding: 15px;
     }
-
     .card-title {
       font-size: 18px;
       font-weight: bold;
     }
-
     .card-text {
       font-size: 14px;
     }
-
     .progress {
       height: 10px;
       border-radius: 5px;
     }
-
     .progress-bar {
       background-color: #EB2D32;
     }
-
     .btn.bg-danger {
       border-radius: 25px;
       font-size: 14px;
       padding: 5px 15px;
     }
-
     /* Single Row for Supporters and Created by */
     .supporters-section,
     .created-by-section {
       display: flex;
       align-items: center;
     }
-
     .supporters-section {
       flex: 12;
       min-width: 0;
       overflow: hidden;
     }
-
     .created-by-section {
       flex: 10;
       justify-content: flex-end;
       min-width: 0;
     }
-
     .supporters-section p,
     .created-by-section p {
       font-size: 14px;
       color: black;
     }
-
     .supporters-section p {
       display: flex;
       align-items: center;
       white-space: normal;
     }
-
     .supporters-section .supporter-count {
       font-weight: bold;
       font-size: 16px;
       color: black;
       margin-right: 4px;
     }
-
     /* Truncate Text with Ellipsis */
     .truncate-text {
       position: relative;
@@ -501,7 +421,6 @@
       max-width: 60px;
       cursor: pointer;
     }
-
     .truncate-text1 {
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -511,7 +430,6 @@
       max-width: 100px;
       text-align: center;
     }
-
     .truncate-text:hover:after {
       content: attr(data-fulltext);
       position: absolute;
@@ -527,100 +445,82 @@
       max-width: 250px;
       word-break: break-word;
     }
-
     .amount-text {
       margin-top: 5px;
       font-size: 14px;
       line-height: 1.5;
       color: #333;
     }
-
     .amount-text strong {
       font-weight: 600;
     }
-
     /* Mobile Responsiveness */
     @media (max-width: 767px) {
       .supporters-section p,
       .created-by-section p {
         font-size: 12px;
       }
-
       .supporters-section i,
       .created-by-section i {
         font-size: 14px;
       }
-
       .created-by-section .rounded-circle {
         width: 20px;
         height: 20px;
       }
-
       .created-by-section .bi-person-fill {
         font-size: 14px;
       }
-
       .truncate-text {
         max-width: 80px;
       }
-
       .supporters-section .truncate-text {
         max-width: 50px;
       }
-
       #userProfile .dropdown-menu {
     right: 0 !important; /* Align the dropdown to the right edge */
     left: auto !important; /* Override default left alignment */
     min-width: 150px; /* Adjust the width as needed */
   }
-  
+ 
   #userProfile img {
     width: 25px; /* Slightly smaller profile image for mobile */
     height: 25px;
   }
-  
+ 
   #userProfile .dropdown-item {
     text-align: center; /* Center-align items for better UX */
   }
     }
-
     .fixed-card-img {
       height: 230px;
       object-fit: cover;
     }
-
     .card-container {
       display: flex;
     }
-
     .fixed-card {
       display: flex;
       flex-direction: column;
     }
   </style>
-
   <?php foreach ($fundraisers as $fundraiser): ?>
     <?php if (!empty($fundraiser->cover_image)): ?>
       <link rel="preload" href="<?= base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) ?>" as="image">
     <?php endif; ?>
   <?php endforeach; ?>
-
 </head>
-
 <body>
   <!-- <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
   </nav> -->
-
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
                 <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
             </a>
-
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title">
@@ -681,16 +581,13 @@
       </div>
     </div>
   </nav>
-
   <div class="donate_img mt-5 pt-4">
     <!-- Donation banner image would go here -->
   </div>
-
   <div class="handwithheart_img text-center">
     <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">
     <p class="mt-3 "><b>"Fundraising is the gentle art of teaching the joy of giving."</b></p>
   </div>
-
   <h1 class="text-center">Select a Category</h1>
   <div class="d-flex justify-content-center pb-3">
     <div style="row-gap:10px;display:flex;justify-content:space-evenly;" class="category-buttons col-md-5">
@@ -701,134 +598,19 @@
       <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Agriculture', 4)">Agriculture</button>
     </div>
   </div>
-
   <!-- Fundraiser Cards with Fixed Size -->
   <div class="container pt-4">
-    <div class="row g-3" id="fundraiserCards">
-      <?php if (!empty($fundraisers)): ?>
-        <?php
-        // Helper to calculate progress
-        function getProgressPercentage($fundraiser)
-        {
-          if ($fundraiser->amount == 0) return 0;
-          return ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-        }
-  
-        // Sort fundraisers by percentage (ascending)
-        usort($fundraisers, function ($a, $b) {
-          return getProgressPercentage($a) <=> getProgressPercentage($b);
-        });
-
-        foreach ($fundraisers as $fundraiser):
-          $is_goal_reached = $fundraiser->raised_amount >= $fundraiser->amount;
-
-          // Image path fix (case-sensitive safe)
-          $image_path = FCPATH . 'assets/individualform_img/' . $fundraiser->cover_image;
-          if (!empty($fundraiser->cover_image) && is_file($image_path)) {
-            $imageSrc = base_url('assets/individualform_img/' . rawurlencode($fundraiser->cover_image));
-          } else {
-            $imageSrc = base_url('assets/img/funddonate.jpg');
-          }
-
-          $progress_percentage = getProgressPercentage($fundraiser);
-          ?>
-          <div class="col-12 col-sm-6 col-md-4 mb-0 d-flex card-container"
-            data-category="<?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?>"
-            id="fundraiser-card-<?= $fundraiser->id ?>">
-            <div class="card h-100 fixed-card w-100 d-flex flex-column"
-              style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-
-              <!-- Cover Image (clickable, no lazyload) -->
-              <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>">
-                <img src="<?= $imageSrc ?>"
-                  alt="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>" width="316" height="230"
-                  class="card-img-top fixed-card-img"
-                  style="border-top-left-radius: 15px; border-top-right-radius: 15px; object-fit: cover;"
-                  onerror="this.src='<?= base_url('assets/img/funddonate.jpg') ?>'">
-              </a>
-
-              <div class="card-body d-flex flex-column">
-
-                <!-- Title -->
-                <div class="flex-grow-1" style="min-height: 100px;">
-                  <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>"
-                    class="text-dark text-decoration-none">
-                    <p class="card-title"
-                      style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                      <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
-                    </p>
-                  </a>
-                </div>
-
-                <!-- Supporters & Creator -->
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                  <div class="text-muted small d-flex align-items-center">
-                    <img src="<?= base_url('assets/img/user-icon.png') ?>" alt="Supporter Icon" width="16" height="16"
-                      class="me-1">
-                    <?= intval($fundraiser->supporters_count) ?> Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
-                  </div>
-                  <div class="text-muted small text-truncate" style="max-width: 60%;">
-                    Created by <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
-                  </div>
-                </div>
-
-                <!-- Raised Amount & Progress Bar -->
-                <div class="mt-1">
-                  <p class="card-text mb-1">
-                    <strong>
-                      ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?>
-                      raised out of ₹ <?= number_format($fundraiser->amount) ?>
-                    </strong>
-                  </p>
-                  <div class="progress mb-2" style="background-color: #f8d7da;">
-                    <div class="progress-bar bg-danger" style="width: <?= $progress_percentage ?>%;" role="progressbar"
-                      aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100">
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Donate / Completed + Share -->
-                <div class="d-flex align-items-center mt-auto justify-content-between">
-                  <?php if ($is_goal_reached): ?>
-                    <span class="badge bg-success">Completed</span>
-                  <?php else: ?>
-                    <button type="button" class="btn bg-danger text-white donate_btn"
-                      onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">
-                      Donate Now
-                    </button>
-                  <?php endif; ?>
-
-                  <!-- Share Icon -->
-                  <div class="d-flex align-items-center text-danger" style="cursor: pointer;"
-                    onclick="shareCause(
-                      '<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>',
-                      '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>',
-                      '<?= $imageSrc ?>'
-                    )">
-                    <i class="bi bi-share fs-6"></i>
-                    <span class="fs-6 fw-bold ms-1">Share</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <p class="text-center">No fundraisers available at the moment.</p>
-      <?php endif; ?>
-    </div>
+    <div class="row g-3" id="fundraiserCards"></div>
   </div>
 
-  <div id="footer">
+  <div id="footer" class=" mt-5">
+    <!-- Footer content will be loaded here -->
   </div>
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
   <script>
-    let allFundraisers = <?= json_encode($fundraisers) ?>;
+    
     let currentIndex = 3; // Already shown 3 cards
-
     $.ajax({
       type: "get",
       url: "kanavuhelp/getHeader",
@@ -844,7 +626,6 @@
         document.getElementById("header").innerHTML = "";
       }
     });
-
     $.ajax({
       type: "get",
       url: "kanavuhelp/getFooter",
@@ -855,59 +636,105 @@
         document.getElementById("footer").innerHTML = "";
       }
     });
+    // Ensure fundraiser goal status is checked when the page loads
+// document.addEventListener('DOMContentLoaded', function () {
 
-    // Ensure the "All" category is selected when the page loads
-    document.addEventListener('DOMContentLoaded', function () {
-      // Select "All" category by default
-      filterCauseswithcategory('All', 0);
+//   // Only target cards inside the main container
+//   const fundraiserCards = document.querySelectorAll('#fundraiserCards .card-container');
 
-      // Check goal status for each fundraiser card
-      const fundraiserCards = document.querySelectorAll('.card-container');
+//   fundraiserCards.forEach(function (card) {
+//     const fundraiserId = card.id.split('-')[2];
 
-      fundraiserCards.forEach(function (card) {
-        const fundraiserId = card.id.split('-')[2];  // Extract fundraiser ID
+//     fetch(`/check_goal_status/${fundraiserId}`)
+//       .then(response => response.json())
+//       .then(data => {
+//         if (data.goal_reached) {
 
-        // Check if the goal is reached dynamically
-        fetch(`/check_goal_status/${fundraiserId}`)
-          .then(response => response.json())
-          .then(data => {
-            if (data.goal_reached) {
-              const donateButton = card.querySelector('.donate_btn');
-              donateButton.textContent = "Complete Fundraiser";
-              donateButton.disabled = true;
-              const badge = card.querySelector('.badge');
-              badge.textContent = "Completed";
-            }
-          });
-      });
-    });
+//           const donateButton = card.querySelector('.donate_btn');
+//           if (donateButton) {
+//             donateButton.textContent = "Complete Fundraiser";
+//             donateButton.disabled = true;
+//           }
 
+//           const badge = card.querySelector('.badge');
+//           if (badge) {
+//             badge.textContent = "Completed";
+//           }
+
+//         }
+//       });
+//   });
+
+// });
+
+    window.currentCategory = 'All';
+    window.currentIndex = 0;
     // Function to filter causes and highlight the selected category
-    function filterCauseswithcategory(category, index) {
-      // Step 1: Update the visual focus (highlight the selected button)
-      changeFocus(index);
+    // function filterCauseswithcategory(category, index) {
+    // // Step 1: Update the visual focus (highlight the selected button)
+    // changeFocus(index);
+    // // Step 2: Make the AJAX request to filter causes
+    // $.ajax({
+    // type: "post",
+    // url: "donations/filterCauses",
+    // data: { category: category },
+    // success: (result) => {
+    // allFundraisers = <?= json_encode($this->session->userdata("fundraisers")) ?>;
+    // currentIndex = 3;
+    // document.getElementById("fundraiserCards").innerHTML = result;
+    // },
+    // error: (error) => {
+    // console.log(error);
+    // document.getElementById("fundraiserCards").innerHTML = "Error fetching causes.";
+    // }
+    // });
+    // }
+//     function filterCauseswithcategory(category, index) {
+//     changeFocus(index);
+//     window.currentCategory = category;
+//     window.currentIndex = index;
 
-      // Step 2: Make the AJAX request to filter causes
-      $.ajax({
-        type: "post",
-        url: "donations/filterCauses",
-        data: { category: category },
-        success: (result) => {
-          allFundraisers = <?= json_encode($this->session->userdata("fundraisers")) ?>;
-          currentIndex = 3;
-          document.getElementById("fundraiserCards").innerHTML = result;
-        },
-        error: (error) => {
-          console.log(error);
-          document.getElementById("fundraiserCards").innerHTML = "Error fetching causes.";
-        }
-      });
-    }
+//     $.ajax({
+//         type: "POST",
+//         url: "donations/filterCauses",
+//         data: { 
+//             category: category,
+//             t: new Date().getTime()  // Cache buster
+//         },
+//         cache: false,
+//         success: function(result) {
+//             $("#fundraiserCards").html(result);
+//         },
+//         error: function() {
+//             $("#fundraiserCards").html("<p class='text-center text-danger'>Error fetching causes.</p>");
+//         }
+//     });
+// }
+// function filterCauseswithcategory(category, index) {
+//     changeFocus(index);
+//     window.currentCategory = category;
+//     window.currentIndex = index;
+
+//     $.ajax({
+//         type: "POST",
+//         url: "donations/filterCauses",
+//         data: { 
+//             category: category,
+//             t: new Date().getTime()
+//         },
+//         cache: false,
+//         success: function(result) {
+//             $("#fundraiserCards").html(result);
+//         },
+//         error: function() {
+//             $("#fundraiserCards").html("<p class='text-center text-danger'>Error fetching causes.</p>");
+//         }
+//     });
+// }
 
     // Function to handle button highlighting
     function changeFocus(index) {
       const buttons = document.querySelectorAll(".focus-change");
-
       buttons.forEach((button, i) => {
         if (i === index) {
           // Highlight the selected button
@@ -920,17 +747,14 @@
         }
       });
     }
-
     function openDonationModal() {
       // Show the modal using Bootstrap's modal method
       var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
       donationModal.show();
     }
-
     function setCauseId(causeId) {
       document.getElementById('cause_id').value = causeId;
     }
-
     function shareCause(url, title, imgurl) {
       console.log(url);
       if (navigator.share) {
@@ -949,12 +773,10 @@
         const encodedUrl = encodeURIComponent(url);
         const encodedTitle = encodeURIComponent(`Check out this cause: ${title}`);
         const encodedImage = encodeURIComponent(imgurl);
-
         // Create share URLs
         const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}%20${encodedImage}`;
         const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`;
         const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodedUrl}&media=${encodedImage}&description=${encodedTitle}`;
-
         // Display the share options to the user (you can use a modal or a dropdown)
         const shareOptions = `
             <div>
@@ -963,26 +785,21 @@
                 <a href="${pinterestUrl}" target="_blank">Share on Pinterest</a>
             </div>
         `;
-
         // You can append this HTML to a modal or any container you have for sharing options
         document.body.insertAdjacentHTML('beforeend', shareOptions);
       }
     }
-
     // Simulate user login status (from backend or session)
     var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
-
     // Handle Donate button click using event delegation
     document.querySelector('.container').addEventListener('click', function (event) {
       if (event.target.classList.contains('donate_btn')) {
         event.preventDefault(); // Prevent default link behavior
-
         // Show the donation modal
         var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
         donationModal.show();
       }
     });
-
     // Handle modal close event to ensure page is accessible
     var donationModal = document.getElementById('donationModal');
     donationModal.addEventListener('hidden.bs.modal', function (event) {
@@ -992,12 +809,10 @@
       if (modalBackdrop) {
         modalBackdrop.remove(); // Remove backdrop if still present
       }
-
       // Reset form fields when the modal is closed
       donationModal.querySelector('form').reset();
     });
   </script>
-
   <!-- Donation Modal -->
   <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -1012,7 +827,6 @@
             <!-- Hidden fields to store cause ID and user ID -->
             <input type="hidden" name="cause_id" id="cause_id" value="">
             <input type="hidden" name="user_id" id="user_id" value="">
-
             <!-- Donation Form Fields -->
             <div class="text-center mb-3">
               <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%">
@@ -1020,18 +834,15 @@
             <div class="text-center mb-3">
               <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="HDFC QR Code" width="50%">
             </div>
-
             <div class="text-center mt-2">
               <h5 class="modal-title text-danger fw-bold" id="donationModalLabel">Make a Secure Donation</h5>
             </div>
-
             <!-- Amount -->
             <div class="mb-3">
               <label for="amount" class="form-label">Enter Amount</label>
               <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>
               <p id="error5" class="text-danger small mt-1"></p>
             </div>
-
             <!-- Transaction ID -->
             <div class="mb-3">
               <label for="transactionid" class="form-label">Transaction ID</label>
@@ -1039,7 +850,6 @@
                 placeholder="Enter UPI Transaction ID*" required>
               <p id="error4" class="text-danger small mt-1"></p>
             </div>
-
             <!-- Phone Number -->
             <div class="mb-3">
               <label for="phone" class="form-label">Phone Number</label>
@@ -1047,7 +857,6 @@
                 placeholder="Enter your phone number*" required>
               <p id="error3" class="text-danger small mt-1"></p>
             </div>
-
             <!-- Name -->
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
@@ -1055,7 +864,6 @@
                 required>
               <p id="error6" class="text-danger small mt-1"></p>
             </div>
-
             <!-- City -->
             <div class="mb-3">
               <label for="donorcity" class="form-label">City</label>
@@ -1063,7 +871,6 @@
                 placeholder="Enter Your City*" required>
               <p id="error8" class="text-danger small mt-1"></p>
             </div>
-
             <!-- Confirm Button -->
             <div class="d-flex justify-content-center">
               <button id="donatenowbtn" type="submit" class="btn btn-danger fw-bold w-50 rounded-3">
@@ -1071,18 +878,16 @@
               </button>
             </div>
           </form>
-
           <!-- Terms and Privacy Policy -->
           <p class="text-center small mt-2">
-            By continuing, you agree to our 
-            <a href="<?= base_url('/terms_of_use') ?>" target="_blank">Terms of Service</a> & 
+            By continuing, you agree to our
+            <a href="<?= base_url('/terms_of_use') ?>" target="_blank">Terms of Service</a> &
             <a href="<?= base_url('/privacy_policy') ?>" target="_blank">Privacy Policy</a>
           </p>
         </div>
       </div>
     </div>
   </div>
-
   <!-- Donation Success Modal -->
   <div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -1100,30 +905,25 @@
       </div>
     </div>
   </div>
-
 <script>
   // Simulate user login status (from backend or session)
   var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
-
   // Handle Donate button click using event delegation
   document.querySelector('.container').addEventListener('click', function(event) {
     if (event.target.classList.contains('donate_btn')) {
       event.preventDefault(); // Prevent default link behavior
-
-    /*  if (!isLoggedIn) {
-        const baseUrl = "<?= base_url('/login') ?>"; 
+    /* if (!isLoggedIn) {
+        const baseUrl = "<?= base_url('/login') ?>";
         // Ask for confirmation before redirecting to the login page
         var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
       loginModal.show();
- 
       // Redirect to login page with return URL on OK button click
       document.getElementById('loginRedirectBtn').addEventListener('click', function() {
         var currentUrl = window.location.href;
-
   // Redirect to the login page with the returnUrl parameter
         window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
       });// Replace with your actual login URL
-        
+       
       } else {*/
         // Show the donation modal if logged in
         var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
@@ -1131,8 +931,7 @@
       //}
     }
   });
-  
-
+ 
   // Handle modal close event to ensure page is accessible
   var donationModal = document.getElementById('donationModal');
   donationModal.addEventListener('hidden.bs.modal', function (event) {
@@ -1142,18 +941,15 @@
     if (modalBackdrop) {
       modalBackdrop.remove(); // Remove backdrop if still present
     }
-
     // Reset form fields when the modal is closed
     donationModal.querySelector('form').reset();
   });
-
 </script>
 <script>
   // Real-time validation function
   function validateField(fieldId, errorId, validationFn, errorMessage) {
     const field = document.getElementById(fieldId);
     const errorElement = document.getElementById(errorId);
-
     field.addEventListener('input', () => {
       if(field.value=='')
     {
@@ -1178,7 +974,6 @@
       }
     });
   }
-
    function fetchDonordata($phone) {
     let phoneid = phone.trim();
     $.ajax({
@@ -1195,11 +990,11 @@
            document.getElementById("donorcity").removeAttribute("readonly");
            document.getElementById("phone").value = "";
            document.getElementById("phone").removeAttribute("readonly");
-           
+          
            fetchingtimeout = setTimeout(()=>{
             document.getElementById("error7").innerHTML = "";
            },2000);
-        } 
+        }
         else{
           let existdonor = JSON.parse(result);
            document.getElementById("user_id").value = existdonor.id;
@@ -1218,16 +1013,13 @@
            document.getElementById("header").innerHTML = "";
       }
     });
-  }  
- 
-
-
+  }
   // Validation functions
   //const isCurrencySelected = (value) => value !== '';
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
   const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
- /*  const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value); */
+ /* const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value); */
  const isName = (value) => /^[a-zA-Z\s.]+$/.test(value) && value.trim().length >= 3;
   const isCity = (value) => /^([A-Za-z0-9_()\s]{3,})+$/.test(value);
   //const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
@@ -1241,11 +1033,9 @@
     validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
     validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
   };
-
   // Final validation and form submission
   document.getElementById('donationForm').onsubmit = function (event) {
     event.preventDefault(); // Prevent form submission for manual handling
-
     // Clear all error messages
     document.getElementById('error5').innerText = '';
     document.getElementById('error3').innerText = '';
@@ -1254,14 +1044,13 @@
    //document.getElementById('error7').innerText = '';
     document.getElementById('error8').innerText = '';
     let isValid = true;
-
     // Perform final validation
   /* if (!isCurrencySelected(document.getElementById('currency').value)) {
       document.getElementById('error5').innerText = 'Please select a currency.';
       isValid = false;
     } */
   if(document.getElementById('amount').value!==''){
-    if (!isAmountValid(document.getElementById('amount').value)  ) {
+    if (!isAmountValid(document.getElementById('amount').value) ) {
       document.getElementById('error5').innerText = 'Amount must be greater than 0.';
       isValid = false;
     }
@@ -1271,14 +1060,12 @@
     document.getElementById('error6').innerText = 'Enter Valid Name';
     isValid = false;
   }
-
   if(!isCity(document.getElementById('donorcity').value))
   {
     document.getElementById('error8').innerText = 'Enter Valid City Name';
     isValid = false;
   }
-
- /*  if(!isEmail(document.getElementById('email').value))
+ /* if(!isEmail(document.getElementById('email').value))
   {
     document.getElementById('error7').innerText = 'Enter Valid EmailID';
     isValid = false;
@@ -1288,19 +1075,15 @@
       document.getElementById('error3').innerText = 'Please Enter Correct Phone number';
       isValid = false;
     }
-
     if (!isTransactionIdValid(document.getElementById('transactionid').value)) {
       document.getElementById('error4').innerText = 'Transaction ID must be exactly 12 characters long.';
       isValid = false;
     }
-
     if (!isValid) {
       return; // Stop submission if validation fails
     }
-
     // Prepare Form Data
     const formData = new FormData(this);
-
     // AJAX Request to Server
     fetch('/kanavuhelp/processDonation', {
       method: 'POST',
@@ -1317,47 +1100,131 @@
           if (donationModalElement.classList.contains('show')) {
             donationModal.hide();
           }
-
           // Show success modal
           const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
           successModal.show();
-
-          // Redirect on button click in the success modal
-          document.getElementById('donationRedirectBtn').addEventListener('click', function () {
-            window.location.href = data.redirect;
-          });
         }
       })
       .catch(() => {
         document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
       });
   };
+</script>
+<script>
+
+    // ✔ LOAD All category on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        filterCauseswithcategory('All', 0);
+    });
+
+
+    // ✔ FIXED: Filter category
+    function filterCauseswithcategory(category, index) {
+        changeFocus(index);
+
+        $.ajax({
+            type: "POST",
+            url: "donations/filterCauses",
+            data: { category: category, t: new Date().getTime() },
+            cache: false,
+            success: function (result) {
+
+                // Insert the new cards
+                $("#fundraiserCards").html(result);
+
+                // After cards load → check goal status
+                checkGoalStatusForLoadedCards();
+            },
+            error: function () {
+                $("#fundraiserCards").html("<p class='text-center text-danger'>Error fetching causes.</p>");
+            }
+        });
+    }
+
+
+    // ✔ FIXED: Highlight selected category
+    function changeFocus(index) {
+        const buttons = document.querySelectorAll(".focus-change");
+        buttons.forEach((button, i) => {
+            if (i === index) {
+                button.classList.remove("category-not-active");
+                button.classList.add("active-category");
+            } else {
+                button.classList.remove("active-category");
+                button.classList.add("category-not-active");
+            }
+        });
+    }
+
+
+    // ✔ FIXED: After AJAX → run goal check ONLY for loaded cards
+    function checkGoalStatusForLoadedCards() {
+
+        const fundraiserCards = document.querySelectorAll('#fundraiserCards .card-container');
+
+        fundraiserCards.forEach(function (card) {
+
+            const fundraiserId = card.id.split('-')[2];
+
+            fetch(`/check_goal_status/${fundraiserId}`)
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.goal_reached) {
+
+                        // Replace donate button
+                        const donateBtn = card.querySelector(".donate_btn");
+                        if (donateBtn) {
+                            donateBtn.textContent = "Completed";
+                            donateBtn.disabled = true;
+                        }
+
+                        // Update badge if exists
+                        const badge = card.querySelector(".badge");
+                        if (badge) {
+                            badge.textContent = "Completed";
+                        }
+                    }
+                });
+        });
+
+    }
+
+
+    // ✔ Open donation modal
+    function openDonationModal() {
+        var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+        donationModal.show();
+    }
+
+    function setCauseId(causeId) {
+        document.getElementById('cause_id').value = causeId;
+    }
 
 </script>
 
+<script>
+document.getElementById('donationRedirectBtn').addEventListener('click', function () {
+  var successModal = bootstrap.Modal.getInstance(document.getElementById('donationSuccess'));
+  successModal.hide();
+  filterCauseswithcategory(window.currentCategory, window.currentIndex);
+});
+</script>
 <form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
     <input type="hidden" name="returnUrl" id="returnUrl" value="">
 </form>
-
 <script>
   function redirectToLogin() {
     // Get the current URL
     var currentUrl = window.location.href;
-    
+   
     // Encode the current URL
     var encodedUrl = encodeURIComponent(currentUrl);
-
     // Set the hidden input value to the encoded current URL
     document.getElementById('returnUrl').value = encodedUrl;
-
     // Submit the form to the login page
     document.getElementById('redirectToLoginForm').submit();
   }
-
-
-
-
 </script>
 </body>
-
 </html>
