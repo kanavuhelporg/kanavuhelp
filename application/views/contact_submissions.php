@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Submissions</title>
+    <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -29,7 +30,7 @@
         }
 
         .ps-letter {
-            background-color: rgb(120, 50, 186);
+            background-color: red;
         }
 
         .ps-user {
@@ -301,7 +302,15 @@
                 display: none;
             }
         }
-        
+        .truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -316,7 +325,7 @@
                     </button>
                     <div class="d-flex align-items-center">
                         <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
-                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px;">KANAVUHELP</span>
+                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px; color: red;">KANAVUHELP</span>
                     </div>
                 </div>
             </div>
@@ -353,12 +362,12 @@
                         </li>
                     </ul>
                                 
-                    <span class="d-flex justify-content-center">
+                    <!-- <span class="d-flex justify-content-center">
                         <i class="fa-solid fa-bell"></i>&nbsp;
                         <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
                             <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
                         </div>
-                    </span>
+                    </span> -->
                 </div>
 
             </div>
@@ -508,7 +517,12 @@
                                             <td><?= htmlspecialchars($submission->name) ?></td>
                                             <td><?= htmlspecialchars($submission->email) ?></td>
                                             <td><?= htmlspecialchars($submission->phone) ?></td>
-                                            <td><?= htmlspecialchars($submission->message) ?></td>
+                                            <td>
+                                                <span class="truncate"
+                                                       data-bs-toggle="tooltip"
+                                                       data-bs-placement="bottom"
+                                                         title="<?= htmlspecialchars($submission->message) ?>"><?= htmlspecialchars($submission->message) ?></span>
+                                            </td>
                                             <td><?= date('d-m-Y', strtotime($submission->created_at)) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -529,6 +543,14 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        });
+    </script>
      <script>
         document.addEventListener('DOMContentLoaded', function() {
             const tbody = document.getElementById('enquiries-tbody');

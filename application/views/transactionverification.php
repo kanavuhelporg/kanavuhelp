@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaction Verification</title>
+    <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -30,7 +31,7 @@
         }
 
         .ps-letter {
-            background-color: rgb(120, 50, 186);
+            background-color: red;
         }
 
         .ps-user {
@@ -408,13 +409,15 @@
             }
         }
         .truncate {
-            white-space: nowrap;         
-            overflow: hidden;            
-            text-overflow: ellipsis;     
-            max-width: 200px;            
-            display: inline-block;      
-            vertical-align: middle;      
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
         }
+
     </style>
 </head>
 <body>
@@ -477,7 +480,7 @@
                     </button>
                     <div class="d-flex align-items-center">
                         <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
-                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px;">KANAVUHELP</span>
+                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px; color:red;">KANAVUHELP</span>
                     </div>
                 </div>
             </div>
@@ -514,12 +517,12 @@
                         </li>
                     </ul>
                     
-                    <span class="d-flex justify-content-center">
+                    <!-- <span class="d-flex justify-content-center">
                         <i class="fa-solid fa-bell"></i>&nbsp;
                         <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
                             <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
                         </div>
-                    </span>
+                    </span> -->
                 </div>
             </div>
         </div><!-----------top-bar-end----------------------->
@@ -673,7 +676,18 @@
                                         <tr>
                                             <td><?= $index + 1; ?></td>
                                             <td><?= htmlspecialchars($donation->category); ?></td>
-                                            <td><?= htmlspecialchars($donation->cause_heading); ?></td>
+                                            <!-- ✅ Tooltip added only for Cause Heading -->
+                                            <td>
+                                                <span class="truncate"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom"
+                                                    data-bs-html="true"
+                                                    title="<?= htmlspecialchars($donation->cause_heading); ?>">
+                                                    <?= htmlspecialchars($donation->cause_heading); ?>
+                                                </span>
+                                            </td>
+
+
                                             <td><?= htmlspecialchars($donation->name); ?></td>
                                             <td><?= htmlspecialchars($donation->email); ?></td>
                                             <td><?= htmlspecialchars($donation->phoneno); ?></td>
@@ -715,6 +729,22 @@
             </div>
         </div>
     </div>
+    <style>
+        .tooltip.show .tooltip-inner {
+            background-color: #1e1e1e !important;
+            color: #fff !important;
+            font-size: 13px !important;
+            border-radius: 6px !important;
+            padding: 6px 10px !important;
+            max-width: 160px !important;   /* Critical for correct shape */
+            white-space: normal !important; /* Allows 2-line text */
+            text-align: center !important;
+        }
+
+        .tooltip.show .tooltip-arrow::before {
+            border-bottom-color: #1e1e1e !important;
+        }
+    </style>
 
     <!----------Logout Modal ------------->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
@@ -1214,5 +1244,18 @@
             }
         });
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+
 </body>
 </html>

@@ -118,7 +118,10 @@ public function get_cause_details()
 {
     return $this->get_all_cause_details();
 }
-
+public function totalUnverifiedCauses()
+{
+    return $this->db->where('verified', 0)->count_all_results('individualform');
+}
 public function get_total_causes()
 {
     return $this->db->count_all('individualform');

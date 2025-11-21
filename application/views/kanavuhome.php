@@ -31,6 +31,13 @@
     body {
       font-family: 'Sen', sans-serif;
     }
+    div[data-testid="resolution-label"],
+    .resolution-label,
+    #resolution-display,
+    .viewport-size,
+    .responsive-viewer-label {
+      display: none !important;
+    }
       /* count running */
     html {
       scroll-behavior: smooth;
@@ -91,7 +98,14 @@
     .offcanvas-body {
       font-size: 17px;
     }
-
+    .nav-link {
+      color: black !important;
+      /* font-weight: bold; */
+    }
+    .nav-link.active {
+      color: #E01A2B !important;
+      font-weight: bold;
+    }
     /* carousel text */
     .imgtext1,
     .imgtext2 {
@@ -250,7 +264,10 @@
       background-color: #FFD700;
       /* Yellow color */
     }
-
+    .nav-link.active {
+      color: #E01A2B !important;
+      font-weight: bold;
+    }
     .background-overlay {
       position: absolute;
       top: 0;
@@ -711,431 +728,519 @@
     border: 1px solid gray !important;
     background: none;
     box-shadow: none;
-}
+    }
 
-.card_button:hover {
-    border: 1px solid gray !important; /* No border on hover */
-    box-shadow: none; /* Prevent any shadow on hover */
-    background: none; /* Ensure background doesn't change */
-}
-.img-placeholder {
-    background-color: white; /* Placeholder background color */
-    display: block;
-    width: 100%; /* Ensures the space is consistent */
-    height: 230px; /* Matches the image height */
-    object-fit: cover; /* Maintains the aspect ratio */
-}
-.img-placeholder:not([src]) {
-    background: url('assets/img/1.svg') center center/cover no-repeat;
-}
-/* Ensure the dropdown menu is fully visible on smaller screens */
-@media (max-width: 768px) {
-  #userProfile .dropdown-menu {
-    right: 0 !important; /* Align the dropdown to the right edge */
-    left: auto !important; /* Override default left alignment */
-    min-width: 150px; /* Adjust the width as needed */
-  }
-  
-  #userProfile img {
-    width: 25px; /* Slightly smaller profile image for mobile */
-    height: 25px;
-  }
-  
-  #userProfile .dropdown-item {
-    text-align: center; /* Center-align items for better UX */
-  }
-}
-.carousel-item {
-    padding-left: 0px;
-    padding-right: 0px;
-}
-.carousel-inner {
-    width: 100%;
-    overflow: hidden;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: black !important;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-}
-
-@media (max-width: 768px) {
-    .carousel-item .card-container {
-        margin-bottom: 15px;
+    .card_button:hover {
+        border: 1px solid gray !important; /* No border on hover */
+        box-shadow: none; /* Prevent any shadow on hover */
+        background: none; /* Ensure background doesn't change */
+    }
+    .img-placeholder {
+        background-color: white; /* Placeholder background color */
+        display: block;
+        width: 100%; /* Ensures the space is consistent */
+        height: 230px; /* Matches the image height */
+        object-fit: cover; /* Maintains the aspect ratio */
+    }
+    .img-placeholder:not([src]) {
+        background: url('assets/img/1.svg') center center/cover no-repeat;
+    }
+    /* Ensure the dropdown menu is fully visible on smaller screens */
+    @media (max-width: 768px) {
+      #userProfile .dropdown-menu {
+        right: 0 !important; /* Align the dropdown to the right edge */
+        left: auto !important; /* Override default left alignment */
+        min-width: 150px; /* Adjust the width as needed */
+      }
+      
+      #userProfile img {
+        width: 25px; /* Slightly smaller profile image for mobile */
+        height: 25px;
+      }
+      
+      #userProfile .dropdown-item {
+        text-align: center; /* Center-align items for better UX */
+      }
+    }
+    .carousel-item {
+        padding-left: 0px;
+        padding-right: 0px;
     }
     .carousel-inner {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
+        width: 100%;
+        overflow: hidden;
     }
-}
-@media (max-width: 767px) {
-  .col-lg-4, .col-md-6 {
-    flex: 0 0 100%;  /* On mobile view, each card takes the full width */
-    max-width: 100%;
-  }
-}
-.custom-dropdown {
-    position: relative;
-    display: inline-block;
-    width: 45%;
-  }
 
-  .custom-dropdown select {
-    appearance: none; /* Remove the default browser styling */
-    -webkit-appearance: none; /* For Safari */
-    -moz-appearance: none; /* For Firefox */
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    width: 100%;
-    font-size: 16px;
-    cursor: pointer;
-  }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: black !important;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+    }
 
-  .custom-dropdown::after {
-    content: '▼'; /* Add a dropdown icon */
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    pointer-events: none; /* Make the icon unclickable */
-    font-size: 14px;
-    color: #666;
-  }
-  /* kani*/
+    @media (max-width: 768px) {
+        .carousel-item .card-container {
+            margin-bottom: 15px;
+        }
+        .carousel-inner {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+        }
+    }
+    @media (max-width: 767px) {
+      .col-lg-4, .col-md-6 {
+        flex: 0 0 100%;  /* On mobile view, each card takes the full width */
+        max-width: 100%;
+      }
+    }
+    .custom-dropdown {
+        position: relative;
+        display: inline-block;
+        width: 45%;
+      }
+
+    .custom-dropdown select {
+      appearance: none; /* Remove the default browser styling */
+      -webkit-appearance: none; /* For Safari */
+      -moz-appearance: none; /* For Firefox */
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .custom-dropdown::after {
+      content: '▼'; /* Add a dropdown icon */
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      pointer-events: none; /* Make the icon unclickable */
+      font-size: 14px;
+      color: #666;
+    }
+    /* kani*/
  
 
 
 
 
-.card-container {
-    transition: transform 0.2s;
-}
-.card-container:hover {
-    transform: translateY(-5px);
-}
-/* .card {
-    width: 100%;
-    max-width: 300px;
-    height: 480px;
-    border-radius: 15px;
-    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 8px 30px rgba(0, 0, 0, 0.1); 
-    overflow: hidden;
-} */
-.card {
-    width: 100%;
-    max-width: 300px;
-    height: 480px;
-    border-radius: 15px;
-    box-shadow: none; /* Explicitly remove default box-shadow */
-    overflow: hidden;
-}
-.card:hover {
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
-}
-.card-img-top {
-    width: 100%;
-    height: 230px;
-    object-fit: cover;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-}
-.card-body {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-}
-.card-title {
-    font-size: 18px;
-   /*  font-weight: bold; */
-    margin-bottom: 10px;
-    line-height: 1.3;
-    color:rgb(22, 24, 26); 
-    
-}
-.card-text {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 8px;
-}
-.progress {
-    height: 8px; /* Thinner progress bar to match the image */
-    border-radius: 5px;
-    background-color: #f8d7da; /* Light pink background */
-}
-.progress-bar {
-    background-color: #EB2D32; /* Red color for progress */
-}
-.btn.bg-danger {
-    border-radius: 25px;
-    font-size: 14px;
-    padding: 8px 20px; /* Adjusted padding for better button size */
-    background-color: #EB2D32;
-    border: none;
-}
-.btn.bg-danger:hover {
-    background-color: #d1262b; /* Slightly darker red on hover */
-}
-
-/* Single Row for Supporters and Created by */
-.supporters-section, .created-by-section {
-   
-    display: flex;
-    align-items: center;
-   
-}
-.supporters-section {
-    flex: 10; /* Give more space to Supporters */
-    min-width: 0;
-    overflow: hidden; /* Prevent overflow */
-}
-.created-by-section {
-    flex: 8; /* Minimize space for Created by */
-    justify-content: flex-end;
-   min-width: 0;
-}
-
-.supporters-section p, .created-by-section p {
-    font-size: 14px;
-   /* color: #6c757d;  Muted text color */
-   color:black;
-}
-.supporters-section p {
-    display: flex;
-    align-items: center;
-    white-space: normal; /* Allow wrapping if needed */
-}
-.supporters-section .supporter-count {
-    font-weight: bold;
-    font-size: 16px;
-    color:black; /* Bold the number */
-    margin-right: 4px; /* Space between number and "Supporters" */
-}
-/* Truncate Text with Ellipsis */
-.truncate-text {
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 60px;
-    cursor: pointer;
-}
-.truncate-text1 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100px;
-    text-align: center;
-}
-.truncate-text:hover:after {
-    content: attr(data-fulltext);
-    position: absolute;
-    top: -30px;
-    left: 0;
-    background-color: #333;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    white-space: normal;
-    z-index: 10;
-    font-size: 14px;
-    max-width: 250px;
-    word-break: break-word;
-}
-
-/* Share Icon and Text */
-.share-section {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-.share-section i {
-    color: #EB2D32;
-    font-size: 16px;
-}
-.share-section span {
-    color: #EB2D32;
-    font-size: 14px;
-    font-weight: 500;
-    margin-left: 5px;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 767px) {
+    .card-container {
+        transition: transform 0.2s;
+    }
+    .card-container:hover {
+        transform: translateY(-5px);
+    }
+    /* .card {
+        width: 100%;
+        max-width: 300px;
+        height: 480px;
+        border-radius: 15px;
+        /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 8px 30px rgba(0, 0, 0, 0.1); 
+        overflow: hidden;
+    } */
     .card {
-        max-width: 100%;
-        height: auto;
-        margin: 0 auto 15px;
+        width: 100%;
+        max-width: 300px;
+        height: 480px;
+        border-radius: 15px;
+        box-shadow: none; /* Explicitly remove default box-shadow */
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+    }
+    .card:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
     }
     .card-img-top {
-        height: 200px;
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    .card-body {
+        /* padding: 15px; */
+        display: flex;
+        flex-direction: column;
     }
     .card-title {
-        font-size: 16px;
+        font-size: 18px;
+      /*  font-weight: bold; */
+        margin-bottom: 10px;
+        line-height: 1.3;
+        color:rgb(22, 24, 26); 
+        
     }
     .card-text {
-        font-size: 12px;
-    }
-    .supporters-section p, .created-by-section p {
-        font-size: 12px;
-    }
-    .supporters-section i, .created-by-section i {
-        font-size: 14px;
-    }
-    .created-by-section .rounded-circle {
-        width: 25px;
-        height: 25px;
-    }
-    .created-by-section .bi-person-fill {
         font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+    .progress {
+        height: 8px; /* Thinner progress bar to match the image */
+        border-radius: 5px;
+        background-color: #f8d7da; /* Light pink background */
+    }
+    .progress-bar {
+        background-color: #EB2D32; /* Red color for progress */
     }
     .btn.bg-danger {
-        font-size: 12px;
-        padding: 6px 15px;
+        border-radius: 25px;
+        font-size: 14px;
+        padding: 8px 20px; /* Adjusted padding for better button size */
+        background-color: #EB2D32;
+        border: none;
+    }
+    .btn.bg-danger:hover {
+        background-color: #d1262b; /* Slightly darker red on hover */
+    }
+
+    /* Single Row for Supporters and Created by */
+    .supporters-section, .created-by-section {
+      
+        display: flex;
+        align-items: center;
+      
+    }
+    .supporters-section {
+        flex: 10; /* Give more space to Supporters */
+        min-width: 0;
+        overflow: hidden; /* Prevent overflow */
+    }
+    .created-by-section {
+        flex: 8; /* Minimize space for Created by */
+        justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .supporters-section p, .created-by-section p {
+        font-size: 14px;
+      /* color: #6c757d;  Muted text color */
+      color:black;
+    }
+    .supporters-section p {
+        display: flex;
+        align-items: center;
+        white-space: normal; /* Allow wrapping if needed */
+    }
+    .supporters-section .supporter-count {
+        font-weight: bold;
+        font-size: 16px;
+        color:black; /* Bold the number */
+        margin-right: 4px; /* Space between number and "Supporters" */
+    }
+    /* Truncate Text with Ellipsis */
+    .truncate-text {
+        position: relative;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60px;
+        cursor: pointer;
+    }
+    .truncate-text1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100px;
+        text-align: center;
+    }
+    .truncate-text:hover:after {
+        content: attr(data-fulltext);
+        position: absolute;
+        top: -30px;
+        left: 0;
+        background-color: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        white-space: normal;
+        z-index: 10;
+        font-size: 14px;
+        max-width: 250px;
+        word-break: break-word;
+    }
+
+    /* Share Icon and Text */
+    .share-section {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .share-section i {
+        color: #EB2D32;
+        font-size: 16px;
     }
     .share-section span {
-        font-size: 12px;
-    }
-}
-
-.carousel-indicators {
-  bottom: 10px;
-}
-.carousel-indicators [data-bs-target] {
-  width: 30px;
-  height: 4px;
-  background-color: #A9A9A9;
-  border-radius: 2px;
-  opacity: 0.5;
-  transition: opacity 0.3s, background-color 0.3s;
-}
-.carousel-indicators .active {
-  background-color: #ED3136;
-  opacity: 1;
-}
-@media (max-width: 768px) {
-  .carousel-indicators [data-bs-target] {
-    width: 20px;
-    height: 3px;
-  }
-}
-
-  /* Raising the funds css style by poovarasan */
-  .step-circle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: #e6e6e6;
-      color: black;
-      text-align: center;
-      line-height: 40px;
-      font-weight: bold;
+        color: #EB2D32;
+        font-size: 14px;
+        font-weight: 500;
+        margin-left: 5px;
     }
 
-    .step-item.active .step-circle {
-      background-color: #ED3136;
-      color: white;
+    /* Mobile Responsiveness */
+    @media (max-width: 767px) {
+        .card {
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto 15px;
+        }
+        .card-img-top {
+            height: 200px;
+        }
+        .card-title {
+            font-size: 16px;
+        }
+        .card-text {
+            font-size: 12px;
+        }
+        .supporters-section p, .created-by-section p {
+            font-size: 12px;
+        }
+        .supporters-section i, .created-by-section i {
+            font-size: 14px;
+        }
+        .created-by-section .rounded-circle {
+            width: 25px;
+            height: 25px;
+        }
+        .created-by-section .bi-person-fill {
+            font-size: 16px;
+        }
+        .btn.bg-danger {
+            font-size: 12px;
+            padding: 6px 15px;
+        }
+        .share-section span {
+            font-size: 12px;
+        }
     }
 
-    .video-box {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-      width: fit-content;
+    .carousel-indicators {
+      bottom: 10px;
+    }
+    .carousel-indicators button {
+      width: 30px;
+      height: 4px;
+      background-color: #ff9999 !important;
+      border-radius: 2px;
+      opacity: 0.5;
+      transition: opacity 0.3s, background-color 0.3s;
     }
 
-    #progressContainer {
-      width: 100%;
-      height: 8px;
-      background-color: #ddd;
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 8px;
-    }
-
-    #progressBar {
-      width: 0%;
-      height: 100%;
-      background-color: #ED3136;
-      transition: width 0.1s linear;
-    }
-
-    .step-item i {
-      visibility: hidden;
-    }
-
-    .step-item.active i {
-      visibility: visible;
-    }
-
-    #playPauseBtn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 20px;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 2;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .video-box:hover #playPauseBtn {
+    .carousel-indicators .active {
+      background-color: #ED3136 !important;
       opacity: 1;
-      pointer-events: auto;
     }
-
-    #playPauseBtn:hover {
-      background-color: rgba(0, 0, 0, 0.7);
-      transform: scale(1.1);
-    }
-
-    video {
-      width: 500px;
-      height: auto;
-      object-fit: cover;
-      display: block;
-    }
-    .raise_video {
-      position: relative;
-      width: 100%;
-      height: auto;
-      overflow: hidden;
-    }
-
     @media (max-width: 768px) {
-      .step-circle {
-        margin-top: 5px;
+      .carousel-indicators {
+        bottom: -10px !important;
       }
-
-      video {
-        width: 100%;
-        height: auto;
+      .carousel-indicators button {
+        width: 20px;
+        height: 3px;
+        
       }
     }
+
+      /* Raising the funds css style by poovarasan */
+      .step-circle {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: #e6e6e6;
+          color: black;
+          text-align: center;
+          line-height: 40px;
+          font-weight: bold;
+        }
+
+        .step-item.active .step-circle {
+          background-color: #ED3136;
+          color: white;
+        }
+
+        .video-box {
+          position: relative;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);
+          margin-bottom: 20px;
+          width: fit-content;
+        }
+
+        #progressContainer {
+          width: 100%;
+          height: 8px;
+          background-color: #ddd;
+          border-radius: 4px;
+          overflow: hidden;
+          margin-top: 8px;
+        }
+
+        #progressBar {
+          width: 0%;
+          height: 100%;
+          background-color: #ED3136;
+          transition: width 0.1s linear;
+        }
+
+        .step-item i {
+          visibility: hidden;
+        }
+
+        .step-item.active i {
+          visibility: visible;
+        }
+
+        #playPauseBtn {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          font-size: 20px;
+          color: white;
+          background-color: rgba(0, 0, 0, 0.5);
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 2;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+        }
+
+        .video-box:hover #playPauseBtn {
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        #playPauseBtn:hover {
+          background-color: rgba(0, 0, 0, 0.7);
+          transform: scale(1.1);
+        }
+
+        video {
+          width: 500px;
+          height: auto;
+          object-fit: cover;
+          display: block;
+        }
+        .raise_video {
+          position: relative;
+          width: 100%;
+          height: auto;
+          overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+          .step-circle {
+            margin-top: 5px;
+          }
+
+          video {
+            width: 100%;
+            height: auto;
+          }
+          #userProfile .dropdown-menu {
+        right: 0 !important; /* Align the dropdown to the right edge */
+        left: auto !important; /* Override default left alignment */
+        min-width: 150px; /* Adjust the width as needed */
+      }
+      
+      #userProfile img {
+        width: 25px; /* Slightly smaller profile image for mobile */
+        height: 25px;
+      }
+      
+      #userProfile .dropdown-item {
+        text-align: center; /* Center-align items for better UX */
+      }
+        }
+
   </style>
 </head>
 
 <body>
-  <nav id="header" class="navbar navbar-expand-lg bg-light py-4 fixed-top">
-    
+  <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
+                <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+            </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">
+             <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a id="kanavuhomepage" class="nav-link mx-lg-2 active" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+                        </li>
+                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
+                            <li class="nav-item">
+                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                    <div class="d-flex align-items-center ms-auto">
+                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown" id="userProfile">
+                                    <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
+                                        <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
+                                    </div>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+                                                <i class="fas fa-sign-out-alt"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+      </div>
+    </div>
   </nav>
 <br>
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
@@ -1167,8 +1272,8 @@
             </ul>
           </div>
         </div>
-      </div>
-<br>
+    </div>
+    <br>
       <!-- Slide 2 -->
       <div class="carousel-item">
         <img src="<?= base_url('assets/img/old2.png') ?>" class="d-block w-100" alt="Image 2">
@@ -1192,7 +1297,7 @@
           </div>
         </div>
       </div>
-    </div>
+  </div>
   </div>
 
    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="prev">
@@ -1342,8 +1447,9 @@
 
   <!-- Fundraiser Cards with Fixed Size -->  <!--kani-->
   <div class="container pt-4"> 
-    <div class="row g-4 raisercard" id="fundraiserCards">
+    <div class="row g-4" id="fundraiserCards">
         <?php if (!empty($fundraisers)): ?>
+
             <?php 
             // Helper to calculate progress
             function getProgressPercentage($fundraiser) {
@@ -1351,7 +1457,7 @@
                 return min(($fundraiser->raised_amount / $fundraiser->amount) * 100, 100);
             }
 
-            // Sort fundraisers by percentage (ascending)
+            // Sort by lowest percentage
             usort($fundraisers, function($a, $b) {
                 return getProgressPercentage($a) <=> getProgressPercentage($b);
             });
@@ -1369,189 +1475,126 @@
 
                 $progress_percentage = getProgressPercentage($fundraiser);
             ?>
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3 d-flex card-container">
-                <div class="card h-100 w-100 d-flex flex-column shadow-sm">
-                    
+
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+
+                <div class="card h-100 shadow-sm">
+
                     <!-- Cover Image -->
                     <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>">
                         <img src="<?= $imageSrc ?>" 
-                            alt="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>"
-                            class="card-img-top">
+                             alt="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>"
+                             class="card-img-top">
                     </a>
 
                     <div class="card-body d-flex flex-column">
-                        
+
                         <!-- Title -->
-                        <div class="flex-grow-1 mb-3">
-                            <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>" 
-                              class="text-dark text-decoration-none">
-                                <h5 class="card-title text-truncate">
-                                    <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
-                                </h5>
-                            </a>
-                        </div>
+                        <h5 class="card-title text-truncate">
+                            <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
+                        </h5>
 
                         <!-- Supporters & Creator -->
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div class="text-muted small d-flex align-items-center">
-                                <img src="<?= base_url('assets/img/heart1.svg') ?>" alt="Supporter Icon" width="16" height="16" class="me-1">
-                                <?= intval($fundraiser->supporters_count) ?> Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
-                            </div>
-                            <div class="text-muted small text-truncate" style="max-width: 50%;">
-                                <img src="<?= base_url('assets/img/Frame.svg') ?>" alt="Created Icon" width="20" height="20">
-                                By <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+                        <div class="d-flex justify-content-between mb-2 small text-muted">
+                            <span>
+                                <img src="<?= base_url('assets/img/heart1.svg') ?>" width="16" class="me-1">
+                                <?= intval($fundraiser->supporters_count) ?> 
+                                Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
+                            </span>
+
+                            <span class="text-truncate" style="max-width: 55%;">
+                                <img src="<?= base_url('assets/img/Frame.svg') ?>" width="16" class="me-1">
+                                Created By <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+                            </span>
+                        </div>
+
+                        <!-- Raised + Progress -->
+                        <p class="mb-1 small">
+                            <strong>₹<?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> / 
+                            ₹<?= number_format($fundraiser->amount) ?></strong>
+                        </p>
+
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-danger" 
+                                 style="width: <?= $progress_percentage ?>%;">
                             </div>
                         </div>
 
-                          <!-- Raised Amount & Progress -->
-                          <div class="mt-2">
-                            <p class="card-text mb-1 small">
-                                <strong>
-                                    ₹<?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> / ₹<?= number_format($fundraiser->amount) ?>
-                                </strong>
-                            </p>
-                            <div class="progress" style="height: 8px; background-color: #f8d7da;">
-                                <div class="progress-bar bg-danger" 
-                                    style="width: <?= $progress_percentage ?>%;" 
-                                    role="progressbar" 
-                                    aria-valuenow="<?= $progress_percentage ?>" 
-                                    aria-valuemin="0" 
-                                    aria-valuemax="100">
-                                </div>
-                            </div>
-                          </div>
-
-                        <!-- Donate Button & Share -->
-                        <div class="d-flex align-items-center mt-3 justify-content-between">
+                        <!-- Donate + Share -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
                             <?php if ($is_goal_reached): ?>
                                 <span class="badge bg-success">Completed</span>
                             <?php else: ?>
-                                <button type="button" class="btn bg-danger text-white btn-sm donate_btn" 
+                                <button class="btn btn-danger btn-sm" 
                                         onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">
                                     Donate
                                 </button>
                             <?php endif; ?>
 
-                            <div class="d-flex align-items-center text-danger" style="cursor: pointer;"
-                                onclick="shareCause(
+                            <div class="text-danger d-flex align-items-center" style="cursor:pointer;"
+                                 onclick="shareCause(
                                     '<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>',
                                     '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>',
                                     '<?= $imageSrc ?>'
-                                )">
+                                 )">
                                 <i class="bi bi-share fs-6"></i>
-                                <span class="fs-6 ms-1">Share</span>
+                                <span class="ms-1 fs-6">Share</span>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
+
             <?php endforeach; ?>
         <?php else: ?>
             <p class="text-center">No fundraisers available at the moment.</p>
         <?php endif; ?>
     </div>
-  </div>
+</div>
+
 
 <!-- Responsive styles -->
 <style>
-  /* FIX FOR TABLET LAYOUT ISSUE */
-  @media (min-width: 768px) and (max-width: 991px) {
-    #fundraiserCards .raisercard {
-      flex-direction: row !important;
-      display: flex !important;
-      flex-wrap: wrap !important;
+  /* Remove forced spacing */
+#fundraiserCards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Card hover */
+.card {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Image FIX – full cover */
+.card-img-top {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Mobile optimizations */
+@media (max-width: 576px) {
+    .card-img-top {
+        height: 180px;
+        object-fit: cover;
+        object-position: center;
     }
-    
-    #fundraiserCards .col-12.col-sm-6.col-md-6.col-lg-3 {
-      flex: 0 0 50% !important;
-      width: 50% !important;
-      max-width: 50% !important;
+    .card-title {
+        font-size: 1rem;
     }
-  }
+}
 
-  /* Desktop layout (992px and above) */
-  @media (min-width: 992px) {
-    #fundraiserCards .col-12.col-sm-6.col-md-6.col-lg-3 {
-      flex: 0 0 25% !important;
-      width: 25% !important;
-      max-width: 25% !important;
-    }
-  }
-
-  /* Mobile layout (below 768px) */
-  @media (max-width: 767px) {
-    #fundraiserCards .col-12.col-sm-6.col-md-6.col-lg-3 {
-      flex: 0 0 100% !important;
-      width: 100% !important;
-      max-width: 100% !important;
-    }
-  }
-
-  /* Base styles */
-  #fundraiserCards .col-12 {
-      padding: 10px; 
-  }
-
-  .card-container {
-      display: block; 
-      margin-bottom: 20px;
-  }
-  
-  #fundraiserCards {
-      display: flex;
-      flex-wrap: wrap;
-  }
-  
-  #fundraiserCards > div {
-      display: flex;
-  }
-
-  .card {
-      height: 100%;
-      transition: transform 0.2s;
-  }
-  
-  .card:hover {
-      transform: translateY(-5px);
-  }
-  
-  .card-img-top {
-      width: 100%;
-      max-height: 200px;
-      object-fit: cover;
-  }
-  
-  .card-title {
-      font-size: 1.1rem;
-      line-height: 1.4;
-  }
-  
-  @media (max-width: 767px) {
-      .card-img-top {
-          max-height: 180px;
-      }
-      .card-title {
-          font-size: 1rem;
-          min-height: 50px;
-      }
-      .card-body {
-          padding: 1rem !important;
-      }
-      .btn-sm {
-          padding: 0.4rem 0.8rem;
-          font-size: 0.8rem;
-      }
-  }
-  
-  @media (max-width: 576px) {
-      .card-img-top {
-          max-height: 160px;
-      }
-      .card-title {
-          font-size: 0.9rem;
-          min-height: 40px;
-      }
-  }
 </style>
   <!-- kani1 -->
 
@@ -2395,21 +2438,46 @@ function openDonationModal() {
   // Simulate user login status (from backend or session)
   var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
 
-  $.ajax({
-      type:"get",
-      url:"kanavuhelp/getHeader",
-      success:(result)=>{
-           document.getElementById("header").innerHTML = result;
-           let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
-           console.log(entry);
-           if(entry > 0){
-           document.getElementById("kanavuhomepage").classList.add("text-danger","fw-bold");
-           }
-      },
-      error:(error)=>{
-           document.getElementById("header").innerHTML = "";
-      }
-    }); 
+  // $.ajax({
+  //     type:"get",
+  //     url:"kanavuhelp/getHeader",
+  //     success:(result)=>{
+  //          document.getElementById("header").innerHTML = result;
+  //          let entry = "<?=$this->session->userdata("entry")?>" ? "<?=$this->session->userdata("entry")?>" : 0;
+  //          console.log(entry);
+  //          if(entry > 0){
+  //          document.getElementById("kanavuhomepage").classList.add("text-danger","fw-bold");
+  //          }
+  //     },
+  //     error:(error)=>{
+  //          document.getElementById("header").innerHTML = "";
+  //     }
+  //   }); 
+
+  document.addEventListener('DOMContentLoaded', function() {
+        // Get current page URL
+        const currentUrl = window.location.href;
+        
+        // Get all navigation links
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // Loop through each link
+        navLinks.forEach(link => {
+            // Check if the link's href matches the current URL
+            if (link.href === currentUrl) {
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+                // Add active class to current link
+                link.classList.add('active');
+            }
+        });
+        
+        // Special handling for about page which might have different URL patterns
+        if (currentUrl.includes('/kanavuhome#how-it-works-section')) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            document.getElementById('kanavuhomepage').classList.add('active');
+        }
+    });
 
     $.ajax({
       type:"get",

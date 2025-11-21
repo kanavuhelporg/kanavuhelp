@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
+  <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
@@ -24,7 +25,7 @@
     }
 
     .ps-letter {
-      background-color: rgb(120, 50, 186);
+      background-color: red;
     }
 
     .ps-user {
@@ -165,7 +166,7 @@
           </button>
           <div class="d-flex align-items-center">
             <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
-            <span class="heading-ponsoft fs-5 position-relative" style="top:1px;">KANAVUHELP</span>
+            <span class="heading-ponsoft fs-5 position-relative " style="top:1px; color:red;">KANAVUHELP</span>
           </div>
         </div>
       </div>
@@ -202,12 +203,12 @@
             </li>
           </ul>
                     
-          <span class="d-flex justify-content-center">
+          <!-- <span class="d-flex justify-content-center">
             <i class="fa-solid fa-bell"></i>&nbsp;
               <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
                 <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
               </div>
-          </span>
+          </span> -->
         </div>
       </div>
     </div><!-----------top-bar-end----------------------->
@@ -229,36 +230,28 @@
           </li>
 
           <li class="nav-item py-2">
-            <a href="<?= base_url('transactionverification') ?>"
-              class="nav-link text-decoration-none <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
-              style="font-weight:400;color:black;">
-              <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
-            </a>
-          </li>
-
-          <li class="nav-item py-2">
-            <a href="<?= base_url('contact_submissions') ?>"
-              class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
-              style="font-weight:400;color:black;">
-              <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
-            </a>
-          </li>
-
-          <li class="nav-item py-2">
-            <a href="<?= base_url('causesverification') ?>"
-              class="nav-link text-decoration-none <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
-              style="font-weight:400;color:black;">
-              <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="#"
-              class="nav-link text-decoration-none"
-              style="font-weight:400;color:black;">
-              <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
-            </a>
-          </li>
+                        <a href="<?= base_url('transactionverification') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('contact_submissions') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="<?= base_url('causesverification') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black; border-radius: 10px;">
+                          <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+                        </a>
+                    </li>
 
           <li class="nav-item py-2">
             <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
@@ -284,7 +277,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <a href="#" class="btn btn-danger">Logout</a>
+              <a href="<?= base_url('admin/logout') ?>" class="btn btn-danger">Logout</a>
             </div>
           </div>
         </div>
@@ -312,17 +305,19 @@
 
             <li class="nav-item py-2 px-3">
               <a href="<?= base_url('transactionverification') ?>"
-                class="nav-link text-decoration-none <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
-                style="font-weight:400;color:black;">
-                <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction
+                class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
+                style="font-weight:400;color:black; position: relative;">
+
+                  <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
               </a>
             </li>
 
             <li class="nav-item py-2 px-3">
               <a href="<?= base_url('contact_submissions') ?>"
                 class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
-                style="font-weight:400;color:black;">
-                <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
+                style="font-weight:400;color:black; position: relative;">
+
+                  <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
               </a>
             </li>
 
@@ -396,31 +391,16 @@
     // setup 
     const data = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [{
-          label: 'outcome',
+      datasets: [
+        {
+          label: 'Outcome',
           data: [10000, 20000, 30000, 40000, 50000, 60000, 70000, 10000, 20000, 80000, 30000, 12000],
-          backgroundColor: [
-            'pink',
-            'pink',
-            'pink',
-            'pink',
-            'pink',
-            'pink',
-            'pink'
-          ]
+          backgroundColor: Array(12).fill('pink')
         },
         {
           label: 'Income',
           data: [20000, 35000, 40000, 50000, 20000, 10000, 25000, 22000, 24000, 30000, 40000, 42000],
-          backgroundColor: [
-            'orangered',
-            'orangered',
-            'orangered',
-            'orangered',
-            'orangered',
-            'orangered',
-            'orangered'
-          ]
+          backgroundColor: Array(12).fill('orangered')
         }
       ]
     };
@@ -443,6 +423,11 @@
           y: {
             beginAtZero: true
           }
+        },
+        // 👇 Add cursor pointer effect
+        onHover: (event, elements) => {
+          const target = event.native ? event.native.target : event.chart.canvas;
+          target.style.cursor = elements.length ? 'pointer' : 'default';
         }
       }
     };
@@ -469,6 +454,7 @@
       });
     });
   </script>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

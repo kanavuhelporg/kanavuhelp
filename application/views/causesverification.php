@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cause verification</title>
+    <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- jQuery library -->
@@ -43,7 +44,7 @@
         }
 
         .ps-letter {
-            background-color: rgb(120, 50, 186);
+            background-color: red;
         }
 
         .ps-user {
@@ -298,6 +299,15 @@
             background-color: rgba(120, 50, 186, 0.1);
         } */
 
+        .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+        display: inline-block;
+        vertical-align: middle;
+        }
+
     </style>
 </head>
 
@@ -367,7 +377,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     </button>
                     <div class="d-flex align-items-center">
                         <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
-                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px;">KANAVUHELP</span>
+                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px; color:red;">KANAVUHELP</span>
                     </div>
                 </div>
             </div>
@@ -404,12 +414,12 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         </li>
                     </ul>
                                 
-                    <span class="d-flex justify-content-center">
+                    <!-- <span class="d-flex justify-content-center">
                         <i class="fa-solid fa-bell"></i>&nbsp;
                         <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
                             <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
                         </div>
-                    </span>
+                    </span> -->
                 </div>
             </div>
         </div><!-----------top-bar-end----------------------->
@@ -593,11 +603,25 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                         <td><?= htmlspecialchars($donation->location); ?></td>
                                         <td><?= htmlspecialchars($donation->age); ?></td>
                                         <td><?= htmlspecialchars($donation->end_date); ?></td>
-                                        <td style="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                                            <button data-bs-toggle="modal" data-bs-target="#viewdocuments" style="outline:none;border:none;" class="bg-transparent text-decoration-underline" onclick="viewDocuments('<?=$donation->cover_image?>')">
-                                                <?= htmlspecialchars($donation->cause_heading); ?>
+                                        <td>
+                                            <button 
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#viewdocuments"
+                                                style="outline:none;border:none;"
+                                                class="bg-transparent text-decoration-underline truncate"
+                                                onclick="viewDocuments('<?= $donation->cover_image ?>')">
+
+                                                <span  
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    data-bs-html="true"
+                                                    title="<?= htmlspecialchars($donation->cause_heading); ?>">
+                                                    <?= htmlspecialchars($donation->cause_heading); ?>
+                                                </span>
+
                                             </button>
                                         </td>
+
                                         <td><?= date('d-m-Y', strtotime($donation->created_at)); ?></td>
                                         <td><?= htmlspecialchars($donation->username); ?></td>
                                         <td><?= htmlspecialchars($donation->raised_amount); ?></td>
@@ -641,7 +665,32 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     </ul>
                 </nav>
             </div>
+            <style>
+                .tooltip-inner {
+                    background-color: #1e1e1e !important;
+                    color: white !important;
+                    font-size: 14px;
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    text-align: center;
+                    max-width: 250px !important; /* controls wrapping like screenshot */
+                    white-space: normal !important;
+                }
 
+                .tooltip .tooltip-arrow::before {
+                    border-top-color: #1e1e1e !important;
+                }
+            </style>
+            <script>
+                // ✅ Initialize Bootstrap tooltips globally
+                document.addEventListener("DOMContentLoaded", function() {
+                const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+                });
+
+            </script>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const tbody = document.getElementById('causes-tbody');
