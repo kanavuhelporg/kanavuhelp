@@ -527,6 +527,9 @@ class admin extends CI_Controller
 
     public function contact_submissions()
 {
+    if (!$this->session->userdata('adminId')) {
+        redirect('admin');
+    }
     // Fetch all enquiries
     $data["counts"] = count($this->db->get('contact_us')->result());
     $data['submissions'] = $this->db->order_by('created_at', 'DESC')->get('contact_us')->result();

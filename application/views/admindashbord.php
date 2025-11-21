@@ -309,30 +309,6 @@
                 style="font-weight:400;color:black; position: relative;">
 
                   <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
-
-                  <?php 
-                      $unverified = $this->session->userdata("unverifiedtransactions");
-                      if (!empty($unverified) && $unverified > 0): 
-                  ?>
-                      <!-- Perfect round badge with centered number -->
-                      <span style="
-                          background: red;
-                          color: white;
-                          width: 22px;
-                          height: 22px;
-                          display: flex;
-                          align-items: center;
-                          justify-content: center;
-                          border-radius: 50%;
-                          font-size: 12px;
-                          position: absolute;
-                          right: 8px;
-                          top: 6px;
-                          font-weight: bold;
-                      ">
-                          <?= $unverified ?>
-                      </span>
-                  <?php endif; ?>
               </a>
             </li>
 
@@ -342,30 +318,6 @@
                 style="font-weight:400;color:black; position: relative;">
 
                   <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
-
-                  <?php 
-                    $enquiryCount = $this->session->userdata("enquiryCount");
-
-                    if (!empty($enquiryCount) && $enquiryCount > 0): 
-                    ?>
-              <span style="
-                  background: red;
-                  color: white;
-                  width: 22px;
-                  height: 22px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  border-radius: 50%;
-                  font-size: 12px;
-                  position: absolute;
-                  right: 10px;
-                  top: 6px;
-                  font-weight: bold;
-              ">
-                  <?= $enquiryCount ?>
-              </span>
-              <?php endif; ?>
               </a>
             </li>
 

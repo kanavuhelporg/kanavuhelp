@@ -32,12 +32,12 @@
       font-family: 'Sen', sans-serif;
     }
     div[data-testid="resolution-label"],
-  .resolution-label,
-  #resolution-display,
-  .viewport-size,
-  .responsive-viewer-label {
-    display: none !important;
-  }
+    .resolution-label,
+    #resolution-display,
+    .viewport-size,
+    .responsive-viewer-label {
+      display: none !important;
+    }
       /* count running */
     html {
       scroll-behavior: smooth;
@@ -264,7 +264,7 @@
       background-color: #FFD700;
       /* Yellow color */
     }
-.nav-link.active {
+    .nav-link.active {
       color: #E01A2B !important;
       font-weight: bold;
     }
@@ -728,451 +728,446 @@
     border: 1px solid gray !important;
     background: none;
     box-shadow: none;
-}
+    }
 
-.card_button:hover {
-    border: 1px solid gray !important; /* No border on hover */
-    box-shadow: none; /* Prevent any shadow on hover */
-    background: none; /* Ensure background doesn't change */
-}
-.img-placeholder {
-    background-color: white; /* Placeholder background color */
-    display: block;
-    width: 100%; /* Ensures the space is consistent */
-    height: 230px; /* Matches the image height */
-    object-fit: cover; /* Maintains the aspect ratio */
-}
-.img-placeholder:not([src]) {
-    background: url('assets/img/1.svg') center center/cover no-repeat;
-}
-/* Ensure the dropdown menu is fully visible on smaller screens */
-@media (max-width: 768px) {
-  #userProfile .dropdown-menu {
-    right: 0 !important; /* Align the dropdown to the right edge */
-    left: auto !important; /* Override default left alignment */
-    min-width: 150px; /* Adjust the width as needed */
-  }
-  
-  #userProfile img {
-    width: 25px; /* Slightly smaller profile image for mobile */
-    height: 25px;
-  }
-  
-  #userProfile .dropdown-item {
-    text-align: center; /* Center-align items for better UX */
-  }
-}
-.carousel-item {
-    padding-left: 0px;
-    padding-right: 0px;
-}
-.carousel-inner {
-    width: 100%;
-    overflow: hidden;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: black !important;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-}
-
-@media (max-width: 768px) {
-    .carousel-item .card-container {
-        margin-bottom: 15px;
+    .card_button:hover {
+        border: 1px solid gray !important; /* No border on hover */
+        box-shadow: none; /* Prevent any shadow on hover */
+        background: none; /* Ensure background doesn't change */
+    }
+    .img-placeholder {
+        background-color: white; /* Placeholder background color */
+        display: block;
+        width: 100%; /* Ensures the space is consistent */
+        height: 230px; /* Matches the image height */
+        object-fit: cover; /* Maintains the aspect ratio */
+    }
+    .img-placeholder:not([src]) {
+        background: url('assets/img/1.svg') center center/cover no-repeat;
+    }
+    /* Ensure the dropdown menu is fully visible on smaller screens */
+    @media (max-width: 768px) {
+      #userProfile .dropdown-menu {
+        right: 0 !important; /* Align the dropdown to the right edge */
+        left: auto !important; /* Override default left alignment */
+        min-width: 150px; /* Adjust the width as needed */
+      }
+      
+      #userProfile img {
+        width: 25px; /* Slightly smaller profile image for mobile */
+        height: 25px;
+      }
+      
+      #userProfile .dropdown-item {
+        text-align: center; /* Center-align items for better UX */
+      }
+    }
+    .carousel-item {
+        padding-left: 0px;
+        padding-right: 0px;
     }
     .carousel-inner {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
+        width: 100%;
+        overflow: hidden;
     }
-}
-@media (max-width: 767px) {
-  .col-lg-4, .col-md-6 {
-    flex: 0 0 100%;  /* On mobile view, each card takes the full width */
-    max-width: 100%;
-  }
-}
-.custom-dropdown {
-    position: relative;
-    display: inline-block;
-    width: 45%;
-  }
 
-  .custom-dropdown select {
-    appearance: none; /* Remove the default browser styling */
-    -webkit-appearance: none; /* For Safari */
-    -moz-appearance: none; /* For Firefox */
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    width: 100%;
-    font-size: 16px;
-    cursor: pointer;
-  }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: black !important;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+    }
 
-  .custom-dropdown::after {
-    content: '▼'; /* Add a dropdown icon */
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    pointer-events: none; /* Make the icon unclickable */
-    font-size: 14px;
-    color: #666;
-  }
-  /* kani*/
+    @media (max-width: 768px) {
+        .carousel-item .card-container {
+            margin-bottom: 15px;
+        }
+        .carousel-inner {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+        }
+    }
+    @media (max-width: 767px) {
+      .col-lg-4, .col-md-6 {
+        flex: 0 0 100%;  /* On mobile view, each card takes the full width */
+        max-width: 100%;
+      }
+    }
+    .custom-dropdown {
+        position: relative;
+        display: inline-block;
+        width: 45%;
+      }
+
+    .custom-dropdown select {
+      appearance: none; /* Remove the default browser styling */
+      -webkit-appearance: none; /* For Safari */
+      -moz-appearance: none; /* For Firefox */
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .custom-dropdown::after {
+      content: '▼'; /* Add a dropdown icon */
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      pointer-events: none; /* Make the icon unclickable */
+      font-size: 14px;
+      color: #666;
+    }
+    /* kani*/
  
 
 
 
 
-.card-container {
-    transition: transform 0.2s;
-}
-.card-container:hover {
-    transform: translateY(-5px);
-}
-/* .card {
-    width: 100%;
-    max-width: 300px;
-    height: 480px;
-    border-radius: 15px;
-    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 8px 30px rgba(0, 0, 0, 0.1); 
-    overflow: hidden;
-} */
-.card {
-    width: 100%;
-    max-width: 300px;
-    height: 480px;
-    border-radius: 15px;
-    box-shadow: none; /* Explicitly remove default box-shadow */
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-}
-.card:hover {
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
-}
-.card-img-top {
-    width: 100%;
-    height: 230px;
-    object-fit: cover;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-}
-.card-body {
-    /* padding: 15px; */
-    display: flex;
-    flex-direction: column;
-}
-.card-title {
-    font-size: 18px;
-   /*  font-weight: bold; */
-    margin-bottom: 10px;
-    line-height: 1.3;
-    color:rgb(22, 24, 26); 
-    
-}
-.card-text {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 8px;
-}
-.progress {
-    height: 8px; /* Thinner progress bar to match the image */
-    border-radius: 5px;
-    background-color: #f8d7da; /* Light pink background */
-}
-.progress-bar {
-    background-color: #EB2D32; /* Red color for progress */
-}
-.btn.bg-danger {
-    border-radius: 25px;
-    font-size: 14px;
-    padding: 8px 20px; /* Adjusted padding for better button size */
-    background-color: #EB2D32;
-    border: none;
-}
-.btn.bg-danger:hover {
-    background-color: #d1262b; /* Slightly darker red on hover */
-}
-
-/* Single Row for Supporters and Created by */
-.supporters-section, .created-by-section {
-   
-    display: flex;
-    align-items: center;
-   
-}
-.supporters-section {
-    flex: 10; /* Give more space to Supporters */
-    min-width: 0;
-    overflow: hidden; /* Prevent overflow */
-}
-.created-by-section {
-    flex: 8; /* Minimize space for Created by */
-    justify-content: flex-end;
-   min-width: 0;
-}
-
-.supporters-section p, .created-by-section p {
-    font-size: 14px;
-   /* color: #6c757d;  Muted text color */
-   color:black;
-}
-.supporters-section p {
-    display: flex;
-    align-items: center;
-    white-space: normal; /* Allow wrapping if needed */
-}
-.supporters-section .supporter-count {
-    font-weight: bold;
-    font-size: 16px;
-    color:black; /* Bold the number */
-    margin-right: 4px; /* Space between number and "Supporters" */
-}
-/* Truncate Text with Ellipsis */
-.truncate-text {
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 60px;
-    cursor: pointer;
-}
-.truncate-text1 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100px;
-    text-align: center;
-}
-.truncate-text:hover:after {
-    content: attr(data-fulltext);
-    position: absolute;
-    top: -30px;
-    left: 0;
-    background-color: #333;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    white-space: normal;
-    z-index: 10;
-    font-size: 14px;
-    max-width: 250px;
-    word-break: break-word;
-}
-
-/* Share Icon and Text */
-.share-section {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-.share-section i {
-    color: #EB2D32;
-    font-size: 16px;
-}
-.share-section span {
-    color: #EB2D32;
-    font-size: 14px;
-    font-weight: 500;
-    margin-left: 5px;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 767px) {
+    .card-container {
+        transition: transform 0.2s;
+    }
+    .card-container:hover {
+        transform: translateY(-5px);
+    }
+    /* .card {
+        width: 100%;
+        max-width: 300px;
+        height: 480px;
+        border-radius: 15px;
+        /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 8px 30px rgba(0, 0, 0, 0.1); 
+        overflow: hidden;
+    } */
     .card {
-        max-width: 100%;
-        height: auto;
-        margin: 0 auto 15px;
+        width: 100%;
+        max-width: 300px;
+        height: 480px;
+        border-radius: 15px;
+        box-shadow: none; /* Explicitly remove default box-shadow */
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+    }
+    .card:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
     }
     .card-img-top {
-        height: 200px;
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    .card-body {
+        /* padding: 15px; */
+        display: flex;
+        flex-direction: column;
     }
     .card-title {
-        font-size: 16px;
+        font-size: 18px;
+      /*  font-weight: bold; */
+        margin-bottom: 10px;
+        line-height: 1.3;
+        color:rgb(22, 24, 26); 
+        
     }
     .card-text {
-        font-size: 12px;
-    }
-    .supporters-section p, .created-by-section p {
-        font-size: 12px;
-    }
-    .supporters-section i, .created-by-section i {
-        font-size: 14px;
-    }
-    .created-by-section .rounded-circle {
-        width: 25px;
-        height: 25px;
-    }
-    .created-by-section .bi-person-fill {
         font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+    .progress {
+        height: 8px; /* Thinner progress bar to match the image */
+        border-radius: 5px;
+        background-color: #f8d7da; /* Light pink background */
+    }
+    .progress-bar {
+        background-color: #EB2D32; /* Red color for progress */
     }
     .btn.bg-danger {
-        font-size: 12px;
-        padding: 6px 15px;
+        border-radius: 25px;
+        font-size: 14px;
+        padding: 8px 20px; /* Adjusted padding for better button size */
+        background-color: #EB2D32;
+        border: none;
+    }
+    .btn.bg-danger:hover {
+        background-color: #d1262b; /* Slightly darker red on hover */
+    }
+
+    /* Single Row for Supporters and Created by */
+    .supporters-section, .created-by-section {
+      
+        display: flex;
+        align-items: center;
+      
+    }
+    .supporters-section {
+        flex: 10; /* Give more space to Supporters */
+        min-width: 0;
+        overflow: hidden; /* Prevent overflow */
+    }
+    .created-by-section {
+        flex: 8; /* Minimize space for Created by */
+        justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .supporters-section p, .created-by-section p {
+        font-size: 14px;
+      /* color: #6c757d;  Muted text color */
+      color:black;
+    }
+    .supporters-section p {
+        display: flex;
+        align-items: center;
+        white-space: normal; /* Allow wrapping if needed */
+    }
+    .supporters-section .supporter-count {
+        font-weight: bold;
+        font-size: 16px;
+        color:black; /* Bold the number */
+        margin-right: 4px; /* Space between number and "Supporters" */
+    }
+    /* Truncate Text with Ellipsis */
+    .truncate-text {
+        position: relative;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60px;
+        cursor: pointer;
+    }
+    .truncate-text1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100px;
+        text-align: center;
+    }
+    .truncate-text:hover:after {
+        content: attr(data-fulltext);
+        position: absolute;
+        top: -30px;
+        left: 0;
+        background-color: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        white-space: normal;
+        z-index: 10;
+        font-size: 14px;
+        max-width: 250px;
+        word-break: break-word;
+    }
+
+    /* Share Icon and Text */
+    .share-section {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .share-section i {
+        color: #EB2D32;
+        font-size: 16px;
     }
     .share-section span {
-        font-size: 12px;
-    }
-}
-
-.carousel-indicators {
-  bottom: 10px;
-}
-.carousel-indicators [data-bs-target] {
-  width: 30px;
-  height: 4px;
-  background-color: #ff9999;
-  border-radius: 2px;
-  opacity: 0.5;
-  transition: opacity 0.3s, background-color 0.3s;
-}
-.carousel-indicators .active {
-  background-color: #ED3136;
-  opacity: 1;
-}
-@media (max-width: 768px) {
-  .carousel-indicators [data-bs-target] {
-    width: 20px;
-    height: 3px;
-  }
-}
-
-  /* Raising the funds css style by poovarasan */
-  .step-circle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: #e6e6e6;
-      color: black;
-      text-align: center;
-      line-height: 40px;
-      font-weight: bold;
+        color: #EB2D32;
+        font-size: 14px;
+        font-weight: 500;
+        margin-left: 5px;
     }
 
-    .step-item.active .step-circle {
-      background-color: #ED3136;
-      color: white;
+    /* Mobile Responsiveness */
+    @media (max-width: 767px) {
+        .card {
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto 15px;
+        }
+        .card-img-top {
+            height: 200px;
+        }
+        .card-title {
+            font-size: 16px;
+        }
+        .card-text {
+            font-size: 12px;
+        }
+        .supporters-section p, .created-by-section p {
+            font-size: 12px;
+        }
+        .supporters-section i, .created-by-section i {
+            font-size: 14px;
+        }
+        .created-by-section .rounded-circle {
+            width: 25px;
+            height: 25px;
+        }
+        .created-by-section .bi-person-fill {
+            font-size: 16px;
+        }
+        .btn.bg-danger {
+            font-size: 12px;
+            padding: 6px 15px;
+        }
+        .share-section span {
+            font-size: 12px;
+        }
     }
 
-    .video-box {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-      width: fit-content;
+    .carousel-indicators {
+      bottom: 10px;
+    }
+    .carousel-indicators button {
+      width: 30px;
+      height: 4px;
+      background-color: #ff9999 !important;
+      border-radius: 2px;
+      opacity: 0.5;
+      transition: opacity 0.3s, background-color 0.3s;
     }
 
-    #progressContainer {
-      width: 100%;
-      height: 8px;
-      background-color: #ddd;
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 8px;
-    }
-
-    #progressBar {
-      width: 0%;
-      height: 100%;
-      background-color: #ED3136;
-      transition: width 0.1s linear;
-    }
-
-    .step-item i {
-      visibility: hidden;
-    }
-
-    .step-item.active i {
-      visibility: visible;
-    }
-
-    #playPauseBtn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 20px;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 2;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .video-box:hover #playPauseBtn {
+    .carousel-indicators .active {
+      background-color: #ED3136 !important;
       opacity: 1;
-      pointer-events: auto;
     }
-
-    #playPauseBtn:hover {
-      background-color: rgba(0, 0, 0, 0.7);
-      transform: scale(1.1);
-    }
-
-    video {
-      width: 500px;
-      height: auto;
-      object-fit: cover;
-      display: block;
-    }
-    .raise_video {
-      position: relative;
-      width: 100%;
-      height: auto;
-      overflow: hidden;
-    }
-
     @media (max-width: 768px) {
-      .step-circle {
-        margin-top: 5px;
+      .carousel-indicators {
+        bottom: -10px !important;
       }
-
-      video {
-        width: 100%;
-        height: auto;
+      .carousel-indicators button {
+        width: 20px;
+        height: 3px;
+        
       }
-      #userProfile .dropdown-menu {
-    right: 0 !important; /* Align the dropdown to the right edge */
-    left: auto !important; /* Override default left alignment */
-    min-width: 150px; /* Adjust the width as needed */
-  }
-  
-  #userProfile img {
-    width: 25px; /* Slightly smaller profile image for mobile */
-    height: 25px;
-  }
-  
-  #userProfile .dropdown-item {
-    text-align: center; /* Center-align items for better UX */
-  }
     }
 
-  /* .carousel-indicators [data-bs-target] {
-  background-color: #ff9999; /* light red for non-active *
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
+      /* Raising the funds css style by poovarasan */
+      .step-circle {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: #e6e6e6;
+          color: black;
+          text-align: center;
+          line-height: 40px;
+          font-weight: bold;
+        }
 
-.carousel-indicators .active {
-  background-color: #ff0000; /* bright red for active *
-}  */
+        .step-item.active .step-circle {
+          background-color: #ED3136;
+          color: white;
+        }
+
+        .video-box {
+          position: relative;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);
+          margin-bottom: 20px;
+          width: fit-content;
+        }
+
+        #progressContainer {
+          width: 100%;
+          height: 8px;
+          background-color: #ddd;
+          border-radius: 4px;
+          overflow: hidden;
+          margin-top: 8px;
+        }
+
+        #progressBar {
+          width: 0%;
+          height: 100%;
+          background-color: #ED3136;
+          transition: width 0.1s linear;
+        }
+
+        .step-item i {
+          visibility: hidden;
+        }
+
+        .step-item.active i {
+          visibility: visible;
+        }
+
+        #playPauseBtn {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          font-size: 20px;
+          color: white;
+          background-color: rgba(0, 0, 0, 0.5);
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 2;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+        }
+
+        .video-box:hover #playPauseBtn {
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        #playPauseBtn:hover {
+          background-color: rgba(0, 0, 0, 0.7);
+          transform: scale(1.1);
+        }
+
+        video {
+          width: 500px;
+          height: auto;
+          object-fit: cover;
+          display: block;
+        }
+        .raise_video {
+          position: relative;
+          width: 100%;
+          height: auto;
+          overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+          .step-circle {
+            margin-top: 5px;
+          }
+
+          video {
+            width: 100%;
+            height: auto;
+          }
+          #userProfile .dropdown-menu {
+        right: 0 !important; /* Align the dropdown to the right edge */
+        left: auto !important; /* Override default left alignment */
+        min-width: 150px; /* Adjust the width as needed */
+      }
+      
+      #userProfile img {
+        width: 25px; /* Slightly smaller profile image for mobile */
+        height: 25px;
+      }
+      
+      #userProfile .dropdown-item {
+        text-align: center; /* Center-align items for better UX */
+      }
+        }
+
   </style>
 </head>
 
@@ -1481,7 +1476,7 @@
                 $progress_percentage = getProgressPercentage($fundraiser);
             ?>
 
-            <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3">
 
                 <div class="card h-100 shadow-sm">
 

@@ -502,12 +502,12 @@
 
     /* Call to Action */
     .cta-section {
-        background: linear-gradient(135deg, #ffb3b3, #ff8080, #ff6666);
-        padding: 60px 20px;
-        border-radius: 20px;
-        margin: 60px 20px;
-        color: white;
-        text-align: center;
+      background: linear-gradient(135deg, #FF9AA2, #FF6F72);
+      padding: 60px 20px;
+      border-radius: 20px;
+      margin: 60px 20px;
+      color: white;
+      text-align: center;
     }
 
     .cta-section h2 {
@@ -539,6 +539,8 @@
             font-size: 26px;
         }
     }
+
+    
     </style>
 </head>
 <body>
@@ -632,7 +634,9 @@
                   <img src="<?= base_url('assets/img/help3.png') ?>" alt="Our Story Image">
               </div>
               <div class="col-md-6">
-                  <h2 class="story-title">From a Simple Dream to a Shared Reality</h2>
+                  <h2 class="story-title">From a Simple Dream to a Shared Reality
+                    
+                  </h2>
                   <p class="story-text">
                       Kanavu (கனவு), meaning 'dream' in Tamil, started with a simple vision:
                       to ensure no child's dream is left behind due to circumstances.

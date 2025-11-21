@@ -414,12 +414,12 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         </li>
                     </ul>
                                 
-                    <span class="d-flex justify-content-center">
+                    <!-- <span class="d-flex justify-content-center">
                         <i class="fa-solid fa-bell"></i>&nbsp;
                         <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
                             <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
                         </div>
-                    </span>
+                    </span> -->
                 </div>
             </div>
         </div><!-----------top-bar-end----------------------->
@@ -604,17 +604,24 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                         <td><?= htmlspecialchars($donation->age); ?></td>
                                         <td><?= htmlspecialchars($donation->end_date); ?></td>
                                         <td>
-                                            <button data-bs-toggle="modal"
-                                                    data-bs-target="#viewdocuments"
-                                                    style="outline:none;border:none;"
-                                                    class="bg-transparent text-decoration-underline truncate"
-                                                    onclick="viewDocuments('<?= $donation->cover_image ?>')"
+                                            <button 
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#viewdocuments"
+                                                style="outline:none;border:none;"
+                                                class="bg-transparent text-decoration-underline truncate"
+                                                onclick="viewDocuments('<?= $donation->cover_image ?>')">
+
+                                                <span  
                                                     data-bs-toggle="tooltip"
                                                     data-bs-placement="top"
+                                                    data-bs-html="true"
                                                     title="<?= htmlspecialchars($donation->cause_heading); ?>">
-                                                <?= htmlspecialchars($donation->cause_heading); ?>
+                                                    <?= htmlspecialchars($donation->cause_heading); ?>
+                                                </span>
+
                                             </button>
                                         </td>
+
                                         <td><?= date('d-m-Y', strtotime($donation->created_at)); ?></td>
                                         <td><?= htmlspecialchars($donation->username); ?></td>
                                         <td><?= htmlspecialchars($donation->raised_amount); ?></td>
@@ -658,6 +665,22 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     </ul>
                 </nav>
             </div>
+            <style>
+                .tooltip-inner {
+                    background-color: #1e1e1e !important;
+                    color: white !important;
+                    font-size: 14px;
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    text-align: center;
+                    max-width: 250px !important; /* controls wrapping like screenshot */
+                    white-space: normal !important;
+                }
+
+                .tooltip .tooltip-arrow::before {
+                    border-top-color: #1e1e1e !important;
+                }
+            </style>
             <script>
                 // ✅ Initialize Bootstrap tooltips globally
                 document.addEventListener("DOMContentLoaded", function() {

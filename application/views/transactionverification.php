@@ -517,12 +517,12 @@
                         </li>
                     </ul>
                     
-                    <span class="d-flex justify-content-center">
+                    <!-- <span class="d-flex justify-content-center">
                         <i class="fa-solid fa-bell"></i>&nbsp;
                         <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
                             <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
                         </div>
-                    </span>
+                    </span> -->
                 </div>
             </div>
         </div><!-----------top-bar-end----------------------->
@@ -678,13 +678,15 @@
                                             <td><?= htmlspecialchars($donation->category); ?></td>
                                             <!-- ✅ Tooltip added only for Cause Heading -->
                                             <td>
-                                            <span class="truncate"
+                                                <span class="truncate"
                                                     data-bs-toggle="tooltip"
                                                     data-bs-placement="bottom"
+                                                    data-bs-html="true"
                                                     title="<?= htmlspecialchars($donation->cause_heading); ?>">
-                                                <?= htmlspecialchars($donation->cause_heading); ?>
-                                            </span>
+                                                    <?= htmlspecialchars($donation->cause_heading); ?>
+                                                </span>
                                             </td>
+
 
                                             <td><?= htmlspecialchars($donation->name); ?></td>
                                             <td><?= htmlspecialchars($donation->email); ?></td>
@@ -727,15 +729,23 @@
             </div>
         </div>
     </div>
+    <style>
+        .tooltip.show .tooltip-inner {
+            background-color: #1e1e1e !important;
+            color: #fff !important;
+            font-size: 13px !important;
+            border-radius: 6px !important;
+            padding: 6px 10px !important;
+            max-width: 160px !important;   /* Critical for correct shape */
+            white-space: normal !important; /* Allows 2-line text */
+            text-align: center !important;
+        }
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-        });
-    </script>
+        .tooltip.show .tooltip-arrow::before {
+            border-bottom-color: #1e1e1e !important;
+        }
+    </style>
+
     <!----------Logout Modal ------------->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -1234,5 +1244,18 @@
             }
         });
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+
 </body>
 </html>

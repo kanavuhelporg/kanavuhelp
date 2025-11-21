@@ -478,30 +478,68 @@
         max-width: 50px;
       }
       #userProfile .dropdown-menu {
-    right: 0 !important; /* Align the dropdown to the right edge */
-    left: auto !important; /* Override default left alignment */
-    min-width: 150px; /* Adjust the width as needed */
-  }
+      right: 0 !important; /* Align the dropdown to the right edge */
+      left: auto !important; /* Override default left alignment */
+      min-width: 150px; /* Adjust the width as needed */
+    }
  
-  #userProfile img {
-    width: 25px; /* Slightly smaller profile image for mobile */
-    height: 25px;
-  }
- 
-  #userProfile .dropdown-item {
-    text-align: center; /* Center-align items for better UX */
-  }
+    #userProfile img {
+      width: 25px; /* Slightly smaller profile image for mobile */
+      height: 25px;
+    }
+  
+    #userProfile .dropdown-item {
+      text-align: center; /* Center-align items for better UX */
+    }
     }
     .fixed-card-img {
       height: 230px;
       object-fit: cover;
     }
+    /* FIX CARD GRID – Same Height Everywhere */
     .card-container {
-      display: flex;
+        display: flex;
     }
+
+    /* Card should fill available height */
     .fixed-card {
-      display: flex;
-      flex-direction: column;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    /* Make All Images the Same Height */
+    .fixed-card-img,
+    .card-img-top {
+        width: 100%;
+        height: 230px !important;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    /* Card Body flex fix */
+    .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Push Donate + Share to Bottom */
+    .mt-auto {
+        margin-top: auto;
+    }
+
+    /* VERY IMPORTANT – remove fixed width + height
+      Let Bootstrap grid calculate width */
+    .card {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100% !important;
+        border-radius: 15px;
+    }
+
+    /* Keep shadow only */
+    .card {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
   </style>
   <?php foreach ($fundraisers as $fundraiser): ?>
@@ -850,6 +888,11 @@
                 placeholder="Enter UPI Transaction ID*" required>
               <p id="error4" class="text-danger small mt-1"></p>
             </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Enter Email</label>
+              <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email*" required>
+              <p id="error9" class="text-danger small mt-1"></p>
+            </div>
             <!-- Phone Number -->
             <div class="mb-3">
               <label for="phone" class="form-label">Phone Number</label>
@@ -1022,7 +1065,7 @@
  /* const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value); */
  const isName = (value) => /^[a-zA-Z\s.]+$/.test(value) && value.trim().length >= 3;
   const isCity = (value) => /^([A-Za-z0-9_()\s]{3,})+$/.test(value);
-  //const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
+  const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
   // Attach real-time validation for each field
   window.onload = () => {
     validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
@@ -1030,6 +1073,7 @@
     validateField('name', 'error6', isName, 'Enter Valid Name');
    // validateField('email', 'error7', isEmail, 'Enter Valid EmailID');
     validateField('donorcity', 'error8', isCity, 'Enter Valid City');
+    validateField('email', 'error9', isEmail, 'Enter Valid EmailID');
     validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
     validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
   };
@@ -1043,6 +1087,7 @@
     document.getElementById('error6').innerText = '';
    //document.getElementById('error7').innerText = '';
     document.getElementById('error8').innerText = '';
+      document.getElementById('error9').innerText = '';
     let isValid = true;
     // Perform final validation
   /* if (!isCurrencySelected(document.getElementById('currency').value)) {
@@ -1065,12 +1110,17 @@
     document.getElementById('error8').innerText = 'Enter Valid City Name';
     isValid = false;
   }
- /* if(!isEmail(document.getElementById('email').value))
-  {
-    document.getElementById('error7').innerText = 'Enter Valid EmailID';
-    isValid = false;
-  }
- */
+    /* if(!isEmail(document.getElementById('email').value))
+      {
+        document.getElementById('error7').innerText = 'Enter Valid EmailID';
+        isValid = false;
+      }
+    */
+    if(!isEmail(document.getElementById('email').value))
+        {
+          document.getElementById('error9').innerText = 'Enter Valid EmailID';
+          isValid = false;
+        }
     if (!isPhoneNumberValid(document.getElementById('phone').value)) {
       document.getElementById('error3').innerText = 'Please Enter Correct Phone number';
       isValid = false;
@@ -1161,14 +1211,14 @@
     function checkGoalStatusForLoadedCards() {
 
         const fundraiserCards = document.querySelectorAll('#fundraiserCards .card-container');
-
+ 
         fundraiserCards.forEach(function (card) {
 
             const fundraiserId = card.id.split('-')[2];
 
             fetch(`/check_goal_status/${fundraiserId}`)
                 .then(response => response.json())
-                .then(data => {
+                .then(data => { 
 
                     if (data.goal_reached) {
 

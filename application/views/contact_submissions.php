@@ -362,12 +362,12 @@
                         </li>
                     </ul>
                                 
-                    <span class="d-flex justify-content-center">
+                    <!-- <span class="d-flex justify-content-center">
                         <i class="fa-solid fa-bell"></i>&nbsp;
                         <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
                             <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
                         </div>
-                    </span>
+                    </span> -->
                 </div>
 
             </div>

@@ -60,7 +60,7 @@ class Donations extends CI_Controller {
             $progress = ($fundraiser->amount == 0) ? 0 : ($fundraiser->raised_amount / $fundraiser->amount) * 100;
 
             $output .= '
-            <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-0 d-flex card-container">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-0 d-flex card-container">
                 <div class="card h-100 fixed-card w-100 d-flex flex-column">
                     <a href="'. base_url('helpus/' . str_replace(" ", "-", $fundraiser->name) . '-' . $fundraiser->id) .'">
                         <img src="'. $imageSrc .'" class="card-img-top fixed-card-img" style=" width: 100%; height: 230px; object-fit: cover; object-position: center;">
