@@ -2264,7 +2264,7 @@ function openDonationModal() {
 
   <!-- Donation Modal -->
   <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header border-0">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -2319,12 +2319,12 @@ function openDonationModal() {
             <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10" placeholder="Enter your phone number*" required>
             <p id="error3" class="text-danger small mt-1"></p>
           </div>
-          <!-- Email 
+          <!-- Email  -->
           <div class="mb-3">
             <label for="email" class="form-label">Email ID</label>
             <input type="email" name="email" class="form-control" id="email" placeholder="Enter your EmailID*" required>
             <p id="error7" class="text-danger small mt-1"></p>
-          </div>-->
+          </div>
 
           <!-- Name 
           <div class="mb-3">
@@ -2334,25 +2334,10 @@ function openDonationModal() {
           </div>-->
 
           <div class="mb-3">
-    <label for="name" class="form-label">Name</label>
-    <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" required>
-    <p id="error6" class="text-danger small mt-1"></p>
-</div>
-
-<script>
-    /* document.getElementById('name').addEventListener('input', function(e) {
-        // Replace invalid characters with an empty string
-        this.value = this.value.replace(/[^a-zA-Z\s.]/g, '');
-
-        // Optional: Display error message if needed
-        const errorMessage = document.getElementById('error6');
-        if (this.value.length > 0 && !/^[a-zA-Z\s.]*$/.test(this.value)) {
-            errorMessage.textContent = "Name can only contain letters, spaces, and dots.";
-        } else {
-            errorMessage.textContent = "";
-        }
-    }); */
-</script>
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*" required>
+            <p id="error6" class="text-danger small mt-1"></p>
+        </div>
 
 
           <!-- City -->
@@ -2558,14 +2543,14 @@ const isTransactionIdValid = (value) => /^[1-9]\d{11}$/.test(value);
 /* const isNameValid = (value) => /^[a-zA-Z]{3,}\s*$/.test(value); */
 const isNameValid = (value) => /^[a-zA-Z\s.]+$/.test(value) && value.trim().length >= 3;
 
-//const isEmailValid = (value) => /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
+const isEmailValid = (value) => /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
 
 // Attach real-time validation for each field
 window.onload = () => {
  // validateField('currency', 'error5', isCurrencySelected, 'Select a currency.', 'change');
   validateField('amount', 'error8', isAmountValid, 'Amount must be greater than 0.');
   validateField('name', 'error6', isNameValid, 'Enter Valid Name');
- // validateField('email', 'error7', isEmailValid, 'Enter a valid Email ID.');
+ validateField('email', 'error7', isEmailValid, 'Enter a valid Email ID.');
   validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
   validateField('transactionid', 'error4', isTransactionIdValid, 'Transaction ID must be exactly 12 digits.');
 
@@ -2593,10 +2578,10 @@ document.getElementById('donationForm').onsubmit = function (event) {
     document.getElementById('error6').innerText = 'Enter Valid Name';
     isValid = false;
   }
- /*  if (!isEmailValid(document.getElementById('email').value)) {
+  if (!isEmailValid(document.getElementById('email').value)) {
     document.getElementById('error7').innerText = 'Enter a valid Email ID.';
     isValid = false;
-  } */
+  } 
   if (!isPhoneNumberValid(document.getElementById('phone').value)) {
     document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
     isValid = false;
