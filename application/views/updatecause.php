@@ -888,7 +888,7 @@
     
   </nav>
 <!-- <?php if(!empty($causedetails)) :?> -->
-  <div class="container-fluid box mt-auto py-3">
+  <div class="container-fluid box mt-3 py-3">
     <div class="row box1 mt-auto py-3">
       <div class="container-fluid mt-5">
         <div class="row w-100">
