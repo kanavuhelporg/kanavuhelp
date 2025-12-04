@@ -1108,9 +1108,8 @@ function setCauseId(causeId) {
     <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
   </div>
   <div class="text-center">
-    <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
+    <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
   </div>
-
   <div class="text-center mt-2">
     <h5 class="modal-title py-1 fw-bold text-danger" id="donationModalLabel">Make a Secure Donation</h5>
   </div>

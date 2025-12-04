@@ -870,7 +870,7 @@
               <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%">
             </div>
             <div class="text-center mb-3">
-              <img src="<?= base_url('assets/img/HDFC QRCode.jpg') ?>" alt="HDFC QR Code" width="50%">
+              <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" alt="HDFC QR Code" width="50%">
             </div>
             <div class="text-center mt-2">
               <h5 class="modal-title text-danger fw-bold" id="donationModalLabel">Make a Secure Donation</h5>
@@ -1275,6 +1275,12 @@ document.getElementById('donationRedirectBtn').addEventListener('click', functio
     // Submit the form to the login page
     document.getElementById('redirectToLoginForm').submit();
   }
+</script>
+<script>
+    $('#donationModal').on('hidden.bs.modal', function () {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    });
 </script>
 </body>
 </html>
