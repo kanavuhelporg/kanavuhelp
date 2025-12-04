@@ -2281,11 +2281,7 @@ function openDonationModal() {
             <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%">
           </div>
           <div class="text-center mb-3">
-            <h5 class="modal-title  text-muted" id="donationModalLabel">THE KANAVU TRUST</h5>
-            <h6 class="modal-subtitle"> TID: 68334166</h6>
-          </div>
-          <div class="text-center mb-3">
-            <img src="<?= base_url('assets/img/donate_qr.jpeg') ?>" alt="HDFC QR Code" width="50%">
+            <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" alt="HDFC QR Code" width="50%">
           </div>
 
           <div class="text-center mt-2">
