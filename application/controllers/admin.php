@@ -275,7 +275,7 @@ class admin extends CI_Controller
                     <td>".($donation->status == 1 ? 'Yes' : 'No')."</td>
                     <td class='d-flex'>
                     <button onclick='editDonation(".(json_encode($donation)).")' class='btn btn-primary fw-bold' data-toggle='modal' data-target='#editDonationModal'>
-                    Edit
+                    Edit 
                     </button>&nbsp;&nbsp;
                     <button onclick='setUrl(".json_encode($donation).")' class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
                     Status
