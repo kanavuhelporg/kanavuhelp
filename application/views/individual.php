@@ -1209,7 +1209,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cause_video__link_tamil" class="col-md-4 col-form-label">Video Embed Link Tamil:</label>
+                    <label for="cause_video__link_tamil" class="col-md-4 col-form-label">You Tube Link: <span class="text-danger">*</span> </label>
                     <div class="col-md-8">
                       <input type="text" onchange="validateEmbed(this)" id="cause_video_link" name="cause_embed_link_tamil" class="form-control my-2" required>
                       <p id="tamil_embed_error" class="text-danger"></p>
@@ -1217,7 +1217,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cause_video" class="col-md-4 col-form-label">Video Embed Link English:</label>
+                    <label for="cause_video" class="col-md-4 col-form-label">Confirm You Tube Link: </label>
                     <div class="col-md-8">
                       <input type="text" onchange="validateEmbed(this)" id="cause_video" name="cause_embed_link_english" class="form-control my-2">
                       <p id="cover-image-error" class="text-danger"></p>
