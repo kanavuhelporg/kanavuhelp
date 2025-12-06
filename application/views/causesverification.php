@@ -623,7 +623,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                         </td>
 
                                         <td><?= date('d-m-Y', strtotime($donation->created_at)); ?></td>
-                                        <td><?= htmlspecialchars($donation->username); ?></td>
+                                        <td><?= htmlspecialchars($donation->created_by); ?></td>
                                         <td><?= htmlspecialchars($donation->raised_amount); ?></td>
                                         <td><?= $donation->verified == 1 ? 'Yes' : 'No'; ?></td>
                                         <td>
@@ -635,7 +635,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                         </td>
                                         <td class="d-flex">
                                             <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">Edit</button> &nbsp;&nbsp;
-                                            <button onclick="setUrl('<?= $donation->email?>','<?= $donation->user_id;?>','<?= $donation->username;?>',<?= $donation->Verifyemailcount;?>,<?= $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">Status</button> &nbsp;&nbsp; 
+                                            <button onclick="setUrl('<?= $donation->email?>','<?= $donation->user_id;?>','<?= $donation->created_by;?>',<?= $donation->Verifyemailcount;?>,<?= $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">Status</button> &nbsp;&nbsp; 
                                             <button onclick="deleteCause(<?= $donation->id; ?>)" class="btn btn-danger fw-bold">Delete</button> &nbsp;&nbsp;
                                             <?php if ($this->session->userdata('adminName')): ?>
                                                 <?php if ($donation->priority == 0): ?>
