@@ -101,17 +101,17 @@ public function get_total_transaction()
         return $query->result();
     }
 
-     public function get_all_cause_details()
-    {
-        // Include only rows where 'verified' is 1
-        $this->db->select('individualform.*');
-        $this->db->from('individualform');
-        // $this->db->join('user', 'user.id = individualform.user_id');
-        $this->db->order_by('individualform.created_at', 'DESC');
-        // Remove any limits to get all records
-        $query = $this->db->get();
-        return $query->result();
-    }
+    public function get_all_cause_details()
+{
+    // Include only rows where 'verified' is 1
+    $this->db->select('individualform.*');
+    $this->db->from('individualform');
+    // $this->db->join('user', 'user.id = individualform.user_id');
+    $this->db->order_by('individualform.created_at', 'DESC');
+    // Remove any limits to get all records
+    $query = $this->db->get();
+    return $query->result();
+}
 
 // Keep existing method for backward compatibility
 public function get_cause_details()
