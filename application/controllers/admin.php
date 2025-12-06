@@ -364,28 +364,40 @@ class admin extends CI_Controller
         $this->load->view('editDonation', $data);
     }
     public function updateDonation()
-    {
-        $id = $this->input->post('id');
-        $status = $this->input->post('status');
+{
+    $data = array(
+        'donation_id'     => $this->input->post('id'),
+        'name'            => $this->input->post('name'),
+        'email'           => $this->input->post('email'),
+        'phoneno'         => $this->input->post('mobile'),
+        'amount'          => $this->input->post('amount'),
+        'transactionid'   => $this->input->post('transaction_id'),
+        'status'          => $this->input->post('status'),
+        'verified_by'     => $this->session->userdata('Kanavu_userName')
+    );
 
-        // Get the name from session
-        $verifiedBy = $this->session->userdata('Kanavu_userName');
+    $this->load->model('adminpanel');
 
-        // Load the model and call the update function
-        $this->load->model('adminpanel');
-        $updateSuccess = $this->adminpanel->updateDonationStatus($id, $status, $verifiedBy);
-        if ($updateSuccess) { // assuming 1 represents "Yes"
-            $donationData = $this->adminpanel->getDonationById1($id); // Get donation details for the cause_id and amount
-            if ($donationData) {
-                $this->adminpanel->update_raised_amount($donationData->cause_id, $donationData->amount,$status);
-            }
+    $updateSuccess = $this->adminpanel->updateDonationFull($data);
+
+    // If status changed → update raised amount
+    if ($updateSuccess && $data['status'] == 1) {
+        $donationData = $this->adminpanel->getDonationById1($data['donation_id']);
+        if ($donationData) {
+            $this->adminpanel->update_raised_amount(
+                $donationData->cause_id,
+                $donationData->amount,
+                $data['status']
+            );
         }
-        // Set content type header to JSON
-        header('Content-Type: application/json');
-
-        // Return JSON response for the AJAX call
-        echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
     }
+
+    header('Content-Type: application/json');
+    echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
+}
+
+
+
 
     public function sendtransactionVerficationstatus(){
         if (!$this->session->userdata('adminId')) {

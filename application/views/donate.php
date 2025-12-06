@@ -1060,7 +1060,7 @@
   // Validation functions
   //const isCurrencySelected = (value) => value !== '';
   const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
-  const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
+  const isPhoneNumberValid = (value) => /^[0-9]\d{9}$/.test(value);
   const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
  /* const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value); */
  const isName = (value) => /^[a-zA-Z\s.]+$/.test(value) && value.trim().length >= 3;

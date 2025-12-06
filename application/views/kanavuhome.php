@@ -2538,7 +2538,7 @@ function validateField(fieldId, errorId, validationFn, errorMessage, eventType =
 // Validation functions
 //const isCurrencySelected = (value) => value !== '';
 const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value);
-const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
+const isPhoneNumberValid = (value) => /^\d{10}$/.test(value);
 const isTransactionIdValid = (value) => /^[1-9]\d{11}$/.test(value);
 /* const isNameValid = (value) => /^[a-zA-Z]{3,}\s*$/.test(value); */
 const isNameValid = (value) => /^[a-zA-Z\s.]+$/.test(value) && value.trim().length >= 3;
@@ -2551,7 +2551,7 @@ window.onload = () => {
   validateField('amount', 'error8', isAmountValid, 'Amount must be greater than 0.');
   validateField('name', 'error6', isNameValid, 'Enter Valid Name');
  validateField('email', 'error7', isEmailValid, 'Enter a valid Email ID.');
-  validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
+  validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must have 10 digits.');
   validateField('transactionid', 'error4', isTransactionIdValid, 'Transaction ID must be exactly 12 digits.');
 
 

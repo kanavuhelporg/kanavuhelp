@@ -249,12 +249,13 @@ public function getUserByMobile($mobile)
 
 		return $result;
 	}
-//update by periority
-public function get_cause_details() {
-	$this->db->select('*');
-	$this->db->from('individualform');
-	return $this->db->get()->result();
-}
+	//update by periority
+	public function get_cause_details() {
+		$this->db->select('*');
+		$this->db->from('individualform');
+		$this->db->where('verified', '1');  
+		return $this->db->get()->result();
+	}
 
 public function update_priority($id, $priority) {
 	log_message('debug', 'Updating priority for ID: ' . $id . ' with value: ' . $priority);

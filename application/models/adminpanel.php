@@ -246,23 +246,35 @@ public function get_enquiries_list($limit, $offset, $search = null)
         return $query->row();  // Return single row as an object
     }
 
-    public function updateDonationStatus($id, $status, $verifiedBy)
-    {
-        $data = array(
-            'status' => $status,
-            'verified_by' => $verifiedBy,  // Update the 'verifiedby' field with the session name
-        );
-        $donationdata = $this->db->query("SELECT status FROM donation_for_cause WHERE donation_id = $id");
-        $get_status = $donationdata->row();
-        $current_status = $get_status->status;
-        if($current_status == $status){
-            return false;
-        }    
-        $this->db->where('donation_id', $id);
-        $result = $this->db->update('donation_for_cause', $data);
-        return $result;  // TRUE on success, FALSE on failure
-        
-    }
+//     public function updateDonationAllFields($id, $data)
+// {
+//     $this->db->where('donation_id', $id);
+//     return $this->db->update('donation_for_cause', $data);
+// }
+public function updateDonationFull($data)
+{
+    $donation_id = $data['donation_id'];
+
+    // First, check current status
+    $current = $this->db->get_where('donation_for_cause', ['donation_id' => $donation_id])->row();
+
+    // If status not changed → still update other fields
+    $updateData = array(
+        'name'          => $data['name'],
+        'email'         => $data['email'],
+        'phoneno'       => $data['phoneno'],
+        'amount'        => $data['amount'],
+        'transactionid' => $data['transactionid'],
+        'verified_by'   => $data['verified_by'],
+        'status'        => $data['status']
+    );
+
+    $this->db->where('donation_id', $donation_id);
+    return $this->db->update('donation_for_cause', $updateData);
+}
+
+
+
 
     public function getDonationById1($id)
     {
