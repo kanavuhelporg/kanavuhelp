@@ -696,18 +696,21 @@
         <!-- Right Sidebar -->
         <div class="mt-2 col-lg-5">
             <!-- Amount Raised and Goal -->
-            <h4>
+            <!-- Amount Raised and Goal -->
+<h4>
     <strong>
-        ₹ <?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
+        ₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
     </strong>
 </h4>
-            <div class="progress mb-2">
-            <?php
-              // Calculate progress percentage
-              $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-              ?>
-              <div class="progress-bar bg-danger" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+<div class="progress mb-2">
+    <?php
+    // Calculate progress percentage
+    $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+    // Cap at 100% to avoid overflow in display
+    $display_percentage = min($progress_percentage, 100);
+    ?>
+    <div class="progress-bar bg-danger" style="width: <?= $display_percentage ?>%;" role="progressbar" aria-valuenow="<?= $display_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
 
             <!-- Supporters and Days Left -->
             <p><strong><?= isset($fundraiser->supporters_count) ? htmlspecialchars($fundraiser->supporters_count) : '0' ?></strong><?=htmlspecialchars($fundraiser->supporters_count) == 1 ? ' Supporter' : ' Supporters';?> 
@@ -1130,7 +1133,12 @@ function setCauseId(causeId) {
       <p id="error5" style="color: red; margin: 5px 0 0; font-size: 0.9em;"></p>
     </div>
   </div>
-
+<!-- Transaction ID -->
+  <div class="form-group ms-4">
+    <label for="transactionid" class="form-label">Transaction ID</label>
+    <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
+    <p id="error4" style="color:red; margin-top: 5px;"></p>
+  </div>
   <!-------------------------email-------------------------->
 
   <div class="form-group ms-4">
@@ -1160,12 +1168,6 @@ function setCauseId(causeId) {
     <p id="error3" style="color:red; margin-top: 5px;"></p>
   </div>
   
-  <!-- Transaction ID -->
-  <div class="form-group ms-4">
-    <label for="transactionid" class="form-label">Transaction ID</label>
-    <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction ID*" style="width:95%;" required>
-    <p id="error4" style="color:red; margin-top: 5px;"></p>
-  </div>
 
   <!-- Continue Button -->
   <div class="d-flex justify-content-center">

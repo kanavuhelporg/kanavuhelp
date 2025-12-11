@@ -2,6 +2,11 @@
 
 class UserModel extends CI_Model
 {
+	public function __construct() // Add this constructor
+    {
+        parent::__construct();
+        $this->load->database();
+    }
 	// public function store($data)
 	// {
 	// 	$this->db->insert('logintable', $data);
@@ -439,7 +444,19 @@ public function get_total_fund()
 }
 
 
-
+public function get_current_raised_amount($fundraiser_id)
+{
+    $this->db->select_sum('amount');
+    $this->db->from('donation_for_cause');
+    $this->db->where('cause_id', $fundraiser_id);
+    $this->db->where('status', 1); // Only count verified/approved donations
+    
+    $query = $this->db->get();
+    $result = $query->row();
+    
+    // Return the sum or 0 if no donations
+    return $result->amount ? (float)$result->amount : 0;
+}
 
 }
 ?>

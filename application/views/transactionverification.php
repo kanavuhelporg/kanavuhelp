@@ -930,26 +930,28 @@
             });
         });
 
-        // Set URL for email
-        function setUrl(donation) {
-            document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${donation.email}</span>`;
-            document.getElementById("transactionstatus").innerHTML = "";
-            let adminname = "<?php echo $this->session->userdata("adminName");?>";
-            document.getElementById("statusheading").innerHTML = `<span class="text-danger h5">Verification Status</span>
-                    <div>
-                    <input hidden type="radio" id='useridforemail' value='${donation.donation_id}'>
-                    <label data-bs-toggle="modal" data-bs-target="#emaildata" type="button" onclick="showVerifyemaildata(${donation.donation_id})" for="verified" class="text-success h5">Verified [${donation.Verifyemailcount}]</label>&nbsp;<input onclick="setAutomail(this,'${donation.name}','${donation.transactionid}')" value="verified" type="radio" name="status">&nbsp;&nbsp;
-                    <label data-bs-toggle="modal" data-bs-target="#emaildata" onclick="showRejectemaildata(${donation.donation_id})" role="button" for="verified" class="text-warning h5">Rejected [${donation.Rejectemailcount}]</label>&nbsp;<input onclick="setAutomail(this,'${donation.name}','${donation.transactionid}')" value="unverified" type="radio" name="status"></div>`;
-            document.getElementById("sendmailbtn").innerHTML = `<button onclick='sendEmail("${donation.donation_id}","${donation.email}","${donation.name}","${adminname}")' class='btn btn-danger'>Send</button>`;
-        }
+       // In your view JavaScript, update the sendEmail function:
+function sendEmail(donationid, email, donarname, adminname, transactionid, amount) {
+    let message = document.getElementById("transactionstatus").innerText;
+    let a = document.createElement("a");
+    a.href = `sendtransactionVerficationstatus?email=${email}&message=${message}&donationid=${donationid}&donarname=${donarname}&adminname=${adminname}&status=${status}&transactionid=${transactionid}&amount=${amount}`;
+    a.dispatchEvent(new MouseEvent("click"));
+}
 
-        // Send email function
-        function sendEmail(donationid,email,donarname,adminname){
-            let message = document.getElementById("transactionstatus").innerText;
-            let a = document.createElement("a");
-            a.href = `sendtransactionVerficationstatus?email=${email}&message=${message}&donationid=${donationid}&donarname=${donarname}&adminname=${adminname}&status=${status}`;
-            a.dispatchEvent(new MouseEvent("click"));
-        }
+
+// Update the setUrl function to include transactionid:
+function setUrl(donation) {
+    document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${donation.email}</span>`;
+    document.getElementById("transactionstatus").innerHTML = "";
+    let adminname = "<?php echo $this->session->userdata("adminName");?>";
+    document.getElementById("statusheading").innerHTML = `<span class="text-danger h5">Verification Status</span>
+            <div>
+            <input hidden type="radio" id='useridforemail' value='${donation.donation_id}'>
+            <label data-bs-toggle="modal" data-bs-target="#emaildata" type="button" onclick="showVerifyemaildata(${donation.donation_id})" for="verified" class="text-success h5">Verified [${donation.Verifyemailcount}]</label>&nbsp;<input onclick="setAutomail(this,'${donation.name}','${donation.transactionid}')" value="verified" type="radio" name="status">&nbsp;&nbsp;
+            <label data-bs-toggle="modal" data-bs-target="#emaildata" onclick="showRejectemaildata(${donation.donation_id})" role="button" for="verified" class="text-warning h5">Rejected [${donation.Rejectemailcount}]</label>&nbsp;<input onclick="setAutomail(this,'${donation.name}','${donation.transactionid}')" value="unverified" type="radio" name="status"></div>`;
+    document.getElementById("sendmailbtn").innerHTML = `<button onclick='sendEmail("${donation.donation_id}","${donation.email}","${donation.name}","${adminname}","${donation.transactionid}","${donation.amount}")' class='btn btn-danger'>Send</button>
+`;
+}
 
         // Set auto mail content
         function setAutomail(mailfor,donarname,transactionid){

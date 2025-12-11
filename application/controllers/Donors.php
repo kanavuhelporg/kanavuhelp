@@ -136,7 +136,7 @@ class Donors extends CI_Controller {
 
         $this->email->from('support@kanavu.help', 'Kanavu Help');
         $this->email->to($to);
-        $this->email->subject('Kanavu Help Foundation');
+        $this->email->subject('The Kanavu Trust');
         $this->email->message($message);
 
         if ($this->email->send()) {

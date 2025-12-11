@@ -37,89 +37,54 @@ class kanavuhelp extends CI_Controller
     }
 
     public function index()
-    {
+{
+    // Fetch all fundraiser details
+    $data['fundraisers'] = $this->UserModel->get_cause_details();
+    $is_logged_in = $this->session->userdata('Kanavu_userId') !== null;
+    $data['is_logged_in'] = $is_logged_in;
+
+    $active_fundraisers = [];
+    foreach ($data['fundraisers'] as $fundraiser) {
+        // Calculate current raised amount from donations table
+        $current_raised_amount = $this->UserModel->get_current_raised_amount($fundraiser->id);
         
-        /*$data['fundraisers'] = $this->UserModel->get_cause_details();
-        $is_logged_in = $this->session->userdata('Kanavu_userId') !== null; // Check if userId is set
-        $data['is_logged_in'] = $is_logged_in;
-
-        $active_fundraisers = [];
-
-        // Loop through each fundraiser to check status and calculate days_left
-        foreach ($data['fundraisers'] as $fundraiser) {
-            $end_date = new DateTime($fundraiser->end_date);
-            $current_date = new DateTime();
-            $days_left = $end_date->diff($current_date)->days;
-
-            // Check if fundraiser has expired by date or target amount reached
-            $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
-
-            // Only include active fundraisers
-            if (!$is_expired) {
-                // If still active, calculate days left and other properties
-                $fundraiser->days_left = $days_left;
-                $fundraiser->hide_donation_button = false;
-                $active_fundraisers[] = $fundraiser;
-            }
+        // Update the fundraiser object with the current raised amount
+        $fundraiser->raised_amount = $current_raised_amount;
+        
+        $end_date = new DateTime($fundraiser->end_date);
+        $current_date = new DateTime();
+        $days_left = $end_date->diff($current_date)->days;
+        
+        // Check if fundraiser has expired by date or target amount reached
+        $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
+        
+        if (!$is_expired) {
+            $fundraiser->days_left = $days_left;
+            $fundraiser->hide_donation_button = false;
+            
+            // Get supporters count for this fundraiser
+            $fundraiser->supporters_count = $this->UserModel->count_supporters($fundraiser->id);
+            
+            // Get creator name
+            $fundraiser->created_by = $this->UserModel->get_user_name_by_cause_id($fundraiser->id);
+            
+            $active_fundraisers[] = $fundraiser;
         }
-
-        $data['fundraisers'] = $active_fundraisers;
-
-        $this->load->view('kanavuhome.php', $data);
-        $this->session->set_userdata("entry",1); */
-
-/* all supporters start 
-
-$this->db->select('f.*, (SELECT COUNT(*) FROM donation_for_cause d WHERE d.fundraiser_id = f.id) as supporters_count', FALSE);
-    $this->db->from('fundraisers f');
-    if ($category !== 'All') {
-        $this->db->where('f.category', $category);
-        $category = $this->input->get('category');
-        echo $category;
     }
-    $query = $this->db->get();
-    return $query->result();
+    
+    $data['fundraisers'] = $active_fundraisers;
+    $data['sno'] = 0;
+   
+    // Fetch statistics
+    $data['total_donors'] = $this->UserModel->get_total_donors();
+    $data['total_events'] = $this->UserModel->get_total_events();
+    $data['total_fund'] = $this->UserModel->get_total_fund();
+    $data['total_volunteers'] = 550; // Static for now, update if you have a table
 
-/* all supporters end */
-        // Fetch all fundraiser details
-        $data['fundraisers'] = $this->UserModel->get_cause_details();
-        $is_logged_in = $this->session->userdata('Kanavu_userId') !== null;
-        $data['is_logged_in'] = $is_logged_in;
-
-        $active_fundraisers = [];
-        foreach ($data['fundraisers'] as $fundraiser) {
-            $end_date = new DateTime($fundraiser->end_date);
-            $current_date = new DateTime();
-            $days_left = $end_date->diff($current_date)->days;
-            $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
-            if (!$is_expired) {
-                $fundraiser->days_left = $days_left;
-                $fundraiser->hide_donation_button = false;
-
-                
-                $fundraiser->supporters_count = $this->UserModel->count_supporters($fundraiser->id); // or use $fundraiser->cause_id if needed
-
-                $active_fundraisers[] = $fundraiser;
-            }
-        }
-        $data['fundraisers'] = $active_fundraisers;
-       
-        $data['sno'] = 0;
-       // $this->load->view('causesverification', $data);
-
-
-       // Fetch data from model
-        $data['total_donors'] = $this->UserModel->get_total_donors();
-        $data['total_events'] = $this->UserModel->get_total_events();
-        $data['total_fund'] = $this->UserModel->get_total_fund();
-        $data['total_volunteers'] = 550; // Static for now, update if you have a table
-
-        // Load view and pass data
-        //$this->load->view('kanavuhome', $data);
-        $this->load->view('kanavuhome.php', $data);
-        $this->session->set_userdata("entry", 1);
-    }
-
+    // Load view and pass data
+    $this->load->view('kanavuhome.php', $data);
+    $this->session->set_userdata("entry", 1);
+}
     
 public function insert_priority() {
     if ($this->input->method() === 'post') {
@@ -562,45 +527,99 @@ foreach ($data['fundraisers'] as $fundraiser) {
     }
 
 
-    public function helpus($fundraiser_id = null,$fundraiser_heading = null)
-    {
-        if ($fundraiser_id === null|| $fundraiser_heading== null) {
-            show_404();
-            return;
-        }
+    // public function helpus($fundraiser_id = null,$fundraiser_heading = null)
+    // {
+    //     if ($fundraiser_id === null|| $fundraiser_heading== null) {
+    //         show_404();
+    //         return;
+    //     }
 
-        $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
+    //     $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
 
-        if (!$fundraiser_details) {
-            show_404();
-            return;
-        }
+    //     if (!$fundraiser_details) {
+    //         show_404();
+    //         return;
+    //     }
 
-        // Calculate days left (existing code)
-        $end_date = new DateTime($fundraiser_details->end_date);
-        $current_date = new DateTime();
-        $days_left = $end_date->diff($current_date)->days . ' Days Left';
-        if ($days_left < 0) {
-            $days_left = 'expired';
-        }
-        $fundraiser_details->hide_donation_button = $fundraiser_details->raised_amount >= $fundraiser_details->amount;
-        // Get the number of supporters
-        $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
-        $username = $this->UserModel->get_user_name_by_cause_id($fundraiser_id);
-        $topdonars = $this->UserModel->get_top_donors_by_cause($fundraiser_id);
-        $topdonars15 = $this->UserModel->get_top_fifteen_donors_by_cause($fundraiser_id);
-        $progressdata = $this->UserModel->get_user_progress($fundraiser_details->id);
-        // Pass data to the view
-        $fundraiser_details->days_left = $days_left;
-        $fundraiser_details->supporters_count = $supporters_count;
-        $fundraiser_details->username = $username;
-        $fundraiser_details->topdonars = $topdonars;
-       // $fundraiser_details->topdonars15 = $topdonars15;
-        $data['fundraiser'] = $fundraiser_details;
-        $data['progressdata'] = $progressdata;
-        $data['is_logged_in'] = $this->session->userdata('Kanavu_userId') !== null;
-        $this->load->view('helpus', $data);
+    //     // Calculate days left (existing code)
+    //     $end_date = new DateTime($fundraiser_details->end_date);
+    //     $current_date = new DateTime();
+    //     $days_left = $end_date->diff($current_date)->days . ' Days Left';
+    //     if ($days_left < 0) {
+    //         $days_left = 'expired';
+    //     }
+    //     $fundraiser_details->hide_donation_button = $fundraiser_details->raised_amount >= $fundraiser_details->amount;
+    //     // Get the number of supporters
+    //     $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
+    //     $username = $this->UserModel->get_user_name_by_cause_id($fundraiser_id);
+    //     $topdonars = $this->UserModel->get_top_donors_by_cause($fundraiser_id);
+    //     $topdonars15 = $this->UserModel->get_top_fifteen_donors_by_cause($fundraiser_id);
+    //     $progressdata = $this->UserModel->get_user_progress($fundraiser_details->id);
+    //     // Pass data to the view
+    //     $fundraiser_details->days_left = $days_left;
+    //     $fundraiser_details->supporters_count = $supporters_count;
+    //     $fundraiser_details->username = $username;
+    //     $fundraiser_details->topdonars = $topdonars;
+    //    // $fundraiser_details->topdonars15 = $topdonars15;
+    //     $data['fundraiser'] = $fundraiser_details;
+    //     $data['progressdata'] = $progressdata;
+    //     $data['is_logged_in'] = $this->session->userdata('Kanavu_userId') !== null;
+    //     $this->load->view('helpus', $data);
+    // }
+
+    public function helpus($fundraiser_id = null, $fundraiser_heading = null)
+{
+    if ($fundraiser_id === null || $fundraiser_heading == null) {
+        show_404();
+        return;
     }
+
+    $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
+
+    if (!$fundraiser_details) {
+        show_404();
+        return;
+    }
+
+    // Calculate days left
+    $end_date = new DateTime($fundraiser_details->end_date);
+    $current_date = new DateTime();
+    $days_left = $end_date->diff($current_date)->days . ' Days Left';
+    
+    // Check if days_left is negative (expired)
+    $interval = $end_date->diff($current_date);
+    $days_left_num = (int)$interval->format('%r%a'); // Get signed days difference
+    
+    if ($days_left_num < 0) {
+        $days_left = 'expired';
+    }
+    
+    // Get the current raised amount from donations
+    $current_raised_amount = $this->UserModel->get_current_raised_amount($fundraiser_id);
+    
+    // Update the fundraiser details with the current raised amount
+    $fundraiser_details->raised_amount = $current_raised_amount;
+    
+    // Check if donation button should be hidden
+    $fundraiser_details->hide_donation_button = ($fundraiser_details->raised_amount >= $fundraiser_details->amount);
+    
+    // Get the number of supporters
+    $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
+    $username = $this->UserModel->get_user_name_by_cause_id($fundraiser_id);
+    $topdonars = $this->UserModel->get_top_donors_by_cause($fundraiser_id);
+    $progressdata = $this->UserModel->get_user_progress($fundraiser_details->id);
+    
+    // Pass data to the view
+    $fundraiser_details->days_left = $days_left;
+    $fundraiser_details->supporters_count = $supporters_count;
+    $fundraiser_details->username = $username;
+    $fundraiser_details->topdonars = $topdonars;
+    $data['fundraiser'] = $fundraiser_details;
+    $data['progressdata'] = $progressdata;
+    $data['is_logged_in'] = $this->session->userdata('Kanavu_userId') !== null;
+    
+    $this->load->view('helpus', $data);
+}
 
     public function registeration()
     {
@@ -935,23 +954,23 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $adminEmail = 'support@kanavu.help';
 
         // --- 1️⃣ Send Confirmation Email to the User ---
-        $userSubject = 'Thanks for contacting Kanavu Help Foundation';
+        $userSubject = 'Thanks for contacting The Kanavu Trust';
         $userMessage = "
             <html>
             <body style='font-family: Arial, sans-serif; line-height: 1.6;'>
                 <h2 style='color:#333;'>Hello {$userName},</h2>
-                <p>Thank you for reaching out to <strong>Kanavu Help Foundation</strong>.</p>
+                <p>Thank you for reaching out to <strong>The Kanavu Trust</strong>.</p>
                 <p>We have received your message and our team will get back to you soon.</p>
                 <h3>Your Message:</h3>
                 <div style='background:#f9f9f9; padding:10px; border-left:4px solid #007bff;'>
                     {$userMsg}
                 </div>
-                <p style='margin-top:20px;'>Best Regards,<br><strong>Kanavu Help Foundation Team</strong></p>
+                <p style='margin-top:20px;'>Best Regards,<br><strong>The Kanavu Trust Team</strong></p>
             </body>
             </html>
         ";
 
-        $this->email->from('support@kanavu.help', 'Kanavu Help Foundation');
+        $this->email->from('support@kanavu.help', 'The Kanavu Trust');
         $this->email->to($userEmail);
         $this->email->subject($userSubject);
         $this->email->message($userMessage);
@@ -1034,11 +1053,11 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $this->session->set_userdata('generated_otp', $otp);
         $path = $this->session->userdata("path") ?? "individual";
        
-        $message = "Your OTP is $otp to change the new password for your Kanavu Help account.";
+        $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
 
-        $this->email->from('support@kanavu.help', 'Kanavu Help');
+        $this->email->from('support@kanavu.help', 'The Kanavu Trust');
         $this->email->to($to);
-        $this->email->subject('Kanavu Help Foundation');
+        $this->email->subject('The Kanavu Trust - OTP Verification');
         $this->email->message($message);
 
         if ($this->email->send()) {
