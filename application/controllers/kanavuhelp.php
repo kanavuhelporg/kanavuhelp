@@ -584,14 +584,18 @@ foreach ($data['fundraisers'] as $fundraiser) {
     // Calculate days left
     $end_date = new DateTime($fundraiser_details->end_date);
     $current_date = new DateTime();
-    $days_left = $end_date->diff($current_date)->days . ' Days Left';
-    
-    // Check if days_left is negative (expired)
     $interval = $end_date->diff($current_date);
-    $days_left_num = (int)$interval->format('%r%a'); // Get signed days difference
     
-    if ($days_left_num < 0) {
+    // Get the signed days difference
+    $days_left_num = $interval->days;
+    
+    // Check if the end date is in the past (negative interval means end_date < current_date)
+    if ($interval->invert == 0) {
+        // This means end_date is in the past (expired)
         $days_left = 'expired';
+    } else {
+        // This means end_date is in the future
+        $days_left = $days_left_num . ' Days Left';
     }
     
     // Get the current raised amount from donations
@@ -601,7 +605,8 @@ foreach ($data['fundraisers'] as $fundraiser) {
     $fundraiser_details->raised_amount = $current_raised_amount;
     
     // Check if donation button should be hidden
-    $fundraiser_details->hide_donation_button = ($fundraiser_details->raised_amount >= $fundraiser_details->amount);
+    // Only hide if expired OR fully funded
+    $fundraiser_details->hide_donation_button = ($days_left === 'expired' || $fundraiser_details->raised_amount >= $fundraiser_details->amount);
     
     // Get the number of supporters
     $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
