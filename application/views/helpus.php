@@ -1116,6 +1116,13 @@ function setCauseId(causeId) {
   <div class="text-center mt-2">
     <h5 class="modal-title py-1 fw-bold text-danger" id="donationModalLabel">Make a Secure Donation</h5>
   </div>
+  <div class="text-center mt-2 mb-3">
+            <h5 class="modal-title fs-bold">
+                UPI ID: 
+                <span id="upiText">vyapar.175502705184@hdfcbank</span>
+                <i class="bi bi-clipboard ms-2" style="cursor:pointer;" onclick="copyUPI()"></i>
+            </h5>
+        </div>
 
   <!-- Currency and Amount -->
   <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
@@ -1449,7 +1456,15 @@ function setCauseId(causeId) {
     document.getElementById('redirectToLoginForm').submit();
 }
 </script>
+<script>
+  function copyUPI() {
+      let upi = document.getElementById("upiText").innerText;
 
+      navigator.clipboard.writeText(upi).then(() => {
+          alert("UPI ID Copied: " + upi);
+      });
+  }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

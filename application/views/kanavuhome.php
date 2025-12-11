@@ -2287,9 +2287,9 @@ function openDonationModal() {
             <h5 class="modal-title text-danger fw-bold" id="donationModalLabel">Make a Secure Donation</h5>
           </div>
           <div class="text-center mt-2">
-            <h5 class="modal-title fw-bold">
+            <h5 class="modal-title fs-bold">
                 UPI ID: 
-                <span id="upiText">175502705184@hdfcbank</span>
+                <span id="upiText">vyapar.175502705184@hdfcbank</span>
                 <i class="bi bi-clipboard ms-2" style="cursor:pointer;" onclick="copyUPI()"></i>
             </h5>
         </div>
