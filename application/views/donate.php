@@ -14,6 +14,7 @@
 </script>
   <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -541,6 +542,12 @@
     .card {
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
+
+    #currency, #amount {
+        height: 48px !important;     /* Equal height */
+        font-size: 15px;
+        padding-left: 12px;
+      }
   </style>
   <?php foreach ($fundraisers as $fundraiser): ?>
     <?php if (!empty($fundraiser->cover_image)): ?>
@@ -854,90 +861,240 @@
   <!-- Donation Modal -->
   <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header border-0">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body" style="padding-left: 30px; padding-right: 30px;">
+
+                <!-- Donation Form -->
+                <form id="donationForm" method="POST" autocomplete="off"
+                      action="<?= base_url('kanavuhelp/processDonation') ?>"
+                      onsubmit="return validateForm()">
+
+                    <input type="hidden" name="cause_id" id="cause_id">
+                    <input type="hidden" name="user_id" id="user_id">
+
+                    <!-- Icon -->
+                    <div class="text-center mb-3">
+                        <img src="<?= base_url('assets/img/handwithheart.png') ?>" width="20%">
+                    </div>
+
+                    <!-- Dropdown -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Select Payment Method</label>
+                        <select class="form-select" id="paymentMethod" onchange="togglePaymentOptions()">
+                            <option value="upi" selected>UPI ID</option>
+                            <option value="scan">Scan QR</option>
+                            <option value="bank">Account Details</option>
+                        </select>
+                    </div>
+
+                    <!-- QR Section -->
+                    <div id="scanSection" class="text-center mb-3" style="display:none;">
+                        <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" width="50%">
+                    </div>
+
+                    <!-- UPI Section -->
+                    <div id="upiSection" class="text-center mb-3" style="display:block;">
+                        <h6 class="fw-bold mb-2">UPI ID</h6>
+
+                        <p class="mb-0" style="font-size:16px;">
+                            <span id="upiText">vyapar.175502705184@hdfcbank</span>
+
+                            <i class="bi bi-copy ms-2 copy-icon"
+                               data-copy="upiText"
+                               style="cursor:pointer;font-size:14px;"
+                               data-bs-toggle="tooltip"
+                               title="Copy UPI ID"></i>
+                        </p>
+                    </div>
+
+                    <!-- Bank Details -->
+                    <div id="bankSection" class="border rounded p-3 mb-3" style="display:none;">
+                        <h6 class="fw-bold text-center mb-3">Bank Details</h6>
+
+                        <p class="mb-1" style="font-size:16px;">
+                            <strong>Account Name:</strong>
+                            <span id="accName">The Kanavu Trust</span>
+                            <i class="bi bi-copy ms-2 copy-icon"
+                               data-copy="accName"
+                               style="cursor:pointer;font-size:14px;"
+                               data-bs-toggle="tooltip"
+                               title="Copy Account Name"></i>
+                        </p>
+
+                        <p class="mb-1" style="font-size:16px;">
+                            <strong>Account Number:</strong>
+                            <span id="accNumber">50200111484578</span>
+                            <i class="bi bi-copy ms-2 copy-icon"
+                               data-copy="accNumber"
+                               style="cursor:pointer;font-size:14px;"
+                               data-bs-toggle="tooltip"
+                               title="Copy Account Number"></i>
+                        </p>
+
+                        <p class="mb-1" style="font-size:16px;">
+                            <strong>IFSC Code:</strong>
+                            <span id="ifscCode">HDFC0008251</span>
+                            <i class="bi bi-copy ms-2 copy-icon"
+                               data-copy="ifscCode"
+                               style="cursor:pointer;font-size:14px;"
+                               data-bs-toggle="tooltip"
+                               title="Copy IFSC Code"></i>
+                        </p>
+                    </div>
+
+                    <!-- Heading -->
+                    <div class="text-center mt-2 mb-3">
+                        <h5 class="modal-title text-danger fw-bold" id="donationModalLabel">Make a Secure Donation</h5>
+                    </div>
+
+                    <!-- Currency + Amount -->
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <select class="form-control py-2" name="currency_type" id="currency" required>
+                                <option value="" disabled selected>Select Currency</option>
+                                <option>INR</option>
+                                <option>USD</option>
+                            </select>
+                        </div>
+
+                        <div class="col-6">
+                            <input type="number" name="amount" class="form-control py-2" id="amount"
+                                  placeholder="Enter amount*" required>
+                            <p id="error5" class="text-danger small"></p>
+                        </div>
+                    </div>
+
+
+                    <!-- Transaction ID -->
+                    <div class="mb-3">
+                        <label class="form-label">Transaction ID</label>
+                        <input type="text" name="transactionid" id="transactionid" class="form-control" placeholder="Enter UPI Transaction ID*" required>
+                        <p id="error4" class="text-danger small"></p>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label class="form-label">Enter Email</label>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email*" required>
+                        <p id="error9" class="text-danger small"></p>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" name="phoneno" id="phone" class="form-control" maxlength="10" placeholder="Enter Phone Number*" required>
+                        <p id="error3" class="text-danger small"></p>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="name" id="name" class="form-control"  maxlength="40" placeholder="Enter Name*" required>
+                        <p id="error6" class="text-danger small"></p>
+                    </div>
+
+                    <!-- City -->
+                    <div class="mb-3">
+                        <label class="form-label">City</label>
+                        <input type="text" name="city" id="donorcity" class="form-control" maxlength="40" placeholder="Enter City*" required>
+                        <p id="error8" class="text-danger small"></p>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-danger fw-bold w-50 rounded-3">
+                            Confirm Payment ₹
+                        </button>
+                    </div>
+
+                </form>
+
+                <p class="text-center small mt-2">
+                    By continuing, you agree to our
+                    <a href="<?= base_url('/terms_of_use') ?>" target="_blank">Terms of Service</a> &
+                    <a href="<?= base_url('/privacy_policy') ?>" target="_blank">Privacy Policy</a>
+                </p>
+
+            </div>
         </div>
-        <div class="modal-body">
-          <!-- Donation Form -->
-          <form id="donationForm" method="POST" autocomplete="off" action="<?= base_url('kanavuhelp/processDonation') ?>"
-            onsubmit="return validateForm()">
-            <!-- Hidden fields to store cause ID and user ID -->
-            <input type="hidden" name="cause_id" id="cause_id" value="">
-            <input type="hidden" name="user_id" id="user_id" value="">
-            <!-- Donation Form Fields -->
-            <div class="text-center mb-3">
-              <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%">
-            </div>
-            <div class="text-center mb-3">
-              <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" alt="HDFC QR Code" width="50%">
-            </div>
-            <div class="text-center mt-2">
-              <h5 class="modal-title text-danger fw-bold" id="donationModalLabel">Make a Secure Donation</h5>
-            </div>
-            <div class="text-center mt-2 mb-3">
-            <h5 class="modal-title fs-bold">
-                UPI ID: 
-                <span id="upiText">vyapar.175502705184@hdfcbank</span>
-                <i class="bi bi-clipboard ms-2" style="cursor:pointer;" onclick="copyUPI()"></i>
-            </h5>
-        </div>
-            <!-- Amount -->
-            <div class="mb-3">
-              <label for="amount" class="form-label">Enter Amount</label>
-              <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount*" required>
-              <p id="error5" class="text-danger small mt-1"></p>
-            </div>
-            <!-- Transaction ID -->
-            <div class="mb-3">
-              <label for="transactionid" class="form-label">Transaction ID</label>
-              <input type="text" name="transactionid" class="form-control" id="transactionid"
-                placeholder="Enter UPI Transaction ID*" required>
-              <p id="error4" class="text-danger small mt-1"></p>
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Enter Email</label>
-              <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email*" required>
-              <p id="error9" class="text-danger small mt-1"></p>
-            </div>
-            <!-- Phone Number -->
-            <div class="mb-3">
-              <label for="phone" class="form-label">Phone Number</label>
-              <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10"
-                placeholder="Enter your phone number*" required>
-              <p id="error3" class="text-danger small mt-1"></p>
-            </div>
-            <!-- Name -->
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" name="name" class="form-control" id="name" maxlength="40" placeholder="Enter Your Name*"
-                required>
-              <p id="error6" class="text-danger small mt-1"></p>
-            </div>
-            <!-- City -->
-            <div class="mb-3">
-              <label for="donorcity" class="form-label">City</label>
-              <input type="text" name="city" class="form-control" id="donorcity" maxlength="40"
-                placeholder="Enter Your City*" required>
-              <p id="error8" class="text-danger small mt-1"></p>
-            </div>
-            <!-- Confirm Button -->
-            <div class="d-flex justify-content-center">
-              <button id="donatenowbtn" type="submit" class="btn btn-danger fw-bold w-50 rounded-3">
-                Confirm Payment ₹
-              </button>
-            </div>
-          </form>
-          <!-- Terms and Privacy Policy -->
-          <p class="text-center small mt-2">
-            By continuing, you agree to our
-            <a href="<?= base_url('/terms_of_use') ?>" target="_blank">Terms of Service</a> &
-            <a href="<?= base_url('/privacy_policy') ?>" target="_blank">Privacy Policy</a>
-          </p>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
+<!-- FULL JS -->
+<script>
+function togglePaymentOptions() {
+    let option = document.getElementById("paymentMethod").value;
+
+    document.getElementById("scanSection").style.display = "none";
+    document.getElementById("upiSection").style.display = "none";
+    document.getElementById("bankSection").style.display = "none";
+
+    if (option === "upi") {
+        document.getElementById("upiSection").style.display = "block";
+    }
+    if (option === "scan") {
+        document.getElementById("scanSection").style.display = "block";
+    }
+    if (option === "bank") {
+        document.getElementById("bankSection").style.display = "block";
+    }
+}
+
+// Generic Copy Function (UPI + Bank Details)
+function copyField(element) {
+    let id = element.getAttribute("data-copy");
+    let text = document.getElementById(id).innerText;
+
+    navigator.clipboard.writeText(text);
+
+    // Icon change → tick ✔
+    element.classList.remove("bi-copy");
+    element.classList.add("bi-check2-circle", "text-success");
+
+    // Tooltip change
+    let tooltip = bootstrap.Tooltip.getInstance(element);
+    tooltip.setContent({ '.tooltip-inner': 'Copied!' });
+
+    // Revert after 1.5 sec
+    setTimeout(() => {
+        element.classList.remove("bi-check2-circle", "text-success");
+        element.classList.add("bi-copy");
+
+        tooltip.setContent({ '.tooltip-inner': element.getAttribute("title") });
+    }, 1500);
+}
+
+// Attach copy event
+document.addEventListener("DOMContentLoaded", function () {
+    // Initialize all tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+
+    // Add copy functionality
+    document.querySelectorAll(".copy-icon").forEach(icon => {
+        icon.addEventListener("click", function () {
+            copyField(this);
+        });
+    });
+});
+
+// Reset modal content each time opened
+document.getElementById('donationModal').addEventListener('shown.bs.modal', function () {
+    document.getElementById("paymentMethod").value = "upi";
+    document.getElementById("upiSection").style.display = "block";
+    document.getElementById("scanSection").style.display = "none";
+    document.getElementById("bankSection").style.display = "none";
+});
+</script>
+
+
   <!-- Donation Success Modal -->
   <div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -1288,15 +1445,6 @@ document.getElementById('donationRedirectBtn').addEventListener('click', functio
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
     });
-</script>
-<script>
-  function copyUPI() {
-      let upi = document.getElementById("upiText").innerText;
-
-      navigator.clipboard.writeText(upi).then(() => {
-          alert("UPI ID Copied: " + upi);
-      });
-  }
 </script>
 </body>
 </html>
