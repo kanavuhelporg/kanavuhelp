@@ -475,27 +475,47 @@ class admin extends CI_Controller
             $this->email->set_mailtype('html');
             
             // Attach PDF for verified transactions
-            if ($status == 'verified' && $pdfContent) {
-                $this->email->attach($pdfContent, 'attachment', 'Kanavu_Receipt_' . $transactionid . '.pdf', 'application/pdf');
-            }
-            
-            if ($this->email->send()) {
-                // Clean message for database storage
-                $find = array(",", "!", ".", "'", "\r", "\n");
-                $replace = array("", "", "", "", " ", " ");
-                $cleanMessage = str_replace($find, $replace, $message);
-                
-                // Save email status
-                $this->adminpanel->transactionemailStatus($status, $donationid, $donarname, $donaremail, $cleanMessage, $adminName);
-                
-                if ($status == 'verified') {
-                    $this->session->set_userdata("transactionemailsuccessstatus", "Email with receipt sent to " . $to);
-                } else {
-                    $this->session->set_userdata("transactionemailsuccessstatus", "Status update email sent to " . $to);
-                }
-            } else {
-                $this->session->set_userdata("transactionemailerrorstatus", "Failed to send email. Please check email configuration.");
-            }
+            // Attach PDF for verified transactions
+if ($status == 'verified' && $pdfContent) {
+    // Store PDF temporarily
+    $filePath = FCPATH . 'uploads/receipt_' . $transactionid . '.pdf';
+    file_put_contents($filePath, $pdfContent);
+    
+    $this->email->attach($filePath);
+}
+
+if ($this->email->send()) {
+    // Delete file after sending
+    if (isset($filePath) && file_exists($filePath)) {
+        unlink($filePath);
+    }
+
+    $find = array(",", "!", ".", "'", "\r", "\n");
+    $replace = array("", "", "", "", " ", " ");
+    $cleanMessage = str_replace($find, $replace, $message);
+    
+    $this->adminpanel->transactionemailStatus(
+        $status, 
+        $donationid, 
+        $donarname, 
+        $donaremail, 
+        $cleanMessage, 
+        $adminName
+    );
+
+    $this->session->set_userdata(
+        "transactionemailsuccessstatus",
+        $status == 'verified'
+            ? "Email with receipt sent to " . $to
+            : "Status update email sent to " . $to
+    );
+} else {
+    $this->session->set_userdata(
+        "transactionemailerrorstatus",
+        $this->email->print_debugger() // REAL error message
+    );
+}
+
         } catch (Exception $e) {
             $this->session->set_userdata("transactionemailerrorstatus", "Error generating receipt: " . $e->getMessage());
         }
