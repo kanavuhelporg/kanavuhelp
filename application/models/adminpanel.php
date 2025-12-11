@@ -104,17 +104,36 @@ public function get_total_transaction()
         $query = $this->db->get();
         return $query->result();
     }
+    
+    public function get_current_raised_amount($fundraiser_id)
+    {
+        $this->db->select_sum('amount');
+        $this->db->from('donation_for_cause');
+        $this->db->where('cause_id', $fundraiser_id);
+        $this->db->where('status', 1); // Only count verified donations
+        
+        $query = $this->db->get();
+        $result = $query->row();
+        
+        return $result->amount ? (float)$result->amount : 0;
+    }
 
     public function get_all_cause_details()
 {
-    // Include only rows where 'verified' is 1
-    $this->db->select('individualform.*');
+    $this->db->select('individualform.*, user.name as created_by');
     $this->db->from('individualform');
-    // $this->db->join('user', 'user.id = individualform.user_id');
+    $this->db->join('user', 'user.id = individualform.user_id', 'left');
     $this->db->order_by('individualform.created_at', 'DESC');
-    // Remove any limits to get all records
+    
     $query = $this->db->get();
-    return $query->result();
+    $result = $query->result();
+    
+    // Calculate current raised amount for each cause
+    foreach ($result as $cause) {
+        $cause->raised_amount = $this->get_current_raised_amount($cause->id);
+    }
+    
+    return $result;
 }
 
 // Keep existing method for backward compatibility

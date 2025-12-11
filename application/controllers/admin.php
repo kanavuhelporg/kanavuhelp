@@ -144,28 +144,25 @@ class admin extends CI_Controller
     // $this->load->view('causesverification.php', $data);
 // }
     public function causesverification()
-{
-    if (!$this->session->userdata('adminId')) {
-        redirect('admin');
+    {
+        if (!$this->session->userdata('adminId')) {
+            redirect('admin');
+        }
+        $fundraisers = $this->adminpanel->get_all_cause_details();
+        foreach ($fundraisers as $fundraiser) {
+            $current_raised = $this->adminpanel->get_current_raised_amount($fundraiser->id);
+            $fundraiser->raised_amount = $current_raised;
+        }
+        $data['fundraisers'] = $fundraisers;
+        $data['counts'] = $this->adminpanel->get_total_causes();
+        $data['sno'] = 0;
+        $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+        $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
+        $unverifiedCauses = $this->adminpanel->totalUnverifiedCauses();
+        $this->session->set_userdata("unverifiedCauses", $unverifiedCauses);
+        $this->session->set_userdata('causescounts', $data['counts']);
+        $this->load->view('causesverification.php', $data);
     }
-
-    // Fetch all causes
-    $data['fundraisers'] = $this->adminpanel->get_all_cause_details();
-    $data['counts'] = $this->adminpanel->get_total_causes();
-    $data['sno'] = 0;
-
-    // Transaction badge (already exists)
-    $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
-    $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
-
-    // 🚀 NEW: Causes badge
-    $unverifiedCauses = $this->adminpanel->totalUnverifiedCauses();
-    $this->session->set_userdata("unverifiedCauses", $unverifiedCauses);
-
-    $this->session->set_userdata('causescounts', $data['counts']);
-
-    $this->load->view('causesverification.php', $data);
-}
 
 
 

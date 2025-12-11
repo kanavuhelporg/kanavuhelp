@@ -2272,7 +2272,6 @@ function openDonationModal() {
       <div class="modal-body">
         <!-- Donation Form -->
         <form id="donationForm" method="POST" autocomplete="off" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
-          <!-- Hidden fields to store cause ID and user ID -->
           <input type="hidden" name="cause_id" id="cause_id" value="">
           <input type="hidden" name="user_id" id="user_id" value="">
 
@@ -2287,6 +2286,13 @@ function openDonationModal() {
           <div class="text-center mt-2">
             <h5 class="modal-title text-danger fw-bold" id="donationModalLabel">Make a Secure Donation</h5>
           </div>
+          <div class="text-center mt-2">
+            <h5 class="modal-title fw-bold">
+                UPI ID: 
+                <span id="upiText">175502705184@hdfcbank</span>
+                <i class="bi bi-clipboard ms-2" style="cursor:pointer;" onclick="copyUPI()"></i>
+            </h5>
+        </div>
 
           <!-- Currency and Amount -->
           <div class="mb-3 row">
@@ -2705,6 +2711,16 @@ document.addEventListener('DOMContentLoaded', () => {
   counters.forEach(counter => animateCounter(counter));
 });
 </script>
+<script>
+  function copyUPI() {
+      let upi = document.getElementById("upiText").innerText;
+
+      navigator.clipboard.writeText(upi).then(() => {
+          alert("UPI ID Copied: " + upi);
+      });
+  }
+</script>
+
 
   <!-- Bootstrap JS and dependencies (Popper.js) -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
