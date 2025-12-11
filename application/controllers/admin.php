@@ -399,37 +399,272 @@ class admin extends CI_Controller
 
 
 
+    // public function sendtransactionVerficationstatus(){
+    //     if (!$this->session->userdata('adminId')) {
+    //         redirect('admin'); // Redirect to login if not logged in
+    //     }
+    //     $donaremail = $this->input->get("email");
+    //     $status = $this->input->get("status");
+    //     $donationid = $this->input->get("donationid");
+    //     $donarname = $this->input->get("donarname");
+    //     $message = $this->input->get("message");
+    //     $adminName = $this->input->get("adminname");
+    //     $to = $donaremail;
+
+    //     $this->email->from('support@kanavu.help', 'Kanavu Help');
+    //     $this->email->to($to);
+    //     $this->email->subject('Kanavu Help Foundation');
+    //     $this->email->message($message);
+
+    //     if ($this->email->send()) {
+
+    //         $find = array(",","!",".","'");
+    //         $replace = array("");
+    //         $message = str_replace($find,$replace,$message);
+    //         $this->adminpanel->transactionemailStatus($status,$donationid,$donarname,$donaremail,$message,$adminName);
+    //         $this->session->set_flashdata('transactionmailsend', true);
+    //         $this->session->set_userdata("transactionemailsuccessstatus","Email sent to ".$to."");
+    //             redirect("/transactionverification");
+    //     } else {
+    //         $this->session->set_userdata("transactionemailsuccessstatus","Email not sent please try again.");
+    //         redirect("/transactionverification");
+    //     }   
+    // }
     public function sendtransactionVerficationstatus(){
-        if (!$this->session->userdata('adminId')) {
-            redirect('admin'); // Redirect to login if not logged in
-        }
-        $donaremail = $this->input->get("email");
-        $status = $this->input->get("status");
-        $donationid = $this->input->get("donationid");
-        $donarname = $this->input->get("donarname");
-        $message = $this->input->get("message");
-        $adminName = $this->input->get("adminname");
-        $to = $donaremail;
-
-        $this->email->from('support@kanavu.help', 'Kanavu Help');
-        $this->email->to($to);
-        $this->email->subject('Kanavu Help Foundation');
-        $this->email->message($message);
-
-        if ($this->email->send()) {
-
-            $find = array(",","!",".","'");
-            $replace = array("");
-            $message = str_replace($find,$replace,$message);
-            $this->adminpanel->transactionemailStatus($status,$donationid,$donarname,$donaremail,$message,$adminName);
-            $this->session->set_flashdata('transactionmailsend', true);
-            $this->session->set_userdata("transactionemailsuccessstatus","Email sent to ".$to."");
-                redirect("/transactionverification");
-        } else {
-            $this->session->set_userdata("transactionemailsuccessstatus","Email not sent please try again.");
-            redirect("/transactionverification");
-        }   
+    if (!$this->session->userdata('adminId')) {
+        redirect('admin');
     }
+    
+    $donaremail = $this->input->get("email");
+    $status = $this->input->get("status");
+    $donationid = $this->input->get("donationid");
+    $donarname = $this->input->get("donarname");
+    $message = $this->input->get("message");
+    $adminName = $this->input->get("adminname");
+    $transactionid = $this->input->get("transactionid");
+    $amount = $this->input->get("amount");
+    $amount = preg_replace('/[^0-9.]/', '', $amount); // FIX
+
+
+    // Load PDF library
+    $this->load->library('pdf');
+    
+    try {
+        // Generate PDF receipt (only for verified transactions)
+        if ($status == 'verified') {
+            $pdfContent = $this->pdf->generateReceipt($donarname, $transactionid, $donationid, $amount);
+        } else {
+            $pdfContent = null;
+        }
+        
+        $to = $donaremail;
+        
+        // Generate email content
+        $emailContent = $this->generateEmailContent($donarname, $transactionid, $message, $status);
+        
+        $this->email->from('support@kanavu.help', 'The Kanavu Trust');
+        $this->email->to($to);
+        
+        if ($status == 'verified') {
+            $this->email->subject('Transaction Receipt - The Kanavu Trust');
+        } else {
+            $this->email->subject('Transaction Status Update - The Kanavu Trust');
+        }
+        
+        $this->email->message($emailContent);
+        $this->email->set_mailtype('html');
+        
+        // Attach PDF for verified transactions
+        if ($status == 'verified' && $pdfContent) {
+            $this->email->attach($pdfContent, 'attachment', 'Kanavu_Receipt_' . $transactionid . '.pdf', 'application/pdf');
+        }
+        
+        if ($this->email->send()) {
+            // Clean message for database storage
+            $find = array(",", "!", ".", "'", "\r", "\n");
+            $replace = array("", "", "", "", " ", " ");
+            $cleanMessage = str_replace($find, $replace, $message);
+            
+            // Save email status
+            $this->adminpanel->transactionemailStatus($status, $donationid, $donarname, $donaremail, $cleanMessage, $adminName);
+            
+            if ($status == 'verified') {
+                $this->session->set_userdata("transactionemailsuccessstatus", "Email with receipt sent to " . $to);
+            } else {
+                $this->session->set_userdata("transactionemailsuccessstatus", "Status update email sent to " . $to);
+            }
+        } else {
+            $this->session->set_userdata("transactionemailerrorstatus", "Failed to send email. Please check email configuration.");
+        }
+    } catch (Exception $e) {
+        $this->session->set_userdata("transactionemailerrorstatus", "Error generating receipt: " . $e->getMessage());
+    }
+    
+    redirect("/transactionverification");
+}
+
+private function generateEmailContent($donorName, $transactionId, $originalMessage, $status) {
+    $subject = ($status == 'verified') ? 'Transaction Receipt' : 'Transaction Status Update';
+    
+    $html = '
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .header {
+                background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+                color: white;
+                padding: 25px;
+                text-align: center;
+                border-radius: 8px 8px 0 0;
+            }
+            .header h2 {
+                margin: 0;
+                font-size: 24px;
+            }
+            .header p {
+                margin: 5px 0 0 0;
+                opacity: 0.9;
+            }
+            .content {
+                background-color: #f8f9fa;
+                padding: 30px;
+                border: 1px solid #e0e0e0;
+            }
+            .greeting {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+            .greeting strong {
+                color: #d32f2f;
+            }
+            .transaction-info {
+                background-color: white;
+                border-left: 4px solid ' . ($status == 'verified' ? '#28a745' : '#ffc107') . ';
+                padding: 15px;
+                margin: 20px 0;
+                border-radius: 0 4px 4px 0;
+            }
+            .status-badge {
+                display: inline-block;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-weight: bold;
+                margin: 10px 0;
+                background-color: ' . ($status == 'verified' ? '#d4edda' : '#fff3cd') . ';
+                color: ' . ($status == 'verified' ? '#155724' : '#856404') . ';
+                border: 1px solid ' . ($status == 'verified' ? '#c3e6cb' : '#ffeaa7') . ';
+            }
+            .message-box {
+                background-color: #e8f4fd;
+                padding: 15px;
+                border-radius: 5px;
+                margin: 20px 0;
+                border-left: 4px solid #2196f3;
+            }
+            .footer {
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid #ddd;
+                font-size: 12px;
+                color: #666;
+                text-align: center;
+            }
+            .contact-info {
+                background-color: #f5f5f5;
+                padding: 10px;
+                border-radius: 5px;
+                margin: 15px 0;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h2>The Kanavu Trust </h2>
+            <p>' . $subject . '</p>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                Dear <strong>' . htmlspecialchars($donorName) . '</strong>,
+            </div>
+            
+            <p>' . ($status == 'verified' ? 
+                'Thank you for your generous donation to The Kanavu Trust. Your support means the world to us and will make a significant difference in our mission.' : 
+                'Thank you for your interest in supporting The Kanavu Trust. We appreciate your willingness to contribute to our cause.') . '</p>
+            
+            <div class="transaction-info">
+                <p><strong>Transaction Details:</strong></p>
+                <p>Transaction ID: <code>' . htmlspecialchars($transactionId) . '</code></p>
+                <p>Date: ' . date('F d, Y') . '</p>
+                <div class="status-badge">
+                    ' . ($status == 'verified' ? '✓ Verified Successfully' : '⚠️ Requires Verification') . '
+                </div>
+            </div>';
+            
+    if ($status == 'verified') {
+        $html .= '
+            <div class="message-box">
+                <p><strong>Message from Kanavu Team:</strong></p>
+                <p>' . nl2br(htmlspecialchars($originalMessage)) . '</p>
+            </div>
+            
+            <p>We have attached a PDF receipt for your records. Please keep this document for your reference.</p>
+            
+            <p>Your contribution will help us:</p>
+            <ul>
+                <li>Support educational initiatives</li>
+                <li>Provide healthcare assistance</li>
+                <li>Offer disaster relief</li>
+                <li>Empower communities</li>
+            </ul>';
+    } else {
+        $html .= '
+            <div class="message-box">
+                <p><strong>Important Notice:</strong></p>
+                <p>' . nl2br(htmlspecialchars($originalMessage)) . '</p>
+            </div>
+            
+            <p>If you believe this is an error or need assistance with your transaction, please contact us with the following details:</p>
+            <ul>
+                <li>Your full name</li>
+                <li>Transaction ID</li>
+                <li>Date of transaction</li>
+                <li>Screenshot of payment confirmation</li>
+            </ul>';
+    }
+    
+    $html .= '
+            <div class="contact-info">
+                <p><strong>Need Help?</strong></p>
+                <p>Email: <a href="mailto:support@kanavu.help">support@kanavu.help</a></p>
+                <p>Website: <a href="https://kanavu.help">www.kanavu.help</a></p>
+            </div>
+            
+            <p>With sincere gratitude,</p>
+            <p><strong>The The Kanavu Trust Team</strong></p>
+        </div>
+        
+        <div class="footer">
+            <p>This is an automated email. Please do not reply to this message.</p>
+            <p>© ' . date('Y') . ' The Kanavu Trust. All rights reserved.</p>
+            <p>Creating hope, building futures.</p>
+        </div>
+    </body>
+    </html>';
+    
+    return $html;
+}
 
     public function sendcauseVerficationstatus(){
         if (!$this->session->userdata('adminId')) {
@@ -443,9 +678,9 @@ class admin extends CI_Controller
         $adminName = $this->input->get("adminname");
         $to = $userEmail;
 
-        $this->email->from('support@kanavu.help', 'Kanavu Help');
+        $this->email->from('support@kanavu.help', 'The Kanavu Trust');
         $this->email->to($to);
-        $this->email->subject('Kanavu Help Foundation');
+        $this->email->subject('The Kanavu Trust');
         $this->email->message($message);
         // $this->email->set_mailtype("html");
         // $this->email->set_header("MIME-Version", "1.0");
