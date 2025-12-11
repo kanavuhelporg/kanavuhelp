@@ -397,131 +397,201 @@ class admin extends CI_Controller
 }
 
 
-
-
-    // public function sendtransactionVerficationstatus(){
+    // public function sendtransactionVerficationstatus()
+    // {
     //     if (!$this->session->userdata('adminId')) {
-    //         redirect('admin'); // Redirect to login if not logged in
+    //         redirect('admin');
     //     }
+
     //     $donaremail = $this->input->get("email");
     //     $status = $this->input->get("status");
     //     $donationid = $this->input->get("donationid");
     //     $donarname = $this->input->get("donarname");
-    //     $message = $this->input->get("message");
-    //     $adminName = $this->input->get("adminname");
-    //     $to = $donaremail;
+    //     $message    = $this->input->get("message");
+    //     $adminName  = $this->input->get("adminname");
+    //     $transactionid = $this->input->get("transactionid");
+    //     $amount = preg_replace('/[^0-9.]/', '', $this->input->get("amount"));
 
-    //     $this->email->from('support@kanavu.help', 'Kanavu Help');
-    //     $this->email->to($to);
-    //     $this->email->subject('Kanavu Help Foundation');
-    //     $this->email->message($message);
+    //     // Load PDF Library
+    //     $this->load->library('pdf');
+    //     $pdfContent = null;
+    //     $filePath = '';
 
-    //     if ($this->email->send()) {
+    //     try {
 
-    //         $find = array(",","!",".","'");
-    //         $replace = array("");
-    //         $message = str_replace($find,$replace,$message);
-    //         $this->adminpanel->transactionemailStatus($status,$donationid,$donarname,$donaremail,$message,$adminName);
-    //         $this->session->set_flashdata('transactionmailsend', true);
-    //         $this->session->set_userdata("transactionemailsuccessstatus","Email sent to ".$to."");
-    //             redirect("/transactionverification");
-    //     } else {
-    //         $this->session->set_userdata("transactionemailsuccessstatus","Email not sent please try again.");
-    //         redirect("/transactionverification");
-    //     }   
-    // }
-    public function sendtransactionVerficationstatus(){
-        if (!$this->session->userdata('adminId')) {
-            redirect('admin');
-        }
-        
-        $donaremail = $this->input->get("email");
-        $status = $this->input->get("status");
-        $donationid = $this->input->get("donationid");
-        $donarname = $this->input->get("donarname");
-        $message = $this->input->get("message");
-        $adminName = $this->input->get("adminname");
-        $transactionid = $this->input->get("transactionid");
-        $amount = $this->input->get("amount");
-        $amount = preg_replace('/[^0-9.]/', '', $amount); // FIX
+    //         // Generate PDF only if verified
+    //         if ($status == 'verified') {
+    //             $pdfContent = $this->pdf->generateReceipt($donarname, $transactionid, $donationid, $amount);
 
+    //             // Save to uploads folder
+    //             $filePath = FCPATH . 'uploads/receipt_' . $transactionid . '.pdf';
+    //             file_put_contents($filePath, $pdfContent);
+    //         }
 
-        // Load PDF library
-        $this->load->library('pdf');
-        
-        try {
-            // Generate PDF receipt (only for verified transactions)
-            if ($status == 'verified') {
-                $pdfContent = $this->pdf->generateReceipt($donarname, $transactionid, $donationid, $amount);
-            } else {
-                $pdfContent = null;
-            }
-            
-            $to = $donaremail;
-            
-            // Generate email content
-            $emailContent = $this->generateEmailContent($donarname, $transactionid, $message, $status);
-            
-            $this->email->from('support@kanavu.help', 'The Kanavu Trust');
-            $this->email->to($to);
-            
-            if ($status == 'verified') {
-                $this->email->subject('Transaction Receipt - The Kanavu Trust');
-            } else {
-                $this->email->subject('Transaction Status Update - The Kanavu Trust');
-            }
-            
-            $this->email->message($emailContent);
-            $this->email->set_mailtype('html');
-            
-            // Attach PDF for verified transactions
-            // Attach PDF for verified transactions
-if ($status == 'verified' && $pdfContent) {
-    // Store PDF temporarily
-    $filePath = FCPATH . 'uploads/receipt_' . $transactionid . '.pdf';
-    file_put_contents($filePath, $pdfContent);
-    
-    $this->email->attach($filePath);
-}
+    //         // Prepare Email
+    //         $emailContent = $this->generateEmailContent($donarname, $transactionid, $message, $status);
 
-if ($this->email->send()) {
-    // Delete file after sending
-    if (isset($filePath) && file_exists($filePath)) {
-        unlink($filePath);
+    //         $this->email->from('support@kanavu.help', 'The Kanavu Trust');
+    //         $this->email->to($donaremail);
+    //         $this->email->subject(
+    //             $status == 'verified'
+    //                 ? 'Transaction Receipt - The Kanavu Trust'
+    //                 : 'Transaction Status Update - The Kanavu Trust'
+    //         );
+    //         $this->email->set_mailtype('html');
+    //         $this->email->message($emailContent);
+
+    //         // Attach PDF
+    //         if ($status == 'verified' && file_exists($filePath)) {
+    //             $this->email->attach($filePath);
+    //         }
+
+    //         // Send Email
+    //         if ($this->email->send()) {
+
+    //             // Delete PDF after sending
+    //             if ($status == 'verified' && file_exists($filePath)) {
+    //                 unlink($filePath);
+    //             }
+
+    //             // Save email logs
+    //             $cleanMessage = str_replace(
+    //                 [",", "!", ".", "'", "\r", "\n"],
+    //                 ["", "", "", "", " ", " "],
+    //                 $message
+    //             );
+
+    //             $this->adminpanel->transactionemailStatus(
+    //                 $status,
+    //                 $donationid,
+    //                 $donarname,
+    //                 $donaremail,
+    //                 $cleanMessage,
+    //                 $adminName
+    //             );
+
+    //             $this->session->set_userdata(
+    //                 "transactionemailsuccessstatus",
+    //                 $status == 'verified'
+    //                     ? "Email with receipt sent to " . $donaremail
+    //                     : "Status update email sent to " . $donaremail
+    //             );
+
+    //         } else {
+    //             $this->session->set_userdata(
+    //                 "transactionemailerrorstatus",
+    //                 "Failed to send email."
+    //             );
+    //         }
+
+    //     } catch (Exception $e) {
+    //         $this->session->set_userdata(
+    //             "transactionemailerrorstatus",
+    //             "Error: " . $e->getMessage()
+    //         );
+    //     }
+
+    //     redirect("/transactionverification");
+    // } this code send with pdf file attachment
+
+    // this code sends email without pdf file attachment
+    public function sendtransactionVerficationstatus()
+{
+    if (!$this->session->userdata('adminId')) {
+        redirect('admin');
     }
 
-    $find = array(",", "!", ".", "'", "\r", "\n");
-    $replace = array("", "", "", "", " ", " ");
-    $cleanMessage = str_replace($find, $replace, $message);
-    
-    $this->adminpanel->transactionemailStatus(
-        $status, 
-        $donationid, 
-        $donarname, 
-        $donaremail, 
-        $cleanMessage, 
-        $adminName
-    );
+    $donaremail = $this->input->get("email");
+    $status = $this->input->get("status");
+    $donationid = $this->input->get("donationid");
+    $donarname = $this->input->get("donarname");
+    $message    = $this->input->get("message");
+    $adminName  = $this->input->get("adminname");
+    $transactionid = $this->input->get("transactionid");
+    $amount = preg_replace('/[^0-9.]/', '', $this->input->get("amount"));
 
-    $this->session->set_userdata(
-        "transactionemailsuccessstatus",
-        $status == 'verified'
-            ? "Email with receipt sent to " . $to
-            : "Status update email sent to " . $to
-    );
-} else {
-    $this->session->set_userdata(
-        "transactionemailerrorstatus",
-        $this->email->print_debugger() // REAL error message
-    );
+    // Load PDF Library
+    $this->load->library('pdf');
+    $pdfContent = null;
+    $filePath = '';
+
+    try {
+
+        // Generate PDF (optional)
+        if ($status == 'verified') {
+            $pdfContent = $this->pdf->generateReceipt($donarname, $transactionid, $donationid, $amount);
+
+            // Save PDF (optional)
+            $filePath = FCPATH . 'uploads/receipt_' . $transactionid . '.pdf';
+            file_put_contents($filePath, $pdfContent);
+        }
+
+        // Email content
+        $emailContent = $this->generateEmailContent($donarname, $transactionid, $message, $status);
+
+        $this->email->from('support@kanavu.help', 'The Kanavu Trust');
+        $this->email->to($donaremail);
+
+        $this->email->subject(
+            $status == 'verified'
+                ? 'Transaction Receipt - The Kanavu Trust'
+                : 'Transaction Status Update - The Kanavu Trust'
+        );
+
+        $this->email->set_mailtype('html');
+        $this->email->message($emailContent);
+
+        // ❌ REMOVE PDF ATTACHMENT  
+        // if ($status == 'verified' && file_exists($filePath)) {
+        //     $this->email->attach($filePath);
+        // }
+
+        // Send email
+        if ($this->email->send()) {
+
+            // Delete PDF file since it's no longer needed
+            if ($status == 'verified' && file_exists($filePath)) {
+                unlink($filePath);
+            }
+
+            // Save email logs  
+            $cleanMessage = str_replace(
+                [",", "!", ".", "'", "\r", "\n"],
+                ["", "", "", "", " ", " "],
+                $message
+            );
+
+            $this->adminpanel->transactionemailStatus(
+                $status,
+                $donationid,
+                $donarname,
+                $donaremail,
+                $cleanMessage,
+                $adminName
+            );
+
+            $this->session->set_userdata(
+                "transactionemailsuccessstatus",
+                "Email sent to " . $donaremail
+            );
+
+        } else {
+            $this->session->set_userdata(
+                "transactionemailerrorstatus",
+                "Failed to send email."
+            );
+        }
+
+    } catch (Exception $e) {
+        $this->session->set_userdata(
+            "transactionemailerrorstatus",
+            "Error: " . $e->getMessage()
+        );
+    }
+
+    redirect("/transactionverification");
 }
 
-        } catch (Exception $e) {
-            $this->session->set_userdata("transactionemailerrorstatus", "Error generating receipt: " . $e->getMessage());
-        }
-        
-        redirect("/transactionverification");
-    }
 
     private function generateEmailContent($donorName, $transactionId, $originalMessage, $status) {
         $subject = ($status == 'verified') ? 'Transaction Receipt' : 'Transaction Status Update';
