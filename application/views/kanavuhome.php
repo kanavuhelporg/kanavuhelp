@@ -1252,7 +1252,7 @@
     <div class="carousel-inner">
       <!-- Slide 1 -->
       <div class="carousel-item active">
-         <img src="<?= base_url('assets/img/old1.png') ?>" class="d-block w-100" alt="Image 1"> 
+         <img src="<?= base_url('assets/img/old1.jpg') ?>" class="d-block w-100" alt="Image 1"> 
         <div class="imgtext1 mt-5 pt-5">
           <p>THE <strong>WORLD'S <br>PLATFORM</strong> FOR <br>
             <span>HELP</span>
@@ -1276,7 +1276,7 @@
     <br>
       <!-- Slide 2 -->
       <div class="carousel-item">
-        <img src="<?= base_url('assets/img/old2.png') ?>" class="d-block w-100" alt="Image 2">
+        <img src="<?= base_url('assets/img/old2.jpg') ?>" class="d-block w-100" alt="Image 2">
         <div class="imgtext2 mt-5 pt-5">
           <p>WE ARE ON A MISSION TO <br>
             <span>HELP THE WORLD</span>
