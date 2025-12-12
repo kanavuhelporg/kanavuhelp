@@ -349,6 +349,14 @@
     .container {
       max-width: 100%;
     }
+
+    .navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.08); /* Slight zoom-in */
+}
   </style>
 </head>
 

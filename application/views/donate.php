@@ -548,6 +548,24 @@
         font-size: 15px;
         padding-left: 12px;
       }
+
+      .note-box {
+        background: #ffe6e6;           /* light red background */
+        border-left: 4px solid #d9534f; /* red left border */
+        padding: 10px 15px;
+        border-radius: 6px;
+        color: #b30000;                /* dark red text */
+        font-size: 10px !important;
+    }
+
+    .navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.08); /* Slight zoom-in */
+}
+
   </style>
   <?php foreach ($fundraisers as $fundraiser): ?>
     <?php if (!empty($fundraiser->cover_image)): ?>
@@ -881,7 +899,11 @@
                     <div class="text-center mb-3">
                         <img src="<?= base_url('assets/img/handwithheart.png') ?>" width="20%">
                     </div>
-
+                    <div class="note-box mb-3">
+                        <p class="mb-0">
+                            <strong style="font-size:13px;">Note:</strong> <span style="font-size:14px;">All contributions will go directly to</span> <strong style="font-size:14px;">The Kanavu Trust.</strong>
+                        </p>
+                    </div>
                     <!-- Dropdown -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">Select Payment Method</label>
@@ -1027,72 +1049,67 @@
 
 <!-- FULL JS -->
 <script>
-function togglePaymentOptions() {
-    let option = document.getElementById("paymentMethod").value;
+  function togglePaymentOptions() {
+      let option = document.getElementById("paymentMethod").value;
 
-    document.getElementById("scanSection").style.display = "none";
-    document.getElementById("upiSection").style.display = "none";
-    document.getElementById("bankSection").style.display = "none";
+      document.getElementById("scanSection").style.display = "none";
+      document.getElementById("upiSection").style.display = "none";
+      document.getElementById("bankSection").style.display = "none";
 
-    if (option === "upi") {
-        document.getElementById("upiSection").style.display = "block";
-    }
-    if (option === "scan") {
-        document.getElementById("scanSection").style.display = "block";
-    }
-    if (option === "bank") {
-        document.getElementById("bankSection").style.display = "block";
-    }
-}
+      if (option === "upi") document.getElementById("upiSection").style.display = "block";
+      if (option === "scan") document.getElementById("scanSection").style.display = "block";
+      if (option === "bank") document.getElementById("bankSection").style.display = "block";
+  }
 
-// Generic Copy Function (UPI + Bank Details)
-function copyField(element) {
-    let id = element.getAttribute("data-copy");
-    let text = document.getElementById(id).innerText;
+  // UNIVERSAL COPY FUNCTION
+  function copyField(icon) {
+      let id = icon.getAttribute("data-copy");
+      let text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text);
 
-    navigator.clipboard.writeText(text);
+      let tooltip = bootstrap.Tooltip.getInstance(icon);
 
-    // Icon change → tick ✔
-    element.classList.remove("bi-copy");
-    element.classList.add("bi-check2-circle", "text-success");
+      // Icon change
+      icon.classList.remove("bi-copy");
+      icon.classList.add("bi-check2-circle", "text-success");
 
-    // Tooltip change
-    let tooltip = bootstrap.Tooltip.getInstance(element);
-    tooltip.setContent({ '.tooltip-inner': 'Copied!' });
+      tooltip.setContent({ ".tooltip-inner": "Copied!" });
 
-    // Revert after 1.5 sec
-    setTimeout(() => {
-        element.classList.remove("bi-check2-circle", "text-success");
-        element.classList.add("bi-copy");
+      setTimeout(() => {
+          icon.classList.remove("bi-check2-circle", "text-success");
+          icon.classList.add("bi-copy");
 
-        tooltip.setContent({ '.tooltip-inner': element.getAttribute("title") });
-    }, 1500);
-}
+          // RESTORE ORIGINAL TOOLTIP TEXT
+          let original = icon.getAttribute("data-original-title");
 
-// Attach copy event
-document.addEventListener("DOMContentLoaded", function () {
-    // Initialize all tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    });
+          tooltip._config.title = original;
+          tooltip.setContent({ ".tooltip-inner": original });
+          tooltip.update();
 
-    // Add copy functionality
-    document.querySelectorAll(".copy-icon").forEach(icon => {
-        icon.addEventListener("click", function () {
-            copyField(this);
-        });
-    });
-});
+      }, 1500);
+  }
 
-// Reset modal content each time opened
-document.getElementById('donationModal').addEventListener('shown.bs.modal', function () {
-    document.getElementById("paymentMethod").value = "upi";
-    document.getElementById("upiSection").style.display = "block";
-    document.getElementById("scanSection").style.display = "none";
-    document.getElementById("bankSection").style.display = "none";
-});
+  // Initialize tooltips + store original title
+  document.addEventListener("DOMContentLoaded", function () {
+
+      // Store original tooltip text BEFORE enabling tooltip
+      document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+          el.setAttribute("data-original-title", el.getAttribute("title"));
+          new bootstrap.Tooltip(el);
+      });
+
+      document.querySelectorAll(".copy-icon").forEach(icon => {
+          icon.addEventListener("click", () => copyField(icon));
+      });
+  });
+
+  // Reset modal
+  document.getElementById("donationModal").addEventListener("shown.bs.modal", () => {
+      document.getElementById("paymentMethod").value = "upi";
+      togglePaymentOptions();
+  });
 </script>
+
 
 
   <!-- Donation Success Modal -->

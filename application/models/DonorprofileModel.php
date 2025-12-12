@@ -3,6 +3,12 @@
 
 class DonorprofileModel extends CI_Model {
 
+  public function __construct() // Add this constructor
+    {
+        parent::__construct();
+        $this->load->database();
+    }
+
    public function fetchDonordata($email){
     $getdonordata = $this->db->query("SELECT * FROM user WHERE email LIKE '%$email%'");
     $donordata = $getdonordata->row_array();

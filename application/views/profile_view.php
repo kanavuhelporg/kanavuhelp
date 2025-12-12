@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
+    <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -256,14 +257,86 @@
     text-align: center; /* Center-align items for better UX */
   }
 }
+.navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.08); /* Slight zoom-in */
+}
 
     </style>
 </head>
 <body>
 
-    <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
-    
-    </nav>
+    <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
+                <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+            </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">
+             <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="donatepage" class="nav-link mx-lg-2 " href="<?= base_url('/donate') ?>">Donate</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+                        </li>
+                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
+                            <li class="nav-item">
+                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
+                            </li>
+                        <?php else: ?>
+                            <li class="nav-item">
+                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                    <div class="d-flex align-items-center ms-auto">
+                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown" id="userProfile">
+                                    <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
+                                        <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
+                                    </div>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+                                                <i class="fas fa-sign-out-alt"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+      </div>
+    </div>
+  </nav>
 
     <div class="container mt-5 pb-3">
         <h2>Profile Page</h2>
@@ -400,16 +473,7 @@
 
 </body>
 <script>
-    $.ajax({
-      type:"get",
-      url:"kanavuhelp/getHeader",
-      success:(result)=>{
-           document.getElementById("header").innerHTML = result;
-      },
-      error:(error)=>{
-           document.getElementById("header").innerHTML = "";
-      }
-    }); 
+    
 
     $.ajax({
       type:"get",
@@ -423,7 +487,7 @@
     }); 
 
     function setUpdatedetails(id,name,email,age,location,mobileno) {
-        console.log(id,name,email,age,location,mobileno)
+       console.log(id,name,email,age,location,mobileno)
        document.getElementById("userId").value = id;
        document.getElementById("name").value = name;
        document.getElementById("email").value = email;

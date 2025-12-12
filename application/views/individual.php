@@ -894,6 +894,13 @@
       /* Center-align items for better UX */
     }
   }
+  .navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.08); /* Slight zoom-in */
+}
 </style>
 
 <body>
