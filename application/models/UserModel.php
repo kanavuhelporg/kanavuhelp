@@ -200,13 +200,24 @@ public function getUserByMobile($mobile)
 */
 	// UserModel.php
 	public function get_user_causes($user_id)
-	{
-		// $this->db->where('user_id', $user_id);
-		// $this->db->order_by('created_at', 'DESC'); // Adjust 'user_id' to match your database field name
-		// $query = $this->db->get('individualform'); // Replace with your table name
-		$query = $this->db->query("SELECT * FROM individualform WHERE user_id = $user_id");
-		return $query->result();
-	}
+{
+    return $this->db
+        ->select("
+            i.*,
+            CASE 
+                WHEN u.name IS NULL OR u.name = '' OR u.name = 'undefined'
+                THEN 'Anonymous'
+                ELSE u.name
+            END AS created_by
+        ")
+        ->from('individualform i')
+        ->join('user u', 'u.id = i.user_id', 'left')
+        ->where('i.user_id', $user_id)
+        ->order_by('i.created_at', 'DESC')
+        ->get()
+        ->result();
+}
+
 
 	public function get_user_progress($cause_id){
 		$query = $this->db->query("SELECT * FROM cause_status_data WHERE cause_id = $cause_id");
@@ -391,16 +402,78 @@ public function get_used_priorities() {
 	}
 
 	/* filter by all causes */
-	public function filterCauseswithcategory($category) {
-		if($category == "All") {
-		  $getcauses = $this->db->query("SELECT * FROM individualform WHERE verified = 1");
-		}
-		else{
-		  $getcauses = $this->db->query("SELECT * FROM individualform WHERE category = '$category' AND verified = 1");
-		}
+	// public function filterCauseswithcategory($category) {
+	// 	if($category == "All") {
+	// 	  $getcauses = $this->db->query("SELECT * FROM individualform WHERE verified = 1");
+	// 	}
+	// 	else{
+	// 	  $getcauses = $this->db->query("SELECT * FROM individualform WHERE category = '$category' AND verified = 1");
+	// 	}
 		
-		return $getcauses->result();
-	}
+	// 	return $getcauses->result();
+	// }
+	/* filter by all causes */
+public function filterCauseswithcategory($category)
+{
+    // COMPLETED causes
+    if ($category === "Completed") {
+        $sql = "
+            SELECT 
+                i.*,
+                CASE 
+                    WHEN u.name IS NULL OR u.name = '' OR u.name = 'undefined'
+                    THEN 'Anonymous'
+                    ELSE u.name
+                END AS created_by
+            FROM individualform i
+            LEFT JOIN user u ON u.id = i.user_id
+            WHERE i.verified = 1
+              AND (
+                    SELECT COALESCE(SUM(d.amount),0)
+                    FROM donation_for_cause d
+                    WHERE d.cause_id = i.id AND d.status = 1
+                  ) >= COALESCE(i.amount,0)
+        ";
+        return $this->db->query($sql)->result();
+    }
+
+    // ALL causes
+    if ($category === "All") {
+        return $this->db
+            ->select("
+                i.*,
+                CASE 
+                    WHEN u.name IS NULL OR u.name = '' OR u.name = 'undefined'
+                    THEN 'Anonymous'
+                    ELSE u.name
+                END AS created_by
+            ")
+            ->from('individualform i')
+            ->join('user u', 'u.id = i.user_id', 'left')
+            ->where('i.verified', 1)
+            ->get()
+            ->result();
+    }
+
+    // CATEGORY filter
+    return $this->db
+        ->select("
+            i.*,
+            CASE 
+                WHEN u.name IS NULL OR u.name = '' OR u.name = 'undefined'
+                THEN 'Anonymous'
+                ELSE u.name
+            END AS created_by
+        ")
+        ->from('individualform i')
+        ->join('user u', 'u.id = i.user_id', 'left')
+        ->where('i.category', $category)
+        ->where('i.verified', 1)
+        ->get()
+        ->result();
+}
+
+
 
 
 	// Assuming your donations table is named 'individualform'  kani
@@ -457,6 +530,15 @@ public function get_current_raised_amount($fundraiser_id)
     // Return the sum or 0 if no donations
     return $result->amount ? (float)$result->amount : 0;
 }
+
+public function mark_cause_completed($cause_id)
+{
+    // Update all records for the cause as completed (or only specific logic)
+    $this->db->set('cause_completed', 1);
+    $this->db->where('cause_id', $cause_id);
+    return $this->db->update('donation_for_cause');
+}
+
 
 }
 ?>

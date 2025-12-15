@@ -24,8 +24,8 @@
 
   <style>
     :root {
-      --primary-red: #EB2D32;
-      --dark-red: #c82333;
+      --primary-red: #ed3136;
+      --dark-red: #ed3136;
     }
     
     body {
@@ -51,7 +51,7 @@
       /* font-weight: bold; */
     }
     .nav-link.active {
-      color: #E01A2B !important;
+      color: #ed3136 !important;
       font-weight: bold;
     }
     /* Fixed header with proper spacing */

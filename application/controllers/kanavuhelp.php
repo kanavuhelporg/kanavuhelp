@@ -1131,91 +1131,153 @@ foreach ($data['fundraisers'] as $fundraiser) {
     }
 
 
+    // public function insertUser()
+    // {
+    //     $causeData = ""; 
+    //     $step = $this->input->post("step");
+        
+    //     $causeData = [
+    //         'category' => $this->input->post('category'),
+    //         'created_by' => $this->input->post('created_by'),
+    //         'name' => $this->input->post('name'),
+    //         'email' => $this->input->post('email'),
+    //         'phone' => $this->input->post('phone'),
+    //         'age' => $this->input->post('age'),
+    //         'location' => $this->input->post('location'),
+    //         'form_selected_text' => $this->input->post('category'),
+    //     ];
+        
+    //     $userData = [
+    //         'name' => $this->input->post('created_by'),
+    //         'email' => $this->input->post('email'),
+    //         'mobileNumber' => $this->input->post('phone'),
+    //         'age' => $this->input->post('age'),
+    //         'location' => $this->input->post('location'),
+    //         'category' => 'user',
+    //     ];
+
+    //     $email = $this->input->post('email');
+    //     $checkregister = $this->UserModel->checkUserexist($email);
+        
+    //     if($checkregister->num_rows() > 0){
+    //         $userdata = $checkregister->row();
+    //         $user_id = $userdata->id;
+    //         $user_name = $userdata->name;
+    //         $fundraiser = $this->UserModel->get_user_causes_row($user_id);
+    //         $end_date = $fundraiser->end_date;
+    //         $day_diff = 0;
+    //       /*if(empty($end_date)){
+    //             $day_diff = 0;  
+    //         }
+    //         else{
+    //             $end_date = new DateTime($fundraiser->end_date);
+    //             $current_date = new DateTime();
+    //             $day_diff = $end_date->diff($current_date);
+    //         } 
+
+    //         if($day_diff > 0){
+    //             $this->session->set_flashdata("fundraisinglive",true);
+    //             redirect("individual");
+    //         }*/
+            
+    //             $userLoggedIn = array(
+    //                 'Kanavu_userId' => $user_id,
+    //                 'Kanavu_userName' => $user_name,
+    //             );
+    //             $this->session->set_userdata("userEmail",$email);
+    //             $this->session->set_userdata('currentUserId', $user_id);
+    //             $this->session->set_userdata('form_selected_text',$this->input->post('category'));
+    //             $this->session->set_userdata($userLoggedIn);  
+    //             $this->db->insert('individualform', $causeData);
+    //             $causeId = $this->db->insert_id();
+    //             $causeData['cause_id'] = $causeId;
+    //             // $this->DonorprofileModel->registerAsdonor($causeData);
+    //             $this->session->set_userdata('currentCauseId', $causeId);
+    //             $this->session->set_userdata($userLoggedIn);      
+    //             redirect("/send"); 
+    //         }
+    //     else{
+    //         $this->db->insert('user', $userData);
+    //         $userId = $this->db->insert_id();
+    //         $userLoggedIn = array(
+    //             'Kanavu_userId' => $userId,
+    //             'Kanavu_userName' => $userData["name"],
+    //         );
+    //         $this->session->set_userdata('currentUserId', $userId);
+    //         $causeData["user_id"] = $userId;
+    //         $this->session->set_userdata('form_selected_text', $this->input->post('category'));
+    //         $this->session->set_userdata('userEmail', $email);
+    //         $this->db->insert('individualform', $causeData);
+    //         $causeId = $this->db->insert_id();
+    //         $causeData['cause_id'] = $causeId;
+    //         // $this->DonorprofileModel->registerAsdonor($causeData);
+    //         $this->session->set_userdata('currentCauseId', $userId);
+    //         $this->session->set_userdata($userLoggedIn);     
+    //         redirect("/send"); 
+    //     }
+    // }
+
     public function insertUser()
-    {
-        $causeData = ""; 
-        $step = $this->input->post("step");
-        
-        $causeData = [
-            'category' => $this->input->post('category'),
-            'created_by' => $this->input->post('created_by'),
-            'name' => $this->input->post('name'),
-            'email' => $this->input->post('email'),
-            'phone' => $this->input->post('phone'),
-            'age' => $this->input->post('age'),
-            'location' => $this->input->post('location'),
-            'form_selected_text' => $this->input->post('category'),
-        ];
-        
+{
+    $createdBy = trim($this->input->post('created_by'));
+
+    // SAFETY: prevent null / undefined
+    if (empty($createdBy) || strtolower($createdBy) === 'undefined') {
+        $createdBy = 'Anonymous';
+    }
+
+    $causeData = [
+        'category' => $this->input->post('category'),
+        'created_by' => $createdBy,
+        'name' => $this->input->post('name'),
+        'email' => $this->input->post('email'),
+        'phone' => $this->input->post('phone'),
+        'age' => $this->input->post('age'),
+        'location' => $this->input->post('location'),
+        'form_selected_text' => $this->input->post('category'),
+    ];
+
+    $email = $this->input->post('email');
+    $checkregister = $this->UserModel->checkUserexist($email);
+
+    if ($checkregister->num_rows() > 0) {
+
+        $userdata = $checkregister->row();
+        $user_id = $userdata->id;
+
+        $this->session->set_userdata([
+            'Kanavu_userId' => $user_id,
+            'Kanavu_userName' => $userdata->name,
+            'currentUserId' => $user_id,
+            'userEmail' => $email,
+            'form_selected_text' => $this->input->post('category')
+        ]);
+
+        $causeData['user_id'] = $user_id;
+
+        $this->db->insert('individualform', $causeData);
+
+    } else {
+
         $userData = [
-            'name' => $this->input->post('created_by'),
-            'email' => $this->input->post('email'),
+            'name' => $createdBy,
+            'email' => $email,
             'mobileNumber' => $this->input->post('phone'),
             'age' => $this->input->post('age'),
             'location' => $this->input->post('location'),
             'category' => 'user',
         ];
 
-        $email = $this->input->post('email');
-        $checkregister = $this->UserModel->checkUserexist($email);
-        
-        if($checkregister->num_rows() > 0){
-            $userdata = $checkregister->row();
-            $user_id = $userdata->id;
-            $user_name = $userdata->name;
-            $fundraiser = $this->UserModel->get_user_causes_row($user_id);
-            $end_date = $fundraiser->end_date;
-            $day_diff = 0;
-          /*if(empty($end_date)){
-                $day_diff = 0;  
-            }
-            else{
-                $end_date = new DateTime($fundraiser->end_date);
-                $current_date = new DateTime();
-                $day_diff = $end_date->diff($current_date);
-            } 
+        $this->db->insert('user', $userData);
+        $userId = $this->db->insert_id();
 
-            if($day_diff > 0){
-                $this->session->set_flashdata("fundraisinglive",true);
-                redirect("individual");
-            }*/
-            
-                $userLoggedIn = array(
-                    'Kanavu_userId' => $user_id,
-                    'Kanavu_userName' => $user_name,
-                );
-                $this->session->set_userdata("userEmail",$email);
-                $this->session->set_userdata('currentUserId', $user_id);
-                $this->session->set_userdata('form_selected_text',$this->input->post('category'));
-                $this->session->set_userdata($userLoggedIn);  
-                $this->db->insert('individualform', $causeData);
-                $causeId = $this->db->insert_id();
-                $causeData['cause_id'] = $causeId;
-                // $this->DonorprofileModel->registerAsdonor($causeData);
-                $this->session->set_userdata('currentCauseId', $causeId);
-                $this->session->set_userdata($userLoggedIn);      
-                redirect("/send"); 
-            }
-        else{
-            $this->db->insert('user', $userData);
-            $userId = $this->db->insert_id();
-            $userLoggedIn = array(
-                'Kanavu_userId' => $userId,
-                'Kanavu_userName' => $userData["name"],
-            );
-            $this->session->set_userdata('currentUserId', $userId);
-            $causeData["user_id"] = $userId;
-            $this->session->set_userdata('form_selected_text', $this->input->post('category'));
-            $this->session->set_userdata('userEmail', $email);
-            $this->db->insert('individualform', $causeData);
-            $causeId = $this->db->insert_id();
-            $causeData['cause_id'] = $causeId;
-            // $this->DonorprofileModel->registerAsdonor($causeData);
-            $this->session->set_userdata('currentCauseId', $userId);
-            $this->session->set_userdata($userLoggedIn);     
-            redirect("/send"); 
-        }
+        $causeData['user_id'] = $userId;
+
+        $this->db->insert('individualform', $causeData);
     }
+
+    redirect('/send');
+}
 
     public function updateCauseStep2(){
         $data = [

@@ -39,7 +39,7 @@
     }
     /* Login_button */
     .login-button {
-      background-color: #E01A2B;
+      background-color: #ed3136;
       color: white;
       font-size: 16px;
       padding: 8px 20px;
@@ -49,8 +49,8 @@
     }
     /* start a kanavu button */
     .startkanavu-button {
-      border: 1px solid #E01A2B;
-      color: #E01A2B;
+      border: 1px solid #ed3136;
+      color: #ed3136;
       font-size: 16px;
       padding: 8px 20px;
       border-radius: 25px;
@@ -67,7 +67,7 @@
       /* font-weight: bold; */
     }
     .nav-link.active {
-      color: #E01A2B !important;
+      color: #ed3136 !important;
       font-weight: bold;
     }
     /* carousel text */
@@ -117,7 +117,7 @@
 
     .imgtext1 span,
     .imgtext2 span {
-      color: #EB2D32;
+      color: #ed3136;
       font-weight: bolder;
       font-size: 40px;
     }
@@ -131,9 +131,9 @@
     }
 
     .filter-btn.active {
-      border-color: #EB2D32;
+      border-color: #ed3136;
       /* Red border for active button */
-      color: #EB2D32;
+      color: #ed3136;
       /* Red text for active button */
     }
 
@@ -145,13 +145,13 @@
     }
 
     .filter-btn:hover {
-      border-color: #EB2D32;
+      border-color: #ed3136;
       color: white;
-      background-color: #EB2D32;
+      background-color: #ed3136;
     }
     .donatefor {
-      border: 1px solid #E01A2B;
-      color: #E01A2B;
+      border: 1px solid #ed3136;
+      color: #ed3136;
       background-color: #fff;
       border-radius: 20px;
     }
@@ -189,8 +189,8 @@
     }
 
     .donate_btn {
-      border: 1px solid rgba(224, 26, 43, 1);
-      color: rgba(224, 26, 43, 1);
+      border: 1px solid rgba(237, 49, 54, 1);
+      color: rgba(237, 49, 54, 1);
       border-radius: 25px;
     }
 
@@ -201,7 +201,7 @@
       width: 100%;
       left: 0;
       right: 0;
-      background-color: #EB2D32;
+      background-color: #ed3136;
       margin-top: 50px;
       color: #f0f0f0;
     }
@@ -262,7 +262,7 @@
     }
     #envelope_icon{
       margin-left:35%;
-      color:#E01A2B;
+      color: #ed3136;
       font-size:26px;
     }
     .line{
@@ -338,7 +338,7 @@
     }
     #loc_icon{
       margin-left:19%;
-      color:#E01A2B;
+      color: #ed3136;
       font-size:26px;
     }
     #phone{
@@ -346,7 +346,7 @@
     }
     #phone_icon{
       margin-left:13%;
-      color:#E01A2B;
+      color: #ed3136;
       font-size:26px;
     }
     #email{
@@ -354,7 +354,7 @@
     }
     #envelope_icon{
       margin-left:22%;
-      color:#E01A2B;
+      color:#ed3136;
       font-size:26px;
     }
     .form1{
@@ -401,13 +401,13 @@
     }
 
     .about-hero h1 span {
-        color: #EB2D32;
+        color: #ed3136;
     }
 
     .divider-icon {
         margin: 15px auto;
         font-size: 20px;
-        color: #EB2D32;
+        color: #ed3136;
     }
 
     .about-hero p {
@@ -418,43 +418,63 @@
         line-height: 1.7;
     }
 
-    /* Story Section */
-    .story-section {
-        padding: 80px 20px;
-        background: #FFFDF9;
+.story-section {
+      /* padding: 100px 20px; */
+      background: #FFFDF9;
     }
 
-    .story-section img {
-        border-radius: 20px;
-        width: 100%;
-        height: auto;
-        object-fit: cover;
+    /* EQUAL IMAGE HEIGHT CONTAINER */
+    .story-image-container {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 100%;
+      height: 450px; /* Fixed height for all screens */
+    }
+
+    .story-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* This ensures the image covers the container equally */
+      display: block;
     }
 
     .story-title {
-        font-weight: 700;
-        font-size: 32px;
-        margin-bottom: 20px;
+      font-weight: 800;
+      font-size: 36px;
+      margin-bottom: 25px;
+      color: var(--text-dark);
     }
 
     .story-text {
-        color: #555;
-        line-height: 1.8;
-        font-size: 17px;
+      color: var(--text-gray);
+      line-height: 1.9;
+      font-size: 17px;
+      margin-bottom: 30px;
     }
 
-    .story-section .btn {
-        border-radius: 30px;
-        padding: 10px 25px;
-        background: #fff;
-        color: #EB2D32;
-        border: 1px solid #EB2D32;
-        transition: .3s;
+    .story-text strong {
+      color: var(--primary-red);
+      font-weight: 700;
     }
 
-    .story-section .btn:hover {
-        background: #EB2D32;
-        color: #fff;
+    .story-btn {
+      border-radius: 30px;
+      padding: 12px 35px;
+      background: white;
+      color: var(--primary-red);
+      border: 2px solid var(--primary-red);
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .story-btn:hover {
+      background: var(--primary-red);
+      color: white;
     }
 
     /* Core Values */
@@ -486,7 +506,7 @@
 
     .value-card i {
         font-size: 35px;
-        color: #EB2D32;
+        color: #ed3136;
         margin-bottom: 15px;
     }
 
@@ -502,7 +522,7 @@
 
     /* Call to Action */
     .cta-section {
-      background: linear-gradient(135deg, #FF9AA2, #FF6F72);
+      background: linear-gradient(135deg, #ed3136, #FF6F72);
       padding: 60px 20px;
       border-radius: 20px;
       margin: 60px 20px;
@@ -524,7 +544,7 @@
     .cta-section .btn {
         margin-top: 20px;
         background: white;
-        color: #EB2D32;
+        color: #ed3136;
         font-weight: 600;
         padding: 12px 30px;
         border-radius: 30px;
@@ -539,6 +559,19 @@
             font-size: 26px;
         }
     }
+
+    @media (max-width: 768px) {
+
+  .story-image-container {
+    height: 220px;        /* 👈 Half visible image */
+  }
+
+  .story-image {
+    object-position: top; /* 👈 Focus on top portion */
+  }
+
+}
+
 .navbar-brand img {
     transition: transform 0.3s ease-in-out;
 }
@@ -634,25 +667,31 @@
 
   <!-- ========== STORY SECTION ========== -->
   <section class="story-section">
-      <div class="container">
-          <div class="row align-items-center g-4">
-              <div class="col-md-6">
-                  <img src="<?= base_url('assets/img/help3.png') ?>" alt="Our Story Image">
-              </div>
-              <div class="col-md-6">
-                  <h2 class="story-title">From a Simple Dream to a Shared Reality
-                    
-                  </h2>
-                  <p class="story-text">
-                      Kanavu (கனவு), meaning 'dream' in Tamil, started with a simple vision:
-                      to ensure no child's dream is left behind due to circumstances.
-                      We began by supporting a handful of students in a small village, and
-                      today, with the help of compassionate supporters like you, our family
-                      has grown—touching thousands of lives across communities.
-                  </p>
-              </div>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <!-- EQUAL HEIGHT IMAGE CONTAINER -->
+          <div class="story-image-container">
+            <img src="<?= base_url('assets/img/help3.jpeg') ?>" alt="Our Story" class="story-image">
           </div>
+        </div>
+        <div class="col-lg-6 ">
+          <h2 class="story-title mt-4">From a Simple Dream to a Shared Reality</h2>
+          <p class="story-text">
+            <strong>Kanavu (கனவு)</strong>, meaning 'dream' in Tamil, started with a simple vision: 
+            to ensure no child's dream is left behind due to circumstances. 
+            We began by supporting a handful of students in a small village, and today, 
+            with the help of compassionate supporters like you, our family has grown—touching 
+            thousands of lives across communities.
+          </p>
+          <p class="story-text">
+            What began as a small initiative has now become a movement. Through education 
+            support, healthcare access, and community development programs, we're creating 
+            sustainable change that lasts for generations.
+          </p>
+        </div>
       </div>
+    </div>
   </section>
 
   <!-- ========== CORE VALUES ========== -->
@@ -707,7 +746,7 @@
       <a href="<?= base_url('/donate') ?>" class="btn">Become a Volunteer</a>
   </div>
 
-  <footer class="footer bg-danger text-white py-4 mt-auto">
+  <footer class="footer text-white py-4 mt-auto" style="background-color: #ed3136;">
       <div class="container text-center">
           <h5>kanavu.help</h5>
 

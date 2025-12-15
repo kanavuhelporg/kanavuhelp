@@ -57,7 +57,7 @@
         }
 
         .login-title {
-            color: #EB2D32;
+            color: #ed3136;
             font-weight: bold;
             margin-bottom: 30px;
         }
@@ -76,12 +76,12 @@
         }
 
         .form-control:focus {
-            border-color: #EB2D32;
-            box-shadow: 0 0 0 0.2rem rgba(235, 45, 50, 0.1);
+            border-color: #ed3136;
+            box-shadow: 0 0 0 0.2rem rgba(237, 49, 54, 0.1);
         }
 
         .btn-get-otp {
-            background-color: #EB2D32;
+            background-color: #ed3136;
             color: white;
             border: none;
             border-radius: 8px;
@@ -90,12 +90,12 @@
         }
 
         .btn-get-otp:hover {
-            background-color: #d42a2e;
+            background-color: #ed3136;
             color: white;
         }
 
         .btn-signin {
-            background-color: #EB2D32;
+            background-color: #ed3136;
             color: white;
             border: none;
             border-radius: 8px;
@@ -105,12 +105,12 @@
         }
 
         .btn-signin:hover {
-            background-color: #d42a2e;
+            background-color: #ed3136;
             color: white;
         }
 
         .otp-indicator {
-            color: #EB2D32;
+            color: #ed3136;
             font-weight: 500;
         }
 
@@ -131,18 +131,18 @@
             padding: 25px;
             margin-bottom: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #EB2D32;
+            border-left: 4px solid #ed3136;
         }
 
         .quote-text {
-            color: #EB2D32;
+            color: #ed3136;
             font-weight: bold;
             font-size: 16px;
             margin-bottom: 8px;
         }
 
         .quote-author {
-            color: #EB2D32;
+            color: #ed3136;
             font-weight: 500;
         }
 
@@ -170,7 +170,7 @@
 
         /* Footer Styles */
         .footer {
-            background-color: #EB2D32;
+            background-color: #ed3136;
             color: #f0f0f0;
             padding: 30px 0;
             margin-top: 50px;
