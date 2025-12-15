@@ -20,7 +20,7 @@
         width: 100%;
         left: 0;
         right: 0;
-        background-color: #EB2D32;
+        background-color: #ed3136;
         color: #f0f0f0;
         padding: 30px 0;
         height: auto; /* ✅ allows footer to expand naturally */
@@ -187,7 +187,7 @@
     }
 </style>
 
-<footer class="footer bg-danger text-white py-4 mt-auto">
+<footer class="footer text-white py-4 mt-auto" style="background-color: #ed3136;">
     <div class="container text-center">
         <h5>kanavu.help</h5>
 

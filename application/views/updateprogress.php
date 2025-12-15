@@ -9,6 +9,7 @@
   <!-- <link href="bootstrap.min.css" rel="stylesheet" />
          <script src="bootstrap.bundle.min.js"></script> -->
   <!-- Bootrap for the demo page -->
+   <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
  <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -881,6 +882,14 @@
       /* Center-align items for better UX */
     }
   }
+  .navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.08); /* Slight zoom-in */
+}
+
 </style>
 
 <body>

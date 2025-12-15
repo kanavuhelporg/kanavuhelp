@@ -61,7 +61,7 @@
       font-size: 1.3rem;
       /* Adjust the size of the share icon */
       cursor: pointer;
-      color: #ED3136;
+      color: #ed3136;
       margin-left: auto;
       /* Pushes the share icon to the far right in its flex container */
     }
@@ -75,7 +75,7 @@
     
     /* login_button */
     .login-button {
-      background-color: #ED3136;
+      background-color: #ed3136;
       color: white;
       font-size: 16px;
       padding: 8px 20px;
@@ -86,8 +86,8 @@
 
     /* start a kanavu button */
     .startkanavu-button {
-      border: 1px solid #ED3136;
-      color: #ED3136;
+      border: 1px solid #ed3136;
+      color: #ed3136;
       font-size: 16px;
       padding: 8px 20px;
       border-radius: 25px;
@@ -104,7 +104,7 @@
       /* font-weight: bold; */
     }
     .nav-link.active {
-      color: #E01A2B !important;
+      color: #ed3136 !important;
       font-weight: bold;
     }
     /* carousel text */
@@ -157,14 +157,14 @@
 
     .imgtext1 span,
     .imgtext2 span {
-      color: #ED3136;
+      color: #ed3136;
       font-weight: bolder;
       font-size: 35px;
     }
 
     .btn-3,
     .btn-4 {
-      background-color: #ED3136;
+      background-color: #ed3136;
       color: white;
       border-radius: 20px;
     }
@@ -206,15 +206,15 @@
     }
 
     .donate_btn {
-      border: 1px solid #ED3136;
-      color: #ED3136;
+      border: 1px solid #ed3136;
+      color: #ed3136;
       border-radius: 25px;
     }
 
     /* readmore_button in card */
     .readmore_btn {
-      border: 1px solid #ED3136;
-      color: #ED3136;
+      border: 1px solid #ed3136;
+      color: #ed3136;
       border-radius: 25px;
     }
 
@@ -257,7 +257,7 @@
     }
 
     .step-2 {
-      background-color: #FF6347;
+      background-color: #ed3136;
       /* Tomato red color */
     }
 
@@ -266,7 +266,7 @@
       /* Yellow color */
     }
     .nav-link.active {
-      color: #E01A2B !important;
+      color: #ed3136 !important;
       font-weight: bold;
     }
     .background-overlay {
@@ -325,9 +325,9 @@
     }
 
     .step_2 {
-      border-color: #FF6347;
+      border-color: #ed3136;
       /* Tomato red */
-      color: #FF6347;
+      color: #ed3136;
     }
 
     .step_3 {
@@ -342,7 +342,7 @@
       width: 100%;
       left: 0;
       right: 0;
-      background-color: #ED3136;
+      background-color: #ed3136;
       /* margin-top: -100px; */
       color: #f0f0f0;
     }
@@ -454,14 +454,14 @@
     }
 
     .step_2 {
-      border: 3px solid #FF6347;
+      border: 3px solid #ed3136;
       border-radius: 50px;
       width: 70px;
       height: 70px;
       margin-top: -65px;
       margin-left: 50%;
       background-color: white;
-      color: #FF6347;
+      color: #ed3136;
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.4);
 
     }
@@ -496,7 +496,7 @@
     }
 
     .step-2 {
-      background-color: #FF6347;
+      background-color: #ed3136;
       /* Tomato red color */
     }
 
@@ -888,17 +888,17 @@
         background-color: #f8d7da; /* Light pink background */
     }
     .progress-bar {
-        background-color: #EB2D32; /* Red color for progress */
+        background-color: #ed3136; /* Red color for progress */
     }
     .btn.bg-danger {
         border-radius: 25px;
         font-size: 14px;
         padding: 8px 20px; /* Adjusted padding for better button size */
-        background-color: #EB2D32;
+        background-color: #ed3136;
         border: none;
     }
     .btn.bg-danger:hover {
-        background-color: #d1262b; /* Slightly darker red on hover */
+        background-color: #ed3136; /* Slightly darker red on hover */
     }
 
     /* Single Row for Supporters and Created by */
@@ -976,11 +976,11 @@
         cursor: pointer;
     }
     .share-section i {
-        color: #EB2D32;
+        color: #ed3136;
         font-size: 16px;
     }
     .share-section span {
-        color: #EB2D32;
+        color: #ed3136;
         font-size: 14px;
         font-weight: 500;
         margin-left: 5px;
@@ -1037,7 +1037,7 @@
     }
 
     .carousel-indicators .active {
-      background-color: #ED3136 !important;
+      background-color: #ed3136 !important;
       opacity: 1;
     }
     @media (max-width: 768px) {
@@ -1064,7 +1064,7 @@
         }
 
         .step-item.active .step-circle {
-          background-color: #ED3136;
+          background-color: #ed3136;
           color: white;
         }
 
@@ -1089,7 +1089,7 @@
         #progressBar {
           width: 0%;
           height: 100%;
-          background-color: #ED3136;
+          background-color: #ed3136;
           transition: width 0.1s linear;
         }
 
@@ -1173,7 +1173,22 @@
         font-size: 15px;
         padding-left: 12px;
       }
-      
+      .note-box {
+        background: #ffe6e6;           /* light red background */
+        border-left: 4px solid #d9534f; /* red left border */
+        padding: 10px 15px;
+        border-radius: 6px;
+        color: #ed3136;                /* dark red text */
+        font-size: 15px;
+    }
+.navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.08); /* Slight zoom-in */
+}
+
   </style>
 </head>
 
@@ -1269,7 +1284,7 @@
               <!-- <li>Join Us in the Fight & Healing.</li><br> -->
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color:#ED3136 ; color: white; border: none;">
+                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color:#ed3136 ; color: white; border: none;">
                     Start a Fundraiser
                   </button>
                 </a>
@@ -1293,7 +1308,7 @@
               <!-- <li>Join Us in the Fight & Healing.</li><br> -->
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color: #ED3136; color: white; border: none;">
+                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color: #ed3136; color: white; border: none;">
                     Start a Fundraiser
                   </button>
                 </a>
@@ -1324,7 +1339,7 @@
           <div class="stat-box">
             <img src="<?= base_url('assets/img/money-bag1.png') ?>" alt="Icon" class="mb-3 img-fluid">
             <h2 class="count-up" data-target="<?= html_escape($total_fund) ?>" data-prefix="₹">0</h2>
-            <p>Total fund raised</p>
+            <p>Fund raises</p>
           </div>
         </div>
 
@@ -1333,7 +1348,7 @@
           <div class="stat-box">
             <img src="<?= base_url('assets/img/calendar1.png') ?>" alt="Icon" class="mb-3 img-fluid">
             <h2 class="count-up" data-target="<?= $total_events ?>" data-suffix="+">0</h2>
-            <p>Successful events</p>
+            <p>Causes</p>
           </div>
         </div>
 
@@ -1342,7 +1357,7 @@
           <div class="stat-box">
             <img src="<?= base_url('assets/img/hand1.png') ?>" alt="Icon" class="mb-3 img-fluid">
             <h2 class="count-up" data-target="550" data-suffix="+">0</h2>
-            <p>Worldwide volunteers</p>
+            <p>Volunteers</p>
           </div>
         </div>
 
@@ -1351,7 +1366,7 @@
           <div class="stat-box">
             <img src="<?= base_url('assets/img/volunter1.png') ?>" alt="Icon" class="mb-3 img-fluid">
             <h2 class="count-up" data-target="<?= $total_donors ?>" data-suffix="+">0</h2>
-            <p>Our donors</p>
+            <p>Donors</p>
           </div>
         </div>
       </div>
@@ -1443,7 +1458,7 @@
 
   <div class="container-xxl">
   
-    <div class="h4 text-center">BE THE REASON OF<span style="color:#ED3136"> SOMEONE SMILES</span></div>
+    <div class="h4 text-center">BE THE REASON OF<span style="color: #ed3136"> SOMEONE SMILES</span></div>
     <div style="display: flex; justify-content: center;">
       <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
     </div>
@@ -1610,7 +1625,7 @@
   <!-- See More Button -->
 <?php  if (!empty($fundraisers)): ?>   
 <div class="text-center mt-3">
-  <a href="<?= base_url('/donate') ?>" class="btn" style="background-color: white; border: 1px solid #ED3136; color: #ED3136; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+  <a href="<?= base_url('/donate') ?>" class="btn" style="background-color: white; border: 1px solid #ed3136; color: #ed3136; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     See More Causes
   </a>
 </div>
@@ -1890,7 +1905,7 @@ function openDonationModal() {
 
     .progress-bar {
       height: 100%;
-      background-color: #ED3136;
+      background-color: #ed3136;
       width: 0;
       transition: width 0.1s linear;
     }
@@ -1928,7 +1943,7 @@ function openDonationModal() {
       min-height: 40px !important;
       border-radius: 50% !important;
       border: 2px solid #fbd9d3;
-      color: #ED3136;
+      color: #ed3136;
       background-color: transparent;
       display: flex;
       align-items: center;
@@ -1939,15 +1954,15 @@ function openDonationModal() {
     }
 
     .step-item.active .step-circle {
-      background-color: #ED3136;
+      background-color: #ed3136;
       color: #fff;
       
     }
 
     .step-item:hover .step-circle {
       background-color: #fceaea;
-      color: #ED3136;
-      border: 2px solid #ED3136;
+      color: #ed3136;
+      border: 2px solid #ed3136;
     }
 
     .step-item h5 {
@@ -2292,7 +2307,11 @@ function openDonationModal() {
           <div class="text-center mb-3">
             <img src="<?= base_url('assets/img/handwithheart.png') ?>" width="20%">
           </div>
-
+          <div class="note-box mb-3">
+            <p class="mb-0">
+              <strong style="font-size:13px;">Note:</strong> <span style="font-size:14px;">All contributions will go directly to</span> <strong style="font-size:14px;">The Kanavu Trust.</strong>
+            </p>
+          </div>
           <!-- Payment Method Dropdown -->
           <div class="mb-3">
               <label class="form-label fw-bold">Select Payment Method</label>
@@ -2443,60 +2462,72 @@ function openDonationModal() {
 
 <!-- SCRIPT -->
 <script>
-// Toggle payment sections
-function togglePaymentOptions() {
-    let option = document.getElementById("paymentMethod").value;
+  // Toggle payment sections
+  function togglePaymentOptions() {
+      let option = document.getElementById("paymentMethod").value;
 
-    document.getElementById("upiSection").style.display = "none";
-    document.getElementById("scanSection").style.display = "none";
-    document.getElementById("bankSection").style.display = "none";
+      document.getElementById("upiSection").style.display = "none";
+      document.getElementById("scanSection").style.display = "none";
+      document.getElementById("bankSection").style.display = "none";
 
-    if (option === "upi") document.getElementById("upiSection").style.display = "block";
-    if (option === "scan") document.getElementById("scanSection").style.display = "block";
-    if (option === "bank") document.getElementById("bankSection").style.display = "block";
-}
+      if (option === "upi") document.getElementById("upiSection").style.display = "block";
+      if (option === "scan") document.getElementById("scanSection").style.display = "block";
+      if (option === "bank") document.getElementById("bankSection").style.display = "block";
+  }
 
-// UNIVERSAL COPY FUNCTION
-function copyField(icon) {
-    let id = icon.getAttribute("data-copy");
-    let text = document.getElementById(id).innerText;
+  // UNIVERSAL COPY FUNCTION
+  function copyField(icon) {
+      let id = icon.getAttribute("data-copy");
+      let text = document.getElementById(id).innerText;
 
-    navigator.clipboard.writeText(text);
+      navigator.clipboard.writeText(text);
 
-    icon.classList.remove("bi-copy");
-    icon.classList.add("bi-check2-circle", "text-success");
+      let tooltip = bootstrap.Tooltip.getInstance(icon);
 
-    let tooltip = bootstrap.Tooltip.getInstance(icon);
-    tooltip.setContent({ ".tooltip-inner": "Copied!" });
+      // Change icon + tooltip to "Copied!"
+      icon.classList.remove("bi-copy");
+      icon.classList.add("bi-check2-circle", "text-success");
 
-    setTimeout(() => {
-        icon.classList.remove("bi-check2-circle", "text-success");
-        icon.classList.add("bi-copy");
-        tooltip.setContent({ ".tooltip-inner": icon.getAttribute("title") });
-    }, 1500);
-}
+      tooltip.setContent({ ".tooltip-inner": "Copied!" });
 
-// Apply copy events
-document.addEventListener("DOMContentLoaded", function() {
+      // Reset back after 1.5 sec
+      setTimeout(() => {
+          icon.classList.remove("bi-check2-circle", "text-success");
+          icon.classList.add("bi-copy");
 
-    // Enable all tooltips
-    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-        new bootstrap.Tooltip(el);
-    });
+          // RESTORE ORIGINAL TOOLTIP TEXT
+          let original = icon.getAttribute("data-original-title");
+          tooltip._config.title = original;
+          tooltip.setContent({ ".tooltip-inner": original });
+          tooltip.update();
+      }, 1500);
+  }
+  // Apply copy events
+  document.addEventListener("DOMContentLoaded", function () {
 
-    // Enable copy icon click
-    document.querySelectorAll(".copy-icon").forEach(icon => {
-        icon.addEventListener("click", function() {
-            copyField(this);
-        });
-    });
-});
+      document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+          let originalTitle = el.getAttribute("title");
 
-// Reset modal
-document.getElementById("donationModal").addEventListener("shown.bs.modal", () => {
-    document.getElementById("paymentMethod").value = "upi";
-    togglePaymentOptions();
-});
+          // Store original title in custom attribute
+          el.setAttribute("data-original-title", originalTitle);
+
+          // Activate tooltip
+          new bootstrap.Tooltip(el);
+      });
+
+      // Enable copy click
+      document.querySelectorAll(".copy-icon").forEach(icon => {
+          icon.addEventListener("click", function () {
+              copyField(this);
+          });
+      });
+  });
+
+  // Reset modal
+  document.getElementById("donationModal").addEventListener("shown.bs.modal", () => {
+      document.getElementById("paymentMethod").value = "upi";
+      togglePaymentOptions();
+  });
 </script>
 
 

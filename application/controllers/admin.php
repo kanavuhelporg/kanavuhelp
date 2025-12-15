@@ -739,7 +739,7 @@ class admin extends CI_Controller
                 </div>
                 
                 <p>With sincere gratitude,</p>
-                <p><strong>The The Kanavu Trust Team</strong></p>
+                <p><strong>The Kanavu Trust Team</strong></p>
             </div>
             
             <div class="footer">

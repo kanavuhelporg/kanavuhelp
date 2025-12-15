@@ -33,7 +33,7 @@
     }
     /* Login_button */
     .login-button {
-      background-color: #E01A2B;
+      background-color: #ed3136;
       color: white;
       font-size: 16px;
       padding: 8px 20px;
@@ -43,8 +43,8 @@
     }
     /* start a kanavu button */
     .startkanavu-button {
-      border: 1px solid #E01A2B;
-      color: #E01A2B;
+      border: 1px solid #ed3136;
+      color: #ed3136;
       font-size: 16px;
       padding: 8px 20px;
       border-radius: 25px;
@@ -60,7 +60,7 @@
       /* font-weight: bold; */
     }
     .nav-link.active {
-      color: #E01A2B !important;
+      color: #ed3136 !important;
       font-weight: bold;
     }
     /* carousel text */
@@ -94,7 +94,7 @@
     .bi-share {
       font-size: 1.3rem;
       cursor: pointer;
-      color: #E01A2B;
+      color: #ed3136;
       margin-left: auto;
     }
     .imgtext11,
@@ -112,7 +112,7 @@
     }
     .imgtext1 span,
     .imgtext2 span {
-      color: #EB2D32;
+      color: #ed3136;
       font-weight: bolder;
       font-size: 40px;
     }
@@ -122,21 +122,21 @@
       border-width: 2px;
     }
     .filter-btn.active {
-      border-color: #EB2D32;
-      color: #EB2D32;
+      border-color: #ed3136;
+      color: #ed3136;
     }
     .filter-btn:not(.active) {
       border-color: #A9A9A9;
-      color: #A9A9A9;
+      color: #A9A6B2;
     }
     .filter-btn:hover {
-      border-color: #EB2D32;
+      border-color: #ed3136;
       color: white;
-      background-color: #EB2D32;
+      background-color: #ed3136;
     }
     .donatefor {
-      border: 1px solid #E01A2B;
-      color: #E01A2B;
+      border: 1px solid #ed3136;
+      color: #ed3136;
       background-color: #fff;
       border-radius: 20px;
     }
@@ -164,7 +164,7 @@
       border-radius: 25px;
     }
     .donate_btn {
-      border: 1px solid rgba(224, 26, 43, 1);
+      border: 1px solid #ed3136;
       border-radius: 25px;
     }
     /* footer */
@@ -173,7 +173,7 @@
       width: 100%;
       left: 0;
       right: 0;
-      background-color: #EB2D32;
+      background-color: #ed3136;
       margin-top: 50px;
       color: #f0f0f0;
     }
@@ -209,8 +209,8 @@
       background-color: white !important;
     }
     .active-category {
-      border: 1px solid #d9534f;
-      color: #d9534f;
+      border: 1px solid #ed3136;
+      color: #ed3136;
       background-color: white !important;
     }
     @media (max-width: 767px) {
@@ -239,13 +239,13 @@
     }
     .donate_btn.no-hover {
       background-color: white;
-      color: red;
-      border: 1px solid red;
+      color: #ed3136;
+      border: 1px solid #ed3136;
     }
     .donate_btn.no-hover:hover {
       background-color: white !important;
-      color: red !important;
-      border: 1px solid red !important;
+      color: #ed3136 !important;
+      border: 1px solid #ed3136 !important;
     }
     .card_button {
       border: 1px solid gray !important;
@@ -282,8 +282,8 @@
     }
     .btn-outline-secondary:hover {
       background-color: white;
-      border-color: #d9534f;
-      color: #d9534f !important;
+      border-color: #ed3136;
+      color: #ed3136 !important;
     }
     @media (max-width: 768px) {
       #userProfile .dropdown-menu {
@@ -374,7 +374,7 @@
       border-radius: 5px;
     }
     .progress-bar {
-      background-color: #EB2D32;
+      background-color: #ed3136;
     }
     .btn.bg-danger {
       border-radius: 25px;
@@ -548,6 +548,29 @@
         font-size: 15px;
         padding-left: 12px;
       }
+
+      .note-box {
+        background: #ffe6e6;           /* light red background */
+        border-left: 4px solid #ed3136; /* red left border */
+        padding: 10px 15px;
+        border-radius: 6px;
+        color: #ed3136;                /* dark red text */
+        font-size: 10px !important;
+    }
+
+    .navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.08); /* Slight zoom-in */
+}
+
+ @media (max-width: 576px) {
+    .category-btn {
+        width: 100%;     /* Equal width only on mobile */
+    }
+}
   </style>
   <?php foreach ($fundraisers as $fundraiser): ?>
     <?php if (!empty($fundraiser->cover_image)): ?>
@@ -634,15 +657,51 @@
     <p class="mt-3 "><b>"Fundraising is the gentle art of teaching the joy of giving."</b></p>
   </div>
   <h1 class="text-center">Select a Category</h1>
-  <div class="d-flex justify-content-center pb-3">
-    <div style="row-gap:10px;display:flex;justify-content:space-evenly;" class="category-buttons col-md-5">
-      <button class="rounded-pill bg-white px-3 py-1 px-4 focus-change active-category" id="all-category" onclick="filterCauseswithcategory('All', 0)">All</button>
-      <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Medical', 1)">Medical</button>
-      <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Education', 2)">Education</button>
-      <button class="rounded-pill bg-white px-3 py-1 px-4 focus-change category-not-active" onclick="filterCauseswithcategory('Crisis', 3)">Crisis</button>
-      <button class="rounded-pill bg-white px-3 py-1 focus-change category-not-active" onclick="filterCauseswithcategory('Agriculture', 4)">Agriculture</button>
+
+<div class="container text-center pb-3">
+    <div class="row row-cols-2 row-cols-md-auto g-3 justify-content-center">
+
+        <div class="col">
+            <button class="rounded-pill bg-white px-3 py-2 focus-change active-category category-btn"
+                onclick="filterCauseswithcategory('All', 0)">All</button>
+        </div>
+
+        <div class="col">
+            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+                onclick="filterCauseswithcategory('Medical', 1)">Medical</button>
+        </div>
+
+        <div class="col">
+            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+                onclick="filterCauseswithcategory('Education', 2)">Education</button>
+        </div>
+
+        <div class="col">
+            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+                onclick="filterCauseswithcategory('Crisis', 3)">Crisis</button>
+        </div>
+
+        <div class="col">
+            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+                onclick="filterCauseswithcategory('Agriculture', 4)">Agriculture</button>
+        </div>
+
+        <div class="col">
+            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+                onclick="filterCauseswithcategory('Other', 5)">Others</button>
+        </div>
+
+        <div class="col">
+            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+                onclick="filterCauseswithcategory('Completed', 6)">Completed</button>
+        </div>
+
     </div>
-  </div>
+</div>
+
+
+
+
   <!-- Fundraiser Cards with Fixed Size -->
   <div class="container pt-4">
     <div class="row g-3" id="fundraiserCards"></div>
@@ -881,7 +940,11 @@
                     <div class="text-center mb-3">
                         <img src="<?= base_url('assets/img/handwithheart.png') ?>" width="20%">
                     </div>
-
+                    <div class="note-box mb-3">
+                        <p class="mb-0">
+                            <strong style="font-size:13px;">Note:</strong> <span style="font-size:14px;">All contributions will go directly to</span> <strong style="font-size:14px;">The Kanavu Trust.</strong>
+                        </p>
+                    </div>
                     <!-- Dropdown -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">Select Payment Method</label>
@@ -1027,72 +1090,67 @@
 
 <!-- FULL JS -->
 <script>
-function togglePaymentOptions() {
-    let option = document.getElementById("paymentMethod").value;
+  function togglePaymentOptions() {
+      let option = document.getElementById("paymentMethod").value;
 
-    document.getElementById("scanSection").style.display = "none";
-    document.getElementById("upiSection").style.display = "none";
-    document.getElementById("bankSection").style.display = "none";
+      document.getElementById("scanSection").style.display = "none";
+      document.getElementById("upiSection").style.display = "none";
+      document.getElementById("bankSection").style.display = "none";
 
-    if (option === "upi") {
-        document.getElementById("upiSection").style.display = "block";
-    }
-    if (option === "scan") {
-        document.getElementById("scanSection").style.display = "block";
-    }
-    if (option === "bank") {
-        document.getElementById("bankSection").style.display = "block";
-    }
-}
+      if (option === "upi") document.getElementById("upiSection").style.display = "block";
+      if (option === "scan") document.getElementById("scanSection").style.display = "block";
+      if (option === "bank") document.getElementById("bankSection").style.display = "block";
+  }
 
-// Generic Copy Function (UPI + Bank Details)
-function copyField(element) {
-    let id = element.getAttribute("data-copy");
-    let text = document.getElementById(id).innerText;
+  // UNIVERSAL COPY FUNCTION
+  function copyField(icon) {
+      let id = icon.getAttribute("data-copy");
+      let text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text);
 
-    navigator.clipboard.writeText(text);
+      let tooltip = bootstrap.Tooltip.getInstance(icon);
 
-    // Icon change → tick ✔
-    element.classList.remove("bi-copy");
-    element.classList.add("bi-check2-circle", "text-success");
+      // Icon change
+      icon.classList.remove("bi-copy");
+      icon.classList.add("bi-check2-circle", "text-success");
 
-    // Tooltip change
-    let tooltip = bootstrap.Tooltip.getInstance(element);
-    tooltip.setContent({ '.tooltip-inner': 'Copied!' });
+      tooltip.setContent({ ".tooltip-inner": "Copied!" });
 
-    // Revert after 1.5 sec
-    setTimeout(() => {
-        element.classList.remove("bi-check2-circle", "text-success");
-        element.classList.add("bi-copy");
+      setTimeout(() => {
+          icon.classList.remove("bi-check2-circle", "text-success");
+          icon.classList.add("bi-copy");
 
-        tooltip.setContent({ '.tooltip-inner': element.getAttribute("title") });
-    }, 1500);
-}
+          // RESTORE ORIGINAL TOOLTIP TEXT
+          let original = icon.getAttribute("data-original-title");
 
-// Attach copy event
-document.addEventListener("DOMContentLoaded", function () {
-    // Initialize all tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    });
+          tooltip._config.title = original;
+          tooltip.setContent({ ".tooltip-inner": original });
+          tooltip.update();
 
-    // Add copy functionality
-    document.querySelectorAll(".copy-icon").forEach(icon => {
-        icon.addEventListener("click", function () {
-            copyField(this);
-        });
-    });
-});
+      }, 1500);
+  }
 
-// Reset modal content each time opened
-document.getElementById('donationModal').addEventListener('shown.bs.modal', function () {
-    document.getElementById("paymentMethod").value = "upi";
-    document.getElementById("upiSection").style.display = "block";
-    document.getElementById("scanSection").style.display = "none";
-    document.getElementById("bankSection").style.display = "none";
-});
+  // Initialize tooltips + store original title
+  document.addEventListener("DOMContentLoaded", function () {
+
+      // Store original tooltip text BEFORE enabling tooltip
+      document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+          el.setAttribute("data-original-title", el.getAttribute("title"));
+          new bootstrap.Tooltip(el);
+      });
+
+      document.querySelectorAll(".copy-icon").forEach(icon => {
+          icon.addEventListener("click", () => copyField(icon));
+      });
+  });
+
+  // Reset modal
+  document.getElementById("donationModal").addEventListener("shown.bs.modal", () => {
+      document.getElementById("paymentMethod").value = "upi";
+      togglePaymentOptions();
+  });
 </script>
+
 
 
   <!-- Donation Success Modal -->

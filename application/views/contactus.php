@@ -24,8 +24,8 @@
 
   <style>
     :root {
-      --primary-red: #EB2D32;
-      --dark-red: #c82333;
+      --primary-red: #ed3136;
+      --dark-red: #ed3136;
     }
     
     body {
@@ -51,7 +51,7 @@
       /* font-weight: bold; */
     }
     .nav-link.active {
-      color: #E01A2B !important;
+      color: #ed3136 !important;
       font-weight: bold;
     }
     /* Fixed header with proper spacing */
@@ -349,6 +349,14 @@
     .container {
       max-width: 100%;
     }
+
+    .navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.08); /* Slight zoom-in */
+}
   </style>
 </head>
 

@@ -51,7 +51,7 @@
 
   /* login_button */
   .login-button {
-    background-color: #E01A2B;
+    background-color: #ed3136;
     color: white;
     font-size: 16px;
     padding: 8px 20px;
@@ -62,8 +62,8 @@
 
   /* start a kanavu button */
   .startkanavu-button {
-    border: 1px solid #E01A2B;
-    color: #E01A2B;
+    border: 1px solid #ed3136;
+    color: #ed3136;
     font-size: 16px;
     padding: 8px 20px;
     border-radius: 25px;
@@ -111,7 +111,7 @@
 
   .btn-1 {
     margin-left: 260px !important;
-    background-color: #EB2D32 !important;
+    background-color: #ed3136 !important;
     color: white !important;
     width: 100px;
     height: 45px;
@@ -138,7 +138,7 @@
   .navbar:hover,
   .navbar-brand:hover,
   .dropdown-item:hover {
-    color: #EB2D32;
+    color: #ed3136;
   }
 
   /* Custom select dropdown wrapper */
@@ -180,7 +180,7 @@
     width: 100%;
     left: 0;
     right: 0;
-    background-color: #EB2D32;
+    background-color: #ed3136;
     /* margin-top: 88px; */
     color: #f0f0f0;
   }
@@ -536,7 +536,7 @@
   }
 
   .form-stepper .form-stepper-active .form-stepper-circle {
-    background-color: #E01A2B !important;
+    background-color: #ed3136 !important;
     color: #fff;
   }
 
@@ -545,7 +545,7 @@
   }
 
   .form-stepper .form-stepper-active .form-stepper-circle:hover {
-    background-color: #E01A2B !important;
+    background-color: #ed3136 !important;
     color: #fff !important;
   }
 
@@ -555,7 +555,7 @@
   }
 
   .form-stepper .form-stepper-completed .form-stepper-circle {
-    background-color: #E01A2B !important;
+    background-color: #ed3136 !important;
     color: #fff;
   }
 
@@ -630,7 +630,7 @@
   }
 
   body button {
-    background-color: #E01A2B;
+    background-color: #ed3136;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -736,7 +736,7 @@
 
   .resend a {
     text-decoration: none;
-    color: #E01A2B;
+    color: #ed3136;
   }
 
   .login_btn {
@@ -841,34 +841,34 @@
   .btn-red {
     color: white !important;
     /* Force white text */
-    background-color: red !important;
+    background-color: #ed3136 !important;
     /* Force red background */
-    border-color: red !important;
+    border-color: #ed3136 !important;
     /* Force red border */
   }
 
   .error-text {
     font-size: 0.875em;
-    color: red;
+    color: #ed3136;
   }
 
   .btn.no-hover {
-    background-color: #dc3545 !important;
+    background-color: #ed3136 !important;
     /* Force red background */
     color: white !important;
     /* Force white text */
-    border-color: #dc3545 !important;
+    border-color: #ed3136 !important;
     /* Match border color */
   }
 
   .btn.no-hover:hover,
   .btn.no-hover:focus,
   .btn.no-hover:active {
-    background-color: #dc3545 !important;
+    background-color: #ed3136 !important;
     /* Force red background on hover, focus, and active */
     color: white !important;
     /* Force white text on hover, focus, and active */
-    border-color: #dc3545 !important;
+    border-color: #ed3136 !important;
     /* Match border color on hover, focus, and active */
   }
 
@@ -894,6 +894,13 @@
       /* Center-align items for better UX */
     }
   }
+  .navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.08); /* Slight zoom-in */
+}
 </style>
 
 <body>
