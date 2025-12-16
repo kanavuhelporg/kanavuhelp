@@ -56,28 +56,35 @@
     }
     /* Fixed header with proper spacing */
     
-    .contact-hero {
-      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                  url('<?= base_url('assets/img/Contact_1.jpg') ?>');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 300px;
+    /* HERO SECTION */
+    .contact-hero-section {
+      background: linear-gradient(180deg, #ffffff 0%, #fff2f2 100%);
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    .hero-icon img {
+      width: 90px;
+    }
+
+    .hero-divider {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      text-align: center;
-      width: 100%;
-      margin: 0;
-      padding: 0;
+      margin: 20px 0;
     }
 
-    .contact-hero h1 {
-      font-weight: 700;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    .hero-divider span {
+      width: 120px;
+      height: 2px;
+      background: #ed3136;
     }
 
+    .hero-divider i {
+      color: #ed3136;
+      margin: 0 15px;
+      font-size: 18px;
+    }
     .contact-info-card {
       border-radius: 10px;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -433,14 +440,33 @@
     </div>
   </nav>
 
+<!-- CONTACT HERO SECTION -->
+<section class="contact-hero-section py-5">
+  <div class="container text-center">
 
-  <!-- Hero Section -->
-  <div class="contact-hero mt-5">
-    <div class="container">
-      <h1 class="display-4 fw-bold">Contact Us</h1>
-      <p class="lead">We're here to help and answer any questions you might have</p>
+    <!-- Icon -->
+    <div class="hero-icon mb-3">
+      <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="Helping Hand" class="img-fluid">
     </div>
+
+    <!-- Title -->
+    <h1 class="fw-bold display-5 mb-2">
+      Contact <span class="text-danger">Us</span>
+    </h1>
+
+    <!-- Divider -->
+    <div class="d-flex align-items-center justify-content-center">
+      <img src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="Underline">
+    </div>
+
+    <!-- Subtitle -->
+    <p class="lead text-muted">
+      We're here to help and answer any questions you might have
+    </p>
+
   </div>
+</section>
+
 
   <!-- Contact Information Section -->
   <section class="py-4">

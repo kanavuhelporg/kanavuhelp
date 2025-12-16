@@ -571,6 +571,21 @@
         width: 100%;     /* Equal width only on mobile */
     }
 }
+
+/* Completed CATEGORY button (Filter button) */
+.completed-category-btn {
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+    border: 1px solid #28a745 !important;
+}
+
+/* Keep green even on hover */
+.completed-category-btn:hover {
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+}
+
+
   </style>
   <?php foreach ($fundraisers as $fundraiser): ?>
     <?php if (!empty($fundraiser->cover_image)): ?>
@@ -654,9 +669,9 @@
   </div>
   <div class="handwithheart_img text-center">
     <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">
-    <p class="mt-3 "><b>"Fundraising is the gentle art of teaching the joy of giving."</b></p>
+    <p class="mt-3 mb-3"><b>"Fundraising is the gentle art of teaching the joy of giving."</b></p>
   </div>
-  <h1 class="text-center">Select a Category</h1>
+  <h1 class="text-center mb-3">Select a Category</h1>
 
 <div class="container text-center pb-3">
     <div class="row row-cols-2 row-cols-md-auto g-3 justify-content-center">
@@ -692,8 +707,8 @@
         </div>
 
         <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
-                onclick="filterCauseswithcategory('Completed', 6)">Completed</button>
+            <button class="rounded-pill px-3 py-2 focus-change category-btn completed-category-btn"
+              onclick="filterCauseswithcategory('Completed', 6)">Completed</button>
         </div>
 
     </div>
@@ -838,19 +853,25 @@
 
     // Function to handle button highlighting
     function changeFocus(index) {
-      const buttons = document.querySelectorAll(".focus-change");
-      buttons.forEach((button, i) => {
-        if (i === index) {
-          // Highlight the selected button
-          button.classList.remove("category-not-active");
-          button.classList.add("active-category");
-        } else {
-          // Reset other buttons to default state
-          button.classList.remove("active-category");
-          button.classList.add("category-not-active");
+    const buttons = document.querySelectorAll(".focus-change");
+
+    buttons.forEach((button, i) => {
+
+        // ✅ Skip Completed category button
+        if (button.classList.contains("completed-category-btn")) {
+            return;
         }
-      });
-    }
+
+        if (i === index) {
+            button.classList.remove("category-not-active");
+            button.classList.add("active-category");
+        } else {
+            button.classList.remove("active-category");
+            button.classList.add("category-not-active");
+        }
+    });
+}
+
     function openDonationModal() {
       // Show the modal using Bootstrap's modal method
       var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
@@ -1444,19 +1465,23 @@
 
                     if (data.goal_reached) {
 
-                        // Replace donate button
-                        const donateBtn = card.querySelector(".donate_btn");
-                        if (donateBtn) {
-                            donateBtn.textContent = "Completed";
-                            donateBtn.disabled = true;
-                        }
+                      const donateBtn = card.querySelector(".donate_btn");
+                      if (donateBtn) {
+                          donateBtn.textContent = "Completed";
+                          donateBtn.disabled = true;
 
-                        // Update badge if exists
-                        const badge = card.querySelector(".badge");
-                        if (badge) {
-                            badge.textContent = "Completed";
-                        }
+                          // APPLY GREEN BUTTON STYLE
+                          donateBtn.classList.add("completed-btn");
+                          donateBtn.classList.remove("btn-danger");
+                      }
+
+                      const badge = card.querySelector(".badge");
+                      if (badge) {
+                          badge.textContent = "Completed";
+                          badge.classList.add("bg-success");
+                      }
                     }
+
                 });
         });
 

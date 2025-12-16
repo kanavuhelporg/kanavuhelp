@@ -1276,7 +1276,7 @@
          <img src="<?= base_url('assets/img/old1.jpg') ?>" class="d-block w-100" alt="Image 1"> 
         <div class="imgtext1 mt-5 pt-5">
           <p>THE <strong>WORLD'S <br>PLATFORM</strong> FOR <br>
-            <span>HELP</span>
+            <span style="color: #ed3136;">HELP</span>
           </p>
           <div class="imgtext11">
             <ul>
@@ -1300,7 +1300,7 @@
         <img src="<?= base_url('assets/img/old2.jpg') ?>" class="d-block w-100" alt="Image 2">
         <div class="imgtext2 mt-5 pt-5">
           <p>WE ARE ON A MISSION TO <br>
-            <span>HELP THE WORLD</span>
+            <span style="color: #ed3136;">HELP THE WORLD</span>
           </p>
           <div class="imgtext22">
             <ul>
@@ -1458,11 +1458,11 @@
 
   <div class="container-xxl">
   
-    <div class="h4 text-center">BE THE REASON OF<span style="color: #ed3136"> SOMEONE SMILES</span></div>
+    <div class="h4 text-center mb-4">BE THE REASON OF<span style="color: #ed3136"> SOMEONE SMILES</span></div>
     <div style="display: flex; justify-content: center;">
       <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
     </div>
-    <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
+    <div class="p text-center mt-4">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
 
   </div><br>
 
@@ -1517,7 +1517,7 @@
 
                         <!-- Supporters & Creator -->
                         <div class="d-flex justify-content-between mb-2 small text-muted">
-                            <span>
+                            <span class="text-truncate" style="max-width: 40%;">
                                 <img src="<?= base_url('assets/img/heart1.svg') ?>" width="16" class="me-1">
                                 <?= intval($fundraiser->supporters_count) ?> 
                                 Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
@@ -1559,7 +1559,7 @@
                                     '<?= $imageSrc ?>'
                                  )">
                                 <i class="bi bi-share fs-6"></i>
-                                <span class="ms-1 fs-6">Share</span>
+                                <!-- <span class="ms-1 fs-6">Share</span> -->
                             </div>
                         </div>
 
@@ -1794,229 +1794,325 @@ function openDonationModal() {
   </div> -->
 
   <!-- By Poovarasan for raising funds -->
-  <div class="container py-4">
-    <h2 class="text-center mb-3">
-      START A FUNDRAISER IN <span style="color:#ED3136">THREE SIMPLE STEPS</span>
+  <section class="fundraiser-steps-section">
+
+  <div class="fundraiser-wrapper">
+
+    <h2 class="section-title">
+      START A FUNDRAISER IN <span>THREE SIMPLE STEPS</span>
     </h2>
-    <div class="text-center mb-4">
-      <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
+
+    <div class="underline">
+      <img src="assets/img/underline.svg" alt="">
     </div>
 
-    <div class="row flex-column flex-lg-row align-items-start three_steps_fundraiser">
-      <!-- Video Column -->
-      <div class="col-12 col-lg-6 order-1 order-lg-1">
-        <div class="video-box">
-          <div class="raise_video">
-            <video id="stepVideo" muted autoplay playsinline class="video-small">
-              <source src="<?php echo base_url('assets/video/Help Website 1.mp4'); ?>" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-            <div class="progress-bar-container">
-              <div class="progress-bar" id="progressBar"></div>
-            </div>
+    <div class="fundraiser-grid">
+
+      <!-- VIDEO COLUMN -->
+      <div class="fundraiser-video">
+        <div class="video-frame">
+
+          <video id="stepVideo" autoplay muted playsinline>
+            <source src="<?= base_url('assets/video/Help Website 1.mp4'); ?>" type="video/mp4">
+          </video>
+
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
           </div>
-          <!-- Play/Pause Button -->
-          <div id="playPauseBtn" class="play-pause-btn">
+
+          <div class="play-pause-btn" id="playPauseBtn">
             <i class="bi bi-pause-fill"></i>
           </div>
+
         </div>
       </div>
 
-      <!-- Steps Column -->
-      <div class="col-12 col-lg-6 order-2 order-lg-2">
-        <ul class="list-unstyled mt-3 mt-lg-0">
-          <li class="step-item mb-1" data-step="1">
-            <div class="d-flex align-items-start">
-              <div class="icon-wrapper text-danger fs-4 me-2">
-                <i class="bi bi-caret-left-fill"></i> <!-- target this -->
-              </div>
-              <div class="step-circle me-3" style="border-radius: 50% !important;">1</div>
-              <div>
-                <h5 class="mb-1"><strong>Use our tools to create your fundraiser</strong></h5>
-                <p class="mb-0">With our easy-to-use tools, you can set up your fundraiser in just minutes. Whether it’s for a personal cause, community project, or charitable initiative, our platform gives you everything you need to share your story, connect with supporters, and start raising funds right away.</p>
-              </div>
+
+      <!-- CONTENT COLUMN -->
+      <div class="fundraiser-content">
+
+        <ul class="steps-list">
+
+          <li class="step-item active" data-step="1">
+            <span class="caret"><i class="bi bi-caret-left-fill"></i></span>
+            <span class="step-circle">1</span>
+            <div>
+              <h5>Use our tools to create your fundraiser</h5>
+              <p>You’ll be guided by prompts to add fundraiser details and set your goal. Make updates anytime.</p>
             </div>
           </li>
 
-          <li class="step-item mb-1" data-step="2">
-            <div class="d-flex align-items-start">
-              <div class="icon-wrapper text-danger fs-4 me-2">
-                <i class="bi bi-caret-left-fill"></i>
-              </div>
-              <div class="step-circle me-3">2</div>
-              <div>
-                <h5 class="mb-1"><strong>Reach donors by sharing</strong></h5>
-                <p class="mb-0">Spread the word about your fundraiser with just a click. Share your campaign across social media, email, and messaging apps to reach more donors, inspire support, and grow your impact faster.</p>
-              </div>
+          <li class="step-item" data-step="2">
+            <span class="caret"><i class="bi bi-caret-left-fill"></i></span>
+            <span class="step-circle">2</span>
+            <div>
+              <h5>Reach donors by sharing</h5>
+              <p>Share your fundraiser link and use the resources in your dashboard to gain momentum.</p>
             </div>
           </li>
+
           <li class="step-item" data-step="3">
-            <div class="d-flex align-items-start">
-              <div class="icon-wrapper text-danger fs-4 me-2">
-                <i class="bi bi-caret-left-fill"></i>
-              </div>
-              <div class="step-circle me-3">3</div>
-              <div>
-                <h5 class="mb-1"><strong>Securely receive funds</strong></h5>
-                <p class="mb-0">Receive donations safely and without hassle. Our secure payment system ensures that every contribution goes directly to your fundraiser, giving you and your supporters peace of mind throughout the process.</p>
-              </div>
+            <span class="caret"><i class="bi bi-caret-left-fill"></i></span>
+            <span class="step-circle">3</span>
+            <div>
+              <h5>Securely receive funds</h5>
+              <p>Add your bank information, or invite your fundraiser beneficiary to add theirs, and start receiving funds.</p>
             </div>
           </li>
+
         </ul>
+
       </div>
+
     </div>
   </div>
 
+</section>
+
   <!-- ✅ CSS -->
   <style>
-    
-    .video-box {
-      position: relative;
-      max-width: 100%;
-    }
-    
-   .video-small {
-      width: 100%;
-      max-height: 750px;
-      height: auto;
-      object-fit: cover;
-      border-radius: 8px;
-    }
+   /* SECTION */
+ .fundraiser-steps-section {
+  padding: 70px 20px;
+  background: #fff;
+}
 
-    .raise_video {
-      position: relative;
-    }
+/* FIXED WIDTH – ALIGNMENT LOCK */
+.fundraiser-wrapper {
+  max-width: 1240px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 20px; /* Add padding here instead of on section */
+}
 
-    video {
-      border-radius: 8px;
-    }
+/* Remove padding from section and add to wrapper */
+.fundraiser-steps-section {
+  padding: 70px 0;
+  background: #fff;
+}
 
-    .progress-bar-container {
-      width: 100%;
-      height: 5px;
-      background-color: #e0e0e0;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
-      overflow: hidden;
-    }
+/* TITLE */
+.section-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  width: 100%; /* Ensure full width within wrapper */
+  padding: 0 20px; /* Match wrapper padding */
+}
 
-    .progress-bar {
-      height: 100%;
-      background-color: #ed3136;
-      width: 0;
-      transition: width 0.1s linear;
-    }
+.section-title span {
+  color: #ed3136;
+}
 
-    .play-pause-btn {
-      position: absolute;
-      bottom: 15px;
-      right: 15px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
+/* UNDERLINE */
+.underline {
+  text-align: center;
+  margin: 10px auto 40px;
+  width: 100%; /* Ensure full width within wrapper */
+  padding: 0 20px; /* Match wrapper padding */
+}
 
-    .step-item {
-      cursor: pointer;
-      transition: all 0.3s ease;
-      padding: 12px 16px;
-      border-radius: 8px;
-      position: relative;
-    }
+/* GRID - FIXED ALIGNMENT */
+.fundraiser-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: stretch;
+  width: 100%; /* Take full width of wrapper */
+}
 
-    .step-item:hover {
-      background-color: #f8f9fa;
-    }
+/* VIDEO FRAME */
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: #f5f5f5;
+  border-radius: 16px;
+  overflow: hidden;
+}
 
-    .step-circle {
-      width: 40px !important;
-      height: 40px !important;
-      min-width: 40px !important;
-      min-height: 40px !important;
-      border-radius: 50% !important;
-      border: 2px solid #fbd9d3;
-      color: #ed3136;
-      background-color: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      font-size: 16px;
-    }
+/* VIDEO FITS INSIDE FRAME */
+.video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-    .step-item.active .step-circle {
-      background-color: #ed3136;
-      color: #fff;
-      
-    }
+/* PROGRESS BAR */
+.progress-bar-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: #e0e0e0;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+}
 
-    .step-item:hover .step-circle {
-      background-color: #fceaea;
-      color: #ed3136;
-      border: 2px solid #ed3136;
-    }
+.progress-bar {
+  width: 0;
+  height: 100%;
+  background: #ed3136;
+}
 
-    .step-item h5 {
-      transition: color 0.3s ease;
-    }
+/* PLAY BUTTON */
+.play-pause-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 
-    .step-item:hover h5,
-    .step-item.active h5 {
-      color: #ED3136;
-    }
+/* CONTENT */
+.steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-    /* ✅ Fix: Show caret icon only on active or hover */
-    .step-item .bi-caret-left-fill {
-      visibility: hidden;
-      opacity: 0;
-      transition: visibility 0.3s ease, opacity 0.3s ease;
-    }
+/* STEP ITEM */
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    .step-item.active .bi-caret-left-fill,
-    .step-item:hover .bi-caret-left-fill {
-      visibility: visible;
-      opacity: 1;
-    }
-    /* Hide the icon by default */
-    .step-item .icon-wrapper {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
+.step-item:hover {
+  background: #f8f9fa;
+}
 
-    /* Show icon on hover or active step */
-    .step-item:hover .icon-wrapper,
-    .step-item.active .icon-wrapper {
-      opacity: 1;
-      visibility: visible;
-    }
+/* CARET */
+.caret {
+  opacity: 0;
+  color: #ed3136;
+  font-size: 20px;
+  transition: 0.3s;
+}
 
-    @media (max-width: 991px) {
-      .video-box {
-        max-width: 100%;
-        margin: 0 auto;
-      }
+.step-item:hover .caret,
+.step-item.active .caret {
+  opacity: 1;
+}
 
-      .three_steps_fundraiser {
-        flex-direction: column !important;
-      }
-      .step-circle {
-        /* prevent flex from stretching width/height */
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
-      }
-    }
+/* STEP CIRCLE */
+.step-circle {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #ed3136;
+  border-radius: 50%;
+  color: #ed3136;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.step-item.active .step-circle {
+  background: #ed3136;
+  color: #fff;
+}
+
+/* TEXT */
+.step-item h5 {
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+
+.step-item p {
+  margin: 0;
+  color: #555;
+}
+
+.step-item:hover h5,
+.step-item.active h5 {
+  color: #ed3136;
+}
+
+/* MEDIA QUERIES FOR EXACT BREAKPOINTS */
+
+/* For 2560px screens - Keep same alignment */
+@media (min-width: 1921px) {
+  .fundraiser-wrapper {
+    max-width: 1240px; /* Keep same max-width */
+    padding: 0 20px;
+  }
+}
+
+/* For 1444px screens - Keep same alignment */
+@media (min-width: 1444px) and (max-width: 1920px) {
+  .fundraiser-wrapper {
+    max-width: 1240px;
+    padding: 0 20px;
+  }
+}
+
+/* For 1024px screens - Adjust slightly but keep alignment */
+@media (min-width: 1024px) and (max-width: 1443px) {
+  .fundraiser-wrapper {
+    max-width: 1240px;
+    padding: 0 20px;
+  }
+  
+  .fundraiser-grid {
+    gap: 30px;
+  }
+}
+
+/* TABLET BREAKPOINT */
+@media (max-width: 991px) {
+  .fundraiser-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Ensure video takes reasonable width on tablet */
+  .video-frame {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  /* Ensure content is centered */
+  .fundraiser-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 767px) {
+  .fundraiser-steps-section {
+    padding: 40px 0;
+  }
+  
+  .fundraiser-wrapper {
+    padding: 0 15px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    padding: 0 15px;
+  }
+  
+  .underline {
+    padding: 0 15px;
+    margin: 10px auto 30px;
+  }
+}
+
   </style>
 
   <!-- Bootstrap JS -->
