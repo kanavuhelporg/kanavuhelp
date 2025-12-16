@@ -403,4 +403,49 @@ public function updateDonationFull($data)
         return $delete;
     }
 
+    public function get_donation_total()
+    {
+        $this->db->select('SUM(amount) as total');
+        $this->db->from('donation_for_cause');
+        $query = $this->db->get();
+
+        return ($query->row()->total ?? 0);
+    }
+
+    // 2️⃣ Admin added total
+    public function get_admin_added_total()
+    {
+        $this->db->select('SUM(amount) as total');
+        $this->db->from('admin_set_amount');
+        $query = $this->db->get();
+
+        return ($query->row()->total ?? 0);
+    }
+
+    // 3️⃣ FINAL TOTAL FUND
+    public function get_total_fund()
+    {
+        return $this->get_donation_total() + $this->get_admin_added_total();
+    }
+
+    // 4️⃣ Insert admin amount
+    public function add_admin_amount($amount)
+    {
+        return $this->db->insert('admin_set_amount', [
+            'amount' => $amount,
+            'date'   => date('Y-m-d H:i:s')
+        ]);
+    }
+
+    public function get_last_added_date()
+{
+    $this->db->select('date');
+    $this->db->from('admin_set_amount');
+    $this->db->order_by('date', 'DESC');
+    $this->db->limit(1);
+    $query = $this->db->get();
+
+    return $query->num_rows() > 0 ? $query->row()->date : '-';
+}
+
 }

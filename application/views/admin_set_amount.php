@@ -8,6 +8,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
+    body {
+      overflow-x: hidden;
+    }
+    
     .ps-logo {
       display: flex;
       align-items: center;
@@ -81,13 +85,17 @@
 
     .ham-menu {
       cursor: pointer;
+      padding: 5px;
+      border: none;
+      background: transparent;
     }
 
     .ham-line {
       width: 30px;
-      height: 6px;
+      height: 4px;
       background-color: rgb(70, 70, 70);
-      margin-top: 5px;
+      margin: 4px 0;
+      border-radius: 2px;
     }
 
     /* Sidebar Active */
@@ -100,7 +108,6 @@
       background-color: red !important;
     }
 
-    /* Offcanvas sidebar styles */
     .offcanvas-sidebar {
       background-color: rgb(248, 245, 245);
     }
@@ -114,12 +121,63 @@
       color: white !important;
     }
 
-    /* Main content centering */
+/* Smaller sidebar on very small screens */
+@media (max-width: 400px) {
+  .offcanvas-sidebar {
+    width: 240px !important;
+  }
+}
+
+
+    /* Main content */
     .main-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       padding: 20px;
+      width: 100%;
+    }
+
+    /* Table responsive fixes */
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .table {
+      min-width: 600px; /* Ensures table doesn't get too narrow */
+    }
+
+    /* Top bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .top-bar h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .add-btn {
+      background: #16a34a;
+      color: #fff;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .add-btn:hover {
+      background: #15803d;
+    }
+
+    /* Modal improvements */
+    .modal-content {
+      max-width: 100%;
+      margin: 0 15px;
     }
 
     @media screen and (max-width: 991px) {
@@ -133,10 +191,19 @@
 
       .ps-logo {
         justify-content: space-between;
+        padding: 0 10px;
       }
       
       .dashboard-cards {
         grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .main-content {
+        padding: 15px;
+      }
+      
+      .top-bar h2 {
+        font-size: 1.3rem;
       }
     }
 
@@ -146,16 +213,74 @@
       }
     }
     
+    @media screen and (max-width: 768px) {
+      .container-fluid {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      
+      .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .top-bar h2 {
+        width: 100%;
+      }
+      
+      .add-btn {
+        align-self: flex-end;
+      }
+    }
+    
     @media screen and (max-width: 576px) {
       .dashboard-cards {
         grid-template-columns: 1fr;
       }
+      
+      .main-content {
+        padding: 10px;
+      }
+      
+      .table th,
+      .table td {
+        padding: 8px;
+        font-size: 0.9rem;
+      }
+      
+      .ham-line {
+        width: 25px;
+        height: 3px;
+      }
+      
+      .heading-ponsoft {
+        font-size: 1rem;
+      }
     }
+    
+    @media screen and (max-width: 400px) {
+      .offcanvas-sidebar {
+        width: 250px !important;
+      }
+      
+      .table {
+        font-size: 0.85rem;
+      }
+      
+      .add-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+    }
+    .main-row {
+  min-height: 100vh; /* subtract top bar height */
+}
   </style>
 </head>
 
 <body>
-  <div class="container-fluid">
+  <div class="container-fluid min-vh-100 p-0">
     <div class="row"><!-----top-bar--------------->
       <div class="col-lg-2 col-12 border-bottom ps-gray py-3">
         <div class="ps-logo">
@@ -211,11 +336,12 @@
           </span> -->
         </div>
       </div>
-    </div><!-----------top-bar-end----------------------->
+    </div>
 
-    <div class="row"><!----------main-navbar----------->
+    <div class="row main-row"><!----------main-navbar----------->
       <!----------side-bar-------------------->
-      <div id="menu-bar" style="height:inherit;" class="col-lg-2 ps-gray d-none d-lg-block">
+      <div id="menu-bar" class="col-lg-2 ps-gray d-none d-lg-block">
+
         <ul class="d-grid list-unstyled">
           <li class="nav-item py-3 fs-6">
             <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
@@ -269,29 +395,51 @@
         </ul>
       </div>
 
-      <!-----------side-bar-end-------------->
-      
-      <!----------Logout Modal ------------->
-      <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <!-- Main Content Area -->
+      <div class="col-lg-10 col-12">
+        <div class="main-content">
+          <div class="content-card">
+            <!-- Top Bar -->
+            <div class="top-bar">
+              <h2 style="color: #1e293b;">Admin Fund Details</h2>
+              <button class="add-btn" data-bs-toggle="modal" data-bs-target="#addAmountModal">
+                <i class="fas fa-plus me-2"></i>Add Amount
+              </button>
             </div>
-            <div class="modal-body">
-              Are you sure you want to logout?
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <a href="<?= base_url('admin/logout') ?>" class="btn btn-danger">Logout</a>
+
+            <!-- Fund Details Table -->
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                  <tr>
+                    <th>S.No</th>
+                    <th>Total Amount</th>
+                    <th>Date</th>
+                    <th>Data by Added Amount</th>
+                    <th>Available Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>₹ <?= number_format($total_fund, 2); ?></td>
+                    <td><?= $last_added_date != '-' ? date('d-m-Y', strtotime($last_added_date)) : '-'; ?></td>
+                    <td style="color: green; font-weight: bold;">
+                      ₹ <?= number_format($admin_added_total, 2); ?>
+                    </td>
+                    <td>₹ <?= number_format($total_fund - $admin_added_total, 2); ?></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!----------Offcanvas Sidebar for Mobile ------------->
-      <div class="offcanvas offcanvas-start offcanvas-sidebar" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+  <!-- Offcanvas Sidebar for Mobile -->
+  <div class="offcanvas offcanvas-start offcanvas-sidebar" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasSidebarLabel">MENU</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -354,123 +502,76 @@
         </div>
       </div>
 
-      <div class="col-lg-10 col-12 h-100 main-content"><!-----------main-dashboard------------------------->
-        <div class="container-fluid px-4 pt-4 w-100">
-          <h2>Dashboard</h2>
-
-          <div class="dashboard-cards mt-4 border-bottom pb-5">
-            <div class="card-round card1 shadow-sm py-5 text-white d-grid align-items-center">
-              <ul class="nav flex-column align-items-center">
-                <li class="text-center">Coordinators</li>
-                <li class="fs-3 text-center">100</li>
-              </ul>
-            </div>
-            <div class="card-round card2 shadow-sm py-5 text-white d-grid align-items-center">
-              <ul class="nav flex-column align-items-center">
-                <li class="text-center">Funds collected</li>
-                <li class="fs-3 text-center">Rs.12300 /-</li>
-              </ul>
-            </div>
-            <div class="card-round card3 shadow-sm py-5 text-white d-grid align-items-center">
-              <ul class="nav flex-column align-items-center">
-                <li class="text-center">Donation received</li>
-                <li class="fs-3 text-center">Rs.12300 /-</li>
-              </ul>
-            </div>
-            <div class="card-round card4 shadow-sm py-5 text-white d-grid align-items-center">
-              <ul class="nav flex-column align-items-center">
-                <li class="text-center">Template events</li>
-                <li class="fs-3 text-center">12</li>
-              </ul>
-            </div>
-          </div>
+  <!-- Logout Modal -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-
-        <!-------------------------chart--------------------------------------->
-        <div class="w-100 p-4">
-          <div class="col-12">
-            <div class="chartCard">
-              <div class="chartBox border">
-                <canvas id="myChart"></canvas>
-              </div>
-            </div>
-          </div>
+        <div class="modal-body">
+          Are you sure you want to logout?
         </div>
-        <!------------------------chart-end-------------------------------------->
-      </div><!-----------main-dashboard-end------------------------>
-    </div><!--------------main-navbar-end------------------->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <a href="<?= base_url('admin/logout') ?>" class="btn btn-danger">Logout</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+  <!-- Add Amount Modal -->
+  <div class="modal fade" id="addAmountModal" tabindex="-1" aria-labelledby="addAmountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAmountModalLabel">Add Amount</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="amountInput" class="form-label">Amount (₹)</label>
+              <input type="number" class="form-control" id="amountInput" name="amount" step="0.01" min="0" required 
+                     placeholder="Enter amount to add">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Amount</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // setup 
-    const data = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [
-        {
-          label: 'Outcome',
-          data: [10000, 20000, 30000, 40000, 50000, 60000, 70000, 10000, 20000, 80000, 30000, 12000],
-          backgroundColor: Array(12).fill('pink')
-        },
-        {
-          label: 'Income',
-          data: [20000, 35000, 40000, 50000, 20000, 10000, 25000, 22000, 24000, 30000, 40000, 42000],
-          backgroundColor: Array(12).fill('orangered')
-        }
-      ]
-    };
-
-    // config 
-    const config = {
-      type: 'bar',
-      data,
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            labels: {
-              usePointStyle: true,
-              pointStyle: 'circle'
-            }
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        },
-        // 👇 Add cursor pointer effect
-        onHover: (event, elements) => {
-          const target = event.native ? event.native.target : event.chart.canvas;
-          target.style.cursor = elements.length ? 'pointer' : 'default';
-        }
-      }
-    };
-
-    // render init block
-    const myChart = new Chart(
-      document.getElementById('myChart'),
-      config
-    );
-
-    // Active link highlighting
     document.addEventListener("DOMContentLoaded", function () {
+      // Set active menu item
       const currentUrl = window.location.href;
       const navLinks = document.querySelectorAll("#menu-bar .nav-link, #offcanvasSidebar .nav-link");
-
-      // Remove any existing active class first
-      navLinks.forEach(l => l.classList.remove("active"));
-
-      // Add active to the matching link
+      
       navLinks.forEach(link => {
+        link.classList.remove("active");
         if (currentUrl.includes(link.getAttribute('href'))) {
           link.classList.add("active");
         }
       });
+      
+      // Auto-close mobile sidebar on link click
+      const mobileLinks = document.querySelectorAll('#offcanvasSidebar .nav-link');
+      const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('offcanvasSidebar'));
+      
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (offcanvas) {
+            offcanvas.hide();
+          }
+        });
+      });
     });
   </script>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

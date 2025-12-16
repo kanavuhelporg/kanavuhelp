@@ -12,12 +12,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     
@@ -291,9 +291,10 @@
         }
 
         .nav-link.active {
-            background-color: red;
-            color: white !important;
-        }
+    background-color: red !important;
+    color: white !important;
+    border-radius: 6px;
+}
 
         /* .nav-link:hover {
             background-color: rgba(120, 50, 186, 0.1);
@@ -438,7 +439,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
 
                     <li class="nav-item py-2">
                         <a href="<?= base_url('admindashbord') ?>"
-                        class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>"
+                        class="nav-link text-decoration-none  <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>"
                         style="font-weight:400;color:black;">
                         <i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashboard
                         </a>
@@ -451,7 +452,13 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
                         </a>
                     </li>
-
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('admin/get_total_amount') ?>"
+                          class="nav-link text-decoration-none <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Admin Set Amount
+                        </a>
+                    </li>
                     <li class="nav-item py-2">
                         <a href="<?= base_url('contact_submissions') ?>"
                         class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
@@ -503,7 +510,13 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                               <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction
                             </a>
                         </li>
-                        
+                        <li class="nav-item py-2 px-3">
+                            <a href="<?= base_url('admin/get_total_amount') ?>"
+                            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>"
+                            style="font-weight:400;color:black;">
+                            <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp; Admin Set Amount
+                            </a>
+                        </li>
                         <li class="nav-item py-2 px-3">
                             <a href="<?= base_url('contact_submissions') ?>"
                               class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"

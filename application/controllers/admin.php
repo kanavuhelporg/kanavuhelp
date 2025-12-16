@@ -143,6 +143,24 @@ class admin extends CI_Controller
 
     // $this->load->view('causesverification.php', $data);
 // }
+
+
+    public function get_total_amount(){
+        $data['total_fund'] = $this->adminpanel->get_total_fund();
+        $data['admin_added_total'] = $this->adminpanel->get_admin_added_total();
+        $data['last_added_date']   = $this->adminpanel->get_last_added_date();
+        $this->load->view('admin_set_amount', $data);
+    }
+    public function addAmount()
+    {
+        $amount = $this->input->post('amount');
+
+        if ($amount > 0) {
+            $this->adminpanel->add_admin_amount($amount);
+        }
+
+        redirect('Admin/get_total_amount');
+    }
     public function causesverification()
     {
         if (!$this->session->userdata('adminId')) {
