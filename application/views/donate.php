@@ -571,6 +571,21 @@
         width: 100%;     /* Equal width only on mobile */
     }
 }
+
+/* Completed CATEGORY button (Filter button) */
+.completed-category-btn {
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+    border: 1px solid #28a745 !important;
+}
+
+/* Keep green even on hover */
+.completed-category-btn:hover {
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+}
+
+
   </style>
   <?php foreach ($fundraisers as $fundraiser): ?>
     <?php if (!empty($fundraiser->cover_image)): ?>
@@ -599,7 +614,7 @@
         <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a>
+                            <!-- <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a> -->
                         </li>
                         <li class="nav-item">
                             <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
@@ -621,9 +636,9 @@
                                 <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
                             </li>
                         <?php else: ?>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
-                            </li>
+                            </li> -->
                         <?php endif; ?>
                     </ul>
                     <div class="d-flex align-items-center ms-auto">
@@ -654,9 +669,9 @@
   </div>
   <div class="handwithheart_img text-center">
     <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" class="handwithheart_img mt-5 ">
-    <p class="mt-3 "><b>"Fundraising is the gentle art of teaching the joy of giving."</b></p>
+    <p class="mt-3 mb-3"><b>"Fundraising is the gentle art of teaching the joy of giving."</b></p>
   </div>
-  <h1 class="text-center">Select a Category</h1>
+  <h1 class="text-center mb-3">Select a Category</h1>
 
 <div class="container text-center pb-3">
     <div class="row row-cols-2 row-cols-md-auto g-3 justify-content-center">
@@ -692,8 +707,8 @@
         </div>
 
         <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
-                onclick="filterCauseswithcategory('Completed', 6)">Completed</button>
+            <button class="rounded-pill px-3 py-2 focus-change category-btn completed-category-btn"
+              onclick="filterCauseswithcategory('Completed', 6)">Completed</button>
         </div>
 
     </div>
@@ -838,19 +853,25 @@
 
     // Function to handle button highlighting
     function changeFocus(index) {
-      const buttons = document.querySelectorAll(".focus-change");
-      buttons.forEach((button, i) => {
-        if (i === index) {
-          // Highlight the selected button
-          button.classList.remove("category-not-active");
-          button.classList.add("active-category");
-        } else {
-          // Reset other buttons to default state
-          button.classList.remove("active-category");
-          button.classList.add("category-not-active");
+    const buttons = document.querySelectorAll(".focus-change");
+
+    buttons.forEach((button, i) => {
+
+        // ✅ Skip Completed category button
+        if (button.classList.contains("completed-category-btn")) {
+            return;
         }
-      });
-    }
+
+        if (i === index) {
+            button.classList.remove("category-not-active");
+            button.classList.add("active-category");
+        } else {
+            button.classList.remove("active-category");
+            button.classList.add("category-not-active");
+        }
+    });
+}
+
     function openDonationModal() {
       // Show the modal using Bootstrap's modal method
       var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
@@ -918,171 +939,105 @@
     });
   </script>
   <!-- Donation Modal -->
-  <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal fade" id="donationModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+            
+            <div class="modal-header border-0 bg-danger text-white p-4">
+                <div>
+                    <h5 class="fw-bold mb-0">Support Our Cause</h5>
+                    <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="modal-body" style="padding-left: 30px; padding-right: 30px;">
-
-                <!-- Donation Form -->
-                <form id="donationForm" method="POST" autocomplete="off"
-                      action="<?= base_url('kanavuhelp/processDonation') ?>"
-                      onsubmit="return validateForm()">
-
+            <div class="modal-body p-4 bg-light">
+                <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+                    
                     <input type="hidden" name="cause_id" id="cause_id">
                     <input type="hidden" name="user_id" id="user_id">
 
-                    <!-- Icon -->
-                    <div class="text-center mb-3">
-                        <img src="<?= base_url('assets/img/handwithheart.png') ?>" width="20%">
-                    </div>
-                    <div class="note-box mb-3">
-                        <p class="mb-0">
-                            <strong style="font-size:13px;">Note:</strong> <span style="font-size:14px;">All contributions will go directly to</span> <strong style="font-size:14px;">The Kanavu Trust.</strong>
-                        </p>
-                    </div>
-                    <!-- Dropdown -->
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Select Payment Method</label>
-                        <select class="form-select" id="paymentMethod" onchange="togglePaymentOptions()">
-                            <option value="upi" selected>UPI ID</option>
-                            <option value="scan">Scan QR</option>
-                            <option value="bank">Account Details</option>
-                        </select>
-                    </div>
-
-                    <!-- QR Section -->
-                    <div id="scanSection" class="text-center mb-3" style="display:none;">
-                        <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" width="50%">
-                    </div>
-
-                    <!-- UPI Section -->
-                    <div id="upiSection" class="text-center mb-3" style="display:block;">
-                        <h6 class="fw-bold mb-2">UPI ID</h6>
-
-                        <p class="mb-0" style="font-size:16px;">
-                            <span id="upiText">vyapar.175502705184@hdfcbank</span>
-
-                            <i class="bi bi-copy ms-2 copy-icon"
-                               data-copy="upiText"
-                               style="cursor:pointer;font-size:14px;"
-                               data-bs-toggle="tooltip"
-                               title="Copy UPI ID"></i>
-                        </p>
-                    </div>
-
-                    <!-- Bank Details -->
-                    <div id="bankSection" class="border rounded p-3 mb-3" style="display:none;">
-                        <h6 class="fw-bold text-center mb-3">Bank Details</h6>
-
-                        <p class="mb-1" style="font-size:16px;">
-                            <strong>Account Name:</strong>
-                            <span id="accName">The Kanavu Trust</span>
-                            <i class="bi bi-copy ms-2 copy-icon"
-                               data-copy="accName"
-                               style="cursor:pointer;font-size:14px;"
-                               data-bs-toggle="tooltip"
-                               title="Copy Account Name"></i>
-                        </p>
-
-                        <p class="mb-1" style="font-size:16px;">
-                            <strong>Account Number:</strong>
-                            <span id="accNumber">50200111484578</span>
-                            <i class="bi bi-copy ms-2 copy-icon"
-                               data-copy="accNumber"
-                               style="cursor:pointer;font-size:14px;"
-                               data-bs-toggle="tooltip"
-                               title="Copy Account Number"></i>
-                        </p>
-
-                        <p class="mb-1" style="font-size:16px;">
-                            <strong>IFSC Code:</strong>
-                            <span id="ifscCode">HDFC0008251</span>
-                            <i class="bi bi-copy ms-2 copy-icon"
-                               data-copy="ifscCode"
-                               style="cursor:pointer;font-size:14px;"
-                               data-bs-toggle="tooltip"
-                               title="Copy IFSC Code"></i>
-                        </p>
-                    </div>
-
-                    <!-- Heading -->
-                    <div class="text-center mt-2 mb-3">
-                        <h5 class="modal-title text-danger fw-bold" id="donationModalLabel">Make a Secure Donation</h5>
-                    </div>
-
-                    <!-- Currency + Amount -->
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <select class="form-control py-2" name="currency_type" id="currency" required>
-                                <option value="" disabled selected>Select Currency</option>
-                                <option>INR</option>
-                                <option>USD</option>
-                            </select>
-                        </div>
-
-                        <div class="col-6">
-                            <input type="number" name="amount" class="form-control py-2" id="amount"
-                                  placeholder="Enter amount*" required>
-                            <p id="error5" class="text-danger small"></p>
+                    <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">1</span>
+                                <h6 class="fw-bold mb-0 text-dark">Make Your donation</h6>
+                            </div>
+                            
+                            <div class="row g-3 align-items-center">
+                                <div class="col-7">
+                                    <label class="text-muted small d-block mb-1">UPI ID</label>
+                                    <div class="d-flex align-items-center bg-white p-2 border rounded">
+                                        <span class="text-truncate small fw-bold" id="upiText">vyapar.175502705184@hdfcbank</span>
+                                        <i class="bi bi-copy ms-auto text-primary cursor-pointer copy-icon" data-copy="upiText" title="Copy UPI"></i>
+                                    </div>
+                                </div>
+                                <div class="col-1 text-muted small fw-bold text-center">OR</div>
+                                <div class="col-4 text-center">
+                                    <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" class="img-fluid rounded border shadow-sm" style="max-height: 280px;" alt="QR Code">
+                                    <small class="d-block text-muted mt-1" style="font-size: 10px;">Scan to Pay</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-
-                    <!-- Transaction ID -->
-                    <div class="mb-3">
-                        <label class="form-label">Transaction ID</label>
-                        <input type="text" name="transactionid" id="transactionid" class="form-control" placeholder="Enter UPI Transaction ID*" required>
-                        <p id="error4" class="text-danger small"></p>
+                    <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+                      <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                          <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">2</span>
+                          <h6 class="fw-bold mb-0 text-dark">Donation Details</h6>
+                        </div>
+                        <div class="row gx-4">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white border-end-0">₹</span>
+                              <input type="number" name="amount" class="form-control border-start-0 ps-0" id="amount" placeholder="Donated Amount" required min="1">
+                              <div id="error8" class="text-danger small mt-1"></div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Transaction ID *" required>
+                            <div id="error4" class="text-danger small mt-1"></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label class="form-label">Enter Email</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email*" required>
-                        <p id="error9" class="text-danger small"></p>
-                    </div>
+                    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">3</span>
+                <h6 class="fw-bold mb-0 text-dark">Personal Details</h6>
+              </div>
+              <div class="row g-2">
+                <div class="col-12">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Full Name *" required>
+                  <div id="error6" class="text-danger small mt-1"></div>
+                </div>
+                <div class="col-6">
+                  <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Phone Number *" required maxlength="10">
+                  <div id="error3" class="text-danger small mt-1"></div>
+                </div>
+                <div class="col-6">
+                  <input type="text" name="city" class="form-control" id="donorcity" placeholder="City *" required>
+                  <div id="error9" class="text-danger small mt-1"></div>
+                </div>
+                <div class="col-12">
+                  <input type="email" name="email" class="form-control" id="email" placeholder="Email (Optional)">
+                  <div id="error7" class="text-danger small mt-1"></div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                    <!-- Phone -->
-                    <div class="mb-3">
-                        <label class="form-label">Phone Number</label>
-                        <input type="tel" name="phoneno" id="phone" class="form-control" maxlength="10" placeholder="Enter Phone Number*" required>
-                        <p id="error3" class="text-danger small"></p>
+                    <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-3 shadow" style="border-radius: 12px; letter-spacing: 1px;">
+                        Submit
+                    </button>
+                    
+                    <div class="text-center mt-3">
+                        <small class="text-muted">Funds go directly to <strong>The Kanavu Trust</strong></small>
                     </div>
-
-                    <!-- Name -->
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" name="name" id="name" class="form-control"  maxlength="40" placeholder="Enter Name*" required>
-                        <p id="error6" class="text-danger small"></p>
-                    </div>
-
-                    <!-- City -->
-                    <div class="mb-3">
-                        <label class="form-label">City</label>
-                        <input type="text" name="city" id="donorcity" class="form-control" maxlength="40" placeholder="Enter City*" required>
-                        <p id="error8" class="text-danger small"></p>
-                    </div>
-
-                    <!-- Button -->
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-danger fw-bold w-50 rounded-3">
-                            Confirm Payment ₹
-                        </button>
-                    </div>
-
                 </form>
-
-                <p class="text-center small mt-2">
-                    By continuing, you agree to our
-                    <a href="<?= base_url('/terms_of_use') ?>" target="_blank">Terms of Service</a> &
-                    <a href="<?= base_url('/privacy_policy') ?>" target="_blank">Privacy Policy</a>
-                </p>
-
             </div>
         </div>
     </div>
@@ -1212,148 +1167,91 @@
 </script>
 <script>
   // Real-time validation function
-  function validateField(fieldId, errorId, validationFn, errorMessage) {
-    const field = document.getElementById(fieldId);
-    const errorElement = document.getElementById(errorId);
-    field.addEventListener('input', () => {
-      if(field.value=='')
-    {
-      errorElement.textContent='Please enter value';
+  /* ---------- VALIDATION HELPERS ---------- */
+const isAmountValid = v => parseFloat(v) > 0;
+const isPhoneValid = v => /^[6-9]\d{9}$/.test(v);
+const isTxnValid = v => /^[A-Za-z0-9]{12,}$/.test(v);
+const isNameValid = v => /^[a-zA-Z\s.]{3,}$/.test(v.trim());
+const isCityValid = v => /^[a-zA-Z\s]{3,}$/.test(v.trim());
+const isEmailValid = v => v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+/* ---------- FETCH DONOR ---------- */
+function fetchDonordata(phone) {
+  $.post("<?= base_url('donors/fetchDonordata') ?>", { phone }, function(res){
+    if(res.trim() === "notexist"){
+      $('#name,#donorcity').val('').prop('readonly', false);
+      $('#user_id').val('');
+    } else {
+      const d = JSON.parse(res);
+      $('#user_id').val(d.id);
+      $('#name').val(d.name).prop('readonly', true);
+      $('#donorcity').val(d.location).prop('readonly', true);
+      $('#phone').val(d.mobileNumber).prop('readonly', true);
     }
-     else if (!validationFn(field.value)) {
-        errorElement.textContent = errorMessage;
-      } else {
-        errorElement.innerHTML = "";// Clear error if validation passes
-        if(field.name == "phone") {
-          errorElement.innerHTML = `<span class="text-success">Fetching Donor</span> <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                    <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                    <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                    </div>`;
-          fetchDonordata(field.value)
-        }
-      }
-    });
+  });
+}
+
+/* ---------- FORM SUBMIT ---------- */
+document.getElementById('donationForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  let valid = true;
+  document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
+
+  if(!isAmountValid(amount.value)){
+    error8.innerText = 'Enter valid amount';
+    valid = false;
   }
-   function fetchDonordata($phone) {
-    let phoneid = phone.trim();
-    $.ajax({
-      type:"post",
-      url:"donors/fetchDonordata",
-      data:{"phone":phoneid},
-      success:(result)=>{
-        console.log(result)
-        let fetchingtimeout = "";
-        if(result.trim() == "notexist") {
-           document.getElementById("name").value = "";
-           document.getElementById("name").removeAttribute("readonly");
-           document.getElementById("donorcity").value = "";
-           document.getElementById("donorcity").removeAttribute("readonly");
-           document.getElementById("phone").value = "";
-           document.getElementById("phone").removeAttribute("readonly");
-          
-           fetchingtimeout = setTimeout(()=>{
-            document.getElementById("error7").innerHTML = "";
-           },2000);
-        }
-        else{
-          let existdonor = JSON.parse(result);
-           document.getElementById("user_id").value = existdonor.id;
-           document.getElementById("error7").innerHTML = "";
-           document.getElementById("name").value = existdonor.name;
-           document.getElementById("name").setAttribute("readonly","readonly");
-           document.getElementById("donorcity").value = existdonor.location;
-           document.getElementById("donorcity").setAttribute("readonly","readonly");
-           document.getElementById("phone").value = existdonor.mobileNumber;
-           document.getElementById("phone").setAttribute("readonly","readonly");
-           clearTimeout(fetchingtimeout);
-        }
-      },
-      error:(error)=>{
-        console.log(error)
-           document.getElementById("header").innerHTML = "";
-      }
-    });
+  if(!isTxnValid(transactionid.value)){
+    error4.innerText = 'Invalid Transaction ID';
+    valid = false;
   }
-  // Validation functions
-  //const isCurrencySelected = (value) => value !== '';
-  const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
-  const isPhoneNumberValid = (value) => /^[0-9]\d{9}$/.test(value);
-  const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
- /* const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value); */
- const isName = (value) => /^[a-zA-Z\s.]+$/.test(value) && value.trim().length >= 3;
-  const isCity = (value) => /^([A-Za-z0-9_()\s]{3,})+$/.test(value);
-  const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
-  // Attach real-time validation for each field
-  window.onload = () => {
-    validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
-    validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
-    validateField('name', 'error6', isName, 'Enter Valid Name');
-   // validateField('email', 'error7', isEmail, 'Enter Valid EmailID');
-    validateField('donorcity', 'error8', isCity, 'Enter Valid City');
-    validateField('email', 'error9', isEmail, 'Enter Valid EmailID');
-    validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
-    validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
-  };
-  // Final validation and form submission
-  document.getElementById('donationForm').onsubmit = function (event) {
-    event.preventDefault(); // Prevent form submission for manual handling
-    // Clear all error messages
-    document.getElementById('error5').innerText = '';
-    document.getElementById('error3').innerText = '';
-    document.getElementById('error4').innerText = '';
-    document.getElementById('error6').innerText = '';
-   //document.getElementById('error7').innerText = '';
-    document.getElementById('error8').innerText = '';
-      document.getElementById('error9').innerText = '';
-    let isValid = true;
-    // Perform final validation
-  /* if (!isCurrencySelected(document.getElementById('currency').value)) {
-      document.getElementById('error5').innerText = 'Please select a currency.';
-      isValid = false;
-    } */
-  if(document.getElementById('amount').value!==''){
-    if (!isAmountValid(document.getElementById('amount').value) ) {
-      document.getElementById('error5').innerText = 'Amount must be greater than 0.';
-      isValid = false;
+  if(!isNameValid(name.value)){
+    error6.innerText = 'Invalid name';
+    valid = false;
+  }
+  if(!isPhoneValid(phone.value)){
+    error3.innerText = 'Invalid phone number';
+    valid = false;
+  }
+  if(!isCityValid(donorcity.value)){
+    error9.innerText = 'Invalid city';
+    valid = false;
+  }
+  if(!isEmailValid(email.value)){
+    error7.innerText = 'Invalid email';
+    valid = false;
+  }
+
+  if(!valid) return;
+
+  /* ---------- SUBMIT TO SERVER ---------- */
+  fetch("<?= base_url('kanavuhelp/processDonation') ?>", {
+    method: "POST",
+    body: new FormData(this)
+  })
+  .then(r => r.json())
+  .then(d => {
+    if(d.status === 'success'){
+      bootstrap.Modal.getInstance(
+        document.getElementById('donationModal')
+      ).hide();
+      new bootstrap.Modal(
+        document.getElementById('donationSuccess')
+      ).show();
+    } else {
+      error4.innerText = d.message;
     }
+  })
+  .catch(() => alert('Server error'));
+});
+
+/* ---------- REALTIME PHONE FETCH ---------- */
+document.getElementById('phone').addEventListener('input', function(){
+  if(this.value.length === 10 && isPhoneValid(this.value)){
+    fetchDonordata(this.value);
   }
-  if(!isName(document.getElementById('name').value))
-  {
-    document.getElementById('error6').innerText = 'Enter Valid Name';
-    isValid = false;
-  }
-  if(!isCity(document.getElementById('donorcity').value))
-  {
-    document.getElementById('error8').innerText = 'Enter Valid City Name';
-    isValid = false;
-  }
-    /* if(!isEmail(document.getElementById('email').value))
-      {
-        document.getElementById('error7').innerText = 'Enter Valid EmailID';
-        isValid = false;
-      }
-    */
-    if(!isEmail(document.getElementById('email').value))
-        {
-          document.getElementById('error9').innerText = 'Enter Valid EmailID';
-          isValid = false;
-        }
-    if (!isPhoneNumberValid(document.getElementById('phone').value)) {
-      document.getElementById('error3').innerText = 'Please Enter Correct Phone number';
-      isValid = false;
-    }
-    if (!isTransactionIdValid(document.getElementById('transactionid').value)) {
-      document.getElementById('error4').innerText = 'Transaction ID must be exactly 12 characters long.';
-      isValid = false;
-    }
-    if (!isValid) {
-      return; // Stop submission if validation fails
-    }
+});
     // Prepare Form Data
     const formData = new FormData(this);
     // AJAX Request to Server
@@ -1444,19 +1342,23 @@
 
                     if (data.goal_reached) {
 
-                        // Replace donate button
-                        const donateBtn = card.querySelector(".donate_btn");
-                        if (donateBtn) {
-                            donateBtn.textContent = "Completed";
-                            donateBtn.disabled = true;
-                        }
+                      const donateBtn = card.querySelector(".donate_btn");
+                      if (donateBtn) {
+                          donateBtn.textContent = "Completed";
+                          donateBtn.disabled = true;
 
-                        // Update badge if exists
-                        const badge = card.querySelector(".badge");
-                        if (badge) {
-                            badge.textContent = "Completed";
-                        }
+                          // APPLY GREEN BUTTON STYLE
+                          donateBtn.classList.add("completed-btn");
+                          donateBtn.classList.remove("btn-danger");
+                      }
+
+                      const badge = card.querySelector(".badge");
+                      if (badge) {
+                          badge.textContent = "Completed";
+                          badge.classList.add("bg-success");
+                      }
                     }
+
                 });
         });
 
@@ -1504,5 +1406,56 @@ document.getElementById('donationRedirectBtn').addEventListener('click', functio
         $('.modal-backdrop').remove();
     });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const donationForm = document.getElementById('donationForm');
+
+    donationForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(donationForm);
+
+        fetch(donationForm.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data); // should print {status:"success"}
+
+            if (data.status === 'success') {
+
+                // Hide donation modal
+                const donationModalEl = document.getElementById('donationModal');
+                const donationModal = bootstrap.Modal.getInstance(donationModalEl)
+                    || new bootstrap.Modal(donationModalEl);
+
+                donationModal.hide();
+
+                // Wait for hide animation to finish
+                donationModalEl.addEventListener('hidden.bs.modal', function () {
+
+                    const successModalEl = document.getElementById('donationSuccess');
+                    const successModal = new bootstrap.Modal(successModalEl);
+                    successModal.show();
+
+                }, { once: true });
+
+            } else {
+                alert(data.message || 'Donation failed');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Something went wrong');
+        });
+    });
+
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

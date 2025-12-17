@@ -550,7 +550,13 @@
                           <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
                         </a>
                     </li>
-                    
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('admin/get_total_amount') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Admin Set Amount
+                        </a>
+                    </li>
                     <li class="nav-item py-2">
                         <a href="<?= base_url('contact_submissions') ?>"
                           class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
@@ -603,7 +609,13 @@
                               <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
                             </a>
                         </li>
-                        
+                        <li class="nav-item py-2 px-3">
+                            <a href="<?= base_url('admin/get_total_amount') ?>"
+                            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>"
+                            style="font-weight:400;color:black;">
+                            <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp; Admin Set Amount
+                            </a>
+                        </li>
                         <li class="nav-item py-2 px-3">
                             <a href="<?= base_url('contact_submissions') ?>"
                               class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"

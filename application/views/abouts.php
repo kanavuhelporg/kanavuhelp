@@ -6,16 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
 
-      <!--G4 (google analytics) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0Q147F1Y"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-JF0Q147F1Y');
-</script>
-  <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
+  <!-- G4 (google analytics) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0Q147F1Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JF0Q147F1Y');
+  </script>
+  
+  <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon"/>
   <img src="<?= base_url('assets/img/Kanavu_help2.png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
    
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
@@ -23,10 +23,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
+    :root {
+      --primary-red: #ed3136;
+      --text-dark: #000;
+      --text-gray: #555;
+    }
+
     body {
       font-family: 'Sen', sans-serif;
       background-color: #fff;
+      overflow-x: hidden;
     }
+
     /* carousel */
     .carousel-item {
       height: 100vh;
@@ -37,6 +45,7 @@
       height: 100%;
       width: 100%;
     }
+
     /* Login_button */
     .login-button {
       background-color: #ed3136;
@@ -47,6 +56,7 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
+
     /* start a kanavu button */
     .startkanavu-button {
       border: 1px solid #ed3136;
@@ -57,19 +67,22 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
+
     /* nav bar menu size */
     .offcanvas-body {
       font-size: 17px;
     }
+
     /* Active page highlight */
     .nav-link {
       color: black !important;
-      /* font-weight: bold; */
     }
+
     .nav-link.active {
       color: #ed3136 !important;
       font-weight: bold;
     }
+
     /* carousel text */
     .imgtext1,
     .imgtext2 {
@@ -114,7 +127,6 @@
       margin-left: 0px;
     }
 
-
     .imgtext1 span,
     .imgtext2 span {
       color: #ed3136;
@@ -125,23 +137,17 @@
     /* filter_button above cards */
     .filter-btn {
       background-color: transparent;
-      /* No background color */
       border-width: 2px;
-      /* Add border width for clarity */
     }
 
     .filter-btn.active {
       border-color: #ed3136;
-      /* Red border for active button */
       color: #ed3136;
-      /* Red text for active button */
     }
 
     .filter-btn:not(.active) {
       border-color: #A9A9A9;
-      /* Grey border for inactive buttons */
       color: #A9A9A9;
-      /* Grey text for inactive buttons */
     }
 
     .filter-btn:hover {
@@ -149,18 +155,18 @@
       color: white;
       background-color: #ed3136;
     }
+
     .donatefor {
       border: 1px solid #ed3136;
       color: #ed3136;
       background-color: #fff;
       border-radius: 20px;
     }
+
     /* card section */
     .card {
       width: 80%;
-      /* Make the card width responsive */
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
-      
     }
 
     .carousel-item .row {
@@ -172,15 +178,11 @@
       padding-left: 5px;
       padding-right: 5px;
       margin-bottom: 20px;
-      
     }
-
- 
 
     .card-title {
       font-size: 18px;
       font-weight: bold;
-      
     }
 
     .card_button {
@@ -194,9 +196,8 @@
       border-radius: 25px;
     }
 
-   /* footer */
-
-   .footer {
+    /* footer */
+    .footer {
       height: 250px;
       width: 100%;
       left: 0;
@@ -236,213 +237,139 @@
       width: 20px;
       height: 20px;
       margin-left: 10px;
+    }
 
+    #details {
+      display: block-inline;
     }
-    #details{
-      display:block-inline;
+
+    #location {
+      margin-left: 12%;
     }
-    #location{
-      margin-left:12%;
+
+    #loc_icon {
+      margin-left: 25%;
+      color: #E01A2B;
+      font-size: 26px;
     }
-    #loc_icon{
-      margin-left:25%;
-      color:#E01A2B;
-      font-size:26px;
+
+    #phone {
+      margin-left: 7%
     }
-    #phone{
-      margin-left:7%
+
+    #phone_icon {
+      margin-left: 17%;
+      color: #E01A2B;
+      font-size: 26px;
     }
-    #phone_icon{
-      margin-left:17%;
-      color:#E01A2B;
-      font-size:26px;
+
+    #email {
+      margin-left: -3%;
     }
-    #email{
-      margin-left:-3%;
-    }
-    #envelope_icon{
-      margin-left:35%;
+
+    #envelope_icon {
+      margin-left: 35%;
       color: #ed3136;
-      font-size:26px;
+      font-size: 26px;
     }
-    .line{
-      margin-left:35%;
-      transform:translate(20px,-40px);
+
+    .line {
+      margin-left: 35%;
+      transform: translate(20px, -40px);
     }
-    
-    input[type]{
-      width:50%;
+
+    input[type] {
+      width: 50%;
     }
-    .area{
-      width:50%;
+
+    .area {
+      width: 50%;
     }
-    .form1{
-      margin-left:17%;
+
+    .form1 {
+      margin-left: 17%;
     }
-    .msg_btn{
-      margin-left:15%;
+
+    .msg_btn {
+      margin-left: 15%;
     }
+
     .about p {
-    line-height: 1.6; /* Improve readability */
+      line-height: 1.6;
     }
-@media (max-width: 576px) {
-    .about p {
-        font-size: 0.9rem; /* Smaller text on mobile */
-    }
-}
-    @media (min-width: 767px) and (max-width: 990px) {
-      .line{
-      margin-left:39%;
-      transform:translate(-70px,-50px);
-    }
-    .msg_btn{
-      margin-left:7%;
-    }
-}
-@media (max-width: 767px) {
-
-  /* carousel */
-  .line{
-      margin-left:30%;
-      transform:translate(-70px,-50px);
-    }
-      .carousel-item {
-        position: relative;
-      }
-
-      .carousel-item img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-      }
-      .card{
-        margin-left: 10%;
-      }
-
-    /* donate  image below nav bar */
-          .donate_img {
-        width: 100%; /* Ensure the parent container takes full width */
-        position: relative;
-    }
-
-    .donate_img img {
-        width: 100%;
-        height: 300px; /* Maintain aspect ratio */
-        object-fit: cover; /* Ensures the image fills its container */
-    }
-    #details{
-      display:block;
-    }
-    #location{
-      margin-left:17%;
-    }
-    #loc_icon{
-      margin-left:19%;
-      color: #ed3136;
-      font-size:26px;
-    }
-    #phone{
-      margin-left:22%
-    }
-    #phone_icon{
-      margin-left:13%;
-      color: #ed3136;
-      font-size:26px;
-    }
-    #email{
-      margin-left:15%;
-    }
-    #envelope_icon{
-      margin-left:22%;
-      color:#ed3136;
-      font-size:26px;
-    }
-    .form1{
-      margin-left:3%;
-    }
-    input[type]{
-      width:90%;
-    }
-    .area{
-      width:90%;
-    }
-    .msg_btn{
-      margin-left:20%;
-    }
-    }
-    @media (max-width: 768px) {
-  #userProfile .dropdown-menu {
-    right: 0 !important; /* Align the dropdown to the right edge */
-    left: auto !important; /* Override default left alignment */
-    min-width: 150px; /* Adjust the width as needed */
-  }
-  
-  #userProfile img {
-    width: 25px; /* Slightly smaller profile image for mobile */
-    height: 25px;
-  }
-  
-  #userProfile .dropdown-item {
-    text-align: center; /* Center-align items for better UX */
-  }
-}
 
     /* About page main content style */
     .about-hero {
-        text-align: center;
-        padding: 120px 20px 80px;
-        /* background: linear-gradient(180deg, #fff, #fde7e7); */
-        background-color: #fff;
+      text-align: center;
+      padding: 120px 20px 80px;
+      background-color: #fff;
     }
 
     .about-hero h1 {
-        font-size: 42px;
-        font-weight: 700;
+      font-size: 42px;
+      font-weight: 700;
     }
 
     .about-hero h1 span {
-        color: #ed3136;
+      color: #ed3136;
     }
 
     .divider-icon {
-        margin: 15px auto;
-        font-size: 20px;
-        color: #ed3136;
+      margin: 15px auto;
+      font-size: 20px;
+      color: #ed3136;
     }
 
     .about-hero p {
-        max-width: 750px;
-        margin: auto;
-        color: #555;
-        font-size: 17px;
-        line-height: 1.7;
+      max-width: 750px;
+      margin: auto;
+      color: #555;
+      font-size: 17px;
+      line-height: 1.7;
     }
 
-.story-section {
-      /* padding: 100px 20px; */
+    .story-section {
       background: #FFFDF9;
+      padding: 80px 0;
     }
 
-    /* EQUAL IMAGE HEIGHT CONTAINER */
+    /* FIXED: Perfect circle container with straight alignment */
     .story-image-container {
-      position: relative;
-      border-radius: 10px;
-      overflow: hidden;
       width: 100%;
-      height: 450px; /* Fixed height for all screens */
+      max-width: 450px;
+      height: 450px;
+      margin: 0 auto;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
+    /* Image inside circle */
     .story-image {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* This ensures the image covers the container equally */
-      display: block;
+      object-fit: cover;
+      object-position: center;
     }
 
+    /* Content container */
+    .story-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      padding-left: 50px;
+    }
+
+    /* TEXT STYLES */
     .story-title {
       font-weight: 800;
       font-size: 36px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       color: var(--text-dark);
     }
 
@@ -450,7 +377,7 @@
       color: var(--text-gray);
       line-height: 1.9;
       font-size: 17px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     .story-text strong {
@@ -479,13 +406,13 @@
 
     /* Core Values */
     .core-values {
-        padding: 80px 20px;
-        text-align: center;
+      padding: 80px 20px;
+      text-align: center;
     }
 
     .core-values h2 {
-        font-weight: 700;
-        margin-bottom: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
     }
 
     .value-card {
@@ -494,30 +421,31 @@
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.08);
       text-align: center;
-      height: 100%;         /* Make all cards equal height */
+      height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;  /* Centers content properly */
+      justify-content: center;
+      transition: transform 0.3s ease;
     }
 
     .value-card:hover {
-        transform: translateY(-5px);
+      transform: translateY(-5px);
     }
 
     .value-card i {
-        font-size: 35px;
-        color: #ed3136;
-        margin-bottom: 15px;
+      font-size: 35px;
+      color: #ed3136;
+      margin-bottom: 15px;
     }
 
     .value-card h4 {
-        font-weight: 700;
-        margin-bottom: 10px;
+      font-weight: 700;
+      margin-bottom: 10px;
     }
 
     .value-card p {
-        color: #666;
-        font-size: 15px;
+      color: #666;
+      font-size: 15px;
     }
 
     /* Call to Action */
@@ -531,63 +459,258 @@
     }
 
     .cta-section h2 {
-        font-weight: 700;
-        margin-bottom: 15px;
+      font-weight: 700;
+      margin-bottom: 15px;
     }
 
     .cta-section p {
-        max-width: 700px;
-        margin: auto;
-        font-size: 16px;
+      max-width: 700px;
+      margin: auto;
+      font-size: 16px;
     }
 
     .cta-section .btn {
-        margin-top: 20px;
-        background: white;
-        color: #ed3136;
-        font-weight: 600;
-        padding: 12px 30px;
-        border-radius: 30px;
+      margin-top: 20px;
+      background: white;
+      color: #ed3136;
+      font-weight: 600;
+      padding: 12px 30px;
+      border-radius: 30px;
     }
 
-    @media(max-width:768px) {
-        .about-hero h1 {
-            font-size: 32px;
-        }
-
-        .story-title {
-            font-size: 26px;
-        }
+    .navbar-brand img {
+      transition: transform 0.3s ease-in-out;
     }
 
-    @media (max-width: 768px) {
+    .navbar-brand img:hover {
+      transform: scale(1.08);
+    }
 
-  .story-image-container {
-    height: 220px;        /* 👈 Half visible image */
-  }
-
-  .story-image {
-    object-position: top; /* 👈 Focus on top portion */
-  }
-
-}
-
-.navbar-brand img {
-    transition: transform 0.3s ease-in-out;
-}
-
-.navbar-brand img:hover {
-    transform: scale(1.08); /* Slight zoom-in */
-}
+    /* ========== RESPONSIVE FIXES ========== */
     
-    </style>
+    /* Desktop (min-width: 992px) */
+    @media (min-width: 992px) {
+      .story-section .row {
+        align-items: flex-start; /* Align top edges */
+      }
+      
+      .story-image-container {
+        width: 450px;
+        height: 450px;
+      }
+      
+      .story-content {
+        padding-left: 50px;
+        padding-top: 0;
+      }
+    }
+
+    /* Tablet (768px - 992px) */
+    @media (min-width: 768px) and (max-width: 992px) {
+      .story-image-container {
+        width: 400px;
+        height: 400px;
+        max-width: 400px;
+        margin-bottom: 40px;
+      }
+      
+      .story-content {
+        padding-left: 0;
+        padding-top: 20px;
+        text-align: center;
+      }
+      
+      .story-title {
+        font-size: 32px;
+      }
+      
+      .line {
+        margin-left: 39%;
+        transform: translate(-70px, -50px);
+      }
+      
+      .msg_btn {
+        margin-left: 7%;
+      }
+    }
+
+    /* Mobile (max-width: 767px) */
+    @media (max-width: 767px) {
+      /* Circle image for mobile */
+      .story-image-container {
+        width: 300px;
+        height: 300px;
+        max-width: 300px;
+        margin: 0 auto 30px;
+      }
+      
+      .story-content {
+        padding-left: 0;
+        padding-top: 0;
+        text-align: center;
+      }
+      
+      .story-title {
+        font-size: 28px;
+        margin-bottom: 15px;
+      }
+      
+      .story-text {
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.7;
+      }
+      
+      .carousel-item img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+      
+      .card {
+        margin-left: 10%;
+      }
+      
+      .donate_img {
+        width: 100%;
+        position: relative;
+      }
+      
+      .donate_img img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+      }
+      
+      #details {
+        display: block;
+      }
+      
+      #location {
+        margin-left: 17%;
+      }
+      
+      #loc_icon {
+        margin-left: 19%;
+        color: #ed3136;
+        font-size: 26px;
+      }
+      
+      #phone {
+        margin-left: 22%
+      }
+      
+      #phone_icon {
+        margin-left: 13%;
+        color: #ed3136;
+        font-size: 26px;
+      }
+      
+      #email {
+        margin-left: 15%;
+      }
+      
+      #envelope_icon {
+        margin-left: 22%;
+        color: #ed3136;
+        font-size: 26px;
+      }
+      
+      .form1 {
+        margin-left: 3%;
+      }
+      
+      input[type] {
+        width: 90%;
+      }
+      
+      .area {
+        width: 90%;
+      }
+      
+      .msg_btn {
+        margin-left: 20%;
+      }
+      
+      .about-hero h1 {
+        font-size: 32px;
+      }
+      
+      .about-hero p {
+        font-size: 16px;
+        padding: 0 15px;
+      }
+    }
+
+    /* Small mobile (max-width: 576px) */
+    @media (max-width: 576px) {
+      .story-image-container {
+        width: 250px;
+        height: 250px;
+        max-width: 250px;
+      }
+      
+      .story-title {
+        font-size: 24px;
+      }
+      
+      .about p {
+        font-size: 0.9rem;
+      }
+      
+      .value-card {
+        padding: 20px 15px;
+      }
+      
+      .value-card h4 {
+        font-size: 18px;
+      }
+      
+      .value-card p {
+        font-size: 14px;
+      }
+    }
+
+    /* For very small screens */
+    @media (max-width: 400px) {
+      .story-image-container {
+        width: 220px;
+        height: 220px;
+        max-width: 220px;
+      }
+      
+      .story-title {
+        font-size: 22px;
+      }
+    }
+
+    /* User profile dropdown fix */
+    @media (max-width: 768px) {
+      #userProfile .dropdown-menu {
+        right: 0 !important;
+        left: auto !important;
+        min-width: 150px;
+      }
+      
+      #userProfile img {
+        width: 25px;
+        height: 25px;
+      }
+      
+      #userProfile .dropdown-item {
+        text-align: center;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <!-- Navigation -->
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
-                <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
-            </a>
+        <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+      </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -596,99 +719,105 @@
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title">
-             <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+            <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="aboutuspage" class="nav-link mx-lg-2 active" href="<?= base_url('/abouts') ?>">About us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
-                        </li>
-                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
-                            <li class="nav-item">
-                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
-                            </li>
-                        <?php else: ?>
-                            <li class="nav-item">
-                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-                    <div class="d-flex align-items-center ms-auto">
-                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
-                            <div class="d-flex align-items-center">
-                                <div class="dropdown" id="userProfile">
-                                    <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
-                                        <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
-                                    </div>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
-                                                <i class="fas fa-sign-out-alt"></i> Logout
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item">
+              <!-- <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a> -->
+            </li>
+            <li class="nav-item">
+              <a id="aboutuspage" class="nav-link mx-lg-2 active" href="<?= base_url('/abouts') ?>">About us</a>
+            </li>
+            <li class="nav-item">
+              <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+            </li>
+            <li class="nav-item">
+              <a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
+            </li>
+            <li class="nav-item">
+              <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+            <?php if ($this->session->userdata('Kanavu_userId')): ?>
+              <li class="nav-item">
+                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
+              </li>
+            <?php else: ?>
+              <!-- <li class="nav-item">
+                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
+              </li> -->
+            <?php endif; ?>
+          </ul>
+          <div class="d-flex align-items-center ms-auto">
+            <?php if ($this->session->userdata('Kanavu_userId')): ?>
+              <div class="d-flex align-items-center">
+                <div class="dropdown" id="userProfile">
+                  <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
+                    <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
+                  </div>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                      </a>
+                    </li>
+                  </ul>
                 </div>
+              </div>
+            <?php endif; ?>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
+
   <!-- ========== HERO SECTION ========== -->
   <section class="about-hero">
-      <h1>Our Mission to <span>Make a Smile</span></h1>
-      <div class="divider-icon"><img class="img-fluid" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="Underline" style="max-width: 100%; height: auto;"></div>
-      <p>
-          At Kanavu.Help, we believe every child deserves a future filled with hope,
-          opportunity, and endless smiles. Our mission is to provide underprivileged
-          children with the education, healthcare, and support they need to break the
-          cycle of poverty and realize their dreams.
-      </p>
+    <h1>Our Mission to <span>Make a Smile</span></h1>
+    <div class="divider-icon">
+      <img class="img-fluid" src="<?php echo base_url('/assets/img/underline.svg'); ?>" alt="Underline" style="max-width: 100%; height: auto;">
+    </div>
+    <p>
+      At Kanavu.Help, we believe every child deserves a future filled with hope,
+      opportunity, and endless smiles. Our mission is to provide underprivileged
+      children with the education, healthcare, and support they need to break the
+      cycle of poverty and realize their dreams.
+    </p>
   </section>
 
   <!-- ========== STORY SECTION ========== -->
   <section class="story-section">
     <div class="container">
-      <div class="row align-items-center">
+      <div class="row align-items-start"> 
         <div class="col-lg-6 mb-4 mb-lg-0">
-          <!-- EQUAL HEIGHT IMAGE CONTAINER -->
+          <!-- Perfect circle container -->
           <div class="story-image-container">
             <img src="<?= base_url('assets/img/help3.jpeg') ?>" alt="Our Story" class="story-image">
           </div>
         </div>
-        <div class="col-lg-6 ">
-          <h2 class="story-title mt-4">From a Simple Dream to a Shared Reality</h2>
-          <p class="story-text">
-            <strong>Kanavu (கனவு)</strong>, meaning 'dream' in Tamil, started with a simple vision: 
-            to ensure no child's dream is left behind due to circumstances. 
-            We began by supporting a handful of students in a small village, and today, 
-            with the help of compassionate supporters like you, our family has grown—touching 
-            thousands of lives across communities.
-          </p>
-          <p class="story-text">
-            What began as a small initiative has now become a movement. Through education 
-            support, healthcare access, and community development programs, we're creating 
-            sustainable change that lasts for generations.
-          </p>
+        <div class="col-lg-6">
+          <!-- Content container with straight alignment -->
+          <div class="story-content">
+            <h2 class="story-title">From a Simple Dream to a Shared Reality</h2>
+            <p class="story-text">
+              <strong>Kanavu (கனவு)</strong>, meaning 'dream' in Tamil, started with a simple vision: 
+              to ensure no child's dream is left behind due to circumstances. 
+              We began by supporting a handful of students in a small village, and today, 
+              with the help of compassionate supporters like you, our family has grown—touching 
+              thousands of lives across communities.
+            </p>
+            <p class="story-text">
+              What began as a small initiative has now become a movement. Through education 
+              support, healthcare access, and community development programs, we're creating 
+              sustainable change that lasts for generations.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -700,126 +829,117 @@
     <p class="text-muted mb-5">The principles that guide every action we take and every life we touch.</p>
 
     <div class="container">
-        <div class="row g-4">
-
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="value-card">
-                    <i class="fas fa-heart"></i>
-                    <h4>Compassion</h4>
-                    <p>We approach our work with empathy, kindness, and respect for each individual.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="value-card">
-                    <i class="fas fa-seedling"></i>
-                    <h4>Integrity</h4>
-                    <p>We ensure transparency, honesty, and accountability in all our operations.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
-              <div class="value-card">
-                  <i class="fas fa-hands-helping"></i>
-                  <h4>Impact</h4>
-                  <p>We focus on long-term change that transforms children and communities.</p>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
-                <div class="value-card">
-                    <i class="fas fa-users"></i>
-                    <h4>Community</h4>
-                    <p>We believe in the power of working together with volunteers and partners.</p>
-                </div>
-            </div>
-
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="value-card">
+            <i class="fas fa-heart"></i>
+            <h4>Compassion</h4>
+            <p>We approach our work with empathy, kindness, and respect for each individual.</p>
+          </div>
         </div>
-    </div>
-</section>
 
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="value-card">
+            <i class="fas fa-seedling"></i>
+            <h4>Integrity</h4>
+            <p>We ensure transparency, honesty, and accountability in all our operations.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+          <div class="value-card">
+            <i class="fas fa-hands-helping"></i>
+            <h4>Impact</h4>
+            <p>We focus on long-term change that transforms children and communities.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+          <div class="value-card">
+            <i class="fas fa-users"></i>
+            <h4>Community</h4>
+            <p>We believe in the power of working together with volunteers and partners.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ========== CTA SECTION ========== -->
   <div class="cta-section">
-      <h2>Join Us in Spreading Smiles</h2>
-      <p>Your contribution, big or small, can change a child's life forever. Become a part of our story and help us turn more dreams into reality.</p>
-      <a href="<?= base_url('/donate') ?>" class="btn">Become a Volunteer</a>
+    <h2>Join Us in Spreading Smiles</h2>
+    <p>Your contribution, big or small, can change a child's life forever. Become a part of our story and help us turn more dreams into reality.</p>
+    <a href="<?= base_url('/donate') ?>" class="btn">Become a Volunteer</a>
   </div>
 
+  <!-- Footer -->
   <footer class="footer text-white py-4 mt-auto" style="background-color: #ed3136;">
-      <div class="container text-center">
-          <h5>kanavu.help</h5>
+    <div class="container text-center">
+      <h5>kanavu.help</h5>
 
-          <div class="footer-links my-3">
-              <a class="footer-lable border-end pe-3 me-3 text-white text-decoration-none" href="<?= base_url('/contactus') ?>">Contact</a>
-              <a class="footer-lable border-end pe-3 me-3 text-white text-decoration-none" 
-                href="<?= base_url('/terms_of_use') ?>" 
-                target="_blank" 
-                rel="noopener noreferrer">
-                Terms of Use
-              </a>
-              <a class="footer-lable text-white text-decoration-none" 
-                href="<?= base_url('/privacy_policy') ?>" 
-                target="_blank" 
-                rel="noopener noreferrer">
-                Privacy Policy
-              </a>
-          </div>
-
-          <div class="social-icons d-flex justify-content-center mb-3">
-              <a href="https://www.facebook.com/profile.php?id=61574165466676" target="_blank" class="mx-2 text-white">
-                  <i class="fab fa-facebook-f me-3" style="font-size:24px"></i>
-              </a>
-              <a href="https://www.instagram.com/kanavu.help/" target="_blank" class="mx-2 text-white">
-                  <i class='fab fa-instagram me-3' style='font-size:24px'></i>
-              </a>
-              <a href="https://www.youtube.com/channel/UCA3Za4BS9L1CwPkuhqm260w" target="_blank" class="mx-2 text-white">
-                  <i class='fab fa-youtube me-3' style='font-size:24px'></i>
-              </a>
-          </div>
-          
-          <div class="text-center my-3">
-              <img src="<?= base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="Secure Payment" class="img-fluid" style="max-width:300px;">
-          </div>
-
-          <p class="text-center" style="font-size:15px;">
-            Copyright <?= date('Y'); ?> @ kanavu.help. All Rights Reserved.
-          </p>
+      <div class="footer-links my-3">
+        <a class="footer-lable border-end pe-3 me-3 text-white text-decoration-none" href="<?= base_url('/contactus') ?>">Contact</a>
+        <a class="footer-lable border-end pe-3 me-3 text-white text-decoration-none" 
+          href="<?= base_url('/terms_of_use') ?>" 
+          target="_blank" 
+          rel="noopener noreferrer">
+          Terms of Use
+        </a>
+        <a class="footer-lable text-white text-decoration-none" 
+          href="<?= base_url('/privacy_policy') ?>" 
+          target="_blank" 
+          rel="noopener noreferrer">
+          Privacy Policy
+        </a>
       </div>
+
+      <div class="social-icons d-flex justify-content-center mb-3">
+        <a href="https://www.facebook.com/profile.php?id=61574165466676" target="_blank" class="mx-2 text-white">
+          <i class="fab fa-facebook-f me-3" style="font-size:24px"></i>
+        </a>
+        <a href="https://www.instagram.com/kanavu.help/" target="_blank" class="mx-2 text-white">
+          <i class='fab fa-instagram me-3' style='font-size:24px'></i>
+        </a>
+        <a href="https://www.youtube.com/channel/UCA3Za4BS9L1CwPkuhqm260w" target="_blank" class="mx-2 text-white">
+          <i class='fab fa-youtube me-3' style='font-size:24px'></i>
+        </a>
+      </div>
+      
+      <div class="text-center my-3">
+        <img src="<?= base_url('/assets/img/footer-secured-card 1.svg'); ?>" alt="Secure Payment" class="img-fluid" style="max-width:300px;">
+      </div>
+
+      <p class="text-center" style="font-size:15px;">
+        Copyright <?= date('Y'); ?> @ kanavu.help. All Rights Reserved.
+      </p>
+    </div>
   </footer>
 
-
-<!-- Bootstrap JS and dependencies (Popper.js) -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script>
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
     document.getElementById("currentYear").textContent = new Date().getFullYear();
     
     // Highlight current page in navigation
     document.addEventListener('DOMContentLoaded', function() {
-        // Get current page URL
-        const currentUrl = window.location.href;
-        
-        // Get all navigation links
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        // Loop through each link
-        navLinks.forEach(link => {
-            // Check if the link's href matches the current URL
-            if (link.href === currentUrl) {
-                // Remove active class from all links
-                navLinks.forEach(l => l.classList.remove('active'));
-                // Add active class to current link
-                link.classList.add('active');
-            }
-        });
-        
-        // Special handling for about page which might have different URL patterns
-        if (currentUrl.includes('/abouts')) {
-            navLinks.forEach(l => l.classList.remove('active'));
-            document.getElementById('aboutuspage').classList.add('active');
+      const currentUrl = window.location.href;
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        if (link.href === currentUrl) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
         }
+      });
+      
+      // Special handling for about page
+      if (currentUrl.includes('/abouts')) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        document.getElementById('aboutuspage').classList.add('active');
+      }
     });
-</script>
+  </script>
 </body>
 </html>

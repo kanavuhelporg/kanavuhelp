@@ -1213,7 +1213,7 @@
         <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a id="kanavuhomepage" class="nav-link mx-lg-2 active" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a>
+                            <!-- <a id="kanavuhomepage" class="nav-link mx-lg-2 active" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a> -->
                         </li>
                         <li class="nav-item">
                             <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
@@ -1235,9 +1235,9 @@
                                 <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
                             </li>
                         <?php else: ?>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
-                            </li>
+                            </li> -->
                         <?php endif; ?>
                     </ul>
                     <div class="d-flex align-items-center ms-auto">
@@ -1276,7 +1276,7 @@
          <img src="<?= base_url('assets/img/old1.jpg') ?>" class="d-block w-100" alt="Image 1"> 
         <div class="imgtext1 mt-5 pt-5">
           <p>THE <strong>WORLD'S <br>PLATFORM</strong> FOR <br>
-            <span>HELP</span>
+            <span style="color: #ed3136;">HELP</span>
           </p>
           <div class="imgtext11">
             <ul>
@@ -1300,7 +1300,7 @@
         <img src="<?= base_url('assets/img/old2.jpg') ?>" class="d-block w-100" alt="Image 2">
         <div class="imgtext2 mt-5 pt-5">
           <p>WE ARE ON A MISSION TO <br>
-            <span>HELP THE WORLD</span>
+            <span style="color: #ed3136;">HELP THE WORLD</span>
           </p>
           <div class="imgtext22">
             <ul>
@@ -1356,7 +1356,7 @@
         <div class="col-6 col-sm-6 col-md-3 mb-4 mb-md-0">
           <div class="stat-box">
             <img src="<?= base_url('assets/img/hand1.png') ?>" alt="Icon" class="mb-3 img-fluid">
-            <h2 class="count-up" data-target="550" data-suffix="+">0</h2>
+            <h2 class="count-up" data-target="<?= $total_volunteers ?>" data-suffix="+">0</h2>
             <p>Volunteers</p>
           </div>
         </div>
@@ -1458,11 +1458,11 @@
 
   <div class="container-xxl">
   
-    <div class="h4 text-center">BE THE REASON OF<span style="color: #ed3136"> SOMEONE SMILES</span></div>
+    <div class="h4 text-center mb-4">BE THE REASON OF<span style="color: #ed3136"> SOMEONE SMILES</span></div>
     <div style="display: flex; justify-content: center;">
       <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
     </div>
-    <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
+    <div class="p text-center mt-4">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
 
   </div><br>
 
@@ -1517,7 +1517,7 @@
 
                         <!-- Supporters & Creator -->
                         <div class="d-flex justify-content-between mb-2 small text-muted">
-                            <span>
+                            <span class="text-truncate" style="max-width: 40%;">
                                 <img src="<?= base_url('assets/img/heart1.svg') ?>" width="16" class="me-1">
                                 <?= intval($fundraiser->supporters_count) ?> 
                                 Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
@@ -1547,8 +1547,8 @@
                                 <span class="badge bg-success">Completed</span>
                             <?php else: ?>
                                 <button class="btn btn-danger btn-sm" 
-                                        onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();">
-                                    Donate
+                                        onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();" style="padding: 5px 15px; border-radius: 25px;">
+                                    Donate Now
                                 </button>
                             <?php endif; ?>
 
@@ -1559,7 +1559,7 @@
                                     '<?= $imageSrc ?>'
                                  )">
                                 <i class="bi bi-share fs-6"></i>
-                                <span class="ms-1 fs-6">Share</span>
+                                <!-- <span class="ms-1 fs-6">Share</span> -->
                             </div>
                         </div>
 
@@ -1794,229 +1794,394 @@ function openDonationModal() {
   </div> -->
 
   <!-- By Poovarasan for raising funds -->
-  <div class="container py-4">
-    <h2 class="text-center mb-3">
-      START A FUNDRAISER IN <span style="color:#ED3136">THREE SIMPLE STEPS</span>
+  <section class="fundraiser-steps-section">
+
+ <div class="fundraiser-wrapper">
+
+    <h2 class="section-title">
+        START A FUNDRAISER IN <span>THREE SIMPLE STEPS</span>
     </h2>
-    <div class="text-center mb-4">
-      <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
+
+    <div class="underline">
+        <img src="assets/img/underline.svg" alt="">
     </div>
 
-    <div class="row flex-column flex-lg-row align-items-start three_steps_fundraiser">
-      <!-- Video Column -->
-      <div class="col-12 col-lg-6 order-1 order-lg-1">
-        <div class="video-box">
-          <div class="raise_video">
-            <video id="stepVideo" muted autoplay playsinline class="video-small">
-              <source src="<?php echo base_url('assets/video/Help Website 1.mp4'); ?>" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-            <div class="progress-bar-container">
-              <div class="progress-bar" id="progressBar"></div>
+    <div class="fundraiser-grid">
+
+        <!-- VIDEO COLUMN -->
+        <div class="fundraiser-video">
+            <div class="video-frame">
+
+                <video id="stepVideo" autoplay muted playsinline>
+                    <source src="<?= base_url('assets/video/Help Website 1.mp4'); ?>" type="video/mp4">
+                </video>
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <div class="play-pause-btn" id="playPauseBtn">
+                    <i class="bi bi-pause-fill"></i>
+                </div>
+
             </div>
-          </div>
-          <!-- Play/Pause Button -->
-          <div id="playPauseBtn" class="play-pause-btn">
-            <i class="bi bi-pause-fill"></i>
-          </div>
         </div>
-      </div>
 
-      <!-- Steps Column -->
-      <div class="col-12 col-lg-6 order-2 order-lg-2">
-        <ul class="list-unstyled mt-3 mt-lg-0">
-          <li class="step-item mb-1" data-step="1">
-            <div class="d-flex align-items-start">
-              <div class="icon-wrapper text-danger fs-4 me-2">
-                <i class="bi bi-caret-left-fill"></i> <!-- target this -->
-              </div>
-              <div class="step-circle me-3" style="border-radius: 50% !important;">1</div>
-              <div>
-                <h5 class="mb-1"><strong>Use our tools to create your fundraiser</strong></h5>
-                <p class="mb-0">With our easy-to-use tools, you can set up your fundraiser in just minutes. Whether it’s for a personal cause, community project, or charitable initiative, our platform gives you everything you need to share your story, connect with supporters, and start raising funds right away.</p>
-              </div>
-            </div>
-          </li>
+        <!-- CONTENT COLUMN -->
+        <div class="fundraiser-content">
+            <ul class="steps-list">
 
-          <li class="step-item mb-1" data-step="2">
-            <div class="d-flex align-items-start">
-              <div class="icon-wrapper text-danger fs-4 me-2">
-                <i class="bi bi-caret-left-fill"></i>
-              </div>
-              <div class="step-circle me-3">2</div>
-              <div>
-                <h5 class="mb-1"><strong>Reach donors by sharing</strong></h5>
-                <p class="mb-0">Spread the word about your fundraiser with just a click. Share your campaign across social media, email, and messaging apps to reach more donors, inspire support, and grow your impact faster.</p>
-              </div>
-            </div>
-          </li>
-          <li class="step-item" data-step="3">
-            <div class="d-flex align-items-start">
-              <div class="icon-wrapper text-danger fs-4 me-2">
-                <i class="bi bi-caret-left-fill"></i>
-              </div>
-              <div class="step-circle me-3">3</div>
-              <div>
-                <h5 class="mb-1"><strong>Securely receive funds</strong></h5>
-                <p class="mb-0">Receive donations safely and without hassle. Our secure payment system ensures that every contribution goes directly to your fundraiser, giving you and your supporters peace of mind throughout the process.</p>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
+                <li class="step-item active" data-step="1">
+                    <span class="caret"><i class="bi bi-caret-left-fill"></i></span>
+                    <span class="step-circle me-3">1</span>
+                    <div>
+                        <h5>Use our tools to create your fundraiser</h5>
+                        <p>You’ll be guided by prompts to add fundraiser details and set your goal. Make updates anytime.You’ll be guided by prompts to add fundraiser details and set your goal. Make updates anytime.</p>
+                    </div>
+                </li>
+
+                <li class="step-item" data-step="2">
+                    <span class="caret"><i class="bi bi-caret-left-fill"></i></span>
+                    <span class="step-circle me-3">2</span>
+                    <div>
+                        <h5>Reach donors by sharing</h5>
+                        <p>Share your fundraiser link and use the resources in your dashboard to gain momentum.You’ll be guided by prompts to add fundraiser details and set your goal. Make updates anytime.</p>
+                    </div>
+                </li>
+
+                <li class="step-item" data-step="3">
+                    <span class="caret"><i class="bi bi-caret-left-fill"></i></span>
+                    <span class="step-circle me-3">3</span>
+                    <div>
+                        <h5>Securely receive funds</h5>
+                        <p>Add your bank information or invite your beneficiary and start receiving fundsYou’ll be guided by prompts to add fundraiser details and set your goal. Make updates anytime.You’ll be guided by prompts to add fundraiser details and set your goal. Make updates anytime..</p>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
     </div>
-  </div>
+</div>
+
+</section>
 
   <!-- ✅ CSS -->
-  <style>
-    
-    .video-box {
-      position: relative;
-      max-width: 100%;
+<style>
+    /* SECTION */
+.fundraiser-steps-section {
+    padding: 70px 0;
+    background: #fff;
+}
+
+/* FIXED WIDTH – ALIGNMENT LOCK */
+.fundraiser-wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* TITLE */
+.section-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.section-title span {
+    color: #ed3136;
+}
+
+/* UNDERLINE */
+.underline {
+    text-align: center;
+    margin: 10px auto 40px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* GRID – KEEP TWO COLUMNS ALWAYS */
+.fundraiser-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: stretch; /* 🔥 KEY CHANGE */
+}
+
+/* VIDEO COLUMN */
+.fundraiser-video {
+    display: flex;
+    height: 100%;
+}
+
+/* VIDEO FRAME – REMOVE ASPECT RATIO, STRETCH HEIGHT */
+.video-frame {
+    position: relative;
+    width: 100%;
+    height: 100%; /* 🔥 KEY CHANGE */
+    background: #523636ff;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* VIDEO FITS FRAME */
+.video-frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* PROGRESS BAR */
+.progress-bar-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: #e0e0e0;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background: #ed3136;
+}
+
+/* PLAY BUTTON */
+.play-pause-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* CONTENT COLUMN */
+.fundraiser-content {
+    display: flex;
+    height: 100%;
+    align-items: stretch; /* 🔥 KEY CHANGE */
+}
+
+/* STEPS LIST */
+.steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* STEP ITEM */
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    border-radius: 8px;
+    padding: 14px 16px;
+}
+
+.step-item:hover {
+    background: #f8f9fa;
+}
+
+/* CARET */
+.caret {
+    opacity: 0;
+    color: #ed3136;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+.step-item:hover .caret,
+.step-item.active .caret {
+    opacity: 1;
+}
+
+/* STEP CIRCLE */
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ed3136;
+    border-radius: 50%;
+    color: #ed3136;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.step-item.active .step-circle {
+    background: #ed3136;
+    color: #fff;
+}
+
+/* TEXT */
+.step-item h5 {
+    margin: 0 0 6px;
+    font-weight: 600;
+}
+
+.step-item p {
+    margin: 0;
+    color: #555;
+}
+
+.step-item:hover h5,
+.step-item.active h5 {
+    color: #ed3136;
+}
+
+/* ========================= */
+/* RESPONSIVE – NO STACKING */
+/* ========================= */
+
+/* Large screens – unchanged */
+@media (min-width: 1921px) {
+    .fundraiser-wrapper {
+        max-width: 1240px;
+        padding: 0 20px;
     }
-    
-   .video-small {
-      width: 100%;
-      max-height: 750px;
-      height: auto;
-      object-fit: cover;
-      border-radius: 8px;
+}
+
+/* 1440px */
+@media (min-width: 1444px) and (max-width: 1920px) {
+    .fundraiser-wrapper {
+        max-width: 1240px;
+        padding: 0 20px;
+    }
+}
+
+/* Laptop */
+@media (min-width: 1024px) and (max-width: 1443px) {
+    .fundraiser-wrapper {
+        max-width: 1240px;
+        padding: 0 20px;
     }
 
-    .raise_video {
-      position: relative;
+    .fundraiser-grid {
+        gap: 30px;
     }
+}
 
-    video {
-      border-radius: 8px;
+/* Tablet & Mobile – KEEP SIDE BY SIDE */
+/* @media (max-width: 991px) {
+    .fundraiser-grid {
+        gap: 25px;
     }
+} */
+/* ========================= */
+/* MOBILE FIX – STEPS LAYOUT */
+/* ========================= */
 
-    .progress-bar-container {
-      width: 100%;
-      height: 5px;
-      background-color: #e0e0e0;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
-      overflow: hidden;
-    }
+@media (max-width: 991px) {
 
-    .progress-bar {
-      height: 100%;
-      background-color: #ed3136;
-      width: 0;
-      transition: width 0.1s linear;
-    }
+  /* Stack video & content */
+  .fundraiser-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
 
-    .play-pause-btn {
-      position: absolute;
-      bottom: 15px;
-      right: 15px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
+  /* Center video */
+  .video-frame { max-width: 500px; margin: 0 auto; }
 
-    .step-item {
-      cursor: pointer;
-      transition: all 0.3s ease;
-      padding: 12px 16px;
-      border-radius: 8px;
-      position: relative;
-    }
+  /* Content full width */
+  .fundraiser-content {
+    width: 100%;
+  }
 
-    .step-item:hover {
-      background-color: #f8f9fa;
-    }
+  /* Steps list spacing */
+  .steps-list {
+    gap: 20px;
+  }
 
-    .step-circle {
-      width: 40px !important;
-      height: 40px !important;
-      min-width: 40px !important;
-      min-height: 40px !important;
-      border-radius: 50% !important;
-      border: 2px solid #fbd9d3;
-      color: #ed3136;
-      background-color: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      font-size: 16px;
-    }
+  /* Step item layout */
+  .step-item {
+    align-items: flex-start;
+    padding: 14px 12px;
+  }
 
-    .step-item.active .step-circle {
-      background-color: #ed3136;
-      color: #fff;
-      
-    }
+  /* Hide caret on mobile */
+  .caret {
+    display: none;
+  }
 
-    .step-item:hover .step-circle {
-      background-color: #fceaea;
-      color: #ed3136;
-      border: 2px solid #ed3136;
-    }
+  /* Step circle size */
+  .step-circle {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
 
-    .step-item h5 {
-      transition: color 0.3s ease;
-    }
+  /* Text alignment */
+  .step-item h5 {
+    font-size: 16px;
+    line-height: 1.3;
+  }
 
-    .step-item:hover h5,
-    .step-item.active h5 {
-      color: #ED3136;
-    }
+  .step-item p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
 
-    /* ✅ Fix: Show caret icon only on active or hover */
-    .step-item .bi-caret-left-fill {
-      visibility: hidden;
-      opacity: 0;
-      transition: visibility 0.3s ease, opacity 0.3s ease;
-    }
+/* SMALL MOBILE */
+@media (max-width: 576px) {
 
-    .step-item.active .bi-caret-left-fill,
-    .step-item:hover .bi-caret-left-fill {
-      visibility: visible;
-      opacity: 1;
-    }
-    /* Hide the icon by default */
-    .step-item .icon-wrapper {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
+   .video-frame { max-width: 500px; margin: 0 auto; }
 
-    /* Show icon on hover or active step */
-    .step-item:hover .icon-wrapper,
-    .step-item.active .icon-wrapper {
-      opacity: 1;
-      visibility: visible;
-    }
+  .step-item {
+    gap: 12px;
+  }
 
-    @media (max-width: 991px) {
-      .video-box {
-        max-width: 100%;
-        margin: 0 auto;
-      }
+  .step-item h5 {
+    font-size: 16px;
+    line-height: 1.3;
+  }
 
-      .three_steps_fundraiser {
-        flex-direction: column !important;
-      }
-      .step-circle {
-        /* prevent flex from stretching width/height */
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
-      }
-    }
+  .step-item p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .fundraiser-steps-section {
+    padding: 40px 0;
+  }
+  
+  .fundraiser-wrapper {
+    padding: 0 15px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    padding: 0 15px;
+  }
+  
+  .underline {
+    padding: 0 15px;
+    margin: 10px auto 30px;
+  }
+}
+
+
+
   </style>
 
   <!-- Bootstrap JS -->
@@ -2284,177 +2449,112 @@ function openDonationModal() {
   </div>
 
   <!-- Donation Modal -->
-<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true" style="padding-left: 10px;">
+<!-- Donation Modal -->
+<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-header border-0">
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+      
+      <div class="modal-header border-0 bg-danger text-white p-4">
+        <div>
+          <h5 class="fw-bold mb-0">Support Our Cause</h5>
+          <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
 
-      <div class="modal-body" style="padding-left: 30px; padding-right: 30px;">
-
-
-        <!-- Donation Form -->
-        <form id="donationForm" method="POST" autocomplete="off" 
-              action="<?= base_url('kanavuhelp/processDonation') ?>" 
-              onsubmit="return validateForm()">
-
+      <div class="modal-body p-4 bg-light">
+       <form id="donationForm"
+        method="POST"
+        action="<?= base_url('kanavuhelp/processDonation') ?>">
+          
           <input type="hidden" name="cause_id" id="cause_id">
-          <input type="hidden" name="user_id" id="user_id">
+          <input type="hidden" name="currency_type" value="INR">
+          <input type="hidden" name="user_id" id="user_id" value="<?= $this->session->userdata('Kanavu_userId') ?>">
 
-          <!-- Hand Icon -->
-          <div class="text-center mb-3">
-            <img src="<?= base_url('assets/img/handwithheart.png') ?>" width="20%">
-          </div>
-          <div class="note-box mb-3">
-            <p class="mb-0">
-              <strong style="font-size:13px;">Note:</strong> <span style="font-size:14px;">All contributions will go directly to</span> <strong style="font-size:14px;">The Kanavu Trust.</strong>
-            </p>
-          </div>
-          <!-- Payment Method Dropdown -->
-          <div class="mb-3">
-              <label class="form-label fw-bold">Select Payment Method</label>
-              <select class="form-select" id="paymentMethod" onchange="togglePaymentOptions()">
-                  <option value="upi" selected>UPI ID</option>
-                  <option value="scan">Scan QR</option>
-                  <option value="bank">Account Details</option>
-              </select>
-          </div>
-
-          <!-- Scan QR -->
-          <div id="scanSection" class="text-center mb-3" style="display:none;">
-              <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" width="50%">
-          </div>
-
-          <!-- UPI Section -->
-          <div id="upiSection" class="text-center mb-3" style="display:block;">
-            <h6 class="fw-bold mb-2">UPI ID</h6>
-
-            <p class="mb-0" style="font-size:16px;">
-                <span id="upiText">vyapar.175502705184@hdfcbank</span>
-
-                <i class="bi bi-copy ms-2 copy-icon"
-                   data-copy="upiText"
-                   data-bs-toggle="tooltip"
-                   title="Copy UPI ID"
-                   style="cursor:pointer;font-size:14px;"></i>
-            </p>
-          </div>
-
-          <!-- Bank Section -->
-          <div id="bankSection" class="border rounded p-3 mb-3" style="display:none;">
-            <h6 class="fw-bold text-center mb-3">Bank Details</h6>
-
-            <p class="mb-1" style="font-size:16px;">
-              <strong>Account Name:</strong> 
-              <span id="accName">The Kanavu Trust</span>
-              <i class="bi bi-copy ms-2 copy-icon"
-                 data-copy="accName"
-                 data-bs-toggle="tooltip"
-                 title="Copy Account Name"
-                 style="cursor:pointer;font-size:14px;"></i>
-            </p>
-
-            <p class="mb-1" style="font-size:16px;">
-              <strong>Account Number:</strong>
-              <span id="accNumber">50200111484578</span>
-              <i class="bi bi-copy ms-2 copy-icon"
-                 data-copy="accNumber"
-                 data-bs-toggle="tooltip"
-                 title="Copy Account Number"
-                 style="cursor:pointer;font-size:14px;"></i>
-            </p>
-
-            <p class="mb-1" style="font-size:16px;">
-              <strong>IFSC Code:</strong> 
-              <span id="ifscCode">HDFC0008251</span>
-              <i class="bi bi-copy ms-2 copy-icon"
-                 data-copy="ifscCode"
-                 data-bs-toggle="tooltip"
-                 title="Copy IFSC Code"
-                 style="cursor:pointer;font-size:14px;"></i>
-            </p>
-          </div>
-
-          <!-- Title -->
-          <div class="text-center mt-2 mb-3">
-            <h5 class="modal-title text-danger fw-bold">Make a Secure Donation</h5>
-          </div>
-
-          <!-- Currency + Amount -->
-          <div class="row mb-3">
-              <div class="col-6">
-                  <select class="form-control py-2" name="currency_type" id="currency" required>
-                      <option value="" disabled selected>Select Currency</option>
-                      <option>INR</option>
-                      <option>USD</option>
-                  </select>
+          <!-- Step 1: Payment Info -->
+          <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">1</span>
+                <h6 class="fw-bold mb-0 text-dark">Make Your Donation</h6>
               </div>
-
-              <div class="col-6">
-                  <input type="number" name="amount" class="form-control py-2" id="amount"
-                        placeholder="Enter amount*" required>
-                  <p id="error5" class="text-danger small"></p>
+              
+              <div class="row g-3 align-items-center">
+                <div class="col-7">
+                  <label class="text-muted small d-block mb-1">UPI ID</label>
+                  <div class="d-flex align-items-center bg-white p-2 border rounded">
+                    <span class="text-truncate small fw-bold" id="upiText">vyapar.175502705184@hdfcbank</span>
+                    <i class="bi bi-copy ms-auto text-primary cursor-pointer copy-icon" data-copy="upiText" title="Copy UPI"></i>
+                  </div>
+                </div>
+                <div class="col-1 text-muted small fw-bold text-center">OR</div>
+                <div class="col-4 text-center">
+                  <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" class="img-fluid rounded border shadow-sm" style="max-height: 280px;" alt="QR Code">
+                  <small class="d-block text-muted mt-1" style="font-size: 10px;">Scan to Pay</small>
+                </div>
               </div>
+            </div>
           </div>
 
-
-          <!-- Transaction ID -->
-          <div class="mb-3">
-            <label class="form-label">Transaction ID</label>
-            <input type="text" name="transactionid" class="form-control" id="transactionid"
-                   placeholder="Enter UPI Transaction ID*" required>
-            <p id="error4" class="text-danger small"></p>
+          <!-- Step 2: Donation Details -->
+          <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">2</span>
+                <h6 class="fw-bold mb-0 text-dark">Donation Details</h6>
+              </div>
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0">₹</span>
+                    <input type="number" name="amount" class="form-control border-start-0 ps-0" id="amount" placeholder="Donated Amount" required min="1">
+                    <div id="error8" class="text-danger small mt-1"></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Transaction ID *" required>
+                  <div id="error4" class="text-danger small mt-1"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Phone -->
-          <div class="mb-3">
-            <label class="form-label">Phone Number</label>
-            <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10"
-                   placeholder="Enter your phone number*" required>
-            <p id="error3" class="text-danger small"></p>
+          <!-- Step 3: Personal Details -->
+          <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">3</span>
+                <h6 class="fw-bold mb-0 text-dark">Personal Details</h6>
+              </div>
+              <div class="row g-2">
+                <div class="col-12">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Full Name *" required>
+                  <div id="error6" class="text-danger small mt-1"></div>
+                </div>
+                <div class="col-6">
+                  <input type="tel" name="phoneno" class="form-control" id="phoneno" placeholder="Phone Number *" required maxlength="10">
+                  <div id="error3" class="text-danger small mt-1"></div>
+                </div>
+                <div class="col-6">
+                  <input type="text" name="city" class="form-control" id="city" placeholder="City *" required>
+                  <div id="error9" class="text-danger small mt-1"></div>
+                </div>
+                <div class="col-12">
+                  <input type="email" name="email" class="form-control" id="email" placeholder="Email (Optional)">
+                  <div id="error7" class="text-danger small mt-1"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Email -->
-          <div class="mb-3">
-            <label class="form-label">Email ID</label>
-            <input type="email" name="email" class="form-control" id="email"
-                   placeholder="Enter your EmailID*" required>
-            <p id="error7" class="text-danger small"></p>
+          <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-3 shadow" style="border-radius: 12px; letter-spacing: 1px;" id="submitBtn">
+            Submit Donation
+          </button>
+          
+          <div class="text-center mt-3">
+            <small class="text-muted">Funds go directly to <strong>The Kanavu Trust</strong></small>
           </div>
-
-          <!-- Name -->
-          <div class="mb-3">
-            <label class="form-label">Name</label>
-            <input type="text" name="name" class="form-control" id="name" maxlength="40"
-                   placeholder="Enter Your Name*" required>
-            <p id="error6" class="text-danger small"></p>
-          </div>
-
-          <!-- City -->
-          <div class="mb-3">
-            <label class="form-label">City</label>
-            <input type="text" name="city" class="form-control" id="donorcity" maxlength="40"
-                   placeholder="Enter Your City*" required>
-            <p id="error8" class="text-danger small"></p>
-          </div>
-
-          <!-- Confirm Button -->
-          <div class="d-flex justify-content-center">
-            <button id="donatenowbtn" type="submit" class="btn btn-danger fw-bold w-50 rounded-3">
-              Confirm Payment ₹
-            </button>
-          </div>
-
         </form>
-
-        <p class="text-center small mt-2">
-          By continuing, you agree to our 
-          <a href="<?= base_url('/terms_of_use') ?>">Terms of Service</a> & 
-          <a href="<?= base_url('/privacy_policy') ?>">Privacy Policy</a>
-        </p>
-
       </div>
     </div>
   </div>
@@ -2687,20 +2787,20 @@ function openDonationModal() {
 
 <script>
 // Real-time validation function
-function validateField(fieldId, errorId, validationFn, errorMessage, eventType = 'input') {
-  const field = document.getElementById(fieldId);
-  const errorElement = document.getElementById(errorId);
+// function validateField(fieldId, errorId, validationFn, errorMessage, eventType = 'input') {
+//   const field = document.getElementById(fieldId);
+//   const errorElement = document.getElementById(errorId);
 
-  field.addEventListener(eventType, () => {
-    if (field.value === '') {
-      errorElement.textContent = 'Please enter a value.';
-    } else if (!validationFn(field.value)) {
-      errorElement.textContent = errorMessage;
-    } else {
-      errorElement.textContent = ''; // Clear error if validation passes
-    }
-  });
-}
+//   field.addEventListener(eventType, () => {
+//     if (field.value === '') {
+//       errorElement.textContent = 'Please enter a value.';
+//     } else if (!validationFn(field.value)) {
+//       errorElement.textContent = errorMessage;
+//     } else {
+//       errorElement.textContent = ''; // Clear error if validation passes
+//     }
+//   });
+// }
 
 // Validation functions
 //const isCurrencySelected = (value) => value !== '';
@@ -2717,8 +2817,8 @@ window.onload = () => {
  // validateField('currency', 'error5', isCurrencySelected, 'Select a currency.', 'change');
   validateField('amount', 'error8', isAmountValid, 'Amount must be greater than 0.');
   validateField('name', 'error6', isNameValid, 'Enter Valid Name');
- validateField('email', 'error7', isEmailValid, 'Enter a valid Email ID.');
-  validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must have 10 digits.');
+//  validateField('email', 'error7', isEmailValid, 'Enter a valid Email ID.');
+  validateField('phoneno', 'error3', isPhoneNumberValid, 'Phone number must have 10 digits.');
   validateField('transactionid', 'error4', isTransactionIdValid, 'Transaction ID must be exactly 12 digits.');
 
 
@@ -2726,9 +2826,9 @@ window.onload = () => {
 };
 
 // Final validation and form submission
-document.getElementById('donationForm').onsubmit = function (event) {
-  event.preventDefault(); // Prevent form submission for manual handling
-  let isValid = true;
+document.getElementById('donationForm').onsubmit = function () {
+  return true; // allow normal submit
+};
 
   // Perform final validation
  /*  if (!isCurrencySelected(document.getElementById('currency').value)) {
@@ -2745,11 +2845,11 @@ document.getElementById('donationForm').onsubmit = function (event) {
     document.getElementById('error6').innerText = 'Enter Valid Name';
     isValid = false;
   }
-  if (!isEmailValid(document.getElementById('email').value)) {
-    document.getElementById('error7').innerText = 'Enter a valid Email ID.';
-    isValid = false;
-  } 
-  if (!isPhoneNumberValid(document.getElementById('phone').value)) {
+  // if (!isEmailValid(document.getElementById('email').value)) {
+  //   document.getElementById('error7').innerText = 'Enter a valid Email ID.';
+  //   isValid = false;
+  // } 
+  if (!isPhoneNumberValid(document.getElementById('phoneno').value)) {
     document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
     isValid = false;
   }
@@ -2765,46 +2865,180 @@ document.getElementById('donationForm').onsubmit = function (event) {
   // AJAX Request to Server
   const formData = new FormData(this);
 
-  fetch('/kanavuhelp/processDonation', {
-    method: 'POST',
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.status === 'error') {
-        document.getElementById('error4').innerText = data.message;
-      } else if (data.status === 'success') {
-        // Hide the donation modal if visible
-        const donationModalElement = document.getElementById('donationModal');
-        const donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
-        if (donationModalElement.classList.contains('show')) {
-          donationModal.hide();
-        }
+//   fetch('<?= base_url("kanavuhelp/processDonation") ?>', {
+//   method: 'POST',
+//   body: formData
+// })
+// .then(response => response.text()) // 👈 VERY IMPORTANT
+// .then(text => {
+//   console.log("SERVER RESPONSE:", text);
 
-        // Show success modal
-        const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
-        successModal.show();
+//   let data;
+//   try {
+//     data = JSON.parse(text); // convert only if valid JSON
+//   } catch (e) {
+//     throw new Error("Invalid JSON from server");
+//   }
 
-        // Redirect on button click in the success modal
-        document.getElementById('donationRedirectBtn').addEventListener('click', function () {
-          window.location.href = data.redirect;
-        });
-      }
-    })
-    .catch(() => {
-      document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
-    });
+//   if (data.status === 'error') {
+//     document.getElementById('error4').innerText = data.message;
+//   }
+
+//   if (data.status === 'success') {
+//     const donationModal = bootstrap.Modal.getInstance(document.getElementById('donationModal'));
+//     if (donationModal) donationModal.hide();
+
+//     const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
+//     successModal.show();
+
+//     document.getElementById('donationRedirectBtn').onclick = () => {
+//       window.location.href = data.redirect;
+//     };
+//   }
+// })
+// .catch(error => {
+//   console.error(error);
+//   document.getElementById('error4').innerText =
+//     'Server error. Please contact support.';
+// });
+
 };
 
 
 
 //section counter running
- function animateCounter(el) {
-    if (el.classList.contains('counted')) return; // Prevent multiple runs
+//  function animateCounter(el) {
+//     if (el.classList.contains('counted')) return; // Prevent multiple runs
 
-    const target = +el.getAttribute('data-target');
-    const prefix = el.getAttribute('data-prefix') || '';
-    const suffix = el.getAttribute('data-suffix') || '';
+//     const target = +el.getAttribute('data-target');
+//     const prefix = el.getAttribute('data-prefix') || '';
+//     const suffix = el.getAttribute('data-suffix') || '';
+//     const duration = 2000;
+//     const startTime = performance.now();
+
+//     function update(currentTime) {
+//       const elapsed = currentTime - startTime;
+//       const progress = Math.min(elapsed / duration, 1);
+//       const value = Math.floor(progress * target);
+//       el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
+
+//       if (progress < 1) {
+//         requestAnimationFrame(update);
+//       }
+//     }
+
+//     el.classList.add('counted'); // Mark as done
+//     requestAnimationFrame(update);
+//   }
+
+//   document.addEventListener('DOMContentLoaded', () => {
+//     const counters = document.querySelectorAll('.count-up');
+
+//     // ✅ Run once immediately on page load
+//     counters.forEach(counter => animateCounter(counter));
+
+//     // ✅ Run when section becomes visible (on scroll)
+//     const observer = new IntersectionObserver((entries) => {
+//       entries.forEach(entry => {
+//         if (entry.isIntersecting) {
+//           animateCounter(entry.target);
+//         }
+//       });
+//     }, { threshold: 0.5 });
+
+//     counters.forEach(counter => observer.observe(counter));
+
+//     // ✅ Run when hovered (only once)
+//     // counters.forEach(counter => {
+//     //   counter.addEventListener('mouseenter', () => animateCounter(counter));
+//     // });
+//   });
+
+// function animateCounter(el) {
+//   const target = +el.getAttribute('data-target');
+//   const prefix = el.getAttribute('data-prefix') || '';
+//   const suffix = el.getAttribute('data-suffix') || '';
+//   const duration = 2000; // Total duration of the animation in ms
+//   const startTime = performance.now();
+
+//   function update(currentTime) {
+//     const elapsed = currentTime - startTime;
+//     const progress = Math.min(elapsed / duration, 1);
+//     const value = Math.floor(progress * target);
+//     el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
+//     if (progress < 1) {
+//       requestAnimationFrame(update);
+//     }
+//   }
+
+//   requestAnimationFrame(update);
+// }
+
+// // Run counter animation once on page load
+// document.addEventListener('DOMContentLoaded', () => {
+//   const counters = document.querySelectorAll('.count-up');
+//   counters.forEach(counter => animateCounter(counter));
+// });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const donationForm = document.getElementById('donationForm');
+
+    donationForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(donationForm);
+
+        fetch(donationForm.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data); // should print {status:"success"}
+
+            if (data.status === 'success') {
+
+                // Hide donation modal
+                const donationModalEl = document.getElementById('donationModal');
+                const donationModal = bootstrap.Modal.getInstance(donationModalEl)
+                    || new bootstrap.Modal(donationModalEl);
+
+                donationModal.hide();
+
+                // Wait for hide animation to finish
+                donationModalEl.addEventListener('hidden.bs.modal', function () {
+
+                    const successModalEl = document.getElementById('donationSuccess');
+                    const successModal = new bootstrap.Modal(successModalEl);
+                    successModal.show();
+
+                }, { once: true });
+
+            } else {
+                alert(data.message || 'Donation failed');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Something went wrong');
+        });
+    });
+
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  const counters = document.querySelectorAll('.count-up');
+
+  const animateCounter = (el) => {
+    if (el.dataset.done === "1") return;
+
+    const target = parseInt(el.dataset.target || 0);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
     const duration = 2000;
     const startTime = performance.now();
 
@@ -2819,65 +3053,26 @@ document.getElementById('donationForm').onsubmit = function (event) {
       }
     }
 
-    el.classList.add('counted'); // Mark as done
+    el.dataset.done = "1";
     requestAnimationFrame(update);
-  }
+  };
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const counters = document.querySelectorAll('.count-up');
+  // Run once when visible
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
 
-    // ✅ Run once immediately on page load
-    counters.forEach(counter => animateCounter(counter));
+  counters.forEach(counter => observer.observe(counter));
 
-    // ✅ Run when section becomes visible (on scroll)
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    counters.forEach(counter => observer.observe(counter));
-
-    // ✅ Run when hovered (only once)
-    // counters.forEach(counter => {
-    //   counter.addEventListener('mouseenter', () => animateCounter(counter));
-    // });
-  });
-
-function animateCounter(el) {
-  const target = +el.getAttribute('data-target');
-  const prefix = el.getAttribute('data-prefix') || '';
-  const suffix = el.getAttribute('data-suffix') || '';
-  const duration = 2000; // Total duration of the animation in ms
-  const startTime = performance.now();
-
-  function update(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const value = Math.floor(progress * target);
-    el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
-    if (progress < 1) {
-      requestAnimationFrame(update);
-    }
-  }
-
-  requestAnimationFrame(update);
-}
-
-// Run counter animation once on page load
-document.addEventListener('DOMContentLoaded', () => {
-  const counters = document.querySelectorAll('.count-up');
-  counters.forEach(counter => animateCounter(counter));
 });
 </script>
 
 
-
-  <!-- Bootstrap JS and dependencies (Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -86,12 +86,12 @@ class Donations extends CI_Controller {
                             </p>
 
                             <div class="d-flex justify-content-between">
-                                <div class="small text-muted">
+                                <div class="small text-muted text-truncate" style="max-width: 60%;">
                                     <img src="'. base_url('assets/img/heart_img.svg') .'" width="16">
                                     '. $supporters .' Supporter'. ($supporters != 1 ? "s" : "") .'
                                 </div>
 
-                                <div class="small text-muted">
+                                <div class="small text-muted text-truncate " style="max-width: 60%;">
                                     <img src="'. base_url('assets/img/Frame.svg') .'" width="16">
                                     Created By '. (!empty($fundraiser->created_by) ? htmlspecialchars($fundraiser->created_by) : 'Anonymous') .'
 
@@ -123,7 +123,7 @@ class Donations extends CI_Controller {
                                         base_url('helpus/' . str_replace(" ","-", $fundraiser->name) . '-' . $fundraiser->id) .'\',
                                         \'' . htmlspecialchars($fundraiser->cause_heading) . '\',
                                         \'' . $imageSrc . '\')">
-                                    <i class="bi bi-share"></i> <span class="fw-bold">Share</span>
+                                    <i class="bi bi-share"></i>
                                 </div>
                             </div>
 
