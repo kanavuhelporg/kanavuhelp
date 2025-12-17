@@ -2907,78 +2907,78 @@ document.getElementById('donationForm').onsubmit = function () {
 
 
 //section counter running
- function animateCounter(el) {
-    if (el.classList.contains('counted')) return; // Prevent multiple runs
+//  function animateCounter(el) {
+//     if (el.classList.contains('counted')) return; // Prevent multiple runs
 
-    const target = +el.getAttribute('data-target');
-    const prefix = el.getAttribute('data-prefix') || '';
-    const suffix = el.getAttribute('data-suffix') || '';
-    const duration = 2000;
-    const startTime = performance.now();
+//     const target = +el.getAttribute('data-target');
+//     const prefix = el.getAttribute('data-prefix') || '';
+//     const suffix = el.getAttribute('data-suffix') || '';
+//     const duration = 2000;
+//     const startTime = performance.now();
 
-    function update(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const value = Math.floor(progress * target);
-      el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
+//     function update(currentTime) {
+//       const elapsed = currentTime - startTime;
+//       const progress = Math.min(elapsed / duration, 1);
+//       const value = Math.floor(progress * target);
+//       el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
 
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      }
-    }
+//       if (progress < 1) {
+//         requestAnimationFrame(update);
+//       }
+//     }
 
-    el.classList.add('counted'); // Mark as done
-    requestAnimationFrame(update);
-  }
+//     el.classList.add('counted'); // Mark as done
+//     requestAnimationFrame(update);
+//   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const counters = document.querySelectorAll('.count-up');
+//   document.addEventListener('DOMContentLoaded', () => {
+//     const counters = document.querySelectorAll('.count-up');
 
-    // ✅ Run once immediately on page load
-    counters.forEach(counter => animateCounter(counter));
+//     // ✅ Run once immediately on page load
+//     counters.forEach(counter => animateCounter(counter));
 
-    // ✅ Run when section becomes visible (on scroll)
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
+//     // ✅ Run when section becomes visible (on scroll)
+//     const observer = new IntersectionObserver((entries) => {
+//       entries.forEach(entry => {
+//         if (entry.isIntersecting) {
+//           animateCounter(entry.target);
+//         }
+//       });
+//     }, { threshold: 0.5 });
 
-    counters.forEach(counter => observer.observe(counter));
+//     counters.forEach(counter => observer.observe(counter));
 
-    // ✅ Run when hovered (only once)
-    // counters.forEach(counter => {
-    //   counter.addEventListener('mouseenter', () => animateCounter(counter));
-    // });
-  });
+//     // ✅ Run when hovered (only once)
+//     // counters.forEach(counter => {
+//     //   counter.addEventListener('mouseenter', () => animateCounter(counter));
+//     // });
+//   });
 
-function animateCounter(el) {
-  const target = +el.getAttribute('data-target');
-  const prefix = el.getAttribute('data-prefix') || '';
-  const suffix = el.getAttribute('data-suffix') || '';
-  const duration = 2000; // Total duration of the animation in ms
-  const startTime = performance.now();
+// function animateCounter(el) {
+//   const target = +el.getAttribute('data-target');
+//   const prefix = el.getAttribute('data-prefix') || '';
+//   const suffix = el.getAttribute('data-suffix') || '';
+//   const duration = 2000; // Total duration of the animation in ms
+//   const startTime = performance.now();
 
-  function update(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const value = Math.floor(progress * target);
-    el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
-    if (progress < 1) {
-      requestAnimationFrame(update);
-    }
-  }
+//   function update(currentTime) {
+//     const elapsed = currentTime - startTime;
+//     const progress = Math.min(elapsed / duration, 1);
+//     const value = Math.floor(progress * target);
+//     el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
+//     if (progress < 1) {
+//       requestAnimationFrame(update);
+//     }
+//   }
 
-  requestAnimationFrame(update);
-}
+//   requestAnimationFrame(update);
+// }
 
-// Run counter animation once on page load
-document.addEventListener('DOMContentLoaded', () => {
-  const counters = document.querySelectorAll('.count-up');
-  counters.forEach(counter => animateCounter(counter));
-});
+// // Run counter animation once on page load
+// document.addEventListener('DOMContentLoaded', () => {
+//   const counters = document.querySelectorAll('.count-up');
+//   counters.forEach(counter => animateCounter(counter));
+// });
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -3028,6 +3028,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  const counters = document.querySelectorAll('.count-up');
+
+  const animateCounter = (el) => {
+    if (el.dataset.done === "1") return;
+
+    const target = parseInt(el.dataset.target || 0);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const duration = 2000;
+    const startTime = performance.now();
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const value = Math.floor(progress * target);
+      el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    el.dataset.done = "1";
+    requestAnimationFrame(update);
+  };
+
+  // Run once when visible
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(counter => observer.observe(counter));
+
+});
+</script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
