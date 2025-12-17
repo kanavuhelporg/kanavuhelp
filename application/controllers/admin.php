@@ -146,21 +146,47 @@ class admin extends CI_Controller
 
 
     public function get_total_amount(){
-        $data['total_fund'] = $this->adminpanel->get_total_fund();
-        $data['admin_added_total'] = $this->adminpanel->get_admin_added_total();
-        $data['last_added_date']   = $this->adminpanel->get_last_added_date();
-        $this->load->view('admin_set_amount', $data);
-    }
-    public function addAmount()
-    {
-        $amount = $this->input->post('amount');
+    $data['donation_total'] = $this->adminpanel->get_donation_total();
+    $data['admin_added_total'] = $this->adminpanel->get_admin_added_total();
+    $data['admin_volunteers_total'] = $this->adminpanel->get_admin_added_volunteers_total();
+    $data['donation_volunteers'] = $this->adminpanel->get_total_volunteers();
+    
+    // Final totals (Donations + Admin Added)
+    $data['total_fund'] = $this->adminpanel->get_total_fund();
+    
+    $data['donation_causes'] = $this->adminpanel->get_total_causes();
+    $data['admin_added_causes'] = $this->adminpanel->get_admin_added_causes();
+    $data['total_causes'] = $this->adminpanel->get_total_causes_final();
+    
+    $data['donation_donors'] = $this->adminpanel->get_total_donors();
+    $data['admin_added_donors'] = $this->adminpanel->get_admin_added_donors();
+    $data['total_donors'] = $this->adminpanel->get_total_donors_final();
+    
+    // Get all admin entries for table - NEW
+    $data['admin_entries'] = $this->adminpanel->get_all_admin_entries();
+    $data['last_added_date'] = $this->adminpanel->get_last_added_date();
+    
+    $this->load->view('admin_set_amount', $data);
+}
 
-        if ($amount > 0) {
-            $this->adminpanel->add_admin_amount($amount);
-        }
+public function addAmount()
+{
+    $data = [
+        'amount' => $this->input->post('amount') ?? 0,
+        'causes' => $this->input->post('causes') ?? 0,
+        'donors' => $this->input->post('donors') ?? 0,
+        'volunteers' => $this->input->post('volunteers') ?? 0,
+        'date' => date('Y-m-d H:i:s')
+    ];
 
-        redirect('Admin/get_total_amount');
+    if ($data['amount'] > 0 || $data['causes'] > 0 || $data['donors'] > 0 || $data['volunteers'] > 0) {
+        $this->adminpanel->add_admin_data($data);
     }
+
+    redirect('Admin/get_total_amount');
+}
+
+
     public function causesverification()
     {
         if (!$this->session->userdata('adminId')) {

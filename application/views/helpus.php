@@ -31,6 +31,10 @@
     body {
       font-family: 'Sen', sans-serif;
     }
+    body.modal-open {
+  padding-right: 0 !important;
+  overflow: hidden;
+}
     .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
   padding: (1rem) var(1rem);
@@ -176,7 +180,7 @@
     }
     /* card section */
     .card {
-      width: 80%;
+      width: 100%;
       /* Make the card width responsive */
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
       
@@ -399,6 +403,8 @@
 .navbar-brand img:hover {
     transform: scale(1.08); /* Slight zoom-in */
 }
+
+
     </style>
     </head>
 <body>
@@ -422,7 +428,7 @@
         <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a id="kanavuhomepage" class="nav-link mx-lg-2 " href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a>
+                            <!-- <a id="kanavuhomepage" class="nav-link mx-lg-2 " href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a> -->
                         </li>
                         <li class="nav-item">
                             <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
@@ -444,9 +450,9 @@
                                 <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
                             </li>
                         <?php else: ?>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
-                            </li>
+                            </li> -->
                         <?php endif; ?>
                     </ul>
                     <div class="d-flex align-items-center ms-auto">
@@ -1113,177 +1119,108 @@ function setCauseId(causeId) {
   </div>
 </div>
 <!-- Donation Modal -->
-<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+<div class="modal fade" id="donationModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-            <!-- Close Button -->
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+            
+            <div class="modal-header border-0 bg-danger text-white p-4">
+                <div>
+                    <h5 class="fw-bold mb-0">Support Our Cause</h5>
+                    <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
 
-            <!-- Modal Body with GLOBAL Padding -->
-            <div class="modal-body" style="padding-left: 25px; padding-right: 25px;">
-
-                <form id="donationForm" method="POST" autocomplete="off"
-                      action="<?= base_url('kanavuhelp/processDonation') ?>"
-                      onsubmit="return validateForm()">
-
+            <div class="modal-body p-4 bg-light">
+                <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
+                    
                     <input type="hidden" name="cause_id" id="cause_id">
-                    <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('Kanavu_userId') : ''; ?>">
+                    
+                    <input type="hidden" name="user_id"
+                    value="<?= $this->session->userdata('Kanavu_userId') ?? 0 ?>">
+                    <input type="hidden" name="currency_type" value="INR">
 
-                    <!-- Icon -->
-                    <div class="text-center mb-3">
-                        <img src="<?= base_url('assets/img/handwithheart.png') ?>" width="20%" style="margin-top:-20px;">
-                    </div>
-                    <div class="note-box mb-3">
-                        <p class="mb-0">
-                            <strong style="font-size:13px;">Note:</strong> <span style="font-size:14px;">All contributions will go directly to</span> <strong style="font-size:14px;">The Kanavu Trust.</strong>
-                        </p>
-                    </div>
-                    <!-- Select Payment Method -->
-                    <div class="mt-2 mb-3">
-                        <label class="form-label fw-bold">Select Payment Method</label>
-                        <select class="form-select" id="paymentMethod" onchange="togglePaymentOptions()">
-                            <option value="upi" selected>UPI ID</option>
-                            <option value="scan">Scan QR</option>
-                            <option value="bank">Account Details</option>
-                        </select>
-                    </div>
-
-                    <!-- QR Section -->
-                    <div id="scanSection" class="text-center mb-3" style="display:none;">
-                        <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" width="50%">
-                    </div>
-
-                    <!-- UPI SECTION -->
-                    <div id="upiSection" class="text-center mb-3" style="display:block;">
-                        <h6 class="fw-bold mb-2">UPI ID</h6>
-
-                        <p class="mb-0" style="font-size:16px;">
-                            <span id="upiText">vyapar.175502705184@hdfcbank</span>
-
-                            <i class="bi bi-copy ms-2 copy-icon"
-                               data-copy="upiText"
-                               data-bs-toggle="tooltip"
-                               title="Copy UPI ID"
-                               style="cursor:pointer;font-size:14px;"></i>
-                        </p>
-                    </div>
-
-                    <!-- BANK DETAILS -->
-                    <div id="bankSection" class="border rounded p-3 mb-3" style="display:none;">
-                        <h6 class="fw-bold text-center mb-3">Bank Details</h6>
-
-                        <p class="mb-1" style="font-size:16px;">
-                            <strong>Account Name:</strong>
-                            <span id="accName">The Kanavu Trust</span>
-                            <i class="bi bi-copy ms-2 copy-icon"
-                               data-copy="accName"
-                               data-bs-toggle="tooltip"
-                               title="Copy Account Name"
-                               style="cursor:pointer;font-size:14px;"></i>
-                        </p>
-
-                        <p class="mb-1" style="font-size:16px;">
-                            <strong>Account Number:</strong>
-                            <span id="accNumber">50200111484578</span>
-                            <i class="bi bi-copy ms-2 copy-icon"
-                               data-copy="accNumber"
-                               data-bs-toggle="tooltip"
-                               title="Copy Account Number"
-                               style="cursor:pointer;font-size:14px;"></i>
-                        </p>
-
-                        <p class="mb-1" style="font-size:16px;">
-                            <strong>IFSC Code:</strong>
-                            <span id="ifscCode">HDFC0008251</span>
-                            <i class="bi bi-copy ms-2 copy-icon"
-                               data-copy="ifscCode"
-                               data-bs-toggle="tooltip"
-                               title="Copy IFSC Code"
-                               style="cursor:pointer;font-size:14px;"></i>
-                        </p>
-                    </div>
-
-                    <!-- Heading -->
-                    <div class="text-center mt-2 mb-3">
-                        <h5 class="modal-title py-1 fw-bold text-danger">Make a Secure Donation</h5>
-                    </div>
-
-                    <!-- Currency + Amount -->
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <select class="form-control py-2" name="currency_type" id="currency" required>
-                                <option value="" disabled selected>Select Currency</option>
-                                <option>INR</option>
-                                <option>USD</option>
-                            </select>
-                        </div>
-
-                        <div class="col-6">
-                            <input type="number" name="amount" class="form-control py-2" id="amount"
-                                  placeholder="Enter amount*" required>
-                            <p id="error5" class="text-danger small"></p>
+                    <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">1</span>
+                                <h6 class="fw-bold mb-0 text-dark">Make Your donation</h6>
+                            </div>
+                            
+                            <div class="row g-3 align-items-center">
+                                <div class="col-7">
+                                    <label class="text-muted small d-block mb-1">UPI ID</label>
+                                    <div class="d-flex align-items-center bg-white p-2 border rounded">
+                                        <span class="text-truncate small fw-bold" id="upiText">vyapar.175502705184@hdfcbank</span>
+                                        <i class="bi bi-copy ms-auto text-primary cursor-pointer copy-icon" data-copy="upiText" title="Copy UPI"></i>
+                                    </div>
+                                </div>
+                                <div class="col-1 text-muted small fw-bold text-center">OR</div>
+                                <div class="col-4 text-center">
+                                    <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" class="img-fluid rounded border shadow-sm" style="max-height: 280px;" alt="QR Code">
+                                    <small class="d-block text-muted mt-1" style="font-size: 10px;">Scan to Pay</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Transaction ID -->
-                    <div class="mb-3">
-                        <label class="form-label">Transaction ID</label>
-                        <input type="text" name="transactionid" class="form-control" id="transactionid"
-                               placeholder="Enter UPI Transaction ID*" required>
-                        <p id="error4" class="text-danger small"></p>
+                    <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+                      <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                          <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">2</span>
+                          <h6 class="fw-bold mb-0 text-dark">Donation Details</h6>
+                        </div>
+                        <div class="row gx-4">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <span class="input-group-text bg-white border-end-0">₹</span>
+                              <input type="number" name="amount" class="form-control border-start-0 ps-0" id="amount" placeholder="Donated Amount" required min="1">
+                              <div id="error5" class="text-danger small mt-1"></div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Transaction ID *" required>
+                            <div id="error4" class="text-danger small mt-1"></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label class="form-label">Email ID</label>
-                        <input type="email" name="email" class="form-control" id="email"
-                               placeholder="Enter your Email ID*" required>
-                        <p id="error7" class="text-danger small"></p>
+                    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
+                      <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                          <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">3</span>
+                          <h6 class="fw-bold mb-0 text-dark">Personal Details</h6>
+                        </div>
+                        <div class="row g-2">
+                          <div class="col-12">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Full Name *" required>
+                            <div id="error6" class="text-danger small mt-1"></div>
+                          </div>
+                          <div class="col-6">
+                            <input type="tel" name="phoneno" class="form-control" id="phoneno" placeholder="Phone Number *" required maxlength="10">
+                            <div id="error3" class="text-danger small mt-1"></div>
+                          </div>
+                          <div class="col-6">
+                            <input type="text" name="city" class="form-control" id="city" placeholder="City *" required>
+                            <div id="error8" class="text-danger small mt-1"></div>
+                          </div>
+                          <div class="col-12">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Email (Optional)">
+                            <div id="error7" class="text-danger small mt-1"></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
-                    <!-- Name -->
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" id="name" maxlength="40"
-                               placeholder="Enter Your Name*" required>
-                        <p id="error6" class="text-danger small"></p>
+                    <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-3 shadow" style="border-radius: 12px; letter-spacing: 1px;">
+                        Submit
+                    </button>
+                    
+                    <div class="text-center mt-3">
+                        <small class="text-muted">Funds go directly to <strong>The Kanavu Trust</strong></small>
                     </div>
-
-                    <!-- City -->
-                    <div class="mb-3">
-                        <label class="form-label">City</label>
-                        <input type="text" name="city" class="form-control" id="donorcity" maxlength="40"
-                               placeholder="Enter Your City*" required>
-                        <p id="error8" class="text-danger small"></p>
-                    </div>
-
-                    <!-- Phone -->
-                    <div class="mb-3">
-                        <label class="form-label">Phone Number</label>
-                        <input type="tel" name="phoneno" class="form-control" id="phone" maxlength="10"
-                               placeholder="Enter your phone number*" required>
-                        <p id="error3" class="text-danger small"></p>
-                    </div>
-
-                    <!-- Button -->
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-danger fw-bold"
-                                style="width:50%; border-radius:10px;">
-                            Confirm Payment ₹
-                        </button>
-                    </div>
-
                 </form>
-
-                <p class="text-center small mt-2">
-                    By continuing, you agree to our
-                    <a href="<?= base_url('/terms_of_use') ?>" target="_blank">Terms of Service</a> &
-                    <a href="<?= base_url('/privacy_policy') ?>" target="_blank">Privacy Policy</a>
-                </p>
-
             </div>
         </div>
     </div>
@@ -1509,8 +1446,8 @@ function setCauseId(causeId) {
   };
 
   // Final validation and form submission
-  document.getElementById('donationForm').onsubmit = function (event) {
-    event.preventDefault(); // Prevent form submission for manual handling
+  document.getElementById('donationForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent form submission for manual handling
 
     // Clear all error messages
     document.getElementById('error5').innerText = '';
@@ -1551,7 +1488,7 @@ function setCauseId(causeId) {
     isValid = false;
   }
 
-    if (!isPhoneNumberValid(document.getElementById('phone').value)) {
+    if (!isPhoneNumberValid(document.getElementById('phoneno').value)) {
       document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
       isValid = false;
     }
@@ -1598,11 +1535,9 @@ function setCauseId(causeId) {
       .catch(() => {
         document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
       });
-  };
-
-  
+      };
+    );
 </script>
-
 <form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
     <input type="hidden" name="returnUrl" id="returnUrl" value="">
 </form>
@@ -1622,13 +1557,60 @@ function setCauseId(causeId) {
     document.getElementById('redirectToLoginForm').submit();
 }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.getElementById("currentYear").textContent = new Date().getFullYear();
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const donationForm = document.getElementById('donationForm');
+
+    donationForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(donationForm);
+
+        fetch(donationForm.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data); // should print {status:"success"}
+
+            if (data.status === 'success') {
+
+                // Hide donation modal
+                const donationModalEl = document.getElementById('donationModal');
+                const donationModal = bootstrap.Modal.getInstance(donationModalEl)
+                    || new bootstrap.Modal(donationModalEl);
+
+                donationModal.hide();
+
+                // Wait for hide animation to finish
+                donationModalEl.addEventListener('hidden.bs.modal', function () {
+
+                    const successModalEl = document.getElementById('donationSuccess');
+                    const successModal = new bootstrap.Modal(successModalEl);
+                    successModal.show();
+
+                }, { once: true });
+
+            } else {
+                alert(data.message || 'Donation failed');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Something went wrong');
+        });
+    });
+
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
     </html>
     

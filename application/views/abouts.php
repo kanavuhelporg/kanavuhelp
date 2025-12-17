@@ -726,7 +726,7 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
             <li class="nav-item">
-              <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a>
+              <!-- <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a> -->
             </li>
             <li class="nav-item">
               <a id="aboutuspage" class="nav-link mx-lg-2 active" href="<?= base_url('/abouts') ?>">About us</a>
@@ -748,9 +748,9 @@
                 <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
               </li>
             <?php else: ?>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
-              </li>
+              </li> -->
             <?php endif; ?>
           </ul>
           <div class="d-flex align-items-center ms-auto">

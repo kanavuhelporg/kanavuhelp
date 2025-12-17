@@ -403,49 +403,105 @@ public function updateDonationFull($data)
         return $delete;
     }
 
-    public function get_donation_total()
-    {
-        $this->db->select('SUM(amount) as total');
-        $this->db->from('donation_for_cause');
-        $query = $this->db->get();
+    // Get total donation amount from donors
+public function get_donation_total()
+{
+    $this->db->select('SUM(amount) as total');
+    $this->db->from('donation_for_cause');
+    $query = $this->db->get();
+    return ($query->row()->total ?? 0);
+}
 
-        return ($query->row()->total ?? 0);
-    }
+// Get total DONORS (count of donations)
+public function get_total_donors() {
+    $query = $this->db->select('COUNT(donation_id) as total_donors')
+                      ->from('donation_for_cause')
+                      ->get();
+    return $query->row()->total_donors;
+}
 
-    // 2️⃣ Admin added total
-    public function get_admin_added_total()
-    {
-        $this->db->select('SUM(amount) as total');
-        $this->db->from('admin_set_amount');
-        $query = $this->db->get();
 
-        return ($query->row()->total ?? 0);
-    }
+// Get ADMIN-ADDED amounts only
+public function get_admin_added_total()
+{
+    $this->db->select('SUM(amount) as total');
+    $this->db->from('admin_set_amount');
+    $query = $this->db->get();
+    return ($query->row()->total ?? 0);
+}
+public function get_admin_added_volunteers_total()
+{
+    $this->db->select('volunteers as total');
+    $this->db->from('admin_set_amount');
+    $query = $this->db->get();
+    return ($query->row()->total ?? 0);
+}
 
-    // 3️⃣ FINAL TOTAL FUND
-    public function get_total_fund()
-    {
-        return $this->get_donation_total() + $this->get_admin_added_total();
-    }
+public function get_total_volunteers()
+{
+    $this->db->select('SUM(volunteers) as total');
+    $this->db->from('admin_set_amount');
+    $query = $this->db->get();
+    return ($query->row()->total ?? 0);
+} 
 
-    // 4️⃣ Insert admin amount
-    public function add_admin_amount($amount)
-    {
-        return $this->db->insert('admin_set_amount', [
-            'amount' => $amount,
-            'date'   => date('Y-m-d H:i:s')
-        ]);
-    }
 
-    public function get_last_added_date()
+// Get ADMIN-ADDED causes only
+public function get_admin_added_causes()
+{
+    $this->db->select('SUM(causes) as total');
+    $this->db->from('admin_set_amount');
+    $query = $this->db->get();
+    return ($query->row()->total ?? 0);
+}
+
+// Get ADMIN-ADDED donors only
+public function get_admin_added_donors()
+{
+    $this->db->select('SUM(donors) as total');
+    $this->db->from('admin_set_amount');
+    $query = $this->db->get();
+    return ($query->row()->total ?? 0);
+}
+
+// FINAL TOTALS (Donor Donations + Admin Added)
+public function get_total_fund()
+{
+    return $this->get_donation_total() + $this->get_admin_added_total();
+}
+
+public function get_total_causes_final()
+{
+    return $this->get_total_causes() + $this->get_admin_added_causes();
+}
+
+public function get_total_donors_final()
+{
+    return $this->get_total_donors() + $this->get_admin_added_donors();
+}
+// public function get_total_volunteerss()
+// {
+//     return $this->get_admin_added_volunteers_total() + $this->get_total_volunteers();
+// }
+// Insert admin data
+public function add_admin_data($data)
+{
+    return $this->db->insert('admin_set_amount', $data);
+}
+
+public function get_last_added_date()
 {
     $this->db->select('date');
     $this->db->from('admin_set_amount');
     $this->db->order_by('date', 'DESC');
     $this->db->limit(1);
     $query = $this->db->get();
-
     return $query->num_rows() > 0 ? $query->row()->date : '-';
+}
+
+// In your Adminpanel model
+public function get_all_admin_entries() {
+    return $this->db->order_by('date', 'DESC')->get('admin_set_amount')->result_array();
 }
 
 }

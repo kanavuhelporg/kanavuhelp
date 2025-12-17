@@ -121,14 +121,6 @@
       color: white !important;
     }
 
-/* Smaller sidebar on very small screens */
-@media (max-width: 400px) {
-  .offcanvas-sidebar {
-    width: 240px !important;
-  }
-}
-
-
     /* Main content */
     .main-content {
       padding: 20px;
@@ -142,7 +134,7 @@
     }
     
     .table {
-      min-width: 600px; /* Ensures table doesn't get too narrow */
+      min-width: 600px;
     }
 
     /* Top bar */
@@ -180,6 +172,111 @@
       margin: 0 15px;
     }
 
+    /* Pagination Styles - Circular Design - FIXED VERSION */
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.page-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-link {
+  width: 42px;
+  height: 42px;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dee2e6;
+  background-color: #fff;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 0;
+  overflow: hidden;
+  min-width: 42px;
+  min-height: 42px;
+}
+
+/* Hover Effect */
+.page-link:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+  color: #333;
+  transform: scale(1.05);
+}
+
+/* Active Page */
+.page-item.active .page-link {
+  background-color: #0A517F !important;
+  border-color: #0A517F !important;
+  color: #fff !important;
+  box-shadow: 0 2px 5px rgba(10, 81, 127, 0.3);
+}
+
+/* Disabled */
+.page-item.disabled .page-link {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+  border-color: #dee2e6;
+}
+
+/* Arrow icons */
+.page-link i {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ellipsis */
+.page-item.disabled .page-link[aria-label="..."] {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1;
+  color: #6c757d;
+  min-width: auto;
+  width: auto;
+  height: auto;
+}
+
+/* Ensure the container doesn't cut off circles */
+.pagination-container {
+  padding: 10px 0;
+  width: 100%;
+}
+
+/* Page info */
+.pagination-info {
+  text-align: center;
+  margin-top: 10px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Record summary */
+.record-summary {
+  margin-bottom: 15px;
+  color: #666;
+  font-size: 14px;
+}
+
     @media screen and (max-width: 991px) {
       #search-bar {
         display: none;
@@ -204,6 +301,16 @@
       
       .top-bar h2 {
         font-size: 1.3rem;
+      }
+      
+      .pagination {
+        gap: 4px;
+      }
+      
+      .page-link {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
       }
     }
 
@@ -232,6 +339,15 @@
       .add-btn {
         align-self: flex-end;
       }
+      
+      .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .pagination .page-item {
+        margin-bottom: 5px;
+      }
     }
     
     @media screen and (max-width: 576px) {
@@ -257,6 +373,25 @@
       .heading-ponsoft {
         font-size: 1rem;
       }
+      
+      .add-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+      
+      .top-bar {
+        gap: 8px;
+      }
+      
+      .page-link {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+      }
+      
+      .pagination {
+        gap: 3px;
+      }
     }
     
     @media screen and (max-width: 400px) {
@@ -268,14 +403,33 @@
         font-size: 0.85rem;
       }
       
-      .add-btn {
-        padding: 8px 12px;
-        font-size: 0.8rem;
+      .page-link {
+        width: 30px;
+        height: 30px;
+        font-size: 11px;
       }
     }
+    
     .main-row {
-  min-height: 100vh; /* subtract top bar height */
-}
+      min-height: 100vh;
+    }
+
+    .top-bar {
+      width: 100%;
+    }
+
+    .button-group {
+      margin-left: auto;      /* forces buttons to the right */
+    }
+
+    .add-btn {
+      white-space: nowrap;
+      padding: 6px 14px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: none;
+    }
+
   </style>
 </head>
 
@@ -327,13 +481,6 @@
               </a>
             </li>
           </ul>
-                    
-          <!-- <span class="d-flex justify-content-center">
-            <i class="fa-solid fa-bell"></i>&nbsp;
-              <div style="width:30px;height:30px;background-color:red;color:white;margin-top:-15px;" class="rounded-circle d-flex justify-content-center align-items-center">
-                <?php if($this->session->userdata('unverifiedtransactions') > 0){echo $this->session->userdata("unverifiedtransactions");}?>
-              </div>
-          </span> -->
         </div>
       </div>
     </div>
@@ -341,7 +488,6 @@
     <div class="row main-row"><!----------main-navbar----------->
       <!----------side-bar-------------------->
       <div id="menu-bar" class="col-lg-2 ps-gray d-none d-lg-block">
-
         <ul class="d-grid list-unstyled">
           <li class="nav-item py-3 fs-6">
             <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
@@ -356,35 +502,35 @@
           </li>
 
           <li class="nav-item py-2">
-                        <a href="<?= base_url('transactionverification') ?>"
-                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
-                          style="font-weight:400;color:black;">
-                          <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
-                        </a>
-                    </li>
-                    <li class="nav-item py-2">
-                        <a href="<?= base_url('admin/get_total_amount') ?>"
-                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>"
-                          style="font-weight:400;color:black;">
-                          <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Admin Set Amount
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item py-2">
-                        <a href="<?= base_url('contact_submissions') ?>"
-                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
-                          style="font-weight:400;color:black;">
-                          <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a href="<?= base_url('causesverification') ?>"
-                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
-                          style="font-weight:400;color:black; border-radius: 10px;">
-                          <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
-                        </a>
-                    </li>
+            <a href="<?= base_url('transactionverification') ?>"
+              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
+              style="font-weight:400;color:black;">
+              <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
+            </a>
+          </li>
+          <li class="nav-item py-2">
+            <a href="<?= base_url('admin/get_total_amount') ?>"
+              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>"
+              style="font-weight:400;color:black;">
+              <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Admin Set Amount
+            </a>
+          </li>
+          
+          <li class="nav-item py-2">
+            <a href="<?= base_url('contact_submissions') ?>"
+              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
+              style="font-weight:400;color:black;">
+              <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="<?= base_url('causesverification') ?>"
+              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
+              style="font-weight:400;color:black; border-radius: 10px;">
+              <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+            </a>
+          </li>
 
           <li class="nav-item py-2">
             <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
@@ -400,38 +546,247 @@
         <div class="main-content">
           <div class="content-card">
             <!-- Top Bar -->
-            <div class="top-bar">
-              <h2 style="color: #1e293b;">Admin Fund Details</h2>
-              <button class="add-btn" data-bs-toggle="modal" data-bs-target="#addAmountModal">
-                <i class="fas fa-plus me-2"></i>Add Amount
-              </button>
+            <div class="top-bar col-12 d-flex align-items-center justify-content-between flex-nowrap">
+
+  <h2 class="mb-0 text-start" style="color: #1e293b;">
+    Admin Fund Details
+  </h2>
+
+  <div class="button-group d-flex align-items-center gap-2">
+    <button class="add-btn bg-success text-white" data-bs-toggle="modal" data-bs-target="#addAmountModal">
+      <i class="fa fa-plus"></i> Add Amount
+    </button>
+
+    <button class="add-btn bg-primary text-white" data-bs-toggle="modal" data-bs-target="#addCausesModal">
+      <i class="fa fa-hand-holding-heart"></i> Add Causes
+    </button>
+
+    <button class="add-btn bg-warning text-dark" data-bs-toggle="modal" data-bs-target="#addDonorModal">
+      <i class="fa fa-user"></i> Add Donor
+    </button>
+    <button class="add-btn bg-warning text-dark" data-bs-toggle="modal" data-bs-target="#volunteersDonorModal">
+      <i class="fa fa-user"></i> Add Volunteer
+    </button>
+  </div>
+
+</div>
+
+
+            <!-- Record Summary -->
+            <div class="record-summary">
+              <?php
+              $total_records = count($admin_entries);
+              $per_page = 5;
+              $current_page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+              $total_pages = ceil($total_records / $per_page);
+              $start_index = ($current_page - 1) * $per_page;
+              $end_index = min($start_index + $per_page, $total_records);
+              
+              echo "Showing " . ($start_index + 1) . " to $end_index of $total_records entries";
+              ?>
             </div>
 
             <!-- Fund Details Table -->
             <div class="table-responsive">
-              <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                  <tr>
-                    <th>S.No</th>
-                    <th>Total Amount</th>
-                    <th>Date</th>
-                    <th>Data by Added Amount</th>
-                    <th>Available Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>₹ <?= number_format($total_fund, 2); ?></td>
-                    <td><?= $last_added_date != '-' ? date('d-m-Y', strtotime($last_added_date)) : '-'; ?></td>
-                    <td style="color: green; font-weight: bold;">
-                      ₹ <?= number_format($admin_added_total, 2); ?>
-                    </td>
-                    <td>₹ <?= number_format($total_fund - $admin_added_total, 2); ?></td>
-                  </tr>
-                </tbody>
-              </table>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>S.No</th>
+        <th>Date</th>
+        <th>Admin Added Amount</th>
+        <th>Admin Added Causes</th>
+        <th>Admin Added Donors</th>
+        <th>Cumulative Total Amount</th>
+        <th>Cumulative Total Causes</th>
+        <th>Cumulative Total Donors</th>
+        <th>Cumulative Total Volunteers</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <?php
+      // -------------------------------
+      // INITIALIZE CUMULATIVE VALUES
+      // -------------------------------
+      $cumulative_amount     = 0;
+      $cumulative_causes     = 0;
+      $cumulative_donors     = 0;
+      $cumulative_volunteers = 0;
+
+      $cumulative_totals = [];
+
+      // -------------------------------
+      // PRE-CALCULATE CUMULATIVES
+      // -------------------------------
+      foreach ($admin_entries as $entry) {
+
+        $cumulative_amount     += $entry['amount']     ?? 0;
+        $cumulative_causes     += $entry['causes']     ?? 0;
+        $cumulative_donors     += $entry['donors']     ?? 0;
+        $cumulative_volunteers += $entry['volunteers'] ?? 0;
+
+        $cumulative_totals[] = [
+          'entry'                 => $entry,
+          'cumulative_amount'     => $cumulative_amount,
+          'cumulative_causes'     => $cumulative_causes,
+          'cumulative_donors'     => $cumulative_donors,
+          'cumulative_volunteers' => $cumulative_volunteers
+        ];
+      }
+
+      // -------------------------------
+      // SHOW LATEST FIRST
+      // -------------------------------
+      $cumulative_totals = array_reverse($cumulative_totals);
+
+      // -------------------------------
+      // PAGINATION
+      // -------------------------------
+      $paged_entries = array_slice($cumulative_totals, $start_index, $per_page);
+
+      if (!empty($paged_entries)) {
+        $serial = $start_index + 1;
+
+        foreach ($paged_entries as $item) {
+          $entry = $item['entry'];
+      ?>
+          <tr>
+            <td><?= $serial++; ?></td>
+
+            <td>
+              <?= (!empty($entry['date']) && $entry['date'] != '-') 
+                  ? date('d-m-Y', strtotime($entry['date'])) 
+                  : '-'; ?>
+            </td>
+
+            <td class="fw-bold text-success">
+              ₹ <?= number_format($entry['amount'] ?? 0, 2); ?>
+            </td>
+
+            <td class="fw-bold text-success">
+              <?= $entry['causes'] ?? 0; ?>
+            </td>
+
+            <td class="fw-bold text-success">
+              <?= $entry['donors'] ?? 0; ?>
+            </td>
+
+            <td>
+              ₹ <?= number_format($item['cumulative_amount'], 2); ?>
+            </td>
+
+            <td>
+              <?= $item['cumulative_causes']; ?>
+            </td>
+
+            <td>
+              <?= $item['cumulative_donors']; ?>
+            </td>
+
+            <td>
+              <?= $item['cumulative_volunteers']; ?>
+            </td>
+          </tr>
+      <?php
+        }
+      } else {
+      ?>
+        <tr>
+          <td colspan="10" class="text-center">No admin entries found</td>
+        </tr>
+      <?php
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
+
+
+            <!-- Pagination -->
+            <?php if($total_pages > 1): ?>
+            <div class="pagination-container mt-4">
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-2">
+                  <?php if($current_page > 1): ?>
+                  <!-- Previous Page (Left Arrow) -->
+                  <li class="page-item">
+                    <a class="page-link" href="?page=<?= $current_page - 1 ?>" aria-label="Previous">
+                      <i class='fa fa-solid fa-arrow-left-long'></i>
+                    </a>
+                  </li>
+                  <?php else: ?>
+                  <!-- Disabled Previous Page -->
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <i class='fa fa -solid fa-arrow-left-long'></i>
+                    </a>
+                  </li>
+                  <?php endif; ?>
+                  
+                  <!-- Always show page 1 -->
+                  <li class="page-item <?= $current_page == 1 ? 'active' : '' ?>">
+                    <a class="page-link" href="?page=1">1</a>
+                  </li>
+                  
+                  <?php
+                  // Show dynamic page numbers based on current position
+                  $start_page = max(2, $current_page - 1);
+                  $end_page = min($total_pages - 1, $current_page + 2);
+                  
+                  // Show ellipsis after page 1 if needed
+                  if ($start_page > 2): ?>
+                  <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                  </li>
+                  <?php endif; ?>
+                  
+                  <!-- Show middle pages -->
+                  <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                    <?php if ($i > 1 && $i < $total_pages): ?>
+                    <li class="page-item <?= $current_page == $i ? 'active' : '' ?>">
+                      <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                    </li>
+                    <?php endif; ?>
+                  <?php endfor; ?>
+                  
+                  <!-- Show ellipsis before last page if needed -->
+                  <?php if ($end_page < $total_pages - 1): ?>
+                  <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                  </li>
+                  <?php endif; ?>
+                  
+                  <!-- Always show last page if there is more than 1 page -->
+                  <?php if ($total_pages > 1): ?>
+                  <li class="page-item <?= $current_page == $total_pages ? 'active' : '' ?>">
+                    <a class="page-link" href="?page=<?= $total_pages ?>"><?= $total_pages ?></a>
+                  </li>
+                  <?php endif; ?>
+                  
+                  <?php if($current_page < $total_pages): ?>
+                  <!-- Next Page (Right Arrow) -->
+                  <li class="page-item">
+                    <a class="page-link" href="?page=<?= $current_page + 1 ?>" aria-label="Next">
+                       <i class='fa fa-solid fa-arrow-right-long fw-bold fw-100'></i>
+                    </a>
+                  </li>
+                  <?php else: ?>
+                  <!-- Disabled Next Page -->
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <i class='fa fa-solid fa-arrow-right-long fw-bold fw-100'></i>
+                    </a>
+                  </li>
+                  <?php endif; ?>
+                </ul>
+              </nav>
+              
+              <!-- Page info -->
+              <div class="pagination-info">
+                Page <?= $current_page ?> of <?= $total_pages ?>
+              </div>
             </div>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -440,67 +795,65 @@
 
   <!-- Offcanvas Sidebar for Mobile -->
   <div class="offcanvas offcanvas-start offcanvas-sidebar" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasSidebarLabel">MENU</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body p-0">
-          <ul class="d-grid list-unstyled">
-            <li class="nav-item py-3 fs-6 px-3">
-              <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
-            </li>
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasSidebarLabel">MENU</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+      <ul class="d-grid list-unstyled">
+        <li class="nav-item py-3 fs-6 px-3">
+          <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
+        </li>
 
-            <li class="nav-item py-2 px-3">
-              <a href="<?= base_url('admindashbord') ?>"
-                class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>"
-                style="font-weight:400;color:black;">
-                <i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashboard
-              </a>
-            </li>
+        <li class="nav-item py-2 px-3">
+          <a href="<?= base_url('admindashbord') ?>"
+            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>"
+            style="font-weight:400;color:black;">
+            <i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashboard
+          </a>
+        </li>
 
-            <li class="nav-item py-2 px-3">
-              <a href="<?= base_url('transactionverification') ?>"
-                class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
-                style="font-weight:400;color:black; position: relative;">
+        <li class="nav-item py-2 px-3">
+          <a href="<?= base_url('transactionverification') ?>"
+            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>"
+            style="font-weight:400;color:black; position: relative;">
+            <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
+          </a>
+        </li>
+        
+        <li class="nav-item py-2 px-3">
+          <a href="<?= base_url('admin/get_total_amount') ?>"
+            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>"
+            style="font-weight:400;color:black;">
+            <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp; Admin Set Amount
+          </a>
+        </li>
+        
+        <li class="nav-item py-2 px-3">
+          <a href="<?= base_url('contact_submissions') ?>"
+            class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
+            style="font-weight:400;color:black; position: relative;">
+            <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
+          </a>
+        </li>
 
-                  <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
-              </a>
-            </li>
-<li class="nav-item py-2 px-3">
-                        <a href="<?= base_url('admin/get_total_amount') ?>"
-                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>"
-                          style="font-weight:400;color:black;">
-                          <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp; Admin Set Amount
-                        </a>
-                    </li>
-            <li class="nav-item py-2 px-3">
-              <a href="<?= base_url('contact_submissions') ?>"
-                class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
-                style="font-weight:400;color:black; position: relative;">
+        <li class="nav-item px-3">
+          <a href="<?= base_url('causesverification') ?>"
+            class="nav-link text-decoration-none <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
+            style="font-weight:400;color:black;">
+            <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+          </a>
+        </li>
 
-                  <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
-              </a>
-            </li>
-
-            
-
-            <li class="nav-item px-3">
-              <a href="<?= base_url('causesverification') ?>"
-                class="nav-link text-decoration-none <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
-                style="font-weight:400;color:black;">
-                <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
-              </a>
-            </li>
-
-            <li class="nav-item py-2 px-3">
-              <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
-                data-bs-toggle="modal" data-bs-target="#logoutModal">
-                <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+        <li class="nav-item py-2 px-3">
+          <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
+            data-bs-toggle="modal" data-bs-target="#logoutModal">
+            <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <!-- Logout Modal -->
   <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
@@ -545,6 +898,80 @@
       </div>
     </div>
   </div>
+  
+  <!-- Add Causes Modal -->
+  <div class="modal fade" id="addCausesModal" tabindex="-1" aria-labelledby="addCausesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCausesModalLabel">Add Causes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="amountInput" class="form-label"> Enter Causes Count</label>
+              <input type="number" name="causes" class="form-control" placeholder="Enter causes count" required
+                     placeholder="Enter amount to add">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Amount</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Donors Modal -->
+  <div class="modal fade" id="addDonorModal" tabindex="-1" aria-labelledby="addDonorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addDonorModalLabel">Add Donors</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="amountInput" class="form-label"> Enter Donor Count</label>
+              <input type="number" name="donors" class="form-control" placeholder="Enter donor count" required
+                     placeholder="Enter amount to add">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Amount</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="volunteersDonorModal" tabindex="-1" aria-labelledby="volunteersDonorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="volunteersDonorModalLabel">Add Volunteers</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="amountInput" class="form-label"> Enter Volunteer Count</label>
+              <input type="number" name="volunteers" class="form-control" placeholder="Enter volunteer count" required
+                     placeholder="Enter amount to add">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Amount</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
@@ -570,6 +997,17 @@
             offcanvas.hide();
           }
         });
+      });
+      
+      // Highlight current page in pagination
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentPage = urlParams.get('page') || '1';
+      const pageLinks = document.querySelectorAll('.pagination .page-link');
+      
+      pageLinks.forEach(link => {
+        if (link.getAttribute('href') && link.getAttribute('href').includes('page=' + currentPage)) {
+          link.parentElement.classList.add('active');
+        }
       });
     });
   </script>

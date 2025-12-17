@@ -25,6 +25,7 @@ class kanavuhelp extends CI_Controller
         $this->load->library('session');
         $this->load->library('email');
         $this->load->model('UserModel');
+        $this->load->model('adminpanel');
         $this->load->model('DonorprofileModel');
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
@@ -76,11 +77,14 @@ class kanavuhelp extends CI_Controller
     $data['sno'] = 0;
    
     // Fetch statistics
-    $data['total_donors'] = $this->UserModel->get_total_donors();
-    $data['total_events'] = $this->UserModel->get_total_events();
-    $data['total_fund'] = $this->UserModel->get_total_fund();
-    $data['total_volunteers'] = 550; // Static for now, update if you have a table
-
+    // $data['total_donors'] = $this->UserModel->get_total_donors();
+    // $data['total_events'] = $this->UserModel->get_total_events();
+    // $data['total_fund'] = $this->UserModel->get_total_fund();
+    $data['total_donors'] = $this->adminpanel->get_total_donors_final();
+    $data['total_events'] = $this->adminpanel->get_total_causes_final();
+    $data['total_fund'] = $this->adminpanel->get_total_fund();
+    // $data['total_volunteers'] = 550; // Static for now, update if you have a table
+    $data['total_volunteers'] = $this->adminpanel->get_total_volunteers();
     // Load view and pass data
     $this->load->view('kanavuhome.php', $data);
     $this->session->set_userdata("entry", 1);
@@ -373,83 +377,170 @@ public function set_no_priority() {
         $this->load->view('charity.php');
     }
 
+    // public function processDonation()
+    // {
+    //     // Load the model where the donation logic will be handled
+    //     $this->load->model('UserModel');
+
+    //     // Get form input values
+    //     $cause_id = $this->input->post('cause_id');
+    //     $user_id = $this->input->post('user_id');
+    //     $amount = $this->input->post('amount');
+    //     $name = $this->input->post('name');
+    //     $city = $this->input->post('city');
+    //     $emailid = $this->input->post('email');
+    //     $phoneno = $this->input->post('phoneno');
+    //     $transactionid = $this->input->post('transactionid');
+    //     // $currency_type = $this->input->post('currency_type');
+    //     $causedata = $this->UserModel->get_cause_data($cause_id);
+    //     $category = $causedata->category;
+    //     $cause_heading = $causedata->cause_heading;
+    //     $fundraiser_id =  $causedata->id;
+    //     $fundraiser_name =  $causedata->name;
+    //     $fundraiser_email =  $causedata->email;
+    //     $fundraiser_phone =  $causedata->phone;
+    //     if ($this->UserModel->is_transaction_id_exists($transactionid)) {
+    //         // If it exists, show an error message
+    //         echo json_encode(['status' => 'error', 'message' => 'The transaction ID already exists.']);
+    //         return; // Redirect to the donation page or any relevant page
+    //     }
+    //     // Prepare data to insert
+    //     $data = array(
+    //         'cause_id' => $cause_id,
+    //         'user_id' => $user_id,
+    //         'donor_id' => $user_id,
+    //         'amount' => $amount,
+    //          'name' => $name,
+    //          'donor_location' => $city,
+    //          'email' => $emailid,
+    //         'phoneno' => $phoneno,
+    //         'category' => $category,
+    //         'cause_heading' => $cause_heading,
+    //         'transactionid' => $transactionid,
+    //         'currency_type' => $currency_type,
+    //         'fundraiser_id' => $fundraiser_id,
+    //         'fundraiser_name' => $fundraiser_name,
+    //         'fundraiser_email' => $fundraiser_email,
+    //         'fundraiser_phone' => $fundraiser_phone 
+    //     );
+
+    //     $newuser = array(
+    //         "name" => $name,
+    //         "email" => $emailid,
+    //         "mobileNumber" => $phoneno,
+    //         "location" => $city
+    //     );
+
+    //     $individualdata = array(
+    //         "name" => $name,
+    //         "email" => $emailid,
+    //         "phone" => $phoneno,
+    //         "location" => $city
+    //     );
+
+    //     $checkregister = $this->UserModel->checkUserexist($emailid);
+    //     if($checkregister->num_rows() == 0){
+    //         $this->db->insert('user', $newuser);
+    //         $newid = $this->db->insert_id();
+    //         $individualdata["user_id"] = $newid;
+    //         $data["user_id"] = $newid;
+    //         $this->db->insert('individualform', $individualdata);
+    //     }
+    //     // Call the model function to save the donation
+    //     if ($this->UserModel->saveDonation($data)) {
+    //         // $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
+    //         $this->session->set_flashdata('donation_success', true);
+    //         redirect('donate');
+
+    //     } else {
+    //         $this->session->set_flashdata('error', 'Failed to submit donation');
+    //         redirect('donate');
+    //     }
+    // }
     public function processDonation()
-    {
-        // Load the model where the donation logic will be handled
-        $this->load->model('UserModel');
+{
+    $this->load->model('UserModel');
 
-        // Get form input values
-        $cause_id = $this->input->post('cause_id');
-        $user_id = $this->input->post('user_id');
-        $amount = $this->input->post('amount');
-        $name = $this->input->post('name');
-        $city = $this->input->post('city');
-        $emailid = $this->input->post('email');
-        $phoneno = $this->input->post('phoneno');
-        $transactionid = $this->input->post('transactionid');
-        $currency_type = $this->input->post('currency_type');
-        $causedata = $this->UserModel->get_cause_data($cause_id);
-        $category = $causedata->category;
-        $cause_heading = $causedata->cause_heading;
-        $fundraiser_id =  $causedata->id;
-        $fundraiser_name =  $causedata->name;
-        $fundraiser_email =  $causedata->email;
-        $fundraiser_phone =  $causedata->phone;
-        if ($this->UserModel->is_transaction_id_exists($transactionid)) {
-            // If it exists, show an error message
-            echo json_encode(['status' => 'error', 'message' => 'The transaction ID already exists.']);
-            return; // Redirect to the donation page or any relevant page
-        }
-        // Prepare data to insert
-        $data = array(
-            'cause_id' => $cause_id,
-            'user_id' => $user_id,
-            'donor_id' => $user_id,
-            'amount' => $amount,
-             'name' => $name,
-             'donor_location' => $city,
-             'email' => $emailid,
-            'phoneno' => $phoneno,
-            'category' => $category,
-            'cause_heading' => $cause_heading,
-            'transactionid' => $transactionid,
-            'currency_type' => $currency_type,
-            'fundraiser_id' => $fundraiser_id,
-            'fundraiser_name' => $fundraiser_name,
-            'fundraiser_email' => $fundraiser_email,
-            'fundraiser_phone' => $fundraiser_phone 
-        );
+    // Get POST data
+    $cause_id       = $this->input->post('cause_id');
+    $user_id        = $this->input->post('user_id');
+    $amount         = $this->input->post('amount');
+    $name           = $this->input->post('name');
+    $city           = $this->input->post('city');
+    $emailid        = $this->input->post('email');
+    $phoneno        = $this->input->post('phoneno');
+    $transactionid  = $this->input->post('transactionid');
 
-        $newuser = array(
-            "name" => $name,
-            "email" => $emailid,
-            "mobileNumber" => $phoneno,
-            "location" => $city
-        );
+    // Fetch cause data
+    $causedata = $this->UserModel->get_cause_data($cause_id);
 
-        $individualdata = array(
-            "name" => $name,
-            "email" => $emailid,
-            "phone" => $phoneno,
-            "location" => $city
-        );
-
-        $checkregister = $this->UserModel->checkUserexist($emailid);
-        if($checkregister->num_rows() == 0){
-            $this->db->insert('user', $newuser);
-            $newid = $this->db->insert_id();
-            $individualdata["user_id"] = $newid;
-            $data["user_id"] = $newid;
-            $this->db->insert('individualform', $individualdata);
-        }
-        // Call the model function to save the donation
-        if ($this->UserModel->saveDonation($data)) {
-            // $this->UserModel->update_raised_amount($data['cause_id'], $data['amount']);
-            echo json_encode(['status' => 'success', 'redirect' => base_url('donate')]);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'An error occurred while processing your donation.']);
-        }
+    if (!$causedata) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid cause']);
+        exit;
     }
+
+    // Check duplicate transaction ID
+    if ($this->UserModel->is_transaction_id_exists($transactionid)) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'The transaction ID already exists.'
+        ]);
+        exit;
+    }
+
+    // Donation data
+    $data = [
+        'cause_id'          => $cause_id,
+        'user_id'           => $user_id,
+        'donor_id'          => $user_id,
+        'amount'            => $amount,
+        'name'              => $name,
+        'donor_location'    => $city,
+        'email'             => $emailid,
+        'phoneno'           => $phoneno,
+        'category'          => $causedata->category,
+        'cause_heading'     => $causedata->cause_heading,
+        'transactionid'     => $transactionid,
+        'currency_type'     => 'INR',
+        'fundraiser_id'     => $causedata->id,
+        'fundraiser_name'   => $causedata->name,
+        'fundraiser_email'  => $causedata->email,
+        'fundraiser_phone'  => $causedata->phone
+    ];
+
+    // Register user if not exists
+    if ($this->UserModel->checkUserexist($emailid)->num_rows() == 0) {
+        $this->db->insert('user', [
+            'name' => $name,
+            'email' => $emailid,
+            'mobileNumber' => $phoneno,
+            'location' => $city
+        ]);
+        $newid = $this->db->insert_id();
+        $data['user_id'] = $newid;
+
+        $this->db->insert('individualform', [
+            'user_id' => $newid,
+            'name' => $name,
+            'email' => $emailid,
+            'phone' => $phoneno,
+            'location' => $city
+        ]);
+    }
+
+    // Save donation
+    if ($this->UserModel->saveDonation($data)) {
+        echo json_encode(['status' => 'success']);
+        exit;
+    } else {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Failed to submit donation'
+        ]);
+        exit;
+    }
+}
+
 
     public function donate()
     {
