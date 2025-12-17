@@ -146,7 +146,7 @@
             <div class="col-lg-6 logi1">
                 <div class="login-container">
                     <a class="d-flex justify-content-center justify-content-md-start" href="<?= base_url('/kanavuhelp') ?>">
-                        <img class="logo" src="<?= base_url('/assets/img/kanavu_help.png') ?>" alt="Kanavu Help">
+                       <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
                     </a>
                     
                     <div class="login-form">
