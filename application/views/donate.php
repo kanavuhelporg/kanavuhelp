@@ -1043,6 +1043,238 @@
     </div>
 </div>
 
+<script>
+  // ================================
+// COMPREHENSIVE FORM VALIDATION
+// ================================
+
+// Validation functions
+const validationRules = {
+    // Amount validation
+    amount: {
+        validate: (value) => {
+            const num = parseFloat(value);
+            return !isNaN(num) && num > 0 && num <= 10000000; // Max 1 crore
+        },
+        errorId: 'error8',
+        errorMessage: 'Amount must be between ₹1 and ₹1,00,00,000',
+        required: true
+    },
+    
+    // Transaction ID validation
+    transactionid: {
+        validate: (value) => {
+            // Accepts alphanumeric transaction IDs (common in UPI)
+            return /^[A-Za-z0-9]{8,30}$/.test(value.trim());
+        },
+        errorId: 'error4',
+        errorMessage: 'Transaction ID must be 8-30 alphanumeric characters',
+        required: true
+    },
+    
+    // Name validation
+    name: {
+        validate: (value) => {
+            return /^[A-Za-z\s.'-]{3,50}$/.test(value.trim());
+        },
+        errorId: 'error6',
+        errorMessage: 'Name must be 3-50 letters (only letters, spaces, dots, hyphens)',
+        required: true
+    },
+    
+    // Phone number validation
+    phoneno: {
+        validate: (value) => {
+            return /^\d{10}$/.test(value.trim());
+        },
+        errorId: 'error3',
+        errorMessage: 'Enter a valid 10-digit Indian mobile number',
+        required: true
+    },
+    
+    // City validation
+    city: {
+        validate: (value) => {
+            return /^[A-Za-z\s-]{2,30}$/.test(value.trim());
+        },
+        errorId: 'error9',
+        errorMessage: 'City name must be 2-30 letters',
+        required: true
+    },
+    
+    // Email validation (optional)
+    email: {
+        validate: (value) => {
+            if (!value.trim()) return true; // Optional field
+            return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value.trim());
+        },
+        errorId: 'error7',
+        errorMessage: 'Please enter a valid email address',
+        required: false
+    }
+};
+
+// Real-time field validation
+function setupRealTimeValidation() {
+    Object.keys(validationRules).forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        const rule = validationRules[fieldId];
+        
+        if (field) {
+            // Input event for real-time validation
+            field.addEventListener('input', () => {
+                validateField(fieldId);
+            });
+            
+            // Blur event for final check
+            field.addEventListener('blur', () => {
+                validateField(fieldId);
+            });
+        }
+    });
+}
+
+// Validate a single field
+function validateField(fieldId) {
+    const field = document.getElementById(fieldId);
+    const rule = validationRules[fieldId];
+    const errorElement = document.getElementById(rule.errorId);
+    
+    if (!field || !errorElement) return;
+    
+    const value = field.value.trim();
+    
+    // Clear previous error
+    errorElement.textContent = '';
+    field.classList.remove('is-invalid');
+    field.classList.remove('is-valid');
+    
+    // Skip validation for optional empty fields
+    if (!rule.required && !value) {
+        field.classList.add('is-valid');
+        return true;
+    }
+    
+    // Check if required field is empty
+    if (rule.required && !value) {
+        errorElement.textContent = 'This field is required';
+        field.classList.add('is-invalid');
+        return false;
+    }
+    
+    // Apply validation rule
+    if (!rule.validate(value)) {
+        errorElement.textContent = rule.errorMessage;
+        field.classList.add('is-invalid');
+        return false;
+    }
+    
+    // Field is valid
+    field.classList.add('is-valid');
+    return true;
+}
+
+// Validate all fields
+function validateAllFields() {
+    let isValid = true;
+    
+    Object.keys(validationRules).forEach(fieldId => {
+        if (!validateField(fieldId)) {
+            isValid = false;
+        }
+    });
+    
+    return isValid;
+}
+
+// Reset validation states
+function resetValidation() {
+    Object.keys(validationRules).forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        const rule = validationRules[fieldId];
+        const errorElement = document.getElementById(rule.errorId);
+        
+        if (field) {
+            field.classList.remove('is-invalid', 'is-valid');
+            field.value = '';
+        }
+        if (errorElement) {
+            errorElement.textContent = '';
+        }
+    });
+}
+
+// Format phone number as user types
+document.getElementById('phoneno')?.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+    if (value.length > 10) value = value.slice(0, 10); // Limit to 10 digits
+    e.target.value = value;
+});
+
+// Format amount as user types
+document.getElementById('amount')?.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/[^0-9.]/g, ''); // Allow digits and dot
+    const parts = value.split('.');
+    
+    // Allow only two decimal places
+    if (parts.length > 2) {
+        value = parts[0] + '.' + parts[1];
+    }
+    if (parts[1] && parts[1].length > 2) {
+        value = parts[0] + '.' + parts[1].slice(0, 2);
+    }
+    
+    e.target.value = value;
+});
+
+// Auto-capitalize name
+document.getElementById('name')?.addEventListener('input', function(e) {
+    // Capitalize first letter of each word
+    e.target.value = e.target.value
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+});
+
+// Auto-capitalize city
+document.getElementById('city')?.addEventListener('input', function(e) {
+    e.target.value = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1).toLowerCase();
+});
+
+// Initialize validation when modal opens
+document.getElementById('donationModal').addEventListener('shown.bs.modal', function() {
+    setupRealTimeValidation();
+});
+
+// Reset validation when modal closes
+document.getElementById('donationModal').addEventListener('hidden.bs.modal', function() {
+    resetValidation();
+});
+
+// Override form submission with validation
+document.getElementById('donationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (!validateAllFields()) {
+        // Scroll to first error
+        const firstError = document.querySelector('.is-invalid');
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstError.focus();
+        }
+        return false;
+    }
+    
+    // All validations passed - submit the form
+    this.submit();
+});
+
+// Initialize validation on page load
+document.addEventListener('DOMContentLoaded', function() {
+    setupRealTimeValidation();
+});
+</script>
 <!-- FULL JS -->
 <script>
   function togglePaymentOptions() {
@@ -1109,22 +1341,64 @@
 
 
   <!-- Donation Success Modal -->
-  <div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content bg-red-modal">
-        <div class="modal-header">
-          <h5 class="modal-title" id="donationSuccessLabel">Donation Verification</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Thanks for donating to us!</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="donationRedirectBtn">OK</button>
-        </div>
+<style>
+  .brand-red {
+    background-color: #ed3136 !important;
+  }
+  .text-brand-red {
+    color: #ed3136 !important;
+  }
+</style>
+
+<div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      
+      <div class="modal-header border-0 pb-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
+      <div class="modal-body text-center px-4 py-5">
+
+        <!-- Success Icon -->
+        <div class="mb-4">
+          <div class="rounded-circle d-inline-flex p-4" style="background-color: rgba(237, 49, 54, 0.1);">
+            <i class="bi bi-check-circle-fill text-brand-red" style="font-size: 3rem;"></i>
+          </div>
+        </div>
+
+        <!-- Title -->
+        <h4 class="modal-title fw-bold text-brand-red mb-3" id="donationSuccessLabel">
+          Donation Successful!
+        </h4>
+
+        <!-- Message -->
+        <p class="text-muted mb-4">
+          Thank you for your generous contribution. Your support helps us continue our mission and make a real difference.
+        </p>
+
+        <!-- Confirmation Details -->
+        <div class="bg-light rounded p-3 mb-4">
+          <p class="mb-1">
+            <small class="text-muted">A confirmation email has been sent to you</small>
+          </p>
+          <p class="mb-0 fw-bold text-dark">
+            Thank you for being part of our community!
+          </p>
+        </div>
+
+      </div>
+
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="btn brand-red text-white px-5 py-2 fw-bold"
+                id="donationRedirectBtn" data-bs-dismiss="modal">
+          Ok
+        </button>
+      </div>
+
     </div>
   </div>
+</div>
 <script>
   // Simulate user login status (from backend or session)
   var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this

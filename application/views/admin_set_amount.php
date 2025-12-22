@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Admin Set Amount</title>
   <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -542,164 +542,164 @@
       </div>
 
       <!-- Main Content Area -->
-      <div class="col-lg-10 col-12">
+      <div class="col-lg-10 col-12" style="over">
         <div class="main-content">
           <div class="content-card">
             <!-- Top Bar -->
             <div class="top-bar col-12 d-flex align-items-center justify-content-between flex-nowrap">
 
-  <h2 class="mb-0 text-start" style="color: #1e293b;">
-    Admin Fund Details
-  </h2>
+              <h2 class="mb-0 text-start" style="color: #1e293b;">
+                Admin Fund Details
+              </h2>
 
-  <div class="button-group d-flex align-items-center gap-2">
-    <button class="add-btn bg-success text-white" data-bs-toggle="modal" data-bs-target="#addAmountModal">
-      <i class="fa fa-plus"></i> Add Amount
-    </button>
+              <div class="row g-2 button-group">
+                <div class="col-6 col-md-auto">
+                  <button class="add-btn w-100 bg-success text-white" data-bs-toggle="modal" data-bs-target="#addAmountModal">
+                    <i class="fa fa-plus"></i> Add Amount
+                  </button>
+                </div>
 
-    <button class="add-btn bg-primary text-white" data-bs-toggle="modal" data-bs-target="#addCausesModal">
-      <i class="fa fa-hand-holding-heart"></i> Add Causes
-    </button>
+                <div class="col-6 col-md-auto">
+                  <button class="add-btn w-100 bg-primary text-white" data-bs-toggle="modal" data-bs-target="#addCausesModal">
+                    <i class="fa fa-hand-holding-heart"></i> Add Causes
+                  </button>
+                </div>
 
-    <button class="add-btn bg-warning text-dark" data-bs-toggle="modal" data-bs-target="#addDonorModal">
-      <i class="fa fa-user"></i> Add Donor
-    </button>
-    <button class="add-btn bg-warning text-dark" data-bs-toggle="modal" data-bs-target="#volunteersDonorModal">
-      <i class="fa fa-user"></i> Add Volunteer
-    </button>
-  </div>
+                <div class="col-6 col-md-auto">
+                  <button class="add-btn w-100 bg-warning text-dark" data-bs-toggle="modal" data-bs-target="#addDonorModal">
+                    <i class="fa fa-user"></i> Add Donor
+                  </button>
+                </div>
 
-</div>
+                <div class="col-6 col-md-auto">
+                  <button class="add-btn w-100 bg-warning text-dark" data-bs-toggle="modal" data-bs-target="#volunteersDonorModal">
+                    <i class="fa fa-user"></i> Add Volunteer
+                  </button>
+                </div>
+              </div>
 
 
-            <!-- Record Summary -->
-            <div class="record-summary">
-              <?php
-              $total_records = count($admin_entries);
-              $per_page = 5;
-              $current_page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-              $total_pages = ceil($total_records / $per_page);
-              $start_index = ($current_page - 1) * $per_page;
-              $end_index = min($start_index + $per_page, $total_records);
-              
-              echo "Showing " . ($start_index + 1) . " to $end_index of $total_records entries";
-              ?>
             </div>
 
-            <!-- Fund Details Table -->
-            <div class="table-responsive">
-  <table class="table table-bordered table-striped">
-    <thead class="table-dark">
-      <tr>
-        <th>S.No</th>
-        <th>Date</th>
-        <th>Admin Added Amount</th>
-        <th>Admin Added Causes</th>
-        <th>Admin Added Donors</th>
-        <th>Cumulative Total Amount</th>
-        <th>Cumulative Total Causes</th>
-        <th>Cumulative Total Donors</th>
-        <th>Cumulative Total Volunteers</th>
-      </tr>
-    </thead>
+        <!-- Record Summary -->
+        <div class="record-summary">
+            <?php
+            $running_totals = isset($running_totals) ? array_reverse($running_totals) : [];
+            $total_records = count($running_totals);
+            $per_page = 5;
+            $current_page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+            $total_pages = ceil($total_records / $per_page);
+            $start_index = ($current_page - 1) * $per_page;
+            $end_index = min($start_index + $per_page, $total_records);
+            
+            echo "Showing " . ($start_index + 1) . " to $end_index of $total_records entries";
+            $updatedRow = $this->session->flashdata('updated_row');
+            $updatedColumns = $this->session->flashdata('updated_columns') ?? [];
+            ?>
+        </div
 
-    <tbody>
-      <?php
-      // -------------------------------
-      // INITIALIZE CUMULATIVE VALUES
-      // -------------------------------
-      $cumulative_amount     = 0;
-      $cumulative_causes     = 0;
-      $cumulative_donors     = 0;
-      $cumulative_volunteers = 0;
-
-      $cumulative_totals = [];
-
-      // -------------------------------
-      // PRE-CALCULATE CUMULATIVES
-      // -------------------------------
-      foreach ($admin_entries as $entry) {
-
-        $cumulative_amount     += $entry['amount']     ?? 0;
-        $cumulative_causes     += $entry['causes']     ?? 0;
-        $cumulative_donors     += $entry['donors']     ?? 0;
-        $cumulative_volunteers += $entry['volunteers'] ?? 0;
-
-        $cumulative_totals[] = [
-          'entry'                 => $entry,
-          'cumulative_amount'     => $cumulative_amount,
-          'cumulative_causes'     => $cumulative_causes,
-          'cumulative_donors'     => $cumulative_donors,
-          'cumulative_volunteers' => $cumulative_volunteers
-        ];
-      }
-
-      // -------------------------------
-      // SHOW LATEST FIRST
-      // -------------------------------
-      $cumulative_totals = array_reverse($cumulative_totals);
-
-      // -------------------------------
-      // PAGINATION
-      // -------------------------------
-      $paged_entries = array_slice($cumulative_totals, $start_index, $per_page);
-
-      if (!empty($paged_entries)) {
-        $serial = $start_index + 1;
-
-        foreach ($paged_entries as $item) {
-          $entry = $item['entry'];
-      ?>
-          <tr>
-            <td><?= $serial++; ?></td>
-
-            <td>
-              <?= (!empty($entry['date']) && $entry['date'] != '-') 
-                  ? date('d-m-Y', strtotime($entry['date'])) 
-                  : '-'; ?>
-            </td>
-
-            <td class="fw-bold text-success">
-              ₹ <?= number_format($entry['amount'] ?? 0, 2); ?>
-            </td>
-
-            <td class="fw-bold text-success">
-              <?= $entry['causes'] ?? 0; ?>
-            </td>
-
-            <td class="fw-bold text-success">
-              <?= $entry['donors'] ?? 0; ?>
-            </td>
-
-            <td>
-              ₹ <?= number_format($item['cumulative_amount'], 2); ?>
-            </td>
-
-            <td>
-              <?= $item['cumulative_causes']; ?>
-            </td>
-
-            <td>
-              <?= $item['cumulative_donors']; ?>
-            </td>
-
-            <td>
-              <?= $item['cumulative_volunteers']; ?>
-            </td>
-          </tr>
-      <?php
-        }
-      } else {
-      ?>
-        <tr>
-          <td colspan="10" class="text-center">No admin entries found</td>
-        </tr>
-      <?php
-      }
-      ?>
-    </tbody>
-  </table>
-</div>
+        <!-- Fund Details Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="ps-gray">
+                    <tr>
+                        <th>S.No</th>
+                        <th>Admin Added Amount</th>
+                        <th>Admin Added Causes</th>
+                        <th>Admin Added Donors</th>
+                        <th>Admin Added Volunteers</th>
+                        <th>Available Amount</th>
+                        <th>Available  Causes</th>
+                        <th>Available Donors</th>
+                        <th>Available Volunteers</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if (!empty($running_totals)) {
+                        $paged_entries = array_slice($running_totals, $start_index, $per_page);
+                        $serial = $start_index + 1;
+                        
+                        foreach ($paged_entries as $entry) {
+                    ?>
+                        <tr>
+                            <td><?= $serial++; ?></td>
+                            <td class="<?= $entry['type'] == 'admin' && $entry['amount'] > 0 ? 'fw-bold text-success' : '' ?>">
+                                <?php if($entry['type'] == 'admin' && $entry['amount'] > 0): ?>
+                                    + ₹ <?= number_format($entry['amount'], 2); ?>
+                                <?php else: ?>
+                                    ₹ <?= number_format($entry['amount'], 2); ?>
+                                <?php endif; ?>
+                            </td>
+                            <td class="<?= $entry['type'] == 'admin' && $entry['causes'] > 0 ? 'fw-bold text-success' : '' ?>">
+                                <?php if($entry['type'] == 'admin' && $entry['causes'] > 0): ?>
+                                    + <?= $entry['causes']; ?>
+                                <?php else: ?>
+                                    <?= $entry['causes']; ?>
+                                <?php endif; ?>
+                            </td>
+                            <td class="<?= $entry['type'] == 'admin' && $entry['donors'] > 0 ? 'fw-bold text-success' : '' ?>">
+                                <?php if($entry['type'] == 'admin' && $entry['donors'] > 0): ?>
+                                    + <?= $entry['donors']; ?>
+                                <?php else: ?>
+                                    <?= $entry['donors']; ?>
+                                <?php endif; ?>
+                            </td>
+                            <td class="<?= $entry['type'] == 'admin' && $entry['volunteers'] > 0 ? 'fw-bold text-success' : '' ?>">
+                                <?php if($entry['type'] == 'admin' && $entry['volunteers'] > 0): ?>
+                                    + <?= $entry['volunteers']; ?>
+                                <?php else: ?>
+                                    <?= $entry['volunteers']; ?>
+                                <?php endif; ?>
+                            </td>
+                            <td class="fw-bold">
+                                ₹ <?= number_format($entry['cumulative_amount'], 2); ?>
+                            </td>
+                            <td>
+                                <?= $entry['cumulative_causes']; ?>
+                            </td>
+                            <td>
+                                <?= $entry['cumulative_donors']; ?>
+                            </td>
+                            <td>
+                                <?= $entry['cumulative_volunteers']; ?>
+                            </td>
+                            <td>
+                            <?php if(!empty($entry['id'])): ?>
+                                  <div class="d-flex gap-2">
+                                      <button class="btn btn-sm btn-warning edit-btn" 
+                                              data-id="<?= $entry['id'] ?>"
+                                              data-amount="<?= $entry['amount'] ?>"
+                                              data-causes="<?= $entry['causes'] ?>"
+                                              data-donors="<?= $entry['donors'] ?>"
+                                              data-volunteers="<?= $entry['volunteers'] ?>"
+                                              data-date="<?= $entry['date'] ?>">
+                                          <i class="fas fa-edit"></i>
+                                      </button>
+                                      <button class="btn btn-sm btn-danger delete-btn" 
+                                              data-id="<?= $entry['id'] ?>">
+                                          <i class="fas fa-trash"></i>
+                                      </button>
+                                  </div>
+                              <?php else: ?>
+                                  <span class="text-muted">N/A</span>
+                              <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php
+                        }
+                    } else {
+                    ?>
+                        <tr>
+                            <td colspan="11" class="text-center">No entries found</td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
 
             <!-- Pagination -->
@@ -875,103 +875,198 @@
   </div>
 
   <!-- Add Amount Modal -->
+
   <div class="modal fade" id="addAmountModal" tabindex="-1" aria-labelledby="addAmountModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addAmountModalLabel">Add Amount</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="amountInput" class="form-label">Amount (₹)</label>
-              <input type="number" class="form-control" id="amountInput" name="amount" step="0.01" min="0" required 
-                     placeholder="Enter amount to add">
-            </div>
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="addAmountModalLabel">Add Amount</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
+                  <div class="modal-body">
+                      <div class="alert alert-info">
+                          <i class="fas fa-info-circle"></i> Current Available Balance: 
+                          <strong>₹ <?= isset($current_totals['amount']) ? number_format($current_totals['amount'], 2) : '0.00' ?></strong>
+                      </div>
+                      <div class="mb-3">
+                          <label for="amountInput" class="form-label">Amount to Add (₹)</label>
+                          <input type="number" class="form-control" id="amountInput" name="amount" step="0.01" min="0" required
+                                placeholder="Enter amount to add">
+                          <small class="text-muted">Enter the additional amount to add to the current balance.</small>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Add Amount</button>
+                  </div>
+              </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Amount</button>
-          </div>
-        </form>
       </div>
-    </div>
   </div>
-  
+
   <!-- Add Causes Modal -->
   <div class="modal fade" id="addCausesModal" tabindex="-1" aria-labelledby="addCausesModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addCausesModalLabel">Add Causes</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="amountInput" class="form-label"> Enter Causes Count</label>
-              <input type="number" name="causes" class="form-control" placeholder="Enter causes count" required
-                     placeholder="Enter amount to add">
-            </div>
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="addCausesModalLabel">Add Causes</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
+                  <div class="modal-body">
+                      <div class="alert alert-info">
+                          <i class="fas fa-info-circle"></i> Current Total Causes: 
+                          <strong><?= isset($current_totals['causes']) ? number_format($current_totals['causes']) : '0' ?></strong>
+                      </div>
+                      <div class="mb-3">
+                          <label for="causesInput" class="form-label">Causes to Add</label>
+                          <input type="number" name="causes" class="form-control" id="causesInput" 
+                                placeholder="Enter causes count" required min="0">
+                          <small class="text-muted">Enter the additional causes to add to the current total.</small>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Add Causes</button>
+                  </div>
+              </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Amount</button>
-          </div>
-        </form>
       </div>
-    </div>
   </div>
 
   <!-- Add Donors Modal -->
   <div class="modal fade" id="addDonorModal" tabindex="-1" aria-labelledby="addDonorModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addDonorModalLabel">Add Donors</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="amountInput" class="form-label"> Enter Donor Count</label>
-              <input type="number" name="donors" class="form-control" placeholder="Enter donor count" required
-                     placeholder="Enter amount to add">
-            </div>
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="addDonorModalLabel">Add Donors</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
+                  <div class="modal-body">
+                      <div class="alert alert-info">
+                          <i class="fas fa-info-circle"></i> Current Total Donors: 
+                          <strong><?= isset($current_totals['donors']) ? number_format($current_totals['donors']) : '0' ?></strong>
+                      </div>
+                      <div class="mb-3">
+                          <label for="donorsInput" class="form-label">Donors to Add</label>
+                          <input type="number" name="donors" class="form-control" id="donorsInput" 
+                                placeholder="Enter donor count" required min="0">
+                          <small class="text-muted">Enter the additional donors to add to the current total.</small>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Add Donors</button>
+                  </div>
+              </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Amount</button>
-          </div>
-        </form>
       </div>
-    </div>
   </div>
 
+  <!-- Add Volunteers Modal -->
   <div class="modal fade" id="volunteersDonorModal" tabindex="-1" aria-labelledby="volunteersDonorModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="volunteersDonorModalLabel">Add Volunteers</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="amountInput" class="form-label"> Enter Volunteer Count</label>
-              <input type="number" name="volunteers" class="form-control" placeholder="Enter volunteer count" required
-                     placeholder="Enter amount to add">
-            </div>
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="volunteersDonorModalLabel">Add Volunteers</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form method="post" action="<?= base_url('Admin/addAmount'); ?>">
+                  <div class="modal-body">
+                      <div class="alert alert-info">
+                          <i class="fas fa-info-circle"></i> Current Total Volunteers: 
+                          <strong><?= isset($current_totals['volunteers']) ? number_format($current_totals['volunteers']) : '0' ?></strong>
+                      </div>
+                      <div class="mb-3">
+                          <label for="volunteersInput" class="form-label">Volunteers to Add</label>
+                          <input type="number" name="volunteers" class="form-control" id="volunteersInput" 
+                                placeholder="Enter volunteer count" required min="0">
+                          <small class="text-muted">Enter the additional volunteers to add to the current total.</small>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Add Volunteers</button>
+                  </div>
+              </form>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Amount</button>
-          </div>
-        </form>
       </div>
+  </div>
+  
+<!-- Edit Admin Entry Modal -->
+<div class="modal fade" id="editEntryModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Admin Entry</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form method="post" action="<?= base_url('Admin/updateAdminEntry') ?>">
+        <div class="modal-body">
+
+          <input type="hidden" name="id" id="edit_id">
+
+          <div class="mb-2">
+            <label>Amount</label>
+            <input type="number" class="form-control" name="amount" id="edit_amount" step="0.01">
+          </div>
+
+          <div class="mb-2">
+            <label>Causes</label>
+            <input type="number" class="form-control" name="causes" id="edit_causes">
+          </div>
+
+          <div class="mb-2">
+            <label>Donors</label>
+            <input type="number" class="form-control" name="donors" id="edit_donors">
+          </div>
+
+          <div class="mb-2">
+            <label>Volunteers</label>
+            <input type="number" class="form-control" name="volunteers" id="edit_volunteers">
+          </div>
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit">Update</button>
+        </div>
+
+      </form>
+
     </div>
   </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteEntryModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        Are you sure you want to delete this entry?
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
@@ -1011,5 +1106,89 @@
       });
     });
   </script>
+  <script>
+let deleteId = null;
+
+// EDIT BUTTON CLICK
+document.querySelectorAll('.edit-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+
+    document.getElementById('edit_id').value = this.dataset.id;
+    document.getElementById('edit_amount').value = this.dataset.amount;
+    document.getElementById('edit_causes').value = this.dataset.causes;
+    document.getElementById('edit_donors').value = this.dataset.donors;
+    document.getElementById('edit_volunteers').value = this.dataset.volunteers;
+
+
+    new bootstrap.Modal(document.getElementById('editEntryModal')).show();
+  });
+});
+
+// DELETE BUTTON CLICK
+// Delete Admin Entry Functionality
+document.addEventListener("DOMContentLoaded", function () {
+    let deleteId = null;
+
+    // DELETE BUTTON CLICK
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            deleteId = this.dataset.id;
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteEntryModal'));
+            deleteModal.show();
+        });
+    });
+
+    // CONFIRM DELETE
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+        if (!deleteId) {
+            alert("Invalid entry ID");
+            return;
+        }
+
+        // Create FormData object
+        const formData = new FormData();
+        formData.append('id', deleteId);
+
+        // Add CSRF token if you're using CodeIgniter CSRF protection
+        // formData.append('<?php echo $this->security->get_csrf_token_name(); ?>', '<?php echo $this->security->get_csrf_hash(); ?>');
+
+        fetch("<?= base_url('Admin/deleteAdminEntry') ?>", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                // Close the modal
+                const deleteModal = bootstrap.Modal.getInstance(document.getElementById('deleteEntryModal'));
+                deleteModal.hide();
+                
+                // Show success message
+                alert("Entry deleted successfully!");
+                
+                // Reload the page to see changes
+                setTimeout(() => {
+                    location.reload();
+                }, 500);
+            } else {
+                alert("Delete failed: " + (data.message || "Unknown error"));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Server error occurred. Please try again.");
+        });
+    });
+});
+</script>
+
 </body>
 </html>

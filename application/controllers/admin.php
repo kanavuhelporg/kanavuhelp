@@ -146,31 +146,101 @@ class admin extends CI_Controller
 
 
     public function get_total_amount(){
-    $data['donation_total'] = $this->adminpanel->get_donation_total();
-    $data['admin_added_total'] = $this->adminpanel->get_admin_added_total();
-    $data['admin_volunteers_total'] = $this->adminpanel->get_admin_added_volunteers_total();
-    $data['donation_volunteers'] = $this->adminpanel->get_total_volunteers();
-    
-    // Final totals (Donations + Admin Added)
-    $data['total_fund'] = $this->adminpanel->get_total_fund();
-    
-    $data['donation_causes'] = $this->adminpanel->get_total_causes();
-    $data['admin_added_causes'] = $this->adminpanel->get_admin_added_causes();
-    $data['total_causes'] = $this->adminpanel->get_total_causes_final();
-    
-    $data['donation_donors'] = $this->adminpanel->get_total_donors();
-    $data['admin_added_donors'] = $this->adminpanel->get_admin_added_donors();
-    $data['total_donors'] = $this->adminpanel->get_total_donors_final();
-    
-    // Get all admin entries for table - NEW
-    $data['admin_entries'] = $this->adminpanel->get_all_admin_entries();
-    $data['last_added_date'] = $this->adminpanel->get_last_added_date();
-    
-    $this->load->view('admin_set_amount', $data);
-}
+        // Get base totals (from donations, etc.)
+        $data['base_totals'] = $this->adminpanel->get_base_totals();
+        
+        // Get all admin entries
+        $data['admin_entries'] = $this->adminpanel->get_all_admin_entries();
+        
+        // Calculate running totals including base values
+        $base_amount = $data['base_totals']['base_amount'] ?? 0;
+        $base_causes = $data['base_totals']['base_causes'] ?? 0;
+        $base_donors = $data['base_totals']['base_donors'] ?? 0;
+        $base_volunteers = 0;
+        
+        // Prepare data with cumulative totals
+        $cumulative_amount = $base_amount;
+        $cumulative_causes = $base_causes;
+        $cumulative_donors = $base_donors;
+        $cumulative_volunteers = 0;
+        
+        $data['running_totals'] = array();
+        
+        // Add base entry first
+        $data['running_totals'][] = array(
+            'type' => 'base',
+            'description' => 'Initial Base Values',
+            'amount' => 0,
+            'causes' => 0,
+            'donors' => 0,
+            'volunteers' => 0,
+            'date' => '-',
+            'cumulative_amount' => $cumulative_amount,
+            'cumulative_causes' => $cumulative_causes,
+            'cumulative_donors' => $cumulative_donors,
+            'cumulative_volunteers' => $cumulative_volunteers
+        );
+        
+        // Add admin entries
+        foreach ($data['admin_entries'] as $entry) {
+            $cumulative_amount += $entry['amount'] ?? 0;
+            $cumulative_causes += $entry['causes'] ?? 0;
+            $cumulative_donors += $entry['donors'] ?? 0;
+            $cumulative_volunteers += $entry['volunteers'] ?? 0;
+            
+            $data['running_totals'][] = array(
+                'id' => $entry['id'] ?? null,
+                'type' => 'admin',
+                'description' => 'Admin Addition',
+                'amount' => $entry['amount'] ?? 0,
+                'causes' => $entry['causes'] ?? 0,
+                'donors' => $entry['donors'] ?? 0,
+                'volunteers' => $entry['volunteers'] ?? 0,
+                'date' => $entry['date'] ?? '-',
+                'cumulative_amount' => $cumulative_amount,
+                'cumulative_causes' => $cumulative_causes,
+                'cumulative_donors' => $cumulative_donors,
+                'cumulative_volunteers' => $cumulative_volunteers
+            );
+        }
+        
+        // Current totals for modals
+        $data['current_totals'] = array(
+            'amount' => $cumulative_amount,
+            'causes' => $cumulative_causes,
+            'donors' => $cumulative_donors,
+            'volunteers' => $cumulative_volunteers
+        );
+        
+        $this->load->view('admin_set_amount', $data);
+    }
 
 public function addAmount()
 {
+    $current_totals = $this->adminpanel->get_base_totals();
+    
+    // Calculate current totals including all admin entries
+    $admin_entries = $this->adminpanel->get_all_admin_entries();
+    $current_amount = $current_totals['base_amount'] ?? 0;
+    $current_causes = $current_totals['base_causes'] ?? 0;
+    $current_donors = $current_totals['base_donors'] ?? 0;
+    $current_volunteers = 0;
+    
+    foreach ($admin_entries as $entry) {
+        $current_amount += $entry['amount'] ?? 0;
+        $current_causes += $entry['causes'] ?? 0;
+        $current_donors += $entry['donors'] ?? 0;
+       $current_volunteers += $entry['volunteers'] ?? 0;
+    }
+    
+    // Store current totals in session for modal display
+    $this->session->set_flashdata('current_totals', array(
+        'amount' => $current_amount,
+        'causes' => $current_causes,
+        'donors' => $current_donors,
+        'volunteers' => $current_volunteers
+    ));
+    
     $data = [
         'amount' => $this->input->post('amount') ?? 0,
         'causes' => $this->input->post('causes') ?? 0,
@@ -178,12 +248,55 @@ public function addAmount()
         'volunteers' => $this->input->post('volunteers') ?? 0,
         'date' => date('Y-m-d H:i:s')
     ];
-
+    
     if ($data['amount'] > 0 || $data['causes'] > 0 || $data['donors'] > 0 || $data['volunteers'] > 0) {
         $this->adminpanel->add_admin_data($data);
     }
+    
+    redirect('Admin/get_total_amount');
+}
+public function updateAdminEntry()
+{
+    $id = $this->input->post('id');
+
+    $old = $this->adminpanel->get_admin_entry_by_id($id);
+
+    $new = [
+        'amount' => $this->input->post('amount'),
+        'causes' => $this->input->post('causes'),
+        'donors' => $this->input->post('donors'),
+        'volunteers' => $this->input->post('volunteers'),
+        'date' => $this->input->post('date')
+    ];
+
+    // detect changed columns
+    $changed = [];
+    foreach ($new as $key => $val) {
+        if ($old->$key != $val) {
+            $changed[] = $key;
+        }
+    }
+
+    $this->adminpanel->update_admin_entry($id, $new);
+
+    // store highlight info
+    $this->session->set_flashdata('updated_row', $id);
+    $this->session->set_flashdata('updated_columns', $changed);
 
     redirect('Admin/get_total_amount');
+}
+
+
+public function deleteAdminEntry()
+{
+    if ($this->input->is_ajax_request()) {
+        $id = $this->input->post('id');
+        $result = $this->adminpanel->delete_admin_entry($id);
+
+        echo json_encode([
+            'status' => $result ? 'success' : 'error'
+        ]);
+    }
 }
 
 
