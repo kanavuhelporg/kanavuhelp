@@ -15,13 +15,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-    <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
         .ps-logo {
             display: flex;
@@ -647,12 +646,39 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                             <?php endif; ?>
                                         </td>
                                         <td class="d-flex">
-                                            <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" class="btn btn-primary fw-bold" data-toggle="modal" data-target="#editDonationModal">Edit</button> &nbsp;&nbsp;
-                                            <button onclick="setUrl('<?= $donation->email?>','<?= $donation->user_id;?>','<?= $donation->created_by;?>',<?= $donation->Verifyemailcount;?>,<?= $donation->Rejectemailcount;?>)" class="btn btn-danger fw-bold" data-toggle="modal" data-target="#sendmail">Status</button> &nbsp;&nbsp; 
+                                            <button
+                                                class="btn btn-primary fw-bold"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editDonationModal"
+                                                onclick='editDonation(<?= json_encode($donation); ?>)'>
+                                                Edit
+                                            </button> &nbsp;&nbsp;
+                                               
+                                            <button
+                                                class="btn btn-danger fw-bold"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#sendmail"
+                                                onclick="setUrl(
+                                                    '<?= $donation->email ?>',
+                                                    '<?= $donation->user_id ?>',
+                                                    '<?= $donation->created_by ?>',
+                                                    <?= $donation->Verifyemailcount ?>,
+                                                    <?= $donation->Rejectemailcount ?>
+                                                )">
+                                                Status
+                                            </button> &nbsp;&nbsp;
+ 
                                             <button onclick="deleteCause(<?= $donation->id; ?>)" class="btn btn-danger fw-bold">Delete</button> &nbsp;&nbsp;
                                             <?php if ($this->session->userdata('adminName')): ?>
                                                 <?php if ($donation->priority == 0): ?>
-                                                    <button class="btn btn-info fw-bold btn-sm insert-priority-btn" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?= $donation->id; ?>)">Insert Priority</button>
+                                                    <button
+                                                        class="btn btn-info fw-bold btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#priorityModal"
+                                                        onclick="setPriorityId(<?= $donation->id ?>)">
+                                                        Insert Priority
+                                                    </button>
+
                                                     <button class="btn btn-warning fw-bold btn-sm no-priority-btn" style="display: none;" onclick="setNoPriority(<?= $donation->id; ?>)">No Priority</button>
                                                 <?php else: ?>
                                                     <button class="btn btn-info fw-bold btn-sm insert-priority-btn" style="display: none;" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?= $donation->id; ?>)">Insert Priority</button>
@@ -1014,7 +1040,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
         <div class="modal-content">
           <div class="modal-header">
              <h5 id="mailto" class="text-danger">Send Email</h5>
-             <button data-dismiss="modal" class="btn btn-close"></button>
+             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
 
           <div class="modal-body">
@@ -1208,8 +1234,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <div class="modal-content">
                         <div class="modal-header">
                                     <h5 class="modal-title" id="editDonationLabel">Edit Causes </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
                                     </button>   
                         </div>
 

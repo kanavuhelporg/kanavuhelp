@@ -477,7 +477,10 @@
           <div class="contact-info-card">
             <i class="fas fa-map-marker-alt contact-icon"></i>
             <h4>Our Location</h4>
-            <p>Kanavu Startup Village<br>Annamalaikottai, Sivagiri</p>
+            <p>21/83A, Annamalai kottai,
+              Periyakattu thottam,
+              Ammankovil Post, Sivagiri Village,
+              Erode, Tamil Nadu – 638 109.</p>
           </div>
         </div>
         

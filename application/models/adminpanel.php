@@ -500,8 +500,38 @@ public function get_last_added_date()
 }
 
 // In your Adminpanel model
+// In your adminpanel model
 public function get_all_admin_entries() {
-    return $this->db->order_by('date', 'DESC')->get('admin_set_amount')->result_array();
+    $this->db->order_by('date', 'ASC');
+    return $this->db->get('admin_set_amount')->result_array();
+}
+
+
+// Get base totals before any admin additions
+public function get_base_totals() {
+    return array(
+        'base_amount' => $this->get_donation_total(),
+        'base_causes' => $this->get_total_causes(),
+        'base_donors' => $this->get_total_donors(),
+        'base_volunteers' => 0   
+    );
+}
+public function update_admin_entry($id, $data)
+{
+    return $this->db->where('id', $id)
+                    ->update('admin_set_amount', $data);
+}
+
+public function delete_admin_entry($id)
+{
+    return $this->db->where('id', $id)
+                    ->delete('admin_set_amount');
+}
+public function get_admin_entry_by_id($id)
+{
+    return $this->db->where('id', $id)
+                    ->get('admin_set_amount')
+                    ->row();
 }
 
 }
