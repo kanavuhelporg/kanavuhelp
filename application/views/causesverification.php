@@ -1235,8 +1235,6 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <div class="modal-header">
                                     <h5 class="modal-title" id="editDonationLabel">Edit Causes </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal">
-
-                                    <span aria-hidden="true">×</span>
                                     </button>   
                         </div>
 

@@ -784,9 +784,8 @@
                 <form id="editDonationForm" action="<?php echo site_url('admin/updateDonation'); ?>" method="post">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editDonationLabel">Edit Donation</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-dismiss="modal">
+                                    </button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="donationId">
