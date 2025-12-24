@@ -645,14 +645,27 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                                 <span>Priority <?= htmlspecialchars($donation->priority); ?></span>
                                             <?php endif; ?>
                                         </td>
+                                       
                                         <td class="d-flex">
-                                            <button
+                                             <button type="button" 
+                                                class="btn btn-sm btn-info open-cause-modal" 
+                                                data-id="<?= $donation->id; ?>" 
+                                                data-mode="view">
+                                            <i class="fa fa-eye"></i> View
+                                        </button>
+                                      <button type="button" 
+                                            class="btn btn-sm btn-warning open-cause-modal" 
+                                            data-id="<?= $donation->id; ?>" 
+                                            data-mode="edit">
+                                        <i class="fa fa-edit"></i> Edit
+                                    </button>
+                                                                                <!-- <button
                                                 class="btn btn-primary fw-bold"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#editDonationModal"
                                                 onclick='editDonation(<?= json_encode($donation); ?>)'>
                                                 Edit
-                                            </button> &nbsp;&nbsp;
+                                            </button> &nbsp;&nbsp; -->
                                                
                                             <button
                                                 class="btn btn-danger fw-bold"
@@ -1229,7 +1242,455 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     }
 
                 </script>
-                <div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
+
+
+
+<!-- viewMODAL -->
+    <!-- LARGE MODAL FOR ALL FIELDS -->
+    <div class="modal fade" id="causeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <form id="causeForm" action="<?php echo base_url('admin/update_cause'); ?>" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle">Full Cause Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+                        <input type="hidden" name="id" id="field_id">
+                        
+                        <!-- SECTION 1: Personal & Basic Info -->
+                        <div class="modal-section-title">Personal & Basic Information</div>
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label small">Category</label>
+                                <input type="text" name="category" id="field_category" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Name</label>
+                                <input type="text" name="name" id="field_name" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Email</label>
+                                <input type="email" name="email" id="field_email" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Phone</label>
+                                <input type="text" name="phone" id="field_phone" class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small">Age</label>
+                                <input type="number" name="age" id="field_age" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Location</label>
+                                <input type="text" name="location" id="field_location" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Form Selection Text</label>
+                                <input type="text" name="form_selected_text" id="field_form_text" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: Cause Content -->
+                        <div class="modal-section-title">Cause Content & Descriptions</div>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label small">Cause Heading</label>
+                                <input type="text" name="cause_heading" id="field_cause_heading" class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small">Cause Description</label>
+                                <textarea name="cause_description" id="field_cause_description" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 3: Financials & Tracking -->
+                        <div class="modal-section-title">Financials, Dates & Tracking</div>
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label small">Goal Amount</label>
+                                <input type="number" name="amount" id="field_amount" class="form-control">
+                            </div>
+                          
+                            <div class="col-md-3">
+                                <label class="form-label small">End Date</label>
+                                <input type="text" name="end_date" id="field_end_date" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Created At</label>
+                                <input type="text" id="field_created_at" class="form-control" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">User ID</label>
+                                <input type="text" name="user_id" id="field_user_id" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Created By</label>
+                                <input type="text" name="created_by" id="field_created_by" class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small">Is Fill</label>
+                                <input type="text" name="isFill" id="field_isFill" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Verification Status (Verified)</label>
+                                <select name="verified" id="field_verified" class="form-select">
+                                    <option value="0">Unverified / Pending</option>
+                                    <option value="1">Verified</option>
+                                    <option value="2">Rejected</option>
+                                </select>
+                            </div>
+                        </div>
+
+                       
+
+                        <!-- SECTION 5: Media & Assets -->
+                        <div class="modal-section-title">Media, Images & Video Links</div>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label small">Cover Image</label>
+                                <input type="text" name="cover_image" id="field_cover_image" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 1</label>
+                                <input type="text" name="cause_image1" id="field_img1" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 2</label>
+                                <input type="text" name="cause_image2" id="field_img2" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 3</label>
+                                <input type="text" name="cause_image3" id="field_img3" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 4</label>
+                                <input type="text" name="cause_image4" id="field_img4" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 5</label>
+                                <input type="text" name="cause_image5" id="field_img5" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Cause Video Link</label>
+                                <input type="text" name="Cause_video_link" id="field_video_link" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small"> Original Cause Video Link</label>
+                                <input type="text" name="Cause_video_link_eng" id="field_video_link_eng" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">Update Database Record</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        $('.open-cause-modal').on('click', function() {
+            const id = $(this).data('id');
+            const mode = $(this).data('mode');
+
+            $('#causeForm')[0].reset();
+
+            $.ajax({
+                url: "<?php echo base_url('admin/get_cause_details_ajax/'); ?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(response) {
+                    if (response.status === 'success') {
+                        const d = response.data;
+                        
+                        // POPULATING ALL REQUESTED FIELDS
+                        $('#field_id').val(d.id);
+                        $('#field_category').val(d.category);
+                        $('#field_name').val(d.name);
+                        $('#field_email').val(d.email);
+                        $('#field_phone').val(d.phone);
+                        $('#field_age').val(d.age);
+                        $('#field_location').val(d.location);
+                        $('#field_form_text').val(d.form_selected_text);
+                        $('#field_amount').val(d.amount);
+                        $('#field_end_date').val(d.end_date);
+                        $('#field_cause_heading').val(d.cause_heading);
+                        $('#field_cause_description').val(d.cause_description);
+                        $('#field_cover_image').val(d.cover_image);
+                        // $('#field_raised_amount').val(d.raised_amount);
+                        $('#field_user_id').val(d.user_id);
+                        $('#field_created_at').val(d.created_at);
+                        $('#field_verified').val(d.verified);
+                       
+                        $('#field_isFill').val(d.isFill);
+                        $('#field_img1').val(d.cause_image1);
+                        $('#field_img2').val(d.cause_image2);
+                        $('#field_img3').val(d.cause_image3);
+                        $('#field_img4').val(d.cause_image4);
+                        $('#field_img5').val(d.cause_image5);
+                        $('#field_video_link').val(d.Cause_video_link);
+                        $('#field_video_link_eng').val(d.Cause_video_link_eng);
+                        $('#field_created_by').val(d.created_by);
+
+                        // UI Logic
+                        if (mode === 'view') {
+                            $('#modalTitle').text('Viewing Record #' + d.id);
+                            $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', true);
+                            $('#submitBtn').hide();
+                        } else {
+                            $('#modalTitle').text('Editing Record #' + d.id);
+                            $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', false);
+                            // Keep ID and CreatedAt readonly
+                            $('#field_id, #field_created_at').prop('disabled', true);
+                            $('#submitBtn').show();
+                        }
+
+                        $('#causeModal').modal('show');
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('AJAX Error: Verify controller function exists.');
+                }
+            });
+        });
+    });
+    </script>
+
+        <!-- LARGE MODAL FOR ALL FIELDS -->
+    <div class="modal fade" id="causeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <!-- Form ID 'causeForm' maps to the update function in Admin controller -->
+            <form id="causeForm" action="<?php echo base_url('admin/update_cause'); ?>" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle">Full Cause Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+                        <input type="hidden" name="id" id="field_id">
+                        
+                        <!-- SECTION 1: Personal & Basic Info -->
+                        <div class="modal-section-title">Personal & Basic Information</div>
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label small">Category</label>
+                                <input type="text" name="category" id="field_category" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Name</label>
+                                <input type="text" name="name" id="field_name" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Email</label>
+                                <input type="email" name="email" id="field_email" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Phone</label>
+                                <input type="text" name="phone" id="field_phone" class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small">Age</label>
+                                <input type="number" name="age" id="field_age" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Location</label>
+                                <input type="text" name="location" id="field_location" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Form Selection Text</label>
+                                <input type="text" name="form_selected_text" id="field_form_text" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: Cause Content -->
+                        <div class="modal-section-title">Cause Content & Descriptions</div>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label small">Cause Heading</label>
+                                <input type="text" name="cause_heading" id="field_cause_heading" class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small">Cause Description</label>
+                                <textarea name="cause_description" id="field_cause_description" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 3: Financials & Tracking -->
+                        <div class="modal-section-title">Financials, Dates & Tracking</div>
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label small">Goal Amount</label>
+                                <input type="number" name="amount" id="field_amount" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Raised Amount</label>
+                                <input type="number" name="raised_amount" id="field_raised_amount" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">End Date</label>
+                                <input type="text" name="end_date" id="field_end_date" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Created At</label>
+                                <input type="text" id="field_created_at" class="form-control" readonly disabled>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">User ID</label>
+                                <input type="text" name="user_id" id="field_user_id" class="form-control">
+                            </div>
+                           
+                            <div class="col-md-2">
+                                <label class="form-label small">Is Fill</label>
+                                <input type="text" name="isFill" id="field_isFill" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Verification Status (Verified)</label>
+                                <!-- Map to 'verified' column in DB -->
+                                <select name="verified" id="field_verified" class="form-select">
+                                    <option value="0">Unverified / Pending</option>
+                                    <option value="1">Verified</option>
+                                    <option value="2">Rejected</option>
+                                </select>
+                            </div>
+                        </div>
+
+                      
+
+                        <!-- SECTION 5: Media & Assets -->
+                        <div class="modal-section-title">Media, Images & Video Links</div>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label small">Cover Image</label>
+                                <input type="text" name="cover_image" id="field_cover_image" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 1</label>
+                                <input type="text" name="cause_image1" id="field_img1" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 2</label>
+                                <input type="text" name="cause_image2" id="field_img2" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 3</label>
+                                <input type="text" name="cause_image3" id="field_img3" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 4</label>
+                                <input type="text" name="cause_image4" id="field_img4" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 5</label>
+                                <input type="text" name="cause_image5" id="field_img5" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Cause Video Link</label>
+                                <input type="text" name="Cause_video_link" id="field_video_link" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Cause Video Link (Eng)</label>
+                                <input type="text" name="Cause_video_link_eng" id="field_video_link_eng" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <!-- Submit button only active in Edit Mode -->
+                        <button type="submit" class="btn btn-primary" id="submitBtn">Update Database Record</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        // OPEN MODAL AND LOAD DATA
+        $('.open-cause-modal').on('click', function() {
+            const id = $(this).data('id');
+            const mode = $(this).data('mode');
+
+            // Reset form before loading new data
+            $('#causeForm')[0].reset();
+
+            $.ajax({
+                url: "<?php echo base_url('admin/get_cause_details_ajax/'); ?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(response) {
+                    if (response.status === 'success') {
+                        const d = response.data;
+                        
+                        // POPULATING ALL FIELDS FROM INDIVIDUALFORM TABLE
+                        $('#field_id').val(d.id);
+                        $('#field_category').val(d.category);
+                        $('#field_name').val(d.name);
+                        $('#field_email').val(d.email);
+                        $('#field_phone').val(d.phone);
+                        $('#field_age').val(d.age);
+                        $('#field_location').val(d.location);
+                        $('#field_form_text').val(d.form_selected_text);
+                        $('#field_amount').val(d.amount);
+                        $('#field_end_date').val(d.end_date);
+                        $('#field_cause_heading').val(d.cause_heading);
+                        $('#field_cause_description').val(d.cause_description);
+                        $('#field_cover_image').val(d.cover_image);
+                        $('#field_raised_amount').val(d.raised_amount);
+                        $('#field_user_id').val(d.user_id);
+                        $('#field_created_at').val(d.created_at);
+                        $('#field_verified').val(d.verified);
+                      
+                        $('#field_isFill').val(d.isFill);
+                        $('#field_img1').val(d.cause_image1);
+                        $('#field_img2').val(d.cause_image2);
+                        $('#field_img3').val(d.cause_image3);
+                        $('#field_img4').val(d.cause_image4);
+                        $('#field_img5').val(d.cause_image5);
+                        $('#field_video_link').val(d.Cause_video_link);
+                        $('#field_video_link_eng').val(d.Cause_video_link_eng);
+                        $('#field_created_by').val(d.created_by);
+
+                        // UI Logic for View vs Edit
+                        if (mode === 'view') {
+                            $('#modalTitle').text('Viewing Record #' + d.id);
+                            $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', true);
+                            $('#submitBtn').hide();
+                        } else {
+                            $('#modalTitle').text('Editing Record #' + d.id);
+                            $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', false);
+                            
+                            // Important: Don't let users edit ID or timestamps directly
+                            $('#field_id, #field_created_at').prop('disabled', true);
+                            $('#submitBtn').show();
+                        }
+
+                        $('#causeModal').modal('show');
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('AJAX Error: Verify the controller function exists and returns JSON.');
+                }
+            });
+        });
+
+        // HANDLE FORM SUBMISSION (SAVE CHANGES)
+        $('#causeForm').on('submit', function(e) {
+            // Note: Since 'id' is disabled in Edit mode, jQuery .serialize() won't include it.
+            // We need to temporarily enable it or add it manually before submission.
+            $('#field_id').prop('disabled', false);
+        });
+    });
+    </script>
+
+<!-- old edit  -->
+                <!-- <div class="modal fade" id="editDonationModal" tabindex="-1" role="dialog" aria-labelledby="editDonationLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -1318,35 +1779,12 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                
                         </div>
                     
-                    </div>
+                    </div> -->
                 
 
 <script>
 
 let status = "";
-
-// $.ajax({
-//       type:"get",
-//       url:"admin/sidemenu",
-//       success:(result)=>{
-//            document.getElementById("menu-bar").innerHTML = result;
-//       },
-//       error:(error)=>{
-//            document.getElementById("menu-bar").innerHTML = error;
-//       }
-//     }); 
-
-
-    // $.ajax({
-    //   type:"get",
-    //   url:"admin/topmenu",
-    //   success:(result)=>{
-    //        document.getElementById("search-bar").innerHTML = result;
-    //   },
-    //   error:(error)=>{
-    //        document.getElementById("search-bar").innerHTML = error;
-    //   }
-    // }); 
 
     $.ajax({
       type:"get",

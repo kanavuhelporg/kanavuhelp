@@ -534,4 +534,14 @@ public function get_admin_entry_by_id($id)
                     ->row();
 }
 
+//  Fetch a specific cause from the individualform table
+   public function get_individual_cause_by_id($id) {
+        return $this->db->get_where('individualform', array('id' => $id))->row_array();
+    }
+
+    public function update_individual_cause($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update('individualform', $data);
+    }
+
 }

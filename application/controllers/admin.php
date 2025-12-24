@@ -321,7 +321,65 @@ public function deleteAdminEntry()
         $this->load->view('causesverification.php', $data);
     }
 
+    /**
+     * AJAX: Fetch individual cause details
+     */
+    public function get_cause_details_ajax($id) {
+        // Ensure only AJAX requests can access this if desired
+        $data = $this->adminpanel->get_individual_cause_by_id($id);
+        if ($data) {
+            echo json_encode(['status' => 'success', 'data' => $data]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No data found']);
+        }
+    }
 
+    /**
+     * Save the edited cause details back to the same table
+     */
+   public function update_cause() {
+    
+    $id = $this->input->post('id');
+
+    // individualform 
+    $data = array(
+        'category'             => $this->input->post('category'),
+        'name'                 => $this->input->post('name'),
+        'email'                => $this->input->post('email'),
+        'phone'                => $this->input->post('phone'),
+        'age'                  => $this->input->post('age'),
+        'location'             => $this->input->post('location'),
+        'form_selected_text'   => $this->input->post('form_selected_text'),
+        'amount'               => $this->input->post('amount'),
+        'end_date'             => $this->input->post('end_date'),
+        'cause_heading'        => $this->input->post('cause_heading'),
+        'cause_description'    => $this->input->post('cause_description'),
+        'cover_image'          => $this->input->post('cover_image'),
+       
+        'user_id'              => $this->input->post('user_id'),
+        'verified'             => $this->input->post('verified'), // status-க்கு பதில் verified
+        
+       
+        'cause_image1'         => $this->input->post('cause_image1'),
+        'cause_image2'         => $this->input->post('cause_image2'),
+        'cause_image3'         => $this->input->post('cause_image3'),
+        'cause_image4'         => $this->input->post('cause_image4'),
+        'cause_image5'         => $this->input->post('cause_image5'),
+        'Cause_video_link'     => $this->input->post('Cause_video_link'),
+        'Cause_video_link_eng' => $this->input->post('Cause_video_link_eng'),
+        'created_by'           => $this->input->post('created_by')
+    );
+
+    // DB Update Logic
+    $this->db->where('id', $id);
+    if($this->db->update('individualform', $data)) {
+        $this->session->set_flashdata('success', 'Cause details updated successfully!');
+    } else {
+        $this->session->set_flashdata('error', 'Update failed.');
+    }
+
+    redirect('admin/causesverification');
+}
 
     public function displayCauses(){
         if($this->input->is_ajax_request()){
