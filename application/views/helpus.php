@@ -53,23 +53,7 @@
     margin-bottom: 10px;
     margin-left: 70px;
   }
-/* carousel */
-    .carousel-item {
-      height: 100vh;
-    }
 
-    .carousel-item img {
-      object-fit: cover;
-      height: 100%;
-      width: 100%;
-    }
-    .bi-share {
-    font-size: 1.3rem; /* Adjust the size of the share icon */
-   transform:translateX(130px);
-    cursor: pointer;
-    color:#E01A2B;
-       /* Optional: Make it clickable */
-}
 /* Login_button */
     .login-button {
       background-color: #ED3136;
@@ -410,6 +394,94 @@
   .text-brand-red {
     color: #ed3136 !important;
   }
+
+
+  /*scroll bar  */
+    .list-group::-webkit-scrollbar {
+        width: 4px;
+    }
+    .list-group::-webkit-scrollbar-thumb {
+        background: #eee;
+        border-radius: 10px;
+    }
+    
+   
+    .transition-hover {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #f8f9fa !important;
+    }
+    .transition-hover:hover {
+        background-color: #fcfcfc;
+        transform: translateX(5px);
+    }
+
+    .avatar-circle {
+        flex-shrink: 0;
+    }
+
+    /* Default heights for desktop */
+    #cause-image, 
+    .gallery-img {
+        height: 400px;
+        object-fit: cover;
+    }
+
+     #cause-image, 
+    .gallery-img,
+    .progress-img {
+        height: 400px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .progress-img {
+        height: 350px; /* Progress images can be slightly smaller */
+    }
+
+    .progress-text {
+        line-height: 1.6;
+        color: #444;
+    }
+
+    /* Fix for the gap below carousels on mobile */
+    @media (max-width: 768px) {
+        #cause-image, 
+        .gallery-img {
+            height: 250px !important;
+        }
+
+        .progress-img {
+            height: 200px !important;
+        }
+        
+        #carouselCausesIndicators,
+        #second_carousel {
+            height: auto !important;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+        }
+    }
+
+    /* Default heights for desktop */
+#cause-image, 
+.gallery-img,
+.progress-img {
+    height: 500px; /* Increased height for better desktop look */
+    object-fit: cover;
+    width: 100%;
+    border-radius: 15px; /* Smoother corners */
+}
+
+/* Container control for Desktop */
+@media (min-width: 992px) {
+    #second_carousel, #carouselCausesIndicators {
+        max-width: 100%; /* Ensures it fills its column */
+        margin: 0 auto;
+    }
+}
+
     </style>
     </head>
 <body>
@@ -546,17 +618,75 @@
     }  
 ?>
 
+<!-- new code -->
+<!-- Fundraiser Main Image / Slider Section -->
+<div class="media-container mt-3">
+    <!-- Main Cover Image (Always visible or fallback) -->
+    <img id="cause-image" 
+         src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" 
+         alt="Cause Cover" 
+         class="img-fluid rounded-4 shadow-sm w-100" 
+         style="height: 400px; object-fit: cover;">
 
-     <!-- Fundraiser Image -->
-     <!--        <img id="cause-image" src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" style="width:100%;height:400px;" alt="no image" class="img-fluid mt-3">  -->
+    <!-- [Slider] - Only shows if additional images exist -->
+    <?php
+        $documents = array_filter([
+            $fundraiser->cause_image1,
+            $fundraiser->cause_image2,
+            $fundraiser->cause_image3,
+            $fundraiser->cause_image4,
+            $fundraiser->cause_image5
+        ]);
+        $slideCount = count($documents);
+    ?>
 
+    <?php if($slideCount > 0): ?>
+    <div id="carouselCausesIndicators" class="carousel slide mt-4 shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            <?php for($i = 0; $i < $slideCount; $i++): ?>
+                <button type="button" 
+                        data-bs-target="#carouselCausesIndicators" 
+                        data-bs-slide-to="<?= $i ?>" 
+                        class="<?= $i === 0 ? 'active' : '' ?>" 
+                        aria-label="Slide <?= $i+1 ?>">
+                </button>
+            <?php endfor; ?>
+        </div>
+
+        <!-- Slides -->
+        <div class="carousel-inner">
+            <?php foreach(array_values($documents) as $index => $img): ?>
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" data-bs-interval="2500">
+                    <img src="<?= base_url("assets/individualform_img/$img") ?>" 
+                         class="d-block w-100 gallery-img" 
+                         alt="Cause Gallery <?= $index ?>">
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselCausesIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselCausesIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <?php endif; ?>
+</div>
+
+     <!-- Fundraiser Image 
+     
      <img id="cause-image" 
      src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" 
      style="width: 100%;height:400" 
      alt="no image" 
      class="img-fluid mt-3">
 
-     <!-------------------image-sliding----------------------------->
+     <!-------------------image-sliding---------------------------
        <div style="width:100%;height:400px;" id="carouselCausesIndicators" class="carousel slide mt-4" data-bs-ride="carousel">
         <div id="carousel-indicators" class="carousel-indicators">
 
@@ -598,8 +728,9 @@
         <span class="visually-hidden">Next</span>
         </button>
         </div> 
-        
+        -->
             <!-------------------image-sliding-end---------------------------->
+            
             <p class="mt-2"><?= htmlspecialchars($fundraiser->cause_description) ?></p>
             <!-------------------cause-video---------------------------------->
               <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
@@ -782,41 +913,58 @@
            <!-- Top Donors Section -->
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-12">
-            <div class="card" style="background-color: #fff0f0; border-radius: 10px; border: none; width: 100%; max-width: 600px; margin: 0 0; box-sizing:contnet-box;padding:10px;">
-                <h5 style="font-weight: bold;">Our Donors</h5>
+        <div class="col-lg-12">
+            <div class="card shadow-sm border-0 rounded-4 overflow-hidden" style="background: #ffffff;">
+                <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.5px;">
+                        <i class="bi bi-heart-fill text-danger me-2"></i>Recent Contributions
+                    </h5>
+                    <span class="badge rounded-pill bg-light text-dark fw-normal border px-3 py-2">
+                        <?= count($fundraiser->topdonars ?? []); ?> Donors
+                    </span>
+                </div>
 
-                <ul class="list-group" style="list-style-type: none; padding: 0;">
-               
-                <!-- <ul id="donor-list"> -->
-    <?php if (!empty($fundraiser->topdonars)): ?>
-        <?php foreach ($fundraiser->topdonars as $donor): ?>
-            <li class="d-flex align-items-center" style="padding: 5px 0;">
-                <div class="col-8 d-flex"><!------donor-content----------->
-                  
-                    <div class="col-2 rounded-circle" style="width: 40px; height: 40px;background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                        <?= substr($donor->name, 0, 1); ?>
-                    </div>
-                    
-                    <div class="col-10">
-                    <ul class="w-100 list-unstyled">
-                    <li style="margin-left: 10px;word-wrap:break-word;font-weight:600;"><?= htmlspecialchars($donor->name); ?></li>
-                    <li style="margin-left: 10px;word-wrap:break-word;"><?=$donor->donor_location; ?></li>
+                <div class="card-body px-4 pb-4">
+                    <ul class="list-group list-group-flush" style="max-height: 350px; overflow-y: auto; scrollbar-width: thin;">
+                        
+                        <?php if (!empty($fundraiser->topdonars)): ?>
+                            <?php foreach ($fundraiser->topdonars as $index => $donor): ?>
+                                <li class="list-group-item d-flex align-items-center justify-content-between border-0 px-0 py-3 mb-2 rounded-3 transition-hover">
+                                    <div class="d-flex align-items-center">
+                                       <div class="avatar-circle d-flex align-items-center justify-content-center shadow-sm"
+                                            style="width: 48px; height: 48px; background-color: #ed3136; border-radius: 14px; color: white; font-weight: bold; font-size: 1.2rem;">
+                                            <?= strtoupper(substr($donor->name, 0, 1)); ?>
+                                        </div>
+
+                                        
+                                        <div class="ms-3">
+                                            <div class="text-dark fw-bold mb-0" style="font-size: 1rem;"><?= htmlspecialchars($donor->name); ?></div>
+                                            <div class="text-muted d-flex align-items-center" style="font-size: 0.85rem;">
+                                                <i class="bi bi-geo-alt me-1"></i> <?= htmlspecialchars($donor->donor_location ?: 'Anonymous'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <div class="fw-bolder text-dark" style="font-size: 1.1rem;">₹<?= number_format($donor->amount); ?></div>
+                                        <div class="text-success small" style="font-size: 0.75rem;"><i class="bi bi-check-circle-fill"></i> Verified</div>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="text-center py-5">
+                                <img src="https://cdn-icons-png.flaticon.com/512/11550/11550341.png" style="width: 60px; opacity: 0.3;" alt="No donors">
+                                <p class="text-muted mt-3 italic">Be the first one to support this cause.</p>
+                            </div>
+                        <?php endif; ?>
                     </ul>
-                    </div>
-                     
-                </div><!------donor-content-end---------->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <div class="col-4"><!------donor-amount---------->
-                <span style="font-weight: bold;">Rs.<?= number_format($donor->amount); ?></span>
-                </div><!------donor-amount-end---------->
-            </li>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <li class="no-donors-message" style="padding: 10px 0; font-style: italic; color: #888;list-style:none">
-            No donors available for this cause.
-        </li>
-    <?php endif; ?>
+
 </ul>
 
 <script>
@@ -846,52 +994,61 @@
 
                 </ul>
             </div>
-
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-12">
             <div class="mt-4">
-             <?php if(!empty($progressdata->progress_description)) {?> 
-             <h3>Current progress status</h3>
-             <div>
-             <?=$progressdata->progress_description?>
-             </div> 
-             <?php }?>
-            <!-------------------image-sliding----------------------------->
-       <div style="width:100%;height:300px;" id="second_carousel" class="carousel slide mt-3" data-bs-ride="carousel">
-        <div id="second_carousel_indicators" class="carousel-indicators">
+    <?php if(!empty($progressdata->progress_description)): ?> 
+        <h3 class="fw-bold mb-3">Current progress status</h3>
+        <div class="mb-3 progress-text">
+            <?= nl2br(htmlspecialchars($progressdata->progress_description)) ?>
+        </div> 
+    <?php endif; ?>
 
+    <?php 
+        if(!empty($progressdata)){
+            $progress_docs = array_filter([
+                $progressdata->cause_status_image1,
+                $progressdata->cause_status_image2,
+                $progressdata->cause_status_image3,
+                $progressdata->cause_status_image4,
+                $progressdata->cause_status_image5
+            ]);
+        } else {
+            $progress_docs = [];
+        }
+        $progress_count = count($progress_docs);
+    ?>
+
+    <?php if($progress_count > 0): ?>
+    <div id="second_carousel" class="carousel slide mt-3 shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <?php for($i = 0; $i < $progress_count; $i++): ?>
+                <button type="button" data-bs-target="#second_carousel" data-bs-slide-to="<?= $i ?>" class="<?= $i === 0 ? 'active' : '' ?>" aria-label="Slide <?= $i+1 ?>"></button>
+            <?php endfor; ?>
         </div>
-        <div id="cause-slides" class="carousel-inner" >
-        <?php  if(!empty($progressdata)){
-               $documents = ["$progressdata->cause_status_image1","$progressdata->cause_status_image2","$progressdata->cause_status_image3","$progressdata->cause_status_image4","$progressdata->cause_status_image5"];
-               }
-               else{
-                $documents = [];
-               }
-               $count = count($documents);
-               $slide = 0;
-               for($i = 0;$i < $count ; $i++ ){ ?> 
-               <?php if($documents[$i] == ""){ 
-                       continue;
-                    }?>
-                    <div class='carousel-item <?= $slide == 0 ? 'active' : '';?>' data-bs-interval="2000">
-                    <img style="width:100%;height:300px;" class="d-block" src="<?=base_url("assets/progressdata/$documents[$i]")?>" alt='<?=$documents[$i]?>'>
-                    </div>
-              <script>
-                document.getElementById("second_carousel_indicators").innerHTML += "<button type='button' data-bs-target='#carouselCausesIndicators' data-bs-slide-to='<?=$slide?>' class='<?= $slide == 0 ? 'active' : '';?>' aria-current='true' aria-label='Slide <?=$slide+1?>'></button>";
-               </script>
-        <?php ++$slide; } ?>
-                
+        
+        <div class="carousel-inner">
+            <?php foreach(array_values($progress_docs) as $index => $img): ?>
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" data-bs-interval="2000">
+                    <img class="d-block w-100 progress-img" src="<?= base_url("assets/progressdata/$img") ?>" alt="Progress Image <?= $index ?>">
+                </div>
+            <?php endforeach; ?>
         </div>
 
         <button class="carousel-control-prev" type="button" data-bs-target="#second_carousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#second_carousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
         </button>
-        </div> 
-        
+    </div> 
+    <?php endif; ?>
+</div>
+
+    
             <!-------------------image-sliding-end---------------------------->
 
             <?php
@@ -904,7 +1061,9 @@
     </div>
 </div>
 </div>
-
+ </div>
+    </div>
+</div>   
     <script>
 
    /* let cause_slides = document.querySelector(".carousel-inner").children;
@@ -944,7 +1103,7 @@
             noDonorsMessage.className = 'no-donors-message';
             noDonorsMessage.style.padding = '10px 0';
             noDonorsMessage.style.fontStyle = 'italic';
-            noDonorsMessage.style.color = '#888';
+            noDonorsMessage.style.color = '#ed3136';
            
             return; // Stop further execution
         }
@@ -1554,9 +1713,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </h4>
 
         <!-- Message -->
-        <p class="text-muted mb-4">
-          Thank you for your generous contribution. Your support helps us continue our mission and make a real difference.
-        </p>
+        <!-- <p class="text-muted mb-4">
+          Thank you for your generous contribution.
+        </p> -->
 
         <!-- Confirmation Details -->
         <div class="bg-light rounded p-3 mb-4">
