@@ -935,10 +935,10 @@
             <div class="text-center">
               <h3 class="mt-4"><strong>START YOUR FUNDRAISER</strong></h3>
               <h6>"We make a living by what we get, but we make a life by what we give"</h6>
-              <img src="<?php echo base_url('/assets/img/startyourfund.jpg'); ?>"
+              <img src="<?php echo base_url('/assets/img/startyourfund.jpeg'); ?>"
                 alt="no img"
                 class="img-fluid"
-                style="max-width: 100%; height: auto;border-radius:50%;">
+                style="max-width: 93%; height: auto;border-radius:50%;">
             </div>
           </div>
           <!-- Right Column for Form -->
