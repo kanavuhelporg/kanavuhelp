@@ -255,8 +255,8 @@
   }
 
   .text-center img {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
   }
 
   /* .footer p {
@@ -933,17 +933,17 @@
           <!-- Left Column for Image and Text -->
           <div class="col-md-6 d-flex justify-content-center">
             <div class="text-center">
-              <h3 class="mt-4"><strong>START YOUR FUNDRAISER</strong></h3>
+              <h3 class="mt-4 mb-3"><strong>START YOUR FUNDRAISER</strong></h3>
               <h6>"We make a living by what we get, but we make a life by what we give"</h6>
-              <img src="<?php echo base_url('/assets/img/startyourfund.jpeg'); ?>"
+              <img src="<?php echo base_url('/assets/img/startyourfund_1.png'); ?>"
                 alt="no img"
                 class="img-fluid"
-                style="max-width: 93%; height: auto;border-radius:50%;">
+                style="max-width: 99%; height: 85%;">
             </div>
           </div>
           <!-- Right Column for Form -->
           <div class="col-md-6 mt-4">
-            <div id="multi-step-form-container" class="mt-auto py-3 w-100">
+            <div id="multi-step-form-container" class="mt-auto py-2 w-100 p-0">
               <!-- Form Steps / Progress Bar -->
               <ul class="form-stepper form-stepper-horizontal text-center mx-auto col-md-10 flex-wrap">
                 <li class="form-stepper-active text-center form-stepper-list" step="1">

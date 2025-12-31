@@ -340,12 +340,12 @@
       height: 450px;
       margin: 0 auto;
       border-radius: 50%;
-      overflow: hidden;
+      /* overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #f5f5f5;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1); */
     }
 
     /* Image inside circle */
@@ -798,7 +798,7 @@
         <div class="col-lg-6 mb-4 mb-lg-0">
           <!-- Perfect circle container -->
           <div class="story-image-container">
-            <img src="<?= base_url('assets/img/help3.jpeg') ?>" alt="Our Story" class="story-image">
+            <img src="<?= base_url('assets/img/about_help3.png') ?>" alt="Our Story" class="story-image">
           </div>
         </div>
         <div class="col-lg-6">
