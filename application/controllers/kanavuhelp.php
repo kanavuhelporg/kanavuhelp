@@ -356,9 +356,9 @@ public function set_no_priority() {
 
     public function updateprogressdata()
 {
-    if (!$this->session->userdata('Kanavu_userId')) {
-        redirect('kanavuhelp/login');
-    }
+    // if (!$this->session->userdata('Kanavu_userId')) {
+    //     redirect('kanavuhelp/login');
+    // }
 
     $this->load->model('UserModel');
     $this->load->library('upload');
