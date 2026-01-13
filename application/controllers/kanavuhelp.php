@@ -298,61 +298,162 @@ public function set_no_priority() {
         $this->load->view("updateprogress",array("progressdetails"=>$progressdetails,"cause_id"=>$cause_id));      
     }
 
-    public function updateprogressdata(){
-        if(!$this->session->userdata('Kanavu_userId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
-        }
-        $this->load->model('UserModel');
-        $this->load->library(['upload', 'form_validation']);
+    // public function updateprogressdata(){
+    //     if(!$this->session->userdata('Kanavu_userId')) {
+    //         redirect('kanavuhelp/login'); // Redirect to login if not logged in
+    //     }
+    //     $this->load->model('UserModel');
+    //     $this->load->library(['upload', 'form_validation']);
 
-        $data = array();
-        $dataInfo = array();
-        $documentinfo = array();
-        $files = $_FILES;
+    //     $data = array();
+    //     $dataInfo = array();
+    //     $documentinfo = array();
+    //     $files = $_FILES;
         
-        $uploadeddocuments = ["progress_description","document_one","document_two","document_three","document_four","document_five","progress_video","progress_embed_video"];
-        $databasedocuments = ["progress_description","cause_status_image1","cause_status_image2","cause_status_image3","cause_status_image4","cause_status_image5","cause_status_video"];
-        $count = count($uploadeddocuments);
-        try{
-            $insert = 0;
-        for($i=0; $i < $count; $i++)
-        {           
-            if($_FILES[$uploadeddocuments[$i]]['name'] == ""){
-                continue;
-            }
-            $_FILES['documents']['name']= $files[$uploadeddocuments[$i]]['name'];
-            $_FILES['documents']['type']= $files[$uploadeddocuments[$i]]['type'];
-            $_FILES['documents']['tmp_name']= $files[$uploadeddocuments[$i]]['tmp_name'];
-            $_FILES['documents']['error']= $files[$uploadeddocuments[$i]]['error'];
-            $_FILES['documents']['size']= $files[$uploadeddocuments[$i]]['size'];    
+    //     $uploadeddocuments = ["progress_description","document_one","document_two","document_three","document_four","document_five","progress_video","progress_embed_video"];
+    //     $databasedocuments = ["progress_description","cause_status_image1","cause_status_image2","cause_status_image3","cause_status_image4","cause_status_image5","cause_status_video"];
+    //     $count = count($uploadeddocuments);
+    //     try{
+    //         $insert = 0;
+    //     for($i=0; $i < $count; $i++)
+    //     {           
+    //         if($_FILES[$uploadeddocuments[$i]]['name'] == ""){
+    //             continue;
+    //         }
+    //         $_FILES['documents']['name']= $files[$uploadeddocuments[$i]]['name'];
+    //         $_FILES['documents']['type']= $files[$uploadeddocuments[$i]]['type'];
+    //         $_FILES['documents']['tmp_name']= $files[$uploadeddocuments[$i]]['tmp_name'];
+    //         $_FILES['documents']['error']= $files[$uploadeddocuments[$i]]['error'];
+    //         $_FILES['documents']['size']= $files[$uploadeddocuments[$i]]['size'];    
            
-            $this->upload->initialize($this->set_progress_upload_options());
-            $this->upload->do_upload($uploadeddocuments[$i]);
-            $dataInfo[] = $this->upload->data();
-            $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
-            $insert++;
-        }
-        }
-        catch(Exception $e){
-            $this->session->set_flashdata("fileuploadfailed",true);
-            redirect('updateprogress'); 
-        }
+    //         $this->upload->initialize($this->set_progress_upload_options());
+    //         $this->upload->do_upload($uploadeddocuments[$i]);
+    //         $dataInfo[] = $this->upload->data();
+    //         $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
+    //         $insert++;
+    //     }
+    //     }
+    //     catch(Exception $e){
+    //         $this->session->set_flashdata("fileuploadfailed",true);
+    //         redirect('updateprogress'); 
+    //     }
             
-            $data['progress_description'] = $this->input->post('progress_description');
-            $data['progress_embed_link'] = $this->input->post('progress_embed_video_link');
-            $data['cause_id'] = $this->input->post('cause_id'); 
-            $file_data = $this->upload->data();
+    //         $data['progress_description'] = $this->input->post('progress_description');
+    //         $data['progress_embed_link'] = $this->input->post('progress_embed_video_link');
+    //         $data['cause_id'] = $this->input->post('cause_id'); 
+    //         $file_data = $this->upload->data();
 
-        $causeId = $this->input->post('cause_id');
-        $response = $this->UserModel->store4($data,$causeId);
-        $userLoggedIn = array(
-            'Kanavu_userId' => $this->session->userdata("currentUserId"),
-            'Kanavu_userName' => $this->session->userdata('Kanavu_userName'),
-        );
-        // $this->session->set_userdata($userLoggedIn);  
-        $this->session->set_flashdata("progressupdated", true);
-        redirect('myFundraisers');
+    //     $causeId = $this->input->post('cause_id');
+    //     $response = $this->UserModel->store4($data,$causeId);
+    //     $userLoggedIn = array(
+    //         'Kanavu_userId' => $this->session->userdata("currentUserId"),
+    //         'Kanavu_userName' => $this->session->userdata('Kanavu_userName'),
+    //     );
+    //     // $this->session->set_userdata($userLoggedIn);  
+    //     $this->session->set_flashdata("progressupdated", true);
+    //     redirect('causesverification');
+    // }
+
+    public function updateprogressdata()
+{
+    if (!$this->session->userdata('Kanavu_userId')) {
+        redirect('kanavuhelp/login');
     }
+
+    $this->load->model('UserModel');
+    $this->load->library('upload');
+
+    $data = [];
+    $files = $_FILES;
+
+    // ONLY FILE INPUTS
+    $uploadeddocuments = [
+        "document_one",
+        "document_two",
+        "document_three",
+        "document_four",
+        "document_five",
+        "progress_video"
+    ];
+
+    $databasedocuments = [
+        "cause_status_image1",
+        "cause_status_image2",
+        "cause_status_image3",
+        "cause_status_image4",
+        "cause_status_image5",
+        "cause_status_video"
+    ];
+
+    $insert = 0;
+
+    // for ($i = 0; $i < count($uploadeddocuments); $i++) {
+
+    //     if (empty($_FILES[$uploadeddocuments[$i]]['name'])) {
+    //         continue;
+    //     }
+
+    //     $_FILES['documents']['name']     = $files[$uploadeddocuments[$i]]['name'];
+    //     $_FILES['documents']['type']     = $files[$uploadeddocuments[$i]]['type'];
+    //     $_FILES['documents']['tmp_name'] = $files[$uploadeddocuments[$i]]['tmp_name'];
+    //     $_FILES['documents']['error']    = $files[$uploadeddocuments[$i]]['error'];
+    //     $_FILES['documents']['size']     = $files[$uploadeddocuments[$i]]['size'];
+
+    //     $this->upload->initialize($this->set_progress_upload_options());
+
+    //     if (!$this->upload->do_upload('documents')) {
+    //         echo "<pre>";
+    //         echo "FCPATH = " . FCPATH . "\n";
+    //         echo "UPLOAD PATH = " . FCPATH . "uploads/progress/\n";
+    //         var_dump(is_dir(FCPATH . "uploads/progress/"));
+    //         var_dump(is_writable(FCPATH . "uploads/progress/"));
+    //         exit;
+
+    //     }
+
+    //     $uploadData = $this->upload->data();
+    //     $data[$databasedocuments[$insert]] = $uploadData['file_name'];
+    //     $insert++;
+    // }
+    for ($i = 0; $i < count($uploadeddocuments); $i++) {
+
+    if (empty($_FILES[$uploadeddocuments[$i]]['name'])) {
+        continue;
+    }
+
+    // Assign current file to a single key
+    $_FILES['documents']['name']     = $_FILES[$uploadeddocuments[$i]]['name'];
+    $_FILES['documents']['type']     = $_FILES[$uploadeddocuments[$i]]['type'];
+    $_FILES['documents']['tmp_name'] = $_FILES[$uploadeddocuments[$i]]['tmp_name'];
+    $_FILES['documents']['error']    = $_FILES[$uploadeddocuments[$i]]['error'];
+    $_FILES['documents']['size']     = $_FILES[$uploadeddocuments[$i]]['size'];
+
+    $this->upload->initialize($this->set_progress_upload_options());
+
+    // 🔥 THIS IS THE CRITICAL FIX
+    if (!$this->upload->do_upload('documents')) {
+        echo "<pre>";
+        echo "UPLOAD FAILED FOR: ".$uploadeddocuments[$i]."\n";
+        echo $this->upload->display_errors();
+        exit;
+    }
+
+    $uploadData = $this->upload->data();
+    $data[$databasedocuments[$i]] = $uploadData['file_name'];
+}
+
+    // TEXT DATA (NOT FILES)
+    $data['progress_description'] = $this->input->post('progress_description');
+    $data['progress_embed_link']  = $this->input->post('progress_embed_video_link');
+    $data['cause_id']             = $this->input->post('cause_id');
+
+    $causeId = $this->input->post('cause_id');
+    $this->UserModel->store4($data, $causeId);
+
+    $this->session->set_flashdata("progressupdated", true);
+    redirect('causesverification');
+}
+
 
     public function individual()
     {
@@ -850,7 +951,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $this->session->set_userdata($userLoggedIn);  
         $this->session->set_flashdata("logged_in", true);
         // $this->session->set_userdata("entry",0);
-        redirect('myFundraisers'); 
+        redirect('causesverification'); 
     }
 
     public function updateindividualform_data()
@@ -910,7 +1011,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $causeId = $this->input->post('cause_id');
         $response = $this->UserModel->store5($data,$causeId);
         $this->session->set_flashdata("updatedindividualform", true);
-        redirect('myFundraisers'); 
+        redirect('causesverification'); 
     }
 
     private function set_upload_options()
@@ -925,15 +1026,22 @@ foreach ($data['fundraisers'] as $fundraiser) {
     }
 
     private function set_progress_upload_options()
-    {   
-    //upload an image options
-    $config = array();
-    $config['upload_path'] = './assets/progressdata/';
-    $config['allowed_types'] = 'gif|jpg|jpeg|png|svg|mp4';
-    $config['max_size']      = '0';
-    $config['overwrite']     = FALSE;
-    return $config;
+{
+    $path = realpath(FCPATH . 'uploads/progress');
+
+    if ($path === false) {
+        echo "REALPATH FAILED";
+        exit;
     }
+
+    return [
+        'upload_path'   => $path . DIRECTORY_SEPARATOR,
+        'allowed_types' => 'jpg|jpeg|png|gif|mp4',
+        'max_size'      => 51200,
+        'encrypt_name'  => true
+    ];
+}
+
 
 
 

@@ -652,13 +652,14 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                                 data-id="<?= $donation->id; ?>" 
                                                 data-mode="view">
                                             <i class="fa fa-eye"></i> View
-                                        </button>
+                                        </button>&nbsp;&nbsp;
                                       <button type="button" 
                                             class="btn btn-sm btn-warning open-cause-modal" 
                                             data-id="<?= $donation->id; ?>" 
                                             data-mode="edit">
                                         <i class="fa fa-edit"></i> Edit
-                                    </button>
+                                    </button>&nbsp;&nbsp;
+                                    
                                                                                 <!-- <button
                                                 class="btn btn-primary fw-bold"
                                                 data-bs-toggle="modal"
@@ -680,7 +681,14 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                                 )">
                                                 Status
                                             </button> &nbsp;&nbsp;
- 
+                                            <button 
+                                    type="button"
+                                    class="btn btn-sm btn-success ms-1"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#updateProgressModal"
+                                    onclick="openUpdateProgressModal(<?= $donation->id ?>)">
+                                    <i class="fa fa-upload"></i> Update Progress
+                                </button>&nbsp;&nbsp;
                                             <button onclick="deleteCause(<?= $donation->id; ?>)" class="btn btn-danger fw-bold">Delete</button> &nbsp;&nbsp;
                                             <?php if ($this->session->userdata('adminName')): ?>
                                                 <?php if ($donation->priority == 0): ?>
@@ -700,6 +708,8 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                             <?php endif; ?>
                                         </td>
                                     </tr>
+                                    
+
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr id="no-results">
@@ -2004,6 +2014,108 @@ input.addEventListener("input",function(){
             window.location.href = "?page=1"; // reset to first page with no filter
         });
     }
+</script>
+<div class="modal fade" id="updateProgressModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Update Progress Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- YOUR FORM START -->
+        <form method="post"
+              action="<?= base_url('kanavuhelp/updateprogressdata') ?>"
+              enctype="multipart/form-data">
+
+          <input type="hidden" name="cause_id" id="progress_cause_id">
+
+          <!-- Progress Description -->
+          <div class="row my-3">
+            <label class="col-md-4">Progress description</label>
+            <div class="col-md-8">
+              <textarea name="progress_description"
+                        class="form-control"
+                        required></textarea>
+            </div>
+          </div>
+
+          <!-- Image 1 -->
+          <div class="row my-3">
+            <label class="col-md-4">Progress Image One</label>
+            <div class="col-md-8">
+              <input type="file" name="document_one" class="form-control">
+            </div>
+          </div>
+
+          <!-- Image 2 -->
+          <div class="row my-3">
+            <label class="col-md-4">Progress Image Two</label>
+            <div class="col-md-8">
+              <input type="file" name="document_two" class="form-control">
+            </div>
+          </div>
+
+          <!-- Image 3 -->
+          <div class="row my-3">
+            <label class="col-md-4">Progress Image Three</label>
+            <div class="col-md-8">
+              <input type="file" name="document_three" class="form-control">
+            </div>
+          </div>
+
+          <!-- Image 4 -->
+          <div class="row my-3">
+            <label class="col-md-4">Progress Image Four</label>
+            <div class="col-md-8">
+              <input type="file" name="document_four" class="form-control">
+            </div>
+          </div>
+
+          <!-- Image 5 -->
+          <div class="row my-3">
+            <label class="col-md-4">Progress Image Five</label>
+            <div class="col-md-8">
+              <input type="file" name="document_five" class="form-control">
+            </div>
+          </div>
+
+          <!-- Video
+          <div class="row my-3">
+            <label class="col-md-4">Progress Video (mp4)</label>
+            <div class="col-md-8">
+              <input type="file" name="progress_video" accept="video/mp4" class="form-control">
+            </div>
+          </div> -->
+
+          <!-- Embed link -->
+          <div class="row my-3">
+            <label class="col-md-4">Embed Video Link</label>
+            <div class="col-md-8">
+              <input type="text" name="progress_embed_video_link" class="form-control">
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success">
+              Submit Progress
+            </button>
+          </div>
+
+        </form>
+        <!-- YOUR FORM END -->
+
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function openUpdateProgressModal(causeId) {
+    document.getElementById('progress_cause_id').value = causeId;
+}
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
