@@ -1022,41 +1022,70 @@
 
     <?php if($progress_count > 0): ?>
     <div id="second_carousel" class="carousel slide mt-3 shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel">
+
         <div class="carousel-indicators">
             <?php for($i = 0; $i < $progress_count; $i++): ?>
-                <button type="button" data-bs-target="#second_carousel" data-bs-slide-to="<?= $i ?>" class="<?= $i === 0 ? 'active' : '' ?>" aria-label="Slide <?= $i+1 ?>"></button>
+                <button type="button"
+                        data-bs-target="#second_carousel"
+                        data-bs-slide-to="<?= $i ?>"
+                        class="<?= $i === 0 ? 'active' : '' ?>"
+                        aria-label="Slide <?= $i+1 ?>">
+                </button>
             <?php endfor; ?>
         </div>
-        
+
         <div class="carousel-inner">
             <?php foreach(array_values($progress_docs) as $index => $img): ?>
-                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" data-bs-interval="2000">
-                    <img class="d-block w-100 progress-img" src="<?= base_url("assets/progressdata/$img") ?>" alt="Progress Image <?= $index ?>">
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" data-bs-interval="3000">
+                    <img class="d-block w-100 progress-img"
+                        src="<?= base_url('uploads/progress/'.$img) ?>"
+                        alt="Progress Image <?= $index ?>">
                 </div>
             <?php endforeach; ?>
         </div>
 
         <button class="carousel-control-prev" type="button" data-bs-target="#second_carousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+            <span class="carousel-control-prev-icon"></span>
         </button>
+
         <button class="carousel-control-next" type="button" data-bs-target="#second_carousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+            <span class="carousel-control-next-icon"></span>
         </button>
-    </div> 
+
+    </div>
     <?php endif; ?>
+
 </div>
 
     
             <!-------------------image-sliding-end---------------------------->
 
-            <?php
-              if(!empty($progressdata->progress_embed_link)){ 
-              echo "<div class='mt-3'>$progressdata->progress_embed_link</div>";
-              }
-              ?> 
-            </div>
+           <?php
+if (!empty($progressdata->progress_embed_link)) {
+
+    $youtube_id = '';
+    $url = trim($progressdata->progress_embed_link);
+
+    // Extract YouTube video ID
+    if (preg_match('/(youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]+)/', $url, $matches)) {
+        $youtube_id = $matches[2];
+    }
+
+    if (!empty($youtube_id)) {
+        ?>
+        <div class="ratio ratio-16x9 mt-3">
+            <iframe
+                src="https://www.youtube.com/embed/<?= $youtube_id ?>"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+        <?php
+    }
+}
+?>
+
         </div>
     </div>
 </div>
