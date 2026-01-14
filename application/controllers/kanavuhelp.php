@@ -1027,10 +1027,17 @@ foreach ($data['fundraisers'] as $fundraiser) {
 
     private function set_progress_upload_options()
 {
-    $path = realpath(FCPATH . 'uploads/progress');
+    $upload_path = FCPATH . 'uploads/progress';
+    
+    // Create directory if it doesn't exist
+    if (!is_dir($upload_path)) {
+        mkdir($upload_path, 0777, true);
+    }
+    
+    $path = realpath($upload_path);
 
     if ($path === false) {
-        echo "REALPATH FAILED";
+        echo "REALPATH FAILED: " . $upload_path;
         exit;
     }
 

@@ -329,6 +329,18 @@ if (isset($_SESSION["emailsuccessstatus"])) {
     $toastType = 'error';
     $toastMessage = $_SESSION["emailerrorstatus"];
     unset($_SESSION["emailerrorstatus"]);
+} elseif (isset($_SESSION["progressupdated"])) {
+    $toastType = 'success';
+    $toastMessage = 'Update successfully';
+    unset($_SESSION["progressupdated"]);
+} elseif (isset($_SESSION["success"])) {
+    $toastType = 'success';
+    $toastMessage = $_SESSION["success"];
+    unset($_SESSION["success"]);
+} elseif (isset($_SESSION["error"])) {
+    $toastType = 'error';
+    $toastMessage = $_SESSION["error"];
+    unset($_SESSION["error"]);
 }
 ?>
 
@@ -2047,7 +2059,7 @@ input.addEventListener("input",function(){
           <div class="row my-3">
             <label class="col-md-4">Progress Image One</label>
             <div class="col-md-8">
-              <input type="file" name="document_one" class="form-control">
+              <input type="file" name="document_one" id="document_one" accept="image/*" class="form-control">
             </div>
           </div>
 
@@ -2055,7 +2067,7 @@ input.addEventListener("input",function(){
           <div class="row my-3">
             <label class="col-md-4">Progress Image Two</label>
             <div class="col-md-8">
-              <input type="file" name="document_two" class="form-control">
+              <input type="file" name="document_two" id="document_two" accept="image/*" class="form-control">
             </div>
           </div>
 
@@ -2063,7 +2075,7 @@ input.addEventListener("input",function(){
           <div class="row my-3">
             <label class="col-md-4">Progress Image Three</label>
             <div class="col-md-8">
-              <input type="file" name="document_three" class="form-control">
+              <input type="file" name="document_three" id="document_three" accept="image/*" class="form-control">
             </div>
           </div>
 
@@ -2071,7 +2083,7 @@ input.addEventListener("input",function(){
           <div class="row my-3">
             <label class="col-md-4">Progress Image Four</label>
             <div class="col-md-8">
-              <input type="file" name="document_four" class="form-control">
+              <input type="file" name="document_four" id="document_four" accept="image/*" class="form-control">
             </div>
           </div>
 
@@ -2079,7 +2091,7 @@ input.addEventListener("input",function(){
           <div class="row my-3">
             <label class="col-md-4">Progress Image Five</label>
             <div class="col-md-8">
-              <input type="file" name="document_five" class="form-control">
+              <input type="file" name="document_five" id="document_five" accept="image/*" class="form-control">
             </div>
           </div>
 
@@ -2114,6 +2126,11 @@ input.addEventListener("input",function(){
 </div>
 <script>
 function openUpdateProgressModal(causeId) {
+    // Reset the form to clear previous selections and data
+    const modalForm = document.querySelector('#updateProgressModal form');
+    if (modalForm) {
+        modalForm.reset();
+    }
     document.getElementById('progress_cause_id').value = causeId;
 }
 </script>
