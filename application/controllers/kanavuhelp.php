@@ -444,7 +444,18 @@ public function set_no_priority() {
 
     // TEXT DATA (NOT FILES)
     $data['progress_description'] = $this->input->post('progress_description');
-    $data['progress_embed_link']  = $this->input->post('progress_embed_video_link');
+    
+    $embed_link = $this->input->post('progress_embed_video_link');
+    if (!empty($embed_link) && strpos($embed_link, '<iframe') === false) {
+        $youtube_id = '';
+        if (preg_match('/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]+)/', $embed_link, $matches)) {
+            $youtube_id = $matches[1];
+        }
+        if (!empty($youtube_id)) {
+            $embed_link = '<iframe width="100%" height="400px" src="https://www.youtube.com/embed/' . $youtube_id . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+        }
+    }
+    $data['progress_embed_link']  = $embed_link;
     $data['cause_id']             = $this->input->post('cause_id');
 
     $causeId = $this->input->post('cause_id');

@@ -1067,8 +1067,8 @@ if (!empty($progressdata->progress_embed_link)) {
     $url = trim($progressdata->progress_embed_link);
 
     // Extract YouTube video ID
-    if (preg_match('/(youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]+)/', $url, $matches)) {
-        $youtube_id = $matches[2];
+    if (preg_match('/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]+)/', $url, $matches)) {
+        $youtube_id = $matches[1];
     }
 
     if (!empty($youtube_id)) {
