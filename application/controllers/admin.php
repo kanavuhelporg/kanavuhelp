@@ -337,49 +337,77 @@ public function deleteAdminEntry()
     /**
      * Save the edited cause details back to the same table
      */
-   public function update_cause() {
-    
-    $id = $this->input->post('id');
+    /**
+     * Save the edited cause details back to the same table
+     */
+    public function update_cause() {
+        $id = $this->input->post('id');
 
-    // individualform 
-    $data = array(
-        'category'             => $this->input->post('category'),
-        'name'                 => $this->input->post('name'),
-        'email'                => $this->input->post('email'),
-        'phone'                => $this->input->post('phone'),
-        'age'                  => $this->input->post('age'),
-        'location'             => $this->input->post('location'),
-        'form_selected_text'   => $this->input->post('form_selected_text'),
-        'amount'               => $this->input->post('amount'),
-        'end_date'             => $this->input->post('end_date'),
-        'cause_heading'        => $this->input->post('cause_heading'),
-        'cause_description'    => $this->input->post('cause_description'),
-        'cover_image'          => $this->input->post('cover_image'),
-       
-        'user_id'              => $this->input->post('user_id'),
-        'verified'             => $this->input->post('verified'), // status-க்கு பதில் verified
-        
-       
-        'cause_image1'         => $this->input->post('cause_image1'),
-        'cause_image2'         => $this->input->post('cause_image2'),
-        'cause_image3'         => $this->input->post('cause_image3'),
-        'cause_image4'         => $this->input->post('cause_image4'),
-        'cause_image5'         => $this->input->post('cause_image5'),
-        'Cause_video_link'     => $this->input->post('Cause_video_link'),
-        'Cause_video_link_eng' => $this->input->post('Cause_video_link_eng'),
-        'created_by'           => $this->input->post('created_by')
-    );
+        // Initial data array from post fields
+        $data = array(
+            'category'             => $this->input->post('category'),
+            'name'                 => $this->input->post('name'),
+            'email'                => $this->input->post('email'),
+            'phone'                => $this->input->post('phone'),
+            'age'                  => $this->input->post('age'),
+            'location'             => $this->input->post('location'),
+            'form_selected_text'   => $this->input->post('form_selected_text'),
+            'amount'               => $this->input->post('amount'),
+            'end_date'             => $this->input->post('end_date'),
+            'cause_heading'        => $this->input->post('cause_heading'),
+            'cause_description'    => $this->input->post('cause_description'),
+            'user_id'              => $this->input->post('user_id'),
+            'verified'             => $this->input->post('verified'),
+            'Cause_video_link'     => $this->input->post('Cause_video_link'),
+            'Cause_video_link_eng' => $this->input->post('Cause_video_link_eng'),
+            'created_by'           => $this->input->post('created_by'),
+            'isFill'               => $this->input->post('isFill')
+        );
 
-    // DB Update Logic
-    $this->db->where('id', $id);
-    if($this->db->update('individualform', $data)) {
-        $this->session->set_flashdata('success', 'Cause details updated successfully!');
-    } else {
-        $this->session->set_flashdata('error', 'Update failed.');
+        // File Upload Logic
+        $config['upload_path']   = './assets/individualform_img/';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg|webp';
+        $config['max_size']      = 5120; // 5MB limit
+        $config['encrypt_name']  = TRUE; // Encrypt names to avoid collisions
+
+        $this->load->library('upload', $config);
+
+        $image_fields = [
+            'cover_image'  => 'cover_image_old',
+            'cause_image1' => 'cause_image1_old',
+            'cause_image2' => 'cause_image2_old',
+            'cause_image3' => 'cause_image3_old',
+            'cause_image4' => 'cause_image4_old',
+            'cause_image5' => 'cause_image5_old'
+        ];
+
+        foreach ($image_fields as $field => $old_field) {
+            if (!empty($_FILES[$field]['name'])) {
+                // Initialize upload for each file
+                $this->upload->initialize($config);
+                if ($this->upload->do_upload($field)) {
+                    $uploadData = $this->upload->data();
+                    $data[$field] = $uploadData['file_name'];
+                } else {
+                    // Upload failed, fallback to old or null
+                    $data[$field] = $this->input->post($old_field);
+                }
+            } else {
+                // No new file, use the current existing filename
+                $data[$field] = $this->input->post($old_field);
+            }
+        }
+
+        // DB Update Logic
+        $this->db->where('id', $id);
+        if($this->db->update('individualform', $data)) {
+            $this->session->set_flashdata('success', 'Cause details updated successfully!');
+        } else {
+            $this->session->set_flashdata('error', 'Update failed.');
+        }
+
+        redirect('admin/causesverification');
     }
-
-    redirect('admin/causesverification');
-}
 
     public function displayCauses(){
         if($this->input->is_ajax_request()){
