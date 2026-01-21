@@ -1473,6 +1473,8 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $causeData['user_id'] = $user_id;
 
         $this->db->insert('individualform', $causeData);
+        $causeId = $this->db->insert_id();
+        $this->session->set_userdata('currentCauseId', $causeId);
 
     } else {
 
@@ -1491,6 +1493,8 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $causeData['user_id'] = $userId;
 
         $this->db->insert('individualform', $causeData);
+        $causeId = $this->db->insert_id();
+        $this->session->set_userdata('currentCauseId', $causeId);
     }
 
     redirect('/send');
