@@ -151,7 +151,7 @@
 <body>
    
         <div class="container-fluid">
-            <a class="navbar-brand me-auto" href="<?= base_url('') ?>">
+            <a class="navbar-brand me-auto" href="https://www.kanavu.org/">
                 <!-- <img src="<?= base_url('assets/img/Kanavu_help2.png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">KSV LOGO (14) -->
             <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
             </a>
@@ -164,14 +164,16 @@
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title">
                         <!-- <img src="<?= base_url('assets/img/Kanavu_help2.png') ?>" alt="Kanavu_help" style="height: 50px; width: auto;"> -->
-                         <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 50px; width: auto;">
+                         <a href="https://www.kanavu.org/">
+                            <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 50px; width: auto;">
+                         </a>
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <!-- <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('/kanavuhome#how-it-works-section') ?>">Home</a> -->
+                            <a id="kanavuhomepage" class="nav-link mx-lg-2 active" href="<?= base_url('') ?>">Home</a>
                         </li>
                         <li class="nav-item">
                             <a id="aboutuspage" class="nav-link mx-lg-2" href="<?= base_url('/abouts') ?>">About us</a>

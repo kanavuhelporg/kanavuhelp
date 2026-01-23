@@ -1452,6 +1452,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
         'age' => $this->input->post('age'),
         'location' => $this->input->post('location'),
         'form_selected_text' => $this->input->post('category'),
+        'created_at' => date('Y-m-d H:i:s'),
     ];
 
     $email = $this->input->post('email');
