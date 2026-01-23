@@ -1536,6 +1536,14 @@
         }
       });
 
+      // Back Button Handler
+      document.querySelectorAll(".btn-back").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const step = this.getAttribute("data-step");
+          showStep(step);
+        });
+      });
+
       // Submit Approval Button
       document.getElementById("submitApprovalButton").addEventListener("click", function(event) {
         event.preventDefault();
