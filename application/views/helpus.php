@@ -1230,7 +1230,7 @@ function shareCause(url, title, imgurl) {
     <div class="col-md-3 col-sm-12 justify-content-start d-flex  mb-3 mb-md-0" >
         <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px; ">
             <p style="margin: 0;">Created by</p>
-            <strong style="font-size: 14px;"><a style="color:black;text-decoration:underline;" href="fundraiserprofile?id=<?=$fundraiser->user_id?>"><?= htmlspecialchars($fundraiser->created_by) ?></a></strong>
+            <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->created_by) ?></strong>
         </div>
         
     </div>
