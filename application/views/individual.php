@@ -267,16 +267,16 @@
   @media (min-width: 993px) {
     .img-fluid {
       margin-top: 50px;
-      width: 100%;
-      height: 100%;
+      max-width: 100%;
+      height: auto;
     }
   }
 
   @media (min-width: 769px) and (max-width: 992px) {
     .img-fluid {
       margin-top: 50px;
-      width: 100%;
-      height: 100%;
+      max-width: 100%;
+      height: auto;
     }
 
     .img1 {
@@ -298,8 +298,8 @@
   @media (min-width: 577px) and (max-width: 768px) {
     .img-fluid {
       margin-top: 40px;
-      width: 100%;
-      height: 100%;
+      max-width: 100%;
+      height: auto;
     }
 
     .footimg {
@@ -329,9 +329,9 @@
     }
 
     .img-fluid {
-      margin-top: 95px;
-      width: 100%;
-      height: 100%;
+      margin-top: 20px;
+      max-width: 100%;
+      height: auto;
     }
 
     .footimg {
@@ -358,10 +358,12 @@
       width: 100%;
     }
 
-    .box,
+    .box {
+      margin-top: 100px;
+    }
+
     .box1 {
       margin-top: 10px;
-
     }
 
     /* .ff{
@@ -935,10 +937,10 @@
             <div class="text-center">
               <h3 class="mt-4 mb-3"><strong>START YOUR FUNDRAISER</strong></h3>
               <h6>"We make a living by what we get, but we make a life by what we give"</h6>
-              <img src="<?php echo base_url('/assets/img/startyourfund_1.png'); ?>"
+              <img src="<?php echo base_url('/assets/img/startyourfund_1.jpeg'); ?>"
                 alt="no img"
                 class="img-fluid"
-                style="max-width: 99%; height: 85%;">
+                style="max-width: 80%; height: auto;">
             </div>
           </div>
           <!-- Right Column for Form -->
