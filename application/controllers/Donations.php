@@ -79,6 +79,13 @@ class Donations extends CI_Controller {
                             <img src="'. $imageSrc .'" class="card-img-top fixed-card-img" style="width: 100%; height: 230px; object-fit: cover; object-position: center;">
                         </a>
 
+                        '. ($fundraiser->is_runforcause == "yes" ? '
+                        <div class="position-absolute m-2" style="z-index: 5; top: 0; right: 0;">
+                            <span class="badge bg-danger text-white border-0 shadow-sm" style="font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 600;">
+                                <i class="bi bi-star-fill me-1"></i>for social
+                            </span>
+                        </div>' : '') .'
+
                         <div class="card-body d-flex flex-column">
 
                             <p class="card-title" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">'

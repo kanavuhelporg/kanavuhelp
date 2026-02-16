@@ -903,6 +903,25 @@
 .navbar-brand img:hover {
     transform: scale(1.08); /* Slight zoom-in */
 }
+/* Red Radio Buttons */
+.form-check-input:checked {
+    background-color: #ed3136 !important;
+    border-color: #ed3136 !important;
+}
+.form-check-input:focus {
+    border-color: #ed3136 !important;
+    box-shadow: 0 0 0 0.25rem rgba(237, 49, 54, 0.25) !important;
+}
+.form-check-input {
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: 0.15em;
+    cursor: pointer;
+}
+.form-check-label {
+    cursor: pointer;
+    padding-left: 0.25rem;
+}
 </style>
 
 <body>
@@ -969,8 +988,8 @@
                 <!-- Step 1 Content -->
                  <?php 
                    if(!empty($mailstatus)){
-                     echo "<div class=alert alert-danger>
-                                OTP sent failed. Please try agin. 
+                     echo "<div class='alert alert-danger'>
+                                OTP sent failed. Please try again. 
                            </div>";
                    }
                    $this->session->unset_userdata("mailstatus");
@@ -1048,6 +1067,26 @@
                       <span id="phone-error" class="text-danger"></span>
                     </div>
                   </div>
+									
+									<div class="form-group row align-items-center">
+    
+										<label class="col-md-4 col-12 col-form-label">
+												Are you running for any cause?
+										</label>
+
+										<div class="col-md-8 col-12 d-flex align-items-center">
+												
+                      <div class="form-check me-4">
+                          <input class="form-check-input" type="radio" name="runforcause" id="yes" value="yes">
+                          <label class="form-check-label" for="yes">Yes</label>
+                      </div>
+
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="runforcause" id="no" value="no" checked>
+                          <label class="form-check-label" for="no">No</label>
+                      </div>
+										</div>
+									</div>
 
                   <div class="text-center mt-3">
                     <button type="submit" id="continueToStep2" class="btn btn-danger no-hover">Continue</button>
@@ -1056,6 +1095,7 @@
               </form>
 
               <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/individualform_data') ?>" enctype="multipart/form-data">
+                <input type="hidden" name="runforcause" id="hidden_runforcause" value="no">
                 <!-- OTP Modal -->
                 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
@@ -1115,6 +1155,41 @@
                       <span id="end-date-error" class="text-danger"></span>
                     </div>
                   </div>
+							<div id="run-for-cause-section" class="d-none mt-4">
+								<h5 class="mb-3">Run for Cause Details</h5>
+
+								<div class="row my-3">
+										<label for="event_name" class="col-md-4 col-form-label">Event Name<span class="text-danger">*</span></label>
+										<div class="col-md-8">
+												<input type="text" name="event_name" id="event_name" class="form-control my-2" placeholder="Event Name">
+												<span id="event-name-error" class="text-danger"></span>
+										</div>
+								</div>
+
+								<div class="row my-3">
+										<label for="event_date" class="col-md-4 col-form-label">Event Date<span class="text-danger">*</span></label>
+										<div class="col-md-8">
+												<input type="date" name="event_date" id="event_date" class="form-control my-2">
+												<span id="event-date-error" class="text-danger"></span>
+										</div>
+								</div>
+
+								<div class="row my-3">
+										<label for="run_distance_km" class="col-md-4 col-form-label">Run Distance (KM)<span class="text-danger">*</span></label>
+										<div class="col-md-8">
+												<input type="number" step="0.1" min="0.1" name="run_distance_km" id="run_distance_km" class="form-control my-2" placeholder="e.g. 10.5">
+												<span id="run-distance-error" class="text-danger"></span>
+										</div>
+								</div>
+
+								<div class="row my-3">
+										<label for="event_location" class="col-md-4 col-form-label">Event Location<span class="text-danger">*</span></label>
+										<div class="col-md-8">
+												<input type="text" name="event_location" id="event_location" class="form-control my-2" placeholder="Event Location">
+												<span id="event-location-error" class="text-danger"></span>
+										</div>
+								</div>
+							</div>
 
                   <div class="text-center mt-3">
                     <button type="button" class="btn btn-danger no-hover btn-back" data-step="1">Back</button>
@@ -1381,7 +1456,8 @@
     let headerheight = document.getElementById("header").getBoundingClientRect().height;
     let displayheight = window.innerHeight;
     document.getElementById("step-3").style.height = `${displayheight - headerheight}px`;
-        
+
+		        
     document.addEventListener("DOMContentLoaded", function() {
       const otpModal = new bootstrap.Modal(document.getElementById("myModal"));
       const messageModal = new bootstrap.Modal(document.getElementById("messageModal"));
@@ -1390,7 +1466,8 @@
       function showPopupMessage(message) {
         document.getElementById("messageModalBody").innerHTML = message;
         messageModal.show();
-    }
+    
+			}
 
     let steponeform = document.getElementById("causeStep1");
 
@@ -1403,11 +1480,14 @@
       // Continue to Step 2
     document.getElementById("continueToStep2").addEventListener("click", () => {
         if (stepOnevalidation()) {
+          const selectedRunCause = document.querySelector('input[name="runforcause"]:checked').value;
+          localStorage.setItem('runforcause', selectedRunCause);
           sendOtp();
           otpModal.show();
         }
     }); 
 
+	
     function stepOnevalidation(){
        let category = document.forms["causeStep1"]["category"].value.trim();
        let created_by = document.forms["causeStep1"]["created_by"].value.trim();
@@ -1529,6 +1609,60 @@
         
       });
 
+				// ──────────────────────────────────────────────
+        // Run for Cause logic (Step 1 → affects Step 2)
+        // ──────────────────────────────────────────────
+        const runCauseRadios = document.querySelectorAll('input[name="runforcause"]');
+        const runCauseSection = document.getElementById('run-for-cause-section');
+
+        // Restore saved state from localStorage
+        const savedRunCause = localStorage.getItem('runforcause');
+        if (savedRunCause) {
+            const radioToSelect = document.querySelector(`input[name="runforcause"][value="${savedRunCause}"]`);
+            if (radioToSelect) {
+                radioToSelect.checked = true;
+            }
+        }
+
+        function toggleRunForCauseFields() {
+            const selected = document.querySelector('input[name="runforcause"]:checked');
+            if (selected && selected.value === 'yes') {
+                runCauseSection.classList.remove('d-none');
+                document.getElementById('hidden_runforcause').value = 'yes';
+                runCauseSection.querySelectorAll('input').forEach(el => {
+                    el.setAttribute('required', 'required');
+                });
+            } else {
+                runCauseSection.classList.add('d-none');
+                document.getElementById('hidden_runforcause').value = 'no';
+                runCauseSection.querySelectorAll('input').forEach(el => {
+                    el.removeAttribute('required');
+                    el.value = '';
+                    const errEl = document.getElementById(el.id + '-error');
+                    if (errEl) errEl.textContent = '';
+                });
+            }
+        }
+
+        // Initialize on load
+        toggleRunForCauseFields();
+
+        // Listen to radio changes
+        runCauseRadios.forEach(radio => {
+            radio.addEventListener('change', toggleRunForCauseFields);
+        });
+
+        // Real-time validation for run-for-cause fields
+        runCauseSection.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', () => {
+                const id = input.id;
+                if (id === 'event_name') validateEventName();
+                if (id === 'event_date') validateEventDate();
+                if (id === 'run_distance_km') validateRunDistance();
+                if (id === 'event_location') validateEventLocation();
+            });
+        });
+
       // Continue to Step 3
       document.getElementById("continueToStep3").addEventListener("click", () => {
         if (validateStep2()) {
@@ -1632,9 +1766,47 @@
         }
       }
 
-      function validateStep2() {
-        return validateAmount() & validateEndDate();
-      }
+function validateStep2() {
+    // Basic required fields
+    let valid = validateAmount() && validateEndDate();
+
+    // Only validate run-for-cause fields if section is visible
+    if (!runCauseSection.classList.contains('d-none')) {
+        valid = valid &&
+            validateEventName() &&
+            validateEventDate() &&
+            validateRunDistance() &&
+            validateEventLocation();
+    }
+
+    return valid;
+}
+
+// Helper function (add this if you don't have similar already)
+function validateField(id, errorId, message, isNumber = false) {
+    const field = document.getElementById(id);
+    const errorEl = document.getElementById(errorId);
+
+    if (!field) return true;
+
+    let value = field.value.trim();
+
+    if (isNumber) {
+        let num = parseFloat(value);
+        if (!value || isNaN(num) || num <= 0) {
+            errorEl.textContent = message;
+            return false;
+        }
+    } else {
+        if (!value) {
+            errorEl.textContent = message;
+            return false;
+        }
+    }
+
+    errorEl.textContent = '';
+    return true;
+}
 
       function validateStep3() {
         return validateCauseTitle() & validateCauseDescription();
@@ -1675,7 +1847,7 @@
 
         }
 
-        function validateCreatedby() {
+      function validateCreatedby() {
         const nameInput = document.getElementById("created_by").value.trim();
         const errorElement = document.getElementById("created_by_error");
         const nameRegex = /^([A-Za-z\s'-]{1,49})+$/;
@@ -1691,7 +1863,7 @@
             errorElement.textContent = "";
             return true;
             }
-        }
+        	}
         }   
 
       function validateAge() {
@@ -1775,6 +1947,77 @@
         errorElement.textContent = "";
         return true;
       }
+
+		// newly added validation functions for step 2 fields
+		function validateEventName() {
+			const field = document.getElementById("event_name");
+			const error = document.getElementById("event-name-error");
+			if (!field) return true;
+
+			const val = field.value.trim();
+			if (!val) {
+					error.textContent = "Event name is required.";
+					return false;
+			}
+			error.textContent = "";
+			return true;
+		}
+
+		function validateEventDate() {
+				const field = document.getElementById("event_date");
+				const error = document.getElementById("event-date-error");
+				if (!field) return true;
+
+				const val = field.value;
+				if (!val) {
+						error.textContent = "Please select event date.";
+						return false;
+				}
+
+				// Optional: prevent past dates
+				const selected = new Date(val);
+				const today = new Date();
+				today.setHours(0, 0, 0, 0);
+				if (selected < today) {
+						error.textContent = "Event date cannot be in the past.";
+						return false;
+				}
+
+				error.textContent = "";
+				return true;
+		}
+
+		function validateRunDistance() {
+				const field = document.getElementById("run_distance_km");
+				const error = document.getElementById("run-distance-error");
+				if (!field) return true;
+
+				const val = field.value.trim();
+				const num = parseFloat(val);
+
+				if (!val || isNaN(num) || num <= 0) {
+						error.textContent = "Please enter a valid distance greater than 0.";
+						return false;
+				}
+
+				error.textContent = "";
+				return true;
+		}
+
+		function validateEventLocation() {
+				const field = document.getElementById("event_location");
+				const error = document.getElementById("event-location-error");
+				if (!field) return true;
+
+				const val = field.value.trim();
+				if (!val) {
+						error.textContent = "Event location is required.";
+						return false;
+				}
+				error.textContent = "";
+				return true;
+		}
+
 
       function validateCauseTitle() {
         const heading = document.getElementById("cause_heading").value.trim();

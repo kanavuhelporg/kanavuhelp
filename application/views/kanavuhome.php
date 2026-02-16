@@ -1814,6 +1814,14 @@
                   class="card-img-top">
             </a>
 
+            <?php if ($fundraiser->is_runforcause == 'yes'): ?>
+              <div class="position-absolute m-2" style="z-index: 5; top: 0; right: 0;">
+                  <span class="badge bg-danger text-white border-0 shadow-sm" style="font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 600;">
+                      <i class="bi bi-star-fill me-1"></i>for social
+                  </span>
+              </div>
+            <?php endif; ?>
+
             <div class="card-body d-flex flex-column">
               <!-- Title -->
               <h5 class="card-title text-truncate">

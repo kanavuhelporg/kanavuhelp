@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
  
   <style>
@@ -297,7 +298,13 @@
 
               <div class="card_text d-flex justify-content-between">
 
-                <p class="card-title"><b><?= $cause->cause_heading ?></b></p>
+                <p class="card-title"><b><?= $cause->cause_heading ?></b>
+                  <?php if ($cause->is_runforcause == 'yes'): ?>
+                    <span class="badge bg-danger text-white float-end" style="font-size: 0.75rem; font-weight: 600; white-space: nowrap;">
+                        <i class="bi bi-star-fill me-1"></i>for social
+                    </span>
+                  <?php endif; ?>
+                </p>
 
                 <p class="text-muted"><?= $cause->days_left > 0 ? $cause->days_left . ' days left' : 'Expired' ?></p>
 

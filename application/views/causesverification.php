@@ -642,6 +642,11 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                                     title="<?= htmlspecialchars($donation->cause_heading); ?>">
                                                     <?= htmlspecialchars($donation->cause_heading); ?>
                                                 </span>
+                                                <?php if ($donation->is_runforcause == 'yes'): ?>
+                                                    <span class="badge bg-danger text-white ms-1" style="font-size: 0.65rem; padding: 2px 5px; font-weight: 600;">
+                                                        <i class="bi bi-star-fill me-1"></i>for social
+                                                    </span>
+                                                <?php endif; ?>
 
                                             </button>
                                         </td>
@@ -1326,7 +1331,35 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                         </div>
 
-                        <!-- SECTION 3: Financials & Tracking -->
+                        <!-- SECTION 3: Run for Cause Details -->
+                        <div class="modal-section-title">Run for Cause Details</div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label small">Is Run for Cause?</label>
+                                <select name="is_runforcause" id="field_is_runforcause" class="form-select">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Event Name</label>
+                                <input type="text" name="eventname" id="field_eventname" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Event Date</label>
+                                <input type="text" name="eventdate" id="field_eventdate" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Event Distance (KM)</label>
+                                <input type="text" name="eventdistancekm" id="field_eventdistancekm" class="form-control">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small">Event Location</label>
+                                <input type="text" name="eventlocation" id="field_eventlocation" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- SECTION 4: Financials & Tracking -->
                         <div class="modal-section-title">Financials, Dates & Tracking</div>
                         <div class="row g-3">
                             <div class="col-md-3">
@@ -1455,6 +1488,13 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         $('#field_end_date').val(d.end_date);
                         $('#field_cause_heading').val(d.cause_heading);
                         $('#field_cause_description').val(d.cause_description);
+                        
+                        // Run for Cause Details
+                        $('#field_is_runforcause').val(d.is_runforcause || 'no');
+                        $('#field_eventname').val(d.eventname);
+                        $('#field_eventdate').val(d.eventdate);
+                        $('#field_eventdistancekm').val(d.eventdistancekm);
+                        $('#field_eventlocation').val(d.eventlocation);
                         
                         // Handle images
                         $('#field_cover_image_old').val(d.cover_image);

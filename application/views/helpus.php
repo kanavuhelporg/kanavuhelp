@@ -570,7 +570,13 @@
     <div class="row mt-4">
         <div class="col-lg-7">
             <!-- Cause Heading -->
-            <h4 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?></h4>
+            <h4 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?>
+                <?php if ($fundraiser->is_runforcause == 'yes'): ?>
+                    <span class="badge bg-danger text-white float-end" style="font-size: 0.8rem; font-weight: 600;">
+                        <i class="bi bi-star-fill me-1"></i>for social
+                    </span>
+                <?php endif; ?>
+            </h4>
             
 <!-- Cause Description -->
 <!-- video loaded in topsection -->
