@@ -712,14 +712,15 @@
                                             <td><?= $donation->status == 1 ? 'Yes' : 'No'; ?></td>
                                             <td>
                                                 <div class="action-buttons">
-                                                    <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" 
-                                                            class="btn btn-primary btn-sm fw-bold" 
-                                                            data-toggle="modal" data-target="#editDonationModal">Edit</button>
                                                     <button onclick="setUrl(<?= htmlspecialchars(json_encode($donation)); ?>)" 
-                                                            class="btn btn-warning btn-sm fw-bold" 
+                                                            class="btn btn-warning btn-sm" 
                                                             data-toggle="modal" data-target="#sendmail">Status</button>
+                                                    <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" 
+                                                            class="btn btn-success btn-sm" 
+                                                            data-toggle="modal" data-target="#editDonationModal"><i class="fa fa-edit"></i></button>
+                                                    
                                                     <button onclick="deleteDonation(<?= $donation->donation_id; ?>)" 
-                                                            class="btn btn-danger btn-sm fw-bold">Delete</button>
+                                                            class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                 </div>
                                             </td>
                                         </tr>

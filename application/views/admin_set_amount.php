@@ -668,7 +668,7 @@
                             <td>
                             <?php if(!empty($entry['id'])): ?>
                                   <div class="d-flex gap-2">
-                                      <button class="btn btn-sm btn-warning edit-btn" 
+                                      <button class="btn btn-sm btn-success edit-btn" 
                                               data-id="<?= $entry['id'] ?>"
                                               data-amount="<?= $entry['amount'] ?>"
                                               data-causes="<?= $entry['causes'] ?>"
