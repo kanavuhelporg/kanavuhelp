@@ -81,8 +81,10 @@ class Donations extends CI_Controller {
 
                         '. ($fundraiser->is_runforcause == "yes" ? '
                         <div class="position-absolute m-2" style="z-index: 5; top: 0; right: 0;">
-                            <span class="badge bg-danger text-white border-0 shadow-sm" style="font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 600;">
-                                <i class="bi bi-star-fill me-1"></i>for social
+                            <span class="badge bg-danger text-white border-0 shadow-sm" 
+                                  data-bs-toggle="tooltip" data-bs-placement="left" title="Your support fuels my run"
+                                  style="font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 600; cursor: pointer;">
+                                <i class="bi bi-star-fill me-1"></i>Impact Run
                             </span>
                         </div>' : '') .'
 
@@ -121,7 +123,7 @@ class Donations extends CI_Controller {
                                     $output .= '<span class="badge bg-success mt-2">Completed</span>';
                                 } else {
                                     $output .= '<button type="button" class="btn bg-danger text-white donate_btn" 
-                                                onclick="setCauseId('.$fundraiser->id.'); openDonationModal();">Donate Now</button>';
+                                                onclick="setCauseId('.$fundraiser->id.'); openDonationModal(\''.$fundraiser->is_runforcause.'\');">Donate Now</button>';
                                 }
 
                                 $output .= '

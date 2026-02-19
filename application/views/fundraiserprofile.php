@@ -1546,8 +1546,8 @@
                             <?php if ($is_goal_reached): ?>
                                 <span class="badge bg-success">Completed</span>
                             <?php else: ?>
-                                <button class="btn btn-danger btn-sm" 
-                                        onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal();" style="padding: 5px 15px; border-radius: 25px;">
+                                <button class="btn btn-danger btn-sm donate_btn" 
+                                        onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal('<?= $fundraiser->is_runforcause ?>');" style="padding: 5px 15px; border-radius: 25px;">
                                     Donate Now
                                 </button>
                             <?php endif; ?>
@@ -2631,7 +2631,7 @@ function openDonationModal() {
             
             <div class="modal-header border-0 bg-danger text-white p-4">
                 <div>
-                    <h5 class="fw-bold mb-0">Support Our Cause</h5>
+                    <h5 class="fw-bold mb-0" id="donationModalTitle">Support Our Cause</h5>
                     <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
                 </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -2905,6 +2905,18 @@ function openDonationModal() {
       }
     }); 
 
+
+  function openDonationModal(isRunForCause) {
+    // Update modal title based on is_runforcause
+    const modalTitle = document.getElementById('donationModalTitle');
+    if (modalTitle) {
+      modalTitle.textContent = isRunForCause === 'yes' ? 'Support for Our Run' : 'Support Our Cause';
+    }
+    
+    // Show the modal using Bootstrap's modal method
+    var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+    donationModal.show();
+  }
 
   // Handle Donate button click using event delegation
   document.querySelector('.container').addEventListener('click', function(event) {

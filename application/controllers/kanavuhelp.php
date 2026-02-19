@@ -972,7 +972,8 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $this->session->set_userdata($userLoggedIn);  
         $this->session->set_flashdata("logged_in", true);
         // $this->session->set_userdata("entry",0);
-        redirect('causesverification'); 
+        // redirect('causesverification'); 
+        redirect(base_url());
     }
 
     public function updateindividualform_data()

@@ -637,7 +637,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                                 </span>
                                                 <?php if ($donation->is_runforcause == 'yes'): ?>
                                                     <span class="badge bg-danger text-white ms-1" style="font-size: 0.65rem; padding: 2px 5px; font-weight: 600;">
-                                                        <i class="bi bi-star-fill me-1"></i>for social
+                                                        <i class="bi bi-star-fill me-1"></i>Impact
                                                     </span>
                                                 <?php endif; ?>
 

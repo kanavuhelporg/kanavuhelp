@@ -1816,8 +1816,10 @@
 
             <?php if ($fundraiser->is_runforcause == 'yes'): ?>
               <div class="position-absolute m-2" style="z-index: 5; top: 0; right: 0;">
-                  <span class="badge bg-danger text-white border-0 shadow-sm" style="font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 600;">
-                      <i class="bi bi-star-fill me-1"></i>for social
+                  <span class="badge bg-danger text-white border-0 shadow-sm" 
+                        data-bs-toggle="tooltip" data-bs-placement="left" title="Your support fuels my run"
+                        style="font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 600; cursor: pointer;">
+                      <i class="bi bi-star-fill me-1"></i>Impact Run
                   </span>
               </div>
             <?php endif; ?>
@@ -1861,6 +1863,7 @@
                 <?php else: ?>
                   <button class="btn btn-danger btn-sm donate-btn" 
                           data-cause-id="<?= $fundraiser->id ?>" 
+                          data-is-runforcause="<?= $fundraiser->is_runforcause ?>"
                           style="padding: 5px 15px; border-radius: 25px;">
                     Donate Now
                   </button>
@@ -1967,7 +1970,7 @@
       <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
         <div class="modal-header border-0 bg-danger text-white p-4">
           <div>
-            <h5 class="fw-bold mb-0">Support Our Cause</h5>
+            <h5 class="fw-bold mb-0" id="donationModalTitle">Support Our Cause</h5>
             <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
           </div>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -2556,6 +2559,14 @@
         e.preventDefault();
         const button = e.target.closest('.donate-btn');
         const causeId = button.getAttribute('data-cause-id');
+        const isRunForCause = button.getAttribute('data-is-runforcause');
+        
+        // Update modal title based on is_runforcause
+        const modalTitle = document.getElementById('donationModalTitle');
+        if (modalTitle) {
+          modalTitle.textContent = isRunForCause === 'yes' ? 'Support for Our Run' : 'Support Our Cause';
+        }
+
         setCauseId(causeId);
         openDonationModal();
       }
