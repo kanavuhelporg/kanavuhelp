@@ -1805,7 +1805,7 @@
           $progress_percentage = getProgressPercentage($fundraiser);
         ?>
 
-        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-3" style="position: relative;">
           <div class="card h-100 shadow-sm">
             <!-- Cover Image -->
             <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>">
@@ -2156,6 +2156,22 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Initialize Bootstrap tooltips – container:'body' ensures each tooltip
+    // anchors to its own trigger element and never drifts to a nearby card.
+    document.addEventListener('DOMContentLoaded', function () {
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      tooltipTriggerList.forEach(function (el) {
+        new bootstrap.Tooltip(el, {
+          container: 'body',
+          trigger: 'hover'
+        });
+      });
+    });
+  </script>
 
   <script>
     // ============================================
