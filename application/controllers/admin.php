@@ -361,7 +361,12 @@ public function deleteAdminEntry()
             'Cause_video_link'     => $this->input->post('Cause_video_link'),
             'Cause_video_link_eng' => $this->input->post('Cause_video_link_eng'),
             'created_by'           => $this->input->post('created_by'),
-            'isFill'               => $this->input->post('isFill')
+            'isFill'               => $this->input->post('isFill'),
+            'is_runforcause'       => $this->input->post('is_runforcause'),
+            'eventname'            => $this->input->post('eventname'),
+            'eventdate'            => $this->input->post('eventdate'),
+            'eventdistancekm'      => $this->input->post('eventdistancekm'),
+            'eventlocation'        => $this->input->post('eventlocation')
         );
 
         // File Upload Logic

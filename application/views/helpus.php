@@ -570,7 +570,15 @@
     <div class="row mt-4">
         <div class="col-lg-7">
             <!-- Cause Heading -->
-            <h4 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?></h4>
+            <h4 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?>
+                <?php if ($fundraiser->is_runforcause == 'yes'): ?>
+                    <span class="badge bg-danger text-white float-end" 
+                          data-bs-toggle="tooltip" data-bs-placement="left" title="Your support fuels my run"
+                          style="font-size: 0.8rem; font-weight: 600; cursor: pointer;">
+                        <i class="bi bi-star-fill me-1"></i>Impact Run
+                    </span>
+                <?php endif; ?>
+            </h4>
             
 <!-- Cause Description -->
 <!-- video loaded in topsection -->
@@ -1320,7 +1328,7 @@ function setCauseId(causeId) {
             
             <div class="modal-header border-0 bg-danger text-white p-4">
                 <div>
-                    <h5 class="fw-bold mb-0">Support Our Cause</h5>
+                    <h5 class="fw-bold mb-0" id="donationModalTitle"><?= ($fundraiser->is_runforcause == 'yes') ? 'Support for Our Run' : 'Support Our Cause' ?></h5>
                     <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
                 </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>

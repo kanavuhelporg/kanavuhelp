@@ -874,7 +874,13 @@
     });
 }
 
-    function openDonationModal() {
+    function openDonationModal(isRunForCause) {
+      // Update modal title based on is_runforcause
+      const modalTitle = document.getElementById('donationModalTitle');
+      if (modalTitle) {
+        modalTitle.textContent = isRunForCause === 'yes' ? 'Support for Our Run' : 'Support Our Cause';
+      }
+      
       // Show the modal using Bootstrap's modal method
       var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
       donationModal.show();
@@ -947,7 +953,7 @@
             
             <div class="modal-header border-0 bg-danger text-white p-4">
                 <div>
-                    <h5 class="fw-bold mb-0">Support Our Cause</h5>
+                    <h5 class="fw-bold mb-0" id="donationModalTitle">Support Our Cause</h5>
                     <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
                 </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>

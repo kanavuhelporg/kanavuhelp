@@ -599,14 +599,14 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <thead>
                             <tr class="ps-gray">
                                 <th>S.No</th>
+                                <th>Cause heading</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Mobile</th>
                                 <th>Amount</th>
                                 <th>Location</th>
                                 <th>Age</th>
-                                <th>End date</th>
-                                <th>Cause heading</th>
+                                <th>End date</th>                                
                                 <th>Created date</th>
                                 <th>Created by</th>
                                 <th>Raised amount</th>
@@ -620,13 +620,6 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                 <?php foreach ($fundraisers as $index => $donation): ?>
                                     <tr>
                                         <td><?= $index + 1; ?></td>
-                                        <td><?= htmlspecialchars($donation->name); ?></td>
-                                        <td><?= htmlspecialchars($donation->email); ?></td>
-                                        <td><?= htmlspecialchars($donation->phone); ?></td>
-                                        <td><?= htmlspecialchars($donation->amount); ?></td>
-                                        <td><?= htmlspecialchars($donation->location); ?></td>
-                                        <td><?= htmlspecialchars($donation->age); ?></td>
-                                        <td><?= htmlspecialchars($donation->end_date); ?></td>
                                         <td>
                                             <button 
                                                 data-bs-toggle="modal"
@@ -642,9 +635,22 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                                     title="<?= htmlspecialchars($donation->cause_heading); ?>">
                                                     <?= htmlspecialchars($donation->cause_heading); ?>
                                                 </span>
+                                                <?php if ($donation->is_runforcause == 'yes'): ?>
+                                                    <span class="badge bg-danger text-white ms-1" style="font-size: 0.65rem; padding: 2px 5px; font-weight: 600;">
+                                                        <i class="bi bi-star-fill me-1"></i>Impact
+                                                    </span>
+                                                <?php endif; ?>
 
                                             </button>
                                         </td>
+                                        <td><?= htmlspecialchars($donation->name); ?></td>
+                                        <td><?= htmlspecialchars($donation->email); ?></td>
+                                        <td><?= htmlspecialchars($donation->phone); ?></td>
+                                        <td><?= htmlspecialchars($donation->amount); ?></td>
+                                        <td><?= htmlspecialchars($donation->location); ?></td>
+                                        <td><?= htmlspecialchars($donation->age); ?></td>
+                                        <td><?= htmlspecialchars($donation->end_date); ?></td>
+                                        
 
                                         <td><?= date('d-m-Y', strtotime($donation->created_at)); ?></td>
                                         <td><?= htmlspecialchars($donation->created_by); ?></td>
@@ -660,30 +666,29 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                        
                                         <td class="d-flex">
                                              <button type="button" 
-                                                class="btn btn-sm btn-info open-cause-modal" 
+                                                class="btn btn-sm btn-primary open-cause-modal text-white"
+                                                 toggle="tooltip"
+                                                title="View/Edit the Cause" 
                                                 data-id="<?= $donation->id; ?>" 
                                                 data-mode="view">
-                                            <i class="fa fa-eye"></i> View
+                                            <i class="fa fa-eye"></i>
                                         </button>&nbsp;&nbsp;
-                                      <button type="button" 
-                                            class="btn btn-sm btn-warning open-cause-modal" 
-                                            data-id="<?= $donation->id; ?>" 
-                                            data-mode="edit">
-                                        <i class="fa fa-edit"></i> Edit
-                                    </button>&nbsp;&nbsp;
-                                    
-                                                                                <!-- <button
-                                                class="btn btn-primary fw-bold"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#editDonationModal"
-                                                onclick='editDonation(<?= json_encode($donation); ?>)'>
-                                                Edit
-                                            </button> &nbsp;&nbsp; -->
-                                               
+                                         <button 
+                                    type="button"
+                                    class="btn btn-sm btn-success ms-1"
+                                    toggle="tooltip"
+                                    title="Update Progress"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#updateProgressModal"
+                                    onclick="openUpdateProgressModal(<?= $donation->id ?>)">
+                                    <i class="fa fa-upload"></i>
+                                </button>&nbsp;&nbsp;
                                             <button
-                                                class="btn btn-danger fw-bold"
+                                                class="btn btn-sm btn-danger"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#sendmail"
+                                                toggle="tooltip"
+                                                title="Send email after verification"
                                                 onclick="setUrl(
                                                     '<?= $donation->email ?>',
                                                     '<?= $donation->user_id ?>',
@@ -693,29 +698,23 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                                 )">
                                                 Status
                                             </button> &nbsp;&nbsp;
-                                            <button 
-                                    type="button"
-                                    class="btn btn-sm btn-success ms-1"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#updateProgressModal"
-                                    onclick="openUpdateProgressModal(<?= $donation->id ?>)">
-                                    <i class="fa fa-upload"></i> Update Progress
-                                </button>&nbsp;&nbsp;
-                                            <button onclick="deleteCause(<?= $donation->id; ?>)" class="btn btn-danger fw-bold">Delete</button> &nbsp;&nbsp;
+                                           
                                             <?php if ($this->session->userdata('adminName')): ?>
                                                 <?php if ($donation->priority == 0): ?>
                                                     <button
-                                                        class="btn btn-info fw-bold btn-sm"
+                                                        class="btn btn-info btn-sm"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#priorityModal"
+                                                        toggle="tooltip"
+                                                        title="want to set priority for this cause"
                                                         onclick="setPriorityId(<?= $donation->id ?>)">
                                                         Insert Priority
                                                     </button>
 
-                                                    <button class="btn btn-warning fw-bold btn-sm no-priority-btn" style="display: none;" onclick="setNoPriority(<?= $donation->id; ?>)">No Priority</button>
+                                                    <button class="btn btn-warning btn-sm no-priority-btn" style="display: none;" toggle="tooltip" title="want to remove priority for this cause" onclick="setNoPriority(<?= $donation->id; ?>)">No Priority</button>
                                                 <?php else: ?>
-                                                    <button class="btn btn-info fw-bold btn-sm insert-priority-btn" style="display: none;" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?= $donation->id; ?>)">Insert Priority</button>
-                                                    <button class="btn btn-warning fw-bold btn-sm no-priority-btn" onclick="setNoPriority(<?= $donation->id; ?>)">No Priority</button>
+                                                    <button class="btn btn-info btn-sm insert-priority-btn" style="display: none;" toggle="tooltip" title="want to set priority for this cause" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?= $donation->id; ?>)">Insert Priority</button>
+                                                    <button class="btn btn-warning btn-sm no-priority-btn" toggle="tooltip" title="want to remove priority for this cause" onclick="setNoPriority(<?= $donation->id; ?>)">No Priority</button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                         </td>
@@ -1273,9 +1272,17 @@ if (isset($_SESSION["emailsuccessstatus"])) {
         <div class="modal-dialog modal-xl">
             <form id="causeForm" action="<?php echo base_url('admin/update_cause'); ?>" method="POST" enctype="multipart/form-data">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header d-flex justify-content-between align-items-center">
                         <h5 class="modal-title" id="modalTitle">Full Cause Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="d-flex align-items-center">
+                            <button type="button" class="btn btn-success btn-sm text-white shadow-sm me-2" id="editBtnModal">
+                                <i class="fa fa-edit"></i> Edit
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm shadow-sm me-2" id="deleteBtnModal">
+                                <i class="fa fa-trash"></i> Delete
+                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
                     </div>
                     <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
                         <input type="hidden" name="id" id="field_id">
@@ -1326,7 +1333,35 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                         </div>
 
-                        <!-- SECTION 3: Financials & Tracking -->
+                        <!-- SECTION 3: Run for Cause Details -->
+                        <div class="modal-section-title">Run for Cause Details</div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label small">Is Run for Cause?</label>
+                                <select name="is_runforcause" id="field_is_runforcause" class="form-select">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Event Name</label>
+                                <input type="text" name="eventname" id="field_eventname" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Event Date</label>
+                                <input type="text" name="eventdate" id="field_eventdate" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small">Event Distance (KM)</label>
+                                <input type="text" name="eventdistancekm" id="field_eventdistancekm" class="form-control">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small">Event Location</label>
+                                <input type="text" name="eventlocation" id="field_eventlocation" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- SECTION 4: Financials & Tracking -->
                         <div class="modal-section-title">Financials, Dates & Tracking</div>
                         <div class="row g-3">
                             <div class="col-md-3">
@@ -1417,7 +1452,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="submitBtn">Update Database Record</button>
+                        <button type="submit" class="btn btn-primary shadow-sm" id="submitBtn">Update Database Record</button>
                     </div>
                 </div>
             </form>
@@ -1456,6 +1491,13 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         $('#field_cause_heading').val(d.cause_heading);
                         $('#field_cause_description').val(d.cause_description);
                         
+                        // Run for Cause Details
+                        $('#field_is_runforcause').val(d.is_runforcause || 'no');
+                        $('#field_eventname').val(d.eventname);
+                        $('#field_eventdate').val(d.eventdate);
+                        $('#field_eventdistancekm').val(d.eventdistancekm);
+                        $('#field_eventlocation').val(d.eventlocation);
+                        
                         // Handle images
                         $('#field_cover_image_old').val(d.cover_image);
                         if(d.cover_image) $('#label_cover_image').text('Current: ' + d.cover_image);
@@ -1489,12 +1531,16 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             $('#modalTitle').text('Viewing Record #' + d.id);
                             $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', true);
                             $('#submitBtn').hide();
+                            $('#editBtnModal').show();
+                            $('#deleteBtnModal').show();
                         } else {
                             $('#modalTitle').text('Editing Record #' + d.id);
                             $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', false);
                             // Keep ID and CreatedAt readonly
                             $('#field_id, #field_created_at').prop('readonly', true).prop('disabled', false); // Keep enabled so they submit, but readonly
                             $('#submitBtn').show();
+                            $('#editBtnModal').hide();
+                            $('#deleteBtnModal').hide();
                         }
 
                         $('#causeModal').modal('show');
@@ -1506,6 +1552,27 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     alert('AJAX Error: Verify controller function exists.');
                 }
             });
+        });
+
+        // Toggle Edit Mode inside the Modal
+        $('#editBtnModal').on('click', function() {
+            const id = $('#field_id').val();
+            $('#modalTitle').text('Editing Record #' + id);
+            
+            // Re-enable fields for editing
+            $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', false);
+            $('#field_id, #field_created_at').prop('readonly', true).prop('disabled', false);
+            
+            // Switch buttons
+            $(this).hide();
+            $('#deleteBtnModal').hide();
+            $('#submitBtn').show();
+        });
+
+        // Trigger Delete inside the Modal
+        $('#deleteBtnModal').on('click', function() {
+            const id = $('#field_id').val();
+            deleteCause(id);
         });
     });
     </script>

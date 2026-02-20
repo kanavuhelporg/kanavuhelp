@@ -943,10 +943,20 @@ foreach ($data['fundraisers'] as $fundraiser) {
      
             $data['amount'] = $this->input->post('amount');
             $data['end_date'] = $this->input->post('end_date');
+            $data['is_runforcause'] = $this->input->post('runforcause');
+
+            if($data['is_runforcause'] == "yes"){
+               $data['eventname'] = $this->input->post('event_name');
+               $data['eventdate'] = $this->input->post('event_date');
+               $data['eventdistancekm'] = $this->input->post('run_distance_km');
+               $data['eventlocation'] = $this->input->post('event_location');
+            }
+            
             $data['cause_heading'] = $this->input->post('cause_heading');
             $data['cause_description'] = $this->input->post('cause_description');
             $data['Cause_video_link'] = $this->input->post('cause_embed_link_tamil'); 
             $data['Cause_video_link_eng'] = $this->input->post('cause_embed_link_english');
+
             $data['user_id'] = $this->session->userdata('currentUserId');
            
        
@@ -962,7 +972,8 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $this->session->set_userdata($userLoggedIn);  
         $this->session->set_flashdata("logged_in", true);
         // $this->session->set_userdata("entry",0);
-        redirect('causesverification'); 
+        // redirect('causesverification'); 
+        redirect(base_url());
     }
 
     public function updateindividualform_data()
@@ -1008,6 +1019,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
 
             $data['amount'] = $this->input->post('amount');
             $data['end_date'] = $this->input->post('end_date');
+            
             $data['cause_heading'] = $this->input->post('cause_heading');
             $data['cause_description'] = $this->input->post('cause_description');
             if(!empty($this->input->post('cause_embed_link_tamil'))){
@@ -1451,6 +1463,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
         'phone' => $this->input->post('phone'),
         'age' => $this->input->post('age'),
         'location' => $this->input->post('location'),
+        'is_runforcause' => $this->input->post('runforcause'),
         'form_selected_text' => $this->input->post('category'),
         'created_at' => date('Y-m-d H:i:s'),
     ];
