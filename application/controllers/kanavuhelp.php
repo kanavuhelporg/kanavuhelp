@@ -1465,7 +1465,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
         'location' => $this->input->post('location'),
         'is_runforcause' => $this->input->post('runforcause'),
         'form_selected_text' => $this->input->post('category'),
-        'created_at' => date('Y-m-d H:i:s'),
+        'created_at' => (new DateTime('now', new DateTimeZone('Asia/Kolkata')))->format('Y-m-d H:i:s'),
     ];
 
     $email = $this->input->post('email');
