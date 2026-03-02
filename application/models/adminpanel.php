@@ -375,16 +375,20 @@ public function updateDonationFull($data)
         }
     }
 
-    public function update_raised_amount($cause_id, $amount,$status)
+    public function update_raised_amount($cause_id, $amount, $status)
     {
-        if($status == 1){
-        $this->db->set('raised_amount', 'raised_amount + ' . (int) $amount, FALSE);
-        $this->db->where('id', $cause_id);
-        return $this->db->update('individualform');
+        // Guard: only update if cause_id is a valid non-zero value
+        if (empty($cause_id) || (int)$cause_id <= 0) {
+            return false; // Do NOT touch individualform if cause_id is missing/null/0
         }
-        else{
+
+        if ($status == 1) {
+            $this->db->set('raised_amount', 'raised_amount + ' . (int) $amount, FALSE);
+            $this->db->where('id', (int)$cause_id);
+            return $this->db->update('individualform');
+        } else {
             $this->db->set('raised_amount', 'raised_amount - ' . (int) $amount, FALSE);
-            $this->db->where('id', $cause_id);
+            $this->db->where('id', (int)$cause_id);
             return $this->db->update('individualform');
         }
     }

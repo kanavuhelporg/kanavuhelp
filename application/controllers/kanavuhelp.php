@@ -630,7 +630,7 @@ public function set_no_priority() {
         ]);
         $newid = $this->db->insert_id();
         $data['user_id'] = $newid;
-
+        /*
         $this->db->insert('individualform', [
             'user_id' => $newid,
             'name' => $name,
@@ -638,6 +638,7 @@ public function set_no_priority() {
             'phone' => $phoneno,
             'location' => $city
         ]);
+        */
     }
 
     // Save donation
