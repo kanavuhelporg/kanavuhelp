@@ -31,22 +31,40 @@ class admin extends CI_Controller
 
    
     public function admindashbord()
-{
-    // Transaction count
-    $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
-    $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
+    {
+        // Transaction count
+        $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+        $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
 
-    // Enquiry count
-    $enquiryCount = $this->db->count_all('contact_us');
-    $this->session->set_userdata("enquiryCount", $enquiryCount);
+        // Enquiry count
+        $enquiryCount = $this->db->count_all('contact_us');
+        $this->session->set_userdata("enquiryCount", $enquiryCount);
 
-    //Causes Verification count
-    $unverifiedCauses = $this->adminpanel->totalUnverifiedCauses();
-    $this->session->set_userdata("unverifiedCauses", $unverifiedCauses);
+        //Causes Verification count
+        $unverifiedCauses = $this->adminpanel->totalUnverifiedCauses();
+        $this->session->set_userdata("unverifiedCauses", $unverifiedCauses);
 
-    // Load dashboard
-    $this->load->view('admindashbord');
-}
+        // Fetch real data for dashboard cards
+        $data['total_fund'] = $this->adminpanel->get_total_fund();
+        $data['total_causes'] = $this->adminpanel->get_total_causes_final();
+        $data['total_donors'] = $this->adminpanel->get_total_donors_final();
+        $data['total_volunteers'] = $this->adminpanel->get_total_volunteers();
+
+        // Fetch monthly income for chart
+        $data['monthly_income'] = $this->adminpanel->get_monthly_income();
+
+        // Fetch recent items
+        $data['recent_transactions'] = $this->adminpanel->get_recent_transactions(5);
+        $data['recent_causes'] = $this->adminpanel->get_recent_causes(5);
+        
+        // Explicitly pass counts for actionable cards
+        $data['pending_transactions'] = $totalunverifiedtransactions;
+        $data['pending_causes'] = $unverifiedCauses;
+        $data['enquiry_count'] = $enquiryCount;
+
+        // Load dashboard
+        $this->load->view('admindashbord', $data);
+    }
 
 
     public function sidemenu(){

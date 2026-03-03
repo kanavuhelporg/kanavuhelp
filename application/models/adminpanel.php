@@ -548,4 +548,47 @@ public function get_admin_entry_by_id($id)
         return $this->db->update('individualform', $data);
     }
 
+    public function get_monthly_income() {
+        $year = date('Y');
+        $income = array_fill(0, 12, 0);
+
+        // Get monthly donations
+        $this->db->select('MONTH(created_at) as month, SUM(amount) as total');
+        $this->db->where('YEAR(created_at)', $year);
+        $this->db->where('status', 1); // Only count verified donations
+        $this->db->group_by('month');
+        $query = $this->db->get('donation_for_cause');
+        foreach ($query->result() as $row) {
+            $income[$row->month - 1] += $row->total;
+        }
+
+        // Get admin set amounts
+        $this->db->select('MONTH(date) as month, SUM(amount) as total');
+        $this->db->where('YEAR(date)', $year);
+        $this->db->group_by('month');
+        $query = $this->db->get('admin_set_amount');
+        foreach ($query->result() as $row) {
+            $income[$row->month - 1] += $row->total;
+        }
+
+        return $income;
+    }
+
+    public function get_recent_transactions($limit = 5) {
+        $this->db->select('*');
+        $this->db->from('donation_for_cause');
+        $this->db->order_by('created_at', 'DESC');
+        $this->db->limit($limit);
+        return $this->db->get()->result();
+    }
+
+    public function get_recent_causes($limit = 5) {
+        $this->db->select('individualform.*, user.name as username');
+        $this->db->from('individualform');
+        $this->db->join('user', 'user.id = individualform.user_id', 'left');
+        $this->db->order_by('individualform.created_at', 'DESC');
+        $this->db->limit($limit);
+        return $this->db->get()->result();
+    }
+
 }
