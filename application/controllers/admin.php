@@ -50,8 +50,10 @@ class admin extends CI_Controller
         $data['total_donors'] = $this->adminpanel->get_total_donors_final();
         $data['total_volunteers'] = $this->adminpanel->get_total_volunteers();
 
-        // Fetch monthly income for chart
-        $data['monthly_income'] = $this->adminpanel->get_monthly_income();
+        // Fetch weekly income for chart (Default)
+        $weeklyData = $this->adminpanel->get_weekly_income();
+        $data['chart_labels'] = $weeklyData['labels'];
+        $data['chart_income'] = $weeklyData['income'];
 
         // Fetch recent items
         $data['recent_transactions'] = $this->adminpanel->get_recent_transactions(5);
@@ -64,6 +66,41 @@ class admin extends CI_Controller
 
         // Load dashboard
         $this->load->view('admindashbord', $data);
+    }
+
+
+    public function get_trend_data()
+    {
+        $filter = $this->input->get('filter');
+        $data = [];
+
+        switch ($filter) {
+            case 'week':
+                $rawData = $this->adminpanel->get_weekly_income();
+                $data['labels'] = $rawData['labels'];
+                $data['income'] = $rawData['income'];
+                break;
+            case 'month':
+                $rawData = $this->adminpanel->get_monthly_daily_income();
+                $data['labels'] = $rawData['labels'];
+                $data['income'] = $rawData['income'];
+                break;
+            case 'custom':
+                $start = $this->input->get('start');
+                $end = $this->input->get('end');
+                $rawData = $this->adminpanel->get_custom_range_income($start, $end);
+                $data['labels'] = $rawData['labels'];
+                $data['income'] = $rawData['income'];
+                break;
+            case 'year':
+            default:
+                $data['labels'] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                $data['income'] = $this->adminpanel->get_monthly_income();
+                break;
+        }
+
+        $data['status'] = 'success';
+        echo json_encode($data);
     }
 
 

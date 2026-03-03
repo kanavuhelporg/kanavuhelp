@@ -591,4 +591,90 @@ public function get_admin_entry_by_id($id)
         return $this->db->get()->result();
     }
 
+    public function get_weekly_income() {
+        $labels = [];
+        $income = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = date('Y-m-d', strtotime("-$i days"));
+            $labels[] = date('D', strtotime($date));
+            
+            $total = 0;
+            // Donations
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(created_at)', $date);
+            $this->db->where('status', 1);
+            $query = $this->db->get('donation_for_cause')->row();
+            $total += $query->total ?? 0;
+
+            // Admin set
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(date)', $date);
+            $query = $this->db->get('admin_set_amount')->row();
+            $total += $query->total ?? 0;
+
+            $income[] = $total;
+        }
+        return ['labels' => $labels, 'income' => $income];
+    }
+
+    public function get_monthly_daily_income() {
+        $labels = [];
+        $income = [];
+        $daysInMonth = date('t');
+        $currentMonth = date('m');
+        $currentYear = date('Y');
+
+        for ($i = 1; $i <= $daysInMonth; $i++) {
+            $date = "$currentYear-$currentMonth-" . str_pad($i, 2, '0', STR_PAD_LEFT);
+            $labels[] = $i;
+            
+            $total = 0;
+            // Donations
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(created_at)', $date);
+            $this->db->where('status', 1);
+            $query = $this->db->get('donation_for_cause')->row();
+            $total += $query->total ?? 0;
+
+            // Admin set
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(date)', $date);
+            $query = $this->db->get('admin_set_amount')->row();
+            $total += $query->total ?? 0;
+
+            $income[] = $total;
+        }
+        return ['labels' => $labels, 'income' => $income];
+    }
+    public function get_custom_range_income($start, $end) {
+        $labels = [];
+        $income = [];
+        
+        $current = strtotime($start);
+        $last = strtotime($end);
+
+        while ($current <= $last) {
+            $date = date('Y-m-d', $current);
+            $labels[] = date('M d', $current);
+            
+            $total = 0;
+            // Donations
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(created_at)', $date);
+            $this->db->where('status', 1);
+            $query = $this->db->get('donation_for_cause')->row();
+            $total += $query->total ?? 0;
+
+            // Admin set
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(date)', $date);
+            $query = $this->db->get('admin_set_amount')->row();
+            $total += $query->total ?? 0;
+
+            $income[] = $total;
+            $current = strtotime('+1 day', $current);
+        }
+        return ['labels' => $labels, 'income' => $income];
+    }
+
 }

@@ -200,6 +200,8 @@
     }
     .status-verified { background: #d1e7dd; color: #0f5132; }
     .status-pending { background: #fff3cd; color: #856404; }
+    .bg-light-purple { background-color: #f5f6ff; color: #7986cb; }
+    #trendFilter:focus { box-shadow: 0 0 0 0.25rem rgba(121, 134, 203, 0.25); border: none; }
   </style>
 </head>
 
@@ -474,7 +476,30 @@
 
             <!-- Right Column: Chart -->
             <div class="col-lg-7 col-12 mb-4">
-              <h4 class="mb-3">Income Trends</h4>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Income Trends</h4>
+                <select id="trendFilter" class="form-select form-select-sm w-auto rounded-pill px-3 shadow-sm border-0 bg-light-purple">
+                  <option value="week" selected>Week</option>
+                  <option value="month">Month</option>
+                  <option value="year">Year</option>
+                  <option value="custom">Custom Date Basis</option>
+                </select>
+              </div>
+
+              <!-- Custom Date Range Row -->
+              <div id="customDateRange" class="mb-3 d-none">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-light border-0">From</span>
+                    <input type="date" id="startDate" class="form-control border-0 bg-light">
+                  </div>
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-light border-0">To</span>
+                    <input type="date" id="endDate" class="form-control border-0 bg-light">
+                  </div>
+                  <button id="applyCustomFilter" class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm">Filter</button>
+                </div>
+              </div>
               <div class="chartCard h-100 d-flex flex-column">
                 <div class="chartBox border flex-grow-1 d-flex align-items-center">
                   <canvas id="myChart"></canvas>
@@ -486,7 +511,7 @@
         </div>
 
         <!-------------------------Recent Activity------------------------------>
-        <div class="row w-100 p-4 pt-0">
+        <div class="row w-100 p-4 pt-0 mt-4">
           <div class="col-lg-6 col-12 mb-4">
             <div class="recent-table-card shadow-sm h-100">
               <div class="d-flex justify-content-between align-items-center mb-4">
@@ -571,12 +596,15 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
   <script>
     // setup 
+    let chartLabels = <?php echo json_encode($chart_labels); ?>;
+    let incomeData = <?php echo json_encode($chart_income); ?>;
+
     const data = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      labels: chartLabels,
       datasets: [
         {
-          label: 'Outcome',
-          data: Array(12).fill(0),
+          label: 'Duration',
+          data: Array(chartLabels.length).fill(0),
           borderColor: '#f06292',
           backgroundColor: 'rgba(240, 98, 146, 0.1)',
           fill: true,
@@ -584,8 +612,8 @@
         },
         {
           label: 'Income',
-          data: <?php echo json_encode($monthly_income); ?>,
-          borderColor: '#7986cb',
+          data: incomeData,
+          borderColor: '#6a6aa8ff',
           backgroundColor: 'rgba(121, 134, 203, 0.2)',
           fill: true,
           tension: 0.4
@@ -625,6 +653,52 @@
       document.getElementById('myChart'),
       config
     );
+
+    // Filter Change Handling
+    document.getElementById('trendFilter').addEventListener('change', function() {
+      const filter = this.value;
+      const customRange = document.getElementById('customDateRange');
+
+      if (filter === 'custom') {
+        customRange.classList.remove('d-none');
+        return;
+      } else {
+        customRange.classList.add('d-none');
+      }
+      
+      fetch(`<?= base_url('admin/get_trend_data') ?>?filter=${filter}`)
+        .then(response => response.json())
+        .then(res => {
+          if (res.status === 'success') {
+            myChart.data.labels = res.labels;
+            myChart.data.datasets[1].data = res.income;
+            myChart.data.datasets[0].data = Array(res.labels.length).fill(0);
+            myChart.update();
+          }
+        });
+    });
+
+    // Custom Range Applier
+    document.getElementById('applyCustomFilter').addEventListener('click', function() {
+      const start = document.getElementById('startDate').value;
+      const end = document.getElementById('endDate').value;
+
+      if (!start || !end) {
+        alert('Please select both start and end dates.');
+        return;
+      }
+
+      fetch(`<?= base_url('admin/get_trend_data') ?>?filter=custom&start=${start}&end=${end}`)
+        .then(response => response.json())
+        .then(res => {
+          if (res.status === 'success') {
+            myChart.data.labels = res.labels;
+            myChart.data.datasets[1].data = res.income;
+            myChart.data.datasets[0].data = Array(res.labels.length).fill(0);
+            myChart.update();
+          }
+        });
+    });
 
     // Active link highlighting
     document.addEventListener("DOMContentLoaded", function () {
