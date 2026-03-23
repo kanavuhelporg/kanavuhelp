@@ -531,10 +531,12 @@
                     <?php foreach($recent_transactions as $tx): ?>
                       <tr>
                         <td>
+                          <a href="<?= base_url('transactionverification') ?>">
                           <div class="d-flex flex-column">
                             <span class="fw-bold"><?= $tx->name ?></span>
                             <small class="text-muted"><?= date('M d, Y', strtotime($tx->created_at)) ?></small>
                           </div>
+                          </a>
                         </td>
                         <td class="fw-bold text-success">₹<?= number_format($tx->amount) ?></td>
                         <td>
@@ -569,10 +571,12 @@
                     <?php foreach($recent_causes as $cs): ?>
                       <tr>
                         <td>
+                          <a href="<?= base_url('causesverification') ?>">
                           <div class="d-flex flex-column">
                             <span class="fw-bold text-truncate" style="max-width: 150px;"><?= $cs->cause_heading ?></span>
                             <small class="text-muted"><?= $cs->category ?></small>
                           </div>
+                          </a>
                         </td>
                         <td class="fw-bold">₹<?= number_format($cs->amount) ?></td>
                         <td>
