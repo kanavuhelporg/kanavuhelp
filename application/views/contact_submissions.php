@@ -519,6 +519,7 @@
                                     <th>Phone Number</th>
                                     <th>Message</th>
                                     <th>Created_at</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody id="enquiries-tbody">
@@ -536,10 +537,15 @@
                                                          title="<?= htmlspecialchars($submission->message) ?>"><?= htmlspecialchars($submission->message) ?></span>
                                             </td>
                                             <td><?= date('d-m-Y', strtotime($submission->created_at)) ?></td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm" onclick="deleteEnquiry(<?= $submission->id ?>)" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
-                                    <tr id="no-results"><td colspan="6" style="text-align:center;">No records found.</td></tr>
+                                    <tr id="no-results"><td colspan="7" style="text-align:center;">No records found.</td></tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
@@ -887,6 +893,28 @@
                 }
             });
         });
+
+        function deleteEnquiry(id) {
+            if (confirm("Are you sure you want to delete this enquiry?")) {
+                $.ajax({
+                    url: "<?= base_url('admin/delete_enquiry') ?>",
+                    type: "POST",
+                    data: { id: id },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status === "success") {
+                            alert(response.message);
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function() {
+                        alert("An error occurred while deleting the enquiry.");
+                    }
+                });
+            }
+        }
     </script>
 </body>
 </html>

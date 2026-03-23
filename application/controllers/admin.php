@@ -29,7 +29,7 @@ class admin extends CI_Controller
         redirect('admin'); // Adjust this if your login page is at a different URL
     }
 
-   
+
     public function admindashbord()
     {
         // Transaction count
@@ -58,7 +58,7 @@ class admin extends CI_Controller
         // Fetch recent items
         $data['recent_transactions'] = $this->adminpanel->get_recent_transactions(5);
         $data['recent_causes'] = $this->adminpanel->get_recent_causes(5);
-        
+
         // Explicitly pass counts for actionable cards
         $data['pending_transactions'] = $totalunverifiedtransactions;
         $data['pending_causes'] = $unverifiedCauses;
@@ -104,15 +104,18 @@ class admin extends CI_Controller
     }
 
 
-    public function sidemenu(){
+    public function sidemenu()
+    {
         $this->load->view("sidemenu");
     }
 
-    public function topmenu(){
+    public function topmenu()
+    {
         $this->load->view("searchbar");
     }
 
-    public function kanavuhelplogo(){
+    public function kanavuhelplogo()
+    {
         $this->load->view("kanavuhelplogo");
     }
 
@@ -147,17 +150,19 @@ class admin extends CI_Controller
 
             // Redirect to 'kanavuhome' after successful login
             redirect(('admindashbord'));
-        } else {
+        }
+        else {
             // If login fails, reload the login page with an error message
             $this->load->view('admin');
             echo '<script>alert("Please enter registered credentials.");</script>';
         }
     }
 
-    public function adminlogout(){
-         $this->session->unset_userdata("adminId");
-         $this->session->unset_userdata("adminName");
-         redirect("admin");
+    public function adminlogout()
+    {
+        $this->session->unset_userdata("adminId");
+        $this->session->unset_userdata("adminName");
+        redirect("admin");
     }
 
     // public function causesverification()
@@ -179,20 +184,17 @@ class admin extends CI_Controller
 //     if (!$this->session->userdata('adminId')) {
 //         redirect('kanavuhelp/login');
 //     }
-
-//     $limit = 5;
+    //     $limit = 5;
 //     $page = (int)($this->input->get('page') ?? 1);
 //     $offset = ($page - 1) * $limit;
 //     $search = $this->input->get('search') ?? '';
-
-//     $data['fundraisers'] = $this->adminpanel->get_cause_details($limit, $offset, $search);
+    //     $data['fundraisers'] = $this->adminpanel->get_cause_details($limit, $offset, $search);
 //     $data['counts'] = $this->adminpanel->get_total_causes($search);
 //     $data['sno'] = $offset;
 //     $data['current_page'] = $page;
 //     $data['per_page'] = $limit;
 //     $data['search'] = $search;
-
-//     $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+    //     $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
 //     $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
 //     $this->session->set_userdata('causescounts', $data['counts']);
 
@@ -200,27 +202,28 @@ class admin extends CI_Controller
 // }
 
 
-    public function get_total_amount(){
+    public function get_total_amount()
+    {
         // Get base totals (from donations, etc.)
         $data['base_totals'] = $this->adminpanel->get_base_totals();
-        
+
         // Get all admin entries
         $data['admin_entries'] = $this->adminpanel->get_all_admin_entries();
-        
+
         // Calculate running totals including base values
         $base_amount = $data['base_totals']['base_amount'] ?? 0;
         $base_causes = $data['base_totals']['base_causes'] ?? 0;
         $base_donors = $data['base_totals']['base_donors'] ?? 0;
         $base_volunteers = 0;
-        
+
         // Prepare data with cumulative totals
         $cumulative_amount = $base_amount;
         $cumulative_causes = $base_causes;
         $cumulative_donors = $base_donors;
         $cumulative_volunteers = 0;
-        
+
         $data['running_totals'] = array();
-        
+
         // Add base entry first
         $data['running_totals'][] = array(
             'type' => 'base',
@@ -235,14 +238,14 @@ class admin extends CI_Controller
             'cumulative_donors' => $cumulative_donors,
             'cumulative_volunteers' => $cumulative_volunteers
         );
-        
+
         // Add admin entries
         foreach ($data['admin_entries'] as $entry) {
             $cumulative_amount += $entry['amount'] ?? 0;
             $cumulative_causes += $entry['causes'] ?? 0;
             $cumulative_donors += $entry['donors'] ?? 0;
             $cumulative_volunteers += $entry['volunteers'] ?? 0;
-            
+
             $data['running_totals'][] = array(
                 'id' => $entry['id'] ?? null,
                 'type' => 'admin',
@@ -258,7 +261,7 @@ class admin extends CI_Controller
                 'cumulative_volunteers' => $cumulative_volunteers
             );
         }
-        
+
         // Current totals for modals
         $data['current_totals'] = array(
             'amount' => $cumulative_amount,
@@ -266,93 +269,106 @@ class admin extends CI_Controller
             'donors' => $cumulative_donors,
             'volunteers' => $cumulative_volunteers
         );
-        
+
         $this->load->view('admin_set_amount', $data);
     }
+    public function addAmount()
+    {
+        $current_totals = $this->adminpanel->get_base_totals();
 
-public function addAmount()
-{
-    $current_totals = $this->adminpanel->get_base_totals();
-    
-    // Calculate current totals including all admin entries
-    $admin_entries = $this->adminpanel->get_all_admin_entries();
-    $current_amount = $current_totals['base_amount'] ?? 0;
-    $current_causes = $current_totals['base_causes'] ?? 0;
-    $current_donors = $current_totals['base_donors'] ?? 0;
-    $current_volunteers = 0;
-    
-    foreach ($admin_entries as $entry) {
-        $current_amount += $entry['amount'] ?? 0;
-        $current_causes += $entry['causes'] ?? 0;
-        $current_donors += $entry['donors'] ?? 0;
-       $current_volunteers += $entry['volunteers'] ?? 0;
+        // Calculate current totals including all admin entries
+        $admin_entries = $this->adminpanel->get_all_admin_entries();
+        $current_amount = $current_totals['base_amount'] ?? 0;
+        $current_causes = $current_totals['base_causes'] ?? 0;
+        $current_donors = $current_totals['base_donors'] ?? 0;
+        $current_volunteers = 0;
+
+        foreach ($admin_entries as $entry) {
+            $current_amount += $entry['amount'] ?? 0;
+            $current_causes += $entry['causes'] ?? 0;
+            $current_donors += $entry['donors'] ?? 0;
+            $current_volunteers += $entry['volunteers'] ?? 0;
+        }
+
+        // Store current totals in session for modal display
+        $this->session->set_flashdata('current_totals', array(
+            'amount' => $current_amount,
+            'causes' => $current_causes,
+            'donors' => $current_donors,
+            'volunteers' => $current_volunteers
+        ));
+
+        $data = [
+            'amount' => $this->input->post('amount') ?? 0,
+            'causes' => $this->input->post('causes') ?? 0,
+            'donors' => $this->input->post('donors') ?? 0,
+            'volunteers' => $this->input->post('volunteers') ?? 0,
+            'date' => date('Y-m-d H:i:s')
+        ];
+
+        if ($data['amount'] > 0 || $data['causes'] > 0 || $data['donors'] > 0 || $data['volunteers'] > 0) {
+            $this->adminpanel->add_admin_data($data);
+        }
+
+        redirect('Admin/get_total_amount');
     }
-    
-    // Store current totals in session for modal display
-    $this->session->set_flashdata('current_totals', array(
-        'amount' => $current_amount,
-        'causes' => $current_causes,
-        'donors' => $current_donors,
-        'volunteers' => $current_volunteers
-    ));
-    
-    $data = [
-        'amount' => $this->input->post('amount') ?? 0,
-        'causes' => $this->input->post('causes') ?? 0,
-        'donors' => $this->input->post('donors') ?? 0,
-        'volunteers' => $this->input->post('volunteers') ?? 0,
-        'date' => date('Y-m-d H:i:s')
-    ];
-    
-    if ($data['amount'] > 0 || $data['causes'] > 0 || $data['donors'] > 0 || $data['volunteers'] > 0) {
-        $this->adminpanel->add_admin_data($data);
+    public function updateAdminEntry()
+    {
+        $id = $this->input->post('id');
+
+        $old = $this->adminpanel->get_admin_entry_by_id($id);
+
+        $new = [
+            'amount' => $this->input->post('amount'),
+            'causes' => $this->input->post('causes'),
+            'donors' => $this->input->post('donors'),
+            'volunteers' => $this->input->post('volunteers'),
+            'date' => $this->input->post('date')
+        ];
+
+        // detect changed columns
+        $changed = [];
+        foreach ($new as $key => $val) {
+            if ($old->$key != $val) {
+                $changed[] = $key;
+            }
+        }
+
+        $this->adminpanel->update_admin_entry($id, $new);
+
+        // store highlight info
+        $this->session->set_flashdata('updated_row', $id);
+        $this->session->set_flashdata('updated_columns', $changed);
+
+        redirect('Admin/get_total_amount');
     }
-    
-    redirect('Admin/get_total_amount');
-}
-public function updateAdminEntry()
-{
-    $id = $this->input->post('id');
 
-    $old = $this->adminpanel->get_admin_entry_by_id($id);
+    public function deleteAdminEntry()
+    {
+        if ($this->input->is_ajax_request()) {
+            $id = $this->input->post('id');
+            $result = $this->adminpanel->delete_admin_entry($id);
 
-    $new = [
-        'amount' => $this->input->post('amount'),
-        'causes' => $this->input->post('causes'),
-        'donors' => $this->input->post('donors'),
-        'volunteers' => $this->input->post('volunteers'),
-        'date' => $this->input->post('date')
-    ];
-
-    // detect changed columns
-    $changed = [];
-    foreach ($new as $key => $val) {
-        if ($old->$key != $val) {
-            $changed[] = $key;
+            echo json_encode([
+                'status' => $result ? 'success' : 'error'
+            ]);
         }
     }
 
-    $this->adminpanel->update_admin_entry($id, $new);
-
-    // store highlight info
-    $this->session->set_flashdata('updated_row', $id);
-    $this->session->set_flashdata('updated_columns', $changed);
-
-    redirect('Admin/get_total_amount');
-}
-
-
-public function deleteAdminEntry()
-{
-    if ($this->input->is_ajax_request()) {
-        $id = $this->input->post('id');
-        $result = $this->adminpanel->delete_admin_entry($id);
-
-        echo json_encode([
-            'status' => $result ? 'success' : 'error'
-        ]);
+    public function delete_enquiry()
+    {
+        if ($this->input->is_ajax_request()) {
+            $id = $this->input->post("id");
+            $this->db->where('id', $id);
+            $result = $this->db->delete('contact_us');
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'Enquiry deleted successfully!']);
+            }
+            else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete the enquiry!']);
+            }
+        }
     }
-}
 
 
     public function causesverification()
@@ -379,12 +395,14 @@ public function deleteAdminEntry()
     /**
      * AJAX: Fetch individual cause details
      */
-    public function get_cause_details_ajax($id) {
+    public function get_cause_details_ajax($id)
+    {
         // Ensure only AJAX requests can access this if desired
         $data = $this->adminpanel->get_individual_cause_by_id($id);
         if ($data) {
             echo json_encode(['status' => 'success', 'data' => $data]);
-        } else {
+        }
+        else {
             echo json_encode(['status' => 'error', 'message' => 'No data found']);
         }
     }
@@ -395,45 +413,46 @@ public function deleteAdminEntry()
     /**
      * Save the edited cause details back to the same table
      */
-    public function update_cause() {
+    public function update_cause()
+    {
         $id = $this->input->post('id');
 
         // Initial data array from post fields
         $data = array(
-            'category'             => $this->input->post('category'),
-            'name'                 => $this->input->post('name'),
-            'email'                => $this->input->post('email'),
-            'phone'                => $this->input->post('phone'),
-            'age'                  => $this->input->post('age'),
-            'location'             => $this->input->post('location'),
-            'form_selected_text'   => $this->input->post('form_selected_text'),
-            'amount'               => $this->input->post('amount'),
-            'end_date'             => $this->input->post('end_date'),
-            'cause_heading'        => $this->input->post('cause_heading'),
-            'cause_description'    => $this->input->post('cause_description'),
-            'user_id'              => $this->input->post('user_id'),
-            'verified'             => $this->input->post('verified'),
-            'Cause_video_link'     => $this->input->post('Cause_video_link'),
+            'category' => $this->input->post('category'),
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'phone' => $this->input->post('phone'),
+            'age' => $this->input->post('age'),
+            'location' => $this->input->post('location'),
+            'form_selected_text' => $this->input->post('form_selected_text'),
+            'amount' => $this->input->post('amount'),
+            'end_date' => $this->input->post('end_date'),
+            'cause_heading' => $this->input->post('cause_heading'),
+            'cause_description' => $this->input->post('cause_description'),
+            'user_id' => $this->input->post('user_id'),
+            'verified' => $this->input->post('verified'),
+            'Cause_video_link' => $this->input->post('Cause_video_link'),
             'Cause_video_link_eng' => $this->input->post('Cause_video_link_eng'),
-            'created_by'           => $this->input->post('created_by'),
-            'isFill'               => $this->input->post('isFill'),
-            'is_runforcause'       => $this->input->post('is_runforcause'),
-            'eventname'            => $this->input->post('eventname'),
-            'eventdate'            => $this->input->post('eventdate'),
-            'eventdistancekm'      => $this->input->post('eventdistancekm'),
-            'eventlocation'        => $this->input->post('eventlocation')
+            'created_by' => $this->input->post('created_by'),
+            'isFill' => $this->input->post('isFill'),
+            'is_runforcause' => $this->input->post('is_runforcause'),
+            'eventname' => $this->input->post('eventname'),
+            'eventdate' => $this->input->post('eventdate'),
+            'eventdistancekm' => $this->input->post('eventdistancekm'),
+            'eventlocation' => $this->input->post('eventlocation')
         );
 
         // File Upload Logic
-        $config['upload_path']   = './assets/individualform_img/';
+        $config['upload_path'] = './assets/individualform_img/';
         $config['allowed_types'] = 'gif|jpg|png|jpeg|webp';
-        $config['max_size']      = 5120; // 5MB limit
-        $config['encrypt_name']  = TRUE; // Encrypt names to avoid collisions
+        $config['max_size'] = 5120; // 5MB limit
+        $config['encrypt_name'] = TRUE; // Encrypt names to avoid collisions
 
         $this->load->library('upload', $config);
 
         $image_fields = [
-            'cover_image'  => 'cover_image_old',
+            'cover_image' => 'cover_image_old',
             'cause_image1' => 'cause_image1_old',
             'cause_image2' => 'cause_image2_old',
             'cause_image3' => 'cause_image3_old',
@@ -448,11 +467,13 @@ public function deleteAdminEntry()
                 if ($this->upload->do_upload($field)) {
                     $uploadData = $this->upload->data();
                     $data[$field] = $uploadData['file_name'];
-                } else {
+                }
+                else {
                     // Upload failed, fallback to old or null
                     $data[$field] = $this->input->post($old_field);
                 }
-            } else {
+            }
+            else {
                 // No new file, use the current existing filename
                 $data[$field] = $this->input->post($old_field);
             }
@@ -460,162 +481,163 @@ public function deleteAdminEntry()
 
         // DB Update Logic
         $this->db->where('id', $id);
-        if($this->db->update('individualform', $data)) {
+        if ($this->db->update('individualform', $data)) {
             $this->session->set_flashdata('success', 'Cause details updated successfully!');
-        } else {
+        }
+        else {
             $this->session->set_flashdata('error', 'Update failed.');
         }
 
         redirect('admin/causesverification');
     }
 
-    public function displayCauses(){
-        if($this->input->is_ajax_request()){
-        $counts = $this->input->get("count");
-        $fundraisers = $this->adminpanel->get_causes_list($counts);
-        $data = $this->load->view("causesverificationlist",array("fundraisers"=>$fundraisers,"counts"=>$counts),true);
-        echo $data;
+    public function displayCauses()
+    {
+        if ($this->input->is_ajax_request()) {
+            $counts = $this->input->get("count");
+            $fundraisers = $this->adminpanel->get_causes_list($counts);
+            $data = $this->load->view("causesverificationlist", array("fundraisers" => $fundraisers, "counts" => $counts), true);
+            echo $data;
         }
-        }
+    }
 
-    public function changeCausespagepagesetup(){
+    public function changeCausespagepagesetup()
+    {
         if (!$this->session->userdata('adminId')) {
             redirect('admin'); // Redirect to login if not logged in
         }
-            $initialindex = $this->input->get('initialindex');
-            if($initialindex < 0){
-               $data['initialindex'] = 0;
-               echo "<script>
+        $initialindex = $this->input->get('initialindex');
+        if ($initialindex < 0) {
+            $data['initialindex'] = 0;
+            echo "<script>
                   window.alert('No pages are available to show.')
                     </script>";
-            } 
-            $counts = $initialindex * 5;
-            $this->session->set_userdata('causescounts',$counts);
-            $totalcauses = $this->adminpanel->get_total_causes();
-            if($counts > $totalcauses){
-                echo "<script>
+        }
+        $counts = $initialindex * 5;
+        $this->session->set_userdata('causescounts', $counts);
+        $totalcauses = $this->adminpanel->get_total_causes();
+        if ($counts > $totalcauses) {
+            echo "<script>
                   window.alert('No pages are available to show.')
                      </script>";
-                $counts = 0;  
-                $this->session->set_userdata('causescounts',$counts);   
-            }
-            $causeslist = $this->adminpanel->get_causes_list($counts);
-            $this->load->view('causesverification',array("fundraisers"=>$causeslist,"newcounts"=>$totalcauses,"initialindex"=>$initialindex,"sno"=>$counts));         
-    }    
+            $counts = 0;
+            $this->session->set_userdata('causescounts', $counts);
+        }
+        $causeslist = $this->adminpanel->get_causes_list($counts);
+        $this->load->view('causesverification', array("fundraisers" => $causeslist, "newcounts" => $totalcauses, "initialindex" => $initialindex, "sno" => $counts));
+    }
 
+
+    
 //     public function transactionverification()
 // {
 //     if (!$this->session->userdata('adminId')) {
 //         redirect('kanavuhelp/login');
 //     }
-
-//     $search = $this->input->get('search', true); // Get search text
+    //     $search = $this->input->get('search', true); // Get search text
 //     $page   = (int) $this->input->get('page');
 //     $per_page = 5;
-
-//     // Total filtered rows
+    //     // Total filtered rows
 //     $data['counts'] = $this->adminpanel->get_total_transaction($search);
-
-//     // Pagination offset
+    //     // Pagination offset
 //     $offset = ($page > 1) ? ($page - 1) * $per_page : 0;
-
-//     // Fetch donations with search applied
+    //     // Fetch donations with search applied
 //     $data['donations'] = $this->adminpanel->transactiondetails($per_page, $offset, $search);
 //     $data['sno']       = $offset;
 //     $data['page']      = $page;
 //     $data['per_page']  = $per_page;
 //     $data['search']    = $search;
-
-//     // Unverified transactions count
+    //     // Unverified transactions count
 //     $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
 //     $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
 //     $this->session->set_userdata('verificationpagecounts', $data['counts']);
-
-//     $this->load->view('transactionverification.php', $data);
+    //     $this->load->view('transactionverification.php', $data);
 // }
     public function transactionverification()
     {
         if (!$this->session->userdata('adminId')) {
             redirect('admin');
         }
-        
+
         // Remove the limit to get all records for client-side pagination
         $data['donations'] = $this->adminpanel->get_all_transactions();
         $data['counts'] = $this->adminpanel->get_total_transaction();
         $data['sno'] = 0;
-        
+
         $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
         $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
         $this->session->set_userdata('verificationpagecounts', $data['counts']);
-        
+
         $this->load->view('transactionverification.php', $data);
     }
 
-    public function displayVerificationpage(){
-        
+    public function displayVerificationpage()
+    {
+
         $counts = $this->input->get("count");
         $verification = $this->adminpanel->get_verification_list($counts);
-        if(!empty($verification)){    
+        if (!empty($verification)) {
             $i = $counts + 1;
-        foreach ($verification as $index => $donation){
-            
-               echo "<tr>
+            foreach ($verification as $index => $donation) {
+
+                echo "<tr>
                     <td> $i</td>
-                    <td>".($donation->category)."</td>
-                    <td>".($donation->cause_heading)."</td>
-                    <td>".($donation->name)."</td>
-                    <td>".($donation->email)."</td>
-                    <td>".($donation->phoneno)."</td>
-                    <td>".($donation->amount)."</td>
-                    <td>".($donation->transactionid)."</td>
+                    <td>" . ($donation->category) . "</td>
+                    <td>" . ($donation->cause_heading) . "</td>
+                    <td>" . ($donation->name) . "</td>
+                    <td>" . ($donation->email) . "</td>
+                    <td>" . ($donation->phoneno) . "</td>
+                    <td>" . ($donation->amount) . "</td>
+                    <td>" . ($donation->transactionid) . "</td>
                     <td>$donation->fundraiser_id</td>
                     <td>$donation->fundraiser_name</td>
                     <td>$donation->fundraiser_email</td>
                     <td>$donation->fundraiser_phone</td>
-                    <td>".($donation->status == 1 ? 'Yes' : 'No')."</td>
+                    <td>" . ($donation->status == 1 ? 'Yes' : 'No') . "</td>
                     <td class='d-flex'>
-                    <button onclick='editDonation(".(json_encode($donation)).")' class='btn btn-primary fw-bold' data-toggle='modal' data-target='#editDonationModal'>
+                    <button onclick='editDonation(" . (json_encode($donation)) . ")' class='btn btn-primary fw-bold' data-toggle='modal' data-target='#editDonationModal'>
                     Edit 
                     </button>&nbsp;&nbsp;
-                    <button onclick='setUrl(".json_encode($donation).")' class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
+                    <button onclick='setUrl(" . json_encode($donation) . ")' class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
                     Status
                      </button>&nbsp;&nbsp;
-                    <button onclick=\"deleteDonation(".$donation->donation_id.")\" class='btn btn-danger fw-bold'>
+                    <button onclick=\"deleteDonation(" . $donation->donation_id . ")\" class='btn btn-danger fw-bold'>
                         Delete
                     </button>
                     </td>
-                </tr>";     
-               ++$i;
+                </tr>";
+                ++$i;
             }
-            }
-            else{
-               echo "<tr><td colspan='14'>No causes found</td></tr>";
-            }
+        }
+        else {
+            echo "<tr><td colspan='14'>No causes found</td></tr>";
+        }
     }
 
-    public function changeVerificationpagesetup(){
+    public function changeVerificationpagesetup()
+    {
         if (!$this->session->userdata('adminId')) {
             redirect('admin'); // Redirect to login if not logged in
         }
         $initialindex = $this->input->get('initialindex');
-        if($initialindex < 0){
-           $data['initialindex'] = 0;
-           echo "<script>
+        if ($initialindex < 0) {
+            $data['initialindex'] = 0;
+            echo "<script>
               window.alert('No pages are available to show.')
                 </script>";
-        } 
+        }
         $counts = $initialindex * 5;
-        $this->session->set_userdata('verificationpagecounts',$counts);
+        $this->session->set_userdata('verificationpagecounts', $counts);
         $totalverification = $this->adminpanel->get_total_transaction();
-        if($counts > $totalverification){
+        if ($counts > $totalverification) {
             echo "<script>
               window.alert('No pages are available to show.')
                  </script>";
-            $counts = 0;  
-            $this->session->set_userdata('verificationpagecounts',$counts);   
+            $counts = 0;
+            $this->session->set_userdata('verificationpagecounts', $counts);
         }
         $verificationlist = $this->adminpanel->get_verification_list($counts);
-        $this->load->view('transactionverification.php',array("donations"=>$verificationlist,"newcounts"=>$totalverification,"initialindex"=>$initialindex,"sno"=>$counts)); 
+        $this->load->view('transactionverification.php', array("donations" => $verificationlist, "newcounts" => $totalverification, "initialindex" => $initialindex, "sno" => $counts));
     }
 
     public function updatecauses()
@@ -638,7 +660,7 @@ public function deleteAdminEntry()
         $raised_amount = $this->input->post('raised_amount');
         $verified = $this->input->post('verified');
 
-        $updatedata = ["name"=>$name,"email"=>$email,"phone"=>$mobile,"age"=>$age,"amount"=>$amount,"location"=>$location,"end_date"=>$end_date,"cause_heading"=>$cause_heading,"cause_description"=>$cause_description,"created_by"=>$created_by,"raised_amount"=>$raised_amount,"verified"=>$verified];
+        $updatedata = ["name" => $name, "email" => $email, "phone" => $mobile, "age" => $age, "amount" => $amount, "location" => $location, "end_date" => $end_date, "cause_heading" => $cause_heading, "cause_description" => $cause_description, "created_by" => $created_by, "raised_amount" => $raised_amount, "verified" => $verified];
 
         // Validate input
         if (empty($id) || $verified === null) {
@@ -664,37 +686,37 @@ public function deleteAdminEntry()
         $this->load->view('editDonation', $data);
     }
     public function updateDonation()
-{
-    $data = array(
-        'donation_id'     => $this->input->post('id'),
-        'name'            => $this->input->post('name'),
-        'email'           => $this->input->post('email'),
-        'phoneno'         => $this->input->post('mobile'),
-        'amount'          => $this->input->post('amount'),
-        'transactionid'   => $this->input->post('transaction_id'),
-        'status'          => $this->input->post('status'),
-        'verified_by'     => $this->session->userdata('Kanavu_userName')
-    );
+    {
+        $data = array(
+            'donation_id' => $this->input->post('id'),
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'phoneno' => $this->input->post('mobile'),
+            'amount' => $this->input->post('amount'),
+            'transactionid' => $this->input->post('transaction_id'),
+            'status' => $this->input->post('status'),
+            'verified_by' => $this->session->userdata('Kanavu_userName')
+        );
 
-    $this->load->model('adminpanel');
+        $this->load->model('adminpanel');
 
-    $updateSuccess = $this->adminpanel->updateDonationFull($data);
+        $updateSuccess = $this->adminpanel->updateDonationFull($data);
 
-    // If status changed → update raised amount
-    if ($updateSuccess && $data['status'] == 1) {
-        $donationData = $this->adminpanel->getDonationById1($data['donation_id']);
-        if ($donationData) {
-            $this->adminpanel->update_raised_amount(
-                $donationData->cause_id,
-                $donationData->amount,
-                $data['status']
-            );
+        // If status changed → update raised amount
+        if ($updateSuccess && $data['status'] == 1) {
+            $donationData = $this->adminpanel->getDonationById1($data['donation_id']);
+            if ($donationData) {
+                $this->adminpanel->update_raised_amount(
+                    $donationData->cause_id,
+                    $donationData->amount,
+                    $data['status']
+                );
+            }
         }
-    }
 
-    header('Content-Type: application/json');
-    echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
-}
+        header('Content-Type: application/json');
+        echo json_encode(['status' => $updateSuccess ? 'success' : 'failure']);
+    }
 
 
     // public function sendtransactionVerficationstatus()
@@ -796,106 +818,109 @@ public function deleteAdminEntry()
 
     // this code sends email without pdf file attachment
     public function sendtransactionVerficationstatus()
-{
-    if (!$this->session->userdata('adminId')) {
-        redirect('admin');
-    }
-
-    $donaremail = $this->input->get("email");
-    $status = $this->input->get("status");
-    $donationid = $this->input->get("donationid");
-    $donarname = $this->input->get("donarname");
-    $message    = $this->input->get("message");
-    $adminName  = $this->input->get("adminname");
-    $transactionid = $this->input->get("transactionid");
-    $amount = preg_replace('/[^0-9.]/', '', $this->input->get("amount"));
-
-    // Load PDF Library
-    $this->load->library('pdf');
-    $pdfContent = null;
-    $filePath = '';
-
-    try {
-
-        // Generate PDF (optional)
-        if ($status == 'verified') {
-            $pdfContent = $this->pdf->generateReceipt($donarname, $transactionid, $donationid, $amount);
-
-            // Save PDF (optional)
-            $filePath = FCPATH . 'uploads/receipt_' . $transactionid . '.pdf';
-            file_put_contents($filePath, $pdfContent);
+    {
+        if (!$this->session->userdata('adminId')) {
+            redirect('admin');
         }
 
-        // Email content
-        $emailContent = $this->generateEmailContent($donarname, $transactionid, $message, $status);
+        $donaremail = $this->input->get("email");
+        $status = $this->input->get("status");
+        $donationid = $this->input->get("donationid");
+        $donarname = $this->input->get("donarname");
+        $message = $this->input->get("message");
+        $adminName = $this->input->get("adminname");
+        $transactionid = $this->input->get("transactionid");
+        $amount = preg_replace('/[^0-9.]/', '', $this->input->get("amount"));
 
-        $this->email->from('support@kanavu.help', 'The Kanavu Trust');
-        $this->email->to($donaremail);
+        // Load PDF Library
+        $this->load->library('pdf');
+        $pdfContent = null;
+        $filePath = '';
 
-        $this->email->subject(
-            $status == 'verified'
-                ? 'Transaction Receipt - The Kanavu Trust'
-                : 'Transaction Status Update - The Kanavu Trust'
-        );
+        try {
 
-        $this->email->set_mailtype('html');
-        $this->email->message($emailContent);
+            // Generate PDF (optional)
+            if ($status == 'verified') {
+                $pdfContent = $this->pdf->generateReceipt($donarname, $transactionid, $donationid, $amount);
 
-        // ❌ REMOVE PDF ATTACHMENT  
-        // if ($status == 'verified' && file_exists($filePath)) {
-        //     $this->email->attach($filePath);
-        // }
-
-        // Send email
-        if ($this->email->send()) {
-
-            // Delete PDF file since it's no longer needed
-            if ($status == 'verified' && file_exists($filePath)) {
-                unlink($filePath);
+                // Save PDF (optional)
+                $filePath = FCPATH . 'uploads/receipt_' . $transactionid . '.pdf';
+                file_put_contents($filePath, $pdfContent);
             }
 
-            // Save email logs  
-            $cleanMessage = str_replace(
+            // Email content
+            $emailContent = $this->generateEmailContent($donarname, $transactionid, $message, $status);
+
+            $this->email->from('support@kanavu.help', 'The Kanavu Trust');
+            $this->email->to($donaremail);
+
+            $this->email->subject(
+                $status == 'verified'
+                ? 'Transaction Receipt - The Kanavu Trust'
+                : 'Transaction Status Update - The Kanavu Trust'
+            );
+
+            $this->email->set_mailtype('html');
+            $this->email->message($emailContent);
+
+            // ❌ REMOVE PDF ATTACHMENT  
+            // if ($status == 'verified' && file_exists($filePath)) {
+            //     $this->email->attach($filePath);
+            // }
+
+            // Send email
+            if ($this->email->send()) {
+
+                // Delete PDF file since it's no longer needed
+                if ($status == 'verified' && file_exists($filePath)) {
+                    unlink($filePath);
+                }
+
+                // Save email logs  
+                $cleanMessage = str_replace(
                 [",", "!", ".", "'", "\r", "\n"],
                 ["", "", "", "", " ", " "],
-                $message
-            );
+                    $message
+                );
 
-            $this->adminpanel->transactionemailStatus(
-                $status,
-                $donationid,
-                $donarname,
-                $donaremail,
-                $cleanMessage,
-                $adminName
-            );
+                $this->adminpanel->transactionemailStatus(
+                    $status,
+                    $donationid,
+                    $donarname,
+                    $donaremail,
+                    $cleanMessage,
+                    $adminName
+                );
 
-            $this->session->set_userdata(
-                "transactionemailsuccessstatus",
-                "Email sent to " . $donaremail
-            );
+                $this->session->set_userdata(
+                    "transactionemailsuccessstatus",
+                    "Email sent to " . $donaremail
+                );
 
-        } else {
+            }
+            else {
+                $this->session->set_userdata(
+                    "transactionemailerrorstatus",
+                    "Failed to send email."
+                );
+            }
+
+        }
+        catch (Exception $e) {
             $this->session->set_userdata(
                 "transactionemailerrorstatus",
-                "Failed to send email."
+                "Error: " . $e->getMessage()
             );
         }
 
-    } catch (Exception $e) {
-        $this->session->set_userdata(
-            "transactionemailerrorstatus",
-            "Error: " . $e->getMessage()
-        );
+        redirect("/transactionverification");
     }
 
-    redirect("/transactionverification");
-}
 
-
-    private function generateEmailContent($donorName, $transactionId, $originalMessage, $status) {
+    private function generateEmailContent($donorName, $transactionId, $originalMessage, $status)
+    {
         $subject = ($status == 'verified') ? 'Transaction Receipt' : 'Transaction Status Update';
-        
+
         $html = '
         <!DOCTYPE html>
         <html>
@@ -990,8 +1015,8 @@ public function deleteAdminEntry()
                 </div>
                 
                 <p>' . ($status == 'verified' ? 
-                    'Thank you for your generous donation to The Kanavu Trust. Your support means the world to us and will make a significant difference in our mission.' : 
-                    'Thank you for your interest in supporting The Kanavu Trust. We appreciate your willingness to contribute to our cause.') . '</p>
+            'Thank you for your generous donation to The Kanavu Trust. Your support means the world to us and will make a significant difference in our mission.' :
+            'Thank you for your interest in supporting The Kanavu Trust. We appreciate your willingness to contribute to our cause.') . '</p>
                 
                 <div class="transaction-info">
                     <p><strong>Transaction Details:</strong></p>
@@ -1001,7 +1026,7 @@ public function deleteAdminEntry()
                         ' . ($status == 'verified' ? '✓ Verified Successfully' : '⚠️ Requires Verification') . '
                     </div>
                 </div>';
-                
+
         if ($status == 'verified') {
             $html .= '
                 <div class="message-box">
@@ -1018,7 +1043,8 @@ public function deleteAdminEntry()
                     <li>Offer disaster relief</li>
                     <li>Empower communities</li>
                 </ul>';
-        } else {
+        }
+        else {
             $html .= '
                 <div class="message-box">
                     <p><strong>Important Notice:</strong></p>
@@ -1033,7 +1059,7 @@ public function deleteAdminEntry()
                     <li>Screenshot of payment confirmation</li>
                 </ul>';
         }
-        
+
         $html .= '
                 <div class="contact-info">
                     <p><strong>Need Help?</strong></p>
@@ -1052,11 +1078,12 @@ public function deleteAdminEntry()
             </div>
         </body>
         </html>';
-        
+
         return $html;
     }
 
-    public function sendcauseVerficationstatus(){
+    public function sendcauseVerficationstatus()
+    {
         if (!$this->session->userdata('adminId')) {
             redirect('admin'); // Redirect to login if not logged in
         }
@@ -1078,183 +1105,193 @@ public function deleteAdminEntry()
 
         if ($this->email->send()) {
             // Set a session variable to indicate OTP was sent
-            $find = array(",","!",".","'");
+            $find = array(",", "!", ".", "'");
             $replace = array("");
-            $message = str_replace($find,$replace,$message);
-            $this->adminpanel->emailStatus($status,$userId,$userName,$userEmail,$message,$adminName);
+            $message = str_replace($find, $replace, $message);
+            $this->adminpanel->emailStatus($status, $userId, $userName, $userEmail, $message, $adminName);
             $this->session->set_flashdata('causemailsend', true);
-            $this->session->set_userdata("emailsuccessstatus","Email sent to ".$to."");
-                redirect("/causesverification");
-        } else {
-            $this->session->set_userdata("emailerrorstatus","Email not sent please try again.");
-                redirect("/causesverification");
-            // echo "<script>Email not sent please try again.</script>";
-            // $this->session->set_userdata("emailstatus","failed");
-            // echo $this->email->print_debugger(); // Print debug info if sending fails
-        }   
+            $this->session->set_userdata("emailsuccessstatus", "Email sent to " . $to . "");
+            redirect("/causesverification");
+        }
+        else {
+            $this->session->set_userdata("emailerrorstatus", "Email not sent please try again.");
+            redirect("/causesverification");
+        // echo "<script>Email not sent please try again.</script>";
+        // $this->session->set_userdata("emailstatus","failed");
+        // echo $this->email->print_debugger(); // Print debug info if sending fails
+        }
     }
 
-    public function showtransactionEmaildata(){
+    public function showtransactionEmaildata()
+    {
         if (!$this->session->userdata('adminId')) {
             redirect('kanavuhelp/adminlogin'); // Redirect to login if not logged in
         }
-        if($this->input->is_ajax_request()){
-           $donationid = $this->input->get("donationid");
-           $status = $this->input->get("status");
-           $emaildata = $this->adminpanel->gettransactionEmaildata($donationid,$status);
-           if(!empty($emaildata)){
+        if ($this->input->is_ajax_request()) {
+            $donationid = $this->input->get("donationid");
+            $status = $this->input->get("status");
+            $emaildata = $this->adminpanel->gettransactionEmaildata($donationid, $status);
+            if (!empty($emaildata)) {
                 foreach ($emaildata as $key => $value) {
                     echo "<tr>
-                          <td>".($key + 1)."</td>
+                          <td>" . ($key + 1) . "</td>
                           <td>$value[Emailcount]</td>
                           <td>$value[Who_send]</td>
                           <td>$value[Emailed_date]</td>
                           <td>$value[Message]</td>
                           </tr>";
                 }
-           }
-           else{
+            }
+            else {
                 echo "<tr><td class='text-center' colspan='4'>No emails sent.</td></tr>";
-           }
-           
+            }
+
         }
     }
 
-    public function showEmaildata(){
+    public function showEmaildata()
+    {
         if (!$this->session->userdata('adminId')) {
             redirect('kanavuhelp/adminlogin'); // Redirect to login if not logged in
         }
-        if($this->input->is_ajax_request()){
-           $userid = $this->input->get("userid");
-           $status = $this->input->get("status");
-           $emaildata = $this->adminpanel->getEmaildata($userid,$status);
-           if(!empty($emaildata)){
+        if ($this->input->is_ajax_request()) {
+            $userid = $this->input->get("userid");
+            $status = $this->input->get("status");
+            $emaildata = $this->adminpanel->getEmaildata($userid, $status);
+            if (!empty($emaildata)) {
                 foreach ($emaildata as $key => $value) {
                     echo "<tr>
-                          <td>".($key + 1)."</td>
+                          <td>" . ($key + 1) . "</td>
                           <td>$value[Emailcount]</td>
                           <td>$value[Who_send]</td>
                           <td>$value[Emailed_date]</td>
                           <td>$value[Message]</td>
                           </tr>";
                 }
-           }
-           else{
+            }
+            else {
                 echo "<tr><td class='text-center' colspan='4'>No emails sent.</td></tr>";
-           }
-           
+            }
+
         }
     }
-
-//     public function contact_submissions()
+    //     public function contact_submissions()
 // {
 //     $search = $this->input->get('search');
 //     $page = $this->input->get('page');
 //     $page = (!empty($page) && is_numeric($page)) ? $page : 1;
 //     $limit = 10;
 //     $offset = ($page - 1) * $limit;
-
-//     $data['search'] = $search;
+    //     $data['search'] = $search;
 //     $data['sno'] = $offset;
 //     $data['counts'] = $this->adminpanel->get_enquiries_count($search);
 //     $data['submissions'] = $this->adminpanel->get_enquiries_list($limit, $offset, $search);
-
-//     $this->load->view('contact_submissions', $data);
+    //     $this->load->view('contact_submissions', $data);
 // }
 
     public function contact_submissions()
-{
-    if (!$this->session->userdata('adminId')) {
-        redirect('admin');
+    {
+        if (!$this->session->userdata('adminId')) {
+            redirect('admin');
+        }
+        // Fetch all enquiries
+        $data["counts"] = count($this->db->get('contact_us')->result());
+        $data['submissions'] = $this->db->order_by('created_at', 'DESC')->get('contact_us')->result();
+        $data["sno"] = 0;
+
+        // Store enquiry count in session
+        $this->session->set_userdata("enquiryCount", $data["counts"]);
+
+        // Load view
+        $this->load->view('contact_submissions', $data);
     }
-    // Fetch all enquiries
-    $data["counts"] = count($this->db->get('contact_us')->result());
-    $data['submissions'] = $this->db->order_by('created_at', 'DESC')->get('contact_us')->result();
-    $data["sno"] = 0;
-
-    // Store enquiry count in session
-    $this->session->set_userdata("enquiryCount", $data["counts"]);
-
-    // Load view
-    $this->load->view('contact_submissions', $data);
-}
 
 
 
 
-    public function displayContactsubmissions(){
+    public function displayContactsubmissions()
+    {
         $counts = $this->input->get("count");
         $submissions = $this->adminpanel->get_enquiries_list($counts);
-        $this->session->set_userdata('enquirypagecounts',$counts); 
+        $this->session->set_userdata('enquirypagecounts', $counts);
         // $this->db->order_by('created_at', 'DESC')->limit(10)->get('contact_us')->result_array();
-        if(!empty($submissions)){    
+        if (!empty($submissions)) {
             $i = $counts + 1;
-        foreach ($submissions as $index => $submissions){
-            
-               echo "<tr>
+            foreach ($submissions as $index => $submission) {
+
+                echo "<tr>
                     <td>$i</td>
-                    <td>".($submissions->namee)."</td>
-                    <td>".($submissions->email)."</td>
-                    <td>".($submissions->phone)."</td>
-                    <td>".($submissions->message)."</td>
-                    <td>".($submissions->created_at)."</td>
-                </tr>";     
-               ++$i;
+                    <td>" . ($submission->name) . "</td>
+                    <td>" . ($submission->email) . "</td>
+                    <td>" . ($submission->phone) . "</td>
+                    <td>" . ($submission->message) . "</td>
+                    <td>" . ($submission->created_at) . "</td>
+                    <td>
+                        <button class='btn btn-danger btn-sm' onclick='deleteEnquiry(" . $submission->id . ")' title='Delete'>
+                            <i class='fas fa-trash'></i>
+                        </button>
+                    </td>
+                </tr>";
+                ++$i;
             }
-            }
-            else{
-               echo "<tr><td colspan='6'>No causes found</td></tr>";
-            }        
+        }
+        else {
+            echo "<tr><td colspan='7'>No records found.</td></tr>";
+        }
     }
 
-    public function changeContactpagesetup(){
+    public function changeContactpagesetup()
+    {
         $initialindex = $this->input->get('initialindex');
-        if($initialindex < 0){
-           $data['initialindex'] = 0;
-           echo "<script>
+        if ($initialindex < 0) {
+            $data['initialindex'] = 0;
+            echo "<script>
               window.alert('No pages are available to show.')
                 </script>";
-        } 
+        }
         $counts = $initialindex * 10;
-        $this->session->set_userdata('enquirypagecounts',$counts);
+        $this->session->set_userdata('enquirypagecounts', $counts);
         $totalenquiries = count($this->db->get('contact_us')->result());
-        if($counts > $totalenquiries){
+        if ($counts > $totalenquiries) {
             echo "<script>
               window.alert('No pages are available to show.')
                  </script>";
-            $counts = 0;  
-            $this->session->set_userdata('enquirypagecounts',$counts);   
+            $counts = 0;
+            $this->session->set_userdata('enquirypagecounts', $counts);
         }
         $enquirieslist = $this->adminpanel->get_enquiries_list($counts);
         $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
-        $this->session->set_userdata("unverifiedtransactions",$totalunverifiedtransactions);
-        $this->load->view('contact_submissions',array("submissions"=>$enquirieslist,"newcounts"=>$totalenquiries,"initialindex"=>$initialindex,"sno"=>$counts)); 
+        $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
+        $this->load->view('contact_submissions', array("submissions" => $enquirieslist, "newcounts" => $totalenquiries, "initialindex" => $initialindex, "sno" => $counts));
     }
 
     /* public function delete_donation($donation_id)
+     {
+     $this->load->model('adminpanel'); // Load your model
+     log_message('debug', 'Received donation_id: ' . $donation_id);
+     if ($this->adminpanel->delete_by_id($donation_id)) {
+     echo json_encode(['success' => true]);
+     } else {
+     echo json_encode(['success' => false]);
+     }
+     } */
+    public function delete_donation()
     {
-        $this->load->model('adminpanel'); // Load your model
-       log_message('debug', 'Received donation_id: ' . $donation_id);
-        if ($this->adminpanel->delete_by_id($donation_id)) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false]);
-        }
-    } */
-    public function delete_donation() {
-        if($this->input->is_ajax_request()){
+        if ($this->input->is_ajax_request()) {
             $id = $this->input->post("donation_id");
             // Call the model method to delete the cause by user_id
-            $result = $this->adminpanel->delete_by_id($id);  // Ensure the method matches the model function
-        // return $id;
+            $result = $this->adminpanel->delete_by_id($id); // Ensure the method matches the model function
+            // return $id;
             // Return a JSON response indicating success or failure
             if ($result) {
                 echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
-            } 
             }
-      }
-    
+            else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
+            }
+        }
+    }
+
+
 
 }
