@@ -1916,6 +1916,7 @@ input.addEventListener("input",function(){
             <label class="col-md-4">Progress description</label>
             <div class="col-md-8">
               <textarea name="progress_description"
+                        id="progress_description"
                         class="form-control"
                         required></textarea>
             </div>
@@ -1926,6 +1927,7 @@ input.addEventListener("input",function(){
             <label class="col-md-4">Progress Image One</label>
             <div class="col-md-8">
               <input type="file" name="document_one" id="document_one" accept="image/*" class="form-control">
+              <small id="label_doc1" class="text-muted"></small>
             </div>
           </div>
 
@@ -1934,6 +1936,7 @@ input.addEventListener("input",function(){
             <label class="col-md-4">Progress Image Two</label>
             <div class="col-md-8">
               <input type="file" name="document_two" id="document_two" accept="image/*" class="form-control">
+              <small id="label_doc2" class="text-muted"></small>
             </div>
           </div>
 
@@ -1942,6 +1945,7 @@ input.addEventListener("input",function(){
             <label class="col-md-4">Progress Image Three</label>
             <div class="col-md-8">
               <input type="file" name="document_three" id="document_three" accept="image/*" class="form-control">
+              <small id="label_doc3" class="text-muted"></small>
             </div>
           </div>
 
@@ -1950,6 +1954,7 @@ input.addEventListener("input",function(){
             <label class="col-md-4">Progress Image Four</label>
             <div class="col-md-8">
               <input type="file" name="document_four" id="document_four" accept="image/*" class="form-control">
+              <small id="label_doc4" class="text-muted"></small>
             </div>
           </div>
 
@@ -1958,6 +1963,7 @@ input.addEventListener("input",function(){
             <label class="col-md-4">Progress Image Five</label>
             <div class="col-md-8">
               <input type="file" name="document_five" id="document_five" accept="image/*" class="form-control">
+              <small id="label_doc5" class="text-muted"></small>
             </div>
           </div>
 
@@ -1973,7 +1979,7 @@ input.addEventListener("input",function(){
           <div class="row my-3">
             <label class="col-md-4">Embed Video Link</label>
             <div class="col-md-8">
-              <input type="text" name="progress_embed_video_link" class="form-control">
+              <input type="text" name="progress_embed_video_link" id="progress_embed_video_link" class="form-control">
             </div>
           </div>
 
@@ -1997,7 +2003,33 @@ function openUpdateProgressModal(causeId) {
     if (modalForm) {
         modalForm.reset();
     }
+    // Clear Labels
+    $('#updateProgressModal .text-muted').text('');
+
     document.getElementById('progress_cause_id').value = causeId;
+
+    // Fetch existing progress data via AJAX
+    $.ajax({
+        url: "<?php echo base_url('kanavuhelp/get_progress_data_ajax/'); ?>" + causeId,
+        type: "GET",
+        dataType: "JSON",
+        success: function(response) {
+            if (response.status === 'success') {
+                const d = response.data;
+                $('#progress_description').val(d.progress_description);
+                $('#progress_embed_video_link').val(d.progress_embed_link);
+
+                if (d.cause_status_image1) $('#label_doc1').text('Current: ' + d.cause_status_image1);
+                if (d.cause_status_image2) $('#label_doc2').text('Current: ' + d.cause_status_image2);
+                if (d.cause_status_image3) $('#label_doc3').text('Current: ' + d.cause_status_image3);
+                if (d.cause_status_image4) $('#label_doc4').text('Current: ' + d.cause_status_image4);
+                if (d.cause_status_image5) $('#label_doc5').text('Current: ' + d.cause_status_image5);
+            }
+        },
+        error: function() {
+            console.log('No existing progress found or error occurred.');
+        }
+    });
 }
 </script>
 

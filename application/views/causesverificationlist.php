@@ -86,7 +86,7 @@
                     <td><?=$donation->cause_description?></td>
                     <!-- <td><a href="<?=base_url('assets/individualform_img/'.$donation->cover_image)?>"><img src="<?=base_url('assets/individualform_img/'.$donation->cover_image)?>" style='width:50px;height:50px;' alt='<?=$donation->cover_image?>'></a></td> 
                     <td><?=$donation->created_at?></td>
-                    <td><?=$donation->username?></td>
+                    <td><?=$donation->created_by?></td>
                     <td><?=$donation->raised_amount?></td>
                     <td><?=$donation->verified == 1 ? 'Yes' : 'No'?></td>
                     <td class='d-flex'>
@@ -94,7 +94,7 @@
                         <button onclick='editDonation(json_encode($donation))' class='btn btn-primary fw-bold' data-toggle='modal' data-target='#editDonationModal'>
                             Edit
                         </button>&nbsp;&nbsp;
-                        <button onclick="setUrl(`<?=$donation->email ?>`,<?=$donation->user_id ?>,`<?=$donation->username ?>`,<?=$donation->Verifyemailcount?>,<?php echo $donation->Rejectemailcount?>)" class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
+                        <button onclick="setUrl(`<?=$donation->email ?>`,<?=$donation->user_id ?>,`<?=$donation->created_by ?>`,<?=$donation->Verifyemailcount?>,<?php echo $donation->Rejectemailcount?>)" class='btn btn-danger fw-bold' data-toggle='modal' data-target='#sendmail'>
                             Status
                         </button>&nbsp;&nbsp;
 

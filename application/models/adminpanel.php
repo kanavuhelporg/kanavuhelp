@@ -120,7 +120,7 @@ public function get_total_transaction()
 
     public function get_all_cause_details()
 {
-    $this->db->select('individualform.*, user.name as created_by');
+    $this->db->select('individualform.*, individualform.created_by as created_by, user.name as username');
     $this->db->from('individualform');
     $this->db->join('user', 'user.id = individualform.user_id', 'left');
     $this->db->order_by('individualform.created_at', 'DESC');
@@ -203,7 +203,7 @@ public function get_total_causes()
 
 
     public function get_causes_list($counts){
-        $this->db->select('individualform.*, user.name as username');
+        $this->db->select('individualform.*, individualform.created_by as created_by, user.name as username');
         $this->db->from('individualform');
         $this->db->join('user','user.id = individualform.user_id');
         $this->db->order_by('individualform.created_at', 'DESC');

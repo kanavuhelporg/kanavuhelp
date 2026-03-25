@@ -38,143 +38,159 @@ class kanavuhelp extends CI_Controller
     }
 
     public function index()
-{
-    // Fetch all fundraiser details
-    $data['fundraisers'] = $this->UserModel->get_cause_details();
-    $is_logged_in = $this->session->userdata('Kanavu_userId') !== null;
-    $data['is_logged_in'] = $is_logged_in;
+    {
+        // Fetch all fundraiser details
+        $data['fundraisers'] = $this->UserModel->get_cause_details();
+        $is_logged_in = $this->session->userdata('Kanavu_userId') !== null;
+        $data['is_logged_in'] = $is_logged_in;
 
-    $active_fundraisers = [];
-    foreach ($data['fundraisers'] as $fundraiser) {
-        // Calculate current raised amount from donations table
-        $current_raised_amount = $this->UserModel->get_current_raised_amount($fundraiser->id);
-        
-        // Update the fundraiser object with the current raised amount
-        $fundraiser->raised_amount = $current_raised_amount;
-        
-        $end_date = new DateTime($fundraiser->end_date);
-        $current_date = new DateTime();
-        $days_left = $end_date->diff($current_date)->days;
-        
-        // Check if fundraiser has expired by date or target amount reached
-        $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
-        
-        if (!$is_expired) {
-            $fundraiser->days_left = $days_left;
-            $fundraiser->hide_donation_button = false;
-            
-            // Get supporters count for this fundraiser
-            $fundraiser->supporters_count = $this->UserModel->count_supporters($fundraiser->id);
-            
-            // Get creator name
-            $fundraiser->created_by = $this->UserModel->get_user_name_by_cause_id($fundraiser->id);
-            
-            $active_fundraisers[] = $fundraiser;
+        $active_fundraisers = [];
+        foreach ($data['fundraisers'] as $fundraiser) {
+            // Calculate current raised amount from donations table
+            $current_raised_amount = $this->UserModel->get_current_raised_amount($fundraiser->id);
+
+            // Update the fundraiser object with the current raised amount
+            $fundraiser->raised_amount = $current_raised_amount;
+
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $days_left = $end_date->diff($current_date)->days;
+
+            // Check if fundraiser has expired by date or target amount reached
+            $is_expired = $end_date < $current_date || $fundraiser->raised_amount >= $fundraiser->amount;
+
+            if (!$is_expired) {
+                $fundraiser->days_left = $days_left;
+                $fundraiser->hide_donation_button = false;
+
+                // Get supporters count for this fundraiser
+                $fundraiser->supporters_count = $this->UserModel->count_supporters($fundraiser->id);
+
+                // Get creator name
+                $fundraiser->created_by = $this->UserModel->get_user_name_by_cause_id($fundraiser->id);
+
+                $active_fundraisers[] = $fundraiser;
+            }
         }
+
+        $data['fundraisers'] = $active_fundraisers;
+        $data['sno'] = 0;
+
+        // Fetch statistics
+        // $data['total_donors'] = $this->UserModel->get_total_donors();
+        // $data['total_events'] = $this->UserModel->get_total_events();
+        // $data['total_fund'] = $this->UserModel->get_total_fund();
+        $data['total_donors'] = $this->adminpanel->get_total_donors_final();
+        $data['total_events'] = $this->adminpanel->get_total_causes_final();
+        $data['total_fund'] = $this->adminpanel->get_total_fund();
+        // $data['total_volunteers'] = 550; // Static for now, update if you have a table
+        $data['total_volunteers'] = $this->adminpanel->get_total_volunteers();
+        // Load view and pass data
+        $this->load->view('kanavuhome.php', $data);
+        $this->session->set_userdata("entry", 1);
     }
+
+
+
+
     
-    $data['fundraisers'] = $active_fundraisers;
-    $data['sno'] = 0;
-   
-    // Fetch statistics
-    // $data['total_donors'] = $this->UserModel->get_total_donors();
-    // $data['total_events'] = $this->UserModel->get_total_events();
-    // $data['total_fund'] = $this->UserModel->get_total_fund();
-    $data['total_donors'] = $this->adminpanel->get_total_donors_final();
-    $data['total_events'] = $this->adminpanel->get_total_causes_final();
-    $data['total_fund'] = $this->adminpanel->get_total_fund();
-    // $data['total_volunteers'] = 550; // Static for now, update if you have a table
-    $data['total_volunteers'] = $this->adminpanel->get_total_volunteers();
-    // Load view and pass data
-    $this->load->view('kanavuhome.php', $data);
-    $this->session->set_userdata("entry", 1);
-}
-    
-public function insert_priority() {
-    if ($this->input->method() === 'post') {
-        $id = $this->input->post('id');
-        $priority = $this->input->post('priority');
-      /*    log_message('debug', 'Received ID: ' . $id);
-        log_message('debug', 'Received Priority: ' . $priority);
-        
-        // Or temporary echo for direct checking
-        echo "ID: $id, Priority: $priority";
-        exit;  */
+public function insert_priority()
+    {
+        if ($this->input->method() === 'post') {
+            $id = $this->input->post('id');
+            $priority = $this->input->post('priority');
+            /*    log_message('debug', 'Received ID: ' . $id);
+             log_message('debug', 'Received Priority: ' . $priority);
+             
+             // Or temporary echo for direct checking
+             echo "ID: $id, Priority: $priority";
+             exit;  */
 
-        if (!empty($id) && !empty($priority)) {
-            $this->load->model('UserModel');
+            if (!empty($id) && !empty($priority)) {
+                $this->load->model('UserModel');
 
-            // Check if the priority is already assigned to another ID (skip if priority is 0)
-            if ($priority != 0) {
-                $this->db->where('priority', $priority);
-                $this->db->where('id !=', $id);
-                $query = $this->db->get('individualform');
+                // Check if the priority is already assigned to another ID (skip if priority is 0)
+                if ($priority != 0) {
+                    $this->db->where('priority', $priority);
+                    $this->db->where('id !=', $id);
+                    $query = $this->db->get('individualform');
 
-                if ($query->num_rows() > 0) {
-                    echo json_encode(['status' => 'error', 'message' => 'This priority number is already assigned to another fundraiser.']);
-                    return;
+                    if ($query->num_rows() > 0) {
+                        echo json_encode(['status' => 'error', 'message' => 'This priority number is already assigned to another fundraiser.']);
+                        return;
+                    }
+                }
+
+                // Proceed with the update
+                $update = $this->UserModel->update_priority($id, $priority);
+
+                if ($update) {
+                    echo json_encode(['status' => 'success']);
+                }
+                else {
+                    echo json_encode(['status' => 'error', 'message' => 'Failed to update priority in the database.']);
                 }
             }
-
-            // Proceed with the update
-            $update = $this->UserModel->update_priority($id, $priority);
-
-            if ($update) {
-                echo json_encode(['status' => 'success']);
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Failed to update priority in the database.']);
+            else {
+                echo json_encode(['status' => 'error', 'message' => 'Please provide both ID and priority.']);
             }
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Please provide both ID and priority.']);
         }
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+        else {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+        }
     }
-}
 
     // Existing set_priority method (optional, can be removed if not needed)
-    public function set_priority($id) {
-        
+    public function set_priority($id)
+    {
+
         if ($this->input->is_ajax_request() && $this->input->post('priority')) {
             $priority = (int)$this->input->post('priority');
             $result = $this->UserModel->update_priority($id, $priority);
             if ($result) {
                 echo json_encode(['status' => 'success']);
-            } else {
+            }
+            else {
                 echo json_encode(['status' => 'error']);
             }
-        } else {
+        }
+        else {
             echo json_encode(['status' => 'error']);
         }
     }
-//set_priority method
-public function set_no_priority() {
-    if ($this->input->method() === 'post') {
-        $id = $this->input->post('id');
 
-        if (!empty($id)) {
-            $this->load->model('UserModel');
-            $update = $this->UserModel->update_priority($id, 0); // Set priority to 0
+    public function set_no_priority()
+    {
+        if ($this->input->method() === 'post') {
+            $id = $this->input->post('id');
 
-            if ($update) {
-                echo json_encode(['status' => 'success']);
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Failed to set priority to 0 in the database.']);
+            if (!empty($id)) {
+                $this->load->model('UserModel');
+                $update = $this->UserModel->update_priority($id, 0); // Set priority to 0
+
+                if ($update) {
+                    echo json_encode(['status' => 'success']);
+                }
+                else {
+                    echo json_encode(['status' => 'error', 'message' => 'Failed to set priority to 0 in the database.']);
+                }
             }
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Please provide the ID.']);
+            else {
+                echo json_encode(['status' => 'error', 'message' => 'Please provide the ID.']);
+            }
         }
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+        else {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+        }
     }
-}  
-    
 
-    public function indexpage() {
-        if(!$this->session->userdata("Kanavu_userId")){
+
+    public function indexpage()
+    {
+        if (!$this->session->userdata("Kanavu_userId")) {
             redirect("login");
         }
-        $this->load->view("indexpage");   
+        $this->load->view("indexpage");
     }
 
     public function kanavuhome()
@@ -183,15 +199,15 @@ public function set_no_priority() {
     }
 
     public function register()
-    { 
+    {
         $this->load->view('register.php');
     }
 
     public function login()
-    { 
-        if($this->session->userdata("Kanavu_userId")){
+    {
+        if ($this->session->userdata("Kanavu_userId")) {
             redirect("indexpage");
-           }
+        }
         $this->load->view('login');
     }
 
@@ -200,11 +216,13 @@ public function set_no_priority() {
         $this->load->view('privacy_policy');
     }
 
-    public function getHeader(){
+    public function getHeader()
+    {
         $this->load->view("header");
     }
 
-    public function getFooter(){
+    public function getFooter()
+    {
         $this->load->view("footer");
     }
 
@@ -280,22 +298,24 @@ public function set_no_priority() {
         $this->load->view('login_modal1.php', $data);
     }
 
-    public function updatecause(){
-        if(!$this->session->userdata('Kanavu_userId')) {
+    public function updatecause()
+    {
+        if (!$this->session->userdata('Kanavu_userId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
         $cause_id = $this->input->get("cause_id");
         $causedetails = $this->UserModel->causeDetailsforupdate($cause_id);
-        $this->load->view("updatecause",array("causedetails"=>$causedetails));
+        $this->load->view("updatecause", array("causedetails" => $causedetails));
     }
 
-    public function updateprogress(){
-        if(!$this->session->userdata('Kanavu_userId')) {
+    public function updateprogress()
+    {
+        if (!$this->session->userdata('Kanavu_userId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
         $cause_id = $this->input->get("cause_id");
         $progressdetails = $this->UserModel->causeDetailsforprogress($cause_id);
-        $this->load->view("updateprogress",array("progressdetails"=>$progressdetails,"cause_id"=>$cause_id));      
+        $this->load->view("updateprogress", array("progressdetails" => $progressdetails, "cause_id" => $cause_id));
     }
 
     // public function updateprogressdata(){
@@ -309,7 +329,7 @@ public function set_no_priority() {
     //     $dataInfo = array();
     //     $documentinfo = array();
     //     $files = $_FILES;
-        
+
     //     $uploadeddocuments = ["progress_description","document_one","document_two","document_three","document_four","document_five","progress_video","progress_embed_video"];
     //     $databasedocuments = ["progress_description","cause_status_image1","cause_status_image2","cause_status_image3","cause_status_image4","cause_status_image5","cause_status_video"];
     //     $count = count($uploadeddocuments);
@@ -325,7 +345,7 @@ public function set_no_priority() {
     //         $_FILES['documents']['tmp_name']= $files[$uploadeddocuments[$i]]['tmp_name'];
     //         $_FILES['documents']['error']= $files[$uploadeddocuments[$i]]['error'];
     //         $_FILES['documents']['size']= $files[$uploadeddocuments[$i]]['size'];    
-           
+
     //         $this->upload->initialize($this->set_progress_upload_options());
     //         $this->upload->do_upload($uploadeddocuments[$i]);
     //         $dataInfo[] = $this->upload->data();
@@ -337,7 +357,7 @@ public function set_no_priority() {
     //         $this->session->set_flashdata("fileuploadfailed",true);
     //         redirect('updateprogress'); 
     //     }
-            
+
     //         $data['progress_description'] = $this->input->post('progress_description');
     //         $data['progress_embed_link'] = $this->input->post('progress_embed_video_link');
     //         $data['cause_id'] = $this->input->post('cause_id'); 
@@ -355,134 +375,146 @@ public function set_no_priority() {
     // }
 
     public function updateprogressdata()
-{
-    // if (!$this->session->userdata('Kanavu_userId')) {
-    //     redirect('kanavuhelp/login');
-    // }
+    {
+        // if (!$this->session->userdata('Kanavu_userId')) {
+        //     redirect('kanavuhelp/login');
+        // }
 
-    $this->load->model('UserModel');
-    $this->load->library('upload');
+        $this->load->model('UserModel');
+        $this->load->library('upload');
 
-    $data = [];
-    $files = $_FILES;
+        $data = [];
+        $files = $_FILES;
 
-    // ONLY FILE INPUTS
-    $uploadeddocuments = [
-        "document_one",
-        "document_two",
-        "document_three",
-        "document_four",
-        "document_five",
-        "progress_video"
-    ];
+        // ONLY FILE INPUTS
+        $uploadeddocuments = [
+            "document_one",
+            "document_two",
+            "document_three",
+            "document_four",
+            "document_five",
+            "progress_video"
+        ];
 
-    $databasedocuments = [
-        "cause_status_image1",
-        "cause_status_image2",
-        "cause_status_image3",
-        "cause_status_image4",
-        "cause_status_image5",
-        "cause_status_video"
-    ];
+        $databasedocuments = [
+            "cause_status_image1",
+            "cause_status_image2",
+            "cause_status_image3",
+            "cause_status_image4",
+            "cause_status_image5",
+            "cause_status_video"
+        ];
 
-    $insert = 0;
+        $insert = 0;
 
-    // for ($i = 0; $i < count($uploadeddocuments); $i++) {
+        // for ($i = 0; $i < count($uploadeddocuments); $i++) {
 
-    //     if (empty($_FILES[$uploadeddocuments[$i]]['name'])) {
-    //         continue;
-    //     }
+        //     if (empty($_FILES[$uploadeddocuments[$i]]['name'])) {
+        //         continue;
+        //     }
 
-    //     $_FILES['documents']['name']     = $files[$uploadeddocuments[$i]]['name'];
-    //     $_FILES['documents']['type']     = $files[$uploadeddocuments[$i]]['type'];
-    //     $_FILES['documents']['tmp_name'] = $files[$uploadeddocuments[$i]]['tmp_name'];
-    //     $_FILES['documents']['error']    = $files[$uploadeddocuments[$i]]['error'];
-    //     $_FILES['documents']['size']     = $files[$uploadeddocuments[$i]]['size'];
+        //     $_FILES['documents']['name']     = $files[$uploadeddocuments[$i]]['name'];
+        //     $_FILES['documents']['type']     = $files[$uploadeddocuments[$i]]['type'];
+        //     $_FILES['documents']['tmp_name'] = $files[$uploadeddocuments[$i]]['tmp_name'];
+        //     $_FILES['documents']['error']    = $files[$uploadeddocuments[$i]]['error'];
+        //     $_FILES['documents']['size']     = $files[$uploadeddocuments[$i]]['size'];
 
-    //     $this->upload->initialize($this->set_progress_upload_options());
+        //     $this->upload->initialize($this->set_progress_upload_options());
 
-    //     if (!$this->upload->do_upload('documents')) {
-    //         echo "<pre>";
-    //         echo "FCPATH = " . FCPATH . "\n";
-    //         echo "UPLOAD PATH = " . FCPATH . "uploads/progress/\n";
-    //         var_dump(is_dir(FCPATH . "uploads/progress/"));
-    //         var_dump(is_writable(FCPATH . "uploads/progress/"));
-    //         exit;
+        //     if (!$this->upload->do_upload('documents')) {
+        //         echo "<pre>";
+        //         echo "FCPATH = " . FCPATH . "\n";
+        //         echo "UPLOAD PATH = " . FCPATH . "uploads/progress/\n";
+        //         var_dump(is_dir(FCPATH . "uploads/progress/"));
+        //         var_dump(is_writable(FCPATH . "uploads/progress/"));
+        //         exit;
 
-    //     }
+        //     }
 
-    //     $uploadData = $this->upload->data();
-    //     $data[$databasedocuments[$insert]] = $uploadData['file_name'];
-    //     $insert++;
-    // }
-    for ($i = 0; $i < count($uploadeddocuments); $i++) {
+        //     $uploadData = $this->upload->data();
+        //     $data[$databasedocuments[$insert]] = $uploadData['file_name'];
+        //     $insert++;
+        // }
+        for ($i = 0; $i < count($uploadeddocuments); $i++) {
 
-    if (empty($_FILES[$uploadeddocuments[$i]]['name'])) {
-        continue;
-    }
+            if (empty($_FILES[$uploadeddocuments[$i]]['name'])) {
+                continue;
+            }
 
-    // Assign current file to a single key
-    $_FILES['documents']['name']     = $_FILES[$uploadeddocuments[$i]]['name'];
-    $_FILES['documents']['type']     = $_FILES[$uploadeddocuments[$i]]['type'];
-    $_FILES['documents']['tmp_name'] = $_FILES[$uploadeddocuments[$i]]['tmp_name'];
-    $_FILES['documents']['error']    = $_FILES[$uploadeddocuments[$i]]['error'];
-    $_FILES['documents']['size']     = $_FILES[$uploadeddocuments[$i]]['size'];
+            // Assign current file to a single key
+            $_FILES['documents']['name'] = $_FILES[$uploadeddocuments[$i]]['name'];
+            $_FILES['documents']['type'] = $_FILES[$uploadeddocuments[$i]]['type'];
+            $_FILES['documents']['tmp_name'] = $_FILES[$uploadeddocuments[$i]]['tmp_name'];
+            $_FILES['documents']['error'] = $_FILES[$uploadeddocuments[$i]]['error'];
+            $_FILES['documents']['size'] = $_FILES[$uploadeddocuments[$i]]['size'];
 
-    $this->upload->initialize($this->set_progress_upload_options());
+            $this->upload->initialize($this->set_progress_upload_options());
 
-    // 🔥 THIS IS THE CRITICAL FIX
-    if (!$this->upload->do_upload('documents')) {
-        echo "<pre>";
-        echo "UPLOAD FAILED FOR: ".$uploadeddocuments[$i]."\n";
-        echo $this->upload->display_errors();
-        exit;
-    }
+            // 🔥 THIS IS THE CRITICAL FIX
+            if (!$this->upload->do_upload('documents')) {
+                echo "<pre>";
+                echo "UPLOAD FAILED FOR: " . $uploadeddocuments[$i] . "\n";
+                echo $this->upload->display_errors();
+                exit;
+            }
 
-    $uploadData = $this->upload->data();
-    $data[$databasedocuments[$i]] = $uploadData['file_name'];
-}
-
-    // TEXT DATA (NOT FILES)
-    $data['progress_description'] = $this->input->post('progress_description');
-    
-    $embed_link = $this->input->post('progress_embed_video_link');
-    if (!empty($embed_link) && strpos($embed_link, '<iframe') === false) {
-        $youtube_id = '';
-        if (preg_match('/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]+)/', $embed_link, $matches)) {
-            $youtube_id = $matches[1];
+            $uploadData = $this->upload->data();
+            $data[$databasedocuments[$i]] = $uploadData['file_name'];
         }
-        if (!empty($youtube_id)) {
-            $embed_link = '<iframe width="100%" height="400px" src="https://www.youtube.com/embed/' . $youtube_id . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+
+        // TEXT DATA (NOT FILES)
+        $data['progress_description'] = $this->input->post('progress_description');
+
+        $embed_link = $this->input->post('progress_embed_video_link');
+        if (!empty($embed_link) && strpos($embed_link, '<iframe') === false) {
+            $youtube_id = '';
+            if (preg_match('/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]+)/', $embed_link, $matches)) {
+                $youtube_id = $matches[1];
+            }
+            if (!empty($youtube_id)) {
+                $embed_link = '<iframe width="100%" height="400px" src="https://www.youtube.com/embed/' . $youtube_id . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+            }
+        }
+        $data['progress_embed_link'] = $embed_link;
+        $data['cause_id'] = $this->input->post('cause_id');
+
+        $causeId = $this->input->post('cause_id');
+        $this->UserModel->store4($data, $causeId);
+
+        $this->session->set_flashdata("progressupdated", true);
+        redirect('causesverification');
+    }
+    public function get_progress_data_ajax($cause_id)
+    {
+        $this->load->model('UserModel');
+        $progress = $this->UserModel->get_user_progress($cause_id);
+
+        if ($progress) {
+            echo json_encode(['status' => 'success', 'data' => $progress]);
+        }
+        else {
+            echo json_encode(['status' => 'error', 'message' => 'No progress data found']);
         }
     }
-    $data['progress_embed_link']  = $embed_link;
-    $data['cause_id']             = $this->input->post('cause_id');
-
-    $causeId = $this->input->post('cause_id');
-    $this->UserModel->store4($data, $causeId);
-
-    $this->session->set_flashdata("progressupdated", true);
-    redirect('causesverification');
-}
 
 
     public function individual()
     {
-       // if (!$this->session->userdata('Kanavu_userId')) {
-          //  redirect('login_modal');
-          //  exit;
-      //  }
+        // if (!$this->session->userdata('Kanavu_userId')) {
+        //  redirect('login_modal');
+        //  exit;
+        //  }
 
         //category for individudal form
-       // else {
-            // Load model if not already loaded
-            $this->load->model('UserModel');
+        // else {
+        // Load model if not already loaded
+        $this->load->model('UserModel');
 
-            // Retrieve categories from the database
-            $data['result'] = $this->UserModel->get_all_categories();
+        // Retrieve categories from the database
+        $data['result'] = $this->UserModel->get_all_categories();
 
-            $this->load->view('individual', $data);
-        //}
+        $this->load->view('individual', $data);
+    //}
     }
     public function charity()
     {
@@ -570,94 +602,95 @@ public function set_no_priority() {
     //     }
     // }
     public function processDonation()
-{
-    $this->load->model('UserModel');
+    {
+        $this->load->model('UserModel');
 
-    // Get POST data
-    $cause_id       = $this->input->post('cause_id');
-    $user_id        = $this->input->post('user_id');
-    $amount         = $this->input->post('amount');
-    $name           = $this->input->post('name');
-    $city           = $this->input->post('city');
-    $emailid        = $this->input->post('email');
-    $phoneno        = $this->input->post('phoneno');
-    $transactionid  = $this->input->post('transactionid');
+        // Get POST data
+        $cause_id = $this->input->post('cause_id');
+        $user_id = $this->input->post('user_id');
+        $amount = $this->input->post('amount');
+        $name = $this->input->post('name');
+        $city = $this->input->post('city');
+        $emailid = $this->input->post('email');
+        $phoneno = $this->input->post('phoneno');
+        $transactionid = $this->input->post('transactionid');
 
-    // Fetch cause data
-    $causedata = $this->UserModel->get_cause_data($cause_id);
+        // Fetch cause data
+        $causedata = $this->UserModel->get_cause_data($cause_id);
 
-    if (!$causedata) {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid cause']);
-        exit;
-    }
+        if (!$causedata) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid cause']);
+            exit;
+        }
 
-    // Check duplicate transaction ID
-    if ($this->UserModel->is_transaction_id_exists($transactionid)) {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'The transaction ID already exists.'
-        ]);
-        exit;
-    }
+        // Check duplicate transaction ID
+        if ($this->UserModel->is_transaction_id_exists($transactionid)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'The transaction ID already exists.'
+            ]);
+            exit;
+        }
 
-    // Donation data
-    $data = [
-        'cause_id'          => $cause_id,
-        'user_id'           => $user_id,
-        'donor_id'          => $user_id,
-        'amount'            => $amount,
-        'name'              => $name,
-        'donor_location'    => $city,
-        'email'             => $emailid,
-        'phoneno'           => $phoneno,
-        'category'          => $causedata->category,
-        'cause_heading'     => $causedata->cause_heading,
-        'transactionid'     => $transactionid,
-        'currency_type'     => 'INR',
-        'fundraiser_id'     => $causedata->id,
-        'fundraiser_name'   => $causedata->name,
-        'fundraiser_email'  => $causedata->email,
-        'fundraiser_phone'  => $causedata->phone
-    ];
-
-    // Register user if not exists
-    if ($this->UserModel->checkUserexist($emailid)->num_rows() == 0) {
-        $this->db->insert('user', [
+        // Donation data
+        $data = [
+            'cause_id' => $cause_id,
+            'user_id' => $user_id,
+            'donor_id' => $user_id,
+            'amount' => $amount,
             'name' => $name,
+            'donor_location' => $city,
             'email' => $emailid,
-            'mobileNumber' => $phoneno,
-            'location' => $city
-        ]);
-        $newid = $this->db->insert_id();
-        $data['user_id'] = $newid;
+            'phoneno' => $phoneno,
+            'category' => $causedata->category,
+            'cause_heading' => $causedata->cause_heading,
+            'transactionid' => $transactionid,
+            'currency_type' => 'INR',
+            'fundraiser_id' => $causedata->id,
+            'fundraiser_name' => $causedata->name,
+            'fundraiser_email' => $causedata->email,
+            'fundraiser_phone' => $causedata->phone
+        ];
+
+        // Register user if not exists
+        if ($this->UserModel->checkUserexist($emailid)->num_rows() == 0) {
+            $this->db->insert('user', [
+                'name' => $name,
+                'email' => $emailid,
+                'mobileNumber' => $phoneno,
+                'location' => $city
+            ]);
+            $newid = $this->db->insert_id();
+            $data['user_id'] = $newid;
         /*
-        $this->db->insert('individualform', [
-            'user_id' => $newid,
-            'name' => $name,
-            'email' => $emailid,
-            'phone' => $phoneno,
-            'location' => $city
-        ]);
-        */
-    }
+         $this->db->insert('individualform', [
+         'user_id' => $newid,
+         'name' => $name,
+         'email' => $emailid,
+         'phone' => $phoneno,
+         'location' => $city
+         ]);
+         */
+        }
 
-    // Save donation
-    if ($this->UserModel->saveDonation($data)) {
-        echo json_encode(['status' => 'success']);
-        exit;
-    } else {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Failed to submit donation'
-        ]);
-        exit;
+        // Save donation
+        if ($this->UserModel->saveDonation($data)) {
+            echo json_encode(['status' => 'success']);
+            exit;
+        }
+        else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Failed to submit donation'
+            ]);
+            exit;
+        }
     }
-}
 
 
     public function donate()
     {
-       $data['category'] = $this->UserModel->get_category();
+        $data['category'] = $this->UserModel->get_category();
         $data['fundraisers'] = $this->UserModel->get_cause_details();
 
         // Check if user is logged in using CodeIgniter session
@@ -665,61 +698,59 @@ public function set_no_priority() {
         $data['is_logged_in'] = $is_logged_in;
 
         // Initialize an array to store active fundraisers
+
+
+
+
         
 /* kani */
         $active_fundraisers = [];
+        foreach ($data['fundraisers'] as $fundraiser) {
+            $end_date = new DateTime($fundraiser->end_date);
+            $current_date = new DateTime();
+            $date_diff = $end_date->diff($current_date);
 
-foreach ($data['fundraisers'] as $fundraiser) {
-    $end_date = new DateTime($fundraiser->end_date);
-    $current_date = new DateTime();
-    $date_diff = $end_date->diff($current_date);
+            // Calculate the number of days left
+            $days_left = $date_diff->days;
 
-    // Calculate the number of days left
-    $days_left = $date_diff->days;
-    
-    // Check if the fundraiser is expired (end_date passed) or fully funded
-   /*  $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount; */
-//only expire date 
-   
-    $is_expired = ($date_diff->invert === 0 && $days_left > 0);
+            // Check if the fundraiser is expired (end_date passed) or fully funded
+            /*  $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount; *///only expire date             $is_expired = ($date_diff->invert === 0 && $days_left > 0);
 
-    // Fundraiser is considered "active" even if fully funded (we only mark it as expired if the end date has passed)
-    if ($fundraiser->raised_amount >= $fundraiser->amount) {
-        // If the fundraiser is fully funded, we allow the donation button to stay visible but change the text
-        $fundraiser->hide_donation_button = false;
-        $fundraiser->donation_button_text = 'Complete Donation';  // New button text for fully funded campaigns
-    } elseif (!$is_expired) {
-        // If the fundraiser is still active and not expired
-        $fundraiser->days_left = $days_left;
-        $fundraiser->hide_donation_button = false; // Show the donation button
-        $fundraiser->donation_button_text = 'Donate Now'; // Default text for donation button
-    }
+            // Fundraiser is considered "active" even if fully funded (we only mark it as expired if the end date has passed)
+            if ($fundraiser->raised_amount >= $fundraiser->amount) {
+                // If the fundraiser is fully funded, we allow the donation button to stay visible but change the text
+                $fundraiser->hide_donation_button = false;
+                $fundraiser->donation_button_text = 'Complete Donation'; // New button text for fully funded campaigns
+            }
+            elseif (!$is_expired) {
+                // If the fundraiser is still active and not expired
+                $fundraiser->days_left = $days_left;
+                $fundraiser->hide_donation_button = false; // Show the donation button
+                $fundraiser->donation_button_text = 'Donate Now'; // Default text for donation button
+            }
 
-    // Add the fundraiser to the active list
-      if (!$is_expired) {
-        $active_fundraisers[] = $fundraiser;
-    }  
-    //
-   /*  if (!$is_expired || $fundraiser->raised_amount >= $fundraiser->amount) {
-        $active_fundraisers[] = $fundraiser;
-    } */
-}
+            // Add the fundraiser to the active list
+            if (!$is_expired) {
+                $active_fundraisers[] = $fundraiser;
+            }
+        //
+        /*  if (!$is_expired || $fundraiser->raised_amount >= $fundraiser->amount) {
+         $active_fundraisers[] = $fundraiser;
+         } */}
+        // Update the fundraisers in the data
+        $data['fundraisers'] = $active_fundraisers;
 
-// Update the fundraisers in the data
-    $data['fundraisers'] = $active_fundraisers;
+        // Pass data to the view
+        $this->load->view('donate', $data);
+        $this->session->set_userdata("entry", 1); /* kani */
 
-    // Pass data to the view
-    $this->load->view('donate', $data);
-    $this->session->set_userdata("entry", 1);
-/* kani */
 
-        
     }
 
     public function blogs()
     {
-       /*  $this->load->view('blogs.php'); */
-       redirect('https://kanavu.help/blog/', 'location', 301);
+        /*  $this->load->view('blogs.php'); */
+        redirect('https://kanavu.help/blog/', 'location', 301);
     }
     public function contactus()
     {
@@ -772,63 +803,64 @@ foreach ($data['fundraisers'] as $fundraiser) {
     // }
 
     public function helpus($fundraiser_id = null, $fundraiser_heading = null)
-{
-    if ($fundraiser_id === null || $fundraiser_heading == null) {
-        show_404();
-        return;
-    }
+    {
+        if ($fundraiser_id === null || $fundraiser_heading == null) {
+            show_404();
+            return;
+        }
 
-    $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
+        $fundraiser_details = $this->UserModel->get_fundraiser_details($fundraiser_id);
 
-    if (!$fundraiser_details) {
-        show_404();
-        return;
-    }
+        if (!$fundraiser_details) {
+            show_404();
+            return;
+        }
 
-    // Calculate days left
-    $end_date = new DateTime($fundraiser_details->end_date);
-    $current_date = new DateTime();
-    $interval = $end_date->diff($current_date);
-    
-    // Get the signed days difference
-    $days_left_num = $interval->days;
-    
-    // Check if the end date is in the past (negative interval means end_date < current_date)
-    if ($interval->invert == 0) {
-        // This means end_date is in the past (expired)
-        $days_left = 'expired';
-    } else {
-        // This means end_date is in the future
-        $days_left = $days_left_num . ' Days Left';
+        // Calculate days left
+        $end_date = new DateTime($fundraiser_details->end_date);
+        $current_date = new DateTime();
+        $interval = $end_date->diff($current_date);
+
+        // Get the signed days difference
+        $days_left_num = $interval->days;
+
+        // Check if the end date is in the past (negative interval means end_date < current_date)
+        if ($interval->invert == 0) {
+            // This means end_date is in the past (expired)
+            $days_left = 'expired';
+        }
+        else {
+            // This means end_date is in the future
+            $days_left = $days_left_num . ' Days Left';
+        }
+
+        // Get the current raised amount from donations
+        $current_raised_amount = $this->UserModel->get_current_raised_amount($fundraiser_id);
+
+        // Update the fundraiser details with the current raised amount
+        $fundraiser_details->raised_amount = $current_raised_amount;
+
+        // Check if donation button should be hidden
+        // Only hide if expired OR fully funded
+        $fundraiser_details->hide_donation_button = ($days_left === 'expired' || $fundraiser_details->raised_amount >= $fundraiser_details->amount);
+
+        // Get the number of supporters
+        $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
+        $username = $this->UserModel->get_user_name_by_cause_id($fundraiser_id);
+        $topdonars = $this->UserModel->get_top_donors_by_cause($fundraiser_id);
+        $progressdata = $this->UserModel->get_user_progress($fundraiser_details->id);
+
+        // Pass data to the view
+        $fundraiser_details->days_left = $days_left;
+        $fundraiser_details->supporters_count = $supporters_count;
+        $fundraiser_details->username = $username;
+        $fundraiser_details->topdonars = $topdonars;
+        $data['fundraiser'] = $fundraiser_details;
+        $data['progressdata'] = $progressdata;
+        $data['is_logged_in'] = $this->session->userdata('Kanavu_userId') !== null;
+
+        $this->load->view('helpus', $data);
     }
-    
-    // Get the current raised amount from donations
-    $current_raised_amount = $this->UserModel->get_current_raised_amount($fundraiser_id);
-    
-    // Update the fundraiser details with the current raised amount
-    $fundraiser_details->raised_amount = $current_raised_amount;
-    
-    // Check if donation button should be hidden
-    // Only hide if expired OR fully funded
-    $fundraiser_details->hide_donation_button = ($days_left === 'expired' || $fundraiser_details->raised_amount >= $fundraiser_details->amount);
-    
-    // Get the number of supporters
-    $supporters_count = $this->UserModel->count_supporters($fundraiser_id);
-    $username = $this->UserModel->get_user_name_by_cause_id($fundraiser_id);
-    $topdonars = $this->UserModel->get_top_donors_by_cause($fundraiser_id);
-    $progressdata = $this->UserModel->get_user_progress($fundraiser_details->id);
-    
-    // Pass data to the view
-    $fundraiser_details->days_left = $days_left;
-    $fundraiser_details->supporters_count = $supporters_count;
-    $fundraiser_details->username = $username;
-    $fundraiser_details->topdonars = $topdonars;
-    $data['fundraiser'] = $fundraiser_details;
-    $data['progressdata'] = $progressdata;
-    $data['is_logged_in'] = $this->session->userdata('Kanavu_userId') !== null;
-    
-    $this->load->view('helpus', $data);
-}
 
     public function registeration()
     {
@@ -843,14 +875,16 @@ foreach ($data['fundraisers'] as $fundraiser) {
             // Set flash message for the next page load
             $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
             redirect('/register'); // Redirects to the registration page
-        } else {
+        }
+        else {
             $response = $this->UserModel->register($data);
             if ($response) {
                 echo "<script>
                 alert('Registered successfully!');
                 window.location.href = '" . base_url('login') . "';
             </script>";
-            } else {
+            }
+            else {
                 $this->session->set_flashdata('error', 'Failed to register');
                 redirect('/register');
             }
@@ -875,29 +909,29 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $otp = $this->input->post("loginotp") ?? "";
         $countotp = strlen($otp);
 
-        if ($login->num_rows() == 0){
+        if ($login->num_rows() == 0) {
             $this->session->unset_userdata("userEmail");
             $this->session->set_flashdata("not_registered_user", true);
             redirect("login");
-            // echo '<script>alert("Please enter registered credentials.");</script>';
-        } 
-         else {
-            if($countotp == 0){
-                $this->session->set_userdata("userEmail",$email);
-                $this->session->set_userdata("path","login");           
+        // echo '<script>alert("Please enter registered credentials.");</script>';
+        }
+        else {
+            if ($countotp == 0) {
+                $this->session->set_userdata("userEmail", $email);
+                $this->session->set_userdata("path", "login");
                 redirect("send");
-                }
-                else{
-                    $user = $login->row();
-                    $userLoggedIn = array(
-                        'Kanavu_userId' => $user->id,
-                        'Kanavu_userName' => $user->name,
-                    );
-                    $this->session->set_userdata($userLoggedIn);
-                    $this->session->set_userdata("entry",0);
-                    redirect(base_url('indexpage'));
-                    $this->session->unset_userdata("userEmail");
-                }
+            }
+            else {
+                $user = $login->row();
+                $userLoggedIn = array(
+                    'Kanavu_userId' => $user->id,
+                    'Kanavu_userName' => $user->name,
+                );
+                $this->session->set_userdata($userLoggedIn);
+                $this->session->set_userdata("entry", 0);
+                redirect(base_url('indexpage'));
+                $this->session->unset_userdata("userEmail");
+            }
         }
     }
 
@@ -911,66 +945,65 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $data = array();
         // $cover_image = array();
         $files = $_FILES;
-        
+
         // $this->upload->initialize($this->set_upload_options());
-        $uploadeddocuments = ["cover_image","document_one","document_two","document_three","document_four","document_five","cause_video","cause_video_english"];
-        $databasedocuments = ["cover_image","cause_image1","cause_image2","cause_image3","cause_image4","cause_image5","Cause_video","Cause_video_english","Cause_video_link"];
+        $uploadeddocuments = ["cover_image", "document_one", "document_two", "document_three", "document_four", "document_five", "cause_video", "cause_video_english"];
+        $databasedocuments = ["cover_image", "cause_image1", "cause_image2", "cause_image3", "cause_image4", "cause_image5", "Cause_video", "Cause_video_english", "Cause_video_link"];
         $count = count($uploadeddocuments);
-        
-        try{
+
+        try {
             $insert = 0;
-        for($i=0; $i < $count; $i++)
-        {           
-            $_FILES['documents']['name']= $files[$uploadeddocuments[$i]]['name'];
-            $_FILES['documents']['type']= $files[$uploadeddocuments[$i]]['type'];
-            $_FILES['documents']['tmp_name']= $files[$uploadeddocuments[$i]]['tmp_name'];
-            $_FILES['documents']['error']= $files[$uploadeddocuments[$i]]['error'];
-            $_FILES['documents']['size']= $files[$uploadeddocuments[$i]]['size'];    
-    
-            if($_FILES[$uploadeddocuments[$i]]['name'] == ""){
-                continue;
-            }
-            $this->upload->initialize($this->set_upload_options());
-            $this->upload->do_upload($uploadeddocuments[$i]);
-            $dataInfo[] = $this->upload->data();
-            $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
-            $insert++;
-        }
-        }
-        catch(Exception $e){
-            $this->session->set_flashdata("fileuploadfailed",true);
-            redirect('individual'); 
-        }
-     
-            $data['amount'] = $this->input->post('amount');
-            $data['end_date'] = $this->input->post('end_date');
-            $data['is_runforcause'] = $this->input->post('runforcause');
+            for ($i = 0; $i < $count; $i++) {
+                $_FILES['documents']['name'] = $files[$uploadeddocuments[$i]]['name'];
+                $_FILES['documents']['type'] = $files[$uploadeddocuments[$i]]['type'];
+                $_FILES['documents']['tmp_name'] = $files[$uploadeddocuments[$i]]['tmp_name'];
+                $_FILES['documents']['error'] = $files[$uploadeddocuments[$i]]['error'];
+                $_FILES['documents']['size'] = $files[$uploadeddocuments[$i]]['size'];
 
-            if($data['is_runforcause'] == "yes"){
-               $data['eventname'] = $this->input->post('event_name');
-               $data['eventdate'] = $this->input->post('event_date');
-               $data['eventdistancekm'] = $this->input->post('run_distance_km');
-               $data['eventlocation'] = $this->input->post('event_location');
+                if ($_FILES[$uploadeddocuments[$i]]['name'] == "") {
+                    continue;
+                }
+                $this->upload->initialize($this->set_upload_options());
+                $this->upload->do_upload($uploadeddocuments[$i]);
+                $dataInfo[] = $this->upload->data();
+                $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
+                $insert++;
             }
-            
-            $data['cause_heading'] = $this->input->post('cause_heading');
-            $data['cause_description'] = $this->input->post('cause_description');
-            $data['Cause_video_link'] = $this->input->post('cause_embed_link_tamil'); 
-            $data['Cause_video_link_eng'] = $this->input->post('cause_embed_link_english');
+        }
+        catch (Exception $e) {
+            $this->session->set_flashdata("fileuploadfailed", true);
+            redirect('individual');
+        }
 
-            $data['user_id'] = $this->session->userdata('currentUserId');
-           
-       
+        $data['amount'] = $this->input->post('amount');
+        $data['end_date'] = $this->input->post('end_date');
+        $data['is_runforcause'] = $this->input->post('runforcause');
+
+        if ($data['is_runforcause'] == "yes") {
+            $data['eventname'] = $this->input->post('event_name');
+            $data['eventdate'] = $this->input->post('event_date');
+            $data['eventdistancekm'] = $this->input->post('run_distance_km');
+            $data['eventlocation'] = $this->input->post('event_location');
+        }
+
+        $data['cause_heading'] = $this->input->post('cause_heading');
+        $data['cause_description'] = $this->input->post('cause_description');
+        $data['Cause_video_link'] = $this->input->post('cause_embed_link_tamil');
+        $data['Cause_video_link_eng'] = $this->input->post('cause_embed_link_english');
+
+        $data['user_id'] = $this->session->userdata('currentUserId');
+
+
         $file_data = $this->upload->data();
         // $data['cover_image'] = $file_data['file_name'];
 
         $causeId = $this->session->userdata('currentCauseId');
-        $response = $this->UserModel->store3($data,$causeId);
+        $response = $this->UserModel->store3($data, $causeId);
         $userLoggedIn = array(
             'Kanavu_userId' => $this->session->userdata("currentUserId"),
             'Kanavu_userName' => $this->session->userdata('Kanavu_userName'),
         );
-        $this->session->set_userdata($userLoggedIn);  
+        $this->session->set_userdata($userLoggedIn);
         $this->session->set_flashdata("logged_in", true);
         // $this->session->set_userdata("entry",0);
         // redirect('causesverification'); 
@@ -986,92 +1019,91 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $dataInfo = array();
         $documentinfo = array();
         $files = $_FILES;
-        
-        $uploadeddocuments = ["cover_image","document_one","document_two","document_three","document_four","document_five","cause_video"];
-        $databasedocuments = ["cover_image","cause_image1","cause_image2","cause_image3","cause_image4","cause_image5","Cause_video"];
+
+        $uploadeddocuments = ["cover_image", "document_one", "document_two", "document_three", "document_four", "document_five", "cause_video"];
+        $databasedocuments = ["cover_image", "cause_image1", "cause_image2", "cause_image3", "cause_image4", "cause_image5", "Cause_video"];
         $count = count($uploadeddocuments);
         var_dump($_FILES);
         echo $this->input->post('amount');
-        try{
+        try {
             $insert = 0;
-        for($i=0; $i < $count; $i++)
-        {           
-            if($_FILES[$uploadeddocuments[$i]]['name'] == ""){
-                continue;
+            for ($i = 0; $i < $count; $i++) {
+                if ($_FILES[$uploadeddocuments[$i]]['name'] == "") {
+                    continue;
+                }
+                $_FILES['documents']['name'] = $files[$uploadeddocuments[$i]]['name'];
+                $_FILES['documents']['type'] = $files[$uploadeddocuments[$i]]['type'];
+                $_FILES['documents']['tmp_name'] = $files[$uploadeddocuments[$i]]['tmp_name'];
+                $_FILES['documents']['error'] = $files[$uploadeddocuments[$i]]['error'];
+                $_FILES['documents']['size'] = $files[$uploadeddocuments[$i]]['size'];
+
+
+                $this->upload->initialize($this->set_upload_options());
+                $this->upload->do_upload($uploadeddocuments[$i]);
+                $dataInfo[] = $this->upload->data();
+                $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
+                $insert++;
             }
-            $_FILES['documents']['name']= $files[$uploadeddocuments[$i]]['name'];
-            $_FILES['documents']['type']= $files[$uploadeddocuments[$i]]['type'];
-            $_FILES['documents']['tmp_name']= $files[$uploadeddocuments[$i]]['tmp_name'];
-            $_FILES['documents']['error']= $files[$uploadeddocuments[$i]]['error'];
-            $_FILES['documents']['size']= $files[$uploadeddocuments[$i]]['size'];    
-    
-           
-            $this->upload->initialize($this->set_upload_options());
-            $this->upload->do_upload($uploadeddocuments[$i]);
-            $dataInfo[] = $this->upload->data();
-            $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
-            $insert++;
         }
-        }
-        catch(Exception $e){
-            $this->session->set_flashdata("fileuploadfailed",true);
-            redirect('individual'); 
+        catch (Exception $e) {
+            $this->session->set_flashdata("fileuploadfailed", true);
+            redirect('individual');
         }
 
-            $data['amount'] = $this->input->post('amount');
-            $data['end_date'] = $this->input->post('end_date');
-            
-            $data['cause_heading'] = $this->input->post('cause_heading');
-            $data['cause_description'] = $this->input->post('cause_description');
-            if(!empty($this->input->post('cause_embed_link_tamil'))){
-                $data['Cause_video_link'] = $this->input->post('cause_embed_link_tamil');    
-            }
-            if(!empty($this->input->post('cause_embed_link_english'))){
-                $data['Cause_video_link_eng'] = $this->input->post('cause_embed_link_english');
-            }
-            $data['verified'] = 0;
+        $data['amount'] = $this->input->post('amount');
+        $data['end_date'] = $this->input->post('end_date');
+
+        $data['cause_heading'] = $this->input->post('cause_heading');
+        $data['cause_description'] = $this->input->post('cause_description');
+        if (!empty($this->input->post('cause_embed_link_tamil'))) {
+            $data['Cause_video_link'] = $this->input->post('cause_embed_link_tamil');
+        }
+        if (!empty($this->input->post('cause_embed_link_english'))) {
+            $data['Cause_video_link_eng'] = $this->input->post('cause_embed_link_english');
+        }
+        $data['verified'] = 0;
         $file_data = $this->upload->data();
 
         $causeId = $this->input->post('cause_id');
-        $response = $this->UserModel->store5($data,$causeId);
+        $response = $this->UserModel->store5($data, $causeId);
         $this->session->set_flashdata("updatedindividualform", true);
-        redirect('causesverification'); 
+        redirect('causesverification');
     }
 
     private function set_upload_options()
-    {   
-    //upload an image options
-    $config = array();
-    $config['upload_path'] = './assets/individualform_img/';
-    $config['allowed_types'] = 'gif|jpg|jpeg|png|svg|mp4';
-    $config['max_size']      = '0';
-    $config['overwrite']     = FALSE;
-    return $config;
+    {
+        //upload an image options
+        $config = array();
+        $config['upload_path'] = './assets/individualform_img/';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png|svg|mp4';
+        $config['max_size'] = '0';
+        $config['overwrite'] = FALSE;
+        return $config;
     }
 
     private function set_progress_upload_options()
-{
-    $upload_path = FCPATH . 'uploads/progress';
-    
-    // Create directory if it doesn't exist
-    if (!is_dir($upload_path)) {
-        mkdir($upload_path, 0777, true);
-    }
-    
-    $path = realpath($upload_path);
+    {
+        $upload_path = FCPATH . 'uploads/progress';
 
-    if ($path === false) {
-        echo "REALPATH FAILED: " . $upload_path;
-        exit;
-    }
+        // Create directory if it doesn't exist
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0777, true);
+        }
 
-    return [
-        'upload_path'   => $path . DIRECTORY_SEPARATOR,
-        'allowed_types' => 'jpg|jpeg|png|gif|mp4',
-        'max_size'      => 51200,
-        'encrypt_name'  => true
-    ];
-}
+        $path = realpath($upload_path);
+
+        if ($path === false) {
+            echo "REALPATH FAILED: " . $upload_path;
+            exit;
+        }
+
+        return [
+            'upload_path' => $path . DIRECTORY_SEPARATOR,
+            'allowed_types' => 'jpg|jpeg|png|gif|mp4',
+            'max_size' => 51200,
+            'encrypt_name' => true
+        ];
+    }
 
 
 
@@ -1080,15 +1112,15 @@ foreach ($data['fundraisers'] as $fundraiser) {
     public function user_causes()
     {
         // Check session for user ID
-         $user_id = $this->session->userdata('Kanavu_userId');
-    
-         if (!$user_id) {
-        // Store the current URL (the 'myFundraisers' page) in the session
-         $this->session->set_userdata('redirect_url', current_url());
-        
-        // Redirect to login page
-         redirect('login');
-         }
+        $user_id = $this->session->userdata('Kanavu_userId');
+
+        if (!$user_id) {
+            // Store the current URL (the 'myFundraisers' page) in the session
+            $this->session->set_userdata('redirect_url', current_url());
+
+            // Redirect to login page
+            redirect('login');
+        }
 
         // Initialize data array
         $data = ['is_logged_in' => true];
@@ -1103,17 +1135,18 @@ foreach ($data['fundraisers'] as $fundraiser) {
                 $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
                 $fundraiser->days_left = $days_left;
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             // Handle the error if the database cannot be reached
             log_message('error', 'Database error: ' . $e->getMessage());
             show_404(); // Display a 404 error page
             return;
         }
 
-    // Load the view with data if everything is successful
-    $this->load->view('myFundraisers', array("fundraisers"=>$fundraisers));
-    $this->session->set_userdata("entry",1);
-}
+        // Load the view with data if everything is successful
+        $this->load->view('myFundraisers', array("fundraisers" => $fundraisers));
+        $this->session->set_userdata("entry", 1);
+    }
 
     public function charityform_data()
     {
@@ -1141,7 +1174,8 @@ foreach ($data['fundraisers'] as $fundraiser) {
             $error = $this->upload->display_errors();
             echo "Upload error: $error"; // Debugging statement
             redirect('kanavuhelp/charity', 'refresh');
-        } else {
+        }
+        else {
             // File uploaded successfully, get file name and insert into database
             $file_data = $this->upload->data();
             $file_name = $file_data['file_name'];
@@ -1158,7 +1192,8 @@ foreach ($data['fundraisers'] as $fundraiser) {
             if ($response == true) {
                 echo '<script>alert("Successfully registered")</script>';
                 $this->load->view('donate.php');
-            } else {
+            }
+            else {
                 echo 'Failed to register';
             }
         }
@@ -1172,9 +1207,9 @@ foreach ($data['fundraisers'] as $fundraiser) {
 
         // Get form data safely
         $data = [
-            'name'    => $this->input->post('name', true),
-            'email'   => $this->input->post('email', true),
-            'phone'   => $this->input->post('phone', true),
+            'name' => $this->input->post('name', true),
+            'email' => $this->input->post('email', true),
+            'phone' => $this->input->post('phone', true),
             'message' => $this->input->post('message', true)
         ];
 
@@ -1183,8 +1218,8 @@ foreach ($data['fundraisers'] as $fundraiser) {
 
         // Basic variables
         $userEmail = $data['email'];
-        $userName  = $data['name'];
-        $userMsg   = nl2br($data['message']); // Keep line breaks
+        $userName = $data['name'];
+        $userMsg = nl2br($data['message']); // Keep line breaks
         $userPhone = $data['phone'];
         $adminEmail = 'support@kanavu.help';
 
@@ -1240,7 +1275,8 @@ foreach ($data['fundraisers'] as $fundraiser) {
         // --- 3️⃣ Flash Message Based on Status ---
         if ($userEmailSent && $adminEmailSent) {
             $this->session->set_flashdata('submitsuccessstatus', 'Thanks for contacting us! We have received your message.');
-        } else {
+        }
+        else {
             $this->session->set_flashdata('submiterrorstatus', 'An error occurred while sending your message. Please try again later.');
         }
 
@@ -1287,7 +1323,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
         $otp = rand(1000, 9999);
         $this->session->set_userdata('generated_otp', $otp);
         $path = $this->session->userdata("path") ?? "individual";
-       
+
         $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
 
         $this->email->from('support@kanavu.help', 'The Kanavu Trust');
@@ -1298,49 +1334,51 @@ foreach ($data['fundraisers'] as $fundraiser) {
         if ($this->email->send()) {
             // Set a session variable to indicate OTP was sent
             $this->session->set_flashdata('otp_sent', true);
-            if($path == "login"){
-                $this->session->set_userdata("loginemail",$userEmail);
+            if ($path == "login") {
+                $this->session->set_userdata("loginemail", $userEmail);
                 $this->session->unset_userdata("path");
                 $this->session->unset_userdata("entry");
                 redirect("/login");
             }
-            else{
-                $this->session->set_userdata("entry",0);
-            redirect('/individual');// Redirect back to the same page
+            else {
+                $this->session->set_userdata("entry", 0);
+                redirect('/individual'); // Redirect back to the same page
             }
-        } else {
-            if($path == "login"){
-                $this->session->set_userdata("mailstatus","failed");
+        }
+        else {
+            if ($path == "login") {
+                $this->session->set_userdata("mailstatus", "failed");
                 echo "<script>alert(OTP is not sent to your email. please try again.)</script>";
                 redirect("/login");
 
             }
-            else{
-                $this->session->set_userdata("mailstatus","failed");
+            else {
+                $this->session->set_userdata("mailstatus", "failed");
                 echo "<script>alert(OTP is not sent to your email. please try again.)</script>";
                 redirect('/individual');
             }
-            // echo $this->email->print_debugger(); // Print debug info if sending fails
+        // echo $this->email->print_debugger(); // Print debug info if sending fails
         }
     }
 
-    public function verifyOtp(){
+    public function verifyOtp()
+    {
         if (!$this->session->userdata('Kanavu_userId')) {
             redirect('kanavuhelp/login'); // Redirect to login if not logged in
         }
         $otp = $this->input->post("otp");
-        if($otp == $this->session->userdata('generated_otp')){
-        echo "true"; 
+        if ($otp == $this->session->userdata('generated_otp')) {
+            echo "true";
         }
-        else{
-        echo "false";
+        else {
+            echo "false";
         }
-        }
+    }
 
     public function individualformsubmit()
     {
         $causeId = $this->session->userdata('currentCauseId');
-        
+
 
         // Prepare data for updating
         $data = [
@@ -1365,7 +1403,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
     // {
     //     $causeData = ""; 
     //     $step = $this->input->post("step");
-        
+
     //     $causeData = [
     //         'category' => $this->input->post('category'),
     //         'created_by' => $this->input->post('created_by'),
@@ -1376,7 +1414,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
     //         'location' => $this->input->post('location'),
     //         'form_selected_text' => $this->input->post('category'),
     //     ];
-        
+
     //     $userData = [
     //         'name' => $this->input->post('created_by'),
     //         'email' => $this->input->post('email'),
@@ -1388,7 +1426,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
 
     //     $email = $this->input->post('email');
     //     $checkregister = $this->UserModel->checkUserexist($email);
-        
+
     //     if($checkregister->num_rows() > 0){
     //         $userdata = $checkregister->row();
     //         $user_id = $userdata->id;
@@ -1409,7 +1447,7 @@ foreach ($data['fundraisers'] as $fundraiser) {
     //             $this->session->set_flashdata("fundraisinglive",true);
     //             redirect("individual");
     //         }*/
-            
+
     //             $userLoggedIn = array(
     //                 'Kanavu_userId' => $user_id,
     //                 'Kanavu_userName' => $user_name,
@@ -1448,74 +1486,76 @@ foreach ($data['fundraisers'] as $fundraiser) {
     // }
 
     public function insertUser()
-{
-    $createdBy = trim($this->input->post('created_by'));
+    {
+        $createdBy = trim($this->input->post('created_by'));
 
-    // SAFETY: prevent null / undefined
-    if (empty($createdBy) || strtolower($createdBy) === 'undefined') {
-        $createdBy = 'Anonymous';
-    }
+        // SAFETY: prevent null / undefined
+        if (empty($createdBy) || strtolower($createdBy) === 'undefined') {
+            $createdBy = 'Anonymous';
+        }
 
-    $causeData = [
-        'category' => $this->input->post('category'),
-        'created_by' => $createdBy,
-        'name' => $this->input->post('name'),
-        'email' => $this->input->post('email'),
-        'phone' => $this->input->post('phone'),
-        'age' => $this->input->post('age'),
-        'location' => $this->input->post('location'),
-        'is_runforcause' => $this->input->post('runforcause'),
-        'form_selected_text' => $this->input->post('category'),
-        'created_at' => (new DateTime('now', new DateTimeZone('Asia/Kolkata')))->format('Y-m-d H:i:s'),
-    ];
-
-    $email = $this->input->post('email');
-    $checkregister = $this->UserModel->checkUserexist($email);
-
-    if ($checkregister->num_rows() > 0) {
-
-        $userdata = $checkregister->row();
-        $user_id = $userdata->id;
-
-        $this->session->set_userdata([
-            'Kanavu_userId' => $user_id,
-            'Kanavu_userName' => $userdata->name,
-            'currentUserId' => $user_id,
-            'userEmail' => $email,
-            'form_selected_text' => $this->input->post('category')
-        ]);
-
-        $causeData['user_id'] = $user_id;
-
-        $this->db->insert('individualform', $causeData);
-        $causeId = $this->db->insert_id();
-        $this->session->set_userdata('currentCauseId', $causeId);
-
-    } else {
-
-        $userData = [
-            'name' => $createdBy,
-            'email' => $email,
-            'mobileNumber' => $this->input->post('phone'),
+        $causeData = [
+            'category' => $this->input->post('category'),
+            'created_by' => $createdBy,
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'phone' => $this->input->post('phone'),
             'age' => $this->input->post('age'),
             'location' => $this->input->post('location'),
-            'category' => 'user',
+            'is_runforcause' => $this->input->post('runforcause'),
+            'form_selected_text' => $this->input->post('category'),
+            'created_at' => (new DateTime('now', new DateTimeZone('Asia/Kolkata')))->format('Y-m-d H:i:s'),
         ];
 
-        $this->db->insert('user', $userData);
-        $userId = $this->db->insert_id();
+        $email = $this->input->post('email');
+        $checkregister = $this->UserModel->checkUserexist($email);
 
-        $causeData['user_id'] = $userId;
+        if ($checkregister->num_rows() > 0) {
 
-        $this->db->insert('individualform', $causeData);
-        $causeId = $this->db->insert_id();
-        $this->session->set_userdata('currentCauseId', $causeId);
+            $userdata = $checkregister->row();
+            $user_id = $userdata->id;
+
+            $this->session->set_userdata([
+                'Kanavu_userId' => $user_id,
+                'Kanavu_userName' => $userdata->name,
+                'currentUserId' => $user_id,
+                'userEmail' => $email,
+                'form_selected_text' => $this->input->post('category')
+            ]);
+
+            $causeData['user_id'] = $user_id;
+
+            $this->db->insert('individualform', $causeData);
+            $causeId = $this->db->insert_id();
+            $this->session->set_userdata('currentCauseId', $causeId);
+
+        }
+        else {
+
+            $userData = [
+                'name' => $createdBy,
+                'email' => $email,
+                'mobileNumber' => $this->input->post('phone'),
+                'age' => $this->input->post('age'),
+                'location' => $this->input->post('location'),
+                'category' => 'user',
+            ];
+
+            $this->db->insert('user', $userData);
+            $userId = $this->db->insert_id();
+
+            $causeData['user_id'] = $userId;
+
+            $this->db->insert('individualform', $causeData);
+            $causeId = $this->db->insert_id();
+            $this->session->set_userdata('currentCauseId', $causeId);
+        }
+
+        redirect('/send');
     }
 
-    redirect('/send');
-}
-
-    public function updateCauseStep2(){
+    public function updateCauseStep2()
+    {
         $data = [
             'amount' => $this->input->post('amount'),
             'end_date' => $this->input->post('end_date'),
@@ -1527,13 +1567,14 @@ foreach ($data['fundraisers'] as $fundraiser) {
         redirect('/donate');
     }
 
-    public function fundraiserProfile() {
+    public function fundraiserProfile()
+    {
         $user_id = $this->input->get("id");
-    
+
         try {
             // Attempt to retrieve fundraisers from the database
             $fundraisers = $this->UserModel->get_user_causes($user_id);
-    
+
             // Calculate days left for each fundraiser
             foreach ($fundraisers as $fundraiser) {
                 $end_date = new DateTime($fundraiser->end_date);
@@ -1541,32 +1582,35 @@ foreach ($data['fundraisers'] as $fundraiser) {
                 $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
                 $fundraiser->days_left = $days_left;
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             // Handle the error if the database cannot be reached
             log_message('error', 'Database error: ' . $e->getMessage());
             show_404(); // Display a 404 error page
             return;
         }
-    
+
         // Load the view with data if everything is successful
-        $this->load->view('fundraiserprofile', array("fundraisers"=>$fundraisers));
+        $this->load->view('fundraiserprofile', array("fundraisers" => $fundraisers));
     }
 
-     // Method to handle the delete request
- public function deleteCause() {
-    if($this->input->is_ajax_request()){
-        $id = $this->input->post("id");
-        // Call the model method to delete the cause by user_id
-        $result = $this->UserModel->deleteCause($id);  // Ensure the method matches the model function
-    // return $id;
-        // Return a JSON response indicating success or failure
-        if ($result) {
-            echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
-        } 
+    // Method to handle the delete request
+    public function deleteCause()
+    {
+        if ($this->input->is_ajax_request()) {
+            $id = $this->input->post("id");
+            // Call the model method to delete the cause by user_id
+            $result = $this->UserModel->deleteCause($id); // Ensure the method matches the model function
+            // return $id;
+            // Return a JSON response indicating success or failure
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
+            }
+            else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
+            }
         }
-  }
+    }
 
 }
 ?>
