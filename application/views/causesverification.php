@@ -1917,8 +1917,7 @@ input.addEventListener("input",function(){
             <div class="col-md-8">
               <textarea name="progress_description"
                         id="progress_description"
-                        class="form-control"
-                        required></textarea>
+                         class="form-control"></textarea>
             </div>
           </div>
 

@@ -358,7 +358,7 @@ public function insert_priority()
     //         redirect('updateprogress'); 
     //     }
 
-    //         $data['progress_description'] = $this->input->post('progress_description');
+    //         $data['progress_description'] = !empty(trim($this->input->post('progress_description'))) ? $this->input->post('progress_description') : NULL;
     //         $data['progress_embed_link'] = $this->input->post('progress_embed_video_link');
     //         $data['cause_id'] = $this->input->post('cause_id'); 
     //         $file_data = $this->upload->data();
@@ -463,7 +463,7 @@ public function insert_priority()
         }
 
         // TEXT DATA (NOT FILES)
-        $data['progress_description'] = $this->input->post('progress_description');
+        $data['progress_description'] = !empty(trim($this->input->post('progress_description'))) ? $this->input->post('progress_description') : NULL;
 
         $embed_link = $this->input->post('progress_embed_video_link');
         if (!empty($embed_link) && strpos($embed_link, '<iframe') === false) {
