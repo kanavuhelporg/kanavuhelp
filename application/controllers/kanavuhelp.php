@@ -97,8 +97,6 @@ class kanavuhelp extends CI_Controller
 
 
 
-
-    
 public function insert_priority()
     {
         if ($this->input->method() === 'post') {
@@ -1351,6 +1349,7 @@ public function insert_priority()
         $otp = rand(1000, 9999);
         $this->session->set_userdata('generated_otp', $otp);
         $path = $this->session->userdata("path") ?? "individual";
+        
 
         $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
 

@@ -1441,6 +1441,18 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                 <small id="label_img5" class="text-muted"></small>
                             </div>
                             <div class="col-md-6">
+                                <label class="form-label small">Cause Video (Upload)</label>
+                                <input type="hidden" name="Cause_video_old" id="field_video_file_old">
+                                <input type="file" name="Cause_video" class="form-control" accept="video/*">
+                                <small id="label_video_file" class="text-muted"></small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Cause Video English (Upload)</label>
+                                <input type="hidden" name="Cause_video_english_old" id="field_video_file_eng_old">
+                                <input type="file" name="Cause_video_english" class="form-control" accept="video/*">
+                                <small id="label_video_file_eng" class="text-muted"></small>
+                            </div>
+                            <div class="col-md-6">
                                 <label class="form-label small">Cause Video Link</label>
                                 <input type="text" name="Cause_video_link" id="field_video_link" class="form-control">
                             </div>
@@ -1522,6 +1534,12 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         $('#field_img5_old').val(d.cause_image5);
                         if(d.cause_image5) $('#label_img5').text('Current: ' + d.cause_image5);
                         
+                        $('#field_video_file_old').val(d.Cause_video);
+                        if(d.Cause_video) $('#label_video_file').text('Current: ' + d.Cause_video);
+
+                        $('#field_video_file_eng_old').val(d.Cause_video_english);
+                        if(d.Cause_video_english) $('#label_video_file_eng').text('Current: ' + d.Cause_video_english);
+
                         $('#field_video_link').val(d.Cause_video_link);
                         $('#field_video_link_eng').val(d.Cause_video_link_eng);
                         $('#field_created_by').val(d.created_by);

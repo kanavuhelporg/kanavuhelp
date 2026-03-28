@@ -583,49 +583,49 @@
 <!-- Cause Description -->
 <!-- video loaded in topsection -->
 <?php
+      // 1. Prioritize uploaded videos (English first, then native)
+      $video_to_play = '';
+      if (!empty($fundraiser->Cause_video_english)) {
+          $video_to_play = base_url('assets/individualform_img/' . $fundraiser->Cause_video_english);
+      } else if (!empty($fundraiser->Cause_video)) {
+          $video_to_play = base_url('assets/individualform_img/' . $fundraiser->Cause_video);
+      }
+
+      // 2. Fallback to youtube links if no upload exists
+      $youtube_link = '';
       if (!empty($fundraiser->Cause_video_link_eng)) {
-        // If the video is a direct embed code (iframe, object, etc.)
-        if (strpos($fundraiser->Cause_video_link_eng, '<iframe') !== false || strpos($fundraiser->Cause_video_link_eng, '<embed') !== false) {
-            // Directly output the embed code heading hide
-           // echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
-        } else {
-            // Optionally handle URLs (e.g., YouTube, Vimeo) and convert them into an embed format
-            // Example: Convert a YouTube link to an embed link (assuming the URL is valid)
-            if (preg_match('/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $fundraiser->Cause_video_link_eng, $matches)) {
-                $video_id = $matches[1];
-               /*  echo "<div class='mt-1'>
-                        <iframe width='100%' height='315' src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
-                      </div>"; */
-                      echo "<div class='mt-1'>
-                      <iframe width='100%' height='380' src='https://www.youtube.com/embed/$video_id?autoplay=1' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
-                  </div>";
-            } 
-            // Check for YouTube Shorts URL (https://youtube.com/shorts/video_id)
-            else if (preg_match('/youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/', $fundraiser->Cause_video_link_eng, $matches)) {
-                $video_id = $matches[1];
-                echo "<div class='mt-1'>
-                        <iframe width='100%' height='640' src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
-                      </div>";
-            } 
-            // Handle self-hosted videos (videos uploaded directly to the server)
-            else if (preg_match('/uploads\/videos\/(.+)/', $fundraiser->Cause_video, $matches)) {
-                // Assuming uploaded videos are stored in 'uploads/videos/'
-                $video_url = base_url('uploads/videos/' . $matches[1]); 
-                echo "<div class='mt-1'>
-                        <video width='560' height='315' controls>
-                            <source src='$video_url' type='video/mp4'>
-                            Your browser does not support the video tag.
-                        </video>
-                      </div>";
-            }
-            // Handle other video types (e.g., Vimeo, Dailymotion) or just show the link
-            else {
-                echo "<div class='mt-1'>
-                        <a href='{$fundraiser->Cause_video_link_eng}' target='_blank'>Watch the video</a>
-                      </div>";
-            }
-        }
-    }  
+          $youtube_link = $fundraiser->Cause_video_link_eng;
+      } else if (!empty($fundraiser->Cause_video_link)) {
+          $youtube_link = $fundraiser->Cause_video_link;
+      }
+
+      // 3. Render the video
+      if (!empty($video_to_play)) {
+          echo "<div class='mt-1 text-center'>
+                  <video width='100%' controls class='rounded-3 shadow-sm w-100'>
+                      <source src='{$video_to_play}' type='video/mp4'>
+                      Your browser does not support the video tag.
+                  </video>
+                </div>";
+      } else if (!empty($youtube_link)) {
+          // It's already an iframe/embed code
+          if (strpos($youtube_link, '<iframe') !== false || strpos($youtube_link, '<embed') !== false) {
+              echo "<div class='mt-1'>" . $youtube_link . "</div>";
+          } 
+          // Match standard YouTube links, shorts, or youtu.be
+          else if (preg_match('/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/))([a-zA-Z0-9_-]+)/', $youtube_link, $matches)) {
+              $video_id = $matches[1];
+              echo "<div class='mt-1'>
+                      <iframe class='rounded-3 shadow-sm w-100' style='min-height: 400px;' src='https://www.youtube.com/embed/{$video_id}?autoplay=1' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+                    </div>";
+          } 
+          // Standard clickable text link fallback
+          else {
+              echo "<div class='mt-1'>
+                      <a href='{$youtube_link}' target='_blank' class='btn btn-outline-danger btn-sm'>Watch Campaign Video</a>
+                    </div>";
+          }
+      }  
 ?>
 
 <!-- new code -->

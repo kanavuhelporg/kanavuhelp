@@ -447,7 +447,7 @@ class admin extends CI_Controller
         $config['upload_path'] = './assets/individualform_img/';
         $config['allowed_types'] = 'gif|jpg|png|jpeg|webp';
         $config['max_size'] = 5120; // 5MB limit
-        $config['encrypt_name'] = TRUE; // Encrypt names to avoid collisions
+        $config['encrypt_name'] = FALSE; // Keep original file names
 
         $this->load->library('upload', $config);
 
@@ -475,6 +475,34 @@ class admin extends CI_Controller
             }
             else {
                 // No new file, use the current existing filename
+                $data[$field] = $this->input->post($old_field);
+            }
+        }
+
+        // Video Upload Logic
+        $video_fields = [
+            'Cause_video' => 'Cause_video_old',
+            'Cause_video_english' => 'Cause_video_english_old'
+        ];
+
+        $config_video['upload_path'] = './assets/individualform_img/';
+        $config_video['allowed_types'] = 'mp4|avi|mov|webm|mkv|m4v';
+        $config_video['max_size'] = 5120; // 5MB limit
+        $config_video['encrypt_name'] = FALSE; // Keep original file names
+
+        foreach ($video_fields as $field => $old_field) {
+            if (!empty($_FILES[$field]['name'])) {
+                $this->upload->initialize($config_video);
+                if ($this->upload->do_upload($field)) {
+                    $uploadData = $this->upload->data();
+                    $data[$field] = $uploadData['file_name'];
+                }
+                else {
+                    // Upload failed, fallback
+                    $data[$field] = $this->input->post($old_field);
+                }
+            }
+            else {
                 $data[$field] = $this->input->post($old_field);
             }
         }
@@ -526,6 +554,20 @@ class admin extends CI_Controller
         $causeslist = $this->adminpanel->get_causes_list($counts);
         $this->load->view('causesverification', array("fundraisers" => $causeslist, "newcounts" => $totalcauses, "initialindex" => $initialindex, "sno" => $counts));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     
