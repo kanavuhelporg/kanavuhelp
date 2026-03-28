@@ -1897,9 +1897,17 @@ input.addEventListener("input",function(){
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
     <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title">Update Progress Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <h5 class="modal-title" id="progressModalTitle">Update Progress Details</h5>
+        <div class="d-flex align-items-center" id="progressModalActions" style="display:none;">
+            <button type="button" class="btn btn-success btn-sm text-white shadow-sm me-2" id="editBtnProgressModal" style="display:none;">
+                <i class="fa fa-edit"></i> Edit
+            </button>
+            <button type="button" class="btn btn-danger btn-sm shadow-sm me-2" id="deleteBtnProgressModal" style="display:none;">
+                <i class="fa fa-trash"></i> Delete
+            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
       </div>
 
       <div class="modal-body">
@@ -1917,7 +1925,7 @@ input.addEventListener("input",function(){
             <div class="col-md-8">
               <textarea name="progress_description"
                         id="progress_description"
-                         class="form-control"></textarea>
+                        class="form-control"></textarea>
             </div>
           </div>
 
@@ -1983,7 +1991,7 @@ input.addEventListener("input",function(){
           </div>
 
           <div class="text-center mt-4">
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success" id="progressSubmitBtn">
               Submit Progress
             </button>
           </div>
@@ -2013,20 +2021,79 @@ function openUpdateProgressModal(causeId) {
         type: "GET",
         dataType: "JSON",
         success: function(response) {
-            if (response.status === 'success') {
+            if (response.status === 'success' && response.data) {
                 const d = response.data;
-                $('#progress_description').val(d.progress_description);
-                $('#progress_embed_video_link').val(d.progress_embed_link);
+                $('#progress_description').val(d.progress_description || "");
+                $('#progress_embed_video_link').val(d.progress_embed_link || "");
 
                 if (d.cause_status_image1) $('#label_doc1').text('Current: ' + d.cause_status_image1);
                 if (d.cause_status_image2) $('#label_doc2').text('Current: ' + d.cause_status_image2);
                 if (d.cause_status_image3) $('#label_doc3').text('Current: ' + d.cause_status_image3);
                 if (d.cause_status_image4) $('#label_doc4').text('Current: ' + d.cause_status_image4);
                 if (d.cause_status_image5) $('#label_doc5').text('Current: ' + d.cause_status_image5);
+
+                $('#progressModalTitle').text('View Progress Details for Cause #' + causeId);
+                
+                // Disable fields by default
+                $('#updateProgressModal form input, #updateProgressModal form textarea').prop('disabled', true);
+                $('#progress_cause_id').prop('disabled', false); // Keep hidden id enabled
+                
+                $('#progressSubmitBtn').hide();
+                $('#progressModalActions').show().addClass('d-flex');
+                $('#editBtnProgressModal').show();
+                $('#deleteBtnProgressModal').show();
+                
+            } else {
+                // No progress data -> create mode
+                $('#progressModalTitle').text('Update Progress Details');
+                $('#updateProgressModal form input, #updateProgressModal form textarea').prop('disabled', false);
+                $('#progressSubmitBtn').show();
+                $('#progressModalActions').show().addClass('d-flex');
+                $('#editBtnProgressModal').hide();
+                $('#deleteBtnProgressModal').hide();
             }
         },
         error: function() {
-            console.log('No existing progress found or error occurred.');
+            // No existing progress found or error occurred - create mode
+            $('#progressModalTitle').text('Update Progress Details');
+            $('#updateProgressModal form input, #updateProgressModal form textarea').prop('disabled', false);
+            $('#progressSubmitBtn').show();
+            $('#progressModalActions').show().addClass('d-flex');
+            $('#editBtnProgressModal').hide();
+            $('#deleteBtnProgressModal').hide();
+        }
+    });
+
+    // Unbind previously bound events to prevent multiple triggers
+    $('#editBtnProgressModal').off('click').on('click', function() {
+        $('#progressModalTitle').text('Edit Progress Details for Cause #' + causeId);
+        // Re-enable fields
+        $('#updateProgressModal form input, #updateProgressModal form textarea').prop('disabled', false);
+        // Toggle buttons
+        $(this).hide();
+        $('#deleteBtnProgressModal').hide();
+        $('#progressSubmitBtn').show();
+    });
+
+    $('#deleteBtnProgressModal').off('click').on('click', function() {
+        if (confirm('Are you sure you want to delete the progress details?')) {
+            $.ajax({
+                url: '<?php echo site_url("kanavuhelp/deleteProgress"); ?>',
+                type: 'POST',
+                data: { cause_id: causeId },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function() {
+                    alert('Error deleting progress details.');
+                }
+            });
         }
     });
 }

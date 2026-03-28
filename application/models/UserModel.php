@@ -223,6 +223,11 @@ public function getUserByMobile($mobile)
 		$query = $this->db->query("SELECT * FROM cause_status_data WHERE cause_id = $cause_id");
 		return $query->row();
 	}
+
+	public function deleteProgress($cause_id) {
+		$this->db->where('cause_id', $cause_id);
+		return $this->db->delete('cause_status_data');
+	}
 	
 
 	public function get_user_causes_row($user_id)

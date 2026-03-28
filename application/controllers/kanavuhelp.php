@@ -93,6 +93,11 @@ class kanavuhelp extends CI_Controller
 
 
 
+
+
+
+
+
     
 public function insert_priority()
     {
@@ -497,6 +502,22 @@ public function insert_priority()
         }
     }
 
+    public function deleteProgress()
+    {
+        if ($this->input->is_ajax_request()) {
+            $cause_id = $this->input->post("cause_id");
+            $this->load->model('UserModel');
+            $result = $this->UserModel->deleteProgress($cause_id);
+
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'Progress details deleted successfully!']);
+            }
+            else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete progress details!']);
+            }
+        }
+    }
+
 
     public function individual()
     {
@@ -702,6 +723,11 @@ public function insert_priority()
 
 
 
+
+
+
+
+
         
 /* kani */
         $active_fundraisers = [];
@@ -714,7 +740,9 @@ public function insert_priority()
             $days_left = $date_diff->days;
 
             // Check if the fundraiser is expired (end_date passed) or fully funded
-            /*  $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount; *///only expire date             $is_expired = ($date_diff->invert === 0 && $days_left > 0);
+            /*  $is_expired = ($date_diff->invert === 0 && $days_left > 0) || $fundraiser->raised_amount >= $fundraiser->amount; */
+            //only expire date 
+            $is_expired = ($date_diff->invert === 0 && $days_left > 0);
 
             // Fundraiser is considered "active" even if fully funded (we only mark it as expired if the end date has passed)
             if ($fundraiser->raised_amount >= $fundraiser->amount) {
