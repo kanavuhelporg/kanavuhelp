@@ -120,7 +120,7 @@ public function get_total_transaction()
 
     public function get_all_cause_details()
 {
-    $this->db->select('individualform.*, user.name as created_by');
+    $this->db->select('individualform.*, individualform.created_by as created_by, user.name as username');
     $this->db->from('individualform');
     $this->db->join('user', 'user.id = individualform.user_id', 'left');
     $this->db->order_by('individualform.created_at', 'DESC');
@@ -203,7 +203,7 @@ public function get_total_causes()
 
 
     public function get_causes_list($counts){
-        $this->db->select('individualform.*, user.name as username');
+        $this->db->select('individualform.*, individualform.created_by as created_by, user.name as username');
         $this->db->from('individualform');
         $this->db->join('user','user.id = individualform.user_id');
         $this->db->order_by('individualform.created_at', 'DESC');
@@ -375,16 +375,20 @@ public function updateDonationFull($data)
         }
     }
 
-    public function update_raised_amount($cause_id, $amount,$status)
+    public function update_raised_amount($cause_id, $amount, $status)
     {
-        if($status == 1){
-        $this->db->set('raised_amount', 'raised_amount + ' . (int) $amount, FALSE);
-        $this->db->where('id', $cause_id);
-        return $this->db->update('individualform');
+        // Guard: only update if cause_id is a valid non-zero value
+        if (empty($cause_id) || (int)$cause_id <= 0) {
+            return false; // Do NOT touch individualform if cause_id is missing/null/0
         }
-        else{
+
+        if ($status == 1) {
+            $this->db->set('raised_amount', 'raised_amount + ' . (int) $amount, FALSE);
+            $this->db->where('id', (int)$cause_id);
+            return $this->db->update('individualform');
+        } else {
             $this->db->set('raised_amount', 'raised_amount - ' . (int) $amount, FALSE);
-            $this->db->where('id', $cause_id);
+            $this->db->where('id', (int)$cause_id);
             return $this->db->update('individualform');
         }
     }
@@ -542,6 +546,135 @@ public function get_admin_entry_by_id($id)
     public function update_individual_cause($id, $data) {
         $this->db->where('id', $id);
         return $this->db->update('individualform', $data);
+    }
+
+    public function get_monthly_income() {
+        $year = date('Y');
+        $income = array_fill(0, 12, 0);
+
+        // Get monthly donations
+        $this->db->select('MONTH(created_at) as month, SUM(amount) as total');
+        $this->db->where('YEAR(created_at)', $year);
+        $this->db->where('status', 1); // Only count verified donations
+        $this->db->group_by('month');
+        $query = $this->db->get('donation_for_cause');
+        foreach ($query->result() as $row) {
+            $income[$row->month - 1] += $row->total;
+        }
+
+        // Get admin set amounts
+        $this->db->select('MONTH(date) as month, SUM(amount) as total');
+        $this->db->where('YEAR(date)', $year);
+        $this->db->group_by('month');
+        $query = $this->db->get('admin_set_amount');
+        foreach ($query->result() as $row) {
+            $income[$row->month - 1] += $row->total;
+        }
+
+        return $income;
+    }
+
+    public function get_recent_transactions($limit = 5) {
+        $this->db->select('*');
+        $this->db->from('donation_for_cause');
+        $this->db->order_by('created_at', 'DESC');
+        $this->db->limit($limit);
+        return $this->db->get()->result();
+    }
+
+    public function get_recent_causes($limit = 5) {
+        $this->db->select('individualform.*, user.name as username');
+        $this->db->from('individualform');
+        $this->db->join('user', 'user.id = individualform.user_id', 'left');
+        $this->db->order_by('individualform.created_at', 'DESC');
+        $this->db->limit($limit);
+        return $this->db->get()->result();
+    }
+
+    public function get_weekly_income() {
+        $labels = [];
+        $income = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = date('Y-m-d', strtotime("-$i days"));
+            $labels[] = date('D', strtotime($date));
+            
+            $total = 0;
+            // Donations
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(created_at)', $date);
+            $this->db->where('status', 1);
+            $query = $this->db->get('donation_for_cause')->row();
+            $total += $query->total ?? 0;
+
+            // Admin set
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(date)', $date);
+            $query = $this->db->get('admin_set_amount')->row();
+            $total += $query->total ?? 0;
+
+            $income[] = $total;
+        }
+        return ['labels' => $labels, 'income' => $income];
+    }
+
+    public function get_monthly_daily_income() {
+        $labels = [];
+        $income = [];
+        $daysInMonth = date('t');
+        $currentMonth = date('m');
+        $currentYear = date('Y');
+
+        for ($i = 1; $i <= $daysInMonth; $i++) {
+            $date = "$currentYear-$currentMonth-" . str_pad($i, 2, '0', STR_PAD_LEFT);
+            $labels[] = $i;
+            
+            $total = 0;
+            // Donations
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(created_at)', $date);
+            $this->db->where('status', 1);
+            $query = $this->db->get('donation_for_cause')->row();
+            $total += $query->total ?? 0;
+
+            // Admin set
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(date)', $date);
+            $query = $this->db->get('admin_set_amount')->row();
+            $total += $query->total ?? 0;
+
+            $income[] = $total;
+        }
+        return ['labels' => $labels, 'income' => $income];
+    }
+    public function get_custom_range_income($start, $end) {
+        $labels = [];
+        $income = [];
+        
+        $current = strtotime($start);
+        $last = strtotime($end);
+
+        while ($current <= $last) {
+            $date = date('Y-m-d', $current);
+            $labels[] = date('M d', $current);
+            
+            $total = 0;
+            // Donations
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(created_at)', $date);
+            $this->db->where('status', 1);
+            $query = $this->db->get('donation_for_cause')->row();
+            $total += $query->total ?? 0;
+
+            // Admin set
+            $this->db->select('SUM(amount) as total');
+            $this->db->where('DATE(date)', $date);
+            $query = $this->db->get('admin_set_amount')->row();
+            $total += $query->total ?? 0;
+
+            $income[] = $total;
+            $current = strtotime('+1 day', $current);
+        }
+        return ['labels' => $labels, 'income' => $income];
     }
 
 }

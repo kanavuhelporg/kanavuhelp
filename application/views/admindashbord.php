@@ -25,7 +25,7 @@
     }
 
     .ps-letter {
-      background-color: red;
+      background-color: #7986cb;
     }
 
     .ps-user {
@@ -47,19 +47,24 @@
     }
 
     .card1 {
-      background-color: rgb(88, 194, 255);
+      background-color: #f0f9ff; /* Ultra Light Sky Blue */
+      color: #0369a1 !important;
+      border: 1px solid #e0f2fe;
     }
-
     .card2 {
-      background-color: rgb(233, 153, 3);
+      background-color: #fff7ed; /* Ultra Light Orange */
+      color: #9a3412 !important;
+      border: 1px solid #ffedd5;
     }
-
     .card3 {
-      background-color: rgb(124, 9, 232);
+      background-color: #f5f3ff; /* Ultra Light Purple */
+      color: #6d28d9 !important;
+      border: 1px solid #ede9fe;
     }
-
     .card4 {
-      background-color: rgb(35, 154, 43);
+      background-color: #f0fdf4; /* Ultra Light Mint */
+      color: #15803d !important;
+      border: 1px solid #dcfce7;
     }
 
     .chartCard {
@@ -92,12 +97,12 @@
 
     /* Sidebar Active */
     .nav-link.active {
-      background-color: red !important;
+      background-color: #7986cb !important;
       color: white !important;
     }
     
     .nav-link.active:hover {
-      background-color: red !important;
+      background-color: #5c6bc0 !important;
     }
 
     /* Offcanvas sidebar styles */
@@ -151,6 +156,52 @@
         grid-template-columns: 1fr;
       }
     }
+    .card5 {
+      background-color: #fffde7; /* Ultra Light Yellow */
+      color: #854d0e !important;
+      border: 1px solid #fef9c3;
+    }
+    .card6 {
+      background-color: #fff1f1; /* Ultra Light Red */
+      color: #991b1b !important;
+      border: 1px solid #fee2e2;
+    }
+    .card7 {
+      background-color: #f0fdff; /* Ultra Light Cyan */
+      color: #0e7490 !important;
+      border: 1px solid #ecfeff;
+    }
+    .action-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+    .action-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    .recent-table-card {
+      background: #fff;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .table thead th {
+      border-top: none;
+      color: #6c757d;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    .status-pill {
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .status-verified { background: #d1e7dd; color: #0f5132; }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .bg-light-purple { background-color: #f5f6ff; color: #7986cb; }
+    #trendFilter:focus { box-shadow: 0 0 0 0.25rem rgba(121, 134, 203, 0.25); border: none; }
   </style>
 </head>
 
@@ -166,7 +217,7 @@
           </button>
           <div class="d-flex align-items-center">
             <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
-            <span class="heading-ponsoft fs-5 position-relative " style="top:1px; color:red;">KANAVUHELP</span>
+            <span class="heading-ponsoft fs-5 position-relative " style="top:1px; color:#7986cb;">KANAVUHELP</span>
           </div>
         </div>
       </div>
@@ -359,44 +410,189 @@
           <h2>Dashboard</h2>
 
           <div class="dashboard-cards mt-4 border-bottom pb-5">
-            <div class="card-round card1 shadow-sm py-5 text-white d-grid align-items-center">
+            <div class="card-round card1 shadow-sm py-5 d-grid align-items-center">
               <ul class="nav flex-column align-items-center">
-                <li class="text-center">Coordinators</li>
-                <li class="fs-3 text-center">100</li>
+                <li class="text-center">Volunteers</li>
+                <li class="fs-3 text-center"><?php echo number_format($total_volunteers); ?></li>
               </ul>
             </div>
-            <div class="card-round card2 shadow-sm py-5 text-white d-grid align-items-center">
+            <div class="card-round card2 shadow-sm py-5 d-grid align-items-center">
               <ul class="nav flex-column align-items-center">
                 <li class="text-center">Funds collected</li>
-                <li class="fs-3 text-center">Rs.12300 /-</li>
+                <li class="fs-3 text-center">Rs.<?php echo number_format($total_fund); ?> /-</li>
               </ul>
             </div>
-            <div class="card-round card3 shadow-sm py-5 text-white d-grid align-items-center">
+            <div class="card-round card3 shadow-sm py-5 d-grid align-items-center">
               <ul class="nav flex-column align-items-center">
-                <li class="text-center">Donation received</li>
-                <li class="fs-3 text-center">Rs.12300 /-</li>
+                <li class="text-center">Donors</li>
+                <li class="fs-3 text-center"><?php echo number_format($total_donors); ?></li>
               </ul>
             </div>
-            <div class="card-round card4 shadow-sm py-5 text-white d-grid align-items-center">
+            <div class="card-round card4 shadow-sm py-5 d-grid align-items-center">
               <ul class="nav flex-column align-items-center">
-                <li class="text-center">Template events</li>
-                <li class="fs-3 text-center">12</li>
+                <li class="text-center">Causes</li>
+                <li class="fs-3 text-center"><?php echo number_format($total_causes); ?></li>
               </ul>
             </div>
           </div>
+
+          <!-- Combined Row for Actions & Chart -->
+          <div class="row w-100 mt-4 px-3">
+            <!-- Left Column: Action Required -->
+            <div class="col-lg-5 col-12 mb-4">
+              <h4 class="mb-3">Action Required</h4>
+              <div class="d-grid gap-3">
+                <a href="<?= base_url('transactionverification') ?>" class="text-decoration-none">
+                  <div class="card-round card5 shadow-sm p-4 action-card d-flex flex-row justify-content-between align-items-center">
+                    <div>
+                      <h5 class="mb-0">Pending Donations</h5>
+                      <small>Review new transactions</small>
+                    </div>
+                    <div class="fs-2 fw-bold"><?= $pending_transactions ?></div>
+                  </div>
+                </a>
+
+                <a href="<?= base_url('causesverification') ?>" class="text-decoration-none">
+                  <div class="card-round card6 shadow-sm p-4 action-card d-flex flex-row justify-content-between align-items-center">
+                    <div>
+                      <h5 class="mb-0">Unverified Causes</h5>
+                      <small>Approve new fundraising causes</small>
+                    </div>
+                    <div class="fs-2 fw-bold"><?= $pending_causes ?></div>
+                  </div>
+                </a>
+
+                <a href="<?= base_url('contact_submissions') ?>" class="text-decoration-none">
+                  <div class="card-round card7 shadow-sm p-4 action-card d-flex flex-row justify-content-between align-items-center">
+                    <div>
+                      <h5 class="mb-0">New enquiries</h5>
+                      <small>Respond to customer queries</small>
+                    </div>
+                    <div class="fs-2 fw-bold"><?= $enquiry_count ?></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Right Column: Chart -->
+            <div class="col-lg-7 col-12 mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Income Trends</h4>
+                <select id="trendFilter" class="form-select form-select-sm w-auto rounded-pill px-3 shadow-sm border-0 bg-light-purple">
+                  <option value="week" selected>Week</option>
+                  <option value="month">Month</option>
+                  <option value="year">Year</option>
+                  <option value="custom">Custom Date Basis</option>
+                </select>
+              </div>
+
+              <!-- Custom Date Range Row -->
+              <div id="customDateRange" class="mb-3 d-none">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-light border-0">From</span>
+                    <input type="date" id="startDate" class="form-control border-0 bg-light">
+                  </div>
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-light border-0">To</span>
+                    <input type="date" id="endDate" class="form-control border-0 bg-light">
+                  </div>
+                  <button id="applyCustomFilter" class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm">Filter</button>
+                </div>
+              </div>
+              <div class="chartCard h-100 d-flex flex-column">
+                <div class="chartBox border flex-grow-1 d-flex align-items-center">
+                  <canvas id="myChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Combined Row -->
         </div>
 
-        <!-------------------------chart--------------------------------------->
-        <div class="w-100 p-4">
-          <div class="col-12">
-            <div class="chartCard">
-              <div class="chartBox border">
-                <canvas id="myChart"></canvas>
+        <!-------------------------Recent Activity------------------------------>
+        <div class="row w-100 p-4 pt-0 mt-4">
+          <div class="col-lg-6 col-12 mb-4">
+            <div class="recent-table-card shadow-sm h-100">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0">Recent Donations</h5>
+                <a href="<?= base_url('transactionverification') ?>" class="btn btn-sm btn-outline-primary rounded-pill px-3">View All</a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead>
+                    <tr>
+                      <th>Donor</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach($recent_transactions as $tx): ?>
+                      <tr>
+                        <td>
+                          <a href="<?= base_url('transactionverification') ?>">
+                          <div class="d-flex flex-column">
+                            <span class="fw-bold"><?= $tx->name ?></span>
+                            <small class="text-muted"><?= date('M d, Y', strtotime($tx->created_at)) ?></small>
+                          </div>
+                          </a>
+                        </td>
+                        <td class="fw-bold text-success">₹<?= number_format($tx->amount) ?></td>
+                        <td>
+                          <span class="status-pill <?= $tx->status == 1 ? 'status-verified' : 'status-pending' ?>">
+                            <?= $tx->status == 1 ? 'Verified' : 'Pending' ?>
+                          </span>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-12 mb-4">
+            <div class="recent-table-card shadow-sm h-100">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0">Latest Causes</h5>
+                <a href="<?= base_url('causesverification') ?>" class="btn btn-sm btn-outline-primary rounded-pill px-3">View All</a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead>
+                    <tr>
+                      <th>Cause</th>
+                      <th>Goal</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach($recent_causes as $cs): ?>
+                      <tr>
+                        <td>
+                          <a href="<?= base_url('causesverification') ?>">
+                          <div class="d-flex flex-column">
+                            <span class="fw-bold text-truncate" style="max-width: 150px;"><?= $cs->cause_heading ?></span>
+                            <small class="text-muted"><?= $cs->category ?></small>
+                          </div>
+                          </a>
+                        </td>
+                        <td class="fw-bold">₹<?= number_format($cs->amount) ?></td>
+                        <td>
+                          <span class="status-pill <?= $cs->verified == 1 ? 'status-verified' : 'status-pending' ?>">
+                            <?= $cs->verified == 1 ? 'Approved' : 'Pending' ?>
+                          </span>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
-        <!------------------------chart-end-------------------------------------->
+        <!------------------------Recent Activity-end------------------------------>
       </div><!-----------main-dashboard-end------------------------>
     </div><!--------------main-navbar-end------------------->
   </div>
@@ -404,25 +600,34 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
   <script>
     // setup 
+    let chartLabels = <?php echo json_encode($chart_labels); ?>;
+    let incomeData = <?php echo json_encode($chart_income); ?>;
+
     const data = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      labels: chartLabels,
       datasets: [
         {
-          label: 'Outcome',
-          data: [10000, 20000, 30000, 40000, 50000, 60000, 70000, 10000, 20000, 80000, 30000, 12000],
-          backgroundColor: Array(12).fill('pink')
+          label: 'Duration',
+          data: Array(chartLabels.length).fill(0),
+          borderColor: '#f06292',
+          backgroundColor: 'rgba(240, 98, 146, 0.1)',
+          fill: true,
+          tension: 0.4
         },
         {
           label: 'Income',
-          data: [20000, 35000, 40000, 50000, 20000, 10000, 25000, 22000, 24000, 30000, 40000, 42000],
-          backgroundColor: Array(12).fill('orangered')
+          data: incomeData,
+          borderColor: '#6a6aa8ff',
+          backgroundColor: 'rgba(121, 134, 203, 0.2)',
+          fill: true,
+          tension: 0.4
         }
       ]
     };
 
     // config 
     const config = {
-      type: 'bar',
+      type: 'line',
       data,
       options: {
         responsive: true,
@@ -452,6 +657,52 @@
       document.getElementById('myChart'),
       config
     );
+
+    // Filter Change Handling
+    document.getElementById('trendFilter').addEventListener('change', function() {
+      const filter = this.value;
+      const customRange = document.getElementById('customDateRange');
+
+      if (filter === 'custom') {
+        customRange.classList.remove('d-none');
+        return;
+      } else {
+        customRange.classList.add('d-none');
+      }
+      
+      fetch(`<?= base_url('admin/get_trend_data') ?>?filter=${filter}`)
+        .then(response => response.json())
+        .then(res => {
+          if (res.status === 'success') {
+            myChart.data.labels = res.labels;
+            myChart.data.datasets[1].data = res.income;
+            myChart.data.datasets[0].data = Array(res.labels.length).fill(0);
+            myChart.update();
+          }
+        });
+    });
+
+    // Custom Range Applier
+    document.getElementById('applyCustomFilter').addEventListener('click', function() {
+      const start = document.getElementById('startDate').value;
+      const end = document.getElementById('endDate').value;
+
+      if (!start || !end) {
+        alert('Please select both start and end dates.');
+        return;
+      }
+
+      fetch(`<?= base_url('admin/get_trend_data') ?>?filter=custom&start=${start}&end=${end}`)
+        .then(response => response.json())
+        .then(res => {
+          if (res.status === 'success') {
+            myChart.data.labels = res.labels;
+            myChart.data.datasets[1].data = res.income;
+            myChart.data.datasets[0].data = Array(res.labels.length).fill(0);
+            myChart.update();
+          }
+        });
+    });
 
     // Active link highlighting
     document.addEventListener("DOMContentLoaded", function () {
