@@ -1,4 +1,3 @@
-
 <?php
 
 class admin extends CI_Controller
@@ -150,8 +149,7 @@ class admin extends CI_Controller
 
             // Redirect to 'kanavuhome' after successful login
             redirect(('admindashbord'));
-        }
-        else {
+        } else {
             // If login fails, reload the login page with an error message
             $this->load->view('admin');
             echo '<script>alert("Please enter registered credentials.");</script>';
@@ -363,8 +361,7 @@ class admin extends CI_Controller
             $result = $this->db->delete('contact_us');
             if ($result) {
                 echo json_encode(['status' => 'success', 'message' => 'Enquiry deleted successfully!']);
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error', 'message' => 'Failed to delete the enquiry!']);
             }
         }
@@ -401,8 +398,7 @@ class admin extends CI_Controller
         $data = $this->adminpanel->get_individual_cause_by_id($id);
         if ($data) {
             echo json_encode(['status' => 'success', 'data' => $data]);
-        }
-        else {
+        } else {
             echo json_encode(['status' => 'error', 'message' => 'No data found']);
         }
     }
@@ -467,13 +463,11 @@ class admin extends CI_Controller
                 if ($this->upload->do_upload($field)) {
                     $uploadData = $this->upload->data();
                     $data[$field] = $uploadData['file_name'];
-                }
-                else {
+                } else {
                     // Upload failed, fallback to old or null
                     $data[$field] = $this->input->post($old_field);
                 }
-            }
-            else {
+            } else {
                 // No new file, use the current existing filename
                 $data[$field] = $this->input->post($old_field);
             }
@@ -496,13 +490,11 @@ class admin extends CI_Controller
                 if ($this->upload->do_upload($field)) {
                     $uploadData = $this->upload->data();
                     $data[$field] = $uploadData['file_name'];
-                }
-                else {
+                } else {
                     // Upload failed, fallback
                     $data[$field] = $this->input->post($old_field);
                 }
-            }
-            else {
+            } else {
                 $data[$field] = $this->input->post($old_field);
             }
         }
@@ -511,8 +503,7 @@ class admin extends CI_Controller
         $this->db->where('id', $id);
         if ($this->db->update('individualform', $data)) {
             $this->session->set_flashdata('success', 'Cause details updated successfully!');
-        }
-        else {
+        } else {
             $this->session->set_flashdata('error', 'Update failed.');
         }
 
@@ -570,8 +561,8 @@ class admin extends CI_Controller
 
 
 
-    
-//     public function transactionverification()
+
+    //     public function transactionverification()
 // {
 //     if (!$this->session->userdata('adminId')) {
 //         redirect('kanavuhelp/login');
@@ -650,8 +641,7 @@ class admin extends CI_Controller
                 </tr>";
                 ++$i;
             }
-        }
-        else {
+        } else {
             echo "<tr><td colspan='14'>No causes found</td></tr>";
         }
     }
@@ -920,8 +910,8 @@ class admin extends CI_Controller
 
                 // Save email logs  
                 $cleanMessage = str_replace(
-                [",", "!", ".", "'", "\r", "\n"],
-                ["", "", "", "", " ", " "],
+                    [",", "!", ".", "'", "\r", "\n"],
+                    ["", "", "", "", " ", " "],
                     $message
                 );
 
@@ -939,16 +929,14 @@ class admin extends CI_Controller
                     "Email sent to " . $donaremail
                 );
 
-            }
-            else {
+            } else {
                 $this->session->set_userdata(
                     "transactionemailerrorstatus",
                     "Failed to send email."
                 );
             }
 
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->session->set_userdata(
                 "transactionemailerrorstatus",
                 "Error: " . $e->getMessage()
@@ -1056,7 +1044,7 @@ class admin extends CI_Controller
                     Dear <strong>' . htmlspecialchars($donorName) . '</strong>,
                 </div>
                 
-                <p>' . ($status == 'verified' ? 
+                <p>' . ($status == 'verified' ?
             'Thank you for your generous donation to The Kanavu Trust. Your support means the world to us and will make a significant difference in our mission.' :
             'Thank you for your interest in supporting The Kanavu Trust. We appreciate your willingness to contribute to our cause.') . '</p>
                 
@@ -1085,8 +1073,7 @@ class admin extends CI_Controller
                     <li>Offer disaster relief</li>
                     <li>Empower communities</li>
                 </ul>';
-        }
-        else {
+        } else {
             $html .= '
                 <div class="message-box">
                     <p><strong>Important Notice:</strong></p>
@@ -1154,13 +1141,12 @@ class admin extends CI_Controller
             $this->session->set_flashdata('causemailsend', true);
             $this->session->set_userdata("emailsuccessstatus", "Email sent to " . $to . "");
             redirect("/causesverification");
-        }
-        else {
+        } else {
             $this->session->set_userdata("emailerrorstatus", "Email not sent please try again.");
             redirect("/causesverification");
-        // echo "<script>Email not sent please try again.</script>";
-        // $this->session->set_userdata("emailstatus","failed");
-        // echo $this->email->print_debugger(); // Print debug info if sending fails
+            // echo "<script>Email not sent please try again.</script>";
+            // $this->session->set_userdata("emailstatus","failed");
+            // echo $this->email->print_debugger(); // Print debug info if sending fails
         }
     }
 
@@ -1183,8 +1169,7 @@ class admin extends CI_Controller
                           <td>$value[Message]</td>
                           </tr>";
                 }
-            }
-            else {
+            } else {
                 echo "<tr><td class='text-center' colspan='4'>No emails sent.</td></tr>";
             }
 
@@ -1210,8 +1195,7 @@ class admin extends CI_Controller
                           <td>$value[Message]</td>
                           </tr>";
                 }
-            }
-            else {
+            } else {
                 echo "<tr><td class='text-center' colspan='4'>No emails sent.</td></tr>";
             }
 
@@ -1276,8 +1260,7 @@ class admin extends CI_Controller
                 </tr>";
                 ++$i;
             }
-        }
-        else {
+        } else {
             echo "<tr><td colspan='7'>No records found.</td></tr>";
         }
     }
@@ -1327,10 +1310,34 @@ class admin extends CI_Controller
             // Return a JSON response indicating success or failure
             if ($result) {
                 echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
             }
+        }
+    }
+
+    // test email process
+
+    public function send_test_email()
+    {
+        $currentDateTime = date('Y-m-d H:i:s');
+
+        $message = "
+        Test Email from Kanavu help.
+       Sent On: {$currentDateTime}";
+
+        $this->email->from('support@kanavu.help', 'Kanavu Help Website');
+        $this->email->to('nathiyadev.ksv@gmail.com');
+        $this->email->subject('Kanavu Help Test Email - ' . $currentDateTime);
+        $this->email->message($message);
+
+        if ($this->email->send()) {
+            echo "✅ Email sent successfully!";
+        } else {
+            echo "❌ Email failed!";
+            echo "<pre>";
+            print_r($this->email->print_debugger());
+            echo "</pre>";
         }
     }
 
