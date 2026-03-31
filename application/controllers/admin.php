@@ -1326,7 +1326,7 @@ class admin extends CI_Controller
         Test Email from Kanavu help.
        Sent On: {$currentDateTime}";
 
-        $this->email->from('support@kanavu.help', 'Kanavu Help Website');
+        $this->email->from('giriksv2002@gmail.com', 'Kanavu Help Website');
         $this->email->to('nathiyadev.ksv@gmail.com');
         $this->email->subject('Kanavu Help Test Email - ' . $currentDateTime);
         $this->email->message($message);

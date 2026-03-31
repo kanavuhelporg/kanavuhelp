@@ -9,7 +9,7 @@ $config['protocol'] = 'smtp';
 $config['smtp_host'] = 'smtp.gmail.com';
 $config['smtp_port'] = 587;
 $config['smtp_user'] = 'giriksv2002@gmail.com';
-$config['smtp_pass'] = 'mgnu oigf gdlj uybm';
+$config['smtp_pass'] = 'mgnuoigfgdljuybm';
 
 $config['mailtype'] = 'text';
 $config['charset'] = 'utf-8';
