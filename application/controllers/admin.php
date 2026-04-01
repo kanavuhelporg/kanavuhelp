@@ -1,6 +1,6 @@
 <?php
 
-class admin extends CI_Controller
+class Admin extends CI_Controller
 {
     public function __construct()
     {
@@ -883,7 +883,7 @@ class admin extends CI_Controller
             // Email content
             $emailContent = $this->generateEmailContent($donarname, $transactionid, $message, $status);
 
-            $this->email->from('support@kanavu.help', 'The Kanavu Trust');
+            $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
             $this->email->to($donaremail);
 
             $this->email->subject(
@@ -1124,7 +1124,7 @@ class admin extends CI_Controller
         $adminName = $this->input->get("adminname");
         $to = $userEmail;
 
-        $this->email->from('support@kanavu.help', 'The Kanavu Trust');
+        $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
         $this->email->to($to);
         $this->email->subject('The Kanavu Trust');
         $this->email->message($message);
@@ -1318,29 +1318,63 @@ class admin extends CI_Controller
 
     // test email process
 
+    // public function send_test_email()
+    // {
+    //     $currentDateTime = date('Y-m-d H:i:s');
+
+    //     $message = "
+    //     Test Email from Kanavu help.
+    //    Sent On: {$currentDateTime}";
+
+    //     $this->email->from('giriksv2002@gmail.com', 'Kanavu Help Website');
+    //     $this->email->to('nathiyadev.ksv@gmail.com');
+    //     $this->email->subject('Kanavu Help Test Email - ' . $currentDateTime);
+    //     $this->email->message($message);
+
+    //     if ($this->email->send()) {
+    //         echo "✅ Email sent successfully!";
+    //     } else {
+    //         echo "❌ Email failed!";
+    //         echo "<pre>";
+    //         print_r($this->email->print_debugger());
+    //         echo "</pre>";
+    //     }
+    // }
     public function send_test_email()
     {
+        $config = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'mail.help.kanavu.org',
+            'smtp_port' => 465,
+            'smtp_user' => 'support@help.kanavu.org',
+            'smtp_pass' => 'S8z?HUxsnd30',
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n",
+            'crlf' => "\r\n",
+            'smtp_timeout' => 30,
+        );
+
+        $this->load->library('email');
+        $this->email->clear(TRUE);
+        $this->email->initialize($config);
+
         $currentDateTime = date('Y-m-d H:i:s');
+        $message = "<h3>Test Email from Kanavu Help</h3><p>Sent On: {$currentDateTime}</p>";
 
-        $message = "
-        Test Email from Kanavu help.
-       Sent On: {$currentDateTime}";
-
-        $this->email->from('giriksv2002@gmail.com', 'Kanavu Help Website');
+        $this->email->from($config['smtp_user'], 'Kanavu Help Website');
         $this->email->to('nathiyadev.ksv@gmail.com');
         $this->email->subject('Kanavu Help Test Email - ' . $currentDateTime);
         $this->email->message($message);
 
         if ($this->email->send()) {
-            echo "✅ Email sent successfully!";
+            echo 'Email sent successfully!';
         } else {
-            echo "❌ Email failed!";
-            echo "<pre>";
+            echo '<pre>';
             print_r($this->email->print_debugger());
-            echo "</pre>";
+            echo '</pre>';
         }
     }
-
 
 
 }
