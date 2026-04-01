@@ -1,6 +1,6 @@
 <?php
 
-class Admin extends CI_Controller
+class admin extends CI_Controller
 {
     public function __construct()
     {
@@ -1340,6 +1340,7 @@ class Admin extends CI_Controller
     //         echo "</pre>";
     //     }
     // }
+
     public function send_test_email()
     {
         $config = array(
