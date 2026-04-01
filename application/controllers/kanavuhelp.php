@@ -1266,7 +1266,7 @@ public function insert_priority()
             </html>
         ";
 
-        $this->email->from('support@kanavu.help', 'The Kanavu Trust');
+        $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
         $this->email->to($userEmail);
         $this->email->subject($userSubject);
         $this->email->message($userMessage);
@@ -1291,7 +1291,7 @@ public function insert_priority()
             </html>
         ";
 
-        $this->email->from('support@kanavu.help', 'Kanavu Help Website');
+        $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'Kanavu Help Website');
         $this->email->to($adminEmail);
         $this->email->subject($adminSubject);
         $this->email->message($adminMessage);
@@ -1353,7 +1353,7 @@ public function insert_priority()
 
         $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
 
-        $this->email->from('support@kanavu.help', 'The Kanavu Trust');
+        $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
         $this->email->to($to);
         $this->email->subject('The Kanavu Trust - OTP Verification');
         $this->email->message($message);

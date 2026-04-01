@@ -134,7 +134,7 @@ class Donors extends CI_Controller {
        
         $message = "Your OTP is $otp.";
 
-        $this->email->from('support@kanavu.help', 'Kanavu Help');
+        $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'Kanavu Help');
         $this->email->to($to);
         $this->email->subject('The Kanavu Trust');
         $this->email->message($message);
