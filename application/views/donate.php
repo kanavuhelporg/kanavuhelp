@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
-      <!--G4 (google analytics) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0Q147F1Y"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-JF0Q147F1Y');
-</script>
+  <!--G4 (google analytics) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0Q147F1Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-JF0Q147F1Y');
+  </script>
   <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"
+    rel="stylesheet">
   <style>
     body {
       font-family: 'Sen', sans-serif;
     }
+
     /* carousel */
     .carousel-item {
       height: 100vh;
     }
+
     .carousel-item img {
       object-fit: cover;
       height: 100%;
       width: 100%;
     }
+
     /* Login_button */
     .login-button {
       background-color: #ed3136;
@@ -41,6 +46,7 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
+
     /* start a kanavu button */
     .startkanavu-button {
       border: 1px solid #ed3136;
@@ -51,18 +57,22 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
+
     /* nav bar menu size */
     .offcanvas-body {
       font-size: 17px;
     }
+
     .nav-link {
       color: black !important;
       /* font-weight: bold; */
     }
+
     .nav-link.active {
       color: #ed3136 !important;
       font-weight: bold;
     }
+
     /* carousel text */
     .imgtext1,
     .imgtext2 {
@@ -73,100 +83,121 @@
       font-style: normal;
       padding-bottom: 100px;
     }
+
     .imgtext1 {
       top: 50%;
       left: 65px;
       transform: translateY(-50%);
     }
+
     .imgtext2 {
       top: 50%;
       right: 65px;
       transform: translateY(-50%);
     }
+
     .bg-red-modal {
       background-color: grey;
       color: white;
     }
+
     .imgtext1 strong,
     .imgtext2 strong {
       font-weight: bolder;
     }
+
     .bi-share {
       font-size: 1.3rem;
       cursor: pointer;
       color: #ed3136;
       margin-left: auto;
     }
+
     .imgtext11,
     .imgtext22 {
       font-size: 18px;
       margin-top: 5px;
     }
+
     .imgtext11 ul,
     .imgtext22 ul {
       list-style-type: none;
       padding-left: 0;
     }
+
     .imgtext11 ul li {
       margin-left: 0px;
     }
+
     .imgtext1 span,
     .imgtext2 span {
       color: #ed3136;
       font-weight: bolder;
       font-size: 40px;
     }
+
     /* filter_button above cards */
     .filter-btn {
       background-color: transparent;
       border-width: 2px;
     }
+
     .filter-btn.active {
       border-color: #ed3136;
       color: #ed3136;
     }
+
     .filter-btn:not(.active) {
       border-color: #A9A9A9;
       color: #A9A6B2;
     }
+
     .filter-btn:hover {
       border-color: #ed3136;
       color: white;
       background-color: #ed3136;
     }
+
     .donatefor {
       border: 1px solid #ed3136;
       color: #ed3136;
       background-color: #fff;
       border-radius: 20px;
     }
+
     /* card section */
     .card {
       width: 356px;
       height: 480px;
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
     }
+
     .carousel-item .row {
       margin-left: 150px;
       margin-right: 150px;
     }
+
     .carousel-item .col-12.col-md-4 {
       padding-left: 5px;
       padding-right: 5px;
       margin-bottom: 20px;
     }
+
     .card-title {
       font-size: 18px;
       font-weight: bold;
     }
+
     .card_button {
       border: 1px solid rgba(174, 168, 168, 1);
       border-radius: 25px;
     }
+
     .donate_btn {
       border: 1px solid #ed3136;
       border-radius: 25px;
     }
+
     /* footer */
     .footer {
       height: 250px;
@@ -177,90 +208,110 @@
       margin-top: 50px;
       color: #f0f0f0;
     }
+
     .footer1 {
       text-align: center;
       padding: 10px;
       margin-left: 10px;
     }
+
     .footer-lable {
       color: white;
       text-decoration: none;
       padding-right: 20px;
       padding-left: 20px;
     }
+
     .lable {
       border-right: 3px solid #fff;
     }
+
     .footer1 a {
       margin-left: 20x;
     }
+
     .footimg {
       margin-left: 520px;
       padding: 20px;
     }
+
     .social-icons img {
       width: 20px;
       height: 20px;
       margin-left: 10px;
     }
+
     .category-not-active {
       border: 1px solid #9FA6B2;
       color: #9FA6B2;
       background-color: white !important;
     }
+
     .active-category {
       border: 1px solid #ed3136;
       color: #ed3136;
       background-color: white !important;
     }
+
     @media (max-width: 767px) {
+
       /* carousel */
       .carousel-item {
         position: relative;
       }
+
       .carousel-item img {
         height: 100%;
         width: 100%;
         object-fit: cover;
       }
+
       .card {
         margin-left: 2%;
       }
+
       /* donate image below nav bar */
       .donate_img {
         width: 100%;
         position: relative;
       }
+
       .donate_img img {
         width: 100%;
         height: 300px;
         object-fit: cover;
       }
     }
+
     .donate_btn.no-hover {
       background-color: white;
       color: #ed3136;
       border: 1px solid #ed3136;
     }
+
     .donate_btn.no-hover:hover {
       background-color: white !important;
       color: #ed3136 !important;
       border: 1px solid #ed3136 !important;
     }
+
     .card_button {
       border: 1px solid gray !important;
       background: none;
       box-shadow: none;
     }
+
     .card_button:hover {
       border: 1px solid gray !important;
       box-shadow: none;
       background: none;
     }
+
     .navbar-toggler-icon {
       background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
       padding: (1rem) var(1rem);
     }
+
     .navbar-toggler {
       padding: .25rem .75rem;
       font-size: 1.25rem;
@@ -270,6 +321,7 @@
       border-radius: .25rem;
       transition: box-shadow .15s ease-in-out;
     }
+
     .img-placeholder {
       background-color: white;
       display: block;
@@ -277,31 +329,38 @@
       height: 230px;
       object-fit: cover;
     }
+
     .img-placeholder:not([src]) {
       background: url('path/to/placeholder-image.jpg') center center/cover no-repeat;
     }
+
     .btn-outline-secondary:hover {
       background-color: white;
       border-color: #ed3136;
       color: #ed3136 !important;
     }
+
     @media (max-width: 768px) {
       #userProfile .dropdown-menu {
         right: 0 !important;
         left: auto !important;
         min-width: 150px;
       }
+
       #userProfile img {
         width: 25px;
         height: 25px;
       }
+
       #userProfile .dropdown-item {
         text-align: center;
       }
+
       .category-buttons {
         flex-direction: column;
       }
     }
+
     @media (min-width: 769px) and (max-width: 989px) {
       .card {
         width: 400px;
@@ -309,11 +368,13 @@
         box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
       }
     }
+
     .custom-dropdown {
       position: relative;
       display: inline-block;
       width: 45%;
     }
+
     .custom-dropdown select {
       appearance: none;
       -webkit-appearance: none;
@@ -326,6 +387,7 @@
       font-size: 16px;
       cursor: pointer;
     }
+
     .custom-dropdown::after {
       content: '▼';
       position: absolute;
@@ -336,13 +398,16 @@
       font-size: 14px;
       color: #666;
     }
+
     /* Card Styling */
     .card-container {
       transition: transform 0.2s;
     }
+
     .card-container:hover {
       transform: translateY(-5px);
     }
+
     .card {
       width: 100%;
       max-width: 356px;
@@ -351,68 +416,83 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 8px 30px rgba(0, 0, 0, 0.1);
       overflow: hidden;
     }
+
     .card:hover {
       box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
     }
+
     .card-img-top {
       width: 100%;
       height: 230px;
       object-fit: cover;
     }
+
     .card-body {
       padding: 15px;
     }
+
     .card-title {
       font-size: 18px;
       font-weight: bold;
     }
+
     .card-text {
       font-size: 14px;
     }
+
     .progress {
       height: 10px;
       border-radius: 5px;
     }
+
     .progress-bar {
       background-color: #ed3136;
     }
+
     .btn.bg-danger {
       border-radius: 25px;
       font-size: 14px;
       padding: 5px 15px;
     }
+
     /* Single Row for Supporters and Created by */
     .supporters-section,
     .created-by-section {
       display: flex;
       align-items: center;
     }
+
     .supporters-section {
       flex: 12;
       min-width: 0;
       overflow: hidden;
     }
+
     .created-by-section {
       flex: 10;
       justify-content: flex-end;
       min-width: 0;
     }
+
     .supporters-section p,
     .created-by-section p {
       font-size: 14px;
       color: black;
     }
+
     .supporters-section p {
       display: flex;
       align-items: center;
       white-space: normal;
     }
+
     .supporters-section .supporter-count {
       font-weight: bold;
       font-size: 16px;
       color: black;
       margin-right: 4px;
     }
+
     /* Truncate Text with Ellipsis */
     .truncate-text {
       position: relative;
@@ -422,6 +502,7 @@
       max-width: 60px;
       cursor: pointer;
     }
+
     .truncate-text1 {
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -431,6 +512,7 @@
       max-width: 100px;
       text-align: center;
     }
+
     .truncate-text:hover:after {
       content: attr(data-fulltext);
       position: absolute;
@@ -446,223 +528,251 @@
       max-width: 250px;
       word-break: break-word;
     }
+
     .amount-text {
       margin-top: 5px;
       font-size: 14px;
       line-height: 1.5;
       color: #333;
     }
+
     .amount-text strong {
       font-weight: 600;
     }
+
     /* Mobile Responsiveness */
     @media (max-width: 767px) {
+
       .supporters-section p,
       .created-by-section p {
         font-size: 12px;
       }
+
       .supporters-section i,
       .created-by-section i {
         font-size: 14px;
       }
+
       .created-by-section .rounded-circle {
         width: 20px;
         height: 20px;
       }
+
       .created-by-section .bi-person-fill {
         font-size: 14px;
       }
+
       .truncate-text {
         max-width: 80px;
       }
+
       .supporters-section .truncate-text {
         max-width: 50px;
       }
+
       #userProfile .dropdown-menu {
-      right: 0 !important; /* Align the dropdown to the right edge */
-      left: auto !important; /* Override default left alignment */
-      min-width: 150px; /* Adjust the width as needed */
+        right: 0 !important;
+        /* Align the dropdown to the right edge */
+        left: auto !important;
+        /* Override default left alignment */
+        min-width: 150px;
+        /* Adjust the width as needed */
+      }
+
+      #userProfile img {
+        width: 25px;
+        /* Slightly smaller profile image for mobile */
+        height: 25px;
+      }
+
+      #userProfile .dropdown-item {
+        text-align: center;
+        /* Center-align items for better UX */
+      }
     }
- 
-    #userProfile img {
-      width: 25px; /* Slightly smaller profile image for mobile */
-      height: 25px;
-    }
-  
-    #userProfile .dropdown-item {
-      text-align: center; /* Center-align items for better UX */
-    }
-    }
+
     .fixed-card-img {
       height: 230px;
       object-fit: cover;
     }
+
     /* FIX CARD GRID – Same Height Everywhere */
     .card-container {
-        display: flex;
+      display: flex;
     }
 
     /* Card should fill available height */
     .fixed-card {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     /* Make All Images the Same Height */
     .fixed-card-img,
     .card-img-top {
-        width: 100%;
-        height: 230px !important;
-        object-fit: cover;
-        object-position: center;
+      width: 100%;
+      height: 230px !important;
+      object-fit: cover;
+      object-position: center;
     }
 
     /* Card Body flex fix */
     .card-body {
-        display: flex;
-        flex-direction: column;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Push Donate + Share to Bottom */
     .mt-auto {
-        margin-top: auto;
+      margin-top: auto;
     }
 
     /* VERY IMPORTANT – remove fixed width + height
       Let Bootstrap grid calculate width */
     .card {
-        width: 100% !important;
-        height: auto !important;
-        max-width: 100% !important;
-        border-radius: 15px;
+      width: 100% !important;
+      height: auto !important;
+      max-width: 100% !important;
+      border-radius: 15px;
     }
 
     /* Keep shadow only */
     .card {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
-    #currency, #amount {
-        height: 48px !important;     /* Equal height */
-        font-size: 15px;
-        padding-left: 12px;
-      }
+    #currency,
+    #amount {
+      height: 48px !important;
+      /* Equal height */
+      font-size: 15px;
+      padding-left: 12px;
+    }
 
-      .note-box {
-        background: #ffe6e6;           /* light red background */
-        border-left: 4px solid #ed3136; /* red left border */
-        padding: 10px 15px;
-        border-radius: 6px;
-        color: #ed3136;                /* dark red text */
-        font-size: 10px !important;
+    .note-box {
+      background: #ffe6e6;
+      /* light red background */
+      border-left: 4px solid #ed3136;
+      /* red left border */
+      padding: 10px 15px;
+      border-radius: 6px;
+      color: #ed3136;
+      /* dark red text */
+      font-size: 10px !important;
     }
 
     .navbar-brand img {
-    transition: transform 0.3s ease-in-out;
-}
-
-.navbar-brand img:hover {
-    transform: scale(1.08); /* Slight zoom-in */
-}
-
- @media (max-width: 576px) {
-    .category-btn {
-        width: 100%;     /* Equal width only on mobile */
+      transition: transform 0.3s ease-in-out;
     }
-}
 
-/* Completed CATEGORY button (Filter button) */
-.completed-category-btn {
-    background-color: #28a745 !important;
-    color: #ffffff !important;
-    border: 1px solid #28a745 !important;
-}
+    .navbar-brand img:hover {
+      transform: scale(1.08);
+      /* Slight zoom-in */
+    }
 
-/* Keep green even on hover */
-.completed-category-btn:hover {
-    background-color: #28a745 !important;
-    color: #ffffff !important;
-}
+    @media (max-width: 576px) {
+      .category-btn {
+        width: 100%;
+        /* Equal width only on mobile */
+      }
+    }
 
+    /* Completed CATEGORY button (Filter button) */
+    .completed-category-btn {
+      background-color: #28a745 !important;
+      color: #ffffff !important;
+      border: 1px solid #28a745 !important;
+    }
 
+    /* Keep green even on hover */
+    .completed-category-btn:hover {
+      background-color: #28a745 !important;
+      color: #ffffff !important;
+    }
   </style>
   <?php foreach ($fundraisers as $fundraiser): ?>
     <?php if (!empty($fundraiser->cover_image)): ?>
-      <link rel="preload" href="<?= base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) ?>" as="image">
+      <link rel="preload"
+        href="<?= base_url('assets/individualform_img/' . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)) ?>"
+        as="image">
     <?php endif; ?>
   <?php endforeach; ?>
 </head>
+
 <body>
   <!-- <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
   </nav> -->
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="https://www.kanavu.org/">
-                <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
-            </a>
+        <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title">
-             <a href="https://www.kanavu.org/">
-               <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
-             </a>
+            <a href="https://www.kanavu.org/">
+              <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help"
+                style="height: 70px; width: auto;">
+            </a>
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('') ?>">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="donatepage" class="nav-link mx-lg-2 active" href="<?= base_url('/donate') ?>">Donate</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
-                        </li>
-                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
-                            <li class="nav-item">
-                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
-                            </li>
-                        <?php else: ?>
-                            <!-- <li class="nav-item">
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('') ?>">Home</a>
+            </li>
+            <li class="nav-item">
+              <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
+            </li>
+            <li class="nav-item">
+              <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a
+                Fundraiser</a>
+            </li>
+            <li class="nav-item">
+              <a id="donatepage" class="nav-link mx-lg-2 active" href="<?= base_url('/donate') ?>">Donate</a>
+            </li>
+            <li class="nav-item">
+              <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+            <?php if ($this->session->userdata('Kanavu_userId')): ?>
+              <li class="nav-item">
+                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
+              </li>
+            <?php else: ?>
+              <!-- <li class="nav-item">
                                 <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
                             </li> -->
-                        <?php endif; ?>
-                    </ul>
-                    <div class="d-flex align-items-center ms-auto">
-                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
-                            <div class="d-flex align-items-center">
-                                <div class="dropdown" id="userProfile">
-                                    <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
-                                        <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
-                                    </div>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
-                                                <i class="fas fa-sign-out-alt"></i> Logout
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+            <?php endif; ?>
+          </ul>
+          <div class="d-flex align-items-center ms-auto">
+            <?php if ($this->session->userdata('Kanavu_userId')): ?>
+              <div class="d-flex align-items-center">
+                <div class="dropdown" id="userProfile">
+                  <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                      style="width: 30px; height: 30px; border-radius: 50%;">
+                    <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
+                  </div>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                      </a>
+                    </li>
+                  </ul>
                 </div>
+              </div>
+            <?php endif; ?>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -675,46 +785,46 @@
   </div>
   <h1 class="text-center mb-3">Select a Category</h1>
 
-<div class="container text-center pb-3">
+  <div class="container text-center pb-3">
     <div class="row row-cols-2 row-cols-md-auto g-3 justify-content-center">
 
-        <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change active-category category-btn"
-                onclick="filterCauseswithcategory('All', 0)">All</button>
-        </div>
+      <div class="col">
+        <button class="rounded-pill bg-white px-3 py-2 focus-change active-category category-btn"
+          onclick="filterCauseswithcategory('All', 0)">All</button>
+      </div>
 
-        <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
-                onclick="filterCauseswithcategory('Medical', 1)">Medical</button>
-        </div>
+      <div class="col">
+        <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+          onclick="filterCauseswithcategory('Medical', 1)">Medical</button>
+      </div>
 
-        <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
-                onclick="filterCauseswithcategory('Education', 2)">Education</button>
-        </div>
+      <div class="col">
+        <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+          onclick="filterCauseswithcategory('Education', 2)">Education</button>
+      </div>
 
-        <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
-                onclick="filterCauseswithcategory('Crisis', 3)">Crisis</button>
-        </div>
+      <div class="col">
+        <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+          onclick="filterCauseswithcategory('Crisis', 3)">Crisis</button>
+      </div>
 
-        <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
-                onclick="filterCauseswithcategory('Agriculture', 4)">Agriculture</button>
-        </div>
+      <div class="col">
+        <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+          onclick="filterCauseswithcategory('Agriculture', 4)">Agriculture</button>
+      </div>
 
-        <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
-                onclick="filterCauseswithcategory('Other', 5)">Others</button>
-        </div>
+      <div class="col">
+        <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+          onclick="filterCauseswithcategory('Other', 5)">Others</button>
+      </div>
 
-        <div class="col">
-            <button class="rounded-pill px-3 py-2 focus-change category-btn completed-category-btn"
-              onclick="filterCauseswithcategory('Completed', 6)">Completed</button>
-        </div>
+      <div class="col">
+        <button class="rounded-pill px-3 py-2 focus-change category-btn completed-category-btn"
+          onclick="filterCauseswithcategory('Completed', 6)">Completed</button>
+      </div>
 
     </div>
-</div>
+  </div>
 
 
 
@@ -730,7 +840,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    
+
     let currentIndex = 3; // Already shown 3 cards
     $.ajax({
       type: "get",
@@ -758,35 +868,35 @@
       }
     });
     // Ensure fundraiser goal status is checked when the page loads
-// document.addEventListener('DOMContentLoaded', function () {
+    // document.addEventListener('DOMContentLoaded', function () {
 
-//   // Only target cards inside the main container
-//   const fundraiserCards = document.querySelectorAll('#fundraiserCards .card-container');
+    //   // Only target cards inside the main container
+    //   const fundraiserCards = document.querySelectorAll('#fundraiserCards .card-container');
 
-//   fundraiserCards.forEach(function (card) {
-//     const fundraiserId = card.id.split('-')[2];
+    //   fundraiserCards.forEach(function (card) {
+    //     const fundraiserId = card.id.split('-')[2];
 
-//     fetch(`/check_goal_status/${fundraiserId}`)
-//       .then(response => response.json())
-//       .then(data => {
-//         if (data.goal_reached) {
+    //     fetch(`/check_goal_status/${fundraiserId}`)
+    //       .then(response => response.json())
+    //       .then(data => {
+    //         if (data.goal_reached) {
 
-//           const donateButton = card.querySelector('.donate_btn');
-//           if (donateButton) {
-//             donateButton.textContent = "Complete Fundraiser";
-//             donateButton.disabled = true;
-//           }
+    //           const donateButton = card.querySelector('.donate_btn');
+    //           if (donateButton) {
+    //             donateButton.textContent = "Complete Fundraiser";
+    //             donateButton.disabled = true;
+    //           }
 
-//           const badge = card.querySelector('.badge');
-//           if (badge) {
-//             badge.textContent = "Completed";
-//           }
+    //           const badge = card.querySelector('.badge');
+    //           if (badge) {
+    //             badge.textContent = "Completed";
+    //           }
 
-//         }
-//       });
-//   });
+    //         }
+    //       });
+    //   });
 
-// });
+    // });
 
     window.currentCategory = 'All';
     window.currentIndex = 0;
@@ -810,69 +920,69 @@
     // }
     // });
     // }
-//     function filterCauseswithcategory(category, index) {
-//     changeFocus(index);
-//     window.currentCategory = category;
-//     window.currentIndex = index;
+    //     function filterCauseswithcategory(category, index) {
+    //     changeFocus(index);
+    //     window.currentCategory = category;
+    //     window.currentIndex = index;
 
-//     $.ajax({
-//         type: "POST",
-//         url: "donations/filterCauses",
-//         data: { 
-//             category: category,
-//             t: new Date().getTime()  // Cache buster
-//         },
-//         cache: false,
-//         success: function(result) {
-//             $("#fundraiserCards").html(result);
-//         },
-//         error: function() {
-//             $("#fundraiserCards").html("<p class='text-center text-danger'>Error fetching causes.</p>");
-//         }
-//     });
-// }
-// function filterCauseswithcategory(category, index) {
-//     changeFocus(index);
-//     window.currentCategory = category;
-//     window.currentIndex = index;
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "donations/filterCauses",
+    //         data: { 
+    //             category: category,
+    //             t: new Date().getTime()  // Cache buster
+    //         },
+    //         cache: false,
+    //         success: function(result) {
+    //             $("#fundraiserCards").html(result);
+    //         },
+    //         error: function() {
+    //             $("#fundraiserCards").html("<p class='text-center text-danger'>Error fetching causes.</p>");
+    //         }
+    //     });
+    // }
+    // function filterCauseswithcategory(category, index) {
+    //     changeFocus(index);
+    //     window.currentCategory = category;
+    //     window.currentIndex = index;
 
-//     $.ajax({
-//         type: "POST",
-//         url: "donations/filterCauses",
-//         data: { 
-//             category: category,
-//             t: new Date().getTime()
-//         },
-//         cache: false,
-//         success: function(result) {
-//             $("#fundraiserCards").html(result);
-//         },
-//         error: function() {
-//             $("#fundraiserCards").html("<p class='text-center text-danger'>Error fetching causes.</p>");
-//         }
-//     });
-// }
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "donations/filterCauses",
+    //         data: { 
+    //             category: category,
+    //             t: new Date().getTime()
+    //         },
+    //         cache: false,
+    //         success: function(result) {
+    //             $("#fundraiserCards").html(result);
+    //         },
+    //         error: function() {
+    //             $("#fundraiserCards").html("<p class='text-center text-danger'>Error fetching causes.</p>");
+    //         }
+    //     });
+    // }
 
     // Function to handle button highlighting
     function changeFocus(index) {
-    const buttons = document.querySelectorAll(".focus-change");
+      const buttons = document.querySelectorAll(".focus-change");
 
-    buttons.forEach((button, i) => {
+      buttons.forEach((button, i) => {
 
         // ✅ Skip Completed category button
         if (button.classList.contains("completed-category-btn")) {
-            return;
+          return;
         }
 
         if (i === index) {
-            button.classList.remove("category-not-active");
-            button.classList.add("active-category");
+          button.classList.remove("category-not-active");
+          button.classList.add("active-category");
         } else {
-            button.classList.remove("active-category");
-            button.classList.add("category-not-active");
+          button.classList.remove("active-category");
+          button.classList.add("category-not-active");
         }
-    });
-}
+      });
+    }
 
     function openDonationModal(isRunForCause) {
       // Update modal title based on is_runforcause
@@ -880,7 +990,7 @@
       if (modalTitle) {
         modalTitle.textContent = isRunForCause === 'yes' ? 'Support for Our Run' : 'Support Our Cause';
       }
-      
+
       // Show the modal using Bootstrap's modal method
       var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
       donationModal.show();
@@ -949,343 +1059,353 @@
   <!-- Donation Modal -->
   <div class="modal fade" id="donationModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
-            
-            <div class="modal-header border-0 bg-danger text-white p-4">
-                <div>
-                    <h5 class="fw-bold mb-0" id="donationModalTitle">Support Our Cause</h5>
-                    <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
-                </div>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
 
-            <div class="modal-body p-4 bg-light">
-                <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
-                    
-                    <input type="hidden" name="cause_id" id="cause_id">
-                    <input type="hidden" name="user_id" id="user_id">
-
-                    <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">1</span>
-                                <h6 class="fw-bold mb-0 text-dark">Make Your donation</h6>
-                            </div>
-                            
-                            <div class="row g-3 align-items-center">
-                                <div class="col-7">
-                                    <label class="text-muted small d-block mb-1">UPI ID</label>
-                                    <div class="d-flex align-items-center bg-white p-2 border rounded">
-                                        <span class="text-truncate small fw-bold" id="upiText">vyapar.175502705184@hdfcbank</span>
-                                        <i class="bi bi-copy ms-auto text-primary cursor-pointer copy-icon" data-copy="upiText" title="Copy UPI"></i>
-                                    </div>
-                                </div>
-                                <div class="col-1 text-muted small fw-bold text-center">OR</div>
-                                <div class="col-4 text-center">
-                                    <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" class="img-fluid rounded border shadow-sm" style="max-height: 280px;" alt="QR Code">
-                                    <small class="d-block text-muted mt-1" style="font-size: 10px;">Scan to Pay</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
-                      <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                          <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">2</span>
-                          <h6 class="fw-bold mb-0 text-dark">Donation Details</h6>
-                        </div>
-                        <div class="row gx-4">
-                          <div class="col-md-6">
-                            <div class="input-group">
-                              <span class="input-group-text bg-white border-end-0">₹</span>
-                              <input type="number" name="amount" class="form-control border-start-0 ps-0" id="amount" placeholder="Donated Amount" required min="1">
-                              <div id="error8" class="text-danger small mt-1"></div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Transaction ID *" required>
-                            <div id="error4" class="text-danger small mt-1"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
-            <div class="card-body">
-              <div class="d-flex align-items-center mb-3">
-                <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">3</span>
-                <h6 class="fw-bold mb-0 text-dark">Personal Details</h6>
-              </div>
-              <div class="row g-2">
-                <div class="col-12">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Full Name *" required>
-                  <div id="error6" class="text-danger small mt-1"></div>
-                </div>
-                <div class="col-6">
-                  <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Phone Number *" required maxlength="10">
-                  <div id="error3" class="text-danger small mt-1"></div>
-                </div>
-                <div class="col-6">
-                  <input type="text" name="city" class="form-control" id="donorcity" placeholder="City *" required>
-                  <div id="error9" class="text-danger small mt-1"></div>
-                </div>
-                <div class="col-12">
-                  <input type="email" name="email" class="form-control" id="email" placeholder="Email (Optional)">
-                  <div id="error7" class="text-danger small mt-1"></div>
-                </div>
-              </div>
-            </div>
+        <div class="modal-header border-0 bg-danger text-white p-4">
+          <div>
+            <h5 class="fw-bold mb-0" id="donationModalTitle">Support Our Cause</h5>
+            <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
           </div>
-
-                    <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-3 shadow" style="border-radius: 12px; letter-spacing: 1px;">
-                        Submit
-                    </button>
-                    
-                    <div class="text-center mt-3">
-                        <small class="text-muted">Funds go directly to <strong>The Kanavu Trust</strong></small>
-                    </div>
-                </form>
-            </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
+
+        <div class="modal-body p-4 bg-light">
+          <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>"
+            onsubmit="return validateForm()">
+
+            <input type="hidden" name="cause_id" id="cause_id">
+            <input type="hidden" name="user_id" id="user_id">
+
+            <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">1</span>
+                  <h6 class="fw-bold mb-0 text-dark">Make Your donation</h6>
+                </div>
+
+                <div class="row g-3 align-items-center">
+                  <div class="col-7">
+                    <label class="text-muted small d-block mb-1">UPI ID</label>
+                    <div class="d-flex align-items-center bg-white p-2 border rounded">
+                      <span class="text-truncate small fw-bold" id="upiText">vyapar.175502705184@hdfcbank</span>
+                      <i class="bi bi-copy ms-auto text-primary cursor-pointer copy-icon" data-copy="upiText"
+                        title="Copy UPI"></i>
+                    </div>
+                  </div>
+                  <div class="col-1 text-muted small fw-bold text-center">OR</div>
+                  <div class="col-4 text-center">
+                    <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>"
+                      class="img-fluid rounded border shadow-sm" style="max-height: 280px;" alt="QR Code">
+                    <small class="d-block text-muted mt-1" style="font-size: 10px;">Scan to Pay</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">2</span>
+                  <h6 class="fw-bold mb-0 text-dark">Donation Details</h6>
+                </div>
+                <div class="row gx-4">
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-text bg-white border-end-0">₹</span>
+                      <input type="number" name="amount" class="form-control border-start-0 ps-0" id="amount"
+                        placeholder="Donated Amount" required min="1">
+                      <div id="error8" class="text-danger small mt-1"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" name="transactionid" class="form-control" id="transactionid"
+                      placeholder="Transaction ID *" required>
+                    <div id="error4" class="text-danger small mt-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">3</span>
+                  <h6 class="fw-bold mb-0 text-dark">Personal Details</h6>
+                </div>
+                <div class="row g-2">
+                  <div class="col-12">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Full Name *" required>
+                    <div id="error6" class="text-danger small mt-1"></div>
+                  </div>
+                  <div class="col-6">
+                    <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Phone Number *"
+                      required maxlength="10">
+                    <div id="error3" class="text-danger small mt-1"></div>
+                  </div>
+                  <div class="col-6">
+                    <input type="text" name="city" class="form-control" id="donorcity" placeholder="City *" required>
+                    <div id="error9" class="text-danger small mt-1"></div>
+                  </div>
+                  <div class="col-12">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email (Optional)">
+                    <div id="error7" class="text-danger small mt-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-3 shadow"
+              style="border-radius: 12px; letter-spacing: 1px;">
+              Submit
+            </button>
+
+            <div class="text-center mt-3">
+              <small class="text-muted">Funds go directly to <strong>The Kanavu Trust</strong></small>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
-<script>
-  // ================================
-// COMPREHENSIVE FORM VALIDATION
-// ================================
+  <script>
+    // ================================
+    // COMPREHENSIVE FORM VALIDATION
+    // ================================
 
-// Validation functions
-const validationRules = {
-    // Amount validation
-    amount: {
+    // Validation functions
+    const validationRules = {
+      // Amount validation
+      amount: {
         validate: (value) => {
-            const num = parseFloat(value);
-            return !isNaN(num) && num > 0 && num <= 10000000; // Max 1 crore
+          const num = parseFloat(value);
+          return !isNaN(num) && num > 0 && num <= 10000000; // Max 1 crore
         },
         errorId: 'error8',
         errorMessage: 'Amount must be between ₹1 and ₹1,00,00,000',
         required: true
-    },
-    
-    // Transaction ID validation
-    transactionid: {
+      },
+
+      // Transaction ID validation
+      transactionid: {
         validate: (value) => {
-            // Accepts alphanumeric transaction IDs (common in UPI)
-            return /^[A-Za-z0-9]{8,30}$/.test(value.trim());
+          // Accepts alphanumeric transaction IDs (common in UPI)
+          return /^[A-Za-z0-9]{8,30}$/.test(value.trim());
         },
         errorId: 'error4',
         errorMessage: 'Transaction ID must be 8-30 alphanumeric characters',
         required: true
-    },
-    
-    // Name validation
-    name: {
+      },
+
+      // Name validation
+      name: {
         validate: (value) => {
-            return /^[A-Za-z\s.'-]{3,50}$/.test(value.trim());
+          return /^[A-Za-z\s.'-]{3,50}$/.test(value.trim());
         },
         errorId: 'error6',
         errorMessage: 'Name must be 3-50 letters (only letters, spaces, dots, hyphens)',
         required: true
-    },
-    
-    // Phone number validation
-    phoneno: {
+      },
+
+      // Phone number validation
+      phoneno: {
         validate: (value) => {
-            return /^\d{10}$/.test(value.trim());
+          return /^\d{10}$/.test(value.trim());
         },
         errorId: 'error3',
         errorMessage: 'Enter a valid 10-digit Indian mobile number',
         required: true
-    },
-    
-    // City validation
-    city: {
+      },
+
+      // City validation
+      city: {
         validate: (value) => {
-            return /^[A-Za-z\s-]{2,30}$/.test(value.trim());
+          return /^[A-Za-z\s-]{2,30}$/.test(value.trim());
         },
         errorId: 'error9',
         errorMessage: 'City name must be 2-30 letters',
         required: true
-    },
-    
-    // Email validation (optional)
-    email: {
+      },
+
+      // Email validation (optional)
+      email: {
         validate: (value) => {
-            if (!value.trim()) return true; // Optional field
-            return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value.trim());
+          if (!value.trim()) return true; // Optional field
+          return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value.trim());
         },
         errorId: 'error7',
         errorMessage: 'Please enter a valid email address',
         required: false
-    }
-};
+      }
+    };
 
-// Real-time field validation
-function setupRealTimeValidation() {
-    Object.keys(validationRules).forEach(fieldId => {
+    // Real-time field validation
+    function setupRealTimeValidation() {
+      Object.keys(validationRules).forEach(fieldId => {
         const field = document.getElementById(fieldId);
         const rule = validationRules[fieldId];
-        
-        if (field) {
-            // Input event for real-time validation
-            field.addEventListener('input', () => {
-                validateField(fieldId);
-            });
-            
-            // Blur event for final check
-            field.addEventListener('blur', () => {
-                validateField(fieldId);
-            });
-        }
-    });
-}
 
-// Validate a single field
-function validateField(fieldId) {
-    const field = document.getElementById(fieldId);
-    const rule = validationRules[fieldId];
-    const errorElement = document.getElementById(rule.errorId);
-    
-    if (!field || !errorElement) return;
-    
-    const value = field.value.trim();
-    
-    // Clear previous error
-    errorElement.textContent = '';
-    field.classList.remove('is-invalid');
-    field.classList.remove('is-valid');
-    
-    // Skip validation for optional empty fields
-    if (!rule.required && !value) {
+        if (field) {
+          // Input event for real-time validation
+          field.addEventListener('input', () => {
+            validateField(fieldId);
+          });
+
+          // Blur event for final check
+          field.addEventListener('blur', () => {
+            validateField(fieldId);
+          });
+        }
+      });
+    }
+
+    // Validate a single field
+    function validateField(fieldId) {
+      const field = document.getElementById(fieldId);
+      const rule = validationRules[fieldId];
+      const errorElement = document.getElementById(rule.errorId);
+
+      if (!field || !errorElement) return;
+
+      const value = field.value.trim();
+
+      // Clear previous error
+      errorElement.textContent = '';
+      field.classList.remove('is-invalid');
+      field.classList.remove('is-valid');
+
+      // Skip validation for optional empty fields
+      if (!rule.required && !value) {
         field.classList.add('is-valid');
         return true;
-    }
-    
-    // Check if required field is empty
-    if (rule.required && !value) {
+      }
+
+      // Check if required field is empty
+      if (rule.required && !value) {
         errorElement.textContent = 'This field is required';
         field.classList.add('is-invalid');
         return false;
-    }
-    
-    // Apply validation rule
-    if (!rule.validate(value)) {
+      }
+
+      // Apply validation rule
+      if (!rule.validate(value)) {
         errorElement.textContent = rule.errorMessage;
         field.classList.add('is-invalid');
         return false;
+      }
+
+      // Field is valid
+      field.classList.add('is-valid');
+      return true;
     }
-    
-    // Field is valid
-    field.classList.add('is-valid');
-    return true;
-}
 
-// Validate all fields
-function validateAllFields() {
-    let isValid = true;
-    
-    Object.keys(validationRules).forEach(fieldId => {
+    // Validate all fields
+    function validateAllFields() {
+      let isValid = true;
+
+      Object.keys(validationRules).forEach(fieldId => {
         if (!validateField(fieldId)) {
-            isValid = false;
+          isValid = false;
         }
-    });
-    
-    return isValid;
-}
+      });
 
-// Reset validation states
-function resetValidation() {
-    Object.keys(validationRules).forEach(fieldId => {
+      return isValid;
+    }
+
+    // Reset validation states
+    function resetValidation() {
+      Object.keys(validationRules).forEach(fieldId => {
         const field = document.getElementById(fieldId);
         const rule = validationRules[fieldId];
         const errorElement = document.getElementById(rule.errorId);
-        
+
         if (field) {
-            field.classList.remove('is-invalid', 'is-valid');
-            field.value = '';
+          field.classList.remove('is-invalid', 'is-valid');
+          field.value = '';
         }
         if (errorElement) {
-            errorElement.textContent = '';
+          errorElement.textContent = '';
         }
+      });
+    }
+
+    // Format phone number as user types
+    document.getElementById('phoneno')?.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+      if (value.length > 10) value = value.slice(0, 10); // Limit to 10 digits
+      e.target.value = value;
     });
-}
 
-// Format phone number as user types
-document.getElementById('phoneno')?.addEventListener('input', function(e) {
-    let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
-    if (value.length > 10) value = value.slice(0, 10); // Limit to 10 digits
-    e.target.value = value;
-});
+    // Format amount as user types
+    document.getElementById('amount')?.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/[^0-9.]/g, ''); // Allow digits and dot
+      const parts = value.split('.');
 
-// Format amount as user types
-document.getElementById('amount')?.addEventListener('input', function(e) {
-    let value = e.target.value.replace(/[^0-9.]/g, ''); // Allow digits and dot
-    const parts = value.split('.');
-    
-    // Allow only two decimal places
-    if (parts.length > 2) {
+      // Allow only two decimal places
+      if (parts.length > 2) {
         value = parts[0] + '.' + parts[1];
-    }
-    if (parts[1] && parts[1].length > 2) {
+      }
+      if (parts[1] && parts[1].length > 2) {
         value = parts[0] + '.' + parts[1].slice(0, 2);
-    }
-    
-    e.target.value = value;
-});
+      }
 
-// Auto-capitalize name
-document.getElementById('name')?.addEventListener('input', function(e) {
-    // Capitalize first letter of each word
-    e.target.value = e.target.value
+      e.target.value = value;
+    });
+
+    // Auto-capitalize name
+    document.getElementById('name')?.addEventListener('input', function (e) {
+      // Capitalize first letter of each word
+      e.target.value = e.target.value
         .toLowerCase()
         .split(' ')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
-});
+    });
 
-// Auto-capitalize city
-document.getElementById('city')?.addEventListener('input', function(e) {
-    e.target.value = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1).toLowerCase();
-});
+    // Auto-capitalize city
+    document.getElementById('city')?.addEventListener('input', function (e) {
+      e.target.value = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1).toLowerCase();
+    });
 
-// Initialize validation when modal opens
-document.getElementById('donationModal').addEventListener('shown.bs.modal', function() {
-    setupRealTimeValidation();
-});
+    // Initialize validation when modal opens
+    document.getElementById('donationModal').addEventListener('shown.bs.modal', function () {
+      setupRealTimeValidation();
+    });
 
-// Reset validation when modal closes
-document.getElementById('donationModal').addEventListener('hidden.bs.modal', function() {
-    resetValidation();
-});
+    // Reset validation when modal closes
+    document.getElementById('donationModal').addEventListener('hidden.bs.modal', function () {
+      resetValidation();
+    });
 
-// Override form submission with validation
-document.getElementById('donationForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    if (!validateAllFields()) {
+    // Override form submission with validation
+    document.getElementById('donationForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!validateAllFields()) {
         // Scroll to first error
         const firstError = document.querySelector('.is-invalid');
         if (firstError) {
-            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            firstError.focus();
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstError.focus();
         }
         return false;
-    }
-    
-    // All validations passed - submit the form
-    this.submit();
-});
+      }
 
-// Initialize validation on page load
-document.addEventListener('DOMContentLoaded', function() {
-    setupRealTimeValidation();
-});
-</script>
-<!-- FULL JS -->
-<script>
-  function togglePaymentOptions() {
+      // All validations passed - submit the form
+      this.submit();
+    });
+
+    // Initialize validation on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      setupRealTimeValidation();
+    });
+  </script>
+  <!-- FULL JS -->
+  <script>
+    function togglePaymentOptions() {
       let option = document.getElementById("paymentMethod").value;
 
       document.getElementById("scanSection").style.display = "none";
@@ -1295,10 +1415,10 @@ document.addEventListener('DOMContentLoaded', function() {
       if (option === "upi") document.getElementById("upiSection").style.display = "block";
       if (option === "scan") document.getElementById("scanSection").style.display = "block";
       if (option === "bank") document.getElementById("bankSection").style.display = "block";
-  }
+    }
 
-  // UNIVERSAL COPY FUNCTION
-  function copyField(icon) {
+    // UNIVERSAL COPY FUNCTION
+    function copyField(icon) {
       let id = icon.getAttribute("data-copy");
       let text = document.getElementById(id).innerText;
       navigator.clipboard.writeText(text);
@@ -1312,228 +1432,230 @@ document.addEventListener('DOMContentLoaded', function() {
       tooltip.setContent({ ".tooltip-inner": "Copied!" });
 
       setTimeout(() => {
-          icon.classList.remove("bi-check2-circle", "text-success");
-          icon.classList.add("bi-copy");
+        icon.classList.remove("bi-check2-circle", "text-success");
+        icon.classList.add("bi-copy");
 
-          // RESTORE ORIGINAL TOOLTIP TEXT
-          let original = icon.getAttribute("data-original-title");
+        // RESTORE ORIGINAL TOOLTIP TEXT
+        let original = icon.getAttribute("data-original-title");
 
-          tooltip._config.title = original;
-          tooltip.setContent({ ".tooltip-inner": original });
-          tooltip.update();
+        tooltip._config.title = original;
+        tooltip.setContent({ ".tooltip-inner": original });
+        tooltip.update();
 
       }, 1500);
-  }
+    }
 
-  // Initialize tooltips + store original title
-  document.addEventListener("DOMContentLoaded", function () {
+    // Initialize tooltips + store original title
+    document.addEventListener("DOMContentLoaded", function () {
 
       // Store original tooltip text BEFORE enabling tooltip
       document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-          el.setAttribute("data-original-title", el.getAttribute("title"));
-          new bootstrap.Tooltip(el);
+        el.setAttribute("data-original-title", el.getAttribute("title"));
+        new bootstrap.Tooltip(el);
       });
 
       document.querySelectorAll(".copy-icon").forEach(icon => {
-          icon.addEventListener("click", () => copyField(icon));
+        icon.addEventListener("click", () => copyField(icon));
       });
-  });
+    });
 
-  // Reset modal
-  document.getElementById("donationModal").addEventListener("shown.bs.modal", () => {
+    // Reset modal
+    document.getElementById("donationModal").addEventListener("shown.bs.modal", () => {
       document.getElementById("paymentMethod").value = "upi";
       togglePaymentOptions();
-  });
-</script>
+    });
+  </script>
 
 
 
   <!-- Donation Success Modal -->
-<style>
-  .brand-red {
-    background-color: #ed3136 !important;
-  }
-  .text-brand-red {
-    color: #ed3136 !important;
-  }
-</style>
+  <style>
+    .brand-red {
+      background-color: #ed3136 !important;
+    }
 
-<div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg">
-      
-      <div class="modal-header border-0 pb-0">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+    .text-brand-red {
+      color: #ed3136 !important;
+    }
+  </style>
 
-      <div class="modal-body text-center px-4 py-5">
+  <div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
 
-        <!-- Success Icon -->
-        <div class="mb-4">
-          <div class="rounded-circle d-inline-flex p-4" style="background-color: rgba(237, 49, 54, 0.1);">
-            <i class="bi bi-check-circle-fill text-brand-red" style="font-size: 3rem;"></i>
+        <div class="modal-header border-0 pb-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body text-center px-4 py-5">
+
+          <!-- Success Icon -->
+          <div class="mb-4">
+            <div class="rounded-circle d-inline-flex p-4" style="background-color: rgba(237, 49, 54, 0.1);">
+              <i class="bi bi-check-circle-fill text-brand-red" style="font-size: 3rem;"></i>
+            </div>
           </div>
+
+          <!-- Title -->
+          <h4 class="modal-title fw-bold text-brand-red mb-3" id="donationSuccessLabel">
+            Donation Successful!
+          </h4>
+
+          <!-- Message -->
+          <p class="text-muted mb-4">
+            Thank you for your generous contribution. Your support helps us continue our mission and make a real
+            difference.
+          </p>
+
+          <!-- Confirmation Details -->
+          <div class="bg-light rounded p-3 mb-4">
+            <p class="mb-1">
+              <small class="text-muted">A confirmation email has been sent to you</small>
+            </p>
+            <p class="mb-0 fw-bold text-dark">
+              Thank you for being part of our community!
+            </p>
+          </div>
+
         </div>
 
-        <!-- Title -->
-        <h4 class="modal-title fw-bold text-brand-red mb-3" id="donationSuccessLabel">
-          Donation Successful!
-        </h4>
-
-        <!-- Message -->
-        <p class="text-muted mb-4">
-          Thank you for your generous contribution. Your support helps us continue our mission and make a real difference.
-        </p>
-
-        <!-- Confirmation Details -->
-        <div class="bg-light rounded p-3 mb-4">
-          <p class="mb-1">
-            <small class="text-muted">A confirmation email has been sent to you</small>
-          </p>
-          <p class="mb-0 fw-bold text-dark">
-            Thank you for being part of our community!
-          </p>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn brand-red text-white px-5 py-2 fw-bold" id="donationRedirectBtn"
+            data-bs-dismiss="modal">
+            Ok
+          </button>
         </div>
 
       </div>
-
-      <div class="modal-footer border-0 pt-0">
-        <button type="button" class="btn brand-red text-white px-5 py-2 fw-bold"
-                id="donationRedirectBtn" data-bs-dismiss="modal">
-          Ok
-        </button>
-      </div>
-
     </div>
   </div>
-</div>
-<script>
-  // Simulate user login status (from backend or session)
-  var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
-  // Handle Donate button click using event delegation
-  document.querySelector('.container').addEventListener('click', function(event) {
-    if (event.target.classList.contains('donate_btn')) {
-      event.preventDefault(); // Prevent default link behavior
+  <script>
+    // Simulate user login status (from backend or session)
+    var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
+    // Handle Donate button click using event delegation
+    document.querySelector('.container').addEventListener('click', function (event) {
+      if (event.target.classList.contains('donate_btn')) {
+        event.preventDefault(); // Prevent default link behavior
     /* if (!isLoggedIn) {
         const baseUrl = "<?= base_url('/login') ?>";
         // Ask for confirmation before redirecting to the login page
         var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-      loginModal.show();
-      // Redirect to login page with return URL on OK button click
-      document.getElementById('loginRedirectBtn').addEventListener('click', function() {
-        var currentUrl = window.location.href;
-  // Redirect to the login page with the returnUrl parameter
-        window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
-      });// Replace with your actual login URL
-       
+        loginModal.show();
+        // Redirect to login page with return URL on OK button click
+        document.getElementById('loginRedirectBtn').addEventListener('click', function () {
+          var currentUrl = window.location.href;
+          // Redirect to the login page with the returnUrl parameter
+          window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
+        });// Replace with your actual login URL
+
       } else {*/
         // Show the donation modal if logged in
         var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
         donationModal.show();
-      //}
+        //}
+      }
+    });
+
+    // Handle modal close event to ensure page is accessible
+    var donationModal = document.getElementById('donationModal');
+    donationModal.addEventListener('hidden.bs.modal', function (event) {
+      // This will trigger when the modal is fully closed
+      document.body.classList.remove('modal-open'); // Ensure body is not still marked as modal-open
+      var modalBackdrop = document.querySelector('.modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.remove(); // Remove backdrop if still present
+      }
+      // Reset form fields when the modal is closed
+      donationModal.querySelector('form').reset();
+    });
+  </script>
+  <script>
+    // Real-time validation function
+    /* ---------- VALIDATION HELPERS ---------- */
+    const isAmountValid = v => parseFloat(v) > 0;
+    const isPhoneValid = v => /^[6-9]\d{9}$/.test(v);
+    const isTxnValid = v => /^[A-Za-z0-9]{12,}$/.test(v);
+    const isNameValid = v => /^[a-zA-Z\s.]{3,}$/.test(v.trim());
+    const isCityValid = v => /^[a-zA-Z\s]{3,}$/.test(v.trim());
+    const isEmailValid = v => v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+    /* ---------- FETCH DONOR ---------- */
+    function fetchDonordata(phone) {
+      $.post("<?= base_url('donors/fetchDonordata') ?>", { phone }, function (res) {
+        if (res.trim() === "notexist") {
+          $('#name,#donorcity').val('').prop('readonly', false);
+          $('#user_id').val('');
+        } else {
+          const d = JSON.parse(res);
+          $('#user_id').val(d.id);
+          $('#name').val(d.name).prop('readonly', true);
+          $('#donorcity').val(d.location).prop('readonly', true);
+          $('#phone').val(d.mobileNumber).prop('readonly', true);
+        }
+      });
     }
-  });
- 
-  // Handle modal close event to ensure page is accessible
-  var donationModal = document.getElementById('donationModal');
-  donationModal.addEventListener('hidden.bs.modal', function (event) {
-    // This will trigger when the modal is fully closed
-    document.body.classList.remove('modal-open'); // Ensure body is not still marked as modal-open
-    var modalBackdrop = document.querySelector('.modal-backdrop');
-    if (modalBackdrop) {
-      modalBackdrop.remove(); // Remove backdrop if still present
-    }
-    // Reset form fields when the modal is closed
-    donationModal.querySelector('form').reset();
-  });
-</script>
-<script>
-  // Real-time validation function
-  /* ---------- VALIDATION HELPERS ---------- */
-const isAmountValid = v => parseFloat(v) > 0;
-const isPhoneValid = v => /^[6-9]\d{9}$/.test(v);
-const isTxnValid = v => /^[A-Za-z0-9]{12,}$/.test(v);
-const isNameValid = v => /^[a-zA-Z\s.]{3,}$/.test(v.trim());
-const isCityValid = v => /^[a-zA-Z\s]{3,}$/.test(v.trim());
-const isEmailValid = v => v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
-/* ---------- FETCH DONOR ---------- */
-function fetchDonordata(phone) {
-  $.post("<?= base_url('donors/fetchDonordata') ?>", { phone }, function(res){
-    if(res.trim() === "notexist"){
-      $('#name,#donorcity').val('').prop('readonly', false);
-      $('#user_id').val('');
-    } else {
-      const d = JSON.parse(res);
-      $('#user_id').val(d.id);
-      $('#name').val(d.name).prop('readonly', true);
-      $('#donorcity').val(d.location).prop('readonly', true);
-      $('#phone').val(d.mobileNumber).prop('readonly', true);
-    }
-  });
-}
+    /* ---------- FORM SUBMIT ---------- */
+    document.getElementById('donationForm').addEventListener('submit', function (e) {
+      e.preventDefault();
 
-/* ---------- FORM SUBMIT ---------- */
-document.getElementById('donationForm').addEventListener('submit', function(e){
-  e.preventDefault();
+      let valid = true;
+      document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
 
-  let valid = true;
-  document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
+      if (!isAmountValid(amount.value)) {
+        error8.innerText = 'Enter valid amount';
+        valid = false;
+      }
+      if (!isTxnValid(transactionid.value)) {
+        error4.innerText = 'Invalid Transaction ID';
+        valid = false;
+      }
+      if (!isNameValid(name.value)) {
+        error6.innerText = 'Invalid name';
+        valid = false;
+      }
+      if (!isPhoneValid(phone.value)) {
+        error3.innerText = 'Invalid phone number';
+        valid = false;
+      }
+      if (!isCityValid(donorcity.value)) {
+        error9.innerText = 'Invalid city';
+        valid = false;
+      }
+      if (!isEmailValid(email.value)) {
+        error7.innerText = 'Invalid email';
+        valid = false;
+      }
 
-  if(!isAmountValid(amount.value)){
-    error8.innerText = 'Enter valid amount';
-    valid = false;
-  }
-  if(!isTxnValid(transactionid.value)){
-    error4.innerText = 'Invalid Transaction ID';
-    valid = false;
-  }
-  if(!isNameValid(name.value)){
-    error6.innerText = 'Invalid name';
-    valid = false;
-  }
-  if(!isPhoneValid(phone.value)){
-    error3.innerText = 'Invalid phone number';
-    valid = false;
-  }
-  if(!isCityValid(donorcity.value)){
-    error9.innerText = 'Invalid city';
-    valid = false;
-  }
-  if(!isEmailValid(email.value)){
-    error7.innerText = 'Invalid email';
-    valid = false;
-  }
+      if (!valid) return;
 
-  if(!valid) return;
+      /* ---------- SUBMIT TO SERVER ---------- */
+      fetch("<?= base_url('kanavuhelp/processDonation') ?>", {
+        method: "POST",
+        body: new FormData(this)
+      })
+        .then(r => r.json())
+        .then(d => {
+          if (d.status === 'success') {
+            bootstrap.Modal.getInstance(
+              document.getElementById('donationModal')
+            ).hide();
+            new bootstrap.Modal(
+              document.getElementById('donationSuccess')
+            ).show();
+          } else {
+            error4.innerText = d.message;
+          }
+        })
+        .catch(() => alert('Server error'));
+    });
 
-  /* ---------- SUBMIT TO SERVER ---------- */
-  fetch("<?= base_url('kanavuhelp/processDonation') ?>", {
-    method: "POST",
-    body: new FormData(this)
-  })
-  .then(r => r.json())
-  .then(d => {
-    if(d.status === 'success'){
-      bootstrap.Modal.getInstance(
-        document.getElementById('donationModal')
-      ).hide();
-      new bootstrap.Modal(
-        document.getElementById('donationSuccess')
-      ).show();
-    } else {
-      error4.innerText = d.message;
-    }
-  })
-  .catch(() => alert('Server error'));
-});
-
-/* ---------- REALTIME PHONE FETCH ---------- */
-document.getElementById('phone').addEventListener('input', function(){
-  if(this.value.length === 10 && isPhoneValid(this.value)){
-    fetchDonordata(this.value);
-  }
-});
+    /* ---------- REALTIME PHONE FETCH ---------- */
+    document.getElementById('phone').addEventListener('input', function () {
+      if (this.value.length === 10 && isPhoneValid(this.value)) {
+        fetchDonordata(this.value);
+      }
+    });
     // Prepare Form Data
     const formData = new FormData(this);
     // AJAX Request to Server
@@ -1561,183 +1683,184 @@ document.getElementById('phone').addEventListener('input', function(){
         document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
       });
   };
-</script>
-<script>
+  </script>
+  <script>
 
     // ✔ LOAD All category on page load
     document.addEventListener('DOMContentLoaded', function () {
-        filterCauseswithcategory('All', 0);
+      filterCauseswithcategory('All', 0);
     });
 
 
     // ✔ FIXED: Filter category
     function filterCauseswithcategory(category, index) {
-        changeFocus(index);
+      changeFocus(index);
 
-        $.ajax({
-            type: "POST",
-            url: "donations/filterCauses",
-            data: { category: category, t: new Date().getTime() },
-            cache: false,
-            success: function (result) {
+      $.ajax({
+        type: "POST",
+        url: "donations/filterCauses",
+        data: { category: category, t: new Date().getTime() },
+        cache: false,
+        success: function (result) {
 
-                // Insert the new cards
-                $("#fundraiserCards").html(result);
+          // Insert the new cards
+          $("#fundraiserCards").html(result);
 
-                // After cards load → check goal status
-                checkGoalStatusForLoadedCards();
-            },
-            error: function () {
-                $("#fundraiserCards").html("<p class='text-center text-danger'>Error fetching causes.</p>");
-            }
-        });
+          // After cards load → check goal status
+          checkGoalStatusForLoadedCards();
+        },
+        error: function () {
+          $("#fundraiserCards").html("<p class='text-center text-danger'>Error fetching causes.</p>");
+        }
+      });
     }
 
 
     // ✔ FIXED: Highlight selected category
     function changeFocus(index) {
-        const buttons = document.querySelectorAll(".focus-change");
-        buttons.forEach((button, i) => {
-            if (i === index) {
-                button.classList.remove("category-not-active");
-                button.classList.add("active-category");
-            } else {
-                button.classList.remove("active-category");
-                button.classList.add("category-not-active");
-            }
-        });
+      const buttons = document.querySelectorAll(".focus-change");
+      buttons.forEach((button, i) => {
+        if (i === index) {
+          button.classList.remove("category-not-active");
+          button.classList.add("active-category");
+        } else {
+          button.classList.remove("active-category");
+          button.classList.add("category-not-active");
+        }
+      });
     }
 
 
     // ✔ FIXED: After AJAX → run goal check ONLY for loaded cards
     function checkGoalStatusForLoadedCards() {
 
-        const fundraiserCards = document.querySelectorAll('#fundraiserCards .card-container');
- 
-        fundraiserCards.forEach(function (card) {
+      const fundraiserCards = document.querySelectorAll('#fundraiserCards .card-container');
 
-            const fundraiserId = card.id.split('-')[2];
+      fundraiserCards.forEach(function (card) {
 
-            fetch(`/check_goal_status/${fundraiserId}`)
-                .then(response => response.json())
-                .then(data => { 
+        const fundraiserId = card.id.split('-')[2];
 
-                    if (data.goal_reached) {
+        fetch(`/check_goal_status/${fundraiserId}`)
+          .then(response => response.json())
+          .then(data => {
 
-                      const donateBtn = card.querySelector(".donate_btn");
-                      if (donateBtn) {
-                          donateBtn.textContent = "Completed";
-                          donateBtn.disabled = true;
+            if (data.goal_reached) {
 
-                          // APPLY GREEN BUTTON STYLE
-                          donateBtn.classList.add("completed-btn");
-                          donateBtn.classList.remove("btn-danger");
-                      }
+              const donateBtn = card.querySelector(".donate_btn");
+              if (donateBtn) {
+                donateBtn.textContent = "Completed";
+                donateBtn.disabled = true;
 
-                      const badge = card.querySelector(".badge");
-                      if (badge) {
-                          badge.textContent = "Completed";
-                          badge.classList.add("bg-success");
-                      }
-                    }
+                // APPLY GREEN BUTTON STYLE
+                donateBtn.classList.add("completed-btn");
+                donateBtn.classList.remove("btn-danger");
+              }
 
-                });
-        });
+              const badge = card.querySelector(".badge");
+              if (badge) {
+                badge.textContent = "Completed";
+                badge.classList.add("bg-success");
+              }
+            }
+
+          });
+      });
 
     }
 
 
     // ✔ Open donation modal
     function openDonationModal() {
-        var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
-        donationModal.show();
+      var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+      donationModal.show();
     }
 
     function setCauseId(causeId) {
-        document.getElementById('cause_id').value = causeId;
+      document.getElementById('cause_id').value = causeId;
     }
 
-</script>
+  </script>
 
-<script>
-document.getElementById('donationRedirectBtn').addEventListener('click', function () {
-  var successModal = bootstrap.Modal.getInstance(document.getElementById('donationSuccess'));
-  successModal.hide();
-  filterCauseswithcategory(window.currentCategory, window.currentIndex);
-});
-</script>
-<form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
-    <input type="hidden" name="returnUrl" id="returnUrl" value="">
-</form>
-<script>
-  function redirectToLogin() {
-    // Get the current URL
-    var currentUrl = window.location.href;
-   
-    // Encode the current URL
-    var encodedUrl = encodeURIComponent(currentUrl);
-    // Set the hidden input value to the encoded current URL
-    document.getElementById('returnUrl').value = encodedUrl;
-    // Submit the form to the login page
-    document.getElementById('redirectToLoginForm').submit();
-  }
-</script>
-<script>
-    $('#donationModal').on('hidden.bs.modal', function () {
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
+  <script>
+    document.getElementById('donationRedirectBtn').addEventListener('click', function () {
+      var successModal = bootstrap.Modal.getInstance(document.getElementById('donationSuccess'));
+      successModal.hide();
+      filterCauseswithcategory(window.currentCategory, window.currentIndex);
     });
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+  </script>
+  <form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
+    <input type="hidden" name="returnUrl" id="returnUrl" value="">
+  </form>
+  <script>
+    function redirectToLogin() {
+      // Get the current URL
+      var currentUrl = window.location.href;
 
-    const donationForm = document.getElementById('donationForm');
+      // Encode the current URL
+      var encodedUrl = encodeURIComponent(currentUrl);
+      // Set the hidden input value to the encoded current URL
+      document.getElementById('returnUrl').value = encodedUrl;
+      // Submit the form to the login page
+      document.getElementById('redirectToLoginForm').submit();
+    }
+  </script>
+  <script>
+    $('#donationModal').on('hidden.bs.modal', function () {
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-    donationForm.addEventListener('submit', function (e) {
+      const donationForm = document.getElementById('donationForm');
+
+      donationForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
         const formData = new FormData(donationForm);
 
         fetch(donationForm.action, {
-            method: 'POST',
-            body: formData
+          method: 'POST',
+          body: formData
         })
-        .then(res => res.json())
-        .then(data => {
+          .then(res => res.json())
+          .then(data => {
             console.log(data); // should print {status:"success"}
 
             if (data.status === 'success') {
 
-                // Hide donation modal
-                const donationModalEl = document.getElementById('donationModal');
-                const donationModal = bootstrap.Modal.getInstance(donationModalEl)
-                    || new bootstrap.Modal(donationModalEl);
+              // Hide donation modal
+              const donationModalEl = document.getElementById('donationModal');
+              const donationModal = bootstrap.Modal.getInstance(donationModalEl)
+                || new bootstrap.Modal(donationModalEl);
 
-                donationModal.hide();
+              donationModal.hide();
 
-                // Wait for hide animation to finish
-                donationModalEl.addEventListener('hidden.bs.modal', function () {
+              // Wait for hide animation to finish
+              donationModalEl.addEventListener('hidden.bs.modal', function () {
 
-                    const successModalEl = document.getElementById('donationSuccess');
-                    const successModal = new bootstrap.Modal(successModalEl);
-                    successModal.show();
+                const successModalEl = document.getElementById('donationSuccess');
+                const successModal = new bootstrap.Modal(successModalEl);
+                successModal.show();
 
-                }, { once: true });
+              }, { once: true });
 
             } else {
-                alert(data.message || 'Donation failed');
+              alert(data.message || 'Donation failed');
             }
-        })
-        .catch(err => {
+          })
+          .catch(err => {
             console.error(err);
             alert('Something went wrong');
-        });
+          });
+      });
+
     });
+  </script>
 
-});
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
