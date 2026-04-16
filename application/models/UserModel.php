@@ -163,14 +163,43 @@ class UserModel extends CI_Model
 		}
 	}
 
-	public function get_cause_data($cause_id){
-        $query = $this->db->query("SELECT * FROM individualform WHERE id = $cause_id");
-        return $query->row();
+	public function get_cause_data($cause_id)
+	{
+        return $this->db
+            ->get_where('individualform', array('id' => (int) $cause_id))
+            ->row();
     }
 
 	public function saveDonation($data)
 	{
 		return $this->db->insert('donation_for_cause', $data);
+	}
+
+	public function getDonationById($donation_id)
+	{
+		return $this->db
+			->get_where('donation_for_cause', array('donation_id' => (int) $donation_id))
+			->row_array();
+	}
+
+	public function findRecentPendingGatewayDonation($cause_id, $amount, $phoneno, $name, $email, $minutes = 3)
+	{
+		$cutoff = date('Y-m-d H:i:s', time() - ((int) $minutes * 60));
+
+		return $this->db
+			->from('donation_for_cause')
+			->where('cause_id', (int) $cause_id)
+			->where('amount', $amount)
+			->where('phoneno', $phoneno)
+			->where('name', $name)
+			->where('email', $email)
+			->where('status', 0)
+			->like('transactionid', 'OMNI_', 'after')
+			->where('created_at >=', $cutoff)
+			->order_by('donation_id', 'DESC')
+			->limit(1)
+			->get()
+			->row_array();
 	}
 	
 	public function getCausesDonationByUserId($user_id)
@@ -239,9 +268,12 @@ public function getUserByMobile($mobile)
 		return $query->row();
 	}
 
-	public function is_transaction_id_exists($transaction_id)
+	public function is_transaction_id_exists($transaction_id, $exclude_donation_id = null)
 	{
 		$this->db->where('transactionid', $transaction_id);
+		if (!empty($exclude_donation_id)) {
+			$this->db->where('donation_id !=', (int) $exclude_donation_id);
+		}
 		$query = $this->db->get('donation_for_cause'); // Replace 'donations' with your actual table name for transactions
 
 		return $query->num_rows() > 0;

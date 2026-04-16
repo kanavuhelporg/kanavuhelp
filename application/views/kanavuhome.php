@@ -1982,8 +1982,34 @@
             <input type="hidden" name="currency_type" value="INR">
             <input type="hidden" name="user_id" id="user_id" value="<?= $this->session->userdata('Kanavu_userId') ?>">
 
-            <!-- Step 1: Payment Info -->
             <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">0</span>
+                  <h6 class="fw-bold mb-0 text-dark">Payment Method</h6>
+                </div>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <input type="radio" class="btn-check" name="payment_method" id="home_pay_omni" value="omni" checked>
+                    <label class="btn btn-outline-danger w-100 py-2 d-flex flex-column align-items-center" for="home_pay_omni">
+                      <i class="bi bi-credit-card fs-4 mb-1"></i>
+                      <span class="small fw-bold">Secure Gateway</span>
+                    </label>
+                  </div>
+                  <div class="col-6">
+                    <input type="radio" class="btn-check" name="payment_method" id="home_pay_manual" value="manual">
+                    <label class="btn btn-outline-danger w-100 py-2 d-flex flex-column align-items-center" for="home_pay_manual">
+                      <i class="bi bi-qr-code-scan fs-4 mb-1"></i>
+                      <span class="small fw-bold">Manual UPI</span>
+                    </label>
+                  </div>
+                </div>
+                <small class="text-muted d-block mt-2">Secure Gateway is the default. Manual UPI remains available when you need it.</small>
+              </div>
+            </div>
+
+            <!-- Step 1: Payment Info -->
+            <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;" id="manual_payment_section">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                   <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">1</span>
@@ -2023,7 +2049,7 @@
                       <div id="error8" class="text-danger small mt-1"></div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6" id="transaction_id_wrapper">
                     <label class="form-label required-field">Transaction ID</label>
                     <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter transaction ID" required maxlength="30">
                     <div id="error4" class="text-danger small mt-1"></div>
@@ -2065,7 +2091,7 @@
             </div>
 
             <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-3 shadow" style="border-radius: 12px; letter-spacing: 1px;" id="submitBtn">
-              Submit Donation
+              Continue To Payment
             </button>
             
             <div class="text-center mt-3">
@@ -2756,6 +2782,167 @@
       }
     });
 
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const donationForm = document.getElementById('donationForm');
+      if (!donationForm || donationForm.dataset.omniOverride === '1') {
+        return;
+      }
+
+      donationForm.dataset.omniOverride = '1';
+
+      const amountInput = document.getElementById('amount');
+      const nameInput = document.getElementById('name');
+      const phoneInput = document.getElementById('phoneno') || document.getElementById('phone');
+      const cityInput = document.getElementById('city') || document.getElementById('donorcity');
+      const emailInput = document.getElementById('email');
+      const transactionInput = document.getElementById('transactionid');
+      const manualSection = document.getElementById('manual_payment_section');
+      const transactionWrapper = document.getElementById('transaction_id_wrapper');
+      const submitBtn = donationForm.querySelector('button[type="submit"]');
+      const paymentRadios = donationForm.querySelectorAll('input[name="payment_method"]');
+
+      function currentPaymentMethod() {
+        return donationForm.querySelector('input[name="payment_method"]:checked')?.value || 'omni';
+      }
+
+      function setError(id, message) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.innerText = message;
+        }
+      }
+
+      function clearErrors() {
+        ['error3', 'error4', 'error6', 'error7', 'error8', 'error9'].forEach(function (id) {
+          setError(id, '');
+        });
+      }
+
+      function togglePaymentMode() {
+        const isOmni = currentPaymentMethod() === 'omni';
+
+        if (manualSection) {
+          manualSection.style.display = isOmni ? 'none' : '';
+        }
+
+        if (transactionWrapper) {
+          transactionWrapper.style.display = isOmni ? 'none' : '';
+        }
+
+        if (transactionInput) {
+          transactionInput.required = !isOmni;
+          if (isOmni) {
+            transactionInput.value = '123456789012';
+          } else if (transactionInput.value === '123456789012') {
+            transactionInput.value = '';
+          }
+        }
+
+        if (emailInput) {
+          if (isOmni) {
+            emailInput.setAttribute('required', 'required');
+            emailInput.placeholder = 'Enter email address *';
+          } else {
+            emailInput.removeAttribute('required');
+            emailInput.placeholder = 'Enter email address';
+          }
+        }
+
+        if (submitBtn) {
+          submitBtn.textContent = isOmni ? 'Continue To Secure Payment' : 'Submit Manual Donation';
+        }
+      }
+
+      paymentRadios.forEach(function (radio) {
+        radio.addEventListener('change', togglePaymentMode);
+      });
+
+      togglePaymentMode();
+
+      donationForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        clearErrors();
+
+        const paymentMethod = currentPaymentMethod();
+        let isValid = true;
+
+        if (!amountInput || !(parseFloat(amountInput.value) > 0)) {
+          setError('error8', 'Enter a valid amount.');
+          isValid = false;
+        }
+
+        if (!nameInput || !/^[A-Za-z\s.'-]{2,50}$/.test(nameInput.value.trim())) {
+          setError('error6', 'Enter a valid full name.');
+          isValid = false;
+        }
+
+        if (!phoneInput || !/^[6-9]\d{9}$/.test(phoneInput.value.trim())) {
+          setError('error3', 'Enter a valid 10-digit mobile number.');
+          isValid = false;
+        }
+
+        if (!cityInput || !/^[A-Za-z\s-]{2,30}$/.test(cityInput.value.trim())) {
+          setError('error9', 'Enter a valid city name.');
+          isValid = false;
+        }
+
+        if (paymentMethod === 'omni') {
+          if (!emailInput || !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(emailInput.value.trim())) {
+            setError('error7', 'Enter a valid email address for secure payment.');
+            isValid = false;
+          }
+        } else if (!transactionInput || !/^[A-Za-z0-9]{8,30}$/.test(transactionInput.value.trim())) {
+          setError('error4', 'Enter a valid transaction ID.');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          return;
+        }
+
+        const originalText = submitBtn ? submitBtn.textContent : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Please wait...';
+        }
+
+        fetch(donationForm.action, {
+          method: 'POST',
+          body: new FormData(donationForm)
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.status === 'success' && data.redirect_to_gateway) {
+              window.location.href = data.redirect_url || data.gateway_url;
+              return;
+            }
+
+            if (data.status === 'error') {
+              setError('error4', data.message || 'Unable to continue.');
+              return;
+            }
+
+            setError('error4', 'Unable to continue. Please try again.');
+          })
+          .catch(function () {
+            setError('error4', 'An unexpected error occurred. Please try again.');
+          })
+          .finally(function () {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
+              togglePaymentMode();
+            }
+          });
+      }, true);
+    });
   </script>
 
 </body>

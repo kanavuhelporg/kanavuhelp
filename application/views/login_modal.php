@@ -1180,7 +1180,7 @@
         </div>
         <div class="modal-body">
           <!-- Donation Form -->
-          <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+          <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
             <!-- Hidden fields to store cause ID and user ID -->
             <input type="hidden" name="cause_id" id="cause_id" value="">
             <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
@@ -1189,54 +1189,120 @@
             <div class="text-center">
               <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
             </div>
-            <div class="text-center">
-              <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
-            </div>
 
             <div class="text-center mt-2">
               <h5 class="modal-title" id="donationModalLabel">Make a Secure Donation</h5>
               <!-- <p>Your contribution has the potential <br> to make a greater difference.</p> -->
             </div>
 
-            <!-- Currency and Amount -->
-            <div class="form-group d-flex justify-content-center" style="border-radius:20px;">
-              <select class="form-control" name="currency_type" id="currency" style="width:35%;" required>
-                <option>INR</option>
-                <option>USD</option>
-              </select>
-
-              <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
-
-            </div>
-<br>
-            <!-- Name -->
-            <!-- <div class="form-group ms-4">
-      <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
-    
-      <p id="error1" style="color:red"></p>
-    </div> -->
-
-            <!-- Email -->
-            <!-- <div class="form-group ms-4">
-      <input type="email" name="emailid" class="form-control" id="email" placeholder="Enter your email*" style="width:92%;" required>
-      <p id="error2" style="color:red"></p>
-    </div> -->
-
-            <!-- Phone Number -->
-            <div class="form-group ms-4">
-              <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Enter your phone number*" style="width:92%;" required>
-              <p id="error3" style="color:red"></p>
+            <div class="card border-0 shadow-sm mb-3 mt-3" style="border-radius: 12px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">0</span>
+                  <h6 class="fw-bold mb-0 text-dark">Payment Method</h6>
+                </div>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <input type="radio" class="btn-check" name="payment_method" id="pay_omni" value="omni" checked>
+                    <label class="btn btn-outline-danger w-100 py-2 d-flex flex-column align-items-center" for="pay_omni">
+                      <i class="bi bi-credit-card fs-4 mb-1"></i>
+                      <span class="small fw-bold">Secure Gateway</span>
+                    </label>
+                  </div>
+                  <div class="col-6">
+                    <input type="radio" class="btn-check" name="payment_method" id="pay_manual" value="manual">
+                    <label class="btn btn-outline-danger w-100 py-2 d-flex flex-column align-items-center" for="pay_manual">
+                      <i class="bi bi-qr-code-scan fs-4 mb-1"></i>
+                      <span class="small fw-bold">Manual UPI</span>
+                    </label>
+                  </div>
+                </div>
+                <small class="text-muted d-block mt-2">Secure Gateway is the default. Manual UPI is still available if needed.</small>
+              </div>
             </div>
 
-            <!-- Transaction ID -->
-            <div class="form-group ms-4">
-              <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
-              <p id="error4" style="color:red"></p>
+            <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;" id="manual_payment_section">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">1</span>
+                  <h6 class="fw-bold mb-0 text-dark">Manual UPI Payment</h6>
+                </div>
+                <div class="row g-3 align-items-center">
+                  <div class="col-7">
+                    <label class="text-muted small d-block mb-1">UPI ID</label>
+                    <div class="d-flex align-items-center bg-white p-2 border rounded">
+                      <span class="text-truncate small fw-bold" id="upiText">vyapar.175502705184@hdfcbank</span>
+                      <i class="bi bi-copy ms-auto text-primary cursor-pointer copy-icon" data-copy="upiText" title="Copy UPI"></i>
+                    </div>
+                  </div>
+                  <div class="col-5 text-center">
+                    <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" alt="QR Code" class="img-fluid rounded border shadow-sm" style="max-height: 180px;">
+                    <small class="d-block text-muted mt-1" style="font-size: 10px;">Scan to Pay</small>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <!-- Continue Button -->
+            <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">2</span>
+                  <h6 class="fw-bold mb-0 text-dark">Donation Details</h6>
+                </div>
+                <div class="row g-3">
+                  <div class="col-12">
+                    <input type="number" name="amount" class="form-control" id="amount" placeholder="Donated Amount *" required min="1">
+                    <div id="error8" class="text-danger small mt-1"></div>
+                  </div>
+                  <div class="col-12" id="transaction_id_wrapper">
+                    <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Transaction ID *" required>
+                    <div id="error4" class="text-danger small mt-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">3</span>
+                  <h6 class="fw-bold mb-0 text-dark">Personal Details</h6>
+                </div>
+                <div class="row g-2">
+                  <div class="col-12">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Full Name *" required>
+                    <div id="error6" class="text-danger small mt-1"></div>
+                  </div>
+                  <div class="col-12">
+                    <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Phone Number *" required maxlength="10">
+                    <div id="error3" class="text-danger small mt-1"></div>
+                  </div>
+                  <div class="col-12">
+                    <input type="text" name="city" class="form-control" id="city" placeholder="City *" required>
+                    <div id="error9" class="text-danger small mt-1"></div>
+                  </div>
+                  <div class="col-12">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email (Optional)">
+                    <div id="error7" class="text-danger small mt-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+              <button type="submit" class="btn btn-danger w-100" style="border-radius:10px;">
+                Continue To Payment
+              </button>
+            </div>
+
+
+
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-danger d-none" style="width:50%; border-radius:10px; background-color:white; color:red;">
                 Continue to Pay ₹
               </button>
             </div>
@@ -1324,10 +1390,169 @@ document.querySelector('.container').addEventListener('click', function(event) {
 
       // Reset form fields when the modal is closed
       donationModal.querySelector('form').reset();
+      var selectedPaymentMethod = donationModal.querySelector('input[name="payment_method"]:checked');
+      if (selectedPaymentMethod) {
+        selectedPaymentMethod.dispatchEvent(new Event('change'));
+      }
     });
   </script>
   <script>
-    document.getElementById('donationForm').onsubmit = function(event) {
+    document.addEventListener('DOMContentLoaded', function () {
+      const donationForm = document.getElementById('donationForm');
+      if (!donationForm || donationForm.dataset.omniOverride === '1') {
+        return;
+      }
+
+      donationForm.dataset.omniOverride = '1';
+
+      const amountInput = document.getElementById('amount');
+      const nameInput = document.getElementById('name');
+      const phoneInput = document.getElementById('phone');
+      const cityInput = document.getElementById('city');
+      const emailInput = document.getElementById('email');
+      const transactionInput = document.getElementById('transactionid');
+      const manualSection = document.getElementById('manual_payment_section');
+      const transactionWrapper = document.getElementById('transaction_id_wrapper');
+      const submitBtn = donationForm.querySelector('button[type="submit"]');
+      const paymentRadios = donationForm.querySelectorAll('input[name="payment_method"]');
+
+      function currentPaymentMethod() {
+        return donationForm.querySelector('input[name="payment_method"]:checked')?.value || 'omni';
+      }
+
+      function setError(id, message) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.innerText = message;
+        }
+      }
+
+      function clearErrors() {
+        ['error3', 'error4', 'error6', 'error7', 'error8', 'error9'].forEach(function (id) {
+          setError(id, '');
+        });
+      }
+
+      function togglePaymentMode() {
+        const isOmni = currentPaymentMethod() === 'omni';
+
+        if (manualSection) {
+          manualSection.style.display = isOmni ? 'none' : '';
+        }
+
+        if (transactionWrapper) {
+          transactionWrapper.style.display = isOmni ? 'none' : '';
+        }
+
+        if (transactionInput) {
+          transactionInput.required = !isOmni;
+          if (isOmni) {
+            transactionInput.value = '123456789012';
+          } else if (transactionInput.value === '123456789012') {
+            transactionInput.value = '';
+          }
+        }
+
+        if (emailInput) {
+          if (isOmni) {
+            emailInput.setAttribute('required', 'required');
+            emailInput.placeholder = 'Email *';
+          } else {
+            emailInput.removeAttribute('required');
+            emailInput.placeholder = 'Email (Optional)';
+          }
+        }
+
+        if (submitBtn) {
+          submitBtn.textContent = isOmni ? 'Continue To Secure Payment' : 'Submit Manual Donation';
+        }
+      }
+
+      paymentRadios.forEach(function (radio) {
+        radio.addEventListener('change', togglePaymentMode);
+      });
+
+      togglePaymentMode();
+
+      donationForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        clearErrors();
+
+        const paymentMethod = currentPaymentMethod();
+        let isValid = true;
+
+        if (!amountInput || !(parseFloat(amountInput.value) > 0)) {
+          setError('error8', 'Enter a valid amount.');
+          isValid = false;
+        }
+
+        if (!nameInput || !/^[A-Za-z\s.'-]{2,50}$/.test(nameInput.value.trim())) {
+          setError('error6', 'Enter a valid full name.');
+          isValid = false;
+        }
+
+        if (!phoneInput || !/^[6-9]\d{9}$/.test(phoneInput.value.trim())) {
+          setError('error3', 'Enter a valid 10-digit mobile number.');
+          isValid = false;
+        }
+
+        if (!cityInput || !/^[A-Za-z\s-]{2,30}$/.test(cityInput.value.trim())) {
+          setError('error9', 'Enter a valid city name.');
+          isValid = false;
+        }
+
+        if (paymentMethod === 'omni') {
+          if (!emailInput || !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(emailInput.value.trim())) {
+            setError('error7', 'Enter a valid email address for secure payment.');
+            isValid = false;
+          }
+        } else if (!transactionInput || !/^[A-Za-z0-9]{8,30}$/.test(transactionInput.value.trim())) {
+          setError('error4', 'Enter a valid transaction ID.');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          return;
+        }
+
+        const originalText = submitBtn ? submitBtn.textContent : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Please wait...';
+        }
+
+        fetch(donationForm.action, {
+          method: 'POST',
+          body: new FormData(donationForm)
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.status === 'success' && data.redirect_to_gateway) {
+              window.location.href = data.redirect_url || data.gateway_url;
+              return;
+            }
+
+            setError('error4', data.message || 'Unable to continue. Please try again.');
+          })
+          .catch(function () {
+            setError('error4', 'An unexpected error occurred. Please try again.');
+          })
+          .finally(function () {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
+              togglePaymentMode();
+            }
+          });
+      }, true);
+    });
+  </script>
+  <script>
+    if (false) document.getElementById('donationForm').onsubmit = function(event) {
 
       event.preventDefault(); // Prevent default form submission
 

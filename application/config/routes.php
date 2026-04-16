@@ -115,5 +115,10 @@ $route['donor_otp_email'] = 'donors/donor_otp_email';
 $route['filterCauses'] = 'donations/filterCauses';
 $route['sitemap.xml'] = 'kanavuhelp/sitemap';
 $route['insert_priority'] = 'kanavuhelp/insert_priority';
+$route['order/callback'] = 'kanavuhelp/omniCallback';
+$route['order/checkout/(:num)'] = 'kanavuhelp/paymentCheckout/$1';
+$route['order/manual-submit/(:num)'] = 'kanavuhelp/submitManualPayment/$1';
+$route['order/status/(:num)'] = 'kanavuhelp/paymentStatus/$1';
+$route['order/redirect/(:any)'] = 'kanavuhelp/omni_redirect/$1';
 //$route['admin/delete_donation/(:num)'] = 'admin/delete_donation/$1';
 

@@ -62,6 +62,7 @@ class admin extends CI_Controller
         $data['pending_transactions'] = $totalunverifiedtransactions;
         $data['pending_causes'] = $unverifiedCauses;
         $data['enquiry_count'] = $enquiryCount;
+        $data['completed_causes_count'] = $this->adminpanel->get_completed_causes_count();
 
         // Load dashboard
         $this->load->view('admindashbord', $data);

@@ -61,6 +61,11 @@
       color: #6d28d9 !important;
       border: 1px solid #ede9fe;
     }
+     .card5 {
+      background-color: #f0fdf4; /* Ultra Light Mint */
+      color: #802a15ff !important;
+      border: 1px solid #dcfce7;
+    }
     .card4 {
       background-color: #f0fdf4; /* Ultra Light Mint */
       color: #15803d !important;
@@ -170,6 +175,11 @@
       background-color: #f0fdff; /* Ultra Light Cyan */
       color: #0e7490 !important;
       border: 1px solid #ecfeff;
+    }
+    .card8 {
+      background-color: #f5fdf4; /* Ultra Light Green */
+      color: #166534 !important;
+      border: 1px solid #dcfce7;
     }
     .action-card {
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -428,10 +438,16 @@
                 <li class="fs-3 text-center"><?php echo number_format($total_donors); ?></li>
               </ul>
             </div>
-            <div class="card-round card4 shadow-sm py-5 d-grid align-items-center">
+            <div class="card-round card5 shadow-sm py-5 d-grid align-items-center"> 
               <ul class="nav flex-column align-items-center">
                 <li class="text-center">Causes</li>
                 <li class="fs-3 text-center"><?php echo number_format($total_causes); ?></li>
+              </ul>
+            </div>
+            <div class="card-round card8 shadow-sm py-5 d-grid align-items-center">
+              <ul class="nav flex-column align-items-center">
+                <li class="text-center">Completed Causes</li>
+                <li class="fs-3 text-center"><?php echo number_format($completed_causes_count); ?></li>
               </ul>
             </div>
           </div>

@@ -145,10 +145,16 @@ public function totalUnverifiedCauses()
 {
     return $this->db->where('verified', 0)->count_all_results('individualform');
 }
-public function get_total_causes()
-{
-    return $this->db->count_all('individualform');
-}
+    public function get_total_causes()
+    {
+        return $this->db->count_all('individualform');
+    }
+    public function get_completed_causes_count()
+    {
+        $this->db->where('verified', 1);
+        $this->db->where('raised_amount >= amount');
+        return $this->db->count_all_results('individualform');
+    }
 //     public function get_cause_details($limit = 5, $offset = 0, $search = '')
 // {
 //     $this->db->select('individualform.*, user.name as username');

@@ -623,39 +623,144 @@ public function insert_priority()
     public function processDonation()
     {
         $this->load->model('UserModel');
+        $accept_header = strtolower((string) $this->input->server('HTTP_ACCEPT'));
+        $wants_html_response = (strpos($accept_header, 'text/html') !== false) && !$this->input->is_ajax_request();
 
-        // Get POST data
-        $cause_id = $this->input->post('cause_id');
-        $user_id = $this->input->post('user_id');
-        $amount = $this->input->post('amount');
-        $name = $this->input->post('name');
-        $city = $this->input->post('city');
-        $emailid = $this->input->post('email');
-        $phoneno = $this->input->post('phoneno');
-        $transactionid = $this->input->post('transactionid');
-
-        // Fetch cause data
-        $causedata = $this->UserModel->get_cause_data($cause_id);
-
-        if (!$causedata) {
-            echo json_encode(['status' => 'error', 'message' => 'Invalid cause']);
-            exit;
+        if (!$wants_html_response) {
+            $this->output->set_content_type('application/json');
         }
 
-        // Check duplicate transaction ID
-        if ($this->UserModel->is_transaction_id_exists($transactionid)) {
-            echo json_encode([
+        $cause_id = (int) $this->input->post('cause_id');
+        $user_id = (int) ($this->input->post('user_id') ?: $this->session->userdata('Kanavu_userId') ?: 0);
+        $amount = number_format((float) $this->input->post('amount'), 2, '.', '');
+        $name = trim((string) $this->input->post('name'));
+        $city = trim((string) $this->input->post('city'));
+        $emailid = trim((string) $this->input->post('email'));
+        $phoneno = trim((string) $this->input->post('phoneno'));
+        $transactionid = trim((string) $this->input->post('transactionid'));
+        $payment_method = trim((string) ($this->input->post('payment_method') ?: 'manual'));
+
+        if ($cause_id <= 0 || $name === '' || $city === '' || $phoneno === '' || (float) $amount < 1) {
+            $response = array(
                 'status' => 'error',
-                'message' => 'The transaction ID already exists.'
-            ]);
+                'message' => 'Please fill in all required donation details.'
+            );
+
+            if ($wants_html_response) {
+                $this->session->set_flashdata('error', $response['message']);
+                redirect('donate');
+                return;
+            }
+
+            echo json_encode($response);
             exit;
         }
 
-        // Donation data
-        $data = [
+        $causedata = $this->UserModel->get_cause_data($cause_id);
+        if (!$causedata) {
+            $response = array('status' => 'error', 'message' => 'Invalid cause');
+            if ($wants_html_response) {
+                $this->session->set_flashdata('error', $response['message']);
+                redirect('donate');
+                return;
+            }
+
+            echo json_encode($response);
+            exit;
+        }
+
+        $initial_status = 0;
+
+        if ($payment_method === 'omni') {
+            if ($emailid === '' || !filter_var($emailid, FILTER_VALIDATE_EMAIL)) {
+                $response = array(
+                    'status' => 'error',
+                    'message' => 'A valid email address is required for secure online payment.'
+                );
+
+                if ($wants_html_response) {
+                    $this->session->set_flashdata('error', $response['message']);
+                    redirect('donate');
+                    return;
+                }
+
+                echo json_encode($response);
+                exit;
+            }
+
+            $existing_pending = $this->UserModel->findRecentPendingGatewayDonation($cause_id, $amount, $phoneno, $name, $emailid);
+            if (!empty($existing_pending)) {
+                $redirect_url = base_url('order/checkout/' . (int) $existing_pending['donation_id']);
+                if ($wants_html_response) {
+                    redirect($redirect_url);
+                    return;
+                }
+
+                echo json_encode(array(
+                    'status' => 'success',
+                    'redirect_to_gateway' => true,
+                    'redirect_url' => $redirect_url,
+                    'gateway_url' => $redirect_url
+                ));
+                exit;
+            }
+
+            $transactionid = $this->generateGatewayReference();
+        } else {
+            if ($transactionid === '' || !preg_match('/^[A-Za-z0-9]{8,30}$/', $transactionid)) {
+                $response = array(
+                    'status' => 'error',
+                    'message' => 'Please enter a valid transaction ID for manual UPI payment.'
+                );
+
+                if ($wants_html_response) {
+                    $this->session->set_flashdata('error', $response['message']);
+                    redirect('donate');
+                    return;
+                }
+
+                echo json_encode($response);
+                exit;
+            }
+
+            if ($this->UserModel->is_transaction_id_exists($transactionid)) {
+                $response = array(
+                    'status' => 'error',
+                    'message' => 'The transaction ID already exists.'
+                );
+
+                if ($wants_html_response) {
+                    $this->session->set_flashdata('error', $response['message']);
+                    redirect('donate');
+                    return;
+                }
+
+                echo json_encode($response);
+                exit;
+            }
+        }
+
+        $resolved_user_id = $user_id;
+        if ($emailid !== '' && filter_var($emailid, FILTER_VALIDATE_EMAIL)) {
+            $existing_user = $this->UserModel->checkUserexist($emailid);
+            if ($existing_user->num_rows() == 0) {
+                $this->db->insert('user', array(
+                    'name' => $name,
+                    'email' => $emailid,
+                    'mobileNumber' => $phoneno,
+                    'location' => $city
+                ));
+                $resolved_user_id = (int) $this->db->insert_id();
+            } else {
+                $existing_row = $existing_user->row();
+                $resolved_user_id = (int) ($existing_row->id ?? $user_id);
+            }
+        }
+
+        $data = array(
             'cause_id' => $cause_id,
-            'user_id' => $user_id,
-            'donor_id' => $user_id,
+            'user_id' => $resolved_user_id,
+            'donor_id' => $resolved_user_id,
             'amount' => $amount,
             'name' => $name,
             'donor_location' => $city,
@@ -668,42 +773,64 @@ public function insert_priority()
             'fundraiser_id' => $causedata->id,
             'fundraiser_name' => $causedata->name,
             'fundraiser_email' => $causedata->email,
-            'fundraiser_phone' => $causedata->phone
-        ];
+            'fundraiser_phone' => $causedata->phone,
+            'status' => $initial_status
+        );
 
-        // Register user if not exists
-        if ($this->UserModel->checkUserexist($emailid)->num_rows() == 0) {
-            $this->db->insert('user', [
-                'name' => $name,
-                'email' => $emailid,
-                'mobileNumber' => $phoneno,
-                'location' => $city
-            ]);
-            $newid = $this->db->insert_id();
-            $data['user_id'] = $newid;
-        /*
-         $this->db->insert('individualform', [
-         'user_id' => $newid,
-         'name' => $name,
-         'email' => $emailid,
-         'phone' => $phoneno,
-         'location' => $city
-         ]);
-         */
-        }
-
-        // Save donation
-        if ($this->UserModel->saveDonation($data)) {
-            echo json_encode(['status' => 'success']);
-            exit;
-        }
-        else {
-            echo json_encode([
+        if (!$this->UserModel->saveDonation($data)) {
+            $response = array(
                 'status' => 'error',
                 'message' => 'Failed to submit donation'
-            ]);
+            );
+
+            if ($wants_html_response) {
+                $this->session->set_flashdata('error', $response['message']);
+                redirect('donate');
+                return;
+            }
+
+            echo json_encode($response);
             exit;
         }
+
+        $donation_id = (int) $this->db->insert_id();
+        if ($payment_method === 'omni') {
+            $redirect_url = base_url('order/checkout/' . $donation_id);
+
+            if ($wants_html_response) {
+                redirect($redirect_url);
+                return;
+            }
+
+            echo json_encode(array(
+                'status' => 'success',
+                'redirect_to_gateway' => true,
+                'redirect_url' => $redirect_url,
+                'gateway_url' => $redirect_url
+            ));
+            exit;
+        }
+
+        $this->setPaymentStatusContext(
+            'pending',
+            'Donation Submitted',
+            'Your UPI payment proof was received. We will verify the transaction and confirm it shortly.',
+            'Reference ID: ' . $transactionid
+        );
+
+        $status_url = base_url('order/status/' . $donation_id);
+        if ($wants_html_response) {
+            redirect($status_url);
+            return;
+        }
+
+        echo json_encode(array(
+            'status' => 'success',
+            'redirect_to_gateway' => true,
+            'redirect_url' => $status_url,
+            'gateway_url' => $status_url
+        ));
+        exit;
     }
 
 
@@ -1637,6 +1764,448 @@ public function insert_priority()
                 echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
             }
         }
+    }
+
+    public function omni_redirect($donation_id = null)
+    {
+        $donation = $this->getDonationOrRedirect($donation_id);
+        if (empty($donation)) {
+            return;
+        }
+
+        if ((int) ($donation['status'] ?? 0) === 1) {
+            redirect('order/status/' . (int) $donation['donation_id']);
+            return;
+        }
+
+        $this->load->library('omniware');
+
+        $params = $this->buildOmniPaymentParams($donation);
+        log_message('debug', 'Omni Redirect Params: ' . json_encode(array(
+            'order_id' => $params['order_id'] ?? null,
+            'gateway_url' => $this->omniware->getGatewayUrl(),
+            'payment_options' => $params['payment_options'] ?? 'default',
+            'device_type' => $this->isMobileGatewayRequest() ? 'mobile' : 'desktop'
+        )));
+
+        $this->omniware->auto_submit_form($params);
+    }
+
+    public function paymentCheckout($donation_id = null)
+    {
+        $donation = $this->getDonationOrRedirect($donation_id);
+        if (empty($donation)) {
+            return;
+        }
+
+        if ((int) ($donation['status'] ?? 0) === 1) {
+            redirect('order/status/' . (int) $donation['donation_id']);
+            return;
+        }
+
+        $data = array(
+            'donation' => $donation,
+            'donate_url' => base_url('donate'),
+            'gateway_redirect_url' => base_url('order/redirect/' . (int) $donation['donation_id']),
+            'manual_submit_url' => base_url('order/manual-submit/' . (int) $donation['donation_id']),
+            'status_url' => base_url('order/status/' . (int) $donation['donation_id']),
+            'upi_id' => 'vyapar.175502705184@hdfcbank',
+            'qr_image_url' => base_url('assets/img/hdfc_qr_scranner.jpeg'),
+            'display_transaction_id' => $this->getDisplayTransactionId($donation)
+        );
+
+        $this->load->view('payment_checkout', $data);
+    }
+
+    public function submitManualPayment($donation_id = null)
+    {
+        if (strtoupper($this->input->method()) !== 'POST') {
+            redirect('order/checkout/' . (int) $donation_id . '#manual');
+            return;
+        }
+
+        $donation = $this->getDonationOrRedirect($donation_id);
+        if (empty($donation)) {
+            return;
+        }
+
+        if ((int) ($donation['status'] ?? 0) === 1) {
+            redirect('order/status/' . (int) $donation['donation_id']);
+            return;
+        }
+
+        $transactionid = trim((string) $this->input->post('transactionid'));
+        if ($transactionid === '' || !preg_match('/^[A-Za-z0-9]{8,30}$/', $transactionid)) {
+            $this->session->set_flashdata('error', 'Please enter a valid transaction ID for manual UPI payment.');
+            redirect('order/checkout/' . (int) $donation['donation_id'] . '#manual');
+            return;
+        }
+
+        if ($this->UserModel->is_transaction_id_exists($transactionid, $donation['donation_id'])) {
+            $this->session->set_flashdata('error', 'The transaction ID already exists.');
+            redirect('order/checkout/' . (int) $donation['donation_id'] . '#manual');
+            return;
+        }
+
+        $this->db->where('donation_id', (int) $donation['donation_id']);
+        $this->db->update('donation_for_cause', array(
+            'transactionid' => $transactionid,
+            'status' => 0
+        ));
+
+        $this->setPaymentStatusContext(
+            'pending',
+            'Donation Submitted',
+            'Your UPI payment proof was received. We will verify the transaction and confirm it shortly.',
+            'Reference ID: ' . $transactionid
+        );
+
+        redirect('order/status/' . (int) $donation['donation_id']);
+    }
+
+    public function paymentStatus($donation_id = null)
+    {
+        $donation = $this->getDonationOrRedirect($donation_id);
+        if (empty($donation)) {
+            return;
+        }
+
+        $status_context = $this->session->flashdata('payment_status_context');
+        if (empty($status_context)) {
+            $status_context = $this->getDefaultPaymentStatusContext($donation);
+        }
+
+        $data = array(
+            'donation' => $donation,
+            'status_context' => $status_context,
+            'donate_url' => base_url('donate'),
+            'checkout_url' => base_url('order/checkout/' . (int) $donation['donation_id']),
+            'display_transaction_id' => $this->getDisplayTransactionId($donation)
+        );
+
+        $this->load->view('payment_status', $data);
+    }
+
+    public function omniCallback()
+    {
+        $response = $this->input->post();
+        log_message('debug', 'Omni Callback Received: ' . json_encode($response));
+
+        if (empty($response)) {
+            log_message('error', 'Omni Callback: Empty POST data');
+            $this->setPaymentStatusContext(
+                'error',
+                'Payment Verification Failed',
+                'We could not read the payment response from the gateway. Please try again or contact support if money was debited.'
+            );
+            redirect('donate');
+            return;
+        }
+
+        $donation_id = (int) ($response['order_id'] ?? 0);
+        $this->load->library('omniware');
+        $is_valid = $this->omniware->verify_response($response);
+
+        if (!$is_valid) {
+            log_message('error', 'Omni Callback: Signature verification failed for order ' . ($response['order_id'] ?? 'unknown'));
+            $this->setPaymentStatusContext(
+                'error',
+                'Payment Verification Failed',
+                'We could not verify the payment response from the gateway. Please contact support if money was debited.'
+            );
+
+            if ($donation_id > 0) {
+                redirect('order/status/' . $donation_id);
+                return;
+            }
+
+            redirect('donate');
+            return;
+        }
+
+        if ($donation_id <= 0) {
+            log_message('error', 'Omni Callback: Missing order_id in valid response');
+            $this->setPaymentStatusContext(
+                'error',
+                'Payment Verification Failed',
+                'The payment gateway response did not include a valid order reference.'
+            );
+            redirect('donate');
+            return;
+        }
+
+        $donation = $this->UserModel->getDonationById($donation_id);
+        if (empty($donation)) {
+            log_message('error', 'Omni Callback: Donation not found for order ' . $donation_id);
+            $this->setPaymentStatusContext(
+                'error',
+                'Payment Request Missing',
+                'We could not match this payment response to a donation record.'
+            );
+            redirect('donate');
+            return;
+        }
+
+        $gateway_status = $this->getOmniGatewayStatus($response);
+        $gateway_transaction_id = trim((string) ($response['transaction_id'] ?? ''));
+        $updated_donation = $this->applyGatewayDonationUpdate($donation, $gateway_status, $gateway_transaction_id);
+        $effective_status = (int) ($updated_donation['status'] ?? $gateway_status);
+        $detail_line = $this->buildGatewayDetailLine($response);
+
+        if ($effective_status === 1) {
+            $this->setPaymentStatusContext(
+                'success',
+                'Payment Successful',
+                'Thank you for your generous donation! Your payment was completed successfully.',
+                $detail_line
+            );
+        } elseif ($effective_status === 0) {
+            $this->setPaymentStatusContext(
+                'pending',
+                'Payment Pending',
+                $this->buildOmniPendingMessage($response),
+                $detail_line
+            );
+        } else {
+            $this->setPaymentStatusContext(
+                'error',
+                'Payment Failed',
+                $this->buildOmniFailureMessage($response),
+                $detail_line
+            );
+        }
+
+        redirect('order/status/' . (int) $updated_donation['donation_id']);
+    }
+
+    private function isOmniSuccessResponse($response)
+    {
+        $success_codes = array('0', '1047', '1048', 'success', 'successful', 'captured', 'paid', 'authorized');
+        $response_code = strtolower(trim((string) ($response['response_code'] ?? '')));
+        $status = strtolower(trim((string) ($response['status'] ?? '')));
+        $payment_status = strtolower(trim((string) ($response['payment_status'] ?? '')));
+        $transaction_status = strtolower(trim((string) ($response['transaction_status'] ?? ($response['tx_status'] ?? ''))));
+
+        return in_array($response_code, $success_codes, true)
+            || in_array($status, $success_codes, true)
+            || in_array($payment_status, $success_codes, true)
+            || in_array($transaction_status, $success_codes, true);
+    }
+
+    private function getOmniGatewayStatus($response)
+    {
+        if ($this->isOmniSuccessResponse($response)) {
+            return 1;
+        }
+
+        $pending_codes = array('1006', '1030', '1088');
+        $response_code = trim((string) ($response['response_code'] ?? ''));
+
+        if (in_array($response_code, $pending_codes, true)) {
+            return 0;
+        }
+
+        return 2;
+    }
+
+    private function buildOmniPaymentParams(array $donation)
+    {
+        $return_url = base_url('order/callback');
+
+        return array(
+            'order_id' => (string) $donation['donation_id'],
+            'amount' => (string) $donation['amount'],
+            'name' => $donation['name'] ?: 'Donor',
+            'email' => $donation['email'],
+            'phone' => $donation['phoneno'],
+            'city' => $donation['donor_location'] ?: 'Chennai',
+            'country' => 'IND',
+            'currency' => 'INR',
+            'description' => 'Donation to Kanavu Help',
+            'return_url' => $return_url,
+            'return_url_failure' => $return_url,
+            'return_url_cancel' => $return_url,
+            'payment_options' => 'cc,nb,w,atm,upi,dp',
+            'payment_page_display_text' => 'Donate securely to The Kanavu Trust through Omni payment gateway.'
+        );
+    }
+
+    private function isMobileGatewayRequest()
+    {
+        $user_agent = strtolower((string) ($this->input->user_agent() ?: ($_SERVER['HTTP_USER_AGENT'] ?? '')));
+
+        if ($user_agent === '') {
+            return false;
+        }
+
+        $mobile_indicators = array(
+            'android',
+            'iphone',
+            'ipad',
+            'ipod',
+            'mobile',
+            'opera mini',
+            'windows phone',
+            'blackberry'
+        );
+
+        foreach ($mobile_indicators as $indicator) {
+            if (strpos($user_agent, $indicator) !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function buildOmniFailureMessage($response)
+    {
+        $response_code = trim((string) ($response['response_code'] ?? ''));
+        $response_message = trim((string) ($response['response_message'] ?? 'Payment failed'));
+        $error_desc = trim((string) ($response['error_desc'] ?? ''));
+
+        $message = $response_message;
+        if ($error_desc !== '' && strcasecmp($error_desc, $response_message) !== 0) {
+            $message .= ' (' . $error_desc . ')';
+        }
+
+        if ($response_code !== '') {
+            $message .= ' [Code ' . $response_code . ']';
+        }
+
+        return $message !== '' ? $message : 'Payment failed or was cancelled.';
+    }
+
+    private function buildOmniPendingMessage($response)
+    {
+        $response_code = trim((string) ($response['response_code'] ?? ''));
+        $response_message = trim((string) ($response['response_message'] ?? 'Payment is being processed.'));
+
+        if ($response_code !== '') {
+            return $response_message . ' [Code ' . $response_code . ']';
+        }
+
+        return $response_message;
+    }
+
+    private function generateGatewayReference()
+    {
+        return 'OMNI_' . strtoupper(substr(hash('sha256', uniqid((string) mt_rand(), true)), 0, 18));
+    }
+
+    private function getDonationOrRedirect($donation_id)
+    {
+        $donation = $this->UserModel->getDonationById((int) $donation_id);
+
+        if (!empty($donation)) {
+            return $donation;
+        }
+
+        log_message('error', 'Payment flow: Donation not found for order ' . (int) $donation_id);
+        $this->session->set_flashdata('error', 'Payment request not found. Please start the donation again.');
+        redirect('donate');
+        return null;
+    }
+
+    private function applyGatewayDonationUpdate(array $donation, $gateway_status, $gateway_transaction_id = '')
+    {
+        $current_status = (int) ($donation['status'] ?? 0);
+        $update_data = array();
+
+        if ($gateway_transaction_id !== '') {
+            $update_data['transactionid'] = $gateway_transaction_id;
+        }
+
+        if ($current_status !== 1) {
+            $update_data['status'] = (int) $gateway_status;
+        }
+
+        if (!empty($update_data)) {
+            $this->db->where('donation_id', (int) $donation['donation_id']);
+            $this->db->update('donation_for_cause', $update_data);
+            $donation = array_merge($donation, $update_data);
+        }
+
+        if ((int) $gateway_status === 1 && $current_status !== 1) {
+            $this->UserModel->update_raised_amount($donation['cause_id'], $donation['amount']);
+        }
+
+        return $donation;
+    }
+
+    private function setPaymentStatusContext($variant, $title, $message, $detail = '')
+    {
+        $this->session->set_flashdata('payment_status_context', array(
+            'variant' => $variant,
+            'title' => $title,
+            'message' => $message,
+            'detail' => $detail
+        ));
+    }
+
+    private function getDefaultPaymentStatusContext(array $donation)
+    {
+        $status = (int) ($donation['status'] ?? 0);
+        $detail = $this->getDisplayTransactionId($donation);
+        $detail = $detail !== '' ? 'Reference ID: ' . $detail : '';
+
+        if ($status === 1) {
+            return array(
+                'variant' => 'success',
+                'title' => 'Payment Successful',
+                'message' => 'Thank you for your generous donation! Your payment was completed successfully.',
+                'detail' => $detail
+            );
+        }
+
+        if ($status === 2) {
+            return array(
+                'variant' => 'error',
+                'title' => 'Payment Failed',
+                'message' => 'The payment was not completed. You can retry the gateway checkout or use the manual UPI flow instead.',
+                'detail' => $detail
+            );
+        }
+
+        return array(
+            'variant' => 'pending',
+            'title' => 'Payment Pending',
+            'message' => 'Your donation request is pending verification. We will update it after the payment is confirmed.',
+            'detail' => $detail
+        );
+    }
+
+    private function buildGatewayDetailLine($response)
+    {
+        $details = array();
+
+        $payment_mode = trim((string) ($response['payment_mode'] ?? ''));
+        if ($payment_mode !== '') {
+            $details[] = 'Mode: ' . $payment_mode;
+        }
+
+        $payment_channel = trim((string) ($response['payment_channel'] ?? ''));
+        if ($payment_channel !== '') {
+            $details[] = 'Channel: ' . $payment_channel;
+        }
+
+        $gateway_transaction_id = trim((string) ($response['transaction_id'] ?? ''));
+        if ($gateway_transaction_id !== '') {
+            $details[] = 'Gateway Ref: ' . $gateway_transaction_id;
+        }
+
+        return implode(' | ', $details);
+    }
+
+    private function getDisplayTransactionId(array $donation)
+    {
+        $transaction_id = trim((string) ($donation['transactionid'] ?? ''));
+
+        if ($transaction_id === '' || preg_match('/^OMNI_/i', $transaction_id)) {
+            return '';
+        }
+
+        return $transaction_id;
     }
 
 }
