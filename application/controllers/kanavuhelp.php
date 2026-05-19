@@ -97,14 +97,14 @@ class kanavuhelp extends CI_Controller
 
 
 
-public function insert_priority()
+    public function insert_priority()
     {
         if ($this->input->method() === 'post') {
             $id = $this->input->post('id');
             $priority = $this->input->post('priority');
             /*    log_message('debug', 'Received ID: ' . $id);
              log_message('debug', 'Received Priority: ' . $priority);
-             
+
              // Or temporary echo for direct checking
              echo "ID: $id, Priority: $priority";
              exit;  */
@@ -129,16 +129,13 @@ public function insert_priority()
 
                 if ($update) {
                     echo json_encode(['status' => 'success']);
-                }
-                else {
+                } else {
                     echo json_encode(['status' => 'error', 'message' => 'Failed to update priority in the database.']);
                 }
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error', 'message' => 'Please provide both ID and priority.']);
             }
-        }
-        else {
+        } else {
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
         }
     }
@@ -148,16 +145,14 @@ public function insert_priority()
     {
 
         if ($this->input->is_ajax_request() && $this->input->post('priority')) {
-            $priority = (int)$this->input->post('priority');
+            $priority = (int) $this->input->post('priority');
             $result = $this->UserModel->update_priority($id, $priority);
             if ($result) {
                 echo json_encode(['status' => 'success']);
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error']);
             }
-        }
-        else {
+        } else {
             echo json_encode(['status' => 'error']);
         }
     }
@@ -173,16 +168,13 @@ public function insert_priority()
 
                 if ($update) {
                     echo json_encode(['status' => 'success']);
-                }
-                else {
+                } else {
                     echo json_encode(['status' => 'error', 'message' => 'Failed to set priority to 0 in the database.']);
                 }
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error', 'message' => 'Please provide the ID.']);
             }
-        }
-        else {
+        } else {
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
         }
     }
@@ -494,8 +486,7 @@ public function insert_priority()
 
         if ($progress) {
             echo json_encode(['status' => 'success', 'data' => $progress]);
-        }
-        else {
+        } else {
             echo json_encode(['status' => 'error', 'message' => 'No progress data found']);
         }
     }
@@ -509,8 +500,7 @@ public function insert_priority()
 
             if ($result) {
                 echo json_encode(['status' => 'success', 'message' => 'Progress details deleted successfully!']);
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error', 'message' => 'Failed to delete progress details!']);
             }
         }
@@ -533,7 +523,7 @@ public function insert_priority()
         $data['result'] = $this->UserModel->get_all_categories();
 
         $this->load->view('individual', $data);
-    //}
+        //}
     }
     public function charity()
     {
@@ -853,8 +843,8 @@ public function insert_priority()
 
 
 
-        
-/* kani */
+
+        /* kani */
         $active_fundraisers = [];
         foreach ($data['fundraisers'] as $fundraiser) {
             $end_date = new DateTime($fundraiser->end_date);
@@ -874,8 +864,7 @@ public function insert_priority()
                 // If the fundraiser is fully funded, we allow the donation button to stay visible but change the text
                 $fundraiser->hide_donation_button = false;
                 $fundraiser->donation_button_text = 'Complete Donation'; // New button text for fully funded campaigns
-            }
-            elseif (!$is_expired) {
+            } elseif (!$is_expired) {
                 // If the fundraiser is still active and not expired
                 $fundraiser->days_left = $days_left;
                 $fundraiser->hide_donation_button = false; // Show the donation button
@@ -886,10 +875,11 @@ public function insert_priority()
             if (!$is_expired) {
                 $active_fundraisers[] = $fundraiser;
             }
-        //
-        /*  if (!$is_expired || $fundraiser->raised_amount >= $fundraiser->amount) {
-         $active_fundraisers[] = $fundraiser;
-         } */}
+            //
+            /*  if (!$is_expired || $fundraiser->raised_amount >= $fundraiser->amount) {
+             $active_fundraisers[] = $fundraiser;
+             } */
+        }
         // Update the fundraisers in the data
         $data['fundraisers'] = $active_fundraisers;
 
@@ -981,8 +971,7 @@ public function insert_priority()
         if ($interval->invert == 0) {
             // This means end_date is in the past (expired)
             $days_left = 'expired';
-        }
-        else {
+        } else {
             // This means end_date is in the future
             $days_left = $days_left_num . ' Days Left';
         }
@@ -1028,16 +1017,14 @@ public function insert_priority()
             // Set flash message for the next page load
             $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
             redirect('/register'); // Redirects to the registration page
-        }
-        else {
+        } else {
             $response = $this->UserModel->register($data);
             if ($response) {
                 echo "<script>
                 alert('Registered successfully!');
                 window.location.href = '" . base_url('login') . "';
             </script>";
-            }
-            else {
+            } else {
                 $this->session->set_flashdata('error', 'Failed to register');
                 redirect('/register');
             }
@@ -1066,15 +1053,13 @@ public function insert_priority()
             $this->session->unset_userdata("userEmail");
             $this->session->set_flashdata("not_registered_user", true);
             redirect("login");
-        // echo '<script>alert("Please enter registered credentials.");</script>';
-        }
-        else {
+            // echo '<script>alert("Please enter registered credentials.");</script>';
+        } else {
             if ($countotp == 0) {
                 $this->session->set_userdata("userEmail", $email);
                 $this->session->set_userdata("path", "login");
                 redirect("send");
-            }
-            else {
+            } else {
                 $user = $login->row();
                 $userLoggedIn = array(
                     'Kanavu_userId' => $user->id,
@@ -1122,8 +1107,7 @@ public function insert_priority()
                 $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
                 $insert++;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->session->set_flashdata("fileuploadfailed", true);
             redirect('individual');
         }
@@ -1197,8 +1181,7 @@ public function insert_priority()
                 $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
                 $insert++;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->session->set_flashdata("fileuploadfailed", true);
             redirect('individual');
         }
@@ -1288,8 +1271,7 @@ public function insert_priority()
                 $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
                 $fundraiser->days_left = $days_left;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             // Handle the error if the database cannot be reached
             log_message('error', 'Database error: ' . $e->getMessage());
             show_404(); // Display a 404 error page
@@ -1327,8 +1309,7 @@ public function insert_priority()
             $error = $this->upload->display_errors();
             echo "Upload error: $error"; // Debugging statement
             redirect('kanavuhelp/charity', 'refresh');
-        }
-        else {
+        } else {
             // File uploaded successfully, get file name and insert into database
             $file_data = $this->upload->data();
             $file_name = $file_data['file_name'];
@@ -1345,8 +1326,7 @@ public function insert_priority()
             if ($response == true) {
                 echo '<script>alert("Successfully registered")</script>';
                 $this->load->view('donate.php');
-            }
-            else {
+            } else {
                 echo 'Failed to register';
             }
         }
@@ -1428,8 +1408,7 @@ public function insert_priority()
         // --- 3️⃣ Flash Message Based on Status ---
         if ($userEmailSent && $adminEmailSent) {
             $this->session->set_flashdata('submitsuccessstatus', 'Thanks for contacting us! We have received your message.');
-        }
-        else {
+        } else {
             $this->session->set_flashdata('submiterrorstatus', 'An error occurred while sending your message. Please try again later.');
         }
 
@@ -1476,7 +1455,7 @@ public function insert_priority()
         $otp = rand(1000, 9999);
         $this->session->set_userdata('generated_otp', $otp);
         $path = $this->session->userdata("path") ?? "individual";
-        
+
 
         $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
 
@@ -1493,25 +1472,22 @@ public function insert_priority()
                 $this->session->unset_userdata("path");
                 $this->session->unset_userdata("entry");
                 redirect("/login");
-            }
-            else {
+            } else {
                 $this->session->set_userdata("entry", 0);
                 redirect('/individual'); // Redirect back to the same page
             }
-        }
-        else {
+        } else {
             if ($path == "login") {
                 $this->session->set_userdata("mailstatus", "failed");
                 echo "<script>alert(OTP is not sent to your email. please try again.)</script>";
                 redirect("/login");
 
-            }
-            else {
+            } else {
                 $this->session->set_userdata("mailstatus", "failed");
                 echo "<script>alert(OTP is not sent to your email. please try again.)</script>";
                 redirect('/individual');
             }
-        // echo $this->email->print_debugger(); // Print debug info if sending fails
+            // echo $this->email->print_debugger(); // Print debug info if sending fails
         }
     }
 
@@ -1523,8 +1499,7 @@ public function insert_priority()
         $otp = $this->input->post("otp");
         if ($otp == $this->session->userdata('generated_otp')) {
             echo "true";
-        }
-        else {
+        } else {
             echo "false";
         }
     }
@@ -1547,7 +1522,7 @@ public function insert_priority()
 
         $id = 68;
 
-        $this->db->insert('individualform', $causeData);
+        $this->db->insert('individualform', $data);
         redirect('/donate');
 
     }
@@ -1683,8 +1658,7 @@ public function insert_priority()
             $causeId = $this->db->insert_id();
             $this->session->set_userdata('currentCauseId', $causeId);
 
-        }
-        else {
+        } else {
 
             $userData = [
                 'name' => $createdBy,
@@ -1736,8 +1710,7 @@ public function insert_priority()
                 $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
                 $fundraiser->days_left = $days_left;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             // Handle the error if the database cannot be reached
             log_message('error', 'Database error: ' . $e->getMessage());
             show_404(); // Display a 404 error page
@@ -1759,8 +1732,7 @@ public function insert_priority()
             // Return a JSON response indicating success or failure
             if ($result) {
                 echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
             }
         }
