@@ -413,6 +413,9 @@ class admin extends CI_Controller
     {
         $id = $this->input->post('id');
 
+        // Fetch existing record to preserve created_at
+        $existing = $this->db->get_where('individualform', array('id' => $id))->row();
+
         // Initial data array from post fields
         $data = array(
             'category' => $this->input->post('category'),
@@ -439,6 +442,10 @@ class admin extends CI_Controller
             'eventlocation' => $this->input->post('eventlocation')
         );
 
+        if ($existing) {
+            $data['created_at'] = $existing->created_at;
+        }
+
         // File Upload Logic
         $config['upload_path'] = './assets/individualform_img/';
         $config['allowed_types'] = 'gif|jpg|png|jpeg|webp';
@@ -453,7 +460,9 @@ class admin extends CI_Controller
             'cause_image2' => 'cause_image2_old',
             'cause_image3' => 'cause_image3_old',
             'cause_image4' => 'cause_image4_old',
-            'cause_image5' => 'cause_image5_old'
+            'cause_image5' => 'cause_image5_old',
+            'cause_image6' => 'cause_image6_old',
+            'cause_image7' => 'cause_image7_old'
         ];
 
         foreach ($image_fields as $field => $old_field) {
@@ -692,7 +701,13 @@ class admin extends CI_Controller
         $raised_amount = $this->input->post('raised_amount');
         $verified = $this->input->post('verified');
 
+        $existing = $this->db->get_where('individualform', array('id' => $id))->row();
+
         $updatedata = ["name" => $name, "email" => $email, "phone" => $mobile, "age" => $age, "amount" => $amount, "location" => $location, "end_date" => $end_date, "cause_heading" => $cause_heading, "cause_description" => $cause_description, "created_by" => $created_by, "raised_amount" => $raised_amount, "verified" => $verified];
+
+        if ($existing) {
+            $updatedata['created_at'] = $existing->created_at;
+        }
 
         // Validate input
         if (empty($id) || $verified === null) {

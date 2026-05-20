@@ -1004,7 +1004,7 @@
                    }
                  ?>
                 <section id="step-1" class="form-step col-12">
-                  <h2>Basic Details</h2>
+                  <h2>Beneficiary Basic Details</h2>
                   <div class="row my-3">
                     <label for="category" class="col-md-4 col-form-label">I am raising fund for:<span class="text-danger">*</span></label>
                     <div class="col-md-8">
@@ -1155,41 +1155,41 @@
                       <span id="end-date-error" class="text-danger"></span>
                     </div>
                   </div>
-							<div id="run-for-cause-section" class="d-none mt-4">
-								<h5 class="mb-3">Run for Cause Details</h5>
+									<div id="run-for-cause-section" class="d-none mt-4">
+										<h5 class="mb-3">Run for Cause Details</h5>
 
-								<div class="row my-3">
-										<label for="event_name" class="col-md-4 col-form-label">Event Name<span class="text-danger">*</span></label>
-										<div class="col-md-8">
-												<input type="text" name="event_name" id="event_name" class="form-control my-2" placeholder="Event Name">
-												<span id="event-name-error" class="text-danger"></span>
+										<div class="row my-3">
+												<label for="event_name" class="col-md-4 col-form-label">Event Name<span class="text-danger">*</span></label>
+												<div class="col-md-8">
+														<input type="text" name="event_name" id="event_name" class="form-control my-2" placeholder="Event Name">
+														<span id="event-name-error" class="text-danger"></span>
+												</div>
 										</div>
-								</div>
 
-								<div class="row my-3">
-										<label for="event_date" class="col-md-4 col-form-label">Event Date<span class="text-danger">*</span></label>
-										<div class="col-md-8">
-												<input type="date" name="event_date" id="event_date" class="form-control my-2">
-												<span id="event-date-error" class="text-danger"></span>
+										<div class="row my-3">
+												<label for="event_date" class="col-md-4 col-form-label">Event Date<span class="text-danger">*</span></label>
+												<div class="col-md-8">
+														<input type="date" name="event_date" id="event_date" class="form-control my-2">
+														<span id="event-date-error" class="text-danger"></span>
+												</div>
 										</div>
-								</div>
 
-								<div class="row my-3">
-										<label for="run_distance_km" class="col-md-4 col-form-label">Run Distance (KM)<span class="text-danger">*</span></label>
-										<div class="col-md-8">
-												<input type="number" step="0.1" min="0.1" name="run_distance_km" id="run_distance_km" class="form-control my-2" placeholder="e.g. 10.5">
-												<span id="run-distance-error" class="text-danger"></span>
+										<div class="row my-3">
+												<label for="run_distance_km" class="col-md-4 col-form-label">Run Distance (KM)<span class="text-danger">*</span></label>
+												<div class="col-md-8">
+														<input type="number" step="0.1" min="0.1" name="run_distance_km" id="run_distance_km" class="form-control my-2" placeholder="e.g. 10.5">
+														<span id="run-distance-error" class="text-danger"></span>
+												</div>
 										</div>
-								</div>
 
-								<div class="row my-3">
-										<label for="event_location" class="col-md-4 col-form-label">Event Location<span class="text-danger">*</span></label>
-										<div class="col-md-8">
-												<input type="text" name="event_location" id="event_location" class="form-control my-2" placeholder="Event Location">
-												<span id="event-location-error" class="text-danger"></span>
+										<div class="row my-3">
+												<label for="event_location" class="col-md-4 col-form-label">Event Location<span class="text-danger">*</span></label>
+												<div class="col-md-8">
+														<input type="text" name="event_location" id="event_location" class="form-control my-2" placeholder="Event Location">
+														<span id="event-location-error" class="text-danger"></span>
+												</div>
 										</div>
-								</div>
-							</div>
+									</div>
 
                   <div class="text-center mt-3">
                     <button type="button" class="btn btn-danger no-hover btn-back" data-step="1">Back</button>
@@ -1214,7 +1214,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image_one" class="col-md-4 col-form-label">Cause Image One:</label>
+                    <label for="cover_image_one" class="col-md-4 col-form-label">Cause Image 1:</label>
                     <div class="col-md-8">
                       <input type="file" id="cover_image_one" name="document_one" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)" required>
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1225,7 +1225,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image_two" class="col-md-4 col-form-label">Cause Image Two:</label>
+                    <label for="cover_image_two" class="col-md-4 col-form-label">Cause Image 2:</label>
                     <div class="col-md-8">
                       <input type="file" id="cover_image_two" name="document_two" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1236,7 +1236,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image_three" class="col-md-4 col-form-label">Cause Image Three:</label>
+                    <label for="cover_image_three" class="col-md-4 col-form-label">Cause Image 3:</label>
                     <div class="col-md-8">
                       <input type="file" id="cover_image_three" name="document_three" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1248,7 +1248,7 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image_four" class="col-md-4 col-form-label">Cause Image Four:</label>
+                    <label for="cover_image_four" class="col-md-4 col-form-label">Cause Image 4:</label>
                     <div class="col-md-8">
                       <input type="file" id="cover_image_four" name="document_four" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
                       <p id="cover-image-error" class="text-danger"></p>
@@ -1260,9 +1260,31 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cover_image_five" class="col-md-4 col-form-label">Cause Image Five:</label>
+                    <label for="cover_image_five" class="col-md-4 col-form-label">Cause Image 5:</label>
                     <div class="col-md-8">
                       <input type="file" id="cover_image_five" name="document_five" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
+                      <p id="cover-image-error" class="text-danger"></p>
+                      <small class="text-muted">
+                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                      </small> 
+                    </div>
+                  </div>
+
+									  <div class="row my-3">
+                    <label for="cover_image_six" class="col-md-4 col-form-label">Cause Image 6:</label>
+                    <div class="col-md-8">
+                      <input type="file" id="cover_image_six" name="document_six" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
+                      <p id="cover-image-error" class="text-danger"></p>
+                      <small class="text-muted">
+                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                      </small> 
+                    </div>
+                  </div>
+
+									  <div class="row my-3">
+                    <label for="cover_image_seven" class="col-md-4 col-form-label">Cause Image 7:</label>
+                    <div class="col-md-8">
+                      <input type="file" id="cover_image_seven" name="document_seven" accept="image/jpg,image/jpeg, image/png, image/svg+xml" class="form-control my-2" onchange="validateCoverImage(this)">
                       <p id="cover-image-error" class="text-danger"></p>
                       <small class="text-muted">
                         Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
