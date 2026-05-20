@@ -9,10 +9,10 @@
   <!-- <link href="bootstrap.min.css" rel="stylesheet" />
          <script src="bootstrap.bundle.min.js"></script> -->
   <!-- Bootrap for the demo page -->
-   <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon" />
+  <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
- <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
   <!--wizard-->
   <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet"
@@ -27,10 +27,15 @@
   body {
     font-family: 'sen', sans-serif;
   }
-  html, body {
-  overflow: auto; /* Ensure scrolling is enabled */
-  height: 100%; /* Make sure the body occupies full height */
-}
+
+  html,
+  body {
+    overflow: auto;
+    /* Ensure scrolling is enabled */
+    height: 100%;
+    /* Make sure the body occupies full height */
+  }
+
   .logo {
     margin-left: 65px;
     font-weight: bolder;
@@ -417,21 +422,28 @@
   .d-none {
     display: none;
   }
-  .form-step {
-  width: 100%;
-  overflow: auto; /* Ensure inner sections are scrollable */
-  /* height: 100vh; Viewport height to allow scrolling */
-  /* min-height: 100vh; Ensures the section takes the full height of the viewport */
-  padding: 20px; /* Adds padding for better appearance */
-  box-sizing: border-box; /* Includes padding in width/height calculations */
-  display: flex; /* Ensure layout flexibility */
-  flex-direction: column; /* Columnar layout */
-}
 
-.col-12 {
-  width: 100%;
-  max-width: 100%;
-}
+  .form-step {
+    width: 100%;
+    overflow: auto;
+    /* Ensure inner sections are scrollable */
+    /* height: 100vh; Viewport height to allow scrolling */
+    /* min-height: 100vh; Ensures the section takes the full height of the viewport */
+    padding: 20px;
+    /* Adds padding for better appearance */
+    box-sizing: border-box;
+    /* Includes padding in width/height calculations */
+    display: flex;
+    /* Ensure layout flexibility */
+    flex-direction: column;
+    /* Columnar layout */
+  }
+
+  .col-12 {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .form-step {
     border-radius: 20px;
     padding: auto;
@@ -787,8 +799,8 @@
     }
   }
 
-  .active-individual{
-    color:red !important;
+  .active-individual {
+    color: red !important;
   }
 
   @media (max-width: 767px) {
@@ -885,52 +897,52 @@
 
   .navbar-brand img {
     transition: transform 0.3s ease-in-out;
-}
+  }
 
-.navbar-brand img:hover {
-    transform: scale(1.08); /* Slight zoom-in */
-}
-
+  .navbar-brand img:hover {
+    transform: scale(1.08);
+    /* Slight zoom-in */
+  }
 </style>
 
 <body>
   <nav id="header" class="navbar navbar-expand-lg bg-white py-4 fixed-top">
-    
+
   </nav>
-<!-- <?php if(!empty($causedetails)) :?> -->
-  <div class="container-fluid box mt-3 py-3">
-    <div class="row box1 mt-auto py-3">
-      <div class="container-fluid mt-5">
-        <div class="row w-100">
-          <!-- Left Column for Image and Text -->
-          <div class="col-md-6 d-flex justify-content-center mt-3">
-            <div class="text-center">
-              <h3 class="mt-4"><strong>LAUNCH YOUR FUNDRAISER</strong></h3>
-              <h6>Our legacy is not what we accumulate, but what we give.</h6>
-              <img src="<?php echo base_url('/assets/img/startyourfund.jpg'); ?>"
-                alt="no img"
-                class="img-fluid"
-                style="max-width: 100%; height: auto; border-radius: 50%;">
+  <!-- <?php if (!empty($causedetails)): ?> -->
+    <div class="container-fluid box mt-3 py-3">
+      <div class="row box1 mt-auto py-3">
+        <div class="container-fluid mt-5">
+          <div class="row w-100">
+            <!-- Left Column for Image and Text -->
+            <div class="col-md-6 d-flex justify-content-center mt-3">
+              <div class="text-center">
+                <h3 class="mt-4"><strong>LAUNCH YOUR FUNDRAISER</strong></h3>
+                <h6>Our legacy is not what we accumulate, but what we give.</h6>
+                <img src="<?php echo base_url('/assets/img/startyourfund.jpg'); ?>" alt="no img" class="img-fluid"
+                  style="max-width: 100%; height: auto; border-radius: 50%;">
+              </div>
             </div>
-          </div>
-          <!-- Right Column for Form -->
-          <div id="step-two-form" style="overflow:auto;" class="col-md-6 mt-4">
-            <div id="multi-step-form-container" class="mt-3 py-3 w-100">
+            <!-- Right Column for Form -->
+            <div id="step-two-form" style="overflow:auto;" class="col-md-6 mt-4">
+              <div id="multi-step-form-container" class="mt-3 py-3 w-100">
 
-              <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/updateindividualform_data') ?>" enctype="multipart/form-data">
-              
-                <section id="step-2" class="form-step col-12">
-                  <h2>Update Cause Details</h2>
-                  <input hidden type="text" name="step" value="steptwo">
-                  <input hidden type="number" name="cause_id" value="<?=$causedetails->id?>">
-                  <div class="row my-3">
-                    <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
-                    <div class="col-md-8">
-                      <input type="text" id="form_selected_text" class="form-control my-2" placeholder="I am raising fund for: <?=$causedetails->category?>" readonly>
+                <form id="individualform" name="individualform" method="post"
+                  action="<?= base_url('kanavuhelp/updateindividualform_data') ?>" enctype="multipart/form-data">
+
+                  <section id="step-2" class="form-step col-12">
+                    <h2>Update Cause Details</h2>
+                    <input hidden type="text" name="step" value="steptwo">
+                    <input hidden type="number" name="cause_id" value="<?= $causedetails->id ?>">
+                    <div class="row my-3">
+                      <label for="form_selected_text" class="col-md-4 col-form-label">I am raising fund for: </label>
+                      <div class="col-md-8">
+                        <input type="text" id="form_selected_text" class="form-control my-2"
+                          placeholder="I am raising fund for: <?= $causedetails->category ?>" readonly>
+                      </div>
                     </div>
-                  </div>
 
-                <!--   <script>
+                    <!--   <script>
                     function copySelection() {
                       const selectedCategory = document.getElementById("category").value;
                       const formSelectedText = document.getElementById("form_selected_text");
@@ -943,126 +955,164 @@
                       }
                     }
                   </script> -->
-                  <div class="row my-3">
-                    <label for="amount" class="col-md-4 col-form-label">Amount:<span class="text-danger">*</span></label>
-                    <div class="col-md-8">
-                      <input type="number" id="amount" name="amount" value="<?=$causedetails->amount?>" class="form-control my-2" placeholder="Amount*" required>
-                      <span id="amount-error" class="text-danger"></span>
+                    <div class="row my-3">
+                      <label for="amount" class="col-md-4 col-form-label">Amount:<span
+                          class="text-danger">*</span></label>
+                      <div class="col-md-8">
+                        <input type="number" id="amount" name="amount" value="<?= $causedetails->amount ?>"
+                          class="form-control my-2" placeholder="Amount*" required>
+                        <span id="amount-error" class="text-danger"></span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="row my-3">
-                    <label for="end_date" class="col-md-4 col-form-label">End Date:<span class="text-danger">*</span></label>
-                    <div class="col-md-8">
-                      <input type="date" id="end_date" value="<?=$causedetails->end_date?>" name="end_date" class="form-control my-2" placeholder="End Date*" required>
-                      <span id="end-date-error" class="text-danger"></span>
+                    <div class="row my-3">
+                      <label for="end_date" class="col-md-4 col-form-label">End Date:<span
+                          class="text-danger">*</span></label>
+                      <div class="col-md-8">
+                        <input type="date" id="end_date" value="<?= $causedetails->end_date ?>" name="end_date"
+                          class="form-control my-2" placeholder="End Date*" required>
+                        <span id="end-date-error" class="text-danger"></span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="text-center mt-3">
-                    <button type="button" id="continueToStep3" class="btn btn-danger no-hover">Continue</button>
-                  </div>
-                </section>
-
-                <!-- Step 3 Content -->
-                <section id="step-3" class="form-step col-12 d-none">
-                  <h2>Update Elaborate Cause Details</h2>
-                 
-                  <!-- Cover Image Field -->
-                  <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cover Image:</label>
-                    <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="cover_image" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
-                      <p id="cover-image-error" class="text-danger"></p>
-                      <small class="text-muted">
-                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
-                      </small> 
+                    <div class="text-center mt-3">
+                      <button type="button" id="continueToStep3" class="btn btn-danger no-hover">Continue</button>
                     </div>
-                  </div>
+                  </section>
 
-                  <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image One:</label>
-                    <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_one" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
-                      <p id="cover-image-error" class="text-danger"></p>
-                      <small class="text-muted">
-                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
-                      </small> 
+                  <!-- Step 3 Content -->
+                  <section id="step-3" class="form-step col-12 d-none">
+                    <h2>Update Elaborate Cause Details</h2>
+
+                    <!-- Cover Image Field -->
+                    <div class="row my-3">
+                      <label for="cover_image" class="col-md-4 col-form-label">Cover Image:</label>
+                      <div class="col-md-8">
+                        <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="cover_image"
+                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                        <p id="cover-image-error" class="text-danger"></p>
+                        <small class="text-muted">
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                        </small>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Two:</label>
-                    <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_two" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
-                      <p id="cover-image-error" class="text-danger"></p>
-                      <small class="text-muted">
-                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
-                      </small> 
+                    <div class="row my-3">
+                      <label for="cover_image" class="col-md-4 col-form-label">Cause Image One:</label>
+                      <div class="col-md-8">
+                        <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_one"
+                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                        <p id="cover-image-error" class="text-danger"></p>
+                        <small class="text-muted">
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                        </small>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Three:</label>
-                    <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_three" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
-                      <p id="cover-image-error" class="text-danger"></p>
-                      <small class="text-muted">
-                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
-                      </small> 
+                    <div class="row my-3">
+                      <label for="cover_image" class="col-md-4 col-form-label">Cause Image Two:</label>
+                      <div class="col-md-8">
+                        <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_two"
+                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                        <p id="cover-image-error" class="text-danger"></p>
+                        <small class="text-muted">
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                        </small>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Four:</label>
-                    <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_four" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
-                      <p id="cover-image-error" class="text-danger"></p>
-                      <small class="text-muted">
-                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
-                      </small> 
+                    <div class="row my-3">
+                      <label for="cover_image" class="col-md-4 col-form-label">Cause Image Three:</label>
+                      <div class="col-md-8">
+                        <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_three"
+                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                        <p id="cover-image-error" class="text-danger"></p>
+                        <small class="text-muted">
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                        </small>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="row my-3">
-                    <label for="cover_image" class="col-md-4 col-form-label">Cause Image Five:</label>
-                    <div class="col-md-8">
-                      <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_five" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" >
-                      <p id="cover-image-error" class="text-danger"></p>
-                      <small class="text-muted">
-                        Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
-                      </small> 
+                    <div class="row my-3">
+                      <label for="cover_image" class="col-md-4 col-form-label">Cause Image Four:</label>
+                      <div class="col-md-8">
+                        <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_four"
+                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                        <p id="cover-image-error" class="text-danger"></p>
+                        <small class="text-muted">
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                        </small>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="row my-3">
-                    <label for="cause_video" class="col-md-4 col-form-label">Video Document:</label>
-                    <div class="col-md-8">
-                      <input type="file" onchange="validateCausevideo(this)" id="cause_video" name="cause_video" accept="video/mp4" class="form-control my-2" >
-                      <p id="cover-video-error" class="text-danger"></p>
-                      <small class="text-muted">
-                       Upload only mp4 format.
-                      </small> 
+                    <div class="row my-3">
+                      <label for="cover_image" class="col-md-4 col-form-label">Cause Image Five:</label>
+                      <div class="col-md-8">
+                        <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_five"
+                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                        <p id="cover-image-error" class="text-danger"></p>
+                        <small class="text-muted">
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                        </small>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="row my-3">
-                    <label for="cause_video__link_tamil" class="col-md-4 col-form-label">Video Embed Link Tamil:</label>
-                    <div class="col-md-8">
-                      <input type="text" onchange="validateEmbed(this)" id="cause_video_link" name="cause_embed_link_tamil" value='<?=$causedetails->Cause_video_link?>' class="form-control my-2">
-                      <p id="tamil_embed_error" class="text-danger"></p>
+                    <div class="row my-3">
+                      <label for="cover_image" class="col-md-4 col-form-label">Cause Image Six:</label>
+                      <div class="col-md-8">
+                        <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_six"
+                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                        <p id="cover-image-error" class="text-danger"></p>
+                        <small class="text-muted">
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                        </small>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="row my-3">
-                    <label for="cause_video" class="col-md-4 col-form-label">Video Embed Link English:</label>
-                    <div class="col-md-8">
-                      <input type="text" onchange="validateEmbed(this)" id="cause_video" name="cause_embed_link_english" value='<?=$causedetails->Cause_video_link_eng?>' class="form-control my-2">
-                      <p id="cover-image-error" class="text-danger"></p>
+                    <div class="row my-3">
+                      <label for="cover_image" class="col-md-4 col-form-label">Cause Image Seven:</label>
+                      <div class="col-md-8">
+                        <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_seven"
+                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                        <p id="cover-image-error" class="text-danger"></p>
+                        <small class="text-muted">
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                        </small>
+                      </div>
                     </div>
-                  </div>
 
-                  <!-- <div class="row my-3">
+                    <div class="row my-3">
+                      <label for="cause_video" class="col-md-4 col-form-label">Video Document:</label>
+                      <div class="col-md-8">
+                        <input type="file" onchange="validateCausevideo(this)" id="cause_video" name="cause_video"
+                          accept="video/mp4" class="form-control my-2">
+                        <p id="cover-video-error" class="text-danger"></p>
+                        <small class="text-muted">
+                          Upload only mp4 format.
+                        </small>
+                      </div>
+                    </div>
+
+                    <div class="row my-3">
+                      <label for="cause_video__link_tamil" class="col-md-4 col-form-label">Video Embed Link Tamil:</label>
+                      <div class="col-md-8">
+                        <input type="text" onchange="validateEmbed(this)" id="cause_video_link"
+                          name="cause_embed_link_tamil" value='<?= $causedetails->Cause_video_link ?>'
+                          class="form-control my-2">
+                        <p id="tamil_embed_error" class="text-danger"></p>
+                      </div>
+                    </div>
+
+                    <div class="row my-3">
+                      <label for="cause_video" class="col-md-4 col-form-label">Video Embed Link English:</label>
+                      <div class="col-md-8">
+                        <input type="text" onchange="validateEmbed(this)" id="cause_video" name="cause_embed_link_english"
+                          value='<?= $causedetails->Cause_video_link_eng ?>' class="form-control my-2">
+                        <p id="cover-image-error" class="text-danger"></p>
+                      </div>
+                    </div>
+
+                    <!-- <div class="row my-3">
                     <small class="text-muted">"Please note, only up to 5 images can be uploaded at a time.</small>
                     <label for="cover_image" class="col-md-4 col-form-label">Additional Documents:<span class="text-danger">*</span></label>
                     <div class="col-md-8">
@@ -1074,52 +1124,60 @@
                     </div>
                   </div>
  -->
-                  <!-- Cause Title Field -->
-                  <div class="row my-3">
-                    <label for="cause_heading" class="col-md-4 col-form-label">Cause Title:<span class="text-danger">*</span></label>
-                    <div class="col-md-8">
-                      <input type="text" id="cause_heading" name="cause_heading" class="form-control my-2" value="<?=$causedetails->cause_heading?>" placeholder="Cause Title" required oninput="validateCauseTitle()">
-                      <span id="cause-heading-error" class="text-danger"></span>
+                    <!-- Cause Title Field -->
+                    <div class="row my-3">
+                      <label for="cause_heading" class="col-md-4 col-form-label">Cause Title:<span
+                          class="text-danger">*</span></label>
+                      <div class="col-md-8">
+                        <input type="text" id="cause_heading" name="cause_heading" class="form-control my-2"
+                          value="<?= $causedetails->cause_heading ?>" placeholder="Cause Title" required
+                          oninput="validateCauseTitle()">
+                        <span id="cause-heading-error" class="text-danger"></span>
+                      </div>
                     </div>
-                  </div>
 
-                  <!-- Cause Description Field -->
-                  <div class="row my-3">
-                    <label for="cause_description" class="col-md-4 col-form-label">Description:<span class="text-danger">*</span></label>
-                    <div class="col-md-8">
-                      <textarea id="cause_description" name="cause_description" class="form-control my-2" rows="4" placeholder="Description" required oninput="validateCauseDescription()">
-                      <?=trim($causedetails->cause_description)?>
-                      </textarea>
-                      <span id="cause-description-error" class="text-danger"></span>
+                    <!-- Cause Description Field -->
+                    <div class="row my-3">
+                      <label for="cause_description" class="col-md-4 col-form-label">Description:<span
+                          class="text-danger">*</span></label>
+                      <div class="col-md-8">
+                        <textarea id="cause_description" name="cause_description" class="form-control my-2" rows="4"
+                          placeholder="Description" required oninput="validateCauseDescription()">
+                        <?= trim($causedetails->cause_description) ?>
+                        </textarea>
+                        <span id="cause-description-error" class="text-danger"></span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div style="color:red">Please wait for Admin verification of the cause. It will happen in 24 hours</div>
+                    <div style="color:red">Please wait for Admin verification of the cause. It will happen in 24 hours
+                    </div>
 
-                  <div class="text-center mt-3">
-                    <button type="button" onclick="backtoSteptwo()" class="btn btn-danger no-hover btn-back" data-step="2">Back</button>
-                    <button type="submit" class="btn btn-success no-hover" id="submitApprovalButton">Submit for Approval</button>
-                  </div>
-                </section>
-              </form>
+                    <div class="text-center mt-3">
+                      <button type="button" onclick="backtoSteptwo()" class="btn btn-danger no-hover btn-back"
+                        data-step="2">Back</button>
+                      <button type="submit" class="btn btn-success no-hover" id="submitApprovalButton">Submit for
+                        Approval</button>
+                    </div>
+                  </section>
+                </form>
               </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- <?php endif; ?> -->
+  <!----------------------------footer----------------------->
+  <div id="footer">
+
   </div>
-  <!-- <?php endif;?> -->
-<!----------------------------footer----------------------->
-<div id="footer">
+  <!--------------------------footer-end-------------------->
 
-</div>
-<!--------------------------footer-end-------------------->
+  <!-- Message Modal -->
 
-<!-- Message Modal -->
 
-           
 
-<div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -1138,55 +1196,55 @@
   </div>
 
 
-<script>
+  <script>
 
-$.ajax({
-  type:"get",
-  url:"kanavuhelp/getHeader",
-  success:(result)=>{
-       document.getElementById("header").innerHTML = result;
-    //    document.getElementById("individualpage").classList.add("text-danger");
-  },
-  error:(error)=>{
-       document.getElementById("header").innerHTML = "";
-  }
-}); 
+    $.ajax({
+      type: "get",
+      url: "kanavuhelp/getHeader",
+      success: (result) => {
+        document.getElementById("header").innerHTML = result;
+        //    document.getElementById("individualpage").classList.add("text-danger");
+      },
+      error: (error) => {
+        document.getElementById("header").innerHTML = "";
+      }
+    });
 
-$.ajax({
-  type:"get",
-  url:"kanavuhelp/getFooter",
-  success:(result)=>{
-       document.getElementById("footer").innerHTML = result;
-  },
-  error:(error)=>{
-       document.getElementById("footer").innerHTML = "";
-  }
-}); 
+    $.ajax({
+      type: "get",
+      url: "kanavuhelp/getFooter",
+      success: (result) => {
+        document.getElementById("footer").innerHTML = result;
+      },
+      error: (error) => {
+        document.getElementById("footer").innerHTML = "";
+      }
+    });
 
-let headerheight = document.getElementById("header").getBoundingClientRect().height;
-let displayheight = window.innerHeight;
-document.getElementById("step-two-form").style.height = `${displayheight - headerheight}px`; 
+    let headerheight = document.getElementById("header").getBoundingClientRect().height;
+    let displayheight = window.innerHeight;
+    document.getElementById("step-two-form").style.height = `${displayheight - headerheight}px`;
 
-document.getElementById("continueToStep3").addEventListener("click", () => {
-       if(validateStep2()){
-          showStep(3);
-       }
-       else {
-          showPopupMessage("Please fill in all required fields correctly before continuing.");
-        }
-       });
+    document.getElementById("continueToStep3").addEventListener("click", () => {
+      if (validateStep2()) {
+        showStep(3);
+      }
+      else {
+        showPopupMessage("Please fill in all required fields correctly before continuing.");
+      }
+    });
 
-      // Function to show popup messages
+    // Function to show popup messages
 
-      // Continue to Step 2
-      function showPopupMessage(message) {
-        const messageModal = new bootstrap.Modal(document.getElementById("messageModal"));
-        console.log(message);
-        document.getElementById("messageModalBody").innerHTML = message;
-        messageModal.show();
-      } 
+    // Continue to Step 2
+    function showPopupMessage(message) {
+      const messageModal = new bootstrap.Modal(document.getElementById("messageModal"));
+      console.log(message);
+      document.getElementById("messageModalBody").innerHTML = message;
+      messageModal.show();
+    }
 
-document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       const otpModal = new bootstrap.Modal(document.getElementById("myModal"));
       const messageModal = new bootstrap.Modal(document.getElementById("messageModal"));
 
@@ -1196,19 +1254,19 @@ document.addEventListener("DOMContentLoaded", function() {
       function showPopupMessage(message) {
         document.getElementById("messageModalBody").innerHTML = message;
         messageModal.show();
-      } 
+      }
       document.body.style.overflow = 'auto';
     })
 
-  // Submit Approval Button
-  document.getElementById("submitApprovalButton").addEventListener("click", function(event) {
-    event.preventDefault();
-    if (validateStep3()) {
+    // Submit Approval Button
+    document.getElementById("submitApprovalButton").addEventListener("click", function (event) {
+      event.preventDefault();
+      if (validateStep3()) {
         document.getElementById("individualform").submit();
-      
-    } else {
-      showPopupMessage("Please fill in all required fields correctly before submitting.");
-    }
+
+      } else {
+        showPopupMessage("Please fill in all required fields correctly before submitting.");
+      }
 
       function validateStep2() {
         return validateAmount() & validateEndDate();
@@ -1225,17 +1283,17 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!nameInput) {
           errorElement.textContent = "Enter your name.";
           return false;
-        } else{
-            if(!nameInput.match(nameRegex)){
+        } else {
+          if (!nameInput.match(nameRegex)) {
             errorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
             return false;
-            }
-            else{
+          }
+          else {
             return true;
-            }
+          }
         }
         errorElement.textContent = "";
-        }
+      }
 
       function validateAge() {
         const age = parseInt(document.getElementById("age").value, 10);
@@ -1281,232 +1339,232 @@ document.addEventListener("DOMContentLoaded", function() {
         errorElement.textContent = "";
         return true;
       }
-  });
-
-  function validateEmbed(text){
-
-  }
-
-  // Show specific step
-  function showStep(step) {
-    document.getElementById("step-2").classList.add("d-none");
-    document.getElementById("step-3").classList.remove("d-none");
-    document.getElementById("step-3").classList.add("d-block");
-  }
-
-  function backtoSteptwo(){
-    document.getElementById("step-2").classList.remove("d-none");
-    document.getElementById("step-3").classList.add("d-none");
-  }
-
-  // Update stepper status
-  function updateStepper(step) {
-    const steppers = document.querySelectorAll(".form-stepper-list");
-    steppers.forEach((stepper, index) => {
-      const stepNum = index + 1;
-
-      if (stepNum < step) {
-        stepper.classList.remove("form-stepper-active", "form-stepper-unfinished");
-        stepper.classList.add("form-stepper-completed");
-      } else if (stepNum === step) {
-        stepper.classList.remove("form-stepper-completed", "form-stepper-unfinished");
-        stepper.classList.add("form-stepper-active");
-      } else {
-        stepper.classList.remove("form-stepper-active", "form-stepper-completed");
-        stepper.classList.add("form-stepper-unfinished");
-      }
     });
-  }
 
-  // Utility: Set error message
-  function setError(id, message) {
-    document.getElementById(id).textContent = message;
-  }
+    function validateEmbed(text) {
 
-  // OTP Sending Simulation
-  function sendOtp() {
-    const email = document.getElementById("email").value.trim();
-    showPopupMessage(`
+    }
+
+    // Show specific step
+    function showStep(step) {
+      document.getElementById("step-2").classList.add("d-none");
+      document.getElementById("step-3").classList.remove("d-none");
+      document.getElementById("step-3").classList.add("d-block");
+    }
+
+    function backtoSteptwo() {
+      document.getElementById("step-2").classList.remove("d-none");
+      document.getElementById("step-3").classList.add("d-none");
+    }
+
+    // Update stepper status
+    function updateStepper(step) {
+      const steppers = document.querySelectorAll(".form-stepper-list");
+      steppers.forEach((stepper, index) => {
+        const stepNum = index + 1;
+
+        if (stepNum < step) {
+          stepper.classList.remove("form-stepper-active", "form-stepper-unfinished");
+          stepper.classList.add("form-stepper-completed");
+        } else if (stepNum === step) {
+          stepper.classList.remove("form-stepper-completed", "form-stepper-unfinished");
+          stepper.classList.add("form-stepper-active");
+        } else {
+          stepper.classList.remove("form-stepper-active", "form-stepper-completed");
+          stepper.classList.add("form-stepper-unfinished");
+        }
+      });
+    }
+
+    // Utility: Set error message
+    function setError(id, message) {
+      document.getElementById(id).textContent = message;
+    }
+
+    // OTP Sending Simulation
+    function sendOtp() {
+      const email = document.getElementById("email").value.trim();
+      showPopupMessage(`
                 <span>Please wait OTP is sent to your email ${email}</span>&nbsp;
                 <span class="spinner-border text-danger"></span>
                 `);
-  }
-
-  // Validation Handlers
-  const validationHandlers = {
-    amount: validateAmount,
-    end_date: validateEndDate,
-    cover_image: validateCoverImage,
-    cause_heading: validateCauseTitle,
-    cause_description: validateCauseDescription,
-  };
-
-  Object.keys(validationHandlers).forEach(fieldId => {
-    const field = document.getElementById(fieldId);
-    if (field) {
-      field.addEventListener("input", validationHandlers[fieldId]);
-      field.addEventListener("blur", validationHandlers[fieldId]);
-    }
-  });
-
-
-  function validateStep2() {
-    const amount = document.getElementById("amount").value.trim();
-    const errorElement = document.getElementById("amount-error");
-    const endDate = document.getElementById("end_date").value;
-    const dateerrorElement = document.getElementById("end-date-error");
-
-    if (!amount || isNaN(amount) || parseFloat(amount) <= 10) {
-      errorElement.textContent = "Amount must be greater than 10.";
-      return false;
-    }
-    else{
-    errorElement.textContent = "";
-    }
-    if (!endDate) {
-      dateerrorElement.textContent = "Select an end date.";
-      return false;
     }
 
-    const selectedDate = new Date(endDate);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Validation Handlers
+    const validationHandlers = {
+      amount: validateAmount,
+      end_date: validateEndDate,
+      cover_image: validateCoverImage,
+      cause_heading: validateCauseTitle,
+      cause_description: validateCauseDescription,
+    };
 
-    if (selectedDate < today) {
-      errorElement.textContent = "The date must be today or a future date.";
-      return false;
-    }
-    else{
+    Object.keys(validationHandlers).forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        field.addEventListener("input", validationHandlers[fieldId]);
+        field.addEventListener("blur", validationHandlers[fieldId]);
+      }
+    });
+
+
+    function validateStep2() {
+      const amount = document.getElementById("amount").value.trim();
+      const errorElement = document.getElementById("amount-error");
+      const endDate = document.getElementById("end_date").value;
+      const dateerrorElement = document.getElementById("end-date-error");
+
+      if (!amount || isNaN(amount) || parseFloat(amount) <= 10) {
+        errorElement.textContent = "Amount must be greater than 10.";
+        return false;
+      }
+      else {
         errorElement.textContent = "";
-    }
-    showStep(3)
-    return true;
-  }
+      }
+      if (!endDate) {
+        dateerrorElement.textContent = "Select an end date.";
+        return false;
+      }
 
-  function validateStep3() {
-    return validateCoverImage() & validateCauseTitle() & validateCauseDescription();
-  }
+      const selectedDate = new Date(endDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-  // Individual field validation functions
-  
-  function validateAmount() {
-    const amount = document.getElementById("amount").value.trim();
-    const errorElement = document.getElementById("amount-error");
-
-    if (!amount || isNaN(amount) || parseFloat(amount) <= 10) {
-      errorElement.textContent = "Amount must be greater than 10.";
-      return false;
-    }
-    errorElement.textContent = "";
-    return true;
-  }
-
-  function validateEndDate() {
-    const endDate = document.getElementById("end_date").value;
-    const errorElement = document.getElementById("end-date-error");
-
-    if (!endDate) {
-      errorElement.textContent = "Select an end date.";
-      return false;
+      if (selectedDate < today) {
+        errorElement.textContent = "The date must be today or a future date.";
+        return false;
+      }
+      else {
+        errorElement.textContent = "";
+      }
+      showStep(3)
+      return true;
     }
 
-    const selectedDate = new Date(endDate);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (selectedDate < today) {
-      errorElement.textContent = "The date must be today or a future date.";
-      return false;
+    function validateStep3() {
+      return validateCoverImage() & validateCauseTitle() & validateCauseDescription();
     }
-    errorElement.textContent = "";
-    return true;
-  }
 
+    // Individual field validation functions
 
-  function validateCauseTitle() {
-    const heading = document.getElementById("cause_heading").value.trim();
-    const errorElement = document.getElementById("cause-heading-error");
+    function validateAmount() {
+      const amount = document.getElementById("amount").value.trim();
+      const errorElement = document.getElementById("amount-error");
 
-    if (!heading) {
-      errorElement.textContent = "Cause title is required.";
-      return false;
+      if (!amount || isNaN(amount) || parseFloat(amount) <= 10) {
+        errorElement.textContent = "Amount must be greater than 10.";
+        return false;
+      }
+      errorElement.textContent = "";
+      return true;
     }
-    errorElement.textContent = "";
-    return true;
-  }
 
-  function validateCauseDescription() {
-    const description = document.getElementById("cause_description").value.trim();
-    const errorElement = document.getElementById("cause-description-error");
+    function validateEndDate() {
+      const endDate = document.getElementById("end_date").value;
+      const errorElement = document.getElementById("end-date-error");
 
-    if (!description) {
-      errorElement.textContent = "Cause description is required.";
-      return false;
+      if (!endDate) {
+        errorElement.textContent = "Select an end date.";
+        return false;
+      }
+
+      const selectedDate = new Date(endDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (selectedDate < today) {
+        errorElement.textContent = "The date must be today or a future date.";
+        return false;
+      }
+      errorElement.textContent = "";
+      return true;
     }
-    errorElement.textContent = "";
-    return true;
-  }
 
-  function validateCoverImage(file) {
 
-    let filereader = new FileReader();
-    let fileuploadread = filereader.readAsDataURL(file.files[0]);
-    let imagesize = 2000000;
-    let uploadedimagesize = file.files[0].size;
+    function validateCauseTitle() {
+      const heading = document.getElementById("cause_heading").value.trim();
+      const errorElement = document.getElementById("cause-heading-error");
 
-// Check for image size greater than 2MB
-    if(uploadedimagesize > imagesize){
+      if (!heading) {
+        errorElement.textContent = "Cause title is required.";
+        return false;
+      }
+      errorElement.textContent = "";
+      return true;
+    }
+
+    function validateCauseDescription() {
+      const description = document.getElementById("cause_description").value.trim();
+      const errorElement = document.getElementById("cause-description-error");
+
+      if (!description) {
+        errorElement.textContent = "Cause description is required.";
+        return false;
+      }
+      errorElement.textContent = "";
+      return true;
+    }
+
+    function validateCoverImage(file) {
+
+      let filereader = new FileReader();
+      let fileuploadread = filereader.readAsDataURL(file.files[0]);
+      let imagesize = 2000000;
+      let uploadedimagesize = file.files[0].size;
+
+      // Check for image size greater than 2MB
+      if (uploadedimagesize > imagesize) {
         file.nextElementSibling.textContent = "Image size should be below 2MB";
         filereader.onloadstart = () => {
-        file.value = "";  // Clear the file input
-      return false;
-    }
-    return false;
-} else {
-    file.nextElementSibling.textContent = "";
-}
-
-// Check for supported image formats (JPG, JPEG, PNG)
-if (!["image/jpeg", "image/jpg", "image/png"].includes(file.files[0].type)) {
-    file.nextElementSibling.textContent = "Only JPG, JPEG, and PNG formats are allowed.";
-    filereader.onloadstart = () => {
-        file.value = "";  // Clear the file input if format is not supported
+          file.value = "";  // Clear the file input
+          return false;
+        }
         return false;
-    }
-    return false;
-}
-
-return true;
-
+      } else {
+        file.nextElementSibling.textContent = "";
       }
 
-      function validateCausevideo(file){
-        let videosize = 128000000;  // Max size set to 128MB (which is 128,000,000 bytes)
-        let uploadedvideosize = file.files[0].size;
+      // Check for supported image formats (JPG, JPEG, PNG)
+      if (!["image/jpeg", "image/jpg", "image/png"].includes(file.files[0].type)) {
+        file.nextElementSibling.textContent = "Only JPG, JPEG, and PNG formats are allowed.";
+        filereader.onloadstart = () => {
+          file.value = "";  // Clear the file input if format is not supported
+          return false;
+        }
+        return false;
+      }
 
-// Check for video size greater than 39MB (128MB as in your code)
-    if (uploadedvideosize > videosize) {
+      return true;
+
+    }
+
+    function validateCausevideo(file) {
+      let videosize = 128000000;  // Max size set to 128MB (which is 128,000,000 bytes)
+      let uploadedvideosize = file.files[0].size;
+
+      // Check for video size greater than 39MB (128MB as in your code)
+      if (uploadedvideosize > videosize) {
         file.nextElementSibling.textContent = "Video size should be below 39MB";  // Show size error
         file.value = "";  // Clear the file input
-      return false;
-    } else {
-      file.nextElementSibling.textContent = "";
-    }
-
-// Check for supported video format (only mp4 allowed)
-if (file.files[0].type !== "video/mp4") {
-    file.nextElementSibling.textContent = "Only MP4 video format is allowed.";  // Show format error
-    file.value = "";  // Clear the file input if format is not supported
-    return false;
-}
-
-return true;
-
+        return false;
+      } else {
+        file.nextElementSibling.textContent = "";
       }
-</script>
+
+      // Check for supported video format (only mp4 allowed)
+      if (file.files[0].type !== "video/mp4") {
+        file.nextElementSibling.textContent = "Only MP4 video format is allowed.";  // Show format error
+        file.value = "";  // Clear the file input if format is not supported
+        return false;
+      }
+
+      return true;
+
+    }
+  </script>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
