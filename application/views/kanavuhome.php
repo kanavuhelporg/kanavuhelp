@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="facebook-domain-verification" content="3y4drf1rdjqy3ovv66biy46zxi3ysb" />
   <title>Kanavu_help</title>
 
   <!--G4 (google analytics) -->
