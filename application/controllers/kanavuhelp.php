@@ -1085,8 +1085,8 @@ class kanavuhelp extends CI_Controller
         $files = $_FILES;
 
         // $this->upload->initialize($this->set_upload_options());
-        $uploadeddocuments = ["cover_image", "document_one", "document_two", "document_three", "document_four", "document_five", "cause_video", "cause_video_english"];
-        $databasedocuments = ["cover_image", "cause_image1", "cause_image2", "cause_image3", "cause_image4", "cause_image5", "Cause_video", "Cause_video_english", "Cause_video_link"];
+        $uploadeddocuments = ["cover_image", "document_one", "document_two", "document_three", "document_four", "document_five", "document_six", "document_seven", "cause_video", "cause_video_english"];
+        $databasedocuments = ["cover_image", "cause_image1", "cause_image2", "cause_image3", "cause_image4", "cause_image5", "cause_image6", "cause_image7", "Cause_video", "Cause_video_english"];
         $count = count($uploadeddocuments);
 
         try {
@@ -1157,8 +1157,8 @@ class kanavuhelp extends CI_Controller
         $documentinfo = array();
         $files = $_FILES;
 
-        $uploadeddocuments = ["cover_image", "document_one", "document_two", "document_three", "document_four", "document_five", "cause_video"];
-        $databasedocuments = ["cover_image", "cause_image1", "cause_image2", "cause_image3", "cause_image4", "cause_image5", "Cause_video"];
+        $uploadeddocuments = ["cover_image", "document_one", "document_two", "document_three", "document_four", "document_five", "document_six", "document_seven", "cause_video"];
+        $databasedocuments = ["cover_image", "cause_image1", "cause_image2", "cause_image3", "cause_image4", "cause_image5", "cause_image6", "cause_image7", "Cause_video"];
         $count = count($uploadeddocuments);
         var_dump($_FILES);
         echo $this->input->post('amount');
@@ -1453,11 +1453,12 @@ class kanavuhelp extends CI_Controller
         $userEmail = $this->session->userdata('userEmail');
         $to = $userEmail;
         $otp = rand(1000, 9999);
+        // $otp = 1234; // Static OTP for testing
         $this->session->set_userdata('generated_otp', $otp);
         $path = $this->session->userdata("path") ?? "individual";
 
 
-        $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
+         $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
 
         $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
         $this->email->to($to);
@@ -1465,7 +1466,9 @@ class kanavuhelp extends CI_Controller
         $this->email->message($message);
 
         if ($this->email->send()) {
+
             // Set a session variable to indicate OTP was sent
+
             $this->session->set_flashdata('otp_sent', true);
             if ($path == "login") {
                 $this->session->set_userdata("loginemail", $userEmail);
@@ -1476,7 +1479,23 @@ class kanavuhelp extends CI_Controller
                 $this->session->set_userdata("entry", 0);
                 redirect('/individual'); // Redirect back to the same page
             }
-        } else {
+
+        // Bypass actual email sending for testing
+        // $this->session->set_flashdata('otp_sent', true);
+        // if ($path == "login") {
+        //     $this->session->set_userdata("loginemail", $userEmail);
+        //     $this->session->unset_userdata("path");
+        //     $this->session->unset_userdata("entry");
+        //     redirect("/login");
+        // }
+        // else {
+        //     $this->session->set_userdata("entry", 0);
+        //     redirect('/individual'); // Redirect back to the same page
+        // }
+    }
+
+            else {
+
             if ($path == "login") {
                 $this->session->set_userdata("mailstatus", "failed");
                 echo "<script>alert(OTP is not sent to your email. please try again.)</script>";
@@ -1490,7 +1509,6 @@ class kanavuhelp extends CI_Controller
             // echo $this->email->print_debugger(); // Print debug info if sending fails
         }
     }
-
     public function verifyOtp()
     {
         if (!$this->session->userdata('Kanavu_userId')) {

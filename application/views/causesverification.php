@@ -1440,6 +1440,18 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                 <input type="file" name="cause_image5" class="form-control">
                                 <small id="label_img5" class="text-muted"></small>
                             </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 6</label>
+                                <input type="hidden" name="cause_image6_old" id="field_img6_old">
+                                <input type="file" name="cause_image6" class="form-control">
+                                <small id="label_img6" class="text-muted"></small>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small">Cause Image 7</label>
+                                <input type="hidden" name="cause_image7_old" id="field_img7_old">
+                                <input type="file" name="cause_image7" class="form-control">
+                                <small id="label_img7" class="text-muted"></small>
+                            </div>
                             <div class="col-md-6">
                                 <label class="form-label small">Cause Video (Upload)</label>
                                 <input type="hidden" name="Cause_video_old" id="field_video_file_old">
@@ -1533,6 +1545,12 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         
                         $('#field_img5_old').val(d.cause_image5);
                         if(d.cause_image5) $('#label_img5').text('Current: ' + d.cause_image5);
+
+                        $('#field_img6_old').val(d.cause_image6);
+                        if(d.cause_image6) $('#label_img6').text('Current: ' + d.cause_image6);
+
+                        $('#field_img7_old').val(d.cause_image7);
+                        if(d.cause_image7) $('#label_img7').text('Current: ' + d.cause_image7);
                         
                         $('#field_video_file_old').val(d.Cause_video);
                         if(d.Cause_video) $('#label_video_file').text('Current: ' + d.Cause_video);

@@ -2,59 +2,66 @@
 <html lang="en">
 
 <head>
-<meta property="og:title" content="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>">
-    <meta property="og:description" content="Check out this cause: <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>">
-    <meta property="og:image" content="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>">
-    <meta property="og:url" content="<?= base_url('helpus/' . $fundraiser->id) ?>">
-    <meta property="og:type" content="website">
+  <meta property="og:title" content="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>">
+  <meta property="og:description"
+    content="Check out this cause: <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>">
+  <meta property="og:image"
+    content="<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>">
+  <meta property="og:url" content="<?= base_url('helpus/' . $fundraiser->id) ?>">
+  <meta property="og:type" content="website">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kanavu_help</title>
-  <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
+  <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"
+    rel="stylesheet">
   <!-- Bootstrap 5 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Bootstrap CSS -->
 
-<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
-<!-- Bootstrap JS and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
 
   <style>
     body {
       font-family: 'Sen', sans-serif;
     }
-    body.modal-open {
-  padding-right: 0 !important;
-  overflow: hidden;
-}
-    .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-  padding: (1rem) var(1rem);
-}
-.navbar-toggler {
-    padding: .25rem .75rem;
-    font-size: 1.25rem;
-    line-height: 1;
-    background-color: transparent;
-    border: 1px solid #4f373766;
-    border-radius: .25rem;
-    transition: box-shadow .15s ease-in-out;
-}
-  #navbarscroll {
-    margin-top: 17px;
-    margin-bottom: 10px;
-    margin-left: 70px;
-  }
 
-/* Login_button */
+    body.modal-open {
+      padding-right: 0 !important;
+      overflow: hidden;
+    }
+
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+      padding: (1rem) var(1rem);
+    }
+
+    .navbar-toggler {
+      padding: .25rem .75rem;
+      font-size: 1.25rem;
+      line-height: 1;
+      background-color: transparent;
+      border: 1px solid #4f373766;
+      border-radius: .25rem;
+      transition: box-shadow .15s ease-in-out;
+    }
+
+    #navbarscroll {
+      margin-top: 17px;
+      margin-bottom: 10px;
+      margin-left: 70px;
+    }
+
+    /* Login_button */
     .login-button {
       background-color: #ED3136;
       color: white;
@@ -64,7 +71,8 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-/* start a kanavu button */
+
+    /* start a kanavu button */
     .startkanavu-button {
       border: 1px solid #ED3136;
       color: #ED3136;
@@ -74,11 +82,13 @@
       text-decoration: none;
       transition: 0.3s background-color;
     }
-/* nav bar menu size */
+
+    /* nav bar menu size */
     .offcanvas-body {
       font-size: 17px;
     }
-/* carousel text */
+
+    /* carousel text */
     .imgtext1,
     .imgtext2 {
       position: absolute;
@@ -156,18 +166,20 @@
       color: white;
       background-color: #EB2D32;
     }
+
     .donatefor {
       border: 1px solid #E01A2B;
       color: #E01A2B;
       background-color: #fff;
       border-radius: 20px;
     }
+
     /* card section */
     .card {
       width: 100%;
       /* Make the card width responsive */
       box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
-      
+
     }
 
     .carousel-item .row {
@@ -179,15 +191,15 @@
       padding-left: 5px;
       padding-right: 5px;
       margin-bottom: 20px;
-      
+
     }
 
- 
+
 
     .card-title {
       font-size: 18px;
       font-weight: bold;
-      
+
     }
 
     .card_button {
@@ -218,10 +230,13 @@
       margin-top: 50px;
       color: #f0f0f0;
     }
+
     .bg-red-modal {
-  background-color: grey;
-  color: white; /* Adjust the text color if needed for better contrast */
-}
+      background-color: grey;
+      color: white;
+      /* Adjust the text color if needed for better contrast */
+    }
+
     .footer1 {
       text-align: center;
       padding: 10px;
@@ -255,9 +270,9 @@
 
     }
 
-@media (max-width: 767px) {
+    @media (max-width: 767px) {
 
-  /* carousel */
+      /* carousel */
 
       .carousel-item {
         position: relative;
@@ -268,228 +283,261 @@
         width: 100%;
         object-fit: cover;
       }
-      .card{
+
+      .card {
         margin-left: 10%;
       }
 
-      #cause-image{
-        width:300px;
+      #cause-image {
+        width: 300px;
       }
 
-      #cause-heading{
-        word-wrap:break-word;
-        font-size:24px;
+      #cause-heading {
+        word-wrap: break-word;
+        font-size: 24px;
       }
 
-    /* donate  image below nav bar */
-          .donate_img {
-        width: 100%; /* Ensure the parent container takes full width */
-        position: relative;
-    }
-
-    .donate_img img {
+      /* donate  image below nav bar */
+      .donate_img {
         width: 100%;
-        height: 300px; /* Maintain aspect ratio */
-        object-fit: cover; /* Ensures the image fills its container */
+        /* Ensure the parent container takes full width */
+        position: relative;
+      }
+
+      .donate_img img {
+        width: 100%;
+        height: 300px;
+        /* Maintain aspect ratio */
+        object-fit: cover;
+        /* Ensures the image fills its container */
+      }
     }
-    }
+
     .donate_btn.no-hover {
-    background-color: white;
-    color: red;
-    border: 1px solid red;
-}
+      background-color: white;
+      color: red;
+      border: 1px solid red;
+    }
 
-.share_btn.no-hover {
-    background-color: white;
-    color: red;
-    border: 1px solid red;
-}
+    .share_btn.no-hover {
+      background-color: white;
+      color: red;
+      border: 1px solid red;
+    }
 
-.share_btn.no-hover:hover {
-    background-color: white !important;
-    color: red !important;
-    border: 1px solid red !important;
-}
-@media (max-width: 768px) {
-  #userProfile .dropdown-menu {
-    right: 0 !important; /* Align the dropdown to the right edge */
-    left: auto !important; /* Override default left alignment */
-    min-width: 150px; /* Adjust the width as needed */
-  }
-  
-  #userProfile img {
-    width: 25px; /* Slightly smaller profile image for mobile */
-    height: 25px;
-  }
-  
-  #userProfile .dropdown-item {
-    text-align: center; /* Center-align items for better UX */
-  }
-}
-.custom-dropdown {
-    position: relative;
-    display: inline-block;
-    width: 45%;
-  }
+    .share_btn.no-hover:hover {
+      background-color: white !important;
+      color: red !important;
+      border: 1px solid red !important;
+    }
 
-  .custom-dropdown select {
-    appearance: none; /* Remove the default browser styling */
-    -webkit-appearance: none; /* For Safari */
-    -moz-appearance: none; /* For Firefox */
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    width: 100%;
-    font-size: 16px;
-    cursor: pointer;
-  }
+    @media (max-width: 768px) {
+      #userProfile .dropdown-menu {
+        right: 0 !important;
+        /* Align the dropdown to the right edge */
+        left: auto !important;
+        /* Override default left alignment */
+        min-width: 150px;
+        /* Adjust the width as needed */
+      }
 
-  .custom-dropdown::after {
-    content: '▼'; /* Add a dropdown icon */
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    pointer-events: none; /* Make the icon unclickable */
-    font-size: 14px;
-    color: #666;
-  }
-  .carousel-inner {
-    margin: 0;
-    padding: 0;
-    width: 100% !important;
-}
+      #userProfile img {
+        width: 25px;
+        /* Slightly smaller profile image for mobile */
+        height: 25px;
+      }
 
-.nav-link.active {
+      #userProfile .dropdown-item {
+        text-align: center;
+        /* Center-align items for better UX */
+      }
+    }
+
+    .custom-dropdown {
+      position: relative;
+      display: inline-block;
+      width: 45%;
+    }
+
+    .custom-dropdown select {
+      appearance: none;
+      /* Remove the default browser styling */
+      -webkit-appearance: none;
+      /* For Safari */
+      -moz-appearance: none;
+      /* For Firefox */
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .custom-dropdown::after {
+      content: '▼';
+      /* Add a dropdown icon */
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      /* Make the icon unclickable */
+      font-size: 14px;
+      color: #666;
+    }
+
+    .carousel-inner {
+      margin: 0;
+      padding: 0;
+      width: 100% !important;
+    }
+
+    .nav-link.active {
       color: #E01A2B !important;
       font-weight: bold;
     }
-/* .carousel-inner > .carousel-item {
+
+    /* .carousel-inner > .carousel-item {
     -webkit-transition: 0s !important;
     -o-transition: 0s !important;
     transition: 0s !important;
 } */
 
     .note-box {
-        background: #ffe6e6;           /* light red background */
-        border-left: 4px solid #d9534f; /* red left border */
-        padding: 10px 15px;
-        border-radius: 6px;
-        color: #b30000;                /* dark red text */
-        font-size: 15px;
+      background: #ffe6e6;
+      /* light red background */
+      border-left: 4px solid #d9534f;
+      /* red left border */
+      padding: 10px 15px;
+      border-radius: 6px;
+      color: #b30000;
+      /* dark red text */
+      font-size: 15px;
     }
 
     .navbar-brand img {
-    transition: transform 0.3s ease-in-out;
-}
+      transition: transform 0.3s ease-in-out;
+    }
 
-.navbar-brand img:hover {
-    transform: scale(1.08); /* Slight zoom-in */
-}
+    .navbar-brand img:hover {
+      transform: scale(1.08);
+      /* Slight zoom-in */
+    }
 
-  .brand-red {
-    background-color: #ed3136 !important;
-  }
-  .text-brand-red {
-    color: #ed3136 !important;
-  }
+    .brand-red {
+      background-color: #ed3136 !important;
+    }
+
+    .text-brand-red {
+      color: #ed3136 !important;
+    }
 
 
-  /*scroll bar  */
+    /*scroll bar  */
     .list-group::-webkit-scrollbar {
-        width: 4px;
+      width: 4px;
     }
+
     .list-group::-webkit-scrollbar-thumb {
-        background: #eee;
-        border-radius: 10px;
+      background: #eee;
+      border-radius: 10px;
     }
-    
-   
+
+
     .transition-hover {
-        transition: all 0.3s ease;
-        border-bottom: 1px solid #f8f9fa !important;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid #f8f9fa !important;
     }
+
     .transition-hover:hover {
-        background-color: #fcfcfc;
-        transform: translateX(5px);
+      background-color: #fcfcfc;
+      transform: translateX(5px);
     }
 
     .avatar-circle {
-        flex-shrink: 0;
+      flex-shrink: 0;
     }
 
     /* Default heights for desktop */
-    #cause-image, 
+    #cause-image,
     .gallery-img {
-        height: 400px;
-        object-fit: cover;
+      height: 400px;
+      object-fit: cover;
     }
 
-     #cause-image, 
+    #cause-image,
     .gallery-img,
     .progress-img {
-        height: 400px;
-        object-fit: cover;
-        width: 100%;
+      height: 400px;
+      object-fit: cover;
+      width: 100%;
     }
 
     .progress-img {
-        height: 350px; /* Progress images can be slightly smaller */
+      height: 350px;
+      /* Progress images can be slightly smaller */
     }
 
     .progress-text {
-        line-height: 1.6;
-        color: #444;
+      line-height: 1.6;
+      color: #444;
     }
 
     /* Fix for the gap below carousels on mobile */
     @media (max-width: 768px) {
-        #cause-image, 
-        .gallery-img {
-            height: 250px !important;
-        }
 
-        .progress-img {
-            height: 200px !important;
-        }
-        
-        #carouselCausesIndicators,
-        #second_carousel {
-            height: auto !important;
-        }
+      #cause-image,
+      .gallery-img {
+        height: 250px !important;
+      }
 
-        h3 {
-            font-size: 1.25rem;
-        }
+      .progress-img {
+        height: 200px !important;
+      }
+
+      #carouselCausesIndicators,
+      #second_carousel {
+        height: auto !important;
+      }
+
+      h3 {
+        font-size: 1.25rem;
+      }
     }
 
     /* Default heights for desktop */
-#cause-image, 
-.gallery-img,
-.progress-img {
-    height: 500px; /* Increased height for better desktop look */
-    object-fit: cover;
-    width: 100%;
-    border-radius: 15px; /* Smoother corners */
-}
-
-/* Container control for Desktop */
-@media (min-width: 992px) {
-    #second_carousel, #carouselCausesIndicators {
-        max-width: 100%; /* Ensures it fills its column */
-        margin: 0 auto;
+    #cause-image,
+    .gallery-img,
+    .progress-img {
+      height: 500px;
+      /* Increased height for better desktop look */
+      object-fit: cover;
+      width: 100%;
+      border-radius: 15px;
+      /* Smoother corners */
     }
-}
 
-    </style>
-    </head>
+    /* Container control for Desktop */
+    @media (min-width: 992px) {
+
+      #second_carousel,
+      #carouselCausesIndicators {
+        max-width: 100%;
+        /* Ensures it fills its column */
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+
 <body>
   <nav class="navbar navbar-expand-lg bg-white py-4 fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand me-auto" href="https://www.kanavu.org/">
-                <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
-            </a>
+        <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+      </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -498,197 +546,197 @@
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title">
-             <a href="https://www.kanavu.org/">
-               <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
-             </a>
+            <a href="https://www.kanavu.org/">
+              <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help"
+                style="height: 70px; width: auto;">
+            </a>
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('') ?>">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="donatepage" class="nav-link mx-lg-2 active" href="<?= base_url('/donate') ?>">Donate</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
-                        </li>
-                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
-                            <li class="nav-item">
-                                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
-                            </li>
-                        <?php else: ?>
-                            <!-- <li class="nav-item">
+          <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a id="kanavuhomepage" class="nav-link mx-lg-2" href="<?= base_url('') ?>">Home</a>
+            </li>
+            <li class="nav-item">
+              <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
+            </li>
+            <li class="nav-item">
+              <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a
+                Fundraiser</a>
+            </li>
+            <li class="nav-item">
+              <a id="donatepage" class="nav-link mx-lg-2 active" href="<?= base_url('/donate') ?>">Donate</a>
+            </li>
+            <li class="nav-item">
+              <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a id="contactuspage" class="nav-link mx-lg-2" href="<?= base_url('/contactus') ?>">Contact Us</a>
+            </li>
+            <?php if ($this->session->userdata('Kanavu_userId')): ?>
+              <li class="nav-item">
+                <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">View Dashboard</a>
+              </li>
+            <?php else: ?>
+              <!-- <li class="nav-item">
                                 <a id="signinpage" class="nav-link mx-lg-2" href="<?= base_url('/login') ?>">Sign In</a>
                             </li> -->
-                        <?php endif; ?>
-                    </ul>
-                    <div class="d-flex align-items-center ms-auto">
-                        <?php if ($this->session->userdata('Kanavu_userId')): ?>
-                            <div class="d-flex align-items-center">
-                                <div class="dropdown" id="userProfile">
-                                    <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
-                                        <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
-                                    </div>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item" href="<?= base_url('/logout') ?>">
-                                                <i class="fas fa-sign-out-alt"></i> Logout
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+            <?php endif; ?>
+          </ul>
+          <div class="d-flex align-items-center ms-auto">
+            <?php if ($this->session->userdata('Kanavu_userId')): ?>
+              <div class="d-flex align-items-center">
+                <div class="dropdown" id="userProfile">
+                  <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                      style="width: 30px; height: 30px; border-radius: 50%;">
+                    <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
+                  </div>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="<?= base_url('/logout') ?>">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                      </a>
+                    </li>
+                  </ul>
                 </div>
+              </div>
+            <?php endif; ?>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
 
- 
-    <!-- Fundraiser Banner Image -->
-    <div class="donate_img mt-5 pt-4">
-    <!-- <img src="<?=base_url('assets/img/Frame 21.png')?>" width="100%"> -->
+
+  <!-- Fundraiser Banner Image -->
+  <div class="donate_img mt-5 pt-4">
+    <!-- <img src="<?= base_url('assets/img/Frame 21.png') ?>" width="100%"> -->
   </div>
-    <div class="container-fluid">
-    <div class="row justify-content-center">  
-    <div class="col-11 mt-5 pt-4">
-    <!-- Cause Heading and Main Content -->
-    <div class="row mt-4">
-        <div class="col-lg-7">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-11 mt-5 pt-4">
+        <!-- Cause Heading and Main Content -->
+        <div class="row mt-4">
+          <div class="col-lg-7">
             <!-- Cause Heading -->
             <h4 id="cause-heading"><?= htmlspecialchars($fundraiser->cause_heading) ?>
-                <?php if ($fundraiser->is_runforcause == 'yes'): ?>
-                    <span class="badge bg-danger text-white float-end" 
-                          data-bs-toggle="tooltip" data-bs-placement="left" title="Your support fuels my run"
-                          style="font-size: 0.8rem; font-weight: 600; cursor: pointer;">
-                        <i class="bi bi-star-fill me-1"></i>Impact Run
-                    </span>
-                <?php endif; ?>
+              <?php if ($fundraiser->is_runforcause == 'yes'): ?>
+                <span class="badge bg-danger text-white float-end" data-bs-toggle="tooltip" data-bs-placement="left"
+                  title="Your support fuels my run" style="font-size: 0.8rem; font-weight: 600; cursor: pointer;">
+                  <i class="bi bi-star-fill me-1"></i>Impact Run
+                </span>
+              <?php endif; ?>
             </h4>
-            
-<!-- Cause Description -->
-<!-- video loaded in topsection -->
-<?php
-      // 1. Prioritize uploaded videos (English first, then native)
-      $video_to_play = '';
-      if (!empty($fundraiser->Cause_video_english)) {
-          $video_to_play = base_url('assets/individualform_img/' . $fundraiser->Cause_video_english);
-      } else if (!empty($fundraiser->Cause_video)) {
-          $video_to_play = base_url('assets/individualform_img/' . $fundraiser->Cause_video);
-      }
 
-      // 2. Fallback to youtube links if no upload exists
-      $youtube_link = '';
-      if (!empty($fundraiser->Cause_video_link_eng)) {
-          $youtube_link = $fundraiser->Cause_video_link_eng;
-      } else if (!empty($fundraiser->Cause_video_link)) {
-          $youtube_link = $fundraiser->Cause_video_link;
-      }
+            <!-- Cause Description -->
+            <!-- video loaded in topsection -->
+            <?php
+            // 1. Prioritize uploaded videos (English first, then native)
+            $video_to_play = '';
+            if (!empty($fundraiser->Cause_video_english)) {
+              $video_to_play = base_url('assets/individualform_img/' . $fundraiser->Cause_video_english);
+            } else if (!empty($fundraiser->Cause_video)) {
+              $video_to_play = base_url('assets/individualform_img/' . $fundraiser->Cause_video);
+            }
 
-      // 3. Render the video
-      if (!empty($video_to_play)) {
-          echo "<div class='mt-1 text-center'>
+            // 2. Fallback to youtube links if no upload exists
+            $youtube_link = '';
+            if (!empty($fundraiser->Cause_video_link_eng)) {
+              $youtube_link = $fundraiser->Cause_video_link_eng;
+            } else if (!empty($fundraiser->Cause_video_link)) {
+              $youtube_link = $fundraiser->Cause_video_link;
+            }
+
+            // 3. Render the video
+            if (!empty($video_to_play)) {
+              echo "<div class='mt-1 text-center'>
                   <video width='100%' controls class='rounded-3 shadow-sm w-100'>
                       <source src='{$video_to_play}' type='video/mp4'>
                       Your browser does not support the video tag.
                   </video>
                 </div>";
-      } else if (!empty($youtube_link)) {
-          // It's already an iframe/embed code
-          if (strpos($youtube_link, '<iframe') !== false || strpos($youtube_link, '<embed') !== false) {
-              echo "<div class='mt-1'>" . $youtube_link . "</div>";
-          } 
-          // Match standard YouTube links, shorts, or youtu.be
-          else if (preg_match('/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/))([a-zA-Z0-9_-]+)/', $youtube_link, $matches)) {
-              $video_id = $matches[1];
-              echo "<div class='mt-1'>
+            } else if (!empty($youtube_link)) {
+              // It's already an iframe/embed code
+              if (strpos($youtube_link, '<iframe') !== false || strpos($youtube_link, '<embed') !== false) {
+                echo "<div class='mt-1'>" . $youtube_link . "</div>";
+              }
+              // Match standard YouTube links, shorts, or youtu.be
+              else if (preg_match('/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/))([a-zA-Z0-9_-]+)/', $youtube_link, $matches)) {
+                $video_id = $matches[1];
+                echo "<div class='mt-1'>
                       <iframe class='rounded-3 shadow-sm w-100' style='min-height: 400px;' src='https://www.youtube.com/embed/{$video_id}?autoplay=1' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
                     </div>";
-          } 
-          // Standard clickable text link fallback
-          else {
-              echo "<div class='mt-1'>
+              }
+              // Standard clickable text link fallback
+              else {
+                echo "<div class='mt-1'>
                       <a href='{$youtube_link}' target='_blank' class='btn btn-outline-danger btn-sm'>Watch Campaign Video</a>
                     </div>";
-          }
-      }  
-?>
+              }
+            }
+            ?>
 
-<!-- new code -->
-<!-- Fundraiser Main Image / Slider Section -->
-<div class="media-container mt-3">
-    <!-- Main Cover Image (Always visible or fallback) -->
-    <img id="cause-image" 
-         src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" 
-         alt="Cause Cover" 
-         class="img-fluid rounded-4 shadow-sm w-100" 
-         style="height: 400px; object-fit: cover;">
+            <!-- new code -->
+            <!-- Fundraiser Main Image / Slider Section -->
+            <div class="media-container mt-3">
+              <!-- Main Cover Image (Always visible or fallback) -->
+              <img id="cause-image" src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>"
+                alt="Cause Cover" class="img-fluid rounded-4 shadow-sm w-100" style="height: 400px; object-fit: cover;">
 
-    <!-- [Slider] - Only shows if additional images exist -->
-    <?php
-        $documents = array_filter([
-            $fundraiser->cause_image1,
-            $fundraiser->cause_image2,
-            $fundraiser->cause_image3,
-            $fundraiser->cause_image4,
-            $fundraiser->cause_image5
-        ]);
-        $slideCount = count($documents);
-    ?>
+              <!-- [Slider] - Only shows if additional images exist -->
+              <?php
+              $documents = array_filter([
+                $fundraiser->cause_image1,
+                $fundraiser->cause_image2,
+                $fundraiser->cause_image3,
+                $fundraiser->cause_image4,
+                $fundraiser->cause_image5,
+                $fundraiser->cause_image6,
+                $fundraiser->cause_image7,
+              ]);
+              $slideCount = count($documents);
+              ?>
 
-    <?php if($slideCount > 0): ?>
-    <div id="carouselCausesIndicators" class="carousel slide mt-4 shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel">
-        <!-- Indicators -->
-        <div class="carousel-indicators">
-            <?php for($i = 0; $i < $slideCount; $i++): ?>
-                <button type="button" 
-                        data-bs-target="#carouselCausesIndicators" 
-                        data-bs-slide-to="<?= $i ?>" 
-                        class="<?= $i === 0 ? 'active' : '' ?>" 
-                        aria-label="Slide <?= $i+1 ?>">
-                </button>
-            <?php endfor; ?>
-        </div>
+              <?php if ($slideCount > 0): ?>
+                <div id="carouselCausesIndicators" class="carousel slide mt-4 shadow-sm rounded-4 overflow-hidden"
+                  data-bs-ride="carousel">
+                  <!-- Indicators -->
+                  <div class="carousel-indicators">
+                    <?php for ($i = 0; $i < $slideCount; $i++): ?>
+                      <button type="button" data-bs-target="#carouselCausesIndicators" data-bs-slide-to="<?= $i ?>"
+                        class="<?= $i === 0 ? 'active' : '' ?>" aria-label="Slide <?= $i + 1 ?>">
+                      </button>
+                    <?php endfor; ?>
+                  </div>
 
-        <!-- Slides -->
-        <div class="carousel-inner">
-            <?php foreach(array_values($documents) as $index => $img): ?>
-                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" data-bs-interval="2500">
-                    <img src="<?= base_url("assets/individualform_img/$img") ?>" 
-                         class="d-block w-100 gallery-img" 
-                         alt="Cause Gallery <?= $index ?>">
+                  <!-- Slides -->
+                  <div class="carousel-inner">
+                    <?php foreach (array_values($documents) as $index => $img): ?>
+                      <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" data-bs-interval="2500">
+                        <img src="<?= base_url("assets/individualform_img/$img") ?>" class="d-block w-100 gallery-img"
+                          alt="Cause Gallery <?= $index ?>">
+                      </div>
+                    <?php endforeach; ?>
+                  </div>
+
+                  <!-- Controls -->
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselCausesIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselCausesIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
                 </div>
-            <?php endforeach; ?>
-        </div>
+              <?php endif; ?>
+            </div>
 
-        <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselCausesIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselCausesIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-    <?php endif; ?>
-</div>
-
-     <!-- Fundraiser Image 
+            <!-- Fundraiser Image 
      
      <img id="cause-image" 
      src="<?= base_url('assets/individualform_img/') . $fundraiser->cover_image ?>" 
@@ -703,32 +751,33 @@
         </div>
         <div id="cause-slides" class="carousel-inner" >
         <?php
-               $documents = ["$fundraiser->cause_image1","$fundraiser->cause_image2","$fundraiser->cause_image3","$fundraiser->cause_image4","$fundraiser->cause_image5"];
-               $count = count($documents);
-               $slide = 0;
-               $checkempty = 0;
-               for($i = 0;$i < $count ; $i++ ){ ?> 
-               <?php if($documents[$i] == ""){ 
-                       $checkempty +=1;
-                       continue;
-                    }?>
-                    <div class='carousel-item <?= $slide == 0 ? 'active' : '';?>' data-bs-interval="2000">
-                    <img style="width:100%;height:400px;" class="d-block" src="<?=base_url("assets/individualform_img/$documents[$i]")?>" alt='<?=$documents[$i]?>'>
+        $documents = ["$fundraiser->cause_image1", "$fundraiser->cause_image2", "$fundraiser->cause_image3", "$fundraiser->cause_image4", "$fundraiser->cause_image5", "$fundraiser->cause_image6", "$fundraiser->cause_image7"];
+        $count = count($documents);
+        $slide = 0;
+        $checkempty = 0;
+        for ($i = 0; $i < $count; $i++) { ?> 
+               <?php if ($documents[$i] == "") {
+                 $checkempty += 1;
+                 continue;
+               } ?>
+                    <div class='carousel-item <?= $slide == 0 ? 'active' : ''; ?>' data-bs-interval="2000">
+                    <img style="width:100%;height:400px;" class="d-block" src="<?= base_url("assets/individualform_img/$documents[$i]") ?>" alt='<?= $documents[$i] ?>'>
                     </div>
               <script>
-                document.getElementById("carousel-indicators").innerHTML += "<button type='button' data-bs-target='#carouselCausesIndicators' data-bs-slide-to='<?=$slide?>' class='<?= $slide == 0 ? 'active' : '';?>' aria-current='true' aria-label='Slide <?=$slide+1?>'></button>";
+                document.getElementById("carousel-indicators").innerHTML += "<button type='button' data-bs-target='#carouselCausesIndicators' data-bs-slide-to='<?= $slide ?>' class='<?= $slide == 0 ? 'active' : ''; ?>' aria-current='true' aria-label='Slide <?= $slide + 1 ?>'></button>";
                </script>
-        <?php ++$slide; } ?>
+        <?php ++$slide;
+        } ?>
         </div>
-        <?php if($slide < 1) {?>
+        <?php if ($slide < 1) { ?>
           <script>
              document.getElementById("carouselCausesIndicators").style.display = "none";
           </script>
-        <?php } else {?>
+        <?php } else { ?>
           <script>
           document.getElementById("carouselCausesIndicators").style.display = "block";
           </script>
-        <?php }?>    
+        <?php } ?>    
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselCausesIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
@@ -740,261 +789,273 @@
         </div> 
         -->
             <!-------------------image-sliding-end---------------------------->
-            
+
             <p class="mt-2"><?= htmlspecialchars($fundraiser->cause_description) ?></p>
             <!-------------------cause-video---------------------------------->
-              <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
-              <?php
-              if(!empty($fundraiser->Cause_video_link)){ 
-            //  echo "<div class='mt-1'>$fundraiser->Cause_video_link</div>";
-              }
-              ?> 
+            <!-- <video width="500px" height="300px" class="mt-2" src="https://youtu.be/qvfi0oSrfog?si=WP5vHIs5OfGiG4Ct" controls autoplay loop></video> -->
+            <?php
+            if (!empty($fundraiser->Cause_video_link)) {
+              //  echo "<div class='mt-1'>$fundraiser->Cause_video_link</div>";
+            }
+            ?>
 
-              <?php
-              if(!empty($fundraiser->Cause_video_link_eng)){ 
-             // echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
-              }
-              ?> 
+            <?php
+            if (!empty($fundraiser->Cause_video_link_eng)) {
+              // echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
+            }
+            ?>
 
-              <?php
-              
-             //self video upload  
-             
-          /*    
-              if (!empty($fundraiser->Cause_video_link)) {
-              $video_link = $fundraiser->Cause_video_link;
-              
-              // Check if the video is a direct embed code (iframe, object, etc.)
-              if (strpos($video_link, '<iframe') !== false || strpos($video_link, '<embed') !== false) {
-                  // Directly output the embed code
-                  echo "<div class='mt-1'>$video_link</div>";
-              } else {
-                  // Handle URLs (e.g., YouTube, Vimeo) and convert them into an embed format
-                  if (preg_match('/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $video_link, $matches)) {
-                      // YouTube link found, create the embed link
-                      $video_id = $matches[1];
-                      echo "<div class='mt-1'>
-                              <iframe width='100%' height='315' src='https://www.youtube.com/embed/$video_id?autoplay=1' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
-                          </div>";
-                  } elseif (preg_match('/vimeo\.com\/(\d+)/', $video_link, $matches)) {
-                      // Vimeo link found, create the embed link
-                      $video_id = $matches[1];
-                      echo "<div class='mt-1'>
-                              <iframe width='100%' height='315' src='https://player.vimeo.com/video/$video_id' frameborder='0' allowfullscreen></iframe>
-                            </div>";
-                  } elseif (preg_match('/(?:http(s)?:\/\/)?([\w]+\.)+[\w]+(\/[^\s]*)?/', $video_link)) {
-                      // Self-hosted video (we'll assume the URL is valid)
-                      echo "<div class='mt-1'>
-                              <video width='100%' height='315' controls>
-                                  <source src='$video_link' type='video/mp4'>
-                                  Your browser does not support the video tag.
-                              </video>
-                            </div>";
-                  } else {
-                      // If the link is neither a YouTube, Vimeo, nor self-hosted video
-                      echo "<div class='mt-1'>
-                              <a href='$video_link' target='_blank'>Watch the video</a>
-                            </div>";
-                  }
-              }
-          }  */
+            <?php
 
-        
-        
-?>          
-              
+            //self video upload  
             
+            /*    
+                if (!empty($fundraiser->Cause_video_link)) {
+                $video_link = $fundraiser->Cause_video_link;
 
-       <!-- correct code for youtue shorts Or video -->              
-<?php
-   /*   if (!empty($fundraiser->Cause_video_link_eng)) {
-        // If the video is a direct embed code (iframe, object, etc.)
-        if (strpos($fundraiser->Cause_video_link_eng, '<iframe') !== false || strpos($fundraiser->Cause_video_link_eng, '<embed') !== false) {
-            // Directly output the embed code heading hide
-           // echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
-        } else {
-            // Optionally handle URLs (e.g., YouTube, Vimeo) and convert them into an embed format
-            // Example: Convert a YouTube link to an embed link (assuming the URL is valid)
-            if (preg_match('/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $fundraiser->Cause_video_link_eng, $matches)) {
-                $video_id = $matches[1];
-                echo "<div class='mt-1'>
-                        <iframe width='560' height='315' src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
-                      </div>";
-            } 
-            // Check for YouTube Shorts URL (https://youtube.com/shorts/video_id)
-            else if (preg_match('/youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/', $fundraiser->Cause_video_link_eng, $matches)) {
-                $video_id = $matches[1];
-                echo "<div class='mt-1'>
-                        <iframe width='360' height='640' src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
-                      </div>";
-            } 
-            // Handle self-hosted videos (videos uploaded directly to the server)
-            else if (preg_match('/uploads\/videos\/(.+)/', $fundraiser->Cause_video, $matches)) {
-                // Assuming uploaded videos are stored in 'uploads/videos/'
-                $video_url = base_url('uploads/videos/' . $matches[1]); 
-                echo "<div class='mt-1'>
-                        <video width='560' height='315' controls>
-                            <source src='$video_url' type='video/mp4'>
-                            Your browser does not support the video tag.
-                        </video>
-                      </div>";
-            }
-            // Handle other video types (e.g., Vimeo, Dailymotion) or just show the link
-            else {
-                echo "<div class='mt-1'>
-                        <a href='{$fundraiser->Cause_video_link_eng}' target='_blank'>Watch the video</a>
-                      </div>";
-            }
-        }
-    }  */
-?>
+                // Check if the video is a direct embed code (iframe, object, etc.)
+                if (strpos($video_link, '<iframe') !== false || strpos($video_link, '<embed') !== false) {
+                    // Directly output the embed code
+                    echo "<div class='mt-1'>$video_link</div>";
+                } else {
+                    // Handle URLs (e.g., YouTube, Vimeo) and convert them into an embed format
+                    if (preg_match('/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $video_link, $matches)) {
+                        // YouTube link found, create the embed link
+                        $video_id = $matches[1];
+                        echo "<div class='mt-1'>
+                                <iframe width='100%' height='315' src='https://www.youtube.com/embed/$video_id?autoplay=1' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+                            </div>";
+                    } elseif (preg_match('/vimeo\.com\/(\d+)/', $video_link, $matches)) {
+                        // Vimeo link found, create the embed link
+                        $video_id = $matches[1];
+                        echo "<div class='mt-1'>
+                                <iframe width='100%' height='315' src='https://player.vimeo.com/video/$video_id' frameborder='0' allowfullscreen></iframe>
+                              </div>";
+                    } elseif (preg_match('/(?:http(s)?:\/\/)?([\w]+\.)+[\w]+(\/[^\s]*)?/', $video_link)) {
+                        // Self-hosted video (we'll assume the URL is valid)
+                        echo "<div class='mt-1'>
+                                <video width='100%' height='315' controls>
+                                    <source src='$video_link' type='video/mp4'>
+                                    Your browser does not support the video tag.
+                                </video>
+                              </div>";
+                    } else {
+                        // If the link is neither a YouTube, Vimeo, nor self-hosted video
+                        echo "<div class='mt-1'>
+                                <a href='$video_link' target='_blank'>Watch the video</a>
+                              </div>";
+                    }
+                }
+            }  */
 
 
 
+            ?>
 
-          
-                    
-                    
+
+
+            <!-- correct code for youtue shorts Or video -->
+            <?php
+            /*   if (!empty($fundraiser->Cause_video_link_eng)) {
+                 // If the video is a direct embed code (iframe, object, etc.)
+                 if (strpos($fundraiser->Cause_video_link_eng, '<iframe') !== false || strpos($fundraiser->Cause_video_link_eng, '<embed') !== false) {
+                     // Directly output the embed code heading hide
+                    // echo "<div class='mt-1'>$fundraiser->Cause_video_link_eng</div>";
+                 } else {
+                     // Optionally handle URLs (e.g., YouTube, Vimeo) and convert them into an embed format
+                     // Example: Convert a YouTube link to an embed link (assuming the URL is valid)
+                     if (preg_match('/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $fundraiser->Cause_video_link_eng, $matches)) {
+                         $video_id = $matches[1];
+                         echo "<div class='mt-1'>
+                                 <iframe width='560' height='315' src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
+                               </div>";
+                     } 
+                     // Check for YouTube Shorts URL (https://youtube.com/shorts/video_id)
+                     else if (preg_match('/youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/', $fundraiser->Cause_video_link_eng, $matches)) {
+                         $video_id = $matches[1];
+                         echo "<div class='mt-1'>
+                                 <iframe width='360' height='640' src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
+                               </div>";
+                     } 
+                     // Handle self-hosted videos (videos uploaded directly to the server)
+                     else if (preg_match('/uploads\/videos\/(.+)/', $fundraiser->Cause_video, $matches)) {
+                         // Assuming uploaded videos are stored in 'uploads/videos/'
+                         $video_url = base_url('uploads/videos/' . $matches[1]); 
+                         echo "<div class='mt-1'>
+                                 <video width='560' height='315' controls>
+                                     <source src='$video_url' type='video/mp4'>
+                                     Your browser does not support the video tag.
+                                 </video>
+                               </div>";
+                     }
+                     // Handle other video types (e.g., Vimeo, Dailymotion) or just show the link
+                     else {
+                         echo "<div class='mt-1'>
+                                 <a href='{$fundraiser->Cause_video_link_eng}' target='_blank'>Watch the video</a>
+                               </div>";
+                     }
+                 }
+             }  */
+            ?>
+
+
+
+
+
+
+
             <!-------------------cause-video-end--------------------------------->
-            
+
             <div>
-            <!-- Share Fundraiser Button -->
-            <!-- <button class="btn mt-3" style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>','<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>','<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES)?>')">
+              <!-- Share Fundraiser Button -->
+              <!-- <button class="btn mt-3" style="color:#E01A2B;border-radius:30px;border-color:#E01A2B" onclick="shareCause('<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name)) . '-' . $fundraiser->id ?>','<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', '<?= htmlspecialchars($fundraiser->cause_description, ENT_QUOTES) ?>','<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">
             <i class="bi bi-share ms-2" ></i> &nbsp;Share this fundraiser
             </button> -->
             </div>
-        </div>
+          </div>
 
-        <!-- Right Sidebar -->
-        <div class="mt-2 col-lg-5">
+          <!-- Right Sidebar -->
+          <div class="mt-2 col-lg-5">
             <!-- Amount Raised and Goal -->
             <!-- Amount Raised and Goal -->
-<h4>
-    <strong>
-        ₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?>
-    </strong>
-</h4>
-<div class="progress mb-2">
-    <?php
-    // Calculate progress percentage
-    $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
-    // Cap at 100% to avoid overflow in display
-    $display_percentage = min($progress_percentage, 100);
-    ?>
-    <div class="progress-bar bg-danger" style="width: <?= $display_percentage ?>%;" role="progressbar" aria-valuenow="<?= $display_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
+            <h4>
+              <strong>
+                ₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹
+                <?= number_format($fundraiser->amount) ?>
+              </strong>
+            </h4>
+            <div class="progress mb-2">
+              <?php
+              // Calculate progress percentage
+              $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
+              // Cap at 100% to avoid overflow in display
+              $display_percentage = min($progress_percentage, 100);
+              ?>
+              <div class="progress-bar bg-danger" style="width: <?= $display_percentage ?>%;" role="progressbar"
+                aria-valuenow="<?= $display_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
 
             <!-- Supporters and Days Left -->
-            <p><strong><?= isset($fundraiser->supporters_count) ? htmlspecialchars($fundraiser->supporters_count) : '0' ?></strong><?=htmlspecialchars($fundraiser->supporters_count) == 1 ? ' Supporter' : ' Supporters';?> 
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong></p>
-           <?php if ($fundraiser->days_left>= 0&&(!$fundraiser->hide_donation_button)): ?>
-        <!-- Donate Button -->
-          <div class="d-flex justify-content-between">
-           <?php if($fundraiser->verified == 1){
-            echo "<a href='#'  style='height:fit-content;' class='btn donate_btn no-hover'  onclick='setCauseId($fundraiser->id)'>Donate Now</a>";
-           }
-           else{
-               echo "<span class='text-danger fw-bold'>Verification pending</span>";
-           } ?> 
-             <span>
-             <button class='btn share_btn no-hover' 
-                                    onclick="shareCause('<?= base_url('helpus/' . str_replace(' ','-',$fundraiser->name)) . '-' . $fundraiser->id ?>', 
+            <p>
+              <strong><?= isset($fundraiser->supporters_count) ? htmlspecialchars($fundraiser->supporters_count) : '0' ?></strong><?= htmlspecialchars($fundraiser->supporters_count) == 1 ? ' Supporter' : ' Supporters'; ?>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong></p>
+            <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)): ?>
+              <!-- Donate Button -->
+              <div class="d-flex justify-content-between">
+                <?php if ($fundraiser->verified == 1) {
+                  echo "<a href='#'  style='height:fit-content;' class='btn donate_btn no-hover'  onclick='setCauseId($fundraiser->id)'>Donate Now</a>";
+                } else {
+                  echo "<span class='text-danger fw-bold'>Verification pending</span>";
+                } ?>
+                <span>
+                  <button class='btn share_btn no-hover'
+                    onclick="shareCause('<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name)) . '-' . $fundraiser->id ?>', 
                                                        '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>', 
-                                                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">Share now
-                                    </button></span>
-            </div>
-           
-    <?php endif; ?>
-    <?php if ($this->session->flashdata('error')) : ?>
-    <div class="alert alert-danger">
-        <?= $this->session->flashdata('error'); ?>
-    </div>
-<?php endif; ?>
-            
+                                                       '<?= base_url('assets/individualform_img/') . htmlspecialchars($fundraiser->cover_image, ENT_QUOTES) ?>')">Share
+                    now
+                  </button></span>
+              </div>
+
+            <?php endif; ?>
+            <?php if ($this->session->flashdata('error')): ?>
+              <div class="alert alert-danger">
+                <?= $this->session->flashdata('error'); ?>
+              </div>
+            <?php endif; ?>
+
             <!-- Payment Options 
             <p class="mt-2">or pay with &nbsp;&nbsp;
                 <img src="<?= base_url('assets/img/gpay.png') ?>"  width= "10%"alt="Google Pay">
                &nbsp; <img src="<?= base_url('assets/img/phonepay.jpg') ?>"  width=" 10%" alt="PhonePe" class="ms-2">
             </p>-->
 
-           <!-- Top Donors Section -->
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card shadow-sm border-0 rounded-4 overflow-hidden" style="background: #ffffff;">
-                <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.5px;">
+            <!-- Top Donors Section -->
+            <div class="container mt-4">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card shadow-sm border-0 rounded-4 overflow-hidden" style="background: #ffffff;">
+                    <div
+                      class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                      <h5 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.5px;">
                         <i class="bi bi-heart-fill text-danger me-2"></i>Recent Contributions
-                    </h5>
-                    <span class="badge rounded-pill bg-light text-dark fw-normal border px-3 py-2">
+                      </h5>
+                      <span class="badge rounded-pill bg-light text-dark fw-normal border px-3 py-2">
                         <?= count($fundraiser->topdonars ?? []); ?> Donors
-                    </span>
-                </div>
-
-                <div class="card-body px-4 pb-4">
-                    <ul class="list-group list-group-flush" style="max-height: 350px; overflow-y: auto; scrollbar-width: thin;">
-                        
-                        <?php if (!empty($fundraiser->topdonars)): ?>
-                            <?php foreach ($fundraiser->topdonars as $index => $donor): ?>
-                                <li class="list-group-item d-flex align-items-center justify-content-between border-0 px-0 py-3 mb-2 rounded-3 transition-hover">
-                                    <div class="d-flex align-items-center">
-                                       <div class="avatar-circle d-flex align-items-center justify-content-center shadow-sm"
-                                            style="width: 48px; height: 48px; background-color: #ed3136; border-radius: 14px; color: white; font-weight: bold; font-size: 1.2rem;">
-                                            <?= strtoupper(substr($donor->name, 0, 1)); ?>
-                                        </div>
-
-                                        
-                                        <div class="ms-3">
-                                            <div class="text-dark fw-bold mb-0" style="font-size: 1rem;"><?= htmlspecialchars($donor->name); ?></div>
-                                            <div class="text-muted d-flex align-items-center" style="font-size: 0.85rem;">
-                                                <i class="bi bi-geo-alt me-1"></i> <?= htmlspecialchars($donor->donor_location ?: 'Anonymous'); ?>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-end">
-                                        <div class="fw-bolder text-dark" style="font-size: 1.1rem;">₹<?= number_format($donor->amount); ?></div>
-                                        <div class="text-success small" style="font-size: 0.75rem;"><i class="bi bi-check-circle-fill"></i> Verified</div>
-                                    </div>
-                                </li>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <div class="text-center py-5">
-                                <img src="https://cdn-icons-png.flaticon.com/512/11550/11550341.png" style="width: 60px; opacity: 0.3;" alt="No donors">
-                                <p class="text-muted mt-3 italic">Be the first one to support this cause.</p>
-                            </div>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-</ul>
-
-<script>
-    // Prepare a JavaScript array of donors, or an empty array if no donors are available
-    const donors = [
-        <?php if (!empty($fundraiser->topdonars)): ?>
-            <?php foreach ($fundraiser->topdonars as $donor): ?>
-                {
-                    name: "<?= htmlspecialchars($donor->name); ?>",
-                    initial: "<?= substr($donor->name, 0, 1); ?>",
-                    amount: <?= $donor->amount; ?>
-                },
-            <?php endforeach; ?>
-        <?php endif; ?>
-    ];
-</script>
-
-
+                      </span>
                     </div>
-                    <!-- Toggle Links
+
+                    <div class="card-body px-4 pb-4">
+                      <ul class="list-group list-group-flush"
+                        style="max-height: 350px; overflow-y: auto; scrollbar-width: thin;">
+
+                        <?php if (!empty($fundraiser->topdonars)): ?>
+                          <?php foreach ($fundraiser->topdonars as $index => $donor): ?>
+                            <li
+                              class="list-group-item d-flex align-items-center justify-content-between border-0 px-0 py-3 mb-2 rounded-3 transition-hover">
+                              <div class="d-flex align-items-center">
+                                <div class="avatar-circle d-flex align-items-center justify-content-center shadow-sm"
+                                  style="width: 48px; height: 48px; background-color: #ed3136; border-radius: 14px; color: white; font-weight: bold; font-size: 1.2rem;">
+                                  <?= strtoupper(substr($donor->name, 0, 1)); ?>
+                                </div>
+
+
+                                <div class="ms-3">
+                                  <div class="text-dark fw-bold mb-0" style="font-size: 1rem;">
+                                    <?= htmlspecialchars($donor->name); ?></div>
+                                  <div class="text-muted d-flex align-items-center" style="font-size: 0.85rem;">
+                                    <i class="bi bi-geo-alt me-1"></i>
+                                    <?= htmlspecialchars($donor->donor_location ?: 'Anonymous'); ?>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="text-end">
+                                <div class="fw-bolder text-dark" style="font-size: 1.1rem;">
+                                  ₹<?= number_format($donor->amount); ?></div>
+                                <div class="text-success small" style="font-size: 0.75rem;"><i
+                                    class="bi bi-check-circle-fill"></i> Verified</div>
+                              </div>
+                            </li>
+                          <?php endforeach; ?>
+                        <?php else: ?>
+                          <div class="text-center py-5">
+                            <img src="https://cdn-icons-png.flaticon.com/512/11550/11550341.png"
+                              style="width: 60px; opacity: 0.3;" alt="No donors">
+                            <p class="text-muted mt-3 italic">Be the first one to support this cause.</p>
+                          </div>
+                        <?php endif; ?>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            </ul>
+
+            <script>
+              // Prepare a JavaScript array of donors, or an empty array if no donors are available
+              const donors = [
+                <?php if (!empty($fundraiser->topdonars)): ?>
+              <?php foreach ($fundraiser->topdonars as $donor): ?>
+                    {
+                      name: "<?= htmlspecialchars($donor->name); ?>",
+                      initial: "<?= substr($donor->name, 0, 1); ?>",
+                      amount: <?= $donor->amount; ?>
+                    },
+                  <?php endforeach; ?>
+        <?php endif; ?>
+              ];
+            </script>
+
+
+          </div>
+          <!-- Toggle Links
                     <li class="text-center" id="show-more" style="padding: 10px 0;">
                         <a href="javascript:void(0);" style="color: red; text-decoration: none;" onclick="toggleDonors(true)">Show more <span>&#x25BC;</span></a>
                     </li>
@@ -1002,128 +1063,125 @@
                         <a href="javascript:void(0);" style="color: red; text-decoration: none;" onclick="toggleDonors(false)">Show less <span>&#x25B2;</span></a>
                     </li> -->
 
-                </ul>
+          </ul>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-md-12">
+              <div class="mt-4">
+                <?php if (!empty($progressdata->progress_description)): ?>
+                  <h3 class="fw-bold mb-3">Current progress status</h3>
+                  <div class="mb-3 progress-text">
+                    <?= nl2br(htmlspecialchars($progressdata->progress_description)) ?>
+                  </div>
+                <?php endif; ?>
+
+                <?php
+                if (!empty($progressdata)) {
+                  $progress_docs = array_filter([
+                    $progressdata->cause_status_image1,
+                    $progressdata->cause_status_image2,
+                    $progressdata->cause_status_image3,
+                    $progressdata->cause_status_image4,
+                    $progressdata->cause_status_image5
+                  ]);
+                } else {
+                  $progress_docs = [];
+                }
+                $progress_count = count($progress_docs);
+                ?>
+
+                <?php if ($progress_count > 0): ?>
+                  <div id="second_carousel" class="carousel slide mt-3 shadow-sm rounded-4 overflow-hidden"
+                    data-bs-ride="carousel">
+
+                    <div class="carousel-indicators">
+                      <?php for ($i = 0; $i < $progress_count; $i++): ?>
+                        <button type="button" data-bs-target="#second_carousel" data-bs-slide-to="<?= $i ?>"
+                          class="<?= $i === 0 ? 'active' : '' ?>" aria-label="Slide <?= $i + 1 ?>">
+                        </button>
+                      <?php endfor; ?>
+                    </div>
+
+                    <div class="carousel-inner">
+                      <?php foreach (array_values($progress_docs) as $index => $img): ?>
+                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" data-bs-interval="3000">
+                          <img class="d-block w-100 progress-img" src="<?= base_url('uploads/progress/' . $img) ?>"
+                            alt="Progress Image <?= $index ?>">
+                        </div>
+                      <?php endforeach; ?>
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#second_carousel"
+                      data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon"></span>
+                    </button>
+
+                    <button class="carousel-control-next" type="button" data-bs-target="#second_carousel"
+                      data-bs-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                    </button>
+
+                  </div>
+                <?php endif; ?>
+
+              </div>
+
+
+              <!-------------------image-sliding-end---------------------------->
+
+              <?php
+              if (!empty($progressdata->progress_embed_link)) {
+
+                $youtube_id = '';
+                $url = trim($progressdata->progress_embed_link);
+
+                // Extract YouTube video ID
+                if (preg_match('/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]+)/', $url, $matches)) {
+                  $youtube_id = $matches[1];
+                }
+
+                if (!empty($youtube_id)) {
+                  ?>
+                  <div class="ratio ratio-16x9 mt-3">
+                    <iframe src="https://www.youtube.com/embed/<?= $youtube_id ?>" frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen>
+                    </iframe>
+                  </div>
+                  <?php
+                }
+              }
+              ?>
+
             </div>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-md-12">
-            <div class="mt-4">
-    <?php if(!empty($progressdata->progress_description)): ?> 
-        <h3 class="fw-bold mb-3">Current progress status</h3>
-        <div class="mb-3 progress-text">
-            <?= nl2br(htmlspecialchars($progressdata->progress_description)) ?>
-        </div> 
-    <?php endif; ?>
-
-    <?php 
-        if(!empty($progressdata)){
-            $progress_docs = array_filter([
-                $progressdata->cause_status_image1,
-                $progressdata->cause_status_image2,
-                $progressdata->cause_status_image3,
-                $progressdata->cause_status_image4,
-                $progressdata->cause_status_image5
-            ]);
-        } else {
-            $progress_docs = [];
-        }
-        $progress_count = count($progress_docs);
-    ?>
-
-    <?php if($progress_count > 0): ?>
-    <div id="second_carousel" class="carousel slide mt-3 shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel">
-
-        <div class="carousel-indicators">
-            <?php for($i = 0; $i < $progress_count; $i++): ?>
-                <button type="button"
-                        data-bs-target="#second_carousel"
-                        data-bs-slide-to="<?= $i ?>"
-                        class="<?= $i === 0 ? 'active' : '' ?>"
-                        aria-label="Slide <?= $i+1 ?>">
-                </button>
-            <?php endfor; ?>
+          </div>
         </div>
-
-        <div class="carousel-inner">
-            <?php foreach(array_values($progress_docs) as $index => $img): ?>
-                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" data-bs-interval="3000">
-                    <img class="d-block w-100 progress-img"
-                        src="<?= base_url('uploads/progress/'.$img) ?>"
-                        alt="Progress Image <?= $index ?>">
-                </div>
-            <?php endforeach; ?>
-        </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#second_carousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-
-        <button class="carousel-control-next" type="button" data-bs-target="#second_carousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
-
+      </div>
     </div>
-    <?php endif; ?>
+  </div>
+  </div>
+  <script>
 
-</div>
+    /* let cause_slides = document.querySelector(".carousel-inner").children;
+    if(cause_slides.length == 0){
+        document.getElementById("carouselCausesIndicators").style.display = "none";
+    };
+  */
+    document.addEventListener('DOMContentLoaded', function () {
+      const donorList = document.getElementById('donor-list');
+      const displayLimit = 3; // Number of donors to display at a time
 
-    
-            <!-------------------image-sliding-end---------------------------->
+      // Function to render donors
+      function renderDonors(donorsToRender) {
+        donorList.innerHTML = ''; // Clear current list
 
-           <?php
-if (!empty($progressdata->progress_embed_link)) {
+        donorsToRender.forEach(donor => {
+          const donorItem = document.createElement('li');
+          donorItem.className = 'd-flex align-items-center justify-content-between';
+          donorItem.style.padding = '10px 0';
 
-    $youtube_id = '';
-    $url = trim($progressdata->progress_embed_link);
-
-    // Extract YouTube video ID
-    if (preg_match('/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]+)/', $url, $matches)) {
-        $youtube_id = $matches[1];
-    }
-
-    if (!empty($youtube_id)) {
-        ?>
-        <div class="ratio ratio-16x9 mt-3">
-            <iframe
-                src="https://www.youtube.com/embed/<?= $youtube_id ?>"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-        </div>
-        <?php
-    }
-}
-?>
-
-        </div>
-    </div>
-</div>
-</div>
- </div>
-    </div>
-</div>   
-    <script>
-
-   /* let cause_slides = document.querySelector(".carousel-inner").children;
-   if(cause_slides.length == 0){
-       document.getElementById("carouselCausesIndicators").style.display = "none";
-   };
- */
-    document.addEventListener('DOMContentLoaded', function() {
-        const donorList = document.getElementById('donor-list');
-        const displayLimit = 3; // Number of donors to display at a time
-
-        // Function to render donors
-        function renderDonors(donorsToRender) {
-            donorList.innerHTML = ''; // Clear current list
-
-            donorsToRender.forEach(donor => {
-                const donorItem = document.createElement('li');
-                donorItem.className = 'd-flex align-items-center justify-content-between';
-                donorItem.style.padding = '10px 0';
-                
-                donorItem.innerHTML = `
+          donorItem.innerHTML = `
                     <div class="d-flex align-items-center">
                         <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #dcdcdc; display: flex; align-items: center; justify-content: center; font-weight: bold;">
                             ${donor.initial}
@@ -1132,83 +1190,83 @@ if (!empty($progressdata->progress_embed_link)) {
                     </div>
                     <span style="font-weight: bold;">Rs.${donor.amount.toLocaleString()}</span>
                 `;
-                donorList.appendChild(donorItem);
-            });
-        }
+          donorList.appendChild(donorItem);
+        });
+      }
 
-        // Check if donors array is empty
-        if (donors.length === 0) {
-            const noDonorsMessage = document.createElement('li');
-            noDonorsMessage.className = 'no-donors-message';
-            noDonorsMessage.style.padding = '10px 0';
-            noDonorsMessage.style.fontStyle = 'italic';
-            noDonorsMessage.style.color = '#ed3136';
-           
-            return; // Stop further execution
-        }
+      // Check if donors array is empty
+      if (donors.length === 0) {
+        const noDonorsMessage = document.createElement('li');
+        noDonorsMessage.className = 'no-donors-message';
+        noDonorsMessage.style.padding = '10px 0';
+        noDonorsMessage.style.fontStyle = 'italic';
+        noDonorsMessage.style.color = '#ed3136';
 
-        if (donors.length < 4) {
-            // Directly display all donors if length is less than 4
-            renderDonors(donors);
-        } else {
-            // Rotate donors if length is 4 or more
-            let displayedDonors = [];
+        return; // Stop further execution
+      }
 
-            function selectRandomDonors() {
-                const randomIndexes = [];
-                while (randomIndexes.length < displayLimit) {
-                    const randomIndex = Math.floor(Math.random() * donors.length);
-                    if (!randomIndexes.includes(randomIndex)) {
-                        randomIndexes.push(randomIndex);
-                    }
-                }
-                displayedDonors = randomIndexes.map(index => donors[index]);
+      if (donors.length < 4) {
+        // Directly display all donors if length is less than 4
+        renderDonors(donors);
+      } else {
+        // Rotate donors if length is 4 or more
+        let displayedDonors = [];
+
+        function selectRandomDonors() {
+          const randomIndexes = [];
+          while (randomIndexes.length < displayLimit) {
+            const randomIndex = Math.floor(Math.random() * donors.length);
+            if (!randomIndexes.includes(randomIndex)) {
+              randomIndexes.push(randomIndex);
             }
-
-            // Initial render
-            selectRandomDonors();
-            renderDonors(displayedDonors);
-
-            // Rotate donors every few seconds
-            setInterval(() => {
-                selectRandomDonors();
-                renderDonors(displayedDonors);
-            }, 2000); // Rotate every 2 seconds
+          }
+          displayedDonors = randomIndexes.map(index => donors[index]);
         }
+
+        // Initial render
+        selectRandomDonors();
+        renderDonors(displayedDonors);
+
+        // Rotate donors every few seconds
+        setInterval(() => {
+          selectRandomDonors();
+          renderDonors(displayedDonors);
+        }, 2000); // Rotate every 2 seconds
+      }
     });
 
 
 
 
-function toggleDonors(showMore) {
-    const additionalDonors = document.getElementById('additional-donors');
-    const showMoreLink = document.getElementById('show-more');
-    const showLessLink = document.getElementById('show-less');
+    function toggleDonors(showMore) {
+      const additionalDonors = document.getElementById('additional-donors');
+      const showMoreLink = document.getElementById('show-more');
+      const showLessLink = document.getElementById('show-less');
 
-    if (showMore) {
+      if (showMore) {
         additionalDonors.style.display = 'block';
         showMoreLink.style.display = 'none';
         showLessLink.style.display = 'block';
-    } else {
+      } else {
         additionalDonors.style.display = 'none';
         showMoreLink.style.display = 'block';
         showLessLink.style.display = 'none';
+      }
     }
-}
-function shareCause(url, title, imgurl) {
-  console.log(url)
-    if (navigator.share) {
+    function shareCause(url, title, imgurl) {
+      console.log(url)
+      if (navigator.share) {
         // Use Web Share API if available
         navigator.share({
-            title: title,
-            text: `Check out this cause: ${title}`,
-            url: url
+          title: title,
+          text: `Check out this cause: ${title}`,
+          url: url
         }).then(() => {
-            console.log('Successfully shared');
+          console.log('Successfully shared');
         }).catch((error) => {
-            console.error('Error sharing:', error);
+          console.error('Error sharing:', error);
         });
-    } else {
+      } else {
         // Fallback to social media links if Web Share API is not supported
         const encodedUrl = encodeURIComponent(url);
         const encodedTitle = encodeURIComponent(`Check out this cause: ${title}`);
@@ -1230,110 +1288,118 @@ function shareCause(url, title, imgurl) {
 
         // You can append this HTML to a modal or any container you have for sharing options
         document.body.insertAdjacentHTML('beforeend', shareOptions);
+      }
     }
-}
-</script>
-    <div class="row mt-4" >
+  </script>
+  <div class="row mt-4">
     <!-- Created by Section -->
-    <div class="col-md-3 col-sm-12 justify-content-start d-flex  mb-3 mb-md-0" >
-        <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px; ">
-            <p style="margin: 0;">Created by</p>
-            <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->created_by) ?></strong>
-        </div>
-        
+    <div class="col-md-3 col-sm-12 justify-content-start d-flex  mb-3 mb-md-0">
+      <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px; ">
+        <p style="margin: 0;">Created by</p>
+        <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->created_by) ?></strong>
+      </div>
+
     </div>
 
     <!-- Beneficiary Section -->
     <div class="col-md-3 justify-content-start col-sm-12 d-flex ">
-        <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px;">
-            <p style="margin: 0;">Your contributions will benefit</p>
-            <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->name) ?></strong>
-            <!-- <p style="margin: 0;">from</p> -->
-        </div>
-        
-    </div>
-</div>
+      <div class="border rounded p-2" style="border: 1px solid #E0E1E3; width: 80%; max-width: 250px;">
+        <p style="margin: 0;">Your contributions will benefit</p>
+        <strong style="font-size: 14px;"><?= htmlspecialchars($fundraiser->name) ?></strong>
+        <!-- <p style="margin: 0;">from</p> -->
+      </div>
 
-    <!-- Disclaimer Section -->
-    <p class="text-muted" style="width:70%">
-      <br>
-        Content Disclaimer: The views and opinions expressed on the campaign page are those of the campaigner or donors. They do not reflect or represent the company’s views and opinions.
-    </p>
-</div>
-            </div>
-            </div>
-            </div>
-            <script>
-function setCauseId(causeId) {
-  document.getElementById('cause_id').value = causeId;
-}
-</script>
+    </div>
+  </div>
+
+  <!-- Disclaimer Section -->
+  <p class="text-muted" style="width:70%">
+    <br>
+    Content Disclaimer: The views and opinions expressed on the campaign page are those of the campaigner or donors.
+    They do not reflect or represent the company’s views and opinions.
+  </p>
+  </div>
+  </div>
+  </div>
+  </div>
+  <script>
+    function setCauseId(causeId) {
+      document.getElementById('cause_id').value = causeId;
+    }
+  </script>
   <div class="footer">
-      <footer class="footer mt-auto py-3">
-        <div class="container">
-          <h5 class="text-center">Kanavu.help</h5>
-          <div class="row text-center">
-            <div class="col-12">
-              <div class="footer1">
-                <a class="footer-lable lable" href="<?= base_url('/contactus') ?>" style="text-decoration:none;color:white">Contact</a>
-                <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>" style="text-decoration:none; color:white">Terms of Use</a>
-                <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>" style="text-decoration:none;color:white">Privacy Policy</a>
-              </div>
+    <footer class="footer mt-auto py-3">
+      <div class="container">
+        <h5 class="text-center">Kanavu.help</h5>
+        <div class="row text-center">
+          <div class="col-12">
+            <div class="footer1">
+              <a class="footer-lable lable" href="<?= base_url('/contactus') ?>"
+                style="text-decoration:none;color:white">Contact</a>
+              <a class="footer-lable lable" href="<?= base_url('/terms_of_use') ?>"
+                style="text-decoration:none; color:white">Terms of Use</a>
+              <a class="footer-lable lable" href="<?= base_url('/privacy_policy') ?>"
+                style="text-decoration:none;color:white">Privacy Policy</a>
             </div>
           </div>
         </div>
-        <div class="social-icons d-flex justify-content-center text-center my-2">
-          <a href="https://www.facebook.com/" target="_blank" class="mx-2">
-            <img src="<?= base_url('assets/img/facebook-f.svg')?>" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-          <a href="https://twitter.com/" target="_blank" class="mx-2">
-            <img src="<?= base_url('assets/img/twitter.svg')?>" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-          <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
-            <img src="<?= base_url('assets/img/linkedin-in.svg')?>" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
-          </a>
-        </div>
-        <img src="<?= base_url('assets/img/footer-secured-card 1.svg')?>" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
-          style="max-width: 200px;">
-        <p class="text-center" style="font-size:15px;">
-          Copyright <span id="currentYear"></span> @ kanavu.help. All Rights Reserved.
+      </div>
+      <div class="social-icons d-flex justify-content-center text-center my-2">
+        <a href="https://www.facebook.com/" target="_blank" class="mx-2">
+          <img src="<?= base_url('assets/img/facebook-f.svg') ?>" alt="Facebook Logo" class="img-fluid"
+            style="max-width: 30px;">
+        </a>
+        <a href="https://twitter.com/" target="_blank" class="mx-2">
+          <img src="<?= base_url('assets/img/twitter.svg') ?>" alt="Twitter Logo" class="img-fluid"
+            style="max-width: 30px;">
+        </a>
+        <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
+          <img src="<?= base_url('assets/img/linkedin-in.svg') ?>" alt="LinkedIn Logo" class="img-fluid"
+            style="max-width: 30px;">
+        </a>
+      </div>
+      <img src="<?= base_url('assets/img/footer-secured-card 1.svg') ?>" alt="Secure Card"
+        class="footimg img-fluid mx-auto d-block" style="max-width: 200px;">
+      <p class="text-center" style="font-size:15px;">
+        Copyright <span id="currentYear"></span> @ kanavu.help. All Rights Reserved.
       </p>
-      </footer>
-    </div>
+    </footer>
+  </div>
 
-      <!-- Bootstrap JS and dependencies (Popper.js) -->
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap JS and dependencies (Popper.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>You need to log in to continue with the donation.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="loginRedirectBtn">OK</button>
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>You need to log in to continue with the donation.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="loginRedirectBtn">OK</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Donation Modal -->
-<div class="modal fade" id="donationModal" tabindex="-1" aria-hidden="true">
+  <!-- Donation Modal -->
+  <div class="modal fade" id="donationModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
-            
-            <div class="modal-header border-0 bg-danger text-white p-4">
-                <div>
-                    <h5 class="fw-bold mb-0" id="donationModalTitle"><?= ($fundraiser->is_runforcause == 'yes') ? 'Support for Our Run' : 'Support Our Cause' ?></h5>
-                    <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
-                </div>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+							<div class="modal-header border-0 bg-danger text-white p-4">
+          <div>
+            <h5 class="fw-bold mb-0" id="donationModalTitle">
+              <?= ($fundraiser->is_runforcause == 'yes') ? 'Support for Our Run' : 'Support Our Cause' ?></h5>
+            <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 
+        </div>
+				
             <div class="modal-body p-4 bg-light">
                 <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
                     
@@ -1451,246 +1517,357 @@ function setCauseId(causeId) {
                     </div>
                 </form>
             </div>
+						<!--				
+        <div class="modal-header border-0 bg-danger text-white p-4">
+          <div>
+            <h5 class="fw-bold mb-0" id="donationModalTitle">
+              <?= ($fundraiser->is_runforcause == 'yes') ? 'Support for Our Run' : 'Support Our Cause' ?></h5>
+            <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+
         </div>
+									
+        <div class="modal-body p-4 bg-light">
+          <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
+
+            <input type="hidden" name="cause_id" id="cause_id">
+
+            <input type="hidden" name="user_id" value="<?= $this->session->userdata('Kanavu_userId') ?? 0 ?>">
+            <input type="hidden" name="currency_type" value="INR">
+
+            <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">1</span>
+                  <h6 class="fw-bold mb-0 text-dark">Make Your donation</h6>
+                </div>
+
+                <div class="row g-3 align-items-center">
+                  <div class="col-7">
+                    <label class="text-muted small d-block mb-1">UPI ID</label>
+                    <div class="d-flex align-items-center bg-white p-2 border rounded">
+                      <span class="text-truncate small fw-bold" id="upiText">vyapar.175502705184@hdfcbank</span>
+                      <i class="bi bi-copy ms-auto text-primary cursor-pointer copy-icon" data-copy="upiText"
+                        title="Copy UPI"></i>
+                    </div>
+                  </div>
+                  <div class="col-1 text-muted small fw-bold text-center">OR</div>
+                  <div class="col-4 text-center">
+                    <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>"
+                      class="img-fluid rounded border shadow-sm" style="max-height: 280px;" alt="QR Code">
+                    <small class="d-block text-muted mt-1" style="font-size: 10px;">Scan to Pay</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">2</span>
+                  <h6 class="fw-bold mb-0 text-dark">Donation Details</h6>
+                </div>
+                <div class="row gx-4">
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-text bg-white border-end-0">₹</span>
+                      <input type="number" name="amount" class="form-control border-start-0 ps-0" id="amount"
+                        placeholder="Donated Amount" required min="1">
+                      <div id="error5" class="text-danger small mt-1"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" name="transactionid" class="form-control" id="transactionid"
+                      placeholder="Transaction ID *" required>
+                    <div id="error4" class="text-danger small mt-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">3</span>
+                  <h6 class="fw-bold mb-0 text-dark">Personal Details</h6>
+                </div>
+                <div class="row g-2">
+                  <div class="col-12">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Full Name *" required>
+                    <div id="error6" class="text-danger small mt-1"></div>
+                  </div>
+                  <div class="col-6">
+                    <input type="tel" name="phoneno" class="form-control" id="phoneno" placeholder="Phone Number *"
+                      required maxlength="10">
+                    <div id="error3" class="text-danger small mt-1"></div>
+                  </div>
+                  <div class="col-6">
+                    <input type="text" name="city" class="form-control" id="city" placeholder="City *" required>
+                    <div id="error8" class="text-danger small mt-1"></div>
+                  </div>
+                  <div class="col-12">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Email (Optional)">
+                    <div id="error7" class="text-danger small mt-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-3 shadow"
+              style="border-radius: 12px; letter-spacing: 1px;">
+              Submit
+            </button>
+
+            <div class="text-center mt-3">
+              <small class="text-muted">Funds go directly to <strong>The Kanavu Trust</strong></small>
+            </div>
+          </form>
+										-->
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
-<script>
-  // ================================
-// COMPREHENSIVE FORM VALIDATION
-// ================================
+  <script>
+    // ================================
+    // COMPREHENSIVE FORM VALIDATION
+    // ================================
 
-// Validation functions
-const validationRules = {
-    // Amount validation
-    amount: {
+    // Validation functions
+    const validationRules = {
+      // Amount validation
+      amount: {
         validate: (value) => {
-            const num = parseFloat(value);
-            return !isNaN(num) && num > 0 && num <= 10000000; // Max 1 crore
+          const num = parseFloat(value);
+          return !isNaN(num) && num > 0 && num <= 10000000; // Max 1 crore
         },
         errorId: 'error8',
         errorMessage: 'Amount must be between ₹1 and ₹1,00,00,000',
         required: true
-    },
-    
-    // Transaction ID validation
-    transactionid: {
+      },
+
+      // Transaction ID validation
+      transactionid: {
         validate: (value) => {
-            // Accepts alphanumeric transaction IDs (common in UPI)
-            return /^[A-Za-z0-9]{8,30}$/.test(value.trim());
+          // Accepts alphanumeric transaction IDs (common in UPI)
+          return /^[A-Za-z0-9]{8,30}$/.test(value.trim());
         },
         errorId: 'error4',
         errorMessage: 'Transaction ID must be 8-30 alphanumeric characters',
         required: true
-    },
-    
-    // Name validation
-    name: {
+      },
+
+      // Name validation
+      name: {
         validate: (value) => {
-            return /^[A-Za-z\s.'-]{3,50}$/.test(value.trim());
+          return /^[A-Za-z\s.'-]{3,50}$/.test(value.trim());
         },
         errorId: 'error6',
         errorMessage: 'Name must be 3-50 letters (only letters, spaces, dots, hyphens)',
         required: true
-    },
-    
-    // Phone number validation
-    phoneno: {
+      },
+
+      // Phone number validation
+      phoneno: {
         validate: (value) => {
-            return /^\d{10}$/.test(value.trim());
+          return /^\d{10}$/.test(value.trim());
         },
         errorId: 'error3',
         errorMessage: 'Enter a valid 10-digit Indian mobile number',
         required: true
-    },
-    
-    // City validation
-    city: {
+      },
+
+      // City validation
+      city: {
         validate: (value) => {
-            return /^[A-Za-z\s-]{2,30}$/.test(value.trim());
+          return /^[A-Za-z\s-]{2,30}$/.test(value.trim());
         },
         errorId: 'error9',
         errorMessage: 'City name must be 2-30 letters',
         required: true
-    },
-    
-    // Email validation (optional)
-    email: {
+      },
+
+      // Email validation (optional)
+      email: {
         validate: (value) => {
-            if (!value.trim()) return true; // Optional field
-            return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value.trim());
+          if (!value.trim()) return true; // Optional field
+          return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value.trim());
         },
         errorId: 'error7',
         errorMessage: 'Please enter a valid email address',
         required: false
-    }
-};
+      }
+    };
 
-// Real-time field validation
-function setupRealTimeValidation() {
-    Object.keys(validationRules).forEach(fieldId => {
+    // Real-time field validation
+    function setupRealTimeValidation() {
+      Object.keys(validationRules).forEach(fieldId => {
         const field = document.getElementById(fieldId);
         const rule = validationRules[fieldId];
-        
-        if (field) {
-            // Input event for real-time validation
-            field.addEventListener('input', () => {
-                validateField(fieldId);
-            });
-            
-            // Blur event for final check
-            field.addEventListener('blur', () => {
-                validateField(fieldId);
-            });
-        }
-    });
-}
 
-// Validate a single field
-function validateField(fieldId) {
-    const field = document.getElementById(fieldId);
-    const rule = validationRules[fieldId];
-    const errorElement = document.getElementById(rule.errorId);
-    
-    if (!field || !errorElement) return;
-    
-    const value = field.value.trim();
-    
-    // Clear previous error
-    errorElement.textContent = '';
-    field.classList.remove('is-invalid');
-    field.classList.remove('is-valid');
-    
-    // Skip validation for optional empty fields
-    if (!rule.required && !value) {
+        if (field) {
+          // Input event for real-time validation
+          field.addEventListener('input', () => {
+            validateField(fieldId);
+          });
+
+          // Blur event for final check
+          field.addEventListener('blur', () => {
+            validateField(fieldId);
+          });
+        }
+      });
+    }
+
+    // Validate a single field
+    function validateField(fieldId) {
+      const field = document.getElementById(fieldId);
+      const rule = validationRules[fieldId];
+      const errorElement = document.getElementById(rule.errorId);
+
+      if (!field || !errorElement) return;
+
+      const value = field.value.trim();
+
+      // Clear previous error
+      errorElement.textContent = '';
+      field.classList.remove('is-invalid');
+      field.classList.remove('is-valid');
+
+      // Skip validation for optional empty fields
+      if (!rule.required && !value) {
         field.classList.add('is-valid');
         return true;
-    }
-    
-    // Check if required field is empty
-    if (rule.required && !value) {
+      }
+
+      // Check if required field is empty
+      if (rule.required && !value) {
         errorElement.textContent = 'This field is required';
         field.classList.add('is-invalid');
         return false;
-    }
-    
-    // Apply validation rule
-    if (!rule.validate(value)) {
+      }
+
+      // Apply validation rule
+      if (!rule.validate(value)) {
         errorElement.textContent = rule.errorMessage;
         field.classList.add('is-invalid');
         return false;
+      }
+
+      // Field is valid
+      field.classList.add('is-valid');
+      return true;
     }
-    
-    // Field is valid
-    field.classList.add('is-valid');
-    return true;
-}
 
-// Validate all fields
-function validateAllFields() {
-    let isValid = true;
-    
-    Object.keys(validationRules).forEach(fieldId => {
+    // Validate all fields
+    function validateAllFields() {
+      let isValid = true;
+
+      Object.keys(validationRules).forEach(fieldId => {
         if (!validateField(fieldId)) {
-            isValid = false;
+          isValid = false;
         }
-    });
-    
-    return isValid;
-}
+      });
 
-// Reset validation states
-function resetValidation() {
-    Object.keys(validationRules).forEach(fieldId => {
+      return isValid;
+    }
+
+    // Reset validation states
+    function resetValidation() {
+      Object.keys(validationRules).forEach(fieldId => {
         const field = document.getElementById(fieldId);
         const rule = validationRules[fieldId];
         const errorElement = document.getElementById(rule.errorId);
-        
+
         if (field) {
-            field.classList.remove('is-invalid', 'is-valid');
-            field.value = '';
+          field.classList.remove('is-invalid', 'is-valid');
+          field.value = '';
         }
         if (errorElement) {
-            errorElement.textContent = '';
+          errorElement.textContent = '';
         }
+      });
+    }
+
+    // Format phone number as user types
+    document.getElementById('phoneno')?.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+      if (value.length > 10) value = value.slice(0, 10); // Limit to 10 digits
+      e.target.value = value;
     });
-}
 
-// Format phone number as user types
-document.getElementById('phoneno')?.addEventListener('input', function(e) {
-    let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
-    if (value.length > 10) value = value.slice(0, 10); // Limit to 10 digits
-    e.target.value = value;
-});
+    // Format amount as user types
+    document.getElementById('amount')?.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/[^0-9.]/g, ''); // Allow digits and dot
+      const parts = value.split('.');
 
-// Format amount as user types
-document.getElementById('amount')?.addEventListener('input', function(e) {
-    let value = e.target.value.replace(/[^0-9.]/g, ''); // Allow digits and dot
-    const parts = value.split('.');
-    
-    // Allow only two decimal places
-    if (parts.length > 2) {
+      // Allow only two decimal places
+      if (parts.length > 2) {
         value = parts[0] + '.' + parts[1];
-    }
-    if (parts[1] && parts[1].length > 2) {
+      }
+      if (parts[1] && parts[1].length > 2) {
         value = parts[0] + '.' + parts[1].slice(0, 2);
-    }
-    
-    e.target.value = value;
-});
+      }
 
-// Auto-capitalize name
-document.getElementById('name')?.addEventListener('input', function(e) {
-    // Capitalize first letter of each word
-    e.target.value = e.target.value
+      e.target.value = value;
+    });
+
+    // Auto-capitalize name
+    document.getElementById('name')?.addEventListener('input', function (e) {
+      // Capitalize first letter of each word
+      e.target.value = e.target.value
         .toLowerCase()
         .split(' ')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
-});
+    });
 
-// Auto-capitalize city
-document.getElementById('city')?.addEventListener('input', function(e) {
-    e.target.value = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1).toLowerCase();
-});
+    // Auto-capitalize city
+    document.getElementById('city')?.addEventListener('input', function (e) {
+      e.target.value = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1).toLowerCase();
+    });
 
-// Initialize validation when modal opens
-document.getElementById('donationModal').addEventListener('shown.bs.modal', function() {
-    setupRealTimeValidation();
-});
+    // Initialize validation when modal opens
+    document.getElementById('donationModal').addEventListener('shown.bs.modal', function () {
+      setupRealTimeValidation();
+    });
 
-// Reset validation when modal closes
-document.getElementById('donationModal').addEventListener('hidden.bs.modal', function() {
-    resetValidation();
-});
+    // Reset validation when modal closes
+    document.getElementById('donationModal').addEventListener('hidden.bs.modal', function () {
+      resetValidation();
+    });
 
-// Override form submission with validation
-document.getElementById('donationForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    if (!validateAllFields()) {
+    // Override form submission with validation
+    document.getElementById('donationForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!validateAllFields()) {
         // Scroll to first error
         const firstError = document.querySelector('.is-invalid');
         if (firstError) {
-            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            firstError.focus();
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstError.focus();
         }
         return false;
-    }
-    
-    // All validations passed - submit the form
-    this.submit();
-});
+      }
 
-// Initialize validation on page load
-document.addEventListener('DOMContentLoaded', function() {
-    setupRealTimeValidation();
-});
-</script>
-<!-- SCRIPT -->
-<script>
-  // Toggle Payment Method
-  function togglePaymentOptions() {
+      // All validations passed - submit the form
+      this.submit();
+    });
+
+    // Initialize validation on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      setupRealTimeValidation();
+    });
+  </script>
+  <!-- SCRIPT -->
+  <script>
+    // Toggle Payment Method
+    function togglePaymentOptions() {
       let type = document.getElementById("paymentMethod").value;
 
       document.getElementById("upiSection").style.display = "none";
@@ -1700,10 +1877,10 @@ document.addEventListener('DOMContentLoaded', function() {
       if (type === "upi") document.getElementById("upiSection").style.display = "block";
       if (type === "scan") document.getElementById("scanSection").style.display = "block";
       if (type === "bank") document.getElementById("bankSection").style.display = "block";
-  }
+    }
 
-  // UNIVERSAL COPY FUNCTION
-  function copyField(icon) {
+    // UNIVERSAL COPY FUNCTION
+    function copyField(icon) {
       let id = icon.getAttribute("data-copy");
       let txt = document.getElementById(id).innerText;
 
@@ -1717,102 +1894,102 @@ document.addEventListener('DOMContentLoaded', function() {
       tooltip.setContent({ ".tooltip-inner": "Copied!" });
 
       setTimeout(() => {
-          icon.classList.remove("bi-check2-circle", "text-success");
-          icon.classList.add("bi-copy");
+        icon.classList.remove("bi-check2-circle", "text-success");
+        icon.classList.add("bi-copy");
 
-          // 💥 RESTORE ORIGINAL TOOLTIP TEXT
-          let original = icon.getAttribute("data-original-title");
+        // 💥 RESTORE ORIGINAL TOOLTIP TEXT
+        let original = icon.getAttribute("data-original-title");
 
-          tooltip._config.title = original;              // important!
-          tooltip.setContent({ ".tooltip-inner": original });
-          tooltip.update();
+        tooltip._config.title = original;              // important!
+        tooltip.setContent({ ".tooltip-inner": original });
+        tooltip.update();
 
       }, 1500);
-  }
+    }
 
-  // Initialize tooltip + copy event
-  document.addEventListener("DOMContentLoaded", () => {
+    // Initialize tooltip + copy event
+    document.addEventListener("DOMContentLoaded", () => {
 
       document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-          // Store original tooltip text BEFORE Bootstrap overwrites it
-          el.setAttribute("data-original-title", el.getAttribute("title"));
-          new bootstrap.Tooltip(el);
+        // Store original tooltip text BEFORE Bootstrap overwrites it
+        el.setAttribute("data-original-title", el.getAttribute("title"));
+        new bootstrap.Tooltip(el);
       });
 
       document.querySelectorAll(".copy-icon").forEach(icon => {
-          icon.addEventListener("click", () => copyField(icon));
+        icon.addEventListener("click", () => copyField(icon));
       });
-  });
+    });
 
-  // Reset modal
-  document.getElementById("donationModal").addEventListener("shown.bs.modal", function () {
+    // Reset modal
+    document.getElementById("donationModal").addEventListener("shown.bs.modal", function () {
       document.getElementById("paymentMethod").value = "upi";
       togglePaymentOptions();
-  });
-</script>
+    });
+  </script>
 
 
 
   <!-- Donation Success Modal -->
 
-<div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg">
-      
-      <div class="modal-header border-0 pb-0">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+  <div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
 
-      <div class="modal-body text-center px-4 py-5">
-
-        <!-- Success Icon -->
-        <div class="mb-4">
-          <div class="rounded-circle d-inline-flex p-4" style="background-color: rgba(237, 49, 54, 0.1);">
-            <i class="bi bi-check-circle-fill text-brand-red" style="font-size: 3rem;"></i>
-          </div>
+        <div class="modal-header border-0 pb-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        <!-- Title -->
-        <h4 class="modal-title fw-bold text-brand-red mb-3" id="donationSuccessLabel">
-          Donation Successful!
-        </h4>
+        <div class="modal-body text-center px-4 py-5">
 
-        <!-- Message -->
-        <!-- <p class="text-muted mb-4">
+          <!-- Success Icon -->
+          <div class="mb-4">
+            <div class="rounded-circle d-inline-flex p-4" style="background-color: rgba(237, 49, 54, 0.1);">
+              <i class="bi bi-check-circle-fill text-brand-red" style="font-size: 3rem;"></i>
+            </div>
+          </div>
+
+          <!-- Title -->
+          <h4 class="modal-title fw-bold text-brand-red mb-3" id="donationSuccessLabel">
+            Donation Successful!
+          </h4>
+
+          <!-- Message -->
+          <!-- <p class="text-muted mb-4">
           Thank you for your generous contribution.
         </p> -->
 
-        <!-- Confirmation Details -->
-        <div class="bg-light rounded p-3 mb-4">
-          <p class="mb-1">
-            <small class="text-muted">A confirmation email has been sent to you</small>
-          </p>
-          <p class="mb-0 fw-bold text-dark">
-            Thank you for being part of our community!
-          </p>
+          <!-- Confirmation Details -->
+          <div class="bg-light rounded p-3 mb-4">
+            <p class="mb-1">
+              <small class="text-muted">A confirmation email has been sent to you</small>
+            </p>
+            <p class="mb-0 fw-bold text-dark">
+              Thank you for being part of our community!
+            </p>
+          </div>
+
+        </div>
+
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn brand-red text-white px-5 py-2 fw-bold" id="donationRedirectBtn"
+            data-bs-dismiss="modal">
+            Ok
+          </button>
         </div>
 
       </div>
-
-      <div class="modal-footer border-0 pt-0">
-        <button type="button" class="btn brand-red text-white px-5 py-2 fw-bold"
-                id="donationRedirectBtn" data-bs-dismiss="modal">
-          Ok
-        </button>
-      </div>
-
     </div>
   </div>
-</div>
 
-<script>
-  // Simulate user login status (from backend or session)
-  var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
+  <script>
+    // Simulate user login status (from backend or session)
+    var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
 
-  // Handle Donate button click
-  document.querySelectorAll('.donate_btn').forEach(button => {
-    button.addEventListener('click', function(event) {
-      event.preventDefault(); // Prevent default link behavior
+    // Handle Donate button click
+    document.querySelectorAll('.donate_btn').forEach(button => {
+      button.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent default link behavior
 
     /*  if (!isLoggedIn) {
         // Show login modal if not logged in
@@ -1821,52 +1998,51 @@ document.addEventListener('DOMContentLoaded', function() {
         loginModal.show();
 
         // Redirect to login page with return URL on OK button click
-        document.getElementById('loginRedirectBtn').addEventListener('click', function() {
+        document.getElementById('loginRedirectBtn').addEventListener('click', function () {
           var currentUrl = window.location.href;
           window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
         });
-      } else {*/
+      } else { */
         // Show the donation modal if logged in
         var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
-        donationModal.show();
-     // }
+      donationModal.show();
+      // }
     });
   });
 
-  // Handle donation modal close event to ensure page is accessible
-  var donationModalElement = document.getElementById('donationModal');
-  donationModalElement.addEventListener('hidden.bs.modal', function () {
-    // Ensure body is not still marked as modal-open
-    document.body.classList.remove('modal-open');
-    
-    // Remove any lingering modal backdrop
-    var modalBackdrop = document.querySelector('.modal-backdrop');
-    if (modalBackdrop) {
-      modalBackdrop.remove();
-    }
+    // Handle donation modal close event to ensure page is accessible
+    var donationModalElement = document.getElementById('donationModal');
+    donationModalElement.addEventListener('hidden.bs.modal', function () {
+      // Ensure body is not still marked as modal-open
+      document.body.classList.remove('modal-open');
 
-    // Reset form fields when the modal is closed
-    donationModalElement.querySelector('form').reset();
-  });
-</script>
+      // Remove any lingering modal backdrop
+      var modalBackdrop = document.querySelector('.modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
 
-<script>
-  // Real-time validation function
-  function validateField(fieldId, errorId, validationFn, errorMessage) {
-    const field = document.getElementById(fieldId);
-    const errorElement = document.getElementById(errorId);
+      // Reset form fields when the modal is closed
+      donationModalElement.querySelector('form').reset();
+    });
+  </script>
 
-    field.addEventListener('input', () => {
-      if(field.value=='')
-    {
-      errorElement.textContent='Please enter value';
-    }
-     else if (!validationFn(field.value)) {
-        errorElement.textContent = errorMessage;
-      } else {
-        errorElement.textContent = ''; // Clear error if validation passes
-        if(field.name == "email") {
-          errorElement.innerHTML = `<span class="text-success">Fetching Donor</span> <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
+  <script>
+    // Real-time validation function
+    function validateField(fieldId, errorId, validationFn, errorMessage) {
+      const field = document.getElementById(fieldId);
+      const errorElement = document.getElementById(errorId);
+
+      field.addEventListener('input', () => {
+        if (field.value == '') {
+          errorElement.textContent = 'Please enter value';
+        }
+        else if (!validationFn(field.value)) {
+          errorElement.textContent = errorMessage;
+        } else {
+          errorElement.textContent = ''; // Clear error if validation passes
+          if (field.name == "email") {
+            errorElement.innerHTML = `<span class="text-success">Fetching Donor</span> <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                     </div>
                                     <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
@@ -1875,232 +2051,233 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <div style="width:15px;height:15px;" class="spinner-grow text-success" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                     </div>`;
-          fetchDonordata(field.value)
-      }
-    }
-    });
-  }
-
-  function fetchDonordata(email) {
-    let emailid = email.trim();
-    $.ajax({
-      type:"post",
-      url:"fetchDonordata",
-      data:{"email":emailid},
-      success:(result)=>{
-        let fetchingtimeout = "";
-        console.log(result);
-        if(result.trim() == "notexist") {
-          document.getElementById("name").value = "";
-           document.getElementById("name").removeAttribute("readonly");
-           document.getElementById("donorcity").value = "";
-           document.getElementById("donorcity").removeAttribute("readonly");
-           document.getElementById("phone").value = "";
-           document.getElementById("phone").removeAttribute("readonly");
-           
-           fetchingtimeout = setTimeout(()=>{
-            document.getElementById("error7").innerHTML = "";
-           },2000);
-        } 
-        else{
-          let existdonor = JSON.parse(result);
-           document.getElementById("error7").innerHTML = "";
-           document.getElementById("name").value = existdonor.name;
-           document.getElementById("name").setAttribute("readonly","readonly");
-           document.getElementById("donorcity").value = existdonor.location;
-           document.getElementById("donorcity").setAttribute("readonly","readonly");
-           document.getElementById("phone").value = existdonor.mobileNumber;
-           document.getElementById("phone").setAttribute("readonly","readonly");
-           clearTimeout(fetchingtimeout);
-        }
-      },
-      error:(error)=>{
-        console.log(error)
-           document.getElementById("header").innerHTML = "";
-      }
-    });
-  }
-
-  // Validation functions
-  const isCurrencySelected = (value) => value !== '';
-  const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
-  const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
-  const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
-  const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value);
-  const isCity = (value) => /^([A-Za-z0-9_()\s]{3,})+$/.test(value);
-  const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
-  // Attach real-time validation for each field
-  window.onload = () => {
-    validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
-    validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
-    validateField('name', 'error6', isName, 'Enter Valid Name');
-    validateField('email', 'error7', isEmail, 'Enter Valid EmailID');
-    validateField('donorcity', 'error8', isCity, 'Enter Valid City');
-    validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
-    validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
-  };
-
-  // Final validation and form submission
-  document.getElementById('donationForm').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent form submission for manual handling
-
-    // Clear all error messages
-    document.getElementById('error5').innerText = '';
-    document.getElementById('error3').innerText = '';
-    document.getElementById('error4').innerText = '';
-    document.getElementById('error6').innerText = '';
-    document.getElementById('error7').innerText = '';
-    document.getElementById('error8').innerText = '';
-    let isValid = true;
-
-    // Perform final validation
-  if (!isCurrencySelected(document.getElementById('currency').value)) {
-      document.getElementById('error5').innerText = 'Please select a currency.';
-      isValid = false;
-    }
-  if(document.getElementById('amount').value!==''){
-    if (!isAmountValid(document.getElementById('amount').value)  ) {
-      document.getElementById('error5').innerText = 'Amount must be greater than 0.';
-      isValid = false;
-    }
-  }
-  if(!isName(document.getElementById('name').value))
-  {
-    document.getElementById('error6').innerText = 'Enter Valid Name';
-    isValid = false;
-  }
-
-  if(!isCity(document.getElementById('donorcity').value))
-  {
-    document.getElementById('error8').innerText = 'Enter Valid City Name';
-    isValid = false;
-  }
-
-
-  if(!isEmail(document.getElementById('email').value))
-  {
-    document.getElementById('error7').innerText = 'Enter Valid EmailID';
-    isValid = false;
-  }
-
-    if (!isPhoneNumberValid(document.getElementById('phoneno').value)) {
-      document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
-      isValid = false;
-    }
-
-    if (!isTransactionIdValid(document.getElementById('transactionid').value)) {
-      document.getElementById('error4').innerText = 'Transaction ID must be exactly 12 characters long.';
-      isValid = false;
-    }
-
-    if (!isValid) {
-      return; // Stop submission if validation fails
-    }
-
-    // Prepare Form Data
-    const formData = new FormData(this);
-
-    // AJAX Request to Server
-    fetch('/kanavuhelp/processDonation', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === 'error') {
-          document.getElementById('error4').innerText = data.message; // Show server error
-        } else if (data.status === 'success') {
-          // Hide the donation modal if visible
-          const donationModalElement = document.getElementById('donationModal');
-          const donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
-          if (donationModalElement.classList.contains('show')) {
-            donationModal.hide();
+            fetchDonordata(field.value)
           }
-
-          // Show success modal
-          const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
-          successModal.show();
-
-          // Redirect on button click in the success modal
-          document.getElementById('donationRedirectBtn').addEventListener('click', function () {
-            window.location.href = data.redirect;
-          });
         }
-      })
-      .catch(() => {
-        document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
       });
-      };
+    }
+
+    function fetchDonordata(email) {
+      let emailid = email.trim();
+      $.ajax({
+        type: "post",
+        url: "fetchDonordata",
+        data: { "email": emailid },
+        success: (result) => {
+          let fetchingtimeout = "";
+          console.log(result);
+          if (result.trim() == "notexist") {
+            document.getElementById("name").value = "";
+            document.getElementById("name").removeAttribute("readonly");
+            document.getElementById("donorcity").value = "";
+            document.getElementById("donorcity").removeAttribute("readonly");
+            document.getElementById("phone").value = "";
+            document.getElementById("phone").removeAttribute("readonly");
+
+            fetchingtimeout = setTimeout(() => {
+              document.getElementById("error7").innerHTML = "";
+            }, 2000);
+          }
+          else {
+            let existdonor = JSON.parse(result);
+            document.getElementById("error7").innerHTML = "";
+            document.getElementById("name").value = existdonor.name;
+            document.getElementById("name").setAttribute("readonly", "readonly");
+            document.getElementById("donorcity").value = existdonor.location;
+            document.getElementById("donorcity").setAttribute("readonly", "readonly");
+            document.getElementById("phone").value = existdonor.mobileNumber;
+            document.getElementById("phone").setAttribute("readonly", "readonly");
+            clearTimeout(fetchingtimeout);
+          }
+        },
+        error: (error) => {
+          console.log(error)
+          document.getElementById("header").innerHTML = "";
+        }
+      });
+    }
+
+    // Validation functions
+    const isCurrencySelected = (value) => value !== '';
+    const isAmountValid = (value) => parseFloat(value) > 0 && !isNaN(value); // Ensure value is greater than 0
+    const isPhoneNumberValid = (value) => /^[6-9]\d{9}$/.test(value);
+    const isTransactionIdValid = (value) => /^([A-Za-z0-9]{12,})+$/.test(value);
+    const isName = (value) => /^([A-Za-z\s]{3,})+$/.test(value);
+    const isCity = (value) => /^([A-Za-z0-9_()\s]{3,})+$/.test(value);
+    const isEmail = (value) => value.match(/^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/);
+    // Attach real-time validation for each field
+    window.onload = () => {
+      validateField('currency', 'error5', isCurrencySelected, 'Please select a currency.');
+      validateField('amount', 'error5', isAmountValid, 'Amount must be greater than 0.');
+      validateField('name', 'error6', isName, 'Enter Valid Name');
+      validateField('email', 'error7', isEmail, 'Enter Valid EmailID');
+      validateField('donorcity', 'error8', isCity, 'Enter Valid City');
+      validateField('phone', 'error3', isPhoneNumberValid, 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.');
+      validateField('transactionid', 'error4', isTransactionIdValid, 'Enter Valid UPI Trasaction Id');
+    };
+
+    // Final validation and form submission
+    document.getElementById('donationForm').addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent form submission for manual handling
+
+      // Clear all error messages
+      document.getElementById('error5').innerText = '';
+      document.getElementById('error3').innerText = '';
+      document.getElementById('error4').innerText = '';
+      document.getElementById('error6').innerText = '';
+      document.getElementById('error7').innerText = '';
+      document.getElementById('error8').innerText = '';
+      let isValid = true;
+
+      // Perform final validation
+      if (!isCurrencySelected(document.getElementById('currency').value)) {
+        document.getElementById('error5').innerText = 'Please select a currency.';
+        isValid = false;
+      }
+      if (document.getElementById('amount').value !== '') {
+        if (!isAmountValid(document.getElementById('amount').value)) {
+          document.getElementById('error5').innerText = 'Amount must be greater than 0.';
+          isValid = false;
+        }
+      }
+      if (!isName(document.getElementById('name').value)) {
+        document.getElementById('error6').innerText = 'Enter Valid Name';
+        isValid = false;
+      }
+
+      if (!isCity(document.getElementById('donorcity').value)) {
+        document.getElementById('error8').innerText = 'Enter Valid City Name';
+        isValid = false;
+      }
+
+
+      if (!isEmail(document.getElementById('email').value)) {
+        document.getElementById('error7').innerText = 'Enter Valid EmailID';
+        isValid = false;
+      }
+
+      if (!isPhoneNumberValid(document.getElementById('phoneno').value)) {
+        document.getElementById('error3').innerText = 'Phone number must start with 6, 7, 8, or 9 and be exactly 10 digits.';
+        isValid = false;
+      }
+
+      if (!isTransactionIdValid(document.getElementById('transactionid').value)) {
+        document.getElementById('error4').innerText = 'Transaction ID must be exactly 12 characters long.';
+        isValid = false;
+      }
+
+      if (!isValid) {
+        return; // Stop submission if validation fails
+      }
+
+      // Prepare Form Data
+      const formData = new FormData(this);
+
+      // AJAX Request to Server
+      fetch('/kanavuhelp/processDonation', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 'error') {
+            document.getElementById('error4').innerText = data.message; // Show server error
+          } else if (data.status === 'success') {
+            // Hide the donation modal if visible
+            const donationModalElement = document.getElementById('donationModal');
+            const donationModal = bootstrap.Modal.getOrCreateInstance(donationModalElement);
+            if (donationModalElement.classList.contains('show')) {
+              donationModal.hide();
+            }
+
+            // Show success modal
+            const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
+            successModal.show();
+
+            // Redirect on button click in the success modal
+            document.getElementById('donationRedirectBtn').addEventListener('click', function () {
+              window.location.href = data.redirect;
+            });
+          }
+        })
+        .catch(() => {
+          document.getElementById('error4').innerText = 'An unexpected error occurred. Please try again.';
+        });
+    };
     );
-</script>
-<form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
+  </script>
+  <form id="redirectToLoginForm" method="POST" action="<?= base_url('login') ?>">
     <input type="hidden" name="returnUrl" id="returnUrl" value="">
-</form>
+  </form>
 
-<script>
-  function redirectToLogin() {
-    // Get the current URL
-    var currentUrl = window.location.href;
-    
-    // Encode the current URL
-    var encodedUrl = encodeURIComponent(currentUrl);
+  <script>
+    function redirectToLogin() {
+      // Get the current URL
+      var currentUrl = window.location.href;
 
-    // Set the hidden input value to the encoded current URL
-    document.getElementById('returnUrl').value = encodedUrl;
+      // Encode the current URL
+      var encodedUrl = encodeURIComponent(currentUrl);
 
-    // Submit the form to the login page
-    document.getElementById('redirectToLoginForm').submit();
-}
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+      // Set the hidden input value to the encoded current URL
+      document.getElementById('returnUrl').value = encodedUrl;
+
+      // Submit the form to the login page
+      document.getElementById('redirectToLoginForm').submit();
+    }
+  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
     document.getElementById("currentYear").textContent = new Date().getFullYear();
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-    const donationForm = document.getElementById('donationForm');
+      const donationForm = document.getElementById('donationForm');
 
-    donationForm.addEventListener('submit', function (e) {
+      donationForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
         const formData = new FormData(donationForm);
 
         fetch(donationForm.action, {
-            method: 'POST',
-            body: formData
+          method: 'POST',
+          body: formData
         })
-        .then(res => res.json())
-        .then(data => {
+          .then(res => res.json())
+          .then(data => {
             console.log(data); // should print {status:"success"}
 
             if (data.status === 'success') {
 
-                // Hide donation modal
-                const donationModalEl = document.getElementById('donationModal');
-                const donationModal = bootstrap.Modal.getInstance(donationModalEl)
-                    || new bootstrap.Modal(donationModalEl);
+              // Hide donation modal
+              const donationModalEl = document.getElementById('donationModal');
+              const donationModal = bootstrap.Modal.getInstance(donationModalEl)
+                || new bootstrap.Modal(donationModalEl);
 
-                donationModal.hide();
+              donationModal.hide();
 
-                // Wait for hide animation to finish
-                donationModalEl.addEventListener('hidden.bs.modal', function () {
+              // Wait for hide animation to finish
+              donationModalEl.addEventListener('hidden.bs.modal', function () {
 
-                    const successModalEl = document.getElementById('donationSuccess');
-                    const successModal = new bootstrap.Modal(successModalEl);
-                    successModal.show();
+                const successModalEl = document.getElementById('donationSuccess');
+                const successModal = new bootstrap.Modal(successModalEl);
+                successModal.show();
 
-                }, { once: true });
+              }, { once: true });
 
             } else {
-                alert(data.message || 'Donation failed');
+              alert(data.message || 'Donation failed');
             }
-        })
-        .catch(err => {
+          })
+          .catch(err => {
             console.error(err);
             alert('Something went wrong');
-        });
+          });
+      });
+
     });
+  </script>
+
 
 });
 </script>
@@ -2271,3 +2448,8 @@ document.addEventListener('DOMContentLoaded', function () {
     </html>
     
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+>>>>>>> main
+
+</html>
