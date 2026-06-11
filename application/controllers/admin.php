@@ -1392,5 +1392,57 @@ class admin extends CI_Controller
         }
     }
 
+    /**
+     * Manual Cause Completion - Admin can manually complete a cause
+     * Updates raised_amount to match goal_amount
+     */
+    public function manual_complete_cause()
+    {
+        // Check if user is admin
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+
+        // Check if AJAX request
+        if (!$this->input->is_ajax_request()) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
+            return;
+        }
+
+        $cause_id = $this->input->post('cause_id');
+        $raised_amount = $this->input->post('raised_amount');
+        $completion_reason = trim($this->input->post('completion_reason'));
+
+        // Validate inputs
+        if (empty($cause_id) || empty($raised_amount)) {
+            echo json_encode(['status' => 'error', 'message' => 'Missing required fields']);
+            return;
+        }
+
+        if (empty($completion_reason)) {
+            echo json_encode(['status' => 'error', 'message' => 'Please provide a reason for completion.']);
+            return;
+        }
+
+        if (strlen($completion_reason) > 100) {
+            echo json_encode(['status' => 'error', 'message' => 'Reason must not exceed 100 characters.']);
+            return;
+        }
+
+        if (!preg_match('/^[a-zA-Z\s]+$/', $completion_reason)) {
+            echo json_encode(['status' => 'error', 'message' => 'Reason must contain only letters and spaces (no numbers or special characters).']);
+            return;
+        }
+
+        // Call model method to update the cause
+        $result = $this->adminpanel->manual_complete_cause($cause_id, $raised_amount, $completion_reason);
+
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Cause completed successfully']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to complete cause']);
+        }
+    }
 
 }

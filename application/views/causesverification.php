@@ -716,6 +716,17 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                                     <button class="btn btn-info btn-sm insert-priority-btn" style="display: none;" toggle="tooltip" title="want to set priority for this cause" data-toggle="modal" data-target="#priorityModal" onclick="setPriorityId(<?= $donation->id; ?>)">Insert Priority</button>
                                                     <button class="btn btn-warning btn-sm no-priority-btn" toggle="tooltip" title="want to remove priority for this cause" onclick="setNoPriority(<?= $donation->id; ?>)">No Priority</button>
                                                 <?php endif; ?>
+                                                &nbsp;&nbsp;
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-secondary manual-complete-btn"
+                                                    toggle="tooltip"
+                                                    title="Manually complete the cause"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#manualCompleteModal"
+                                                    onclick="setManualCompleteCauseId(<?= $donation->id ?>, '<?= htmlspecialchars($donation->amount) ?>')">
+                                                    <i class="fa fa-check-circle"></i> Complete
+                                                </button>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
@@ -1371,7 +1382,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                           
                             <div class="col-md-3">
                                 <label class="form-label small">End Date</label>
-                                <input type="text" name="end_date" id="field_end_date" class="form-control">
+                                <input type="date" name="end_date" id="field_end_date" class="form-control">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Created At</label>
@@ -2133,6 +2144,117 @@ function openUpdateProgressModal(causeId) {
         }
     });
 }
+</script>
+
+<!-- Manual Complete Modal -->
+<div id="manualCompleteModal" class="modal fade" tabindex="-1" aria-labelledby="manualCompleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="manualCompleteModalLabel">Manual Cause Completion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="manualCompleteForm">
+                    <input type="hidden" id="mcCauseId" name="cause_id">
+                    <input type="hidden" id="mcGoalAmount" name="goal_amount">
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Confirm Completion</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="completionToggle" name="confirm_completion">
+                            <label class="form-check-label" for="completionToggle">
+                                I confirm to complete this cause manually
+                            </label>
+                        </div>
+                        <small class="text-muted d-block mt-2">
+                            <i class="fa fa-info-circle"></i> This will set the raised amount equal to the goal amount.
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="completionReason" class="form-label">Reason for Completion</label>
+                        <textarea 
+                            class="form-control" 
+                            id="completionReason" 
+                            name="completion_reason" 
+                            rows="4" 
+                            maxlength="100"
+                            placeholder="Enter the reason for completing this cause manually (letters & spaces only, max 100 chars)..."
+                            required></textarea>
+                        <small class="text-muted">Provide a brief explanation for manually completing this cause (letters and spaces only, maximum 100 characters).</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="manualCompleteSubmitBtn">Complete Cause</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function setManualCompleteCauseId(causeId, goalAmount) {
+    document.getElementById('mcCauseId').value = causeId;
+    document.getElementById('mcGoalAmount').value = goalAmount;
+    // Reset form
+    document.getElementById('manualCompleteForm').reset();
+    document.getElementById('completionToggle').checked = false;
+}
+
+document.getElementById('manualCompleteSubmitBtn').addEventListener('click', function() {
+    const toggle = document.getElementById('completionToggle').checked;
+    const reason = document.getElementById('completionReason').value.trim();
+    const causeId = document.getElementById('mcCauseId').value;
+    const goalAmount = document.getElementById('mcGoalAmount').value;
+
+    if (!toggle) {
+        alert('Please confirm the completion by toggling the checkbox.');
+        return;
+    }
+
+    if (!reason) {
+        alert('Please provide a reason for completion.');
+        return;
+    }
+
+    if (reason.length > 100) {
+        alert('Reason must not exceed 100 characters.');
+        return;
+    }
+
+    const reasonRegex = /^[a-zA-Z\s]+$/;
+    if (!reasonRegex.test(reason)) {
+        alert('Reason must contain only letters and spaces (no numbers or special characters).');
+        return;
+    }
+
+    // AJAX call to backend
+    $.ajax({
+        url: '<?php echo base_url('admin/manual_complete_cause'); ?>',
+        type: 'POST',
+        data: {
+            cause_id: causeId,
+            raised_amount: goalAmount,
+            completion_reason: reason
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'success') {
+                alert('Cause completed successfully!');
+                $('#manualCompleteModal').modal('hide');
+                location.reload(); // Reload to reflect changes
+            } else {
+                alert('Error: ' + response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log('AJAX Error:', xhr, status, error);
+            alert('Error occurred while completing the cause. Please try again.');
+        }
+    });
+});
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

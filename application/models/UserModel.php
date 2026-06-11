@@ -434,10 +434,13 @@ public function filterCauseswithcategory($category)
             LEFT JOIN user u ON u.id = i.user_id
             WHERE i.verified = 1
               AND (
-                    SELECT COALESCE(SUM(d.amount),0)
-                    FROM donation_for_cause d
-                    WHERE d.cause_id = i.id AND d.status = 1
-                  ) >= COALESCE(i.amount,0)
+                    (
+                      SELECT COALESCE(SUM(d.amount),0)
+                      FROM donation_for_cause d
+                      WHERE d.cause_id = i.id AND d.status = 1
+                    ) >= COALESCE(i.amount,0)
+                    OR i.manually_completed = 1
+                  )
         ";
         return $this->db->query($sql)->result();
     }
@@ -524,6 +527,15 @@ public function get_total_fund()
 
 public function get_current_raised_amount($fundraiser_id)
 {
+    // Check if the cause is manually completed
+    $this->db->select('manually_completed, amount');
+    $this->db->where('id', $fundraiser_id);
+    $cause = $this->db->get('individualform')->row();
+
+    if ($cause && $cause->manually_completed == 1) {
+        return (float)$cause->amount;
+    }
+
     $this->db->select_sum('amount');
     $this->db->from('donation_for_cause');
     $this->db->where('cause_id', $fundraiser_id);

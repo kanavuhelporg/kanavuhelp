@@ -107,6 +107,15 @@ public function get_total_transaction()
     
     public function get_current_raised_amount($fundraiser_id)
     {
+        // Check if the cause is manually completed
+        $this->db->select('manually_completed, amount');
+        $this->db->where('id', $fundraiser_id);
+        $cause = $this->db->get('individualform')->row();
+
+        if ($cause && $cause->manually_completed == 1) {
+            return (float)$cause->amount;
+        }
+
         $this->db->select_sum('amount');
         $this->db->from('donation_for_cause');
         $this->db->where('cause_id', $fundraiser_id);
@@ -675,6 +684,29 @@ public function get_admin_entry_by_id($id)
             $current = strtotime('+1 day', $current);
         }
         return ['labels' => $labels, 'income' => $income];
+    }
+
+    /**
+     * Manually complete a cause by setting raised_amount to goal_amount
+     * @param int $cause_id The cause ID
+     * @param float $raised_amount The amount to set as raised
+     * @param string $completion_reason The reason for manual completion
+     * @return bool true if update successful, false otherwise
+     */
+    public function manual_complete_cause($cause_id, $raised_amount, $completion_reason)
+    {
+        date_default_timezone_set('Asia/Kolkata');
+        $update_data = array(
+            'raised_amount' => $raised_amount,
+            'completion_reason' => $completion_reason,
+            'manually_completed' => 1,
+            'manually_completed_at' => date('Y-m-d H:i:s')
+        );
+
+        $this->db->where('id', $cause_id);
+        $result = $this->db->update('individualform', $update_data);
+
+        return $result;
     }
 
 }
