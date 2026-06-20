@@ -1012,10 +1012,58 @@ public function insert_priority()
             $data['eventlocation'] = $this->input->post('event_location');
         }
 
-        $data['cause_heading'] = $this->input->post('cause_heading');
+        $cause_heading = $this->input->post('cause_heading');
+        if (!empty($cause_heading)) {
+            $cause_heading = trim($cause_heading);
+            if (strlen($cause_heading) < 4 || strlen($cause_heading) > 150) {
+                $this->session->set_flashdata("error", "Cause title must be between 4 and 150 characters.");
+                redirect($_SERVER['HTTP_REFERER']);
+                return;
+            }
+            if (preg_match('/(https?:\/\/[^\s]+|www\.[^\s]+|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?|youtube\.com|youtu\.be)/i', $cause_heading)) {
+                $this->session->set_flashdata("error", "YouTube links, domains, or URLs are not allowed in the title.");
+                redirect($_SERVER['HTTP_REFERER']);
+                return;
+            }
+            if (!preg_match('/^[A-Za-z0-9\s]+$/', $cause_heading)) {
+                $this->session->set_flashdata("error", "Cause title must only contain letters, numbers, and spaces.");
+                redirect($_SERVER['HTTP_REFERER']);
+                return;
+            }
+            $data['cause_heading'] = $cause_heading;
+        }
         $data['cause_description'] = $this->input->post('cause_description');
-        $data['Cause_video_link'] = $this->input->post('cause_embed_link_tamil');
-        $data['Cause_video_link_eng'] = $this->input->post('cause_embed_link_english');
+        
+        $cause_embed_link_tamil = $this->input->post('cause_embed_link_tamil');
+        $cause_embed_link_english = $this->input->post('cause_embed_link_english');
+        $youtube_regex = '/^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be|youtube-nocookie\.com)\/(watch\?v=|embed\/|shorts\/|[a-zA-Z0-9_-]+)/i';
+
+        if (empty($cause_embed_link_tamil)) {
+            $this->session->set_flashdata("error", "YouTube Link is required.");
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        } elseif (!preg_match($youtube_regex, $cause_embed_link_tamil)) {
+            $this->session->set_flashdata("error", "Please enter a valid YouTube link.");
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        }
+
+        if (empty($cause_embed_link_english)) {
+            $this->session->set_flashdata("error", "Confirm YouTube Link is required.");
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        } elseif (!preg_match($youtube_regex, $cause_embed_link_english)) {
+            $this->session->set_flashdata("error", "Please enter a valid YouTube link.");
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        } elseif ($cause_embed_link_tamil !== $cause_embed_link_english) {
+            $this->session->set_flashdata("error", "YouTube links do not match.");
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        }
+
+        $data['Cause_video_link'] = $cause_embed_link_tamil;
+        $data['Cause_video_link_eng'] = $cause_embed_link_english;
 
         $data['user_id'] = $this->session->userdata('currentUserId');
 
@@ -1079,14 +1127,58 @@ public function insert_priority()
         $data['amount'] = $this->input->post('amount');
         $data['end_date'] = $this->input->post('end_date');
 
-        $data['cause_heading'] = $this->input->post('cause_heading');
+        $cause_heading = $this->input->post('cause_heading');
+        if (!empty($cause_heading)) {
+            $cause_heading = trim($cause_heading);
+            if (strlen($cause_heading) < 4 || strlen($cause_heading) > 150) {
+                $this->session->set_flashdata("error", "Cause title must be between 4 and 150 characters.");
+                redirect($_SERVER['HTTP_REFERER']);
+                return;
+            }
+            if (preg_match('/(https?:\/\/[^\s]+|www\.[^\s]+|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?|youtube\.com|youtu\.be)/i', $cause_heading)) {
+                $this->session->set_flashdata("error", "YouTube links, domains, or URLs are not allowed in the title.");
+                redirect($_SERVER['HTTP_REFERER']);
+                return;
+            }
+            if (!preg_match('/^[A-Za-z0-9\s]+$/', $cause_heading)) {
+                $this->session->set_flashdata("error", "Cause title must only contain letters, numbers, and spaces.");
+                redirect($_SERVER['HTTP_REFERER']);
+                return;
+            }
+            $data['cause_heading'] = $cause_heading;
+        }
         $data['cause_description'] = $this->input->post('cause_description');
-        if (!empty($this->input->post('cause_embed_link_tamil'))) {
-            $data['Cause_video_link'] = $this->input->post('cause_embed_link_tamil');
+        
+        $cause_embed_link_tamil = $this->input->post('cause_embed_link_tamil');
+        $cause_embed_link_english = $this->input->post('cause_embed_link_english');
+        $youtube_regex = '/^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be|youtube-nocookie\.com)\/(watch\?v=|embed\/|shorts\/|[a-zA-Z0-9_-]+)/i';
+
+        if (empty($cause_embed_link_tamil)) {
+            $this->session->set_flashdata("error", "YouTube Link is required.");
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        } elseif (!preg_match($youtube_regex, $cause_embed_link_tamil)) {
+            $this->session->set_flashdata("error", "Please enter a valid YouTube link.");
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
         }
-        if (!empty($this->input->post('cause_embed_link_english'))) {
-            $data['Cause_video_link_eng'] = $this->input->post('cause_embed_link_english');
+
+        if (empty($cause_embed_link_english)) {
+            $this->session->set_flashdata("error", "Confirm YouTube Link is required.");
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        } elseif (!preg_match($youtube_regex, $cause_embed_link_english)) {
+            $this->session->set_flashdata("error", "Please enter a valid YouTube link.");
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        } elseif ($cause_embed_link_tamil !== $cause_embed_link_english) {
+            $this->session->set_flashdata("error", "YouTube links do not match.");
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
         }
+
+        $data['Cause_video_link'] = $cause_embed_link_tamil;
+        $data['Cause_video_link_eng'] = $cause_embed_link_english;
         $data['verified'] = 0;
         $file_data = $this->upload->data();
 
@@ -1342,16 +1434,13 @@ public function insert_priority()
 
     public function send()
     {
-        // Initialize the email with config settings
-
         $userEmail = $this->session->userdata('userEmail');
         $to = $userEmail;
         $otp = rand(1000, 9999);
-        // $otp = 1234; // Static OTP for testing
         $this->session->set_userdata('generated_otp', $otp);
         $path = $this->session->userdata("path") ?? "individual";
 
-         $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
+        $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
 
         $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
         $this->email->to($to);
@@ -1359,42 +1448,34 @@ public function insert_priority()
         $this->email->message($message);
 
         if ($this->email->send()) {
-
             // Set a session variable to indicate OTP was sent
-        // Bypass actual email sending for testing
-        $this->session->set_flashdata('otp_sent', true);
-        if ($path == "login") {
-            $this->session->set_userdata("loginemail", $userEmail);
-            $this->session->unset_userdata("path");
-            $this->session->unset_userdata("entry");
-            redirect("/login");
+            $this->session->set_flashdata('otp_sent', true);
+            if ($path == "login") {
+                $this->session->set_userdata("loginemail", $userEmail);
+                $this->session->unset_userdata("path");
+                $this->session->unset_userdata("entry");
+                redirect("/login");
+            }
+            else {
+                $this->session->set_userdata("entry", 0);
+                redirect('/individual'); // Redirect back to the same page
+            }
         }
         else {
-            $this->session->set_userdata("entry", 0);
-            redirect('/individual'); // Redirect back to the same page
-        }
-    }
-
-            else {
             if ($path == "login") {
                 $this->session->set_userdata("mailstatus", "failed");
-                echo "<script>alert(OTP is not sent to your email. please try again.)</script>";
+                echo "<script>alert('OTP is not sent to your email. please try again.')</script>";
                 redirect("/login");
-
             }
             else {
                 $this->session->set_userdata("mailstatus", "failed");
-                echo "<script>alert(OTP is not sent to your email. please try again.)</script>";
+                echo "<script>alert('OTP is not sent to your email. please try again.')</script>";
                 redirect('/individual');
             }
-        // echo $this->email->print_debugger(); // Print debug info if sending fails
         }
     }
     public function verifyOtp()
     {
-        if (!$this->session->userdata('Kanavu_userId')) {
-            redirect('kanavuhelp/login'); // Redirect to login if not logged in
-        }
         $otp = $this->input->post("otp");
         if ($otp == $this->session->userdata('generated_otp')) {
             echo "true";

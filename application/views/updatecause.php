@@ -425,8 +425,8 @@
 
   .form-step {
     width: 100%;
-    overflow: auto;
-    /* Ensure inner sections are scrollable */
+    overflow: visible;
+    /* Allow natural page scrolling */
     /* height: 100vh; Viewport height to allow scrolling */
     /* min-height: 100vh; Ensures the section takes the full height of the viewport */
     padding: 20px;
@@ -903,6 +903,18 @@
     transform: scale(1.08);
     /* Slight zoom-in */
   }
+  .button-container {
+    position: sticky;
+    bottom: -20px;
+    background: #fff;
+    z-index: 99;
+    padding: 15px 0;
+    margin-top: 20px;
+    border-top: 1px solid #f0f0f0;
+  }
+  #step-two-form {
+    overscroll-behavior: contain;
+  }
 </style>
 
 <body>
@@ -924,7 +936,7 @@
               </div>
             </div>
             <!-- Right Column for Form -->
-            <div id="step-two-form" style="overflow:auto;" class="col-md-6 mt-4">
+            <div id="step-two-form" style="overflow-y: auto; overflow-x: hidden;" class="col-md-6 mt-4">
               <div id="multi-step-form-container" class="mt-3 py-3 w-100">
 
                 <form id="individualform" name="individualform" method="post"
@@ -975,7 +987,7 @@
                       </div>
                     </div>
 
-                    <div class="text-center mt-3">
+                    <div class="text-center mt-3 button-container">
                       <button type="button" id="continueToStep3" class="btn btn-danger no-hover">Continue</button>
                     </div>
                   </section>
@@ -1094,21 +1106,21 @@
                     </div>
 
                     <div class="row my-3">
-                      <label for="cause_video__link_tamil" class="col-md-4 col-form-label">Video Embed Link Tamil:</label>
+                      <label for="cause_video_link" class="col-md-4 col-form-label">You Tube Link: <span class="text-danger">*</span></label>
                       <div class="col-md-8">
                         <input type="text" onchange="validateEmbed(this)" id="cause_video_link"
                           name="cause_embed_link_tamil" value='<?= $causedetails->Cause_video_link ?>'
-                          class="form-control my-2">
+                          class="form-control my-2" required>
                         <p id="tamil_embed_error" class="text-danger"></p>
                       </div>
                     </div>
 
                     <div class="row my-3">
-                      <label for="cause_video" class="col-md-4 col-form-label">Video Embed Link English:</label>
+                      <label for="cause_video_link_english" class="col-md-4 col-form-label">Confirm You Tube Link: <span class="text-danger">*</span></label>
                       <div class="col-md-8">
-                        <input type="text" onchange="validateEmbed(this)" id="cause_video" name="cause_embed_link_english"
-                          value='<?= $causedetails->Cause_video_link_eng ?>' class="form-control my-2">
-                        <p id="cover-image-error" class="text-danger"></p>
+                        <input type="text" onchange="validateEmbed(this)" id="cause_video_link_english" name="cause_embed_link_english"
+                          value='<?= $causedetails->Cause_video_link_eng ?>' class="form-control my-2" required>
+                        <p id="english_embed_error" class="text-danger"></p>
                       </div>
                     </div>
 
@@ -1130,7 +1142,7 @@
                           class="text-danger">*</span></label>
                       <div class="col-md-8">
                         <input type="text" id="cause_heading" name="cause_heading" class="form-control my-2"
-                          value="<?= $causedetails->cause_heading ?>" placeholder="Cause Title" required
+                          value="<?= $causedetails->cause_heading ?>" placeholder="Cause Title" minlength="4" maxlength="150" required
                           oninput="validateCauseTitle()">
                         <span id="cause-heading-error" class="text-danger"></span>
                       </div>
@@ -1152,7 +1164,7 @@
                     <div style="color:red">Please wait for Admin verification of the cause. It will happen in 24 hours
                     </div>
 
-                    <div class="text-center mt-3">
+                    <div class="text-center mt-3 button-container">
                       <button type="button" onclick="backtoSteptwo()" class="btn btn-danger no-hover btn-back"
                         data-step="2">Back</button>
                       <button type="submit" class="btn btn-success no-hover" id="submitApprovalButton">Submit for
@@ -1182,15 +1194,15 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="messageModalLabel">Notification</h5>
-          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <!-- Form starts here -->
         <div class="modal-body" id="messageModalBody">
 
         </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Ok</button>
-        </div> -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger no-hover" data-bs-dismiss="modal">Ok</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1221,9 +1233,23 @@
       }
     });
 
-    let headerheight = document.getElementById("header").getBoundingClientRect().height;
-    let displayheight = window.innerHeight;
-    document.getElementById("step-two-form").style.height = `${displayheight - headerheight}px`;
+    function adjustFormHeight() {
+      let header = document.getElementById("header");
+      let formContainer = document.getElementById("step-two-form");
+      if (header && formContainer) {
+        let headerheight = header.getBoundingClientRect().height;
+        let displayheight = window.innerHeight;
+        if (window.innerWidth >= 768) {
+          formContainer.style.height = `${displayheight - headerheight}px`;
+          formContainer.style.overflowY = "auto";
+        } else {
+          formContainer.style.height = "auto";
+          formContainer.style.overflowY = "visible";
+        }
+      }
+    }
+    adjustFormHeight();
+    window.addEventListener('resize', adjustFormHeight);
 
     document.getElementById("continueToStep3").addEventListener("click", () => {
       if (validateStep2()) {
@@ -1256,6 +1282,10 @@
         messageModal.show();
       }
       document.body.style.overflow = 'auto';
+
+      <?php if ($this->session->flashdata('error')): ?>
+        showPopupMessage(<?= json_encode($this->session->flashdata('error')) ?>);
+      <?php endif; ?>
     })
 
     // Submit Approval Button
@@ -1263,87 +1293,10 @@
       event.preventDefault();
       if (validateStep3()) {
         document.getElementById("individualform").submit();
-
       } else {
         showPopupMessage("Please fill in all required fields correctly before submitting.");
       }
-
-      function validateStep2() {
-        return validateAmount() & validateEndDate();
-      }
-
-      function validateStep3() {
-        return validateCauseTitle() & validateCauseDescription();
-      }
-
-      function validateName() {
-        const nameInput = document.getElementById("name").value.trim();
-        const errorElement = document.getElementById("name-error");
-        const nameRegex = /^([A-Za-z\s'-]{1,49})+$/;
-        if (!nameInput) {
-          errorElement.textContent = "Enter your name.";
-          return false;
-        } else {
-          if (!nameInput.match(nameRegex)) {
-            errorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
-            return false;
-          }
-          else {
-            return true;
-          }
-        }
-        errorElement.textContent = "";
-      }
-
-      function validateAge() {
-        const age = parseInt(document.getElementById("age").value, 10);
-        const errorElement = document.getElementById("age-error");
-
-        if (isNaN(age) || age < 1 || age > 120) {
-          errorElement.textContent = "Enter a valid age between 1 and 120.";
-          return false;
-        }
-        errorElement.textContent = "";
-        return true;
-      }
-
-      /*   document.getElementById("messageModalBody").innerHTML = "Please fill in all required fields correctly before continuing.";  
-          var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
-          backdrop: 'static',
-          keyboard: false
-        });
-        myModal.show(); 
-        }
-      });  */
-
-      function validateCauseTitle() {
-        const heading = document.getElementById("cause_heading").value.trim();
-        const errorElement = document.getElementById("cause-heading-error");
-
-        if (!heading) {
-          errorElement.textContent = "Cause title is required.";
-          return false;
-        }
-        errorElement.textContent = "";
-        return true;
-      }
-
-      function validateCauseDescription() {
-        const description = document.getElementById("cause_description").value.trim();
-        const errorElement = document.getElementById("cause-description-error");
-
-        if (!description) {
-          errorElement.textContent = "Cause description is required.";
-          return false;
-        }
-        errorElement.textContent = "";
-        return true;
-      }
     });
-
-    function validateEmbed(text) {
-
-    }
 
     // Show specific step
     function showStep(step) {
@@ -1397,6 +1350,8 @@
       cover_image: validateCoverImage,
       cause_heading: validateCauseTitle,
       cause_description: validateCauseDescription,
+      cause_video_link: validateYoutubeLinks,
+      cause_video_link_english: validateYoutubeLinks,
     };
 
     Object.keys(validationHandlers).forEach(fieldId => {
@@ -1442,7 +1397,10 @@
     }
 
     function validateStep3() {
-      return validateCoverImage() & validateCauseTitle() & validateCauseDescription();
+      const isTitleValid = validateCauseTitle();
+      const isDescriptionValid = validateCauseDescription();
+      const isYoutubeValid = validateYoutubeLinks();
+      return isTitleValid && isDescriptionValid && isYoutubeValid;
     }
 
     // Individual field validation functions
@@ -1480,6 +1438,44 @@
       return true;
     }
 
+    function validateYoutubeLinks() {
+      const youtubeLink = document.getElementById("cause_video_link").value.trim();
+      const confirmYoutubeLink = document.getElementById("cause_video_link_english").value.trim();
+      const errorTamil = document.getElementById("tamil_embed_error");
+      const errorEnglish = document.getElementById("english_embed_error");
+
+      let isValid = true;
+      const youtubeRegex = /^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be|youtube-nocookie\.com)\/(watch\?v=|embed\/|shorts\/|[a-zA-Z0-9_-]+)/i;
+
+      if (!youtubeLink) {
+        errorTamil.textContent = "YouTube Link is required.";
+        isValid = false;
+      } else if (!youtubeRegex.test(youtubeLink)) {
+        errorTamil.textContent = "Please enter a valid YouTube link.";
+        isValid = false;
+      } else {
+        errorTamil.textContent = "";
+      }
+
+      if (!confirmYoutubeLink) {
+        errorEnglish.textContent = "Confirm YouTube Link is required.";
+        isValid = false;
+      } else if (!youtubeRegex.test(confirmYoutubeLink)) {
+        errorEnglish.textContent = "Please enter a valid YouTube link.";
+        isValid = false;
+      } else if (youtubeLink !== confirmYoutubeLink) {
+        errorEnglish.textContent = "YouTube links do not match.";
+        isValid = false;
+      } else {
+        errorEnglish.textContent = "";
+      }
+
+      return isValid;
+    }
+
+    function validateEmbed(input) {
+      return validateYoutubeLinks();
+    }
 
     function validateCauseTitle() {
       const heading = document.getElementById("cause_heading").value.trim();
@@ -1487,6 +1483,23 @@
 
       if (!heading) {
         errorElement.textContent = "Cause title is required.";
+        return false;
+      } else if (heading.length < 4 || heading.length > 150) {
+        errorElement.textContent = "Cause title must be between 4 and 150 characters.";
+        return false;
+      }
+
+      // Check if it contains a URL/domain or youtube links
+      const linkRegex = /(https?:\/\/[^\s]+|www\.[^\s]+|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?|youtube\.com|youtu\.be)/i;
+      if (linkRegex.test(heading)) {
+        errorElement.textContent = "YouTube links, domains, or URLs are not allowed in the title.";
+        return false;
+      }
+
+      // Check for alphanumeric and spaces
+      const textRegex = /^[A-Za-z0-9\s]+$/;
+      if (!heading.match(textRegex)) {
+        errorElement.textContent = "Cause title must only contain letters, numbers, and spaces.";
         return false;
       }
       errorElement.textContent = "";
