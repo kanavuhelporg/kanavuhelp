@@ -1524,31 +1524,39 @@ function validateCoverImage() {
 }
 
   function validateCauseTitle() {
-  const headingField = document.getElementById("cause_heading");
-  const heading = headingField.value.trim();
-  const errorElement = document.getElementById("cause-heading-error");
-  const regex = /^[a-zA-Z\s]+$/;
+    const headingField = document.getElementById("cause_heading");
+    const heading = headingField.value.trim();
+    const errorElement = document.getElementById("cause-heading-error");
 
-  console.log("Validating Cause Title:", heading);
+    console.log("Validating Cause Title:", heading);
 
-  if (!heading) {
-    errorElement.textContent = "Cause title is required.";
-    return false;
+    if (!heading) {
+      errorElement.textContent = "Cause title is required.";
+      return false;
+    }
+
+    // Check if it contains a URL/domain or youtube links
+    const linkRegex = /(https?:\/\/[^\s]+|www\.[^\s]+|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?|youtube\.com|youtu\.be)/i;
+    if (linkRegex.test(heading)) {
+      errorElement.textContent = "YouTube links, domains, or URLs are not allowed in the title.";
+      return false;
+    }
+
+    // Check for alphanumeric and spaces
+    const textRegex = /^[A-Za-z0-9\s]+$/;
+    if (!heading.match(textRegex)) {
+      errorElement.textContent = "Cause title must only contain letters, numbers, and spaces.";
+      return false;
+    }
+
+    if (heading.length < 4 || heading.length > 150) {
+      errorElement.textContent = "Cause title must be between 4 and 150 characters.";
+      return false;
+    }
+
+    errorElement.textContent = "";
+    return true;
   }
-
-  if (!regex.test(heading)) {
-    errorElement.textContent = "Cause title must only contain alphabets and spaces.";
-    return false;
-  }
-
-  if (heading.length > 5) {
-    errorElement.textContent = "Cause title must not exceed 50 characters.";
-    return false;
-  }
-
-  errorElement.textContent = "";
-  return true;
-}
 
 function validateCauseDescription() {
   const descriptionField = document.getElementById("cause_description");

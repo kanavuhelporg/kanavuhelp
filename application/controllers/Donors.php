@@ -125,8 +125,6 @@ class Donors extends CI_Controller {
   }
 
   public function donor_otp_email() {
-        // Initialize the email with config settings
-
         $userEmail = $this->session->userdata('donorEmail');
         $to = $userEmail;
         $otp = rand(1000, 9999);
@@ -142,12 +140,11 @@ class Donors extends CI_Controller {
         if ($this->email->send()) {
             // Set a session variable to indicate OTP was sent
             $this->session->set_flashdata('otp_sent', true);
-                redirect('/login_myhelps');// Redirect back to the same page
+            redirect('/login_myhelps');// Redirect back to the same page
         } else {
-                $this->session->set_userdata("mailstatus","failed");
-                redirect("/login_myhelps");        
-            }
-            // echo $this->email->print_debugger(); // Print debug info if sending fails
+            $this->session->set_userdata("mailstatus","failed");
+            redirect("/login_myhelps");        
         }
+  }
 }
 ?>    

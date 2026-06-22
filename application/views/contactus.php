@@ -535,7 +535,7 @@
               <!-- Phone Field -->
               <div class="mb-3">
                 <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
-                <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter your phone number" maxlength="10" required>
+                <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter your phone number" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);" required>
                 <div id="phone-error" class="error-message"></div>
               </div>
 
@@ -672,13 +672,13 @@
     function validatePhone() {
       const phone = document.getElementById("phone").value.trim();
       const errorElement = document.getElementById("phone-error");
-      const regex = /^[0-9]{10}$/;
+      const regex = /^[6-9][0-9]{9}$/;
 
       if (!phone) {
         errorElement.textContent = "Please enter your phone number.";
         return false;
       } else if (!regex.test(phone)) {
-        errorElement.textContent = "Phone number must be 10 digits.";
+        errorElement.textContent = "Phone number must be 10 digits starting with 6-9.";
         return false;
       }
 

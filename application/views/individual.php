@@ -433,7 +433,7 @@
   }
   .form-step {
   width: 100%;
-  overflow: auto; /* Ensure inner sections are scrollable */
+  overflow: visible; /* Allow natural page scrolling */
   /* height: 100vh; Viewport height to allow scrolling */
   /* min-height: 100vh; Ensures the section takes the full height of the viewport */
   padding: 20px; /* Adds padding for better appearance */
@@ -922,6 +922,18 @@
     cursor: pointer;
     padding-left: 0.25rem;
 }
+  .button-container {
+    position: sticky;
+    bottom: -20px;
+    background: #fff;
+    z-index: 99;
+    padding: 15px 0;
+    margin-top: 20px;
+    border-top: 1px solid #f0f0f0;
+  }
+  #step-two-form {
+    overscroll-behavior: contain;
+  }
 </style>
 
 <body>
@@ -963,7 +975,7 @@
             </div>
           </div>
           <!-- Right Column for Form -->
-          <div class="col-md-6 mt-4">
+          <div id="step-two-form" style="overflow-y: auto; overflow-x: hidden;" class="col-md-6 mt-4">
             <div id="multi-step-form-container" class="mt-auto py-2 w-100 p-0">
               <!-- Form Steps / Progress Bar -->
               <ul class="form-stepper form-stepper-horizontal text-center mx-auto col-md-10 flex-wrap">
@@ -1027,7 +1039,7 @@
 
 
                       
-                      <input type="text" id="created_by" name="created_by" class="form-control my-2" placeholder="Created by" required>
+                      <input type="text" id="created_by" name="created_by" class="form-control my-2" placeholder="Created by" minlength="4" maxlength="30" required>
                       <span id="created_by_error" class="text-danger"></span>
                     </div>
                   </div>
@@ -1035,7 +1047,7 @@
                   <div class="form-group row">
                     <label for="name" class="col-sm-4 col-form-label">Name of beneficiary:<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <input type="text" id="name" name="name" class="form-control my-2" placeholder="Name of beneficiary" required>
+                      <input type="text" id="name" name="name" class="form-control my-2" placeholder="Name of beneficiary" minlength="4" maxlength="30" required>
                       <span id="name-error" class="text-danger"></span>
                     </div>
                   </div>
@@ -1063,7 +1075,7 @@
                   <div class="form-group row">
                     <label for="phone" class="col-sm-4 col-form-label">Phone Number:<span class="text-danger">*</span></label>
                     <div class="col-sm-8">
-                      <input type="tel" id="phone" name="phone" class="form-control my-2" placeholder="Phone Number*" required>
+                      <input type="tel" id="phone" name="phone" class="form-control my-2" placeholder="Phone Number*" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);" required>
                       <span id="phone-error" class="text-danger"></span>
                     </div>
                   </div>
@@ -1088,7 +1100,7 @@
 										</div>
 									</div>
 
-                  <div class="text-center mt-3">
+                  <div class="text-center mt-3 button-container">
                     <button type="submit" id="continueToStep2" class="btn btn-danger no-hover">Continue</button>
                   </div>
                 </section>
@@ -1191,14 +1203,14 @@
 										</div>
 									</div>
 
-                  <div class="text-center mt-3">
+                  <div class="text-center mt-3 button-container">
                     <button type="button" class="btn btn-danger no-hover btn-back" data-step="1">Back</button>
                     <button type="button" id="continueToStep3" class="btn btn-danger no-hover">Continue</button>
                   </div>
                 </section>
 
                 <!-- Step 3 Content -->
-                <section id="step-3" style="overflow:auto;" class="form-step col-12 d-none">
+                <section id="step-3" class="form-step col-12 d-none">
                   <h2>Elaborate Cause Details</h2>
                  
                   <!-- Cover Image Field -->
@@ -1323,10 +1335,10 @@
                   </div>
 
                   <div class="row my-3">
-                    <label for="cause_video" class="col-md-4 col-form-label">Confirm You Tube Link: </label>
+                    <label for="cause_video_link_english" class="col-md-4 col-form-label">Confirm You Tube Link: <span class="text-danger">*</span></label>
                     <div class="col-md-8">
-                      <input type="text" onchange="validateEmbed(this)" id="cause_video" name="cause_embed_link_english" class="form-control my-2">
-                      <p id="cover-image-error" class="text-danger"></p>
+                      <input type="text" onchange="validateEmbed(this)" id="cause_video_link_english" name="cause_embed_link_english" class="form-control my-2" required>
+                      <p id="english_embed_error" class="text-danger"></p>
                     </div>
                   </div>
 
@@ -1345,7 +1357,7 @@
                   <div class="row my-3">
                     <label for="cause_heading" class="col-md-4 col-form-label">Cause Title:<span class="text-danger">*</span></label>
                     <div class="col-md-8">
-                      <input type="text" id="cause_heading" name="cause_heading" class="form-control my-2" placeholder="Cause Title" required oninput="validateCauseTitle()">
+                      <input type="text" id="cause_heading" name="cause_heading" class="form-control my-2" placeholder="Cause Title" minlength="4" maxlength="150" required oninput="validateCauseTitle()">
                       <span id="cause-heading-error" class="text-danger"></span>
                     </div>
                   </div>
@@ -1361,7 +1373,7 @@
 
                   <div style="color:red">Please wait for Admin verification of the cause. It will happen in 24 hours</div>
 
-                  <div class="text-center mt-3">
+                  <div class="text-center mt-3 button-container">
                     <button type="button" class="btn btn-danger no-hover btn-back" data-step="2">Back</button>
                     <button type="submit" class="btn btn-success no-hover" id="submitApprovalButton">Submit for Approval</button>
                   </div>
@@ -1394,15 +1406,15 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="messageModalLabel">Notification</h5>
-          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <!-- Form starts here -->
         <div class="modal-body" id="messageModalBody">
 
         </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Ok</button>
-        </div> -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger no-hover" data-bs-dismiss="modal">Ok</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1475,9 +1487,23 @@
       }
     }); 
 
-    let headerheight = document.getElementById("header").getBoundingClientRect().height;
-    let displayheight = window.innerHeight;
-    document.getElementById("step-3").style.height = `${displayheight - headerheight}px`;
+    function adjustFormHeight() {
+      let header = document.getElementById("header");
+      let formContainer = document.getElementById("step-two-form");
+      if (header && formContainer) {
+        let headerheight = header.getBoundingClientRect().height;
+        let displayheight = window.innerHeight;
+        if (window.innerWidth >= 768) {
+          formContainer.style.height = `${displayheight - headerheight}px`;
+          formContainer.style.overflowY = "auto";
+        } else {
+          formContainer.style.height = "auto";
+          formContainer.style.overflowY = "visible";
+        }
+      }
+    }
+    adjustFormHeight();
+    window.addEventListener('resize', adjustFormHeight);
 
 		        
     document.addEventListener("DOMContentLoaded", function() {
@@ -1488,8 +1514,11 @@
       function showPopupMessage(message) {
         document.getElementById("messageModalBody").innerHTML = message;
         messageModal.show();
-    
-			}
+      }
+
+      <?php if ($this->session->flashdata('error')): ?>
+        showPopupMessage(<?= json_encode($this->session->flashdata('error')) ?>);
+      <?php endif; ?>
 
     let steponeform = document.getElementById("causeStep1");
 
@@ -1511,96 +1540,30 @@
 
 	
     function stepOnevalidation(){
-       let category = document.forms["causeStep1"]["category"].value.trim();
-       let created_by = document.forms["causeStep1"]["created_by"].value.trim();
-       let name = document.forms["causeStep1"]["name"].value.trim();
-       let age = document.forms["causeStep1"]["age"].value.trim();
-       let location = document.forms["causeStep1"]["location"].value.trim();
-       let email = document.forms["causeStep1"]["email"].value.trim();
-       let phone = document.forms["causeStep1"]["phone"].value.trim();
-       const categoryerrorElement = document.getElementById("category-error");
-       const createdbyerrorElement = document.getElementById("created_by_error");
-       const nameerrorElement = document.getElementById("name-error");
-       const ageerrorElement = document.getElementById("age-error");
-       const locationerrorElement = document.getElementById("location-error");
-       const emailerrorElement = document.getElementById("email-error");
-       const phoneerrorElement = document.getElementById("phone-error");
-       
-       let validatename = /^([A-Za-z\s]{1,49})+$/;
-       let validatelocation = /^(?![0-9]*$)[a-zA-Z0-9\s]+$/;
-       let validateemail = /^([A-Za-z0-9._-])+\@([a-z])+\.([a-z])+$/;
-       let validatephone = /^([0-9]{10})+$/;
-       console.log((!validatephone.test(phone)))
-       if(category == ""){
-        return false;          
-       }
+       const isCategoryValid = validateCategory();
+       const isCreatedByValid = validateCreatedby();
+       const isNameValid = validateName();
+       const isAgeValid = validateAge();
+       const isLocationValid = validateLocation();
+       const isEmailValid = validateEmail();
+       const isPhoneValid = validatePhone();
 
-       if(created_by == "" || !created_by.match(validatename)){
-          createdbyerrorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
-          return false;
-        }
-        else{
-          createdbyerrorElement.textContent = ""
-        }
-        
-        if(name == "" || !name.match(validatename)){
-          nameerrorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
-          return false;
-        }
-        else{
-          nameerrorElement.textContent = ""
-        }
-        
-        if(age == "" || age < 1 || age > 120){
-          ageerrorElement.textContent = "Enter a valid age between 1 and 120.";
-          return false;
-        }
-        else{
-          ageerrorElement.textContent = "";
-        }  
-
-        if(location == "" || !location.match(validatelocation)){
-          locationerrorElement.textContent = "Please enter a location in correct format.";
-          return false;
-        }
-        
-        else{
-          locationerrorElement.textContent = ""
-        }
-
-        if(email == "" || !email.match(validateemail)){
-          emailerrorElement.textContent = "Enter a valid email address.";
-          return false;
-        }
-        else{
-          emailerrorElement.textContent = "";
-        }
-        
-        if(phone == "" || !phone.match(validatephone)){
-          console.log("hi")
-          phoneerrorElement.textContent = "Enter a valid 10-digit phone number.";
-          return false;
-        }
-        else{
-          phoneerrorElement.textContent = "";
-        }
-        return true;
-       }
+       return (isCategoryValid && isCreatedByValid && isNameValid && isAgeValid && isLocationValid && isEmailValid && isPhoneValid);
+    }
       
-  document.getElementById('verifyOtpButton').addEventListener('click', function () {
-  // Hide OTP Modal
-  const otpModal = new bootstrap.Modal(document.getElementById('myModal'));
-  otpModal.hide();
-
-  // Hide Step 1 and Show Step 2
-  document.getElementById('step-1').classList.add('d-none');
-  const step2 = document.getElementById('step-2');
-  step2.classList.remove('d-none');
-  step2.classList.add('d-flex');
-
-  // Reset body scroll
-  document.body.style.overflow = 'auto';
-});
+  // Allow Enter key in OTP input to trigger Verify OTP button click
+  const otpInput = document.getElementById("otp");
+  if (otpInput) {
+    otpInput.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const verifyBtn = document.getElementById("verifyOtpButton");
+        if (verifyBtn) {
+          verifyBtn.click();
+        }
+      }
+    });
+  }
 
       // Verify OTP
       document.getElementById("verifyOtpButton").addEventListener("click", () => {
@@ -1769,6 +1732,8 @@
         cover_image: validateCoverImage,
         cause_heading: validateCauseTitle,
         cause_description: validateCauseDescription,
+        cause_video_link: validateYoutubeLinks,
+        cause_video_link_english: validateYoutubeLinks,
       };
 
       Object.keys(validationHandlers).forEach(fieldId => {
@@ -1831,7 +1796,7 @@ function validateField(id, errorId, message, isNumber = false) {
 }
 
       function validateStep3() {
-        return validateCauseTitle() & validateCauseDescription();
+        return validateCauseTitle() & validateCauseDescription() & validateYoutubeLinks();
       }
 
       // Individual field validation functions
@@ -1849,50 +1814,47 @@ function validateField(id, errorId, message, isNumber = false) {
       function validateName() {
         const nameInput = document.getElementById("name").value.trim();
         const errorElement = document.getElementById("name-error");
-        const nameRegex = /^([A-Za-z\s'-]{1,49})+$/;
+        const nameRegex = /^[A-Za-z\s'-]+$/;
         if (!nameInput) {
-          errorElement.textContent = "Enter your name.";
+          errorElement.textContent = "Beneficiary name is required.";
           return false;
-        } else{
-            if(!nameInput.match(nameRegex)){
-            errorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
-            return false;
-            }
-            else{
-            errorElement.textContent = "";
-            return true;
-            }
+        } else if (nameInput.length < 4 || nameInput.length > 30) {
+          errorElement.textContent = "Name must be between 4 and 30 characters.";
+          return false;
+        } else if (!nameInput.match(nameRegex)) {
+          errorElement.textContent = "Name can only contain letters, spaces, hyphens, and apostrophes.";
+          return false;
+        } else {
+          errorElement.textContent = "";
+          return true;
         }
-        }
-
-        function validateEmbed() {
-
-        }
+      }
 
       function validateCreatedby() {
         const nameInput = document.getElementById("created_by").value.trim();
         const errorElement = document.getElementById("created_by_error");
-        const nameRegex = /^([A-Za-z\s'-]{1,49})+$/;
+        const nameRegex = /^[A-Za-z\s'-]+$/;
         if (!nameInput) {
-          errorElement.textContent = "Enter your name.";
+          errorElement.textContent = "Created by name is required.";
           return false;
-        } else{
-            if(!nameInput.match(nameRegex)){
-            errorElement.textContent = "Name can only contain letters, spaces, and hyphens.";
-            return false;
-            }
-            else{
-            errorElement.textContent = "";
-            return true;
-            }
-        	}
-        }   
+        } else if (nameInput.length < 4 || nameInput.length > 30) {
+          errorElement.textContent = "Name must be between 4 and 30 characters.";
+          return false;
+        } else if (!nameInput.match(nameRegex)) {
+          errorElement.textContent = "Name can only contain letters, spaces, hyphens, and apostrophes.";
+          return false;
+        } else {
+          errorElement.textContent = "";
+          return true;
+        }
+      }   
 
       function validateAge() {
-        const age = parseInt(document.getElementById("age").value, 10);
+        const ageVal = document.getElementById("age").value.trim();
+        const age = parseInt(ageVal, 10);
         const errorElement = document.getElementById("age-error");
 
-        if (isNaN(age) || age < 1 || age > 120) {
+        if (ageVal === "" || isNaN(age) || age < 1 || age > 120) {
           errorElement.textContent = "Enter a valid age between 1 and 120.";
           return false;
         }
@@ -1901,10 +1863,14 @@ function validateField(id, errorId, message, isNumber = false) {
       }
 
       function validateLocation() {
-        const location = document.getElementById("location").value;
+        const location = document.getElementById("location").value.trim();
         const errorElement = document.getElementById("location-error");
+        const validatelocation = /^(?![0-9]*$)[a-zA-Z0-9\s,.-]+$/;
         if (!location) {
-          errorElement.textContent = "Please select a location.";
+          errorElement.textContent = "Location is required.";
+          return false;
+        } else if (!location.match(validatelocation)) {
+          errorElement.textContent = "Please enter a location in correct format.";
           return false;
         }
         errorElement.textContent = "";
@@ -1914,10 +1880,13 @@ function validateField(id, errorId, message, isNumber = false) {
       function validateEmail() {
         const email = document.getElementById("email").value.trim();
         const errorElement = document.getElementById("email-error");
-        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-        if (!regex.test(email)) {
-          errorElement.textContent = "Enter a valid email address.";
+        if (!email) {
+          errorElement.textContent = "Email address is required.";
+          return false;
+        } else if (!regex.test(email)) {
+          errorElement.textContent = "Enter a valid email address (e.g. nath@gmail.com).";
           return false;
         }
         errorElement.textContent = "";
@@ -1927,10 +1896,13 @@ function validateField(id, errorId, message, isNumber = false) {
       function validatePhone() {
         const phone = document.getElementById("phone").value.trim();
         const errorElement = document.getElementById("phone-error");
-        const regex = /^[0-9]{10}$/;
+        const regex = /^[6-9][0-9]{9}$/;
 
-        if (!regex.test(phone)) {
-          errorElement.textContent = "Enter a valid 10-digit phone number.";
+        if (!phone) {
+          errorElement.textContent = "Phone number is required.";
+          return false;
+        } else if (!regex.test(phone)) {
+          errorElement.textContent = "Enter a valid 10-digit Indian phone number (starting with 6-9).";
           return false;
         }
         errorElement.textContent = "";
@@ -2040,31 +2012,87 @@ function validateField(id, errorId, message, isNumber = false) {
 				return true;
 		}
 
-
-      function validateCauseTitle() {
-        const heading = document.getElementById("cause_heading").value.trim();
-        const errorElement = document.getElementById("cause-heading-error");
-
-        if (!heading) {
-          errorElement.textContent = "Cause title is required.";
-          return false;
-        }
-        errorElement.textContent = "";
-        return true;
-      }
-
-      function validateCauseDescription() {
-        const description = document.getElementById("cause_description").value.trim();
-        const errorElement = document.getElementById("cause-description-error");
-
-        if (!description) {
-          errorElement.textContent = "Cause description is required.";
-          return false;
-        }
-        errorElement.textContent = "";
-        return true;
-      }
     });
+
+    function validateYoutubeLinks() {
+      const youtubeLink = document.getElementById("cause_video_link").value.trim();
+      const confirmYoutubeLink = document.getElementById("cause_video_link_english").value.trim();
+      const errorTamil = document.getElementById("tamil_embed_error");
+      const errorEnglish = document.getElementById("english_embed_error");
+
+      let isValid = true;
+      const youtubeRegex = /^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be|youtube-nocookie\.com)\/(watch\?v=|embed\/|shorts\/|[a-zA-Z0-9_-]+)/i;
+
+      if (!youtubeLink) {
+        errorTamil.textContent = "YouTube Link is required.";
+        isValid = false;
+      } else if (!youtubeRegex.test(youtubeLink)) {
+        errorTamil.textContent = "Please enter a valid YouTube link.";
+        isValid = false;
+      } else {
+        errorTamil.textContent = "";
+      }
+
+      if (!confirmYoutubeLink) {
+        errorEnglish.textContent = "Confirm YouTube Link is required.";
+        isValid = false;
+      } else if (!youtubeRegex.test(confirmYoutubeLink)) {
+        errorEnglish.textContent = "Please enter a valid YouTube link.";
+        isValid = false;
+      } else if (youtubeLink !== confirmYoutubeLink) {
+        errorEnglish.textContent = "YouTube links do not match.";
+        isValid = false;
+      } else {
+        errorEnglish.textContent = "";
+      }
+
+      return isValid;
+    }
+
+    function validateEmbed(input) {
+      return validateYoutubeLinks();
+    }
+
+    function validateCauseTitle() {
+      const heading = document.getElementById("cause_heading").value.trim();
+      const errorElement = document.getElementById("cause-heading-error");
+
+      if (!heading) {
+        errorElement.textContent = "Cause title is required.";
+        return false;
+      } else if (heading.length < 4 || heading.length > 150) {
+        errorElement.textContent = "Cause title must be between 4 and 150 characters.";
+        return false;
+      }
+
+      // Check if it contains a URL/domain or youtube links
+      const linkRegex = /(https?:\/\/[^\s]+|www\.[^\s]+|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?|youtube\.com|youtu\.be)/i;
+      if (linkRegex.test(heading)) {
+        errorElement.textContent = "YouTube links, domains, or URLs are not allowed in the title.";
+        return false;
+      }
+
+      // Check for alphanumeric and spaces
+      const textRegex = /^[A-Za-z0-9\s]+$/;
+      if (!heading.match(textRegex)) {
+        errorElement.textContent = "Cause title must only contain letters, numbers, and spaces.";
+        return false;
+      }
+      errorElement.textContent = "";
+      return true;
+    }
+
+    function validateCauseDescription() {
+      const description = document.getElementById("cause_description").value.trim();
+      const errorElement = document.getElementById("cause-description-error");
+
+      if (!description) {
+        errorElement.textContent = "Cause description is required.";
+        return false;
+      }
+      errorElement.textContent = "";
+      return true;
+    }
 
     function validateCoverImage(file) {
         
