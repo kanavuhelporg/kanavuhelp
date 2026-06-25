@@ -1307,27 +1307,27 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Name</label>
-                                <input type="text" name="name" id="field_name" class="form-control">
+                                <input type="text" name="name" id="field_name" class="form-control" oninput="this.value = this.value.replace(/[^A-Za-z\s\-]/g, '')">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Email</label>
-                                <input type="email" name="email" id="field_email" class="form-control">
+                                <input type="email" name="email" id="field_email" class="form-control" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Valid email ID only like example@gmail.com">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Phone</label>
-                                <input type="text" name="phone" id="field_phone" class="form-control">
+                                <input type="text" name="phone" id="field_phone" class="form-control" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                             </div>
                             <div class="col-md-2">
                                 <label class="form-label small">Age</label>
-                                <input type="number" name="age" id="field_age" class="form-control">
+                                <input type="text" name="age" id="field_age" class="form-control" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value !== '' && parseInt(this.value) > 120) this.value = '120'; if(this.value === '0') this.value = '';">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small">Location</label>
-                                <input type="text" name="location" id="field_location" class="form-control">
+                                <input type="text" name="location" id="field_location" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s,.-]/g, '')">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small">Form Selection Text</label>
-                                <input type="text" name="form_selected_text" id="field_form_text" class="form-control">
+                                <input type="text" name="form_selected_text" id="field_form_text" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                             </div>
                         </div>
 
@@ -1336,11 +1336,11 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <div class="row g-3">
                             <div class="col-12">
                                 <label class="form-label small">Cause Heading</label>
-                                <input type="text" name="cause_heading" id="field_cause_heading" class="form-control">
+                                <input type="text" name="cause_heading" id="field_cause_heading" class="form-control" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s]/g, '')">
                             </div>
                             <div class="col-12">
                                 <label class="form-label small">Cause Description</label>
-                                <textarea name="cause_description" id="field_cause_description" class="form-control" rows="4"></textarea>
+                                <textarea name="cause_description" id="field_cause_description" class="form-control" rows="4" maxlength="150"></textarea>
                             </div>
                         </div>
 
@@ -1356,19 +1356,19 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Event Name</label>
-                                <input type="text" name="eventname" id="field_eventname" class="form-control">
+                                <input type="text" name="eventname" id="field_eventname" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, '')">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Event Date</label>
-                                <input type="text" name="eventdate" id="field_eventdate" class="form-control">
+                                <input type="date" name="eventdate" id="field_eventdate" class="form-control">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Event Distance (KM)</label>
-                                <input type="text" name="eventdistancekm" id="field_eventdistancekm" class="form-control">
+                                <input type="text" name="eventdistancekm" id="field_eventdistancekm" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '')">
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label small">Event Location</label>
-                                <input type="text" name="eventlocation" id="field_eventlocation" class="form-control">
+                                <input type="text" name="eventlocation" id="field_eventlocation" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                             </div>
                         </div>
 
@@ -1377,7 +1377,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <div class="row g-3">
                             <div class="col-md-3">
                                 <label class="form-label small">Goal Amount</label>
-                                <input type="number" name="amount" id="field_amount" class="form-control">
+                                <input type="text" name="amount" id="field_amount" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1').replace(/^(\d+\.\d{2}).*/, '$1')">
                             </div>
                           
                             <div class="col-md-3">
@@ -1386,7 +1386,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Created At</label>
-                                <input type="text" id="field_created_at" class="form-control" readonly>
+                                <input type="date" id="field_created_at" class="form-control" readonly>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">User ID</label>
@@ -1394,7 +1394,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Created By</label>
-                                <input type="text" name="created_by" id="field_created_by" class="form-control">
+                                <input type="text" name="created_by" id="field_created_by" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                             </div>
                             <div class="col-md-2">
                                 <label class="form-label small">Is Fill</label>
@@ -1538,7 +1538,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         if(d.cover_image) $('#label_cover_image').text('Current: ' + d.cover_image);
                         
                         $('#field_user_id').val(d.user_id);
-                        $('#field_created_at').val(d.created_at);
+                        $('#field_created_at').val(d.created_at ? d.created_at.split(' ')[0] : '');
                         $('#field_verified').val(d.verified);
                         $('#field_isFill').val(d.isFill);
                         
@@ -1584,7 +1584,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             $('#modalTitle').text('Editing Record #' + d.id);
                             $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', false);
                             // Keep ID and CreatedAt readonly
-                            $('#field_id, #field_created_at').prop('readonly', true).prop('disabled', false); // Keep enabled so they submit, but readonly
+                            $('#field_id, #field_created_at, #field_user_id, #field_isFill').prop('readonly', true).prop('disabled', false); // Keep enabled so they submit, but readonly
                             $('#submitBtn').show();
                             $('#editBtnModal').hide();
                             $('#deleteBtnModal').hide();

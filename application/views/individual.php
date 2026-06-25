@@ -1814,7 +1814,7 @@ function validateField(id, errorId, message, isNumber = false) {
       function validateName() {
         const nameInput = document.getElementById("name").value.trim();
         const errorElement = document.getElementById("name-error");
-        const nameRegex = /^[A-Za-z\s'-]+$/;
+        const nameRegex = /^[A-Za-z\s-]+$/;
         if (!nameInput) {
           errorElement.textContent = "Beneficiary name is required.";
           return false;
@@ -1822,7 +1822,7 @@ function validateField(id, errorId, message, isNumber = false) {
           errorElement.textContent = "Name must be between 4 and 30 characters.";
           return false;
         } else if (!nameInput.match(nameRegex)) {
-          errorElement.textContent = "Name can only contain letters, spaces, hyphens, and apostrophes.";
+          errorElement.textContent = "Name can only contain letters, spaces, hyphens only.";
           return false;
         } else {
           errorElement.textContent = "";
@@ -1833,7 +1833,7 @@ function validateField(id, errorId, message, isNumber = false) {
       function validateCreatedby() {
         const nameInput = document.getElementById("created_by").value.trim();
         const errorElement = document.getElementById("created_by_error");
-        const nameRegex = /^[A-Za-z\s'-]+$/;
+        const nameRegex = /^[A-Za-z\s-]+$/;
         if (!nameInput) {
           errorElement.textContent = "Created by name is required.";
           return false;
@@ -1841,7 +1841,7 @@ function validateField(id, errorId, message, isNumber = false) {
           errorElement.textContent = "Name must be between 4 and 30 characters.";
           return false;
         } else if (!nameInput.match(nameRegex)) {
-          errorElement.textContent = "Name can only contain letters, spaces, hyphens, and apostrophes.";
+          errorElement.textContent = "Name can only contain letters, spaces, hyphens only.";
           return false;
         } else {
           errorElement.textContent = "";
