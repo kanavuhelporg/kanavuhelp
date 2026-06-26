@@ -1311,7 +1311,32 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Email</label>
-                                <input type="email" name="email" id="field_email" class="form-control" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Valid email ID only like example@gmail.com">
+                                <input type="email" name="email" id="field_email" class="form-control"
+                                    title="Valid email: at least 4 characters before @ and a valid domain like example@gmail.com"
+                                    onblur="
+                                        this.setCustomValidity('');
+                                        var v = this.value.trim();
+                                        var errEl = document.getElementById('field_email_err');
+                                        if(v === ''){ if(errEl) errEl.style.display='none'; return; }
+                                        var emailPattern = /^[a-zA-Z0-9._%+\-]{4,}@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,}$/;
+                                        if(!emailPattern.test(v)){
+                                            var msg = '';
+                                            var parts = v.split('@');
+                                            if(parts.length !== 2 || parts[0].length < 4){
+                                                msg = 'Email must have at least 4 characters before @';
+                                            } else {
+                                                msg = 'Enter a valid email like example@gmail.com';
+                                            }
+                                            this.setCustomValidity(msg);
+                                            this.reportValidity();
+                                            if(errEl){ errEl.textContent = msg; errEl.style.display='block'; }
+                                        } else {
+                                            this.setCustomValidity('');
+                                            if(errEl) errEl.style.display='none';
+                                        }
+                                    "
+                                    oninput="this.setCustomValidity(''); var errEl=document.getElementById('field_email_err'); if(errEl) errEl.style.display='none';">
+                                <small id="field_email_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Phone</label>
@@ -1356,7 +1381,18 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Event Name</label>
-                                <input type="text" name="eventname" id="field_eventname" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, '')">
+                                <input type="text" name="eventname" id="field_eventname" class="form-control"
+                                    oninput="
+                                        this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, '');
+                                        if(this.value.trim() !== '' && /^[0-9]+$/.test(this.value.trim())){
+                                            this.setCustomValidity('Event Name cannot be purely numeric. Please include letters.');
+                                            document.getElementById('field_eventname_err').style.display='block';
+                                        } else {
+                                            this.setCustomValidity('');
+                                            document.getElementById('field_eventname_err').style.display='none';
+                                        }
+                                    ">
+                                <small id="field_eventname_err" class="text-danger" style="display:none;">Event Name cannot be purely numeric. Please include letters.</small>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Event Date</label>
@@ -1390,7 +1426,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">User ID</label>
-                                <input type="text" name="user_id" id="field_user_id" class="form-control">
+                                <input type="text" name="user_id" id="field_user_id" class="form-control" readonly style="background-color:#e9ecef; cursor:not-allowed;">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Created By</label>
@@ -1398,7 +1434,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-2">
                                 <label class="form-label small">Is Fill</label>
-                                <input type="text" name="isFill" id="field_isFill" class="form-control">
+                                <input type="text" name="isFill" id="field_isFill" class="form-control" readonly style="background-color:#e9ecef; cursor:not-allowed;">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small">Verification Status (Verified)</label>
@@ -1477,11 +1513,13 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small">Cause Video Link</label>
-                                <input type="text" name="Cause_video_link" id="field_video_link" class="form-control">
+                                <input type="url" name="Cause_video_link" id="field_video_link" class="form-control" placeholder="https://youtube.com/... or https://youtu.be/..." onblur="validateVideoLink(this)">
+                                <small class="text-danger" id="field_video_link_err" style="display:none;">Only video links (YouTube, Vimeo, Dailymotion, etc.) are allowed.</small>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label small"> Original Cause Video Link</label>
-                                <input type="text" name="Cause_video_link_eng" id="field_video_link_eng" class="form-control">
+                                <label class="form-label small">Original Cause Video Link</label>
+                                <input type="url" name="Cause_video_link_eng" id="field_video_link_eng" class="form-control" placeholder="https://youtube.com/... or https://youtu.be/..." onblur="validateVideoLink(this)">
+                                <small class="text-danger" id="field_video_link_eng_err" style="display:none;">Only video links (YouTube, Vimeo, Dailymotion, etc.) are allowed.</small>
                             </div>
                         </div>
                     </div>
@@ -1608,7 +1646,8 @@ if (isset($_SESSION["emailsuccessstatus"])) {
             
             // Re-enable fields for editing
             $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', false);
-            $('#field_id, #field_created_at').prop('readonly', true).prop('disabled', false);
+            // Keep ID, CreatedAt, User ID and IsFill readonly
+            $('#field_id, #field_created_at, #field_user_id, #field_isFill').prop('readonly', true).prop('disabled', false);
             
             // Switch buttons
             $(this).hide();
@@ -1622,6 +1661,69 @@ if (isset($_SESSION["emailsuccessstatus"])) {
             deleteCause(id);
         });
     });
+    </script>
+
+    <script>
+        // ---- Video Link Validation ----
+        function validateVideoLink(input) {
+            var val = input.value.trim();
+            if (val === '') {
+                // Empty is allowed
+                var errId = input.id + '_err';
+                var errEl = document.getElementById(errId);
+                if (errEl) errEl.style.display = 'none';
+                input.style.borderColor = '';
+                return true;
+            }
+            // Allowed video domains
+            var validPatterns = [
+                /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/i,
+                /^https?:\/\/(www\.)?vimeo\.com\/.+/i,
+                /^https?:\/\/(www\.)?dailymotion\.com\/.+/i,
+                /^https?:\/\/(www\.)?facebook\.com\/.*(video|videos|watch).*/i,
+                /^https?:\/\/(www\.)?fb\.watch\/.+/i,
+                /^https?:\/\/(www\.)?twitch\.tv\/.+/i,
+                /^https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/.+/i
+            ];
+            var isValid = validPatterns.some(function(p) { return p.test(val); });
+            var errId = input.id + '_err';
+            var errEl = document.getElementById(errId);
+            if (!isValid) {
+                if (errEl) errEl.style.display = 'block';
+                input.style.borderColor = 'red';
+                input.setCustomValidity('Only valid video links (YouTube, Vimeo, Dailymotion, etc.) are allowed.');
+                input.reportValidity();
+            } else {
+                if (errEl) errEl.style.display = 'none';
+                input.style.borderColor = '#198754'; // green border if valid
+                input.setCustomValidity('');
+            }
+            return isValid;
+        }
+
+        // Block form submit if video links are invalid
+        document.getElementById('causeForm').addEventListener('submit', function(e) {
+            var vl  = document.getElementById('field_video_link');
+            var vle = document.getElementById('field_video_link_eng');
+            var ok  = true;
+            if (vl  && vl.value.trim()  !== '' && !validateVideoLink(vl))  ok = false;
+            if (vle && vle.value.trim() !== '' && !validateVideoLink(vle)) ok = false;
+
+            // Block purely-numeric event name
+            var evName = document.getElementById('field_eventname');
+            if (evName && evName.value.trim() !== '' && /^[0-9]+$/.test(evName.value.trim())) {
+                evName.setCustomValidity('Event Name cannot be purely numeric. Please include letters.');
+                evName.reportValidity();
+                evName.focus();
+                document.getElementById('field_eventname_err').style.display = 'block';
+                ok = false;
+            } else if (evName) {
+                evName.setCustomValidity('');
+                document.getElementById('field_eventname_err').style.display = 'none';
+            }
+
+            if (!ok) e.preventDefault();
+        });
     </script>
 
 <!-- old edit  -->

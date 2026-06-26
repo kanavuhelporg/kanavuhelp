@@ -1886,7 +1886,7 @@ function validateField(id, errorId, message, isNumber = false) {
           errorElement.textContent = "Email address is required.";
           return false;
         } else if (!regex.test(email)) {
-          errorElement.textContent = "Enter a valid email address (e.g. nath@gmail.com).";
+          errorElement.textContent = "Enter a valid email address (e.g. example@gmail.com).";
           return false;
         }
         errorElement.textContent = "";
