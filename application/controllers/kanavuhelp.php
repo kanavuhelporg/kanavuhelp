@@ -980,25 +980,39 @@ public function insert_priority()
         try {
             $insert = 0;
             for ($i = 0; $i < $count; $i++) {
+                if ($_FILES[$uploadeddocuments[$i]]['name'] == "") {
+                    continue;
+                }
                 $_FILES['documents']['name'] = $files[$uploadeddocuments[$i]]['name'];
                 $_FILES['documents']['type'] = $files[$uploadeddocuments[$i]]['type'];
                 $_FILES['documents']['tmp_name'] = $files[$uploadeddocuments[$i]]['tmp_name'];
                 $_FILES['documents']['error'] = $files[$uploadeddocuments[$i]]['error'];
                 $_FILES['documents']['size'] = $files[$uploadeddocuments[$i]]['size'];
 
-                if ($_FILES[$uploadeddocuments[$i]]['name'] == "") {
-                    continue;
+                // Dynamically configure allowed types depending on file purpose
+                $config = $this->set_upload_options();
+                if ($i < 8) {
+                    $config['allowed_types'] = 'jpg|jpeg|png|svg';
+                } else {
+                    $config['allowed_types'] = 'mp4';
                 }
-                $this->upload->initialize($this->set_upload_options());
-                $this->upload->do_upload($uploadeddocuments[$i]);
+
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload($uploadeddocuments[$i])) {
+                    $error = $this->upload->display_errors('', '');
+                    $this->session->set_flashdata("error", "Upload failed for " . $uploadeddocuments[$i] . ": " . $error);
+                    redirect($_SERVER['HTTP_REFERER']);
+                    return;
+                }
                 $dataInfo[] = $this->upload->data();
                 $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
                 $insert++;
             }
         }
         catch (Exception $e) {
-            $this->session->set_flashdata("fileuploadfailed", true);
-            redirect('individual');
+            $this->session->set_flashdata("error", "File upload failed: " . $e->getMessage());
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
         }
 
         $data['amount'] = $this->input->post('amount');
@@ -1111,17 +1125,30 @@ public function insert_priority()
                 $_FILES['documents']['error'] = $files[$uploadeddocuments[$i]]['error'];
                 $_FILES['documents']['size'] = $files[$uploadeddocuments[$i]]['size'];
 
+                // Dynamically configure allowed types depending on file purpose
+                $config = $this->set_upload_options();
+                if ($i < 8) {
+                    $config['allowed_types'] = 'jpg|jpeg|png|svg';
+                } else {
+                    $config['allowed_types'] = 'mp4';
+                }
 
-                $this->upload->initialize($this->set_upload_options());
-                $this->upload->do_upload($uploadeddocuments[$i]);
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload($uploadeddocuments[$i])) {
+                    $error = $this->upload->display_errors('', '');
+                    $this->session->set_flashdata("error", "Upload failed for " . $uploadeddocuments[$i] . ": " . $error);
+                    redirect($_SERVER['HTTP_REFERER']);
+                    return;
+                }
                 $dataInfo[] = $this->upload->data();
                 $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
                 $insert++;
             }
         }
         catch (Exception $e) {
-            $this->session->set_flashdata("fileuploadfailed", true);
-            redirect('individual');
+            $this->session->set_flashdata("error", "File upload failed: " . $e->getMessage());
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
         }
 
         $data['amount'] = $this->input->post('amount');

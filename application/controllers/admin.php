@@ -413,8 +413,84 @@ class admin extends CI_Controller
     {
         $id = $this->input->post('id');
 
+        // Server-side validation rules
+        $this->form_validation->set_rules('category', 'Category', 'required');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('phone', 'Phone', 'required');
+        $this->form_validation->set_rules('age', 'Age', 'required');
+        $this->form_validation->set_rules('location', 'Location', 'required');
+        $this->form_validation->set_rules('form_selected_text', 'Form Selection Text', 'required');
+        $this->form_validation->set_rules('cause_heading', 'Cause Title', 'required|min_length[4]|max_length[100]');
+        $this->form_validation->set_rules('cause_description', 'Cause Description', 'required');
+        $this->form_validation->set_rules('amount', 'Goal Amount', 'required');
+        $this->form_validation->set_rules('end_date', 'End Date', 'required');
+        $this->form_validation->set_rules('created_by', 'Created By', 'required');
+        $this->form_validation->set_rules('Cause_video_link', 'Cause Video Link', 'required');
+        $this->form_validation->set_rules('Cause_video_link_eng', 'Original Cause Video Link', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect('admin/causesverification');
+        }
+
+        // SQL Injection and XSS validation helper closure
+        $has_injection_payload = function($value) {
+            if (empty($value)) return false;
+            
+            // XSS Check: script tag, HTML tag, or javascript: scheme
+            if (preg_match('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i', $value) || 
+                preg_match('/<[^>]+>/', $value) || 
+                stripos($value, 'javascript:') !== false) {
+                return true;
+            }
+            
+            // SQL Injection Check: union select, ' or 1=1, or 1=1, -- comments, /* comments
+            $sql_patterns = array(
+                '/union\b.*\bselect/i',
+                '/[\'"].*\bor\b.*=.*/i',
+                '/\bor\b\s+\d+\s*=\s*\d+/i',
+                '/--/',
+                '/\/\*/'
+            );
+            foreach ($sql_patterns as $pattern) {
+                if (preg_match($pattern, $value)) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        // Scan all POST fields for SQL Injection / XSS injection attempts
+        foreach ($this->input->post() as $key => $val) {
+            if (is_string($val) && $has_injection_payload($val)) {
+                $this->session->set_flashdata('error', 'SQL Injection or XSS injection pattern detected.');
+                redirect('admin/causesverification');
+                return;
+            }
+        }
+
+        // Validate Cover Image presence (either old one exists or new one is uploaded)
+        $cover_image_old = $this->input->post('cover_image_old');
+        $cover_image_new = !empty($_FILES['cover_image']['name']);
+        if (empty($cover_image_old) && !$cover_image_new) {
+            $this->session->set_flashdata('error', 'Cover Image is required.');
+            redirect('admin/causesverification');
+        }
+
         // Fetch existing record to preserve created_at
         $existing = $this->db->get_where('individualform', array('id' => $id))->row();
+
+        // Validate End Date is not a past date compared to Created At
+        if ($existing && !empty($existing->created_at)) {
+            $created_date = date('Y-m-d', strtotime($existing->created_at));
+            $end_date = date('Y-m-d', strtotime($this->input->post('end_date')));
+            if ($end_date < $created_date) {
+                $this->session->set_flashdata('error', 'End Date cannot be in the past compared to Created At.');
+                redirect('admin/causesverification');
+                return;
+            }
+        }
 
         // Initial data array from post fields
         $data = array(
@@ -448,8 +524,8 @@ class admin extends CI_Controller
 
         // File Upload Logic
         $config['upload_path'] = './assets/individualform_img/';
-        $config['allowed_types'] = 'gif|jpg|png|jpeg|webp';
-        $config['max_size'] = 5120; // 5MB limit
+        $config['allowed_types'] = 'jpg|jpeg|png|svg';
+        $config['max_size'] = 2048; // 2MB limit
         $config['encrypt_name'] = FALSE; // Keep original file names
 
         $this->load->library('upload', $config);
@@ -473,8 +549,10 @@ class admin extends CI_Controller
                     $uploadData = $this->upload->data();
                     $data[$field] = $uploadData['file_name'];
                 } else {
-                    // Upload failed, fallback to old or null
-                    $data[$field] = $this->input->post($old_field);
+                    $error = $this->upload->display_errors('', '');
+                    $this->session->set_flashdata('error', "Upload failed for " . $field . ": " . $error);
+                    redirect('admin/causesverification');
+                    return;
                 }
             } else {
                 // No new file, use the current existing filename
@@ -500,8 +578,10 @@ class admin extends CI_Controller
                     $uploadData = $this->upload->data();
                     $data[$field] = $uploadData['file_name'];
                 } else {
-                    // Upload failed, fallback
-                    $data[$field] = $this->input->post($old_field);
+                    $error = $this->upload->display_errors('', '');
+                    $this->session->set_flashdata('error', "Upload failed for " . $field . ": " . $error);
+                    redirect('admin/causesverification');
+                    return;
                 }
             } else {
                 $data[$field] = $this->input->post($old_field);
