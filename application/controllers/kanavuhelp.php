@@ -109,12 +109,18 @@ public function insert_priority()
              echo "ID: $id, Priority: $priority";
              exit;  */
 
-            if (!empty($id) && !empty($priority)) {
+            if ($id !== null && $id !== '' && $priority !== null && $priority !== '') {
+                $priorityVal = (int)$priority;
+                if (!is_numeric($priority) || $priorityVal != $priority || $priorityVal < 0 || $priorityVal > 8) {
+                    echo json_encode(['status' => 'error', 'message' => 'Priority value must be an integer between 0 and 8.']);
+                    return;
+                }
+
                 $this->load->model('UserModel');
 
                 // Check if the priority is already assigned to another ID (skip if priority is 0)
-                if ($priority != 0) {
-                    $this->db->where('priority', $priority);
+                if ($priorityVal != 0) {
+                    $this->db->where('priority', $priorityVal);
                     $this->db->where('id !=', $id);
                     $query = $this->db->get('individualform');
 
@@ -125,9 +131,9 @@ public function insert_priority()
                 }
 
                 // Proceed with the update
-                $update = $this->UserModel->update_priority($id, $priority);
+                $update = $this->UserModel->update_priority($id, $priorityVal);
 
-                if ($update) {
+                if ($update !== false && $update >= 0) {
                     echo json_encode(['status' => 'success']);
                 }
                 else {
@@ -386,10 +392,6 @@ public function insert_priority()
         $this->load->model('UserModel');
         $this->load->library('upload');
 
-        $data = [];
-        $files = $_FILES;
-
-        // ONLY FILE INPUTS
         $uploadeddocuments = [
             "document_one",
             "document_two",
@@ -398,6 +400,78 @@ public function insert_priority()
             "document_five",
             "progress_video"
         ];
+
+        // Server side validation of progress details
+        $progress_description = trim($this->input->post('progress_description'));
+        if ($progress_description !== '') {
+            if (strlen($progress_description) > 200) {
+                $this->session->set_flashdata("error", "Progress description cannot exceed 200 characters.");
+                $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'causesverification';
+                redirect($referrer);
+                return;
+            }
+            if (!preg_match('/[a-zA-Z]/', $progress_description)) {
+                $this->session->set_flashdata("error", "Progress description cannot consist of only numbers or special characters.");
+                $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'causesverification';
+                redirect($referrer);
+                return;
+            }
+            // XSS Check
+            if (preg_match('/<[^>]*>|javascript\s*:/i', $progress_description)) {
+                $this->session->set_flashdata("error", "Progress description cannot contain HTML tags or script URLs.");
+                $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'causesverification';
+                redirect($referrer);
+                return;
+            }
+            // SQL Injection Check
+            if (preg_match('/<!--|\/\*|\bunion\s+(?:all\s+)?select\b|\bselect\b.+\bfrom\b|\binsert\s+into\b|\bupdate\b.+\bset\b|\bdelete\s+from\b|\bdrop\s+table\b/i', $progress_description) ||
+                preg_match('/\b(or|and)\b\s+(\d+|\'[^\']*\'|"[^"]*")\s*=\s*(\d+|\'[^\']*\'|"[^"]*")/i', $progress_description)) {
+                $this->session->set_flashdata("error", "Progress description cannot contain SQL injection keywords or comments.");
+                $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'causesverification';
+                redirect($referrer);
+                return;
+            }
+        }
+
+        // Validate image file formats (JPG, JPEG, PNG, SVG)
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'svg'];
+        for ($i = 0; $i < 5; $i++) {
+            $file_key = $uploadeddocuments[$i];
+            if (!empty($_FILES[$file_key]['name'])) {
+                $ext = strtolower(pathinfo($_FILES[$file_key]['name'], PATHINFO_EXTENSION));
+                if (!in_array($ext, $allowed_extensions)) {
+                    $this->session->set_flashdata("error", "Only JPG, JPEG, PNG, and SVG formats are allowed for progress images.");
+                    $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'causesverification';
+                    redirect($referrer);
+                    return;
+                }
+            }
+        }
+
+        // Validate video file format (MP4) if uploaded
+        if (!empty($_FILES['progress_video']['name'])) {
+            $ext = strtolower(pathinfo($_FILES['progress_video']['name'], PATHINFO_EXTENSION));
+            if ($ext !== 'mp4') {
+                $this->session->set_flashdata("error", "Only MP4 video format is allowed.");
+                $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'causesverification';
+                redirect($referrer);
+                return;
+            }
+        }
+
+        // Validate embed video link
+        $embed_link = trim($this->input->post('progress_embed_video_link'));
+        if (!empty($embed_link)) {
+            if (filter_var($embed_link, FILTER_VALIDATE_URL) === false) {
+                $this->session->set_flashdata("error", "Please enter a valid video link/URL.");
+                $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'causesverification';
+                redirect($referrer);
+                return;
+            }
+        }
+
+        $data = [];
+        $files = $_FILES;
 
         $databasedocuments = [
             "cause_status_image1",

@@ -1902,7 +1902,7 @@ function validateField(id, errorId, message, isNumber = false) {
           errorElement.textContent = "Phone number is required.";
           return false;
         } else if (!regex.test(phone)) {
-          errorElement.textContent = "Enter a valid 10-digit Indian phone number (starting with 6-9).";
+          errorElement.textContent = "Enter a valid 10-digit Indian phone number.";
           return false;
         }
         errorElement.textContent = "";

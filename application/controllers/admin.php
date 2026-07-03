@@ -1219,6 +1219,32 @@ class admin extends CI_Controller
         $adminName = $this->input->get("adminname");
         $to = $userEmail;
 
+        if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+            $this->session->set_userdata("emailerrorstatus", "Please provide a valid email address.");
+            redirect("/causesverification");
+            return;
+        }
+
+        $emailParts = explode('@', $userEmail);
+        $domain = end($emailParts);
+        if (!checkdnsrr($domain, 'MX') && !checkdnsrr($domain, 'A')) {
+            $this->session->set_userdata("emailerrorstatus", "The email domain '" . htmlspecialchars($domain) . "' does not exist.");
+            redirect("/causesverification");
+            return;
+        }
+
+        if ($status === null || !in_array($status, ['verified', 'unverified'])) {
+            $this->session->set_userdata("emailerrorstatus", "Please select a valid verification status (Verified or Rejected).");
+            redirect("/causesverification");
+            return;
+        }
+
+        if ($message === null || trim($message) === '' || !preg_match('/[a-zA-Z]/', $message)) {
+            $this->session->set_userdata("emailerrorstatus", "Status message cannot be empty or consist of only numbers or special characters.");
+            redirect("/causesverification");
+            return;
+        }
+
         $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
         $this->email->to($to);
         $this->email->subject('The Kanavu Trust');

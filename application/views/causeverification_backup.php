@@ -509,7 +509,7 @@ function createarr($noofpages){
         <div class="modal-content">
           <div class="modal-header">
              <h5 id="mailto" class="text-danger">Send Email</h5>
-             <button data-dismiss="modal" class="btn btn-close"></button>
+             <button data-bs-dismiss="modal" class="btn btn-close"></button>
           </div>
 
           <div class="modal-body">
@@ -599,16 +599,14 @@ function createarr($noofpages){
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Insert Priority</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="priorityForm">
                     <input type="hidden" id="priorityId" name="id">
                     <div class="form-group">
                         <label for="priorityValue">Priority Value (1-8 or 0 for No Priority Higher numbers (e.g 8) first priority)</label>
-                        <input type="number" class="form-control" id="priorityValue" name="priority" min="0" max="20" required>
+                        <input type="number" class="form-control" id="priorityValue" name="priority" min="0" max="8" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
@@ -642,12 +640,24 @@ function createarr($noofpages){
                     $('#priorityForm').on('submit', function(event) {
                         event.preventDefault();
                         var id = $('#priorityId').val();
-                        var priority = $('#priorityValue').val();
+                        var priority = $('#priorityValue').val().trim();
                         console.log('ID:', id, 'Priority:', priority);
+
+                        if (priority === '') {
+                            alert('Please enter a priority value.');
+                            return;
+                        }
+
+                        var priorityNum = Number(priority);
+                        if (isNaN(priorityNum) || !Number.isInteger(priorityNum) || priorityNum < 0 || priorityNum > 8) {
+                            alert('Priority value must be an integer between 0 and 8 (no negative values allowed).');
+                            return;
+                        }
+
                         $.ajax({
                             url: 'insert_priority',
                             type: 'POST',
-                            data: { id: id, priority: priority },
+                            data: { id: id, priority: priorityNum },
                             dataType: 'json',
                             success: function(response) {
                                 if (response.status === 'success') {
@@ -703,9 +713,7 @@ function createarr($noofpages){
                         <div class="modal-content">
                         <div class="modal-header">
                                     <h5 class="modal-title" id="editDonationLabel">Edit Causes </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                    </button>   
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>   
                         </div>
 
                         <div class="modal-body">
@@ -777,10 +785,10 @@ function createarr($noofpages){
                                        </select>
                                    </div>
                                </div>
-                               <div class="modal-footer">
-                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                   <button type="submit" class="btn btn-primary">Update</button>
-                               </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
                            </form>
                         </div>
 
@@ -904,10 +912,29 @@ $.ajax({
     }
 
     function sendEmail(email,username,adminname){
-        let message = document.getElementById("causestatus").innerText;
+        let checkedRadio = document.querySelector('input[name="status"]:checked');
+        if (!checkedRadio) {
+            alert("Please select a verification status (Verified or Rejected) before sending.");
+            return;
+        }
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Please provide a valid email address.");
+            return;
+        }
+        let message = document.getElementById("causestatus").innerText.trim();
+        if (message === "") {
+            alert("Status message/description is required.");
+            return;
+        }
+        if (!/[a-zA-Z]/.test(message)) {
+            alert("Status message cannot consist of only numbers or special characters.");
+            return;
+        }
         let userid = document.getElementById("useridforemail").value;
+        let statusVal = checkedRadio.value;
         let a = document.createElement("a");
-        a.href = `sendcauseVerficationstatus?email=${email}&message=${message}&userid=${userid}&username=${username}&adminname=${adminname}&status=${status}`;
+        a.href = `sendcauseVerficationstatus?email=${email}&message=${encodeURIComponent(message)}&userid=${userid}&username=${username}&adminname=${adminname}&status=${statusVal}`;
         a.dispatchEvent(new MouseEvent("click"));
     }
 

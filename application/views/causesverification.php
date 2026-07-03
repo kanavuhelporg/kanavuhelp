@@ -1175,16 +1175,14 @@ if (isset($_SESSION["emailsuccessstatus"])) {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Insert Priority</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="priorityForm">
                     <input type="hidden" id="priorityId" name="id">
                     <div class="form-group">
                         <label for="priorityValue">Priority Value (1-8 or 0 for No Priority Higher numbers (e.g 8) first priority)</label>
-                        <input type="number" class="form-control" id="priorityValue" name="priority" min="0" max="20" required>
+                        <input type="number" class="form-control" id="priorityValue" name="priority" min="0" max="8" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
@@ -1218,12 +1216,24 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     $('#priorityForm').on('submit', function(event) {
                         event.preventDefault();
                         var id = $('#priorityId').val();
-                        var priority = $('#priorityValue').val();
+                        var priority = $('#priorityValue').val().trim();
                         console.log('ID:', id, 'Priority:', priority);
+
+                        if (priority === '') {
+                            alert('Please enter a priority value.');
+                            return;
+                        }
+
+                        var priorityNum = Number(priority);
+                        if (isNaN(priorityNum) || !Number.isInteger(priorityNum) || priorityNum < 0 || priorityNum > 8) {
+                            alert('Priority value must be an integer between 0 and 8 (no negative values allowed).');
+                            return;
+                        }
+
                         $.ajax({
                             url: 'insert_priority',
                             type: 'POST',
-                            data: { id: id, priority: priority },
+                            data: { id: id, priority: priorityNum },
                             dataType: 'json',
                             success: function(response) {
                                 if (response.status === 'success') {
@@ -2317,10 +2327,29 @@ let status = "";
     }
 
     function sendEmail(email,username,adminname){
-        let message = document.getElementById("causestatus").innerText;
+        let checkedRadio = document.querySelector('input[name="status"]:checked');
+        if (!checkedRadio) {
+            alert("Please select a verification status (Verified or Rejected) before sending.");
+            return;
+        }
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Please provide a valid email address.");
+            return;
+        }
+        let message = document.getElementById("causestatus").innerText.trim();
+        if (message === "") {
+            alert("Status message/description is required.");
+            return;
+        }
+        if (!/[a-zA-Z]/.test(message)) {
+            alert("Status message cannot consist of only numbers or special characters.");
+            return;
+        }
         let userid = document.getElementById("useridforemail").value;
+        let statusVal = checkedRadio.value;
         let a = document.createElement("a");
-        a.href = `sendcauseVerficationstatus?email=${email}&message=${message}&userid=${userid}&username=${username}&adminname=${adminname}&status=${status}`;
+        a.href = `sendcauseVerficationstatus?email=${email}&message=${encodeURIComponent(message)}&userid=${userid}&username=${username}&adminname=${adminname}&status=${statusVal}`;
         a.dispatchEvent(new MouseEvent("click"));
     }
 
@@ -2470,7 +2499,7 @@ input.addEventListener("input",function(){
       <div class="modal-body">
 
         <!-- YOUR FORM START -->
-        <form method="post"
+        <form id="updateProgressForm" method="post"
               action="<?= base_url('kanavuhelp/updateprogressdata') ?>"
               enctype="multipart/form-data">
 
@@ -2483,6 +2512,7 @@ input.addEventListener("input",function(){
               <textarea name="progress_description"
                         id="progress_description"
                         class="form-control"></textarea>
+              <div id="description_error" class="text-danger mt-1" style="display: none; font-size: 13px;"></div>
             </div>
           </div>
 
@@ -2544,6 +2574,7 @@ input.addEventListener("input",function(){
             <label class="col-md-4">Embed Video Link</label>
             <div class="col-md-8">
               <input type="text" name="progress_embed_video_link" id="progress_embed_video_link" class="form-control">
+              <div id="embed_video_error" class="text-danger mt-1" style="display: none; font-size: 13px;"></div>
             </div>
           </div>
 
@@ -2654,6 +2685,80 @@ function openUpdateProgressModal(causeId) {
         }
     });
 }
+
+$(document).ready(function() {
+    $('#progress_description').on('input', function() {
+        $('#description_error').hide().text('');
+    });
+
+    $('#updateProgressForm').on('submit', function(event) {
+        $('#description_error').hide().text('');
+        $('#embed_video_error').hide().text('');
+        var description = $('#progress_description').val().trim();
+        if (description !== '') {
+            if (description.length > 200) {
+                $('#description_error').text('Progress description cannot exceed 200 characters.').show();
+                event.preventDefault();
+                return false;
+            }
+            if (!/[a-zA-Z]/.test(description)) {
+                $('#description_error').text('Progress description cannot consist of only numbers or special characters. It must contain letters.').show();
+                event.preventDefault();
+                return false;
+            }
+            // XSS Check
+            var xssPattern = /<[^>]*>|javascript\s*:/i;
+            if (xssPattern.test(description)) {
+                $('#description_error').text('Progress description cannot contain HTML tags or script URLs.').show();
+                event.preventDefault();
+                return false;
+            }
+            // SQL Injection Check
+            var sqlPattern = /<!--|\/\*|\bunion\s+(?:all\s+)?select\b|\bselect\b.+\bfrom\b|\binsert\s+into\b|\bupdate\b.+\bset\b|\bdelete\s+from\b|\bdrop\s+table\b/i;
+            var sqlOrPattern = /\b(or|and)\b\s+(\d+|'[^']*'|"[^"]*")\s*=\s*(\d+|'[^']*'|"[^"]*")/i;
+            if (sqlPattern.test(description) || sqlOrPattern.test(description)) {
+                $('#description_error').text('Progress description cannot contain SQL injection keywords or comments.').show();
+                event.preventDefault();
+                return false;
+            }
+        }
+
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;
+        var imageFields = ['#document_one', '#document_two', '#document_three', '#document_four', '#document_five'];
+        for (var i = 0; i < imageFields.length; i++) {
+            var fileInput = $(imageFields[i])[0];
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                var fileName = fileInput.files[0].name;
+                if (!allowedExtensions.exec(fileName)) {
+                    alert('Only JPG, JPEG, PNG, and SVG formats are allowed for progress images. File "' + fileName + '" is not allowed.');
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        }
+
+        var videoLink = $('#progress_embed_video_link').val().trim();
+        if (videoLink !== '') {
+            try {
+                var url = new URL(videoLink);
+                if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+                    $('#embed_video_error').text('Please enter a valid video URL starting with http:// or https://').show();
+                    event.preventDefault();
+                    return false;
+                }
+            } catch (e) {
+                $('#embed_video_error').text('Please enter a valid video link/URL.').show();
+                event.preventDefault();
+                return false;
+            }
+        }
+        return true;
+    });
+
+    $('#progress_embed_video_link').on('input', function() {
+        $('#embed_video_error').hide().text('');
+    });
+});
 </script>
 
 <!-- Manual Complete Modal -->

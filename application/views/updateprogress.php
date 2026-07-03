@@ -915,7 +915,7 @@
           <div id="step-two-form" style="overflow:auto;" class="col-md-6 mt-4">
             <div id="multi-step-form-container" class="mt-3 py-3 w-100">
 
-              <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/updateprogressdata') ?>" enctype="multipart/form-data">
+              <form id="individualform" name="individualform" method="post" action="<?= base_url('kanavuhelp/updateprogressdata') ?>" enctype="multipart/form-data" onsubmit="return validateProgressForm(event)">
                 <!-- Step 3 Content -->
                 <section id="step-3" class="form-step col-12">
                   <h2>Update Progress Details</h2>
@@ -926,7 +926,7 @@
                   <div class="row my-3">
                     <label for="progress_description" class="col-md-4 col-form-label">Progress description:</label>
                     <div class="col-md-8">
-                      <textarea type="text" name="progress_description" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2" required><?php if(!empty($progressdetails)){echo "$progressdetails->progress_description";}?></textarea>
+                      <textarea type="text" name="progress_description" accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2"><?php if(!empty($progressdetails)){echo "$progressdetails->progress_description";}?></textarea>
                       <p id="progress-description-error" class="text-danger"></p>
                     </div>
                   </div>
@@ -1001,7 +1001,7 @@
                     <label for="cause_video" class="col-md-4 col-form-label">Progress embed video link:</label>
                     <div class="col-md-8">
                       <input type="text" id="progress_video" name="progress_embed_video_link" class="form-control my-2" >
-                      <p id="progress-video-error" class="text-danger"></p> 
+                      <p id="progress-embed-video-error" class="text-danger"></p> 
                     </div>
                   </div>
 
@@ -1398,6 +1398,130 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         return true;
       }
+
+function validateProgressForm(event) {
+    var errorElem = document.getElementById("progress-description-error");
+    if (errorElem) {
+        errorElem.textContent = "";
+    }
+    var videoErrorElem = document.getElementById("progress-embed-video-error");
+    if (videoErrorElem) {
+        videoErrorElem.textContent = "";
+    }
+
+    // 1. Progress description validation
+    var descElem = document.getElementsByName("progress_description")[0];
+    if (descElem) {
+        var description = descElem.value.trim();
+        if (description !== "") {
+            if (description.length > 200) {
+                if (errorElem) {
+                    errorElem.textContent = "Progress description cannot exceed 200 characters.";
+                }
+                event.preventDefault();
+                return false;
+            }
+            if (!/[a-zA-Z]/.test(description)) {
+                if (errorElem) {
+                    errorElem.textContent = "Progress description cannot consist of only numbers or special characters. It must contain letters.";
+                }
+                event.preventDefault();
+                return false;
+            }
+            // XSS Check
+            var xssPattern = /<[^>]*>|javascript\s*:/i;
+            if (xssPattern.test(description)) {
+                if (errorElem) {
+                    errorElem.textContent = "Progress description cannot contain HTML tags or script URLs.";
+                }
+                event.preventDefault();
+                return false;
+            }
+            // SQL Injection Check
+            var sqlPattern = /<!--|\/\*|\bunion\s+(?:all\s+)?select\b|\bselect\b.+\bfrom\b|\binsert\s+into\b|\bupdate\b.+\bset\b|\bdelete\s+from\b|\bdrop\s+table\b/i;
+            var sqlOrPattern = /\b(or|and)\b\s+(\d+|'[^']*'|"[^"]*")\s*=\s*(\d+|'[^']*'|"[^"]*")/i;
+            if (sqlPattern.test(description) || sqlOrPattern.test(description)) {
+                if (errorElem) {
+                    errorElem.textContent = "Progress description cannot contain SQL injection keywords or comments.";
+                }
+                event.preventDefault();
+                return false;
+            }
+        }
+    }
+
+    // 2. Progress images validation (JPG, JPEG, PNG, SVG only)
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;
+    var imageIds = ["progress_image_one", "progress_image_two", "progress_image_three", "progress_image_four", "progress_image_five"];
+    for (var i = 0; i < imageIds.length; i++) {
+        var fileInput = document.getElementById(imageIds[i]);
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+            var fileName = fileInput.files[0].name;
+            if (!allowedExtensions.exec(fileName)) {
+                alert("Only JPG, JPEG, PNG, and SVG formats are allowed for progress images. File \"" + fileName + "\" is not allowed.");
+                event.preventDefault();
+                return false;
+            }
+        }
+    }
+
+    // 3. Progress video validation (MP4 only)
+    var videoFileInput = document.getElementById("progress_video");
+    if (videoFileInput && videoFileInput.files && videoFileInput.files[0]) {
+        var videoName = videoFileInput.files[0].name;
+        if (!/(\.mp4)$/i.exec(videoName)) {
+            alert("Only MP4 format is allowed for video files. File \"" + videoName + "\" is not allowed.");
+            event.preventDefault();
+            return false;
+        }
+    }
+
+    // 4. Video link validation (HTTP/HTTPS URL only)
+    var videoInput = document.getElementsByName("progress_embed_video_link")[0];
+    if (videoInput) {
+        var videoLink = videoInput.value.trim();
+        if (videoLink !== "") {
+            try {
+                var url = new URL(videoLink);
+                if (url.protocol !== "http:" && url.protocol !== "https:") {
+                    if (videoErrorElem) {
+                        videoErrorElem.textContent = "Please enter a valid video URL starting with http:// or https://";
+                    }
+                    event.preventDefault();
+                    return false;
+                }
+            } catch (e) {
+                if (videoErrorElem) {
+                    videoErrorElem.textContent = "Please enter a valid video link/URL.";
+                }
+                event.preventDefault();
+                return false;
+            }
+        }
+    }
+    return true;
+}
+document.addEventListener("DOMContentLoaded", function() {
+    var descElem = document.getElementsByName("progress_description")[0];
+    if (descElem) {
+        descElem.addEventListener("input", function() {
+            var errorElem = document.getElementById("progress-description-error");
+            if (errorElem) {
+                errorElem.textContent = "";
+            }
+        });
+    }
+
+    var videoInput = document.getElementsByName("progress_embed_video_link")[0];
+    if (videoInput) {
+        videoInput.addEventListener("input", function() {
+            var videoErrorElem = document.getElementById("progress-embed-video-error");
+            if (videoErrorElem) {
+                videoErrorElem.textContent = "";
+            }
+        });
+    }
+});
 </script>
 
 
