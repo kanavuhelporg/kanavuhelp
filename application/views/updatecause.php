@@ -1001,10 +1001,10 @@
                       <label for="cover_image" class="col-md-4 col-form-label">Cover Image:</label>
                       <div class="col-md-8">
                         <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="cover_image"
-                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                          accept="image/jpg, image/jpeg, image/png" class="form-control my-2">
                         <p id="cover-image-error" class="text-danger"></p>
                         <small class="text-muted">
-                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG.
                         </small>
                       </div>
                     </div>
@@ -1013,10 +1013,10 @@
                       <label for="cover_image" class="col-md-4 col-form-label">Cause Image One:</label>
                       <div class="col-md-8">
                         <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_one"
-                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                          accept="image/jpg, image/jpeg, image/png" class="form-control my-2">
                         <p id="cover-image-error" class="text-danger"></p>
                         <small class="text-muted">
-                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG.
                         </small>
                       </div>
                     </div>
@@ -1025,10 +1025,10 @@
                       <label for="cover_image" class="col-md-4 col-form-label">Cause Image Two:</label>
                       <div class="col-md-8">
                         <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_two"
-                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                          accept="image/jpg, image/jpeg, image/png" class="form-control my-2">
                         <p id="cover-image-error" class="text-danger"></p>
                         <small class="text-muted">
-                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG.
                         </small>
                       </div>
                     </div>
@@ -1037,10 +1037,10 @@
                       <label for="cover_image" class="col-md-4 col-form-label">Cause Image Three:</label>
                       <div class="col-md-8">
                         <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_three"
-                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                          accept="image/jpg, image/jpeg, image/png" class="form-control my-2">
                         <p id="cover-image-error" class="text-danger"></p>
                         <small class="text-muted">
-                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG.
                         </small>
                       </div>
                     </div>
@@ -1049,10 +1049,10 @@
                       <label for="cover_image" class="col-md-4 col-form-label">Cause Image Four:</label>
                       <div class="col-md-8">
                         <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_four"
-                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                          accept="image/jpg, image/jpeg, image/png" class="form-control my-2">
                         <p id="cover-image-error" class="text-danger"></p>
                         <small class="text-muted">
-                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG.
                         </small>
                       </div>
                     </div>
@@ -1061,10 +1061,10 @@
                       <label for="cover_image" class="col-md-4 col-form-label">Cause Image Five:</label>
                       <div class="col-md-8">
                         <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_five"
-                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                          accept="image/jpg, image/jpeg, image/png" class="form-control my-2">
                         <p id="cover-image-error" class="text-danger"></p>
                         <small class="text-muted">
-                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG.
                         </small>
                       </div>
                     </div>
@@ -1073,10 +1073,10 @@
                       <label for="cover_image" class="col-md-4 col-form-label">Cause Image Six:</label>
                       <div class="col-md-8">
                         <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_six"
-                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                          accept="image/jpg, image/jpeg, image/png" class="form-control my-2">
                         <p id="cover-image-error" class="text-danger"></p>
                         <small class="text-muted">
-                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG.
                         </small>
                       </div>
                     </div>
@@ -1085,10 +1085,10 @@
                       <label for="cover_image" class="col-md-4 col-form-label">Cause Image Seven:</label>
                       <div class="col-md-8">
                         <input type="file" onchange="validateCoverImage(this)" id="cover_image" name="document_seven"
-                          accept="image/jpeg, image/png, image/svg+xml" class="form-control my-2">
+                          accept="image/jpg, image/jpeg, image/png" class="form-control my-2">
                         <p id="cover-image-error" class="text-danger"></p>
                         <small class="text-muted">
-                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG, SVG.
+                          Image dimensions up to 600x400 px, and formats: JPG, JPEG, PNG.
                         </small>
                       </div>
                     </div>
@@ -1519,59 +1519,60 @@
     }
 
     function validateCoverImage(file) {
-
-      let filereader = new FileReader();
-      let fileuploadread = filereader.readAsDataURL(file.files[0]);
+      if (!file.files || !file.files[0]) {
+        return true;
+      }
+      let fileObj = file.files[0];
+      let allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml"];
+      let allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;
       let imagesize = 2000000;
-      let uploadedimagesize = file.files[0].size;
+      let uploadedimagesize = fileObj.size;
 
       // Check for image size greater than 2MB
       if (uploadedimagesize > imagesize) {
         file.nextElementSibling.textContent = "Image size should be below 2MB";
-        filereader.onloadstart = () => {
-          file.value = "";  // Clear the file input
-          return false;
-        }
-        return false;
-      } else {
-        file.nextElementSibling.textContent = "";
-      }
-
-      // Check for supported image formats (JPG, JPEG, PNG)
-      if (!["image/jpeg", "image/jpg", "image/png"].includes(file.files[0].type)) {
-        file.nextElementSibling.textContent = "Only JPG, JPEG, and PNG formats are allowed.";
-        filereader.onloadstart = () => {
-          file.value = "";  // Clear the file input if format is not supported
-          return false;
-        }
+        file.value = "";  // Clear the file input
         return false;
       }
 
+      // Check for supported image formats (JPG, JPEG, PNG, SVG)
+      if (!allowedTypes.includes(fileObj.type) && !allowedExtensions.test(fileObj.name)) {
+        file.nextElementSibling.textContent = "Only JPG, JPEG, PNG, and SVG formats are allowed.";
+        file.value = "";  // Clear the file input if format is not supported
+        return false;
+      }
+
+      file.nextElementSibling.textContent = "";
       return true;
-
     }
 
     function validateCausevideo(file) {
+      if (!file.files || !file.files[0]) {
+        return true;
+      }
+      let fileObj = file.files[0];
       let videosize = 128000000;  // Max size set to 128MB (which is 128,000,000 bytes)
-      let uploadedvideosize = file.files[0].size;
+      let uploadedvideosize = fileObj.size;
 
       // Check for video size greater than 39MB (128MB as in your code)
       if (uploadedvideosize > videosize) {
         file.nextElementSibling.textContent = "Video size should be below 39MB";  // Show size error
         file.value = "";  // Clear the file input
         return false;
-      } else {
-        file.nextElementSibling.textContent = "";
       }
 
       // Check for supported video format (only mp4 allowed)
-      if (file.files[0].type !== "video/mp4") {
+      let allowedTypes = ["video/mp4"];
+      let allowedExtensions = /(\.mp4)$/i;
+      if (!allowedTypes.includes(fileObj.type) && !allowedExtensions.test(fileObj.name)) {
         file.nextElementSibling.textContent = "Only MP4 video format is allowed.";  // Show format error
         file.value = "";  // Clear the file input if format is not supported
         return false;
       }
 
+      file.nextElementSibling.textContent = "";
       return true;
+    }
 
     }
   </script>

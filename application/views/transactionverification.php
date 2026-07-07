@@ -791,27 +791,32 @@
                     <div class="modal-body">
                         <input type="hidden" name="id" id="donationId">
                         <div class="mb-3">
-                            <label class="form-label">Name</label>
+                            <label class="form-label">Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" id="donationName" class="form-control">
+                            <div class="invalid-feedback" id="err-donationName"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
                             <input type="email" name="email" id="donationEmail" class="form-control">
+                            <div class="invalid-feedback" id="err-donationEmail"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Mobile</label>
-                            <input type="text" name="mobile" id="donationMobile" class="form-control">
+                            <label class="form-label">Mobile <span class="text-danger">*</span></label>
+                            <input type="text" name="mobile" id="donationMobile" class="form-control" maxlength="20">
+                            <div class="invalid-feedback" id="err-donationMobile"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Amount</label>
+                            <label class="form-label">Amount <span class="text-danger">*</span></label>
                             <input type="text" name="amount" id="donationAmount" class="form-control">
+                            <div class="invalid-feedback" id="err-donationAmount"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Transaction ID</label>
+                            <label class="form-label">Transaction ID <span class="text-danger">*</span></label>
                             <input type="text" name="transaction_id" id="donationTransactionId" class="form-control">
+                            <div class="invalid-feedback" id="err-donationTransactionId"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Verified</label>
+                            <label class="form-label">Verified <span class="text-danger">*</span></label>
                             <select name="status" id="donationVerified" class="form-control">
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -917,9 +922,85 @@
             document.getElementById('donationVerified').value = donation.status;
         }
 
+        // ---- Edit Donation Form Validation ----
+        function validateEditDonationForm() {
+            let isValid = true;
+
+            // Helper: clear all errors
+            function clearError(fieldId, errId) {
+                let field = document.getElementById(fieldId);
+                let err   = document.getElementById(errId);
+                field.classList.remove('is-invalid');
+                err.textContent = '';
+            }
+
+            // Helper: set error
+            function setError(fieldId, errId, message) {
+                let field = document.getElementById(fieldId);
+                let err   = document.getElementById(errId);
+                field.classList.add('is-invalid');
+                err.textContent = message;
+                isValid = false;
+            }
+
+            // Clear all first
+            ['donationName','donationEmail','donationMobile','donationAmount','donationTransactionId'].forEach(function(id) {
+                clearError(id, 'err-' + id);
+            });
+
+            let name          = document.getElementById('donationName').value.trim();
+            let email         = document.getElementById('donationEmail').value.trim();
+            let mobile        = document.getElementById('donationMobile').value.trim();
+            let amount        = document.getElementById('donationAmount').value.trim();
+            let transactionId = document.getElementById('donationTransactionId').value.trim();
+
+            // Name: required, alphabets (and spaces) only, max 30 chars
+            if (name === '') {
+                setError('donationName', 'err-donationName', 'Name is required.');
+            } else if (!/^[A-Za-z\s]+$/.test(name)) {
+                setError('donationName', 'err-donationName', 'Name must contain alphabets only.');
+            } else if (name.length > 30) {
+                setError('donationName', 'err-donationName', 'Name must not exceed 30 characters.');
+            }
+
+            // Email: optional but validate format if provided (min 4 chars before @, not purely special/numeric)
+            if (email !== '' && !/^(?=[^@]*[a-zA-Z])[a-zA-Z0-9._%+-]{4,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                setError('donationEmail', 'err-donationEmail', 'Enter a valid email address (minimum 4 characters and at least one letter before @).');
+            }
+
+            // Mobile: required, numeric only, exactly 10 digits
+            if (mobile === '') {
+                setError('donationMobile', 'err-donationMobile', 'Mobile number is required.');
+            } else if (!/^[0-9]+$/.test(mobile)) {
+                setError('donationMobile', 'err-donationMobile', 'Mobile must contain numbers only.');
+            } else if (mobile.length !== 10) {
+                setError('donationMobile', 'err-donationMobile', 'Mobile number must be exactly 10 digits.');
+            }
+
+            // Amount: required, numeric with up to 2 decimal places (e.g. 1000.00)
+            if (amount === '') {
+                setError('donationAmount', 'err-donationAmount', 'Amount is required.');
+            } else if (!/^\d+(\.\d{1,2})?$/.test(amount)) {
+                setError('donationAmount', 'err-donationAmount', 'Amount must be a valid number with up to 2 decimal places (e.g. 1000.00).');
+            }
+
+            // Transaction ID: required, alphanumeric only
+            if (transactionId === '') {
+                setError('donationTransactionId', 'err-donationTransactionId', 'Transaction ID is required.');
+            } else if (!/^[A-Za-z0-9]+$/.test(transactionId)) {
+                setError('donationTransactionId', 'err-donationTransactionId', 'Transaction ID must contain letters and numbers only.');
+            }
+
+            return isValid;
+        }
+
         // Form submission for edit
         $('#editDonationForm').on('submit', function(event) {
             event.preventDefault();
+
+            if (!validateEditDonationForm()) {
+                return; // Stop if validation fails
+            }
 
             $.ajax({
                 url: $(this).attr('action'),
@@ -942,8 +1023,22 @@
             });
         });
 
+        // Clear validation errors when modal is opened/reset
+        document.getElementById('editDonationModal').addEventListener('show.bs.modal', function () {
+            ['donationName','donationEmail','donationMobile','donationAmount','donationTransactionId'].forEach(function(id) {
+                let field = document.getElementById(id);
+                let err   = document.getElementById('err-' + id);
+                field.classList.remove('is-invalid');
+                if (err) err.textContent = '';
+            });
+        });
+
        // In your view JavaScript, update the sendEmail function:
 function sendEmail(donationid, email, donarname, adminname, transactionid, amount) {
+    if (status === "") {
+        alert("First choose any one radio button only");
+        return;
+    }
     let message = document.getElementById("transactionstatus").innerText;
     let a = document.createElement("a");
     a.href = `sendtransactionVerficationstatus?email=${email}&message=${message}&donationid=${donationid}&donarname=${donarname}&adminname=${adminname}&status=${status}&transactionid=${transactionid}&amount=${amount}`;
@@ -955,12 +1050,13 @@ function sendEmail(donationid, email, donarname, adminname, transactionid, amoun
 function setUrl(donation) {
     document.getElementById("mailto").innerHTML = `Send Mail to <span class='text-dark'>${donation.email}</span>`;
     document.getElementById("transactionstatus").innerHTML = "";
+    status = ""; // reset status when opening modal
     let adminname = "<?php echo $this->session->userdata("adminName");?>";
     document.getElementById("statusheading").innerHTML = `<span class="text-danger h5">Verification Status</span>
             <div>
             <input hidden type="radio" id='useridforemail' value='${donation.donation_id}'>
-            <label data-bs-toggle="modal" data-bs-target="#emaildata" type="button" onclick="showVerifyemaildata(${donation.donation_id})" for="verified" class="text-success h5">Verified [${donation.Verifyemailcount}]</label>&nbsp;<input onclick="setAutomail(this,'${donation.name}','${donation.transactionid}')" value="verified" type="radio" name="status">&nbsp;&nbsp;
-            <label data-bs-toggle="modal" data-bs-target="#emaildata" onclick="showRejectemaildata(${donation.donation_id})" role="button" for="verified" class="text-warning h5">Rejected [${donation.Rejectemailcount}]</label>&nbsp;<input onclick="setAutomail(this,'${donation.name}','${donation.transactionid}')" value="unverified" type="radio" name="status"></div>`;
+            <label data-bs-toggle="modal" data-bs-target="#emaildata" type="button" onclick="showVerifyemaildata(${donation.donation_id})" class="text-success h5">Verified [${donation.Verifyemailcount}]</label>&nbsp;<input onclick="setAutomail(this,'${donation.name}','${donation.transactionid}')" value="verified" type="radio" name="status">&nbsp;&nbsp;
+            <label data-bs-toggle="modal" data-bs-target="#emaildata" onclick="showRejectemaildata(${donation.donation_id})" role="button" class="text-warning h5">Rejected [${donation.Rejectemailcount}]</label>&nbsp;<input onclick="setAutomail(this,'${donation.name}','${donation.transactionid}')" value="unverified" type="radio" name="status"></div>`;
     document.getElementById("sendmailbtn").innerHTML = `<button onclick='sendEmail("${donation.donation_id}","${donation.email}","${donation.name}","${adminname}","${donation.transactionid}","${donation.amount}")' class='btn btn-danger'>Send</button>
 `;
 }

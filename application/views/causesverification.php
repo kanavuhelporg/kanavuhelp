@@ -1175,16 +1175,14 @@ if (isset($_SESSION["emailsuccessstatus"])) {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Insert Priority</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="priorityForm">
                     <input type="hidden" id="priorityId" name="id">
                     <div class="form-group">
                         <label for="priorityValue">Priority Value (1-8 or 0 for No Priority Higher numbers (e.g 8) first priority)</label>
-                        <input type="number" class="form-control" id="priorityValue" name="priority" min="0" max="20" required>
+                        <input type="number" class="form-control" id="priorityValue" name="priority" min="0" max="8" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
@@ -1218,12 +1216,24 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     $('#priorityForm').on('submit', function(event) {
                         event.preventDefault();
                         var id = $('#priorityId').val();
-                        var priority = $('#priorityValue').val();
+                        var priority = $('#priorityValue').val().trim();
                         console.log('ID:', id, 'Priority:', priority);
+
+                        if (priority === '') {
+                            alert('Please enter a priority value.');
+                            return;
+                        }
+
+                        var priorityNum = Number(priority);
+                        if (isNaN(priorityNum) || !Number.isInteger(priorityNum) || priorityNum < 0 || priorityNum > 8) {
+                            alert('Priority value must be an integer between 0 and 8 (no negative values allowed).');
+                            return;
+                        }
+
                         $.ajax({
                             url: 'insert_priority',
                             type: 'POST',
-                            data: { id: id, priority: priority },
+                            data: { id: id, priority: priorityNum },
                             dataType: 'json',
                             success: function(response) {
                                 if (response.status === 'success') {
@@ -1281,7 +1291,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
     <!-- LARGE MODAL FOR ALL FIELDS -->
     <div class="modal fade" id="causeModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl">
-            <form id="causeForm" action="<?php echo base_url('admin/update_cause'); ?>" method="POST" enctype="multipart/form-data">
+            <form id="causeForm" action="<?php echo base_url('admin/update_cause'); ?>" method="POST" enctype="multipart/form-data" novalidate>
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-between align-items-center">
                         <h5 class="modal-title" id="modalTitle">Full Cause Details</h5>
@@ -1302,32 +1312,63 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <div class="modal-section-title">Personal & Basic Information</div>
                         <div class="row g-3">
                             <div class="col-md-3">
-                                <label class="form-label small">Category</label>
-                                <input type="text" name="category" id="field_category" class="form-control">
+                                <label class="form-label small">Category <span class="text-danger">*</span></label>
+                                <input type="text" name="category" id="field_category" class="form-control" required>
+                                <small id="field_category_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-3">
-                                <label class="form-label small">Name</label>
-                                <input type="text" name="name" id="field_name" class="form-control">
+                                <label class="form-label small">Name <span class="text-danger">*</span></label>
+                                <input type="text" name="name" id="field_name" class="form-control" oninput="this.value = this.value.replace(/[^A-Za-z\s\-]/g, '')" required>
+                                <small id="field_name_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-3">
-                                <label class="form-label small">Email</label>
-                                <input type="email" name="email" id="field_email" class="form-control">
+                                <label class="form-label small">Email <span class="text-danger">*</span></label>
+                                <input type="email" name="email" id="field_email" class="form-control"
+                                    title="Valid email: at least 4 characters before @ and a valid domain like example@gmail.com"
+                                    onblur="
+                                        this.setCustomValidity('');
+                                        var v = this.value.trim();
+                                        var errEl = document.getElementById('field_email_err');
+                                        if(v === ''){ if(errEl) errEl.style.display='none'; return; }
+                                        var emailPattern = /^[a-zA-Z0-9._%+\-]{4,}@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,}$/;
+                                        if(!emailPattern.test(v)){
+                                            var msg = '';
+                                            var parts = v.split('@');
+                                            if(parts.length !== 2 || parts[0].length < 4){
+                                                msg = 'Email must have at least 4 characters before @';
+                                            } else {
+                                                msg = 'Enter a valid email like example@gmail.com';
+                                            }
+                                            this.setCustomValidity(msg);
+                                            this.reportValidity();
+                                            if(errEl){ errEl.textContent = msg; errEl.style.display='block'; }
+                                        } else {
+                                            this.setCustomValidity('');
+                                            if(errEl) errEl.style.display='none';
+                                        }
+                                    "
+                                    oninput="this.setCustomValidity(''); var errEl=document.getElementById('field_email_err'); if(errEl) errEl.style.display='none';" required>
+                                <small id="field_email_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-3">
-                                <label class="form-label small">Phone</label>
-                                <input type="text" name="phone" id="field_phone" class="form-control">
+                                <label class="form-label small">Phone <span class="text-danger">*</span></label>
+                                <input type="text" name="phone" id="field_phone" class="form-control" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                                <small id="field_phone_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-2">
-                                <label class="form-label small">Age</label>
-                                <input type="number" name="age" id="field_age" class="form-control">
+                                <label class="form-label small">Age <span class="text-danger">*</span></label>
+                                <input type="text" name="age" id="field_age" class="form-control" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value !== '' && parseInt(this.value) > 120) this.value = '120'; if(this.value === '0') this.value = '';" required>
+                                <small id="field_age_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label small">Location</label>
-                                <input type="text" name="location" id="field_location" class="form-control">
+                                <label class="form-label small">Location <span class="text-danger">*</span></label>
+                                <input type="text" name="location" id="field_location" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s,.-]/g, '')" required>
+                                <small id="field_location_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label small">Form Selection Text</label>
-                                <input type="text" name="form_selected_text" id="field_form_text" class="form-control">
+                                <label class="form-label small">Form Selection Text <span class="text-danger">*</span></label>
+                                <input type="text" name="form_selected_text" id="field_form_text" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" required>
+                                <small id="field_form_text_err" class="text-danger" style="display:none;"></small>
                             </div>
                         </div>
 
@@ -1335,12 +1376,14 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <div class="modal-section-title">Cause Content & Descriptions</div>
                         <div class="row g-3">
                             <div class="col-12">
-                                <label class="form-label small">Cause Heading</label>
-                                <input type="text" name="cause_heading" id="field_cause_heading" class="form-control">
+                                <label class="form-label small">Cause Heading <span class="text-danger">*</span></label>
+                                <input type="text" name="cause_heading" id="field_cause_heading" class="form-control" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s]/g, '')" required minlength="4" maxlength="100">
+                                <small id="field_cause_heading_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-12">
-                                <label class="form-label small">Cause Description</label>
-                                <textarea name="cause_description" id="field_cause_description" class="form-control" rows="4"></textarea>
+                                <label class="form-label small">Cause Description <span class="text-danger">*</span></label>
+                                <textarea name="cause_description" id="field_cause_description" class="form-control" rows="4" maxlength="150" required></textarea>
+                                <small id="field_cause_description_err" class="text-danger" style="display:none;"></small>
                             </div>
                         </div>
 
@@ -1356,19 +1399,30 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Event Name</label>
-                                <input type="text" name="eventname" id="field_eventname" class="form-control">
+                                <input type="text" name="eventname" id="field_eventname" class="form-control"
+                                    oninput="
+                                        this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, '');
+                                        if(this.value.trim() !== '' && /^[0-9]+$/.test(this.value.trim())){
+                                            this.setCustomValidity('Event Name cannot be purely numeric. Please include letters.');
+                                            document.getElementById('field_eventname_err').style.display='block';
+                                        } else {
+                                            this.setCustomValidity('');
+                                            document.getElementById('field_eventname_err').style.display='none';
+                                        }
+                                    ">
+                                <small id="field_eventname_err" class="text-danger" style="display:none;">Event Name cannot be purely numeric. Please include letters.</small>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Event Date</label>
-                                <input type="text" name="eventdate" id="field_eventdate" class="form-control">
+                                <input type="date" name="eventdate" id="field_eventdate" class="form-control">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Event Distance (KM)</label>
-                                <input type="text" name="eventdistancekm" id="field_eventdistancekm" class="form-control">
+                                <input type="text" name="eventdistancekm" id="field_eventdistancekm" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '')">
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label small">Event Location</label>
-                                <input type="text" name="eventlocation" id="field_eventlocation" class="form-control">
+                                <input type="text" name="eventlocation" id="field_eventlocation" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                             </div>
                         </div>
 
@@ -1376,29 +1430,32 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <div class="modal-section-title">Financials, Dates & Tracking</div>
                         <div class="row g-3">
                             <div class="col-md-3">
-                                <label class="form-label small">Goal Amount</label>
-                                <input type="number" name="amount" id="field_amount" class="form-control">
+                                <label class="form-label small">Goal Amount <span class="text-danger">*</span></label>
+                                <input type="text" name="amount" id="field_amount" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1').replace(/^(\d+\.\d{2}).*/, '$1')" required>
+                                <small id="field_amount_err" class="text-danger" style="display:none;"></small>
                             </div>
                           
                             <div class="col-md-3">
-                                <label class="form-label small">End Date</label>
-                                <input type="date" name="end_date" id="field_end_date" class="form-control">
+                                <label class="form-label small">End Date <span class="text-danger">*</span></label>
+                                <input type="date" name="end_date" id="field_end_date" class="form-control" required>
+                                <small id="field_end_date_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Created At</label>
-                                <input type="text" id="field_created_at" class="form-control" readonly>
+                                <input type="date" id="field_created_at" class="form-control" readonly>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">User ID</label>
-                                <input type="text" name="user_id" id="field_user_id" class="form-control">
+                                <input type="text" name="user_id" id="field_user_id" class="form-control" readonly style="background-color:#e9ecef; cursor:not-allowed;">
                             </div>
                             <div class="col-md-3">
-                                <label class="form-label small">Created By</label>
-                                <input type="text" name="created_by" id="field_created_by" class="form-control">
+                                <label class="form-label small">Created By <span class="text-danger">*</span></label>
+                                <input type="text" name="created_by" id="field_created_by" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" required>
+                                <small id="field_created_by_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-2">
                                 <label class="form-label small">Is Fill</label>
-                                <input type="text" name="isFill" id="field_isFill" class="form-control">
+                                <input type="text" name="isFill" id="field_isFill" class="form-control" readonly style="background-color:#e9ecef; cursor:not-allowed;">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small">Verification Status (Verified)</label>
@@ -1415,73 +1472,76 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <!-- SECTION 5: Media & Assets -->
                         <div class="modal-section-title">Media, Images & Video Links</div>
                         <div class="row g-3">
-                            <div class="col-md-4">
-                                <label class="form-label small">Cover Image</label>
-                                <input type="hidden" name="cover_image_old" id="field_cover_image_old">
-                                <input type="file" name="cover_image" class="form-control">
-                                <small id="label_cover_image" class="text-muted"></small>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label small">Cause Image 1</label>
-                                <input type="hidden" name="cause_image1_old" id="field_img1_old">
-                                <input type="file" name="cause_image1" class="form-control">
-                                <small id="label_img1" class="text-muted"></small>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label small">Cause Image 2</label>
-                                <input type="hidden" name="cause_image2_old" id="field_img2_old">
-                                <input type="file" name="cause_image2" class="form-control">
-                                <small id="label_img2" class="text-muted"></small>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label small">Cause Image 3</label>
-                                <input type="hidden" name="cause_image3_old" id="field_img3_old">
-                                <input type="file" name="cause_image3" class="form-control">
-                                <small id="label_img3" class="text-muted"></small>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label small">Cause Image 4</label>
-                                <input type="hidden" name="cause_image4_old" id="field_img4_old">
-                                <input type="file" name="cause_image4" class="form-control">
-                                <small id="label_img4" class="text-muted"></small>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label small">Cause Image 5</label>
-                                <input type="hidden" name="cause_image5_old" id="field_img5_old">
-                                <input type="file" name="cause_image5" class="form-control">
-                                <small id="label_img5" class="text-muted"></small>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label small">Cause Image 6</label>
-                                <input type="hidden" name="cause_image6_old" id="field_img6_old">
-                                <input type="file" name="cause_image6" class="form-control">
-                                <small id="label_img6" class="text-muted"></small>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label small">Cause Image 7</label>
-                                <input type="hidden" name="cause_image7_old" id="field_img7_old">
-                                <input type="file" name="cause_image7" class="form-control">
-                                <small id="label_img7" class="text-muted"></small>
+                             <div class="col-md-4">
+                                 <label class="form-label small">Cover Image <span class="text-danger">*</span></label>
+                                 <input type="hidden" name="cover_image_old" id="field_cover_image_old">
+                                 <input type="file" name="cover_image" class="form-control" accept="image/jpg, image/jpeg, image/png, image/svg+xml" onchange="validateAdminFile(this, 'image')">
+                                 <small id="label_cover_image" class="text-muted"></small>
+                                 <small id="field_cover_image_err" class="text-danger" style="display:none;"></small>
+                             </div>
+                             <div class="col-md-4">
+                                 <label class="form-label small">Cause Image 1</label>
+                                 <input type="hidden" name="cause_image1_old" id="field_img1_old">
+                                 <input type="file" name="cause_image1" class="form-control" accept="image/jpg, image/jpeg, image/png, image/svg+xml" onchange="validateAdminFile(this, 'image')">
+                                 <small id="label_img1" class="text-muted"></small>
+                             </div>
+                             <div class="col-md-4">
+                                 <label class="form-label small">Cause Image 2</label>
+                                 <input type="hidden" name="cause_image2_old" id="field_img2_old">
+                                 <input type="file" name="cause_image2" class="form-control" accept="image/jpg, image/jpeg, image/png, image/svg+xml" onchange="validateAdminFile(this, 'image')">
+                                 <small id="label_img2" class="text-muted"></small>
+                             </div>
+                             <div class="col-md-4">
+                                 <label class="form-label small">Cause Image 3</label>
+                                 <input type="hidden" name="cause_image3_old" id="field_img3_old">
+                                 <input type="file" name="cause_image3" class="form-control" accept="image/jpg, image/jpeg, image/png, image/svg+xml" onchange="validateAdminFile(this, 'image')">
+                                 <small id="label_img3" class="text-muted"></small>
+                             </div>
+                             <div class="col-md-4">
+                                 <label class="form-label small">Cause Image 4</label>
+                                 <input type="hidden" name="cause_image4_old" id="field_img4_old">
+                                 <input type="file" name="cause_image4" class="form-control" accept="image/jpg, image/jpeg, image/png, image/svg+xml" onchange="validateAdminFile(this, 'image')">
+                                 <small id="label_img4" class="text-muted"></small>
+                             </div>
+                             <div class="col-md-4">
+                                 <label class="form-label small">Cause Image 5</label>
+                                 <input type="hidden" name="cause_image5_old" id="field_img5_old">
+                                 <input type="file" name="cause_image5" class="form-control" accept="image/jpg, image/jpeg, image/png, image/svg+xml" onchange="validateAdminFile(this, 'image')">
+                                 <small id="label_img5" class="text-muted"></small>
+                             </div>
+                             <div class="col-md-4">
+                                 <label class="form-label small">Cause Image 6</label>
+                                 <input type="hidden" name="cause_image6_old" id="field_img6_old">
+                                 <input type="file" name="cause_image6" class="form-control" accept="image/jpg, image/jpeg, image/png, image/svg+xml" onchange="validateAdminFile(this, 'image')">
+                                 <small id="label_img6" class="text-muted"></small>
+                             </div>
+                             <div class="col-md-4">
+                                 <label class="form-label small">Cause Image 7</label>
+                                 <input type="hidden" name="cause_image7_old" id="field_img7_old">
+                                 <input type="file" name="cause_image7" class="form-control" accept="image/jpg, image/jpeg, image/png, image/svg+xml" onchange="validateAdminFile(this, 'image')">
+                                 <small id="label_img7" class="text-muted"></small>
+                             </div>
+                             <div class="col-md-6">
+                                 <label class="form-label small">Cause Video (Upload)</label>
+                                 <input type="hidden" name="Cause_video_old" id="field_video_file_old">
+                                 <input type="file" name="Cause_video" class="form-control" accept="video/mp4, video/avi, video/quicktime, video/webm, video/x-matroska, video/x-m4v" onchange="validateAdminFile(this, 'video')">
+                                 <small id="label_video_file" class="text-muted"></small>
+                             </div>
+                             <div class="col-md-6">
+                                 <label class="form-label small">Cause Video English (Upload)</label>
+                                 <input type="hidden" name="Cause_video_english_old" id="field_video_file_eng_old">
+                                 <input type="file" name="Cause_video_english" class="form-control" accept="video/mp4, video/avi, video/quicktime, video/webm, video/x-matroska, video/x-m4v" onchange="validateAdminFile(this, 'video')">
+                                 <small id="label_video_file_eng" class="text-muted"></small>
+                             </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Cause Video Link <span class="text-danger">*</span></label>
+                                <input type="url" name="Cause_video_link" id="field_video_link" class="form-control" placeholder="https://youtube.com/... or https://youtu.be/..." onblur="validateVideoLink(this)" required>
+                                <small class="text-danger" id="field_video_link_err" style="display:none;">Only video links (YouTube, Vimeo, Dailymotion, etc.) are allowed.</small>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label small">Cause Video (Upload)</label>
-                                <input type="hidden" name="Cause_video_old" id="field_video_file_old">
-                                <input type="file" name="Cause_video" class="form-control" accept="video/*">
-                                <small id="label_video_file" class="text-muted"></small>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small">Cause Video English (Upload)</label>
-                                <input type="hidden" name="Cause_video_english_old" id="field_video_file_eng_old">
-                                <input type="file" name="Cause_video_english" class="form-control" accept="video/*">
-                                <small id="label_video_file_eng" class="text-muted"></small>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small">Cause Video Link</label>
-                                <input type="text" name="Cause_video_link" id="field_video_link" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small"> Original Cause Video Link</label>
-                                <input type="text" name="Cause_video_link_eng" id="field_video_link_eng" class="form-control">
+                                <label class="form-label small">Original Cause Video Link <span class="text-danger">*</span></label>
+                                <input type="url" name="Cause_video_link_eng" id="field_video_link_eng" class="form-control" placeholder="https://youtube.com/... or https://youtu.be/..." onblur="validateVideoLink(this)" required>
+                                <small class="text-danger" id="field_video_link_eng_err" style="display:none;">Only video links (YouTube, Vimeo, Dailymotion, etc.) are allowed.</small>
                             </div>
                         </div>
                     </div>
@@ -1538,7 +1598,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         if(d.cover_image) $('#label_cover_image').text('Current: ' + d.cover_image);
                         
                         $('#field_user_id').val(d.user_id);
-                        $('#field_created_at').val(d.created_at);
+                        $('#field_created_at').val(d.created_at ? d.created_at.split(' ')[0] : '');
                         $('#field_verified').val(d.verified);
                         $('#field_isFill').val(d.isFill);
                         
@@ -1583,8 +1643,8 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         } else {
                             $('#modalTitle').text('Editing Record #' + d.id);
                             $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', false);
-                            // Keep ID and CreatedAt readonly
-                            $('#field_id, #field_created_at').prop('readonly', true).prop('disabled', false); // Keep enabled so they submit, but readonly
+                            // Keep ID, CreatedAt, and Category readonly
+                            $('#field_id, #field_created_at, #field_user_id, #field_isFill, #field_category').prop('readonly', true).prop('disabled', false); // Keep enabled so they submit, but readonly
                             $('#submitBtn').show();
                             $('#editBtnModal').hide();
                             $('#deleteBtnModal').hide();
@@ -1608,7 +1668,8 @@ if (isset($_SESSION["emailsuccessstatus"])) {
             
             // Re-enable fields for editing
             $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', false);
-            $('#field_id, #field_created_at').prop('readonly', true).prop('disabled', false);
+            // Keep ID, CreatedAt, User ID, IsFill, and Category readonly
+            $('#field_id, #field_created_at, #field_user_id, #field_isFill, #field_category').prop('readonly', true).prop('disabled', false);
             
             // Switch buttons
             $(this).hide();
@@ -1622,6 +1683,465 @@ if (isset($_SESSION["emailsuccessstatus"])) {
             deleteCause(id);
         });
     });
+    </script>
+
+    <script>
+        // ---- Video Link Validation ----
+        function validateVideoLink(input) {
+            var val = input.value.trim();
+            if (val === '') {
+                // Empty is allowed
+                var errId = input.id + '_err';
+                var errEl = document.getElementById(errId);
+                if (errEl) errEl.style.display = 'none';
+                input.style.borderColor = '';
+                return true;
+            }
+            // Allowed video domains
+            var validPatterns = [
+                /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/i,
+                /^https?:\/\/(www\.)?vimeo\.com\/.+/i,
+                /^https?:\/\/(www\.)?dailymotion\.com\/.+/i,
+                /^https?:\/\/(www\.)?facebook\.com\/.*(video|videos|watch).*/i,
+                /^https?:\/\/(www\.)?fb\.watch\/.+/i,
+                /^https?:\/\/(www\.)?twitch\.tv\/.+/i,
+                /^https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/.+/i
+            ];
+            var isValid = validPatterns.some(function(p) { return p.test(val); });
+            var errId = input.id + '_err';
+            var errEl = document.getElementById(errId);
+            if (!isValid) {
+                if (errEl) errEl.style.display = 'block';
+                input.style.borderColor = 'red';
+                input.setCustomValidity('Only valid video links (YouTube, Vimeo, Dailymotion, etc.) are allowed.');
+                input.reportValidity();
+            } else {
+                if (errEl) errEl.style.display = 'none';
+                input.style.borderColor = '#198754'; // green border if valid
+                input.setCustomValidity('');
+            }
+            return isValid;
+        }
+
+        function showError(inputEl, errEl, message) {
+            if (errEl) {
+                errEl.textContent = message;
+                errEl.style.display = 'block';
+            }
+            if (inputEl) {
+                inputEl.style.borderColor = 'red';
+            }
+        }
+
+        function clearError(inputEl, errEl) {
+            if (errEl) {
+                errEl.textContent = '';
+                errEl.style.display = 'none';
+            }
+            if (inputEl) {
+                inputEl.style.borderColor = '';
+            }
+        }
+
+        function hasInjectionPayload(value) {
+            if (!value) return false;
+            var valLower = value.toLowerCase();
+            
+            // XSS Check: script tags, HTML tags, javascript: scheme
+            var xssPattern = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+            var htmlPattern = /<[^>]+>/g;
+            var jsScheme = /javascript:/gi;
+            if (xssPattern.test(value) || htmlPattern.test(value) || jsScheme.test(value)) {
+                return true;
+            }
+            
+            // SQL Injection Check: union select, ' or 1=1, or 1=1, -- comments, /* comments
+            var sqlPatterns = [
+                /\bunion\b.*\bselect\b/i,
+                /'.*\bor\b.*=.*/i,
+                /\bor\b\s+\d+\s*=\s*\d+/i,
+                /--/,
+                /\/\*/
+            ];
+            
+            for (var i = 0; i < sqlPatterns.length; i++) {
+                if (sqlPatterns[i].test(value)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function validateAdminFile(input, type) {
+            if (!input.files || !input.files[0]) {
+                return true;
+            }
+            var fileObj = input.files[0];
+            var parent = input.parentElement;
+            var errEl = parent.querySelector('.text-danger.file-error');
+            if (!errEl) {
+                errEl = document.createElement('small');
+                errEl.className = 'text-danger file-error d-block mt-1';
+                parent.appendChild(errEl);
+            }
+            errEl.style.display = 'none';
+            errEl.textContent = '';
+            input.style.borderColor = '';
+
+            if (type === 'image') {
+                var allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml"];
+                var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;
+                var imagesize = 2000000; // 2MB limit
+
+                if (fileObj.size > imagesize) {
+                    errEl.textContent = "Image size should be below 2MB.";
+                    errEl.style.display = "block";
+                    input.style.borderColor = 'red';
+                    input.value = "";
+                    return false;
+                }
+
+                if (!allowedTypes.includes(fileObj.type) && !allowedExtensions.test(fileObj.name)) {
+                    errEl.textContent = "Only JPG, JPEG, PNG, and SVG formats are allowed.";
+                    errEl.style.display = "block";
+                    input.style.borderColor = 'red';
+                    input.value = "";
+                    return false;
+                }
+            } else if (type === 'video') {
+                var allowedTypes = ["video/mp4", "video/avi", "video/quicktime", "video/webm", "video/x-matroska", "video/x-m4v"];
+                var allowedExtensions = /(\.mp4|\.avi|\.mov|\.webm|\.mkv|\.m4v)$/i;
+                var videosize = 5 * 1024 * 1024; // 5MB limit
+
+                if (fileObj.size > videosize) {
+                    errEl.textContent = "Video size should be below 5MB.";
+                    errEl.style.display = "block";
+                    input.style.borderColor = 'red';
+                    input.value = "";
+                    return false;
+                }
+
+                if (!allowedTypes.includes(fileObj.type) && !allowedExtensions.test(fileObj.name)) {
+                    errEl.textContent = "Only MP4, AVI, MOV, WEBM, MKV, and M4V video formats are allowed.";
+                    errEl.style.display = "block";
+                    input.style.borderColor = 'red';
+                    input.value = "";
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Setup real-time validation to clear errors on typing
+        function setupRealtimeValidation() {
+            var fields = [
+                { id: 'field_category', errId: 'field_category_err' },
+                { id: 'field_name', errId: 'field_name_err' },
+                { id: 'field_email', errId: 'field_email_err' },
+                { id: 'field_phone', errId: 'field_phone_err' },
+                { id: 'field_age', errId: 'field_age_err' },
+                { id: 'field_location', errId: 'field_location_err' },
+                { id: 'field_form_text', errId: 'field_form_text_err' },
+                { id: 'field_cause_heading', errId: 'field_cause_heading_err' },
+                { id: 'field_cause_description', errId: 'field_cause_description_err' },
+                { id: 'field_amount', errId: 'field_amount_err' },
+                { id: 'field_end_date', errId: 'field_end_date_err' },
+                { id: 'field_created_by', errId: 'field_created_by_err' },
+                { id: 'field_video_link', errId: 'field_video_link_err' },
+                { id: 'field_video_link_eng', errId: 'field_video_link_eng_err' }
+            ];
+
+            fields.forEach(function(item) {
+                var el = document.getElementById(item.id);
+                if (el) {
+                    var listener = function() {
+                        var errEl = document.getElementById(item.errId);
+                        clearError(el, errEl);
+                    };
+                    el.addEventListener('input', listener);
+                    el.addEventListener('change', listener);
+                }
+            });
+
+            var coverNew = document.querySelector('input[name="cover_image"]');
+            if (coverNew) {
+                coverNew.addEventListener('change', function() {
+                    var errEl = document.getElementById('field_cover_image_err');
+                    clearError(coverNew, errEl);
+                });
+            }
+        }
+
+        // Call setupRealtimeValidation when document is ready
+        $(document).ready(function() {
+            setupRealtimeValidation();
+        });
+
+        // Block form submit if required fields are empty or video links are invalid
+        document.getElementById('causeForm').addEventListener('submit', function(e) {
+            var ok = true;
+            var firstInvalidEl = null;
+
+            // Clear all errors first
+            var fields = [
+                { id: 'field_category', errId: 'field_category_err' },
+                { id: 'field_name', errId: 'field_name_err' },
+                { id: 'field_email', errId: 'field_email_err' },
+                { id: 'field_phone', errId: 'field_phone_err' },
+                { id: 'field_age', errId: 'field_age_err' },
+                { id: 'field_location', errId: 'field_location_err' },
+                { id: 'field_form_text', errId: 'field_form_text_err' },
+                { id: 'field_cause_heading', errId: 'field_cause_heading_err' },
+                { id: 'field_cause_description', errId: 'field_cause_description_err' },
+                { id: 'field_amount', errId: 'field_amount_err' },
+                { id: 'field_end_date', errId: 'field_end_date_err' },
+                { id: 'field_created_by', errId: 'field_created_by_err' },
+                { id: 'field_video_link', errId: 'field_video_link_err' },
+                { id: 'field_video_link_eng', errId: 'field_video_link_eng_err' }
+            ];
+
+            fields.forEach(function(item) {
+                var el = document.getElementById(item.id);
+                var errEl = document.getElementById(item.errId);
+                clearError(el, errEl);
+            });
+            var coverNew = document.querySelector('input[name="cover_image"]');
+            var coverErr = document.getElementById('field_cover_image_err');
+            clearError(coverNew, coverErr);
+
+            // 1. Validate Category (required)
+            var cat = document.getElementById('field_category');
+            if (cat && cat.value.trim() === '') {
+                showError(cat, document.getElementById('field_category_err'), 'Category is required.');
+                ok = false;
+                if (!firstInvalidEl) firstInvalidEl = cat;
+            }
+
+            // 2. Validate Name (required)
+            var name = document.getElementById('field_name');
+            if (name && name.value.trim() === '') {
+                showError(name, document.getElementById('field_name_err'), 'Name is required.');
+                ok = false;
+                if (!firstInvalidEl) firstInvalidEl = name;
+            }
+
+            // 3. Validate Email (required & format)
+            var email = document.getElementById('field_email');
+            if (email) {
+                var v = email.value.trim();
+                var emailPattern = /^[a-zA-Z0-9._%+\-]{4,}@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,}$/;
+                if (v === '') {
+                    showError(email, document.getElementById('field_email_err'), 'Email is required.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = email;
+                } else if (!emailPattern.test(v)) {
+                    var msg = 'Enter a valid email (e.g. example@gmail.com) with at least 4 characters before @.';
+                    showError(email, document.getElementById('field_email_err'), msg);
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = email;
+                }
+            }
+
+            // 4. Validate Phone (required & length)
+            var phone = document.getElementById('field_phone');
+            if (phone) {
+                var v = phone.value.trim();
+                if (v === '') {
+                    showError(phone, document.getElementById('field_phone_err'), 'Phone is required.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = phone;
+                } else if (v.length < 10) {
+                    showError(phone, document.getElementById('field_phone_err'), 'Phone number must be at least 10 digits.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = phone;
+                }
+            }
+
+            // 5. Validate Age (required)
+            var age = document.getElementById('field_age');
+            if (age && age.value.trim() === '') {
+                showError(age, document.getElementById('field_age_err'), 'Age is required.');
+                ok = false;
+                if (!firstInvalidEl) firstInvalidEl = age;
+            }
+
+            // 6. Validate Location (required)
+            var loc = document.getElementById('field_location');
+            if (loc && loc.value.trim() === '') {
+                showError(loc, document.getElementById('field_location_err'), 'Location is required.');
+                ok = false;
+                if (!firstInvalidEl) firstInvalidEl = loc;
+            }
+
+            // 7. Validate Form Selection Text (required)
+            var formText = document.getElementById('field_form_text');
+            if (formText && formText.value.trim() === '') {
+                showError(formText, document.getElementById('field_form_text_err'), 'Form Selection Text is required.');
+                ok = false;
+                if (!firstInvalidEl) firstInvalidEl = formText;
+            }
+
+            // 8. Validate Cause Heading (required, min 4, max 100)
+            var causeHeading = document.getElementById('field_cause_heading');
+            if (causeHeading) {
+                var v = causeHeading.value.trim();
+                if (v === '') {
+                    showError(causeHeading, document.getElementById('field_cause_heading_err'), 'Cause Heading is required.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = causeHeading;
+                } else if (v.length < 4 || v.length > 100) {
+                    showError(causeHeading, document.getElementById('field_cause_heading_err'), 'Cause Heading must be between 4 and 100 characters.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = causeHeading;
+                }
+            }
+
+            // 9. Validate Cause Description (required)
+            var causeDesc = document.getElementById('field_cause_description');
+            if (causeDesc && causeDesc.value.trim() === '') {
+                showError(causeDesc, document.getElementById('field_cause_description_err'), 'Cause Description is required.');
+                ok = false;
+                if (!firstInvalidEl) firstInvalidEl = causeDesc;
+            }
+
+            // 10. Validate Goal Amount (required)
+            var amount = document.getElementById('field_amount');
+            if (amount && (amount.value.trim() === '' || parseFloat(amount.value) <= 0)) {
+                showError(amount, document.getElementById('field_amount_err'), 'Goal Amount is required and must be greater than 0.');
+                ok = false;
+                if (!firstInvalidEl) firstInvalidEl = amount;
+            }
+
+            // 11. Validate End Date (required & not past date compared to Created At)
+            var endDate = document.getElementById('field_end_date');
+            var createdAt = document.getElementById('field_created_at');
+            if (endDate) {
+                var endVal = endDate.value.trim();
+                if (endVal === '') {
+                    showError(endDate, document.getElementById('field_end_date_err'), 'End Date is required.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = endDate;
+                } else if (createdAt && createdAt.value.trim() !== '') {
+                    var endD = new Date(endVal);
+                    var createD = new Date(createdAt.value.trim());
+                    endD.setHours(0,0,0,0);
+                    createD.setHours(0,0,0,0);
+                    if (endD < createD) {
+                        showError(endDate, document.getElementById('field_end_date_err'), 'End Date cannot be in the past compared to Created At.');
+                        ok = false;
+                        if (!firstInvalidEl) firstInvalidEl = endDate;
+                    }
+                }
+            }
+
+            // 12. Validate Created By (required)
+            var createdBy = document.getElementById('field_created_by');
+            if (createdBy && createdBy.value.trim() === '') {
+                showError(createdBy, document.getElementById('field_created_by_err'), 'Created By is required.');
+                ok = false;
+                if (!firstInvalidEl) firstInvalidEl = createdBy;
+            }
+
+            // 13. Validate Cause Video Link (required & format)
+            var vl = document.getElementById('field_video_link');
+            if (vl) {
+                var v = vl.value.trim();
+                if (v === '') {
+                    showError(vl, document.getElementById('field_video_link_err'), 'Cause Video Link is required.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = vl;
+                } else if (!validateVideoLink(vl)) {
+                    showError(vl, document.getElementById('field_video_link_err'), 'Only valid video links (YouTube, Vimeo, Dailymotion, etc.) are allowed.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = vl;
+                }
+            }
+
+            // 14. Validate Original Cause Video Link (required & format)
+            var vle = document.getElementById('field_video_link_eng');
+            if (vle) {
+                var v = vle.value.trim();
+                if (v === '') {
+                    showError(vle, document.getElementById('field_video_link_eng_err'), 'Original Cause Video Link is required.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = vle;
+                } else if (!validateVideoLink(vle)) {
+                    showError(vle, document.getElementById('field_video_link_eng_err'), 'Only valid video links (YouTube, Vimeo, Dailymotion, etc.) are allowed.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = vle;
+                }
+            }
+
+            // 15. Validate Cover Image (required if cover_image_old is empty)
+            var coverImgOld = document.getElementById('field_cover_image_old');
+            if (coverImgOld && coverImgOld.value.trim() === '' && coverImgNew && coverImgNew.files.length === 0) {
+                showError(coverNew, coverErr, 'Cover Image is required.');
+                ok = false;
+                if (!firstInvalidEl) firstInvalidEl = coverNew;
+            }
+
+            // 16. Block purely-numeric event name (optional field, but has restriction)
+            var evName = document.getElementById('field_eventname');
+            if (evName && evName.value.trim() !== '') {
+                if (/^[0-9]+$/.test(evName.value.trim())) {
+                    var evErr = document.getElementById('field_eventname_err');
+                    showError(evName, evErr, 'Event Name cannot be purely numeric. Please include letters.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = evName;
+                }
+            }
+
+            // 17. Validate all media files on submission
+            var mediaInputs = [
+                { name: 'cover_image', type: 'image' },
+                { name: 'cause_image1', type: 'image' },
+                { name: 'cause_image2', type: 'image' },
+                { name: 'cause_image3', type: 'image' },
+                { name: 'cause_image4', type: 'image' },
+                { name: 'cause_image5', type: 'image' },
+                { name: 'cause_image6', type: 'image' },
+                { name: 'cause_image7', type: 'image' },
+                { name: 'Cause_video', type: 'video' },
+                { name: 'Cause_video_english', type: 'video' }
+            ];
+
+            mediaInputs.forEach(function(item) {
+                var inputEl = document.querySelector('input[name="' + item.name + '"]');
+                if (inputEl && inputEl.files && inputEl.files[0]) {
+                    var isValid = validateAdminFile(inputEl, item.type);
+                    if (!isValid) {
+                        ok = false;
+                        if (!firstInvalidEl) firstInvalidEl = inputEl;
+                    }
+                }
+            });
+
+            // 18. Scan all text/textarea inputs for SQL Injection / XSS injection attempts
+            var formTextInputs = document.querySelectorAll('#causeForm input[type="text"], #causeForm textarea, #causeForm input[type="url"], #causeForm input[type="email"]');
+            formTextInputs.forEach(function(inputEl) {
+                var val = inputEl.value;
+                if (val && hasInjectionPayload(val)) {
+                    var errId = inputEl.id + '_err';
+                    var errEl = document.getElementById(errId);
+                    if (!errEl) {
+                        errEl = document.createElement('small');
+                        errEl.id = errId;
+                        errEl.className = 'text-danger d-block mt-1';
+                        inputEl.parentElement.appendChild(errEl);
+                    }
+                    showError(inputEl, errEl, 'SQL Injection or XSS injection pattern detected.');
+                    ok = false;
+                    if (!firstInvalidEl) firstInvalidEl = inputEl;
+                }
+            });
+
+            if (!ok) {
+                e.preventDefault();
+                if (firstInvalidEl) {
+                    firstInvalidEl.focus();
+                }
+            }
+        });
     </script>
 
 <!-- old edit  -->
@@ -1807,10 +2327,29 @@ let status = "";
     }
 
     function sendEmail(email,username,adminname){
-        let message = document.getElementById("causestatus").innerText;
+        let checkedRadio = document.querySelector('input[name="status"]:checked');
+        if (!checkedRadio) {
+            alert("Please select a verification status (Verified or Rejected) before sending.");
+            return;
+        }
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Please provide a valid email address.");
+            return;
+        }
+        let message = document.getElementById("causestatus").innerText.trim();
+        if (message === "") {
+            alert("Status message/description is required.");
+            return;
+        }
+        if (!/[a-zA-Z]/.test(message)) {
+            alert("Status message cannot consist of only numbers or special characters.");
+            return;
+        }
         let userid = document.getElementById("useridforemail").value;
+        let statusVal = checkedRadio.value;
         let a = document.createElement("a");
-        a.href = `sendcauseVerficationstatus?email=${email}&message=${message}&userid=${userid}&username=${username}&adminname=${adminname}&status=${status}`;
+        a.href = `sendcauseVerficationstatus?email=${email}&message=${encodeURIComponent(message)}&userid=${userid}&username=${username}&adminname=${adminname}&status=${statusVal}`;
         a.dispatchEvent(new MouseEvent("click"));
     }
 
@@ -1960,7 +2499,7 @@ input.addEventListener("input",function(){
       <div class="modal-body">
 
         <!-- YOUR FORM START -->
-        <form method="post"
+        <form id="updateProgressForm" method="post"
               action="<?= base_url('kanavuhelp/updateprogressdata') ?>"
               enctype="multipart/form-data">
 
@@ -1973,6 +2512,7 @@ input.addEventListener("input",function(){
               <textarea name="progress_description"
                         id="progress_description"
                         class="form-control"></textarea>
+              <div id="description_error" class="text-danger mt-1" style="display: none; font-size: 13px;"></div>
             </div>
           </div>
 
@@ -2034,6 +2574,7 @@ input.addEventListener("input",function(){
             <label class="col-md-4">Embed Video Link</label>
             <div class="col-md-8">
               <input type="text" name="progress_embed_video_link" id="progress_embed_video_link" class="form-control">
+              <div id="embed_video_error" class="text-danger mt-1" style="display: none; font-size: 13px;"></div>
             </div>
           </div>
 
@@ -2144,6 +2685,80 @@ function openUpdateProgressModal(causeId) {
         }
     });
 }
+
+$(document).ready(function() {
+    $('#progress_description').on('input', function() {
+        $('#description_error').hide().text('');
+    });
+
+    $('#updateProgressForm').on('submit', function(event) {
+        $('#description_error').hide().text('');
+        $('#embed_video_error').hide().text('');
+        var description = $('#progress_description').val().trim();
+        if (description !== '') {
+            if (description.length > 200) {
+                $('#description_error').text('Progress description cannot exceed 200 characters.').show();
+                event.preventDefault();
+                return false;
+            }
+            if (!/[a-zA-Z]/.test(description)) {
+                $('#description_error').text('Progress description cannot consist of only numbers or special characters. It must contain letters.').show();
+                event.preventDefault();
+                return false;
+            }
+            // XSS Check
+            var xssPattern = /<[^>]*>|javascript\s*:/i;
+            if (xssPattern.test(description)) {
+                $('#description_error').text('Progress description cannot contain HTML tags or script URLs.').show();
+                event.preventDefault();
+                return false;
+            }
+            // SQL Injection Check
+            var sqlPattern = /<!--|\/\*|\bunion\s+(?:all\s+)?select\b|\bselect\b.+\bfrom\b|\binsert\s+into\b|\bupdate\b.+\bset\b|\bdelete\s+from\b|\bdrop\s+table\b/i;
+            var sqlOrPattern = /\b(or|and)\b\s+(\d+|'[^']*'|"[^"]*")\s*=\s*(\d+|'[^']*'|"[^"]*")/i;
+            if (sqlPattern.test(description) || sqlOrPattern.test(description)) {
+                $('#description_error').text('Progress description cannot contain SQL injection keywords or comments.').show();
+                event.preventDefault();
+                return false;
+            }
+        }
+
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;
+        var imageFields = ['#document_one', '#document_two', '#document_three', '#document_four', '#document_five'];
+        for (var i = 0; i < imageFields.length; i++) {
+            var fileInput = $(imageFields[i])[0];
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                var fileName = fileInput.files[0].name;
+                if (!allowedExtensions.exec(fileName)) {
+                    alert('Only JPG, JPEG, PNG, and SVG formats are allowed for progress images. File "' + fileName + '" is not allowed.');
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        }
+
+        var videoLink = $('#progress_embed_video_link').val().trim();
+        if (videoLink !== '') {
+            try {
+                var url = new URL(videoLink);
+                if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+                    $('#embed_video_error').text('Please enter a valid video URL starting with http:// or https://').show();
+                    event.preventDefault();
+                    return false;
+                }
+            } catch (e) {
+                $('#embed_video_error').text('Please enter a valid video link/URL.').show();
+                event.preventDefault();
+                return false;
+            }
+        }
+        return true;
+    });
+
+    $('#progress_embed_video_link').on('input', function() {
+        $('#embed_video_error').hide().text('');
+    });
+});
 </script>
 
 <!-- Manual Complete Modal -->
