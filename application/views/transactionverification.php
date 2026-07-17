@@ -574,6 +574,14 @@
                     </li>
                     
                     <li class="nav-item py-2">
+                        <a href="<?= base_url('users') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'users') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-users"></i>&nbsp;&nbsp;Users
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item py-2">
                         <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
                           data-bs-toggle="modal" data-bs-target="#logoutModal">
                           <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
@@ -631,6 +639,14 @@
                               <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
                             </a>
                         </li>
+
+                        <li class="nav-item px-3 py-2">
+                            <a href="<?= base_url('users') ?>"
+                              class="nav-link text-decoration-none <?= (uri_string() == 'users') ? 'active' : '' ?>"
+                              style="font-weight:400;color:black;">
+                              <i class="fa-solid fa-users"></i>&nbsp;&nbsp;Users
+                            </a>
+                        </li>
                         
                         <li class="nav-item py-2 px-3">
                             <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
@@ -646,7 +662,7 @@
             <div class="col-lg-10 col-12 main-content">
                 <div class="container-fluid px-3 px-md-4 pt-3 w-100">
                     <!-- Search box -->
-                    <div class="row mb-3">
+                    <div class="row mb-3 align-items-center">
                         <div class="col-md-4 position-relative">
                             <input type="text" 
                                 id="search-input" 
@@ -657,6 +673,17 @@
                                     class="btn position-absolute end-0 start-2 top-50 translate-middle-y" 
                                     style="display: none; background: none; border: none; margin-right: 10px;">
                                 <i class="fas fa-times text-danger"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-8 d-flex align-items-center gap-2 mt-2 mt-md-0">
+                            <div class="form-check d-flex align-items-center mb-0">
+                                <input type="checkbox" id="bulk-no-delete-check" class="form-check-input me-2" onchange="toggleBulkDeleteButton(this)" style="cursor: pointer;">
+                                <label for="bulk-no-delete-check" class="form-check-label text-danger fw-bold mb-0" style="cursor: pointer; font-size: 14px; user-select: none;">
+                                    Enable Bulk Delete Unverified ("No")
+                                </label>
+                            </div>
+                            <button id="bulk-delete-no-btn" onclick="deleteUnverifiedTransactions()" class="btn btn-danger btn-sm px-3 ms-2" disabled>
+                                <i class="fa fa-trash"></i> Delete All "No"
                             </button>
                         </div>
                     </div>
@@ -884,6 +911,37 @@
     
     <script>
         let status = "";
+
+        // Toggle bulk delete button based on checkbox
+        function toggleBulkDeleteButton(checkbox) {
+            const bulkBtn = document.getElementById('bulk-delete-no-btn');
+            if (bulkBtn) {
+                bulkBtn.disabled = !checkbox.checked;
+            }
+        }
+
+        // Delete all unverified donations
+        function deleteUnverifiedTransactions() {
+            if (confirm('Are you sure you want to delete all unverified ("No") donations? This action cannot be undone.')) {
+                $.ajax({
+                    url: '<?php echo site_url(). "admin/delete_unverified_donations"; ?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            alert(response.message || 'All unverified donations deleted successfully!');
+                            location.reload();
+                        } else {
+                            alert(response.message || 'Error deleting unverified donations.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('AJAX Error:', error);
+                        alert('Something went wrong.');
+                    }
+                });
+            }
+        }
 
         // Delete donation function
         function deleteDonation(donation_id) {

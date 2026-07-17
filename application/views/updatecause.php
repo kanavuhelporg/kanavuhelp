@@ -1497,7 +1497,7 @@
       }
 
       // Check for alphanumeric and spaces
-      const textRegex = /^[A-Za-z0-9\s]+$/;
+      const textRegex = /^[A-Za-z0-9\s\u0B80-\u0BFF]+$/;
       if (!heading.match(textRegex)) {
         errorElement.textContent = "Cause title must only contain letters, numbers, and spaces.";
         return false;

@@ -1551,4 +1551,86 @@ class admin extends CI_Controller
         }
     }
 
+    public function delete_unverified_donations()
+    {
+        if ($this->input->is_ajax_request()) {
+            if (!$this->session->userdata('adminId')) {
+                echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+                return;
+            }
+            $result = $this->adminpanel->delete_unverified_donations();
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'All unverified donations deleted successfully!']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete unverified donations.']);
+            }
+        }
+    }
+
+    public function users()
+    {
+        if (!$this->session->userdata('adminId')) {
+            redirect('admin');
+        }
+
+        // Get all users with status
+        $data['users'] = $this->adminpanel->get_users_with_status();
+        $data['counts'] = count($data['users']);
+        $data['sno'] = 0;
+
+        $totalunverifiedtransactions = $this->adminpanel->totalUnverifiedtransactions();
+        $this->session->set_userdata("unverifiedtransactions", $totalunverifiedtransactions);
+
+        $this->load->view('users.php', $data);
+    }
+
+    public function delete_unused_users()
+    {
+        if ($this->input->is_ajax_request()) {
+            if (!$this->session->userdata('adminId')) {
+                echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+                return;
+            }
+            $result = $this->adminpanel->delete_unused_users();
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'All unused users deleted successfully!']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete unused users.']);
+            }
+        }
+    }
+
+    public function delete_user()
+    {
+        if ($this->input->is_ajax_request()) {
+            if (!$this->session->userdata('adminId')) {
+                echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+                return;
+            }
+            $id = $this->input->post("id");
+            $result = $this->adminpanel->delete_user($id);
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'User deleted successfully!']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete the user!']);
+            }
+        }
+    }
+
+    public function delete_unverified_causes()
+    {
+        if ($this->input->is_ajax_request()) {
+            if (!$this->session->userdata('adminId')) {
+                echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+                return;
+            }
+            $result = $this->adminpanel->delete_unverified_causes();
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'All unverified causes deleted successfully!']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete unverified causes.']);
+            }
+        }
+    }
+
 }

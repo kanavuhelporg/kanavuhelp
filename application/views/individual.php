@@ -1814,12 +1814,12 @@ function validateField(id, errorId, message, isNumber = false) {
       function validateName() {
         const nameInput = document.getElementById("name").value.trim();
         const errorElement = document.getElementById("name-error");
-        const nameRegex = /^[A-Za-z\s-]+$/;
+        const nameRegex = /^[A-Za-z\s\-\u0B80-\u0BFF]+$/;
         if (!nameInput) {
           errorElement.textContent = "Beneficiary name is required.";
           return false;
-        } else if (nameInput.length < 4 || nameInput.length > 30) {
-          errorElement.textContent = "Name must be between 4 and 30 characters.";
+        } else if (nameInput.length < 4 || nameInput.length > 50) {
+          errorElement.textContent = "Name must be between 4 and 50 characters.";
           return false;
         } else if (!nameInput.match(nameRegex)) {
           errorElement.textContent = "Name can only contain letters, spaces, hyphens only.";
@@ -1833,12 +1833,12 @@ function validateField(id, errorId, message, isNumber = false) {
       function validateCreatedby() {
         const nameInput = document.getElementById("created_by").value.trim();
         const errorElement = document.getElementById("created_by_error");
-        const nameRegex = /^[A-Za-z\s-]+$/;
+        const nameRegex = /^[A-Za-z\s\-\u0B80-\u0BFF]+$/;
         if (!nameInput) {
           errorElement.textContent = "Created by name is required.";
           return false;
-        } else if (nameInput.length < 4 || nameInput.length > 30) {
-          errorElement.textContent = "Name must be between 4 and 30 characters.";
+        } else if (nameInput.length < 4 || nameInput.length > 50) {
+          errorElement.textContent = "Name must be between 4 and 50 characters.";
           return false;
         } else if (!nameInput.match(nameRegex)) {
           errorElement.textContent = "Name can only contain letters, spaces, hyphens only.";
@@ -1865,7 +1865,7 @@ function validateField(id, errorId, message, isNumber = false) {
       function validateLocation() {
         const location = document.getElementById("location").value.trim();
         const errorElement = document.getElementById("location-error");
-        const validatelocation = /^(?![0-9]*$)[a-zA-Z0-9\s,.-]+$/;
+        const validatelocation = /^(?![0-9]*$)[a-zA-Z0-9\s,.\-\u0B80-\u0BFF]+$/;
         if (!location) {
           errorElement.textContent = "Location is required.";
           return false;
@@ -2073,7 +2073,7 @@ function validateField(id, errorId, message, isNumber = false) {
       }
 
       // Check for alphanumeric and spaces
-      const textRegex = /^[A-Za-z0-9\s]+$/;
+      const textRegex = /^[A-Za-z0-9\s\u0B80-\u0BFF]+$/;
       if (!heading.match(textRegex)) {
         errorElement.textContent = "Cause title must only contain letters, numbers, and spaces.";
         return false;

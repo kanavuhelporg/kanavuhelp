@@ -22,6 +22,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
+        /* Table style */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 1rem;
+        }
+        
+        #search_table {
+            min-width: 1600px;
+            width: 100%;
+        }
+
         .ps-logo {
             display: flex;
             align-items: center;
@@ -487,6 +500,14 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     </li>
 
                     <li class="nav-item py-2">
+                        <a href="<?= base_url('users') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'users') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-users"></i>&nbsp;&nbsp;Users
+                        </a>
+                    </li>
+
+                    <li class="nav-item py-2">
                         <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
                         data-bs-toggle="modal" data-bs-target="#logoutModal">
                         <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
@@ -537,12 +558,20 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         </li>
                         
                         <li class="nav-item px-3">
-                            <a href="<?= base_url('causesverification') ?>"
-                              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
-                              style="font-weight:400;color:black;">
-                              <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
-                            </a>
-                        </li>
+                         <a href="<?= base_url('causesverification') ?>"
+                         class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
+                         style="font-weight:400;color:black;">
+                         <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+                         </a>
+                     </li>
+
+                     <li class="nav-item py-2 px-3">
+                         <a href="<?= base_url('users') ?>"
+                           class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'users') ? 'active' : '' ?>"
+                           style="font-weight:400;color:black;">
+                           <i class="fa-solid fa-users"></i>&nbsp;&nbsp;Users
+                         </a>
+                     </li>
                         
                         <li class="nav-item py-2 px-3">
                             <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
@@ -579,23 +608,33 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                 <!-- Scrollable content -->
                 <div style="overflow:auto" class="mt-3 px-4">
                     
-                    <!-- Search -->
-                    <div class="row mb-3"></div>
-                    <div class="row mb-3">
+                    <!-- Search & Bulk Action -->
+                    <div class="row mb-3 align-items-center">
                         <div class="col-md-4 position-relative">
                             <input type="text" id="search-input" class="form-control pe-5" 
                                 placeholder="Search across all columns..." autocomplete="off">
-                            
                             <button id="clear-filter" 
                                     class="btn position-absolute end-0 top-50 translate-middle-y" 
                                     style="display: none; background: none; border: none; margin-right: 10px;">
                                 <i class="fas fa-times text-danger"></i>
                             </button>
                         </div>
+                        <div class="col-md-8 d-flex align-items-center gap-2 mt-2 mt-md-0">
+                            <div class="form-check d-flex align-items-center mb-0">
+                                <input type="checkbox" id="bulk-no-delete-check" class="form-check-input me-2" onchange="toggleBulkDeleteButton(this)" style="cursor: pointer;">
+                                <label for="bulk-no-delete-check" class="form-check-label text-danger fw-bold mb-0" style="cursor: pointer; font-size: 14px; user-select: none;">
+                                    Enable Bulk Delete Unverified Causes ("No")
+                                </label>
+                            </div>
+                            <button id="bulk-delete-no-btn" onclick="deleteUnverifiedCauses()" class="btn btn-danger btn-sm px-3 ms-2" disabled>
+                                <i class="fa fa-trash"></i> Delete All "No"
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Table -->
-                    <table class="table table-bordered table-hover" id="search_table">
+                    <div class="table-container">
+                        <table class="table table-bordered table-hover" id="search_table">
                         <thead>
                             <tr class="ps-gray">
                                 <th>S.No</th>
@@ -740,6 +779,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             <?php endif; ?>
                         </tbody>
                     </table>
+                    </div>
                 </div>
 
                 <!-- Pagination -->
@@ -1318,7 +1358,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Name <span class="text-danger">*</span></label>
-                                <input type="text" name="name" id="field_name" class="form-control" oninput="this.value = this.value.replace(/[^A-Za-z\s\-]/g, '')" required>
+                                <input type="text" name="name" id="field_name" class="form-control" oninput="this.value = this.value.replace(/[^A-Za-z\s\-\u0B80-\u0BFF]/g, '')" required>
                                 <small id="field_name_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-3">
@@ -1362,12 +1402,12 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label small">Location <span class="text-danger">*</span></label>
-                                <input type="text" name="location" id="field_location" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s,.-]/g, '')" required>
+                                <input type="text" name="location" id="field_location" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s,.\-\u0B80-\u0BFF]/g, '')" required>
                                 <small id="field_location_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small">Form Selection Text <span class="text-danger">*</span></label>
-                                <input type="text" name="form_selected_text" id="field_form_text" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" required>
+                                <input type="text" name="form_selected_text" id="field_form_text" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s\u0B80-\u0BFF]/g, '')" required>
                                 <small id="field_form_text_err" class="text-danger" style="display:none;"></small>
                             </div>
                         </div>
@@ -1377,12 +1417,12 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                         <div class="row g-3">
                             <div class="col-12">
                                 <label class="form-label small">Cause Heading <span class="text-danger">*</span></label>
-                                <input type="text" name="cause_heading" id="field_cause_heading" class="form-control" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s]/g, '')" required minlength="4" maxlength="100">
+                                <input type="text" name="cause_heading" id="field_cause_heading" class="form-control" oninput="this.value = this.value.replace(/[^A-Za-z0-9\s\u0B80-\u0BFF]/g, '')" required minlength="4" maxlength="150">
                                 <small id="field_cause_heading_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-12">
                                 <label class="form-label small">Cause Description <span class="text-danger">*</span></label>
-                                <textarea name="cause_description" id="field_cause_description" class="form-control" rows="4" maxlength="150" required></textarea>
+                                <textarea name="cause_description" id="field_cause_description" class="form-control" rows="4" maxlength="250" required></textarea>
                                 <small id="field_cause_description_err" class="text-danger" style="display:none;"></small>
                             </div>
                         </div>
@@ -1401,7 +1441,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                                 <label class="form-label small">Event Name</label>
                                 <input type="text" name="eventname" id="field_eventname" class="form-control"
                                     oninput="
-                                        this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, '');
+                                        this.value = this.value.replace(/[^a-zA-Z0-9\s\u0B80-\u0BFF]/g, '');
                                         if(this.value.trim() !== '' && /^[0-9]+$/.test(this.value.trim())){
                                             this.setCustomValidity('Event Name cannot be purely numeric. Please include letters.');
                                             document.getElementById('field_eventname_err').style.display='block';
@@ -1422,7 +1462,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label small">Event Location</label>
-                                <input type="text" name="eventlocation" id="field_eventlocation" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
+                                <input type="text" name="eventlocation" id="field_eventlocation" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s\u0B80-\u0BFF]/g, '')">
                             </div>
                         </div>
 
@@ -1450,7 +1490,7 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label small">Created By <span class="text-danger">*</span></label>
-                                <input type="text" name="created_by" id="field_created_by" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" required>
+                                <input type="text" name="created_by" id="field_created_by" class="form-control" oninput="this.value = this.value.replace(/[^a-zA-Z\s\-\u0B80-\u0BFF]/g, '')" required>
                                 <small id="field_created_by_err" class="text-danger" style="display:none;"></small>
                             </div>
                             <div class="col-md-2">
@@ -1989,15 +2029,15 @@ if (isset($_SESSION["emailsuccessstatus"])) {
                     showError(causeHeading, document.getElementById('field_cause_heading_err'), 'Cause Heading is required.');
                     ok = false;
                     if (!firstInvalidEl) firstInvalidEl = causeHeading;
-                } else if (v.length < 4 || v.length > 100) {
-                    showError(causeHeading, document.getElementById('field_cause_heading_err'), 'Cause Heading must be between 4 and 100 characters.');
+                } else if (v.length < 4 || v.length > 150) {
+                    showError(causeHeading, document.getElementById('field_cause_heading_err'), 'Cause Heading must be between 4 and 150 characters.');
                     ok = false;
                     if (!firstInvalidEl) firstInvalidEl = causeHeading;
                 }
             }
 
             // 9. Validate Cause Description (required)
-            var causeDesc = document.getElementById('field_cause_description');
+            var causeDesc = document.getElementById('field_cause_description')
             if (causeDesc && causeDesc.value.trim() === '') {
                 showError(causeDesc, document.getElementById('field_cause_description_err'), 'Cause Description is required.');
                 ok = false;
@@ -2457,6 +2497,37 @@ input.addEventListener("input",function(){
         let rowText = tr[i].textContent.toLowerCase();
         tr[i].style.display = rowText.includes(input) ? "" : "none";
       }
+    }
+
+    // Toggle delete button based on checkbox
+    function toggleBulkDeleteButton(checkbox) {
+        const bulkBtn = document.getElementById('bulk-delete-no-btn');
+        if (bulkBtn) {
+            bulkBtn.disabled = !checkbox.checked;
+        }
+    }
+
+    // Delete all unverified causes
+    function deleteUnverifiedCauses() {
+        if (confirm('Are you sure you want to delete all unverified ("No") causes? This action cannot be undone.')) {
+            $.ajax({
+                url: '<?php echo site_url(). "admin/delete_unverified_causes"; ?>',
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message || 'All unverified causes deleted successfully!');
+                        location.reload();
+                    } else {
+                        alert(response.message || 'Error deleting unverified causes.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('AJAX Error:', error);
+                    alert('Something went wrong.');
+                }
+            });
+        }
     }
 
 </script>   
