@@ -386,14 +386,10 @@
                             </button>
                         </div>
                         <div class="col-md-8 d-flex align-items-center gap-2 mt-2 mt-md-0">
-                            <div class="form-check d-flex align-items-center mb-0">
-                                <input type="checkbox" id="bulk-no-delete-check" class="form-check-input me-2" onchange="toggleBulkDeleteButton(this)" style="cursor: pointer;">
-                                <label for="bulk-no-delete-check" class="form-check-label text-danger fw-bold mb-0" style="cursor: pointer; font-size: 14px; user-select: none;">
-                                    Enable Bulk Delete Unused Users ("No")
-                                </label>
-                            </div>
-                            <button id="bulk-delete-no-btn" onclick="deleteUnusedUsers()" class="btn btn-danger btn-sm px-3 ms-2" disabled>
-                                <i class="fa fa-trash"></i> Delete All "No"
+                            <span class="fw-bold fs-6">Filter by Date:</span>
+                            <input type="date" id="filter-date" class="form-control form-control-sm" style="width: 160px;">
+                            <button id="bulk-delete-selected-btn" onclick="deleteSelectedUsers()" class="btn btn-danger btn-sm px-3 ms-3" disabled>
+                                <i class="fa fa-trash"></i> Delete Selected
                             </button>
                         </div>
                     </div>
@@ -403,6 +399,7 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr class="ps-gray">
+                                    <th><input type="checkbox" id="select-all-users" style="cursor: pointer;"></th>
                                     <th>S.No</th>
                                     <th>User ID</th>
                                     <th>Name</th>
@@ -410,6 +407,7 @@
                                     <th>Mobile Number</th>
                                     <th>Location</th>
                                     <th>Category</th>
+                                    <th>Created Date</th>
                                     <th>Active Status (Used)</th>
                                     <th>Action</th>
                                 </tr>
@@ -417,7 +415,8 @@
                             <tbody id="users-tbody">
                                 <?php if (!empty($users)): ?>
                                     <?php foreach ($users as $index => $u): ?>
-                                        <tr>
+                                        <tr data-date="<?= !empty($u->created_at) ? date('Y-m-d', strtotime($u->created_at)) : ''; ?>">
+                                            <td><input type="checkbox" class="user-select-chk" value="<?= $u->id; ?>" data-status="<?= $u->status; ?>" style="cursor: pointer;"></td>
                                             <td><?= $index + 1; ?></td>
                                             <td><?= htmlspecialchars($u->id); ?></td>
                                             <td><?= htmlspecialchars($u->name); ?></td>
@@ -425,6 +424,7 @@
                                             <td><?= htmlspecialchars($u->mobileNumber); ?></td>
                                             <td><?= htmlspecialchars($u->location); ?></td>
                                             <td><?= htmlspecialchars($u->category); ?></td>
+                                            <td><?= !empty($u->created_at) ? date('d-m-Y', strtotime($u->created_at)) : ''; ?></td>
                                             <td class="fw-bold <?= $u->status == 'Yes' ? 'text-success' : 'text-danger'; ?>">
                                                 <?= $u->status; ?>
                                             </td>
@@ -436,7 +436,7 @@
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
-                                    <tr id="no-results"><td colspan="9" class="text-center">No users found.</td></tr>
+                                    <tr id="no-results"><td colspan="11" class="text-center">No users found.</td></tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
@@ -475,36 +475,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Toggle delete button based on checkbox
-        function toggleBulkDeleteButton(checkbox) {
-            const bulkBtn = document.getElementById('bulk-delete-no-btn');
-            if (bulkBtn) {
-                bulkBtn.disabled = !checkbox.checked;
-            }
-        }
-
-        // Delete all unused users
-        function deleteUnusedUsers() {
-            if (confirm('Are you sure you want to delete all inactive/unused ("No") users? This action cannot be undone.')) {
-                $.ajax({
-                    url: '<?php echo site_url(). "admin/delete_unused_users"; ?>',
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            alert(response.message || 'All inactive users deleted successfully!');
-                            location.reload();
-                        } else {
-                            alert(response.message || 'Error deleting inactive users.');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX Error:', error);
-                        alert('Something went wrong.');
-                    }
-                });
-            }
-        }
 
         // Delete individual user
         function deleteUser(id, status) {
@@ -540,6 +510,7 @@
             const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.id.includes('no-results'));
             const searchInput = document.getElementById('search-input');
             const clearSearch = document.getElementById('clear-filter');
+            const filterDate = document.getElementById('filter-date');
             const paginationNav = document.getElementById('pagination-nav');
             const paginationUl = document.getElementById('pagination-ul');
             const recordsPerPage = 10;
@@ -558,7 +529,7 @@
                 });
 
                 pageRows.forEach((row, index) => {
-                    row.cells[0].textContent = start + index + 1;
+                    row.cells[1].textContent = start + index + 1;
                 });
 
                 const noResultsRow = document.getElementById('no-results');
@@ -671,22 +642,42 @@
 
             function filterRows() {
                 const searchTerm = searchInput.value.toLowerCase().trim();
-                if (searchTerm === '') {
-                    filteredRows = rows;
-                } else {
-                    filteredRows = rows.filter(row => {
-                        const searchIndices = [2, 3, 4, 5];
+                const selectedDate = filterDate ? filterDate.value : '';
+
+                // Clear checkbox selections on new filter to avoid deleting invisible rows
+                const selectAllUsers = document.getElementById('select-all-users');
+                if (selectAllUsers) selectAllUsers.checked = false;
+                document.querySelectorAll('.user-select-chk').forEach(chk => chk.checked = false);
+                const bulkDeleteSelectedBtn = document.getElementById('bulk-delete-selected-btn');
+                if (bulkDeleteSelectedBtn) bulkDeleteSelectedBtn.disabled = true;
+
+                filteredRows = rows.filter(row => {
+                    // Match Date first
+                    if (selectedDate !== '') {
+                        const rowDate = row.getAttribute('data-date') || '';
+                        if (rowDate !== selectedDate) {
+                            return false;
+                        }
+                    }
+
+                    // Match Search Term
+                    if (searchTerm !== '') {
+                        let matchSearch = false;
+                        const searchIndices = [3, 4, 5, 6, 8];
                         for (let i of searchIndices) {
                             const cellText = row.children[i]?.textContent.toLowerCase() || '';
                             if (cellText.includes(searchTerm)) {
-                                return true;
+                                matchSearch = true;
+                                break;
                             }
                         }
-                        return false;
-                    });
-                }
+                        return matchSearch;
+                    }
 
-                clearSearch.style.display = searchInput.value ? 'block' : 'none';
+                    return true;
+                });
+
+                clearSearch.style.display = (searchInput.value || selectedDate) ? 'block' : 'none';
                 currentPage = 1;
                 displayPage(currentPage);
                 generatePagination();
@@ -694,6 +685,7 @@
 
             clearSearch.addEventListener('click', function() {
                 searchInput.value = '';
+                if (filterDate) filterDate.value = '';
                 clearSearch.style.display = 'none';
                 filterRows();
                 searchInput.focus();
@@ -703,6 +695,87 @@
                 clearTimeout(this.searchTimeout);
                 this.searchTimeout = setTimeout(filterRows, 300);
             });
+
+            if (filterDate) {
+                filterDate.addEventListener('change', filterRows);
+            }
+
+            // Select all / Individual checkbox listeners
+            const selectAllUsers = document.getElementById('select-all-users');
+            const bulkDeleteSelectedBtn = document.getElementById('bulk-delete-selected-btn');
+
+            function updateBulkDeleteBtnState() {
+                const checkedCount = document.querySelectorAll('.user-select-chk:checked').length;
+                if (bulkDeleteSelectedBtn) {
+                    bulkDeleteSelectedBtn.disabled = checkedCount === 0;
+                }
+            }
+
+            if (selectAllUsers) {
+                selectAllUsers.addEventListener('change', function() {
+                    const checkboxes = document.querySelectorAll('.user-select-chk');
+                    checkboxes.forEach(chk => {
+                        const row = chk.closest('tr');
+                        if (row && row.style.display !== 'none') {
+                            chk.checked = selectAllUsers.checked;
+                        }
+                    });
+                    updateBulkDeleteBtnState();
+                });
+            }
+
+            document.getElementById('users-tbody').addEventListener('change', function(e) {
+                if (e.target && e.target.classList.contains('user-select-chk')) {
+                    updateBulkDeleteBtnState();
+                    const totalVisibleChks = Array.from(document.querySelectorAll('.user-select-chk')).filter(chk => chk.closest('tr').style.display !== 'none');
+                    const checkedVisibleChks = totalVisibleChks.filter(chk => chk.checked);
+                    if (selectAllUsers) {
+                        selectAllUsers.checked = totalVisibleChks.length > 0 && totalVisibleChks.length === checkedVisibleChks.length;
+                    }
+                }
+            });
+
+            window.deleteSelectedUsers = function() {
+                const checkedChks = Array.from(document.querySelectorAll('.user-select-chk:checked'));
+                if (checkedChks.length === 0) {
+                    alert('Please select at least one user to delete.');
+                    return;
+                }
+
+                const ids = checkedChks.map(chk => parseInt(chk.value));
+                let hasActive = false;
+                checkedChks.forEach(chk => {
+                    if (chk.getAttribute('data-status') === 'Yes') {
+                        hasActive = true;
+                    }
+                });
+
+                let confirmMsg = `Are you sure you want to delete the ${ids.length} selected user(s)?`;
+                if (hasActive) {
+                    confirmMsg = `Warning: One or more selected users are active (have transactions, campaigns, or profile data). Deleting them might cause database inconsistencies or orphaned data.\n\nAre you sure you want to proceed and delete the ${ids.length} selected user(s)?`;
+                }
+
+                if (confirm(confirmMsg)) {
+                    $.ajax({
+                        url: '<?php echo site_url(). "admin/delete_selected_users"; ?>',
+                        type: 'POST',
+                        data: { ids: ids },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                alert(response.message || 'Selected users deleted successfully!');
+                                location.reload();
+                            } else {
+                                alert(response.message || 'Error deleting selected users.');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log('AJAX Error:', error);
+                            alert('Something went wrong.');
+                        }
+                    });
+                }
+            };
 
             if (rows.length > 0) {
                 displayPage(currentPage);

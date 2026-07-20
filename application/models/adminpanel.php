@@ -709,9 +709,12 @@ public function get_admin_entry_by_id($id)
         return $result;
     }
 
-    public function delete_unverified_donations()
+    public function delete_unverified_donations($date = NULL)
     {
         $this->db->where('status', 0);
+        if (!empty($date)) {
+            $this->db->where('DATE(created_at) =', $date);
+        }
         return $this->db->delete('donation_for_cause');
     }
 
@@ -748,9 +751,39 @@ public function get_admin_entry_by_id($id)
         return $this->db->delete('user');
     }
 
-    public function delete_unverified_causes()
+    public function delete_selected_users($ids)
+    {
+        if (empty($ids)) {
+            return false;
+        }
+        $this->db->where_in('id', $ids);
+        return $this->db->delete('user');
+    }
+
+    public function delete_unverified_causes($date = NULL)
     {
         $this->db->where('verified', 0);
+        if (!empty($date)) {
+            $this->db->where('DATE(created_at) =', $date);
+        }
+        return $this->db->delete('individualform');
+    }
+
+    public function delete_selected_transactions($ids)
+    {
+        if (empty($ids)) {
+            return false;
+        }
+        $this->db->where_in('donation_id', $ids);
+        return $this->db->delete('donation_for_cause');
+    }
+
+    public function delete_selected_causes($ids)
+    {
+        if (empty($ids)) {
+            return false;
+        }
+        $this->db->where_in('id', $ids);
         return $this->db->delete('individualform');
     }
 

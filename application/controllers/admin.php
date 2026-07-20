@@ -1558,7 +1558,8 @@ class admin extends CI_Controller
                 echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
                 return;
             }
-            $result = $this->adminpanel->delete_unverified_donations();
+            $date = $this->input->post('date');
+            $result = $this->adminpanel->delete_unverified_donations($date);
             if ($result) {
                 echo json_encode(['status' => 'success', 'message' => 'All unverified donations deleted successfully!']);
             } else {
@@ -1617,6 +1618,27 @@ class admin extends CI_Controller
         }
     }
 
+    public function delete_selected_users()
+    {
+        if ($this->input->is_ajax_request()) {
+            if (!$this->session->userdata('adminId')) {
+                echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+                return;
+            }
+            $ids = $this->input->post("ids");
+            if (empty($ids) || !is_array($ids)) {
+                echo json_encode(['status' => 'error', 'message' => 'No users selected.']);
+                return;
+            }
+            $result = $this->adminpanel->delete_selected_users($ids);
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'Selected users deleted successfully!']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete selected users.']);
+            }
+        }
+    }
+
     public function delete_unverified_causes()
     {
         if ($this->input->is_ajax_request()) {
@@ -1624,11 +1646,54 @@ class admin extends CI_Controller
                 echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
                 return;
             }
-            $result = $this->adminpanel->delete_unverified_causes();
+            $date = $this->input->post('date');
+            $result = $this->adminpanel->delete_unverified_causes($date);
             if ($result) {
                 echo json_encode(['status' => 'success', 'message' => 'All unverified causes deleted successfully!']);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Failed to delete unverified causes.']);
+            }
+        }
+    }
+
+    public function delete_selected_transactions()
+    {
+        if ($this->input->is_ajax_request()) {
+            if (!$this->session->userdata('adminId')) {
+                echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+                return;
+            }
+            $ids = $this->input->post("ids");
+            if (empty($ids) || !is_array($ids)) {
+                echo json_encode(['status' => 'error', 'message' => 'No transactions selected.']);
+                return;
+            }
+            $result = $this->adminpanel->delete_selected_transactions($ids);
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'Selected transactions deleted successfully!']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete selected transactions.']);
+            }
+        }
+    }
+
+    public function delete_selected_causes()
+    {
+        if ($this->input->is_ajax_request()) {
+            if (!$this->session->userdata('adminId')) {
+                echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+                return;
+            }
+            $ids = $this->input->post("ids");
+            if (empty($ids) || !is_array($ids)) {
+                echo json_encode(['status' => 'error', 'message' => 'No causes selected.']);
+                return;
+            }
+            $result = $this->adminpanel->delete_selected_causes($ids);
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'Selected causes deleted successfully!']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to delete selected causes.']);
             }
         }
     }

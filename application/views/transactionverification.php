@@ -676,14 +676,10 @@
                             </button>
                         </div>
                         <div class="col-md-8 d-flex align-items-center gap-2 mt-2 mt-md-0">
-                            <div class="form-check d-flex align-items-center mb-0">
-                                <input type="checkbox" id="bulk-no-delete-check" class="form-check-input me-2" onchange="toggleBulkDeleteButton(this)" style="cursor: pointer;">
-                                <label for="bulk-no-delete-check" class="form-check-label text-danger fw-bold mb-0" style="cursor: pointer; font-size: 14px; user-select: none;">
-                                    Enable Bulk Delete Unverified ("No")
-                                </label>
-                            </div>
-                            <button id="bulk-delete-no-btn" onclick="deleteUnverifiedTransactions()" class="btn btn-danger btn-sm px-3 ms-2" disabled>
-                                <i class="fa fa-trash"></i> Delete All "No"
+                            <span class="fw-bold fs-6">Filter by Date:</span>
+                            <input type="date" id="filter-date" class="form-control form-control-sm" style="width: 160px;">
+                            <button id="bulk-delete-selected-btn" onclick="deleteSelectedTransactions()" class="btn btn-danger btn-sm px-3 ms-3" disabled>
+                                <i class="fa fa-trash"></i> Delete Selected
                             </button>
                         </div>
                     </div>
@@ -693,6 +689,7 @@
                         <table class="table table-bordered table-hover w-100">
                             <thead>
                                 <tr class="ps-gray">
+                                    <th><input type="checkbox" id="select-all-transactions" style="cursor: pointer;"></th>
                                     <th>S.No</th>
                                     <th>Category</th>
                                     <th>Cause Heading</th>
@@ -712,7 +709,8 @@
                             <tbody id="donations-tbody">
                                 <?php if (!empty($donations)): ?>
                                     <?php foreach ($donations as $index => $donation): ?>
-                                        <tr>
+                                        <tr data-date="<?= !empty($donation->created_at) ? date('Y-m-d', strtotime($donation->created_at)) : ''; ?>">
+                                            <td><input type="checkbox" class="transaction-select-chk" value="<?= $donation->donation_id; ?>" data-status="<?= $donation->status == 1 ? 'Yes' : 'No'; ?>" style="cursor: pointer;"></td>
                                             <td><?= $index + 1; ?></td>
                                             <td><?= htmlspecialchars($donation->category); ?></td>
                                             <!-- ✅ Tooltip added only for Cause Heading -->
@@ -753,7 +751,7 @@
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
-                                    <tr id="no-results"><td colspan="14" class="text-center">No records found.</td></tr>
+                                    <tr id="no-results"><td colspan="15" class="text-center">No records found.</td></tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
@@ -912,36 +910,6 @@
     <script>
         let status = "";
 
-        // Toggle bulk delete button based on checkbox
-        function toggleBulkDeleteButton(checkbox) {
-            const bulkBtn = document.getElementById('bulk-delete-no-btn');
-            if (bulkBtn) {
-                bulkBtn.disabled = !checkbox.checked;
-            }
-        }
-
-        // Delete all unverified donations
-        function deleteUnverifiedTransactions() {
-            if (confirm('Are you sure you want to delete all unverified ("No") donations? This action cannot be undone.')) {
-                $.ajax({
-                    url: '<?php echo site_url(). "admin/delete_unverified_donations"; ?>',
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            alert(response.message || 'All unverified donations deleted successfully!');
-                            location.reload();
-                        } else {
-                            alert(response.message || 'Error deleting unverified donations.');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX Error:', error);
-                        alert('Something went wrong.');
-                    }
-                });
-            }
-        }
 
         // Delete donation function
         function deleteDonation(donation_id) {
@@ -1201,6 +1169,7 @@ function setUrl(donation) {
             const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.id.includes('no-results'));
             const searchInput = document.getElementById('search-input');
             const clearSearch = document.getElementById('clear-filter');
+            const filterDate = document.getElementById('filter-date');
             const paginationNav = document.getElementById('pagination-nav');
             const paginationUl = document.getElementById('pagination-ul');
             const recordsPerPage = 5;
@@ -1225,9 +1194,9 @@ function setUrl(donation) {
                     row.style.display = '';
                 });
 
-                // Update serial numbers for current page
+                // Update serial numbers for current page (row.cells[1] is S.No now because row.cells[0] is checkbox)
                 pageRows.forEach((row, index) => {
-                    row.cells[0].textContent = start + index + 1;
+                    row.cells[1].textContent = start + index + 1;
                 });
 
                 // Show/hide no results message
@@ -1348,40 +1317,60 @@ function setUrl(donation) {
                 paginationUl.appendChild(nextLi);
             }
 
-            // Function to filter rows based on search
+            // Function to filter rows based on search and date filter
             function filterRows() {
                 const searchTerm = searchInput.value.toLowerCase().trim();
-                
-                console.log('Filtering with search term:', searchTerm);
+                const selectedDate = filterDate ? filterDate.value : '';
 
-                if (searchTerm === '') {
-                    filteredRows = rows;
-                } else {
-                    filteredRows = rows.filter(row => {
-                        // Search through all table cells in the row
-                        for (let i = 0; i < row.children.length; i++) {
+                console.log('Filtering with search term:', searchTerm, 'date:', selectedDate);
+
+                // Clear checkbox selections on new filter to avoid deleting invisible rows
+                const selectAllTx = document.getElementById('select-all-transactions');
+                if (selectAllTx) selectAllTx.checked = false;
+                document.querySelectorAll('.transaction-select-chk').forEach(chk => chk.checked = false);
+                const bulkDeleteSelectedBtn = document.getElementById('bulk-delete-selected-btn');
+                if (bulkDeleteSelectedBtn) bulkDeleteSelectedBtn.disabled = true;
+
+                filteredRows = rows.filter(row => {
+                    // Match Date first
+                    if (selectedDate !== '') {
+                        const rowDate = row.getAttribute('data-date') || '';
+                        if (rowDate !== selectedDate) {
+                            return false;
+                        }
+                    }
+
+                    // Match Search Term
+                    if (searchTerm !== '') {
+                        let matchSearch = false;
+                        // Start search from index 2 to skip checkbox and S.No cells
+                        for (let i = 2; i < row.children.length; i++) {
                             const cellText = row.children[i]?.textContent.toLowerCase() || '';
                             if (cellText.includes(searchTerm)) {
-                                return true; // Found match in this column
+                                matchSearch = true;
+                                break;
                             }
                         }
-                        return false; // No match found in any column
-                    });
-                }
+                        return matchSearch;
+                    }
+
+                    return true;
+                });
 
                 console.log('Filtered rows:', filteredRows.length);
 
                 // Show/hide clear button
-                clearSearch.style.display = searchInput.value ? 'block' : 'none';
+                clearSearch.style.display = (searchInput.value || selectedDate) ? 'block' : 'none';
 
                 currentPage = 1;
                 displayPage(currentPage);
                 generatePagination();
             }
 
-            // Clear search input
+            // Clear search input and date filter
             clearSearch.addEventListener('click', function() {
                 searchInput.value = '';
+                if (filterDate) filterDate.value = '';
                 clearSearch.style.display = 'none';
                 filterRows();
                 searchInput.focus();
@@ -1394,12 +1383,94 @@ function setUrl(donation) {
                 this.searchTimeout = setTimeout(filterRows, 300);
             });
 
+            // Date filter event listener
+            if (filterDate) {
+                filterDate.addEventListener('change', filterRows);
+            }
+
             // Enter key to search
             searchInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     filterRows();
                 }
             });
+
+            // Select all / Individual checkbox listeners
+            const selectAllTransactions = document.getElementById('select-all-transactions');
+            const bulkDeleteSelectedBtn = document.getElementById('bulk-delete-selected-btn');
+
+            function updateBulkDeleteBtnState() {
+                const checkedCount = document.querySelectorAll('.transaction-select-chk:checked').length;
+                if (bulkDeleteSelectedBtn) {
+                    bulkDeleteSelectedBtn.disabled = checkedCount === 0;
+                }
+            }
+
+            if (selectAllTransactions) {
+                selectAllTransactions.addEventListener('change', function() {
+                    const checkboxes = document.querySelectorAll('.transaction-select-chk');
+                    checkboxes.forEach(chk => {
+                        const row = chk.closest('tr');
+                        if (row && row.style.display !== 'none') {
+                            chk.checked = selectAllTransactions.checked;
+                        }
+                    });
+                    updateBulkDeleteBtnState();
+                });
+            }
+
+            tbody.addEventListener('change', function(e) {
+                if (e.target && e.target.classList.contains('transaction-select-chk')) {
+                    updateBulkDeleteBtnState();
+                    const totalVisibleChks = Array.from(document.querySelectorAll('.transaction-select-chk')).filter(chk => chk.closest('tr').style.display !== 'none');
+                    const checkedVisibleChks = totalVisibleChks.filter(chk => chk.checked);
+                    if (selectAllTransactions) {
+                        selectAllTransactions.checked = totalVisibleChks.length > 0 && totalVisibleChks.length === checkedVisibleChks.length;
+                    }
+                }
+            });
+
+            window.deleteSelectedTransactions = function() {
+                const checkedChks = Array.from(document.querySelectorAll('.transaction-select-chk:checked'));
+                if (checkedChks.length === 0) {
+                    alert('Please select at least one transaction to delete.');
+                    return;
+                }
+
+                const ids = checkedChks.map(chk => parseInt(chk.value));
+                let hasVerified = false;
+                checkedChks.forEach(chk => {
+                    if (chk.getAttribute('data-status') === '1' || chk.getAttribute('data-status') === 'Yes') {
+                        hasVerified = true;
+                    }
+                });
+
+                let confirmMsg = `Are you sure you want to delete the ${ids.length} selected transaction(s)?`;
+                if (hasVerified) {
+                    confirmMsg = `Warning: One or more selected transactions are verified. Deleting them might cause database inconsistencies or orphaned data.\n\nAre you sure you want to proceed and delete the ${ids.length} selected transaction(s)?`;
+                }
+
+                if (confirm(confirmMsg)) {
+                    $.ajax({
+                        url: '<?php echo site_url(). "admin/delete_selected_transactions"; ?>',
+                        type: 'POST',
+                        data: { ids: ids },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                alert(response.message || 'Selected transactions deleted successfully!');
+                                location.reload();
+                            } else {
+                                alert(response.message || 'Error deleting selected transactions.');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log('AJAX Error:', error);
+                            alert('Something went wrong.');
+                        }
+                    });
+                }
+            };
 
             // Initial setup
             if (rows.length > 0) {
