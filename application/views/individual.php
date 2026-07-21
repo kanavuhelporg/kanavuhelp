@@ -932,7 +932,7 @@
     border-top: 1px solid #f0f0f0;
   }
   #step-two-form {
-    overscroll-behavior: contain;
+    scroll-behavior: smooth;
   }
 </style>
 
@@ -1683,6 +1683,21 @@
         document.querySelectorAll(".form-step").forEach(section => section.classList.add("d-none"));
         document.getElementById(`step-${step}`).classList.remove("d-none");
         updateStepper(step);
+
+        // Smoothly scroll the form container to the top
+        const formContainer = document.getElementById("step-two-form");
+        if (formContainer) {
+            formContainer.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Also scroll the window to the form container smoothly
+        const formWrapper = document.getElementById("multi-step-form-container");
+        if (formWrapper) {
+            formWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       }
 
       // Update stepper status
