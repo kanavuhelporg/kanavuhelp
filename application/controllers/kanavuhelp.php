@@ -698,6 +698,16 @@ public function insert_priority()
     {
         $this->load->model('UserModel');
 
+        // Honeypot check to prevent automated spambot form submission
+        $honeypot = $this->input->post('username_verification_honey');
+        if ($honeypot === NULL || $honeypot !== '') {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Security check failed. Automated submission detected.'
+            ]);
+            exit;
+        }
+
         // Get POST data
         $cause_id = $this->input->post('cause_id');
         $user_id = $this->input->post('user_id');

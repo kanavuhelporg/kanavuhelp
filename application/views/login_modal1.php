@@ -1179,8 +1179,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- Donation Form -->
           <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+            <!-- Honeypot field to prevent automated spam bot submissions -->
+            <div style="display:none;">
+              <input type="text" name="username_verification_honey" value="" autocomplete="off">
+            </div>
             <!-- Hidden fields to store cause ID and user ID -->
             <input type="hidden" name="cause_id" id="cause_id" value="">
             <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">

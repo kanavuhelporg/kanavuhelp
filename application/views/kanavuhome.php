@@ -1979,6 +1979,10 @@
 
         <div class="modal-body p-4 bg-light">
           <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>">
+            <!-- Honeypot field to prevent automated spam bot submissions -->
+            <div style="display:none;">
+              <input type="text" name="username_verification_honey" value="" autocomplete="off">
+            </div>
             <input type="hidden" name="cause_id" id="cause_id">
             <input type="hidden" name="currency_type" value="INR">
             <input type="hidden" name="user_id" id="user_id" value="<?= $this->session->userdata('Kanavu_userId') ?>">

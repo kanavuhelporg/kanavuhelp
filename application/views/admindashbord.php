@@ -311,6 +311,14 @@
                         </a>
                     </li>
 
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('users') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'users') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-users"></i>&nbsp;&nbsp;Users
+                        </a>
+                    </li>
+
           <li class="nav-item py-2">
             <a href="#" class="nav-link text-decoration-none" style="font-weight:400;color:black;"
               data-bs-toggle="modal" data-bs-target="#logoutModal">
@@ -392,6 +400,14 @@
                 class="nav-link text-decoration-none <?= (uri_string() == 'causesverification') ? 'active' : '' ?>"
                 style="font-weight:400;color:black;">
                 <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
+              </a>
+            </li>
+
+            <li class="nav-item px-3 py-2">
+              <a href="<?= base_url('users') ?>"
+                class="nav-link text-decoration-none <?= (uri_string() == 'users') ? 'active' : '' ?>"
+                style="font-weight:400;color:black;">
+                <i class="fa-solid fa-users"></i>&nbsp;&nbsp;Users
               </a>
             </li>
 

@@ -210,8 +210,8 @@
     }
     .active-category {
       border: 1px solid #ed3136;
-      color: #ed3136;
-      background-color: white !important;
+      color: white !important;
+      background-color: #ed3136 !important;
     }
     @media (max-width: 767px) {
       /* carousel */
@@ -572,15 +572,15 @@
     }
 }
 
-/* Completed CATEGORY button (Filter button) */
-.completed-category-btn {
+/* Completed CATEGORY button (Filter button) when active/selected */
+.completed-category-btn.active-category {
     background-color: #28a745 !important;
     color: #ffffff !important;
     border: 1px solid #28a745 !important;
 }
 
-/* Keep green even on hover */
-.completed-category-btn:hover {
+/* Keep green even on hover when active */
+.completed-category-btn.active-category:hover {
     background-color: #28a745 !important;
     color: #ffffff !important;
 }
@@ -679,37 +679,37 @@
     <div class="row row-cols-2 row-cols-md-auto g-3 justify-content-center">
 
         <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change active-category category-btn"
+            <button class="rounded-pill px-3 py-2 focus-change active-category category-btn"
                 onclick="filterCauseswithcategory('All', 0)">All</button>
         </div>
 
         <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+            <button class="rounded-pill px-3 py-2 focus-change category-not-active category-btn"
                 onclick="filterCauseswithcategory('Medical', 1)">Medical</button>
         </div>
 
         <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+            <button class="rounded-pill px-3 py-2 focus-change category-not-active category-btn"
                 onclick="filterCauseswithcategory('Education', 2)">Education</button>
         </div>
 
         <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+            <button class="rounded-pill px-3 py-2 focus-change category-not-active category-btn"
                 onclick="filterCauseswithcategory('Crisis', 3)">Crisis</button>
         </div>
 
         <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+            <button class="rounded-pill px-3 py-2 focus-change category-not-active category-btn"
                 onclick="filterCauseswithcategory('Agriculture', 4)">Agriculture</button>
         </div>
 
         <div class="col">
-            <button class="rounded-pill bg-white px-3 py-2 focus-change category-not-active category-btn"
+            <button class="rounded-pill px-3 py-2 focus-change category-not-active category-btn"
                 onclick="filterCauseswithcategory('Other', 5)">Others</button>
         </div>
 
         <div class="col">
-            <button class="rounded-pill px-3 py-2 focus-change category-btn completed-category-btn"
+            <button class="rounded-pill px-3 py-2 focus-change category-not-active category-btn completed-category-btn"
               onclick="filterCauseswithcategory('Completed', 6)">Completed</button>
         </div>
 
@@ -853,26 +853,7 @@
 //     });
 // }
 
-    // Function to handle button highlighting
-    function changeFocus(index) {
-    const buttons = document.querySelectorAll(".focus-change");
-
-    buttons.forEach((button, i) => {
-
-        // ✅ Skip Completed category button
-        if (button.classList.contains("completed-category-btn")) {
-            return;
-        }
-
-        if (i === index) {
-            button.classList.remove("category-not-active");
-            button.classList.add("active-category");
-        } else {
-            button.classList.remove("active-category");
-            button.classList.add("category-not-active");
-        }
-    });
-}
+    // (Duplicate changeFocus function removed, utilizing the active-category and completed-category-btn styles with the single changeFocus at the bottom of the page)
 
     function openDonationModal(isRunForCause) {
       // Update modal title based on is_runforcause
@@ -961,6 +942,10 @@
 
             <div class="modal-body p-4 bg-light">
                 <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+                    <!-- Honeypot field to prevent automated spam bot submissions -->
+                    <div style="display:none;">
+                        <input type="text" name="username_verification_honey" value="" autocomplete="off">
+                    </div>
                     
                     <input type="hidden" name="cause_id" id="cause_id">
                     <input type="hidden" name="user_id" id="user_id">

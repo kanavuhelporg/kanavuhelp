@@ -709,4 +709,83 @@ public function get_admin_entry_by_id($id)
         return $result;
     }
 
+    public function delete_unverified_donations($date = NULL)
+    {
+        $this->db->where('status', 0);
+        if (!empty($date)) {
+            $this->db->where('DATE(created_at) =', $date);
+        }
+        return $this->db->delete('donation_for_cause');
+    }
+
+    public function get_users_with_status()
+    {
+        $sql = "SELECT u.*, 
+                (CASE 
+                    WHEN EXISTS (SELECT 1 FROM donation_for_cause d WHERE d.user_id = u.id OR d.donor_id = u.id)
+                         OR EXISTS (SELECT 1 FROM individualform i WHERE i.user_id = u.id)
+                         OR EXISTS (SELECT 1 FROM donor_profiles dp WHERE dp.Donor_id = u.id)
+                    THEN 'Yes'
+                    ELSE 'No'
+                END) AS status
+                FROM user u 
+                ORDER BY u.id DESC";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    public function delete_unused_users()
+    {
+        $sql = "DELETE FROM user 
+                WHERE (category IS NULL OR category != 'admin')
+                AND id NOT IN (SELECT DISTINCT user_id FROM donation_for_cause WHERE user_id IS NOT NULL)
+                AND id NOT IN (SELECT DISTINCT donor_id FROM donation_for_cause WHERE donor_id IS NOT NULL)
+                AND id NOT IN (SELECT DISTINCT user_id FROM individualform WHERE user_id IS NOT NULL)
+                AND id NOT IN (SELECT DISTINCT Donor_id FROM donor_profiles WHERE Donor_id IS NOT NULL)";
+        return $this->db->query($sql);
+    }
+
+    public function delete_user($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->delete('user');
+    }
+
+    public function delete_selected_users($ids)
+    {
+        if (empty($ids)) {
+            return false;
+        }
+        $this->db->where_in('id', $ids);
+        return $this->db->delete('user');
+    }
+
+    public function delete_unverified_causes($date = NULL)
+    {
+        $this->db->where('verified', 0);
+        if (!empty($date)) {
+            $this->db->where('DATE(created_at) =', $date);
+        }
+        return $this->db->delete('individualform');
+    }
+
+    public function delete_selected_transactions($ids)
+    {
+        if (empty($ids)) {
+            return false;
+        }
+        $this->db->where_in('donation_id', $ids);
+        return $this->db->delete('donation_for_cause');
+    }
+
+    public function delete_selected_causes($ids)
+    {
+        if (empty($ids)) {
+            return false;
+        }
+        $this->db->where_in('id', $ids);
+        return $this->db->delete('individualform');
+    }
+
 }
+
