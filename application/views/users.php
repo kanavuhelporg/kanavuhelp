@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Verification</title>
-    <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon"/>
+    <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -44,7 +45,7 @@
             gap: 20px;
         }
 
-        ul > li {
+        ul>li {
             cursor: pointer;
         }
 
@@ -122,7 +123,7 @@
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
-        
+
         .table {
             min-width: 1200px;
             width: 100%;
@@ -196,7 +197,7 @@
             #menu-bar {
                 display: none;
             }
-            
+
             #search-bar {
                 display: none;
             }
@@ -211,7 +212,7 @@
                 border: 1px solid #dee2e6;
                 border-radius: 0.375rem;
             }
-            
+
             .main-content {
                 padding: 10px;
             }
@@ -224,38 +225,45 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
             <!-- Top bar -->
             <div class="col-lg-2 col-12 border-bottom ps-gray py-3">
                 <div class="ps-logo">
-                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" class="ham-menu ms-4 border-0 bg-transparent">
+                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar"
+                        class="ham-menu ms-4 border-0 bg-transparent">
                         <div class="ham-line"></div>
                         <div class="ham-line"></div>
                         <div class="ham-line"></div>
                     </button>
                     <div class="d-flex align-items-center">
                         <span class="rounded-circle text-white px-2 ps-letter">K</span>&nbsp;
-                        <span class="heading-ponsoft fs-5 position-relative" style="top:1px; color:red;">KANAVUHELP</span>
+                        <span class="heading-ponsoft fs-5 position-relative"
+                            style="top:1px; color:red;">KANAVUHELP</span>
                     </div>
                 </div>
             </div>
-            
-            <div id="search-bar" class="col-lg-10 col-12 d-flex align-items-center justify-content-between border-bottom">
+
+            <div id="search-bar"
+                class="col-lg-10 col-12 d-flex align-items-center justify-content-between border-bottom">
                 <div class="col-lg-7 ms-4"></div>
                 <div class="col-lg-3 d-none d-lg-flex align-items-baseline justify-content-evenly">
-                    <button style="outline-style:none;" class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
-                        <span class="p-1 px-2 ps-user rounded-circle"><i class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
+                    <button style="outline-style:none;"
+                        class="drop-down-toggle border-0 d-flex align-items-center bg-white" data-bs-toggle="dropdown">
+                        <span class="p-1 px-2 ps-user rounded-circle"><i
+                                class="fa-solid fa-user"></i></span>&nbsp;&nbsp;
                         <span style="font-weight:500;">
                             <?= $this->session->userdata('adminName') ?: 'Manager Name'; ?>
                         </span>&nbsp;&nbsp;
                         <i class="fa-solid fa-angle-down"></i>
                     </button>
-                    
+
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-decoration-none style-logout" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                            <a href="#" class="nav-link text-decoration-none style-logout" data-bs-toggle="modal"
+                                data-bs-target="#logoutModal">
                                 <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
                             </a>
                         </li>
@@ -271,45 +279,52 @@
                     <li class="nav-item py-3 fs-6">
                         <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
                     </li>
-                    
+
                     <li class="nav-item py-2">
-                        <a href="<?= base_url('admindashbord') ?>" class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>">
+                        <a href="<?= base_url('admindashbord') ?>"
+                            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>">
                             <i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashboard
                         </a>
                     </li>
-                    
+
                     <li class="nav-item py-2">
-                        <a href="<?= base_url('transactionverification') ?>" class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>">
+                        <a href="<?= base_url('transactionverification') ?>"
+                            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>">
                             <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
                         </a>
                     </li>
-                    
+
                     <li class="nav-item py-2">
-                        <a href="<?= base_url('admin/get_total_amount') ?>" class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>">
+                        <a href="<?= base_url('admin/get_total_amount') ?>"
+                            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>">
                             <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Admin Set Amount
                         </a>
                     </li>
-                    
+
                     <li class="nav-item py-2">
-                        <a href="<?= base_url('contact_submissions') ?>" class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>">
+                        <a href="<?= base_url('contact_submissions') ?>"
+                            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>">
                             <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
                         </a>
                     </li>
-                    
+
                     <li class="nav-item py-2">
-                        <a href="<?= base_url('causesverification') ?>" class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>">
+                        <a href="<?= base_url('causesverification') ?>"
+                            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>">
                             <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
                         </a>
                     </li>
 
                     <li class="nav-item py-2">
-                        <a href="<?= base_url('users') ?>" class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'users') ? 'active' : '' ?>">
+                        <a href="<?= base_url('users') ?>"
+                            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'users') ? 'active' : '' ?>">
                             <i class="fa-solid fa-users"></i>&nbsp;&nbsp;Users
                         </a>
                     </li>
-                    
+
                     <li class="nav-item py-2">
-                        <a href="#" class="nav-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                        <a href="#" class="nav-link text-decoration-none" data-bs-toggle="modal"
+                            data-bs-target="#logoutModal">
                             <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
                         </a>
                     </li>
@@ -325,47 +340,55 @@
                 <div class="offcanvas-body p-0">
                     <ul class="d-grid list-unstyled">
                         <li class="nav-item py-3 fs-6 px-3">
-                            <a href="#" style="font-weight:400;color:grey;" class="nav-link text-decoration-none">MENU</a>
+                            <a href="#" style="font-weight:400;color:grey;"
+                                class="nav-link text-decoration-none">MENU</a>
                         </li>
-                        
+
                         <li class="nav-item py-2 px-3">
-                            <a href="<?= base_url('admindashbord') ?>" class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admindashbord') ?>"
+                                class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admindashbord') ? 'active' : '' ?>">
                                 <i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashboard
                             </a>
                         </li>
-                        
+
                         <li class="nav-item py-2 px-3">
-                            <a href="<?= base_url('transactionverification') ?>" class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>">
+                            <a href="<?= base_url('transactionverification') ?>"
+                                class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'transactionverification') ? 'active' : '' ?>">
                                 <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction
                             </a>
                         </li>
-                        
+
                         <li class="nav-item py-2 px-3">
-                            <a href="<?= base_url('admin/get_total_amount') ?>" class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>">
+                            <a href="<?= base_url('admin/get_total_amount') ?>"
+                                class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>">
                                 <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp; Admin Set Amount
                             </a>
                         </li>
-                        
+
                         <li class="nav-item py-2 px-3">
-                            <a href="<?= base_url('contact_submissions') ?>" class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>">
+                            <a href="<?= base_url('contact_submissions') ?>"
+                                class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>">
                                 <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
                             </a>
                         </li>
-                        
+
                         <li class="nav-item px-3 py-2">
-                            <a href="<?= base_url('causesverification') ?>" class="nav-link text-decoration-none <?= (uri_string() == 'causesverification') ? 'active' : '' ?>">
+                            <a href="<?= base_url('causesverification') ?>"
+                                class="nav-link text-decoration-none <?= (uri_string() == 'causesverification') ? 'active' : '' ?>">
                                 <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
                             </a>
                         </li>
 
                         <li class="nav-item px-3 py-2">
-                            <a href="<?= base_url('users') ?>" class="nav-link text-decoration-none <?= (uri_string() == 'users') ? 'active' : '' ?>">
+                            <a href="<?= base_url('users') ?>"
+                                class="nav-link text-decoration-none <?= (uri_string() == 'users') ? 'active' : '' ?>">
                                 <i class="fa-solid fa-users"></i>&nbsp;&nbsp;Users
                             </a>
                         </li>
 
                         <li class="nav-item py-2 px-3">
-                            <a href="#" class="nav-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                            <a href="#" class="nav-link text-decoration-none" data-bs-toggle="modal"
+                                data-bs-target="#logoutModal">
                                 <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
                             </a>
                         </li>
@@ -376,19 +399,24 @@
             <!-- Main Content Area -->
             <div class="col-lg-10 col-12 main-content">
                 <div class="container-fluid px-3 px-md-4 pt-3 w-100">
-                    
+
                     <!-- Search box & Bulk Action -->
                     <div class="row mb-3 align-items-center">
                         <div class="col-md-4 position-relative">
-                            <input type="text" id="search-input" class="form-control pe-5" placeholder="Search user name or email or phoneno or location">
-                            <button id="clear-filter" class="btn position-absolute end-0 start-2 top-50 translate-middle-y" style="display: none; background: none; border: none; margin-right: 10px;">
+                            <input type="text" id="search-input" class="form-control pe-5"
+                                placeholder="Search user name or email or phoneno or location">
+                            <button id="clear-filter"
+                                class="btn position-absolute end-0 start-2 top-50 translate-middle-y"
+                                style="display: none; background: none; border: none; margin-right: 10px;">
                                 <i class="fas fa-times text-danger"></i>
                             </button>
                         </div>
                         <div class="col-md-8 d-flex align-items-center gap-2 mt-2 mt-md-0">
                             <span class="fw-bold fs-6">Filter by Date:</span>
-                            <input type="date" id="filter-date" class="form-control form-control-sm" style="width: 160px;">
-                            <button id="bulk-delete-selected-btn" onclick="deleteSelectedUsers()" class="btn btn-danger btn-sm px-3 ms-3" disabled>
+                            <input type="date" id="filter-date" class="form-control form-control-sm"
+                                style="width: 160px;">
+                            <button id="bulk-delete-selected-btn" onclick="deleteSelectedUsers()"
+                                class="btn btn-danger btn-sm px-3 ms-3" disabled>
                                 <i class="fa fa-trash"></i> Delete Selected
                             </button>
                         </div>
@@ -406,7 +434,6 @@
                                     <th>Email</th>
                                     <th>Mobile Number</th>
                                     <th>Location</th>
-                                    <th>Category</th>
                                     <th>Created Date</th>
                                     <th>Active Status (Used)</th>
                                     <th>Action</th>
@@ -415,28 +442,33 @@
                             <tbody id="users-tbody">
                                 <?php if (!empty($users)): ?>
                                     <?php foreach ($users as $index => $u): ?>
-                                        <tr data-date="<?= !empty($u->created_at) ? date('Y-m-d', strtotime($u->created_at)) : ''; ?>">
-                                            <td><input type="checkbox" class="user-select-chk" value="<?= $u->id; ?>" data-status="<?= $u->status; ?>" style="cursor: pointer;"></td>
+                                        <tr
+                                            data-date="<?= !empty($u->created_at) ? date('Y-m-d', strtotime($u->created_at)) : ''; ?>">
+                                            <td><input type="checkbox" class="user-select-chk" value="<?= $u->id; ?>"
+                                                    data-status="<?= $u->status; ?>" style="cursor: pointer;"></td>
                                             <td><?= $index + 1; ?></td>
                                             <td><?= htmlspecialchars($u->id); ?></td>
                                             <td><?= htmlspecialchars($u->name); ?></td>
                                             <td><?= htmlspecialchars($u->email); ?></td>
                                             <td><?= htmlspecialchars($u->mobileNumber); ?></td>
                                             <td><?= htmlspecialchars($u->location); ?></td>
-                                            <td><?= htmlspecialchars($u->category); ?></td>
-                                            <td><?= !empty($u->created_at) ? date('d-m-Y', strtotime($u->created_at)) : ''; ?></td>
+                                            <td><?= !empty($u->created_at) ? date('d-m-Y', strtotime($u->created_at)) : 'NULL'; ?>
+                                            </td>
                                             <td class="fw-bold <?= $u->status == 'Yes' ? 'text-success' : 'text-danger'; ?>">
                                                 <?= $u->status; ?>
                                             </td>
                                             <td>
-                                                <button class="btn btn-danger btn-sm" onclick="deleteUser(<?= $u->id; ?>, '<?= $u->status; ?>')" title="Delete">
+                                                <button class="btn btn-danger btn-sm"
+                                                    onclick="deleteUser(<?= $u->id; ?>, '<?= $u->status; ?>')" title="Delete">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
-                                    <tr id="no-results"><td colspan="11" class="text-center">No users found.</td></tr>
+                                    <tr id="no-results">
+                                        <td colspan="11" class="text-center">No users found.</td>
+                                    </tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
@@ -473,7 +505,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
 
         // Delete individual user
@@ -484,11 +516,11 @@
             }
             if (confirm(confirmMsg)) {
                 $.ajax({
-                    url: '<?php echo site_url(). "admin/delete_user"; ?>',
+                    url: '<?php echo site_url() . "admin/delete_user"; ?>',
                     type: 'POST',
                     data: { id: id },
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         if (response.status === 'success') {
                             alert(response.message || 'User deleted successfully!');
                             location.reload();
@@ -496,7 +528,7 @@
                             alert(response.message || 'Error deleting user.');
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.log('AJAX Error:', error);
                         alert('Something went wrong.');
                     }
@@ -505,7 +537,7 @@
         }
 
         // Search & Pagination Logic
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const tbody = document.getElementById('users-tbody');
             const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => !row.id.includes('no-results'));
             const searchInput = document.getElementById('search-input');
@@ -520,9 +552,9 @@
             function displayPage(page) {
                 const start = (page - 1) * recordsPerPage;
                 const end = start + recordsPerPage;
-                
+
                 rows.forEach(row => row.style.display = 'none');
-                
+
                 const pageRows = filteredRows.slice(start, end);
                 pageRows.forEach(row => {
                     row.style.display = '';
@@ -553,7 +585,7 @@
                 prevLi.classList.add('page-item');
                 if (currentPage === 1) prevLi.classList.add('disabled');
                 prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><i class="fas fa-arrow-left"></i></a>`;
-                prevLi.addEventListener('click', function(e) {
+                prevLi.addEventListener('click', function (e) {
                     e.preventDefault();
                     if (currentPage > 1) {
                         currentPage--;
@@ -575,7 +607,7 @@
                     const firstLi = document.createElement('li');
                     firstLi.classList.add('page-item');
                     firstLi.innerHTML = `<a class="page-link" href="#">1</a>`;
-                    firstLi.addEventListener('click', function(e) {
+                    firstLi.addEventListener('click', function (e) {
                         e.preventDefault();
                         currentPage = 1;
                         displayPage(currentPage);
@@ -596,7 +628,7 @@
                     li.classList.add('page-item');
                     if (i === currentPage) li.classList.add('active');
                     li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-                    li.addEventListener('click', function(e) {
+                    li.addEventListener('click', function (e) {
                         e.preventDefault();
                         currentPage = i;
                         displayPage(currentPage);
@@ -616,7 +648,7 @@
                     const lastLi = document.createElement('li');
                     lastLi.classList.add('page-item');
                     lastLi.innerHTML = `<a class="page-link" href="#">${totalPages}</a>`;
-                    lastLi.addEventListener('click', function(e) {
+                    lastLi.addEventListener('click', function (e) {
                         e.preventDefault();
                         currentPage = totalPages;
                         displayPage(currentPage);
@@ -629,7 +661,7 @@
                 nextLi.classList.add('page-item');
                 if (currentPage === totalPages) nextLi.classList.add('disabled');
                 nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><i class="fas fa-arrow-right"></i></a>`;
-                nextLi.addEventListener('click', function(e) {
+                nextLi.addEventListener('click', function (e) {
                     e.preventDefault();
                     if (currentPage < totalPages) {
                         currentPage++;
@@ -683,7 +715,7 @@
                 generatePagination();
             }
 
-            clearSearch.addEventListener('click', function() {
+            clearSearch.addEventListener('click', function () {
                 searchInput.value = '';
                 if (filterDate) filterDate.value = '';
                 clearSearch.style.display = 'none';
@@ -691,7 +723,7 @@
                 searchInput.focus();
             });
 
-            searchInput.addEventListener('input', function() {
+            searchInput.addEventListener('input', function () {
                 clearTimeout(this.searchTimeout);
                 this.searchTimeout = setTimeout(filterRows, 300);
             });
@@ -712,7 +744,7 @@
             }
 
             if (selectAllUsers) {
-                selectAllUsers.addEventListener('change', function() {
+                selectAllUsers.addEventListener('change', function () {
                     const checkboxes = document.querySelectorAll('.user-select-chk');
                     checkboxes.forEach(chk => {
                         const row = chk.closest('tr');
@@ -724,7 +756,7 @@
                 });
             }
 
-            document.getElementById('users-tbody').addEventListener('change', function(e) {
+            document.getElementById('users-tbody').addEventListener('change', function (e) {
                 if (e.target && e.target.classList.contains('user-select-chk')) {
                     updateBulkDeleteBtnState();
                     const totalVisibleChks = Array.from(document.querySelectorAll('.user-select-chk')).filter(chk => chk.closest('tr').style.display !== 'none');
@@ -735,7 +767,7 @@
                 }
             });
 
-            window.deleteSelectedUsers = function() {
+            window.deleteSelectedUsers = function () {
                 const checkedChks = Array.from(document.querySelectorAll('.user-select-chk:checked'));
                 if (checkedChks.length === 0) {
                     alert('Please select at least one user to delete.');
@@ -757,11 +789,11 @@
 
                 if (confirm(confirmMsg)) {
                     $.ajax({
-                        url: '<?php echo site_url(). "admin/delete_selected_users"; ?>',
+                        url: '<?php echo site_url() . "admin/delete_selected_users"; ?>',
                         type: 'POST',
                         data: { ids: ids },
                         dataType: 'json',
-                        success: function(response) {
+                        success: function (response) {
                             if (response.status === 'success') {
                                 alert(response.message || 'Selected users deleted successfully!');
                                 location.reload();
@@ -769,7 +801,7 @@
                                 alert(response.message || 'Error deleting selected users.');
                             }
                         },
-                        error: function(xhr, status, error) {
+                        error: function (xhr, status, error) {
                             console.log('AJAX Error:', error);
                             alert('Something went wrong.');
                         }
@@ -786,4 +818,5 @@
         });
     </script>
 </body>
+
 </html>
