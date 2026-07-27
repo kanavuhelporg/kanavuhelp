@@ -12,10 +12,11 @@ $config['protocol'] = 'smtp';
 // $config['smtp_user'] = 'giriksv2002@gmail.com';
 // $config['smtp_pass'] = 'mgnuoigfgdljuybm';
 
-$config['smtp_host'] = 'mail.help.kanavu.org';
+$config['smtp_host'] = 'smtp.resend.com';
 $config['smtp_port'] = 465;
-$config['smtp_user'] = 'support@help.kanavu.org';
-$config['smtp_pass'] = 'S8z?HUxsnd30';
+$config['smtp_user'] = 'resend'; // THIS MUST BE 'resend' FOR RESEND.COM
+$config['smtp_pass'] = 're_cfXuYjdF_DoCLixhMBEG4pWxuPymV9Qca';
+$config['from_email'] = 'support@help.kanavu.org'; // Added this for the controllers
 
 $config['mailtype'] = 'html';
 $config['charset'] = 'utf-8';

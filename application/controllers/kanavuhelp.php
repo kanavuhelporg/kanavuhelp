@@ -97,20 +97,20 @@ class kanavuhelp extends CI_Controller
 
 
 
-public function insert_priority()
+    public function insert_priority()
     {
         if ($this->input->method() === 'post') {
             $id = $this->input->post('id');
             $priority = $this->input->post('priority');
             /*    log_message('debug', 'Received ID: ' . $id);
              log_message('debug', 'Received Priority: ' . $priority);
-             
+
              // Or temporary echo for direct checking
              echo "ID: $id, Priority: $priority";
              exit;  */
 
             if ($id !== null && $id !== '' && $priority !== null && $priority !== '') {
-                $priorityVal = (int)$priority;
+                $priorityVal = (int) $priority;
                 if (!is_numeric($priority) || $priorityVal != $priority || $priorityVal < 0 || $priorityVal > 8) {
                     echo json_encode(['status' => 'error', 'message' => 'Priority value must be an integer between 0 and 8.']);
                     return;
@@ -135,16 +135,13 @@ public function insert_priority()
 
                 if ($update !== false && $update >= 0) {
                     echo json_encode(['status' => 'success']);
-                }
-                else {
+                } else {
                     echo json_encode(['status' => 'error', 'message' => 'Failed to update priority in the database.']);
                 }
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error', 'message' => 'Please provide both ID and priority.']);
             }
-        }
-        else {
+        } else {
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
         }
     }
@@ -154,16 +151,14 @@ public function insert_priority()
     {
 
         if ($this->input->is_ajax_request() && $this->input->post('priority')) {
-            $priority = (int)$this->input->post('priority');
+            $priority = (int) $this->input->post('priority');
             $result = $this->UserModel->update_priority($id, $priority);
             if ($result) {
                 echo json_encode(['status' => 'success']);
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error']);
             }
-        }
-        else {
+        } else {
             echo json_encode(['status' => 'error']);
         }
     }
@@ -179,16 +174,13 @@ public function insert_priority()
 
                 if ($update) {
                     echo json_encode(['status' => 'success']);
-                }
-                else {
+                } else {
                     echo json_encode(['status' => 'error', 'message' => 'Failed to set priority to 0 in the database.']);
                 }
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error', 'message' => 'Please provide the ID.']);
             }
-        }
-        else {
+        } else {
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
         }
     }
@@ -424,8 +416,10 @@ public function insert_priority()
                 return;
             }
             // SQL Injection Check
-            if (preg_match('/<!--|\/\*|\bunion\s+(?:all\s+)?select\b|\bselect\b.+\bfrom\b|\binsert\s+into\b|\bupdate\b.+\bset\b|\bdelete\s+from\b|\bdrop\s+table\b/i', $progress_description) ||
-                preg_match('/\b(or|and)\b\s+(\d+|\'[^\']*\'|"[^"]*")\s*=\s*(\d+|\'[^\']*\'|"[^"]*")/i', $progress_description)) {
+            if (
+                preg_match('/<!--|\/\*|\bunion\s+(?:all\s+)?select\b|\bselect\b.+\bfrom\b|\binsert\s+into\b|\bupdate\b.+\bset\b|\bdelete\s+from\b|\bdrop\s+table\b/i', $progress_description) ||
+                preg_match('/\b(or|and)\b\s+(\d+|\'[^\']*\'|"[^"]*")\s*=\s*(\d+|\'[^\']*\'|"[^"]*")/i', $progress_description)
+            ) {
                 $this->session->set_flashdata("error", "Progress description cannot contain SQL injection keywords or comments.");
                 $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'causesverification';
                 redirect($referrer);
@@ -568,8 +562,7 @@ public function insert_priority()
 
         if ($progress) {
             echo json_encode(['status' => 'success', 'data' => $progress]);
-        }
-        else {
+        } else {
             echo json_encode(['status' => 'error', 'message' => 'No progress data found']);
         }
     }
@@ -583,8 +576,7 @@ public function insert_priority()
 
             if ($result) {
                 echo json_encode(['status' => 'success', 'message' => 'Progress details deleted successfully!']);
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error', 'message' => 'Failed to delete progress details!']);
             }
         }
@@ -607,7 +599,7 @@ public function insert_priority()
         $data['result'] = $this->UserModel->get_all_categories();
 
         $this->load->view('individual', $data);
-    //}
+        //}
     }
     public function charity()
     {
@@ -765,23 +757,22 @@ public function insert_priority()
             ]);
             $newid = $this->db->insert_id();
             $data['user_id'] = $newid;
-        /*
-         $this->db->insert('individualform', [
-         'user_id' => $newid,
-         'name' => $name,
-         'email' => $emailid,
-         'phone' => $phoneno,
-         'location' => $city
-         ]);
-         */
+            /*
+             $this->db->insert('individualform', [
+             'user_id' => $newid,
+             'name' => $name,
+             'email' => $emailid,
+             'phone' => $phoneno,
+             'location' => $city
+             ]);
+             */
         }
 
         // Save donation
         if ($this->UserModel->saveDonation($data)) {
             echo json_encode(['status' => 'success']);
             exit;
-        }
-        else {
+        } else {
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Failed to submit donation'
@@ -810,8 +801,8 @@ public function insert_priority()
 
 
 
-        
-/* kani */
+
+        /* kani */
         $active_fundraisers = [];
         foreach ($data['fundraisers'] as $fundraiser) {
             $end_date = new DateTime($fundraiser->end_date);
@@ -831,8 +822,7 @@ public function insert_priority()
                 // If the fundraiser is fully funded, we allow the donation button to stay visible but change the text
                 $fundraiser->hide_donation_button = false;
                 $fundraiser->donation_button_text = 'Complete Donation'; // New button text for fully funded campaigns
-            }
-            elseif (!$is_expired) {
+            } elseif (!$is_expired) {
                 // If the fundraiser is still active and not expired
                 $fundraiser->days_left = $days_left;
                 $fundraiser->hide_donation_button = false; // Show the donation button
@@ -843,10 +833,11 @@ public function insert_priority()
             if (!$is_expired) {
                 $active_fundraisers[] = $fundraiser;
             }
-        //
-        /*  if (!$is_expired || $fundraiser->raised_amount >= $fundraiser->amount) {
-         $active_fundraisers[] = $fundraiser;
-         } */}
+            //
+            /*  if (!$is_expired || $fundraiser->raised_amount >= $fundraiser->amount) {
+             $active_fundraisers[] = $fundraiser;
+             } */
+        }
         // Update the fundraisers in the data
         $data['fundraisers'] = $active_fundraisers;
 
@@ -938,8 +929,7 @@ public function insert_priority()
         if ($interval->invert == 0) {
             // This means end_date is in the past (expired)
             $days_left = 'expired';
-        }
-        else {
+        } else {
             // This means end_date is in the future
             $days_left = $days_left_num . ' Days Left';
         }
@@ -985,16 +975,14 @@ public function insert_priority()
             // Set flash message for the next page load
             $this->session->set_flashdata('error', 'Email is already registered. Please try another email.');
             redirect('/register'); // Redirects to the registration page
-        }
-        else {
+        } else {
             $response = $this->UserModel->register($data);
             if ($response) {
                 echo "<script>
                 alert('Registered successfully!');
                 window.location.href = '" . base_url('login') . "';
             </script>";
-            }
-            else {
+            } else {
                 $this->session->set_flashdata('error', 'Failed to register');
                 redirect('/register');
             }
@@ -1023,15 +1011,13 @@ public function insert_priority()
             $this->session->unset_userdata("userEmail");
             $this->session->set_flashdata("not_registered_user", true);
             redirect("login");
-        // echo '<script>alert("Please enter registered credentials.");</script>';
-        }
-        else {
+            // echo '<script>alert("Please enter registered credentials.");</script>';
+        } else {
             if ($countotp == 0) {
                 $this->session->set_userdata("userEmail", $email);
                 $this->session->set_userdata("path", "login");
                 redirect("send");
-            }
-            else {
+            } else {
                 $user = $login->row();
                 $userLoggedIn = array(
                     'Kanavu_userId' => $user->id,
@@ -1092,8 +1078,7 @@ public function insert_priority()
                 $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
                 $insert++;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->session->set_flashdata("error", "File upload failed: " . $e->getMessage());
             redirect($_SERVER['HTTP_REFERER']);
             return;
@@ -1131,7 +1116,7 @@ public function insert_priority()
             $data['cause_heading'] = $cause_heading;
         }
         $data['cause_description'] = $this->input->post('cause_description');
-        
+
         $cause_embed_link_tamil = $this->input->post('cause_embed_link_tamil');
         $cause_embed_link_english = $this->input->post('cause_embed_link_english');
         $youtube_regex = '/^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be|youtube-nocookie\.com)\/(watch\?v=|embed\/|shorts\/|[a-zA-Z0-9_-]+)/i';
@@ -1228,8 +1213,7 @@ public function insert_priority()
                 $data[$databasedocuments[$i]] = $dataInfo[$insert]["file_name"];
                 $insert++;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->session->set_flashdata("error", "File upload failed: " . $e->getMessage());
             redirect($_SERVER['HTTP_REFERER']);
             return;
@@ -1259,7 +1243,7 @@ public function insert_priority()
             $data['cause_heading'] = $cause_heading;
         }
         $data['cause_description'] = $this->input->post('cause_description');
-        
+
         $cause_embed_link_tamil = $this->input->post('cause_embed_link_tamil');
         $cause_embed_link_english = $this->input->post('cause_embed_link_english');
         $youtube_regex = '/^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be|youtube-nocookie\.com)\/(watch\?v=|embed\/|shorts\/|[a-zA-Z0-9_-]+)/i';
@@ -1364,8 +1348,7 @@ public function insert_priority()
                 $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
                 $fundraiser->days_left = $days_left;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             // Handle the error if the database cannot be reached
             log_message('error', 'Database error: ' . $e->getMessage());
             show_404(); // Display a 404 error page
@@ -1403,8 +1386,7 @@ public function insert_priority()
             $error = $this->upload->display_errors();
             echo "Upload error: $error"; // Debugging statement
             redirect('kanavuhelp/charity', 'refresh');
-        }
-        else {
+        } else {
             // File uploaded successfully, get file name and insert into database
             $file_data = $this->upload->data();
             $file_name = $file_data['file_name'];
@@ -1421,8 +1403,7 @@ public function insert_priority()
             if ($response == true) {
                 echo '<script>alert("Successfully registered")</script>';
                 $this->load->view('donate.php');
-            }
-            else {
+            } else {
                 echo 'Failed to register';
             }
         }
@@ -1469,7 +1450,7 @@ public function insert_priority()
             </html>
         ";
 
-        $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
+        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
         $this->email->to($userEmail);
         $this->email->subject($userSubject);
         $this->email->message($userMessage);
@@ -1494,7 +1475,7 @@ public function insert_priority()
             </html>
         ";
 
-        $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'Kanavu Help Website');
+        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'Kanavu Help Website');
         $this->email->to($adminEmail);
         $this->email->subject($adminSubject);
         $this->email->message($adminMessage);
@@ -1504,8 +1485,7 @@ public function insert_priority()
         // --- 3️⃣ Flash Message Based on Status ---
         if ($userEmailSent && $adminEmailSent) {
             $this->session->set_flashdata('submitsuccessstatus', 'Thanks for contacting us! We have received your message.');
-        }
-        else {
+        } else {
             $this->session->set_flashdata('submiterrorstatus', 'An error occurred while sending your message. Please try again later.');
         }
 
@@ -1553,7 +1533,7 @@ public function insert_priority()
 
         $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
 
-        $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
+        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
         $this->email->to($to);
         $this->email->subject('The Kanavu Trust - OTP Verification');
         $this->email->message($message);
@@ -1566,19 +1546,16 @@ public function insert_priority()
                 $this->session->unset_userdata("path");
                 $this->session->unset_userdata("entry");
                 redirect("/login");
-            }
-            else {
+            } else {
                 $this->session->set_userdata("entry", 0);
                 redirect('/individual'); // Redirect back to the same page
             }
-        }
-        else {
+        } else {
             if ($path == "login") {
                 $this->session->set_userdata("mailstatus", "failed");
                 echo "<script>alert('OTP is not sent to your email. please try again.')</script>";
                 redirect("/login");
-            }
-            else {
+            } else {
                 $this->session->set_userdata("mailstatus", "failed");
                 echo "<script>alert('OTP is not sent to your email. please try again.')</script>";
                 redirect('/individual');
@@ -1590,8 +1567,7 @@ public function insert_priority()
         $otp = $this->input->post("otp");
         if ($otp == $this->session->userdata('generated_otp')) {
             echo "true";
-        }
-        else {
+        } else {
             echo "false";
         }
     }
@@ -1750,8 +1726,7 @@ public function insert_priority()
             $causeId = $this->db->insert_id();
             $this->session->set_userdata('currentCauseId', $causeId);
 
-        }
-        else {
+        } else {
 
             $userData = [
                 'name' => $createdBy,
@@ -1803,8 +1778,7 @@ public function insert_priority()
                 $days_left = $end_date < $current_date ? 0 : $end_date->diff($current_date)->days;
                 $fundraiser->days_left = $days_left;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             // Handle the error if the database cannot be reached
             log_message('error', 'Database error: ' . $e->getMessage());
             show_404(); // Display a 404 error page
@@ -1826,8 +1800,7 @@ public function insert_priority()
             // Return a JSON response indicating success or failure
             if ($result) {
                 echo json_encode(['status' => 'success', 'message' => 'Cause deleted successfully!']);
-            }
-            else {
+            } else {
                 echo json_encode(['status' => 'error', 'message' => 'Failed to delete the cause!']);
             }
         }

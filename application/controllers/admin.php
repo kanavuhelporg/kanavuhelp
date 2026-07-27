@@ -435,16 +435,19 @@ class admin extends CI_Controller
         }
 
         // SQL Injection and XSS validation helper closure
-        $has_injection_payload = function($value) {
-            if (empty($value)) return false;
-            
+        $has_injection_payload = function ($value) {
+            if (empty($value))
+                return false;
+
             // XSS Check: script tag, HTML tag, or javascript: scheme
-            if (preg_match('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i', $value) || 
-                preg_match('/<[^>]+>/', $value) || 
-                stripos($value, 'javascript:') !== false) {
+            if (
+                preg_match('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i', $value) ||
+                preg_match('/<[^>]+>/', $value) ||
+                stripos($value, 'javascript:') !== false
+            ) {
                 return true;
             }
-            
+
             // SQL Injection Check: union select, ' or 1=1, or 1=1, -- comments, /* comments
             $sql_patterns = array(
                 '/union\b.*\bselect/i',
@@ -978,7 +981,7 @@ class admin extends CI_Controller
             // Email content
             $emailContent = $this->generateEmailContent($donarname, $transactionid, $message, $status);
 
-            $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
+            $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
             $this->email->to($donaremail);
 
             $this->email->subject(
@@ -1245,7 +1248,7 @@ class admin extends CI_Controller
             return;
         }
 
-        $this->email->from($this->config->item('smtp_user') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
+        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
         $this->email->to($to);
         $this->email->subject('The Kanavu Trust');
         $this->email->message($message);
@@ -1484,7 +1487,7 @@ class admin extends CI_Controller
         $currentDateTime = date('Y-m-d H:i:s');
         $message = "<h3>Test Email from Kanavu Help</h3><p>Sent On: {$currentDateTime}</p>";
 
-        $this->email->from($config['smtp_user'], 'Kanavu Help Website');
+        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'Kanavu Help Website');
         $this->email->to('nathiyadev.ksv@gmail.com');
         $this->email->subject('Kanavu Help Test Email - ' . $currentDateTime);
         $this->email->message($message);
