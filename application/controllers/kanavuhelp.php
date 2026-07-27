@@ -1533,12 +1533,10 @@ class kanavuhelp extends CI_Controller
 
         $message = "Your OTP is $otp to change the new password for your The Kanavu Trust account.";
 
-        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
-        $this->email->to($to);
-        $this->email->subject('The Kanavu Trust - OTP Verification');
-        $this->email->message($message);
+        $this->load->library('resend');
+        $response = $this->resend->send($to, 'The Kanavu Trust - OTP Verification', $message);
 
-        if ($this->email->send()) {
+        if ($response['status']) {
             // Set a session variable to indicate OTP was sent
             $this->session->set_flashdata('otp_sent', true);
             if ($path == "login") {
@@ -1551,15 +1549,16 @@ class kanavuhelp extends CI_Controller
                 redirect('/individual'); // Redirect back to the same page
             }
         } else {
+            $error_msg = isset($response['response']['message']) ? $response['response']['message'] : (isset($response['message']) ? $response['message'] : 'Unknown Error');
+            $this->session->set_userdata("mailstatus", "failed");
+            echo "<script>alert('Failed to send OTP to $to. Reason: " . addslashes($error_msg) . "');</script>";
+            
             if ($path == "login") {
-                $this->session->set_userdata("mailstatus", "failed");
-                echo "<script>alert('OTP is not sent to your email. please try again.')</script>";
-                redirect("/login");
+                echo "<script>window.location.href = '/login';</script>";
             } else {
-                $this->session->set_userdata("mailstatus", "failed");
-                echo "<script>alert('OTP is not sent to your email. please try again.')</script>";
-                redirect('/individual');
+                echo "<script>window.location.href = '/individual';</script>";
             }
+            return;
         }
     }
     public function verifyOtp()
