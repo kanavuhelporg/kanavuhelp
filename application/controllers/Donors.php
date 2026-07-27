@@ -137,18 +137,19 @@ class Donors extends CI_Controller
 
     $message = "Your OTP is $otp.";
 
-    $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'Kanavu Help');
-    $this->email->to($to);
-    $this->email->subject('The Kanavu Trust');
-    $this->email->message($message);
+    $this->load->library('resend');
+    $response = $this->resend->send($to, 'The Kanavu Trust', $message);
 
-    if ($this->email->send()) {
+    if ($response['status']) {
       // Set a session variable to indicate OTP was sent
       $this->session->set_flashdata('otp_sent', true);
       redirect('/login_myhelps');// Redirect back to the same page
     } else {
+      $error_msg = isset($response['response']['message']) ? $response['response']['message'] : (isset($response['message']) ? $response['message'] : 'Unknown Error');
       $this->session->set_userdata("mailstatus", "failed");
-      redirect("/login_myhelps");
+      $this->session->set_flashdata('error_msg', "Failed to send to '$to'. Reason: " . $error_msg);
+      echo "<script>alert('Failed to send OTP to $to. Reason: " . addslashes($error_msg) . "'); window.location.href='/login_myhelps';</script>";
+      return;
     }
   }
 }
