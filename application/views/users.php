@@ -545,7 +545,7 @@
             const filterDate = document.getElementById('filter-date');
             const paginationNav = document.getElementById('pagination-nav');
             const paginationUl = document.getElementById('pagination-ul');
-            const recordsPerPage = 10;
+            const recordsPerPage = 30;
             let currentPage = 1;
             let filteredRows = rows;
 
