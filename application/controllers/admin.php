@@ -12,6 +12,23 @@ class admin extends CI_Controller
         $this->load->helper('cookie');
         $this->load->library('email');
         $this->config->load('email');
+
+        // Methods that can be accessed without admin login
+        $allowed_methods = array('index', 'admin', 'adminLogin');
+        $current_method = $this->router->fetch_method();
+        $adminId = $this->session->userdata('adminId');
+
+        if (!in_array($current_method, $allowed_methods)) {
+            if (!$adminId) {
+                if ($this->input->is_ajax_request()) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+                    exit;
+                } else {
+                    redirect('admin');
+                }
+            }
+        }
     }
 
     public function index()
@@ -136,6 +153,10 @@ class admin extends CI_Controller
 
     public function adminLogin()
     {
+        if ($this->input->server('REQUEST_METHOD') !== 'POST') {
+            redirect('admin');
+        }
+
         $postData = $this->input->post(null, true);
         $login = $this->adminpanel->adminlogin();
 
