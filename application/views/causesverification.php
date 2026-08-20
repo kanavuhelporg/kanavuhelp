@@ -1559,9 +1559,7 @@
                                         <label class="form-label small">Cause Heading <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" name="cause_heading" id="field_cause_heading"
-                                            class="form-control"
-                                            oninput="this.value = this.value.replace(/[^A-Za-z0-9\s\u0B80-\u0BFF]/g, '')"
-                                            required minlength="4" maxlength="150">
+                                            class="form-control" required minlength="4" maxlength="150">
                                         <small id="field_cause_heading_err" class="text-danger"
                                             style="display:none;"></small>
                                     </div>
@@ -1645,8 +1643,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-label small">User ID</label>
-                                        <input type="text" name="user_id" id="field_user_id" class="form-control"
-                                            readonly style="background-color:#e9ecef; cursor:not-allowed;">
+                                        <input type="text" name="user_id" id="field_user_id" class="form-control">
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-label small">Created By <span
@@ -1908,8 +1905,9 @@
 
                         // Re-enable fields for editing
                         $('#causeForm input, #causeForm textarea, #causeForm select').prop('disabled', false);
-                        // Keep ID, CreatedAt, User ID, IsFill, and Category readonly
-                        $('#field_id, #field_created_at, #field_user_id, #field_isFill, #field_category').prop('readonly', true).prop('disabled', false);
+                        // Keep ID, CreatedAt, IsFill, and Category readonly
+                        $('#field_id, #field_created_at, #field_isFill, #field_category').prop('readonly', true).prop('disabled', false);
+                        $('#field_user_id').prop('readonly', false).prop('disabled', false);
 
                         // Switch buttons
                         $(this).hide();
@@ -2246,8 +2244,8 @@
 
                     // 10. Validate Goal Amount (required)
                     var amount = document.getElementById('field_amount');
-                    if (amount && (amount.value.trim() === '' || parseFloat(amount.value) <= 0)) {
-                        showError(amount, document.getElementById('field_amount_err'), 'Goal Amount is required and must be greater than 0.');
+                    if (amount && (amount.value.trim() === '' || parseFloat(amount.value) < 1000 || parseFloat(amount.value) > 100000)) {
+                        showError(amount, document.getElementById('field_amount_err'), 'Goal Amount must be between 1000 and 100000.');
                         ok = false;
                         if (!firstInvalidEl) firstInvalidEl = amount;
                     }

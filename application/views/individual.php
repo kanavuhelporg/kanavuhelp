@@ -1933,8 +1933,8 @@
         if (!nameInput) {
           errorElement.textContent = "Created by name is required.";
           return false;
-        } else if (nameInput.length < 4 || nameInput.length > 50) {
-          errorElement.textContent = "Name must be between 4 and 50 characters.";
+        } else if (nameInput.length < 4 || nameInput.length > 100) {
+          errorElement.textContent = "Name must be between 4 and 100 characters.";
           return false;
         } else if (!nameInput.match(nameRegex)) {
           errorElement.textContent = "Name can only contain letters, spaces, hyphens only.";
@@ -2009,8 +2009,8 @@
         const amount = document.getElementById("amount").value.trim();
         const errorElement = document.getElementById("amount-error");
 
-        if (!amount || isNaN(amount) || parseFloat(amount) < 1000 || parseFloat(amount) > 500000) {
-          errorElement.textContent = "Amount must be between 1000 to 500000.";
+        if (!amount || isNaN(amount) || parseFloat(amount) < 1000 || parseFloat(amount) > 100000) {
+          errorElement.textContent = "Amount must be between 1000 to 100000.";
           return false;
         }
         errorElement.textContent = "";
@@ -2156,8 +2156,8 @@
       if (!heading) {
         errorElement.textContent = "Cause title is required.";
         return false;
-      } else if (heading.length < 4 || heading.length > 150) {
-        errorElement.textContent = "Cause title must be between 4 and 150 characters.";
+      } else if (heading.length < 4 || heading.length > 250) {
+        errorElement.textContent = "Cause title must be between 4 and 250 characters.";
         return false;
       }
 
