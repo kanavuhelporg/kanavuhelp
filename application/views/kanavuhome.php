@@ -11,73 +11,74 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0Q147F1Y"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-JF0Q147F1Y');
   </script>
-  
-  <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg"  rel="icon"/>
+
+  <link href="<?php echo base_url(); ?>assets/img/kanavulogoo.jpg" rel="icon" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   <style>
     body {
       font-family: 'Sen', sans-serif;
     }
-    
+
     /* Validation styles */
     .is-invalid {
-        border-color: #dc3545 !important;
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right calc(0.375em + 0.1875rem) center;
-        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-        padding-right: calc(1.5em + 0.75rem) !important;
+      border-color: #dc3545 !important;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right calc(0.375em + 0.1875rem) center;
+      background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+      padding-right: calc(1.5em + 0.75rem) !important;
     }
 
     .is-valid {
-        border-color: #198754 !important;
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right calc(0.375em + 0.1875rem) center;
-        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-        padding-right: calc(1.5em + 0.75rem) !important;
+      border-color: #198754 !important;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right calc(0.375em + 0.1875rem) center;
+      background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+      padding-right: calc(1.5em + 0.75rem) !important;
     }
 
     /* Validation error messages */
     .text-danger.small {
-        font-size: 12px;
-        margin-top: 4px;
-        display: block;
-        min-height: 20px;
+      font-size: 12px;
+      margin-top: 4px;
+      display: block;
+      min-height: 20px;
     }
 
     /* Form focus styles */
     .form-control:focus {
-        box-shadow: 0 0 0 0.25rem rgba(237, 49, 54, 0.25) !important;
-        border-color: #ed3136 !important;
+      box-shadow: 0 0 0 0.25rem rgba(237, 49, 54, 0.25) !important;
+      border-color: #ed3136 !important;
     }
 
     /* Input group focus fix */
     .input-group:focus-within .input-group-text {
-        border-color: #ed3136;
+      border-color: #ed3136;
     }
 
     /* Required field indicator */
     .required-field::after {
-        content: " *";
-        color: #ed3136;
+      content: " *";
+      color: #ed3136;
     }
 
     /* Form labels */
     .form-label {
-        font-weight: 500;
-        margin-bottom: 5px;
-        color: #333;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #333;
     }
 
     div[data-testid="resolution-label"],
@@ -87,21 +88,21 @@
     .responsive-viewer-label {
       display: none !important;
     }
-    
+
     /* count running */
     html {
       scroll-behavior: smooth;
     }
-  
+
     .stat-box img {
       width: 50px;
       height: 50px;
     }
-    
+
     h2.count-up {
       font-weight: bold;
     }
-    
+
     /* carousel img */
     .carousel-item {
       height: 100vh;
@@ -119,7 +120,7 @@
       height: 100%;
       width: 100%;
     }
-  
+
     /* login_button */
     .login-button {
       background-color: #ed3136;
@@ -146,16 +147,16 @@
     .offcanvas-body {
       font-size: 17px;
     }
-    
+
     .nav-link {
       color: black !important;
     }
-    
+
     .nav-link.active {
       color: #ed3136 !important;
       font-weight: bold;
     }
-    
+
     /* carousel text */
     .imgtext1,
     .imgtext2 {
@@ -199,9 +200,9 @@
     .imgtext11 ul li {
       margin-left: 0px;
     }
-    
+
     .imgtext1 p,
-    .imgtext2 p{
+    .imgtext2 p {
       font-size: 40px;
     }
 
@@ -222,7 +223,7 @@
     /* cards section */
     .card {
       width: 100%;
-      box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2); 
+      box-shadow: 0 3px 16px 3px rgba(0, 0, 0, 0.2);
     }
 
     .carousel-item .row {
@@ -293,12 +294,12 @@
     .step-3 {
       background-color: #FFD700;
     }
-    
+
     .nav-link.active {
       color: #ed3136 !important;
       font-weight: bold;
     }
-    
+
     .background-overlay {
       position: absolute;
       top: 0;
@@ -401,6 +402,7 @@
 
     /* Responsive Adjustments */
     @media (max-width: 768px) {
+
       /* how its works section */
       .how-it-works-container {
         flex-direction: column;
@@ -538,6 +540,7 @@
     }
 
     @media (max-width: 768px) {
+
       /* how its works section */
       .how-it-works-container {
         flex-direction: column;
@@ -569,9 +572,10 @@
         margin-left: 0;
         margin-right: 0;
       }
-    } 
+    }
 
     @media (max-width: 767px) {
+
       /* carousel */
       .carousel-item {
         position: relative;
@@ -581,8 +585,8 @@
         height: 100%;
         width: 100%;
         object-fit: cover;
-      } 
-      
+      }
+
       /* carousel text */
       .imgtext1,
       .imgtext2 {
@@ -669,16 +673,17 @@
         margin-bottom: 20px;
       }
 
-      #carouselExampleSlidesOnly{
-        height:100%;
+      #carouselExampleSlidesOnly {
+        height: 100%;
       }
     }
 
     /* For larger screens, display three cards per slide */
     @media (min-width: 769px) {
-      #carouselExampleSlidesOnly{
-        margin-top:30px;
+      #carouselExampleSlidesOnly {
+        margin-top: 30px;
       }
+
       .carousel-item .col-4 {
         max-width: 33.33%;
         flex: 0 0 33.33%;
@@ -691,7 +696,7 @@
       border-radius: 10px;
       margin-bottom: 30px;
     }
-    
+
     .card_button {
       border: 1px solid gray !important;
       background: none;
@@ -703,7 +708,7 @@
       box-shadow: none;
       background: none;
     }
-    
+
     .img-placeholder {
       background-color: white;
       display: block;
@@ -711,11 +716,11 @@
       height: 230px;
       object-fit: cover;
     }
-    
+
     .img-placeholder:not([src]) {
       background: url('assets/img/1.svg') center center/cover no-repeat;
     }
-    
+
     /* Ensure the dropdown menu is fully visible on smaller screens */
     @media (max-width: 768px) {
       #userProfile .dropdown-menu {
@@ -723,22 +728,22 @@
         left: auto !important;
         min-width: 150px;
       }
-      
+
       #userProfile img {
         width: 25px;
         height: 25px;
       }
-      
+
       #userProfile .dropdown-item {
         text-align: center;
       }
     }
-    
+
     .carousel-item {
       padding-left: 0px;
       padding-right: 0px;
     }
-    
+
     .carousel-inner {
       width: 100%;
       overflow: hidden;
@@ -756,20 +761,23 @@
       .carousel-item .card-container {
         margin-bottom: 15px;
       }
+
       .carousel-inner {
         flex-wrap: nowrap;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
       }
     }
-    
+
     @media (max-width: 767px) {
-      .col-lg-4, .col-md-6 {
+
+      .col-lg-4,
+      .col-md-6 {
         flex: 0 0 100%;
         max-width: 100%;
       }
     }
-    
+
     .custom-dropdown {
       position: relative;
       display: inline-block;
@@ -803,11 +811,11 @@
     .card-container {
       transition: transform 0.2s;
     }
-    
+
     .card-container:hover {
       transform: translateY(-5px);
     }
-    
+
     .card {
       width: 100%;
       max-width: 300px;
@@ -817,11 +825,11 @@
       box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
       overflow: hidden;
     }
-    
+
     .card:hover {
       box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
     }
-    
+
     .card-img-top {
       width: 100%;
       height: 230px;
@@ -829,35 +837,35 @@
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
     }
-    
+
     .card-body {
       display: flex;
       flex-direction: column;
     }
-    
+
     .card-title {
       font-size: 18px;
       margin-bottom: 10px;
       line-height: 1.3;
-      color:rgb(22, 24, 26); 
+      color: rgb(22, 24, 26);
     }
-    
+
     .card-text {
       font-size: 16px;
       font-weight: 500;
       margin-bottom: 8px;
     }
-    
+
     .progress {
       height: 8px;
       border-radius: 5px;
       background-color: #f8d7da;
     }
-    
+
     .progress-bar {
       background-color: #ed3136;
     }
-    
+
     .btn.bg-danger {
       border-radius: 25px;
       font-size: 14px;
@@ -865,47 +873,49 @@
       background-color: #ed3136;
       border: none;
     }
-    
+
     .btn.bg-danger:hover {
       background-color: #ed3136;
     }
 
     /* Single Row for Supporters and Created by */
-    .supporters-section, .created-by-section {
+    .supporters-section,
+    .created-by-section {
       display: flex;
       align-items: center;
     }
-    
+
     .supporters-section {
       flex: 10;
       min-width: 0;
       overflow: hidden;
     }
-    
+
     .created-by-section {
       flex: 8;
       justify-content: flex-end;
       min-width: 0;
     }
 
-    .supporters-section p, .created-by-section p {
+    .supporters-section p,
+    .created-by-section p {
       font-size: 14px;
-      color:black;
+      color: black;
     }
-    
+
     .supporters-section p {
       display: flex;
       align-items: center;
       white-space: normal;
     }
-    
+
     .supporters-section .supporter-count {
       font-weight: bold;
       font-size: 16px;
-      color:black;
+      color: black;
       margin-right: 4px;
     }
-    
+
     /* Truncate Text with Ellipsis */
     .truncate-text {
       position: relative;
@@ -915,7 +925,7 @@
       max-width: 60px;
       cursor: pointer;
     }
-    
+
     .truncate-text1 {
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -925,7 +935,7 @@
       max-width: 100px;
       text-align: center;
     }
-    
+
     .truncate-text:hover:after {
       content: attr(data-fulltext);
       position: absolute;
@@ -948,12 +958,12 @@
       align-items: center;
       cursor: pointer;
     }
-    
+
     .share-section i {
       color: #ed3136;
       font-size: 16px;
     }
-    
+
     .share-section span {
       color: #ed3136;
       font-size: 14px;
@@ -968,32 +978,43 @@
         height: auto;
         margin: 0 auto 15px;
       }
+
       .card-img-top {
         height: 200px;
       }
+
       .card-title {
         font-size: 16px;
       }
+
       .card-text {
         font-size: 12px;
       }
-      .supporters-section p, .created-by-section p {
+
+      .supporters-section p,
+      .created-by-section p {
         font-size: 12px;
       }
-      .supporters-section i, .created-by-section i {
+
+      .supporters-section i,
+      .created-by-section i {
         font-size: 14px;
       }
+
       .created-by-section .rounded-circle {
         width: 25px;
         height: 25px;
       }
+
       .created-by-section .bi-person-fill {
         font-size: 16px;
       }
+
       .btn.bg-danger {
         font-size: 12px;
         padding: 6px 15px;
       }
+
       .share-section span {
         font-size: 12px;
       }
@@ -1002,7 +1023,7 @@
     .carousel-indicators {
       bottom: 10px;
     }
-    
+
     .carousel-indicators button {
       width: 30px;
       height: 4px;
@@ -1016,11 +1037,12 @@
       background-color: #ed3136 !important;
       opacity: 1;
     }
-    
+
     @media (max-width: 768px) {
       .carousel-indicators {
         bottom: -10px !important;
       }
+
       .carousel-indicators button {
         width: 20px;
         height: 3px;
@@ -1048,7 +1070,7 @@
       position: relative;
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       margin-bottom: 20px;
       width: fit-content;
     }
@@ -1113,7 +1135,7 @@
       object-fit: cover;
       display: block;
     }
-    
+
     .raise_video {
       position: relative;
       width: 100%;
@@ -1130,28 +1152,30 @@
         width: 100%;
         height: auto;
       }
+
       #userProfile .dropdown-menu {
         right: 0 !important;
         left: auto !important;
         min-width: 150px;
       }
-      
+
       #userProfile img {
         width: 25px;
         height: 25px;
       }
-      
+
       #userProfile .dropdown-item {
         text-align: center;
       }
     }
-    
-    #currency, #amount {
+
+    #currency,
+    #amount {
       height: 48px !important;
       font-size: 15px;
       padding-left: 12px;
     }
-    
+
     .note-box {
       background: #ffe6e6;
       border-left: 4px solid #d9534f;
@@ -1160,7 +1184,7 @@
       color: #ed3136;
       font-size: 15px;
     }
-    
+
     .navbar-brand img {
       transition: transform 0.3s ease-in-out;
     }
@@ -1464,6 +1488,7 @@
     /* ========================= */
 
     @media (max-width: 991px) {
+
       /* Stack video & content */
       .fundraiser-grid {
         grid-template-columns: 1fr;
@@ -1471,7 +1496,10 @@
       }
 
       /* Center video */
-      .video-frame { max-width: 500px; margin: 0 auto; }
+      .video-frame {
+        max-width: 500px;
+        margin: 0 auto;
+      }
 
       /* Content full width */
       .fundraiser-content {
@@ -1515,7 +1543,10 @@
 
     /* SMALL MOBILE */
     @media (max-width: 576px) {
-      .video-frame { max-width: 500px; margin: 0 auto; }
+      .video-frame {
+        max-width: 500px;
+        margin: 0 auto;
+      }
 
       .step-item {
         gap: 12px;
@@ -1536,16 +1567,16 @@
       .fundraiser-steps-section {
         padding: 40px 0;
       }
-      
+
       .fundraiser-wrapper {
         padding: 0 15px;
       }
-      
+
       .section-title {
         font-size: 24px;
         padding: 0 15px;
       }
-      
+
       .underline {
         padding: 0 15px;
         margin: 10px auto 30px;
@@ -1566,7 +1597,7 @@
       transition: transform 0.2s ease-in-out;
       box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
     }
-    
+
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.15);
@@ -1587,11 +1618,11 @@
         object-fit: cover;
         object-position: center;
       }
+
       .card-title {
         font-size: 1rem;
       }
     }
-
   </style>
 </head>
 
@@ -1610,7 +1641,8 @@
         <div class="offcanvas-header">
           <h5 class="offcanvas-title">
             <a href="https://www.kanavu.org/">
-              <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help" style="height: 70px; width: auto;">
+              <img src="<?= base_url('assets/img/KSV LOGO (14).png') ?>" alt="Kanavu_help"
+                style="height: 70px; width: auto;">
             </a>
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
@@ -1624,7 +1656,8 @@
               <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
             </li>
             <li class="nav-item">
-              <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
+              <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a
+                Fundraiser</a>
             </li>
             <li class="nav-item">
               <a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
@@ -1650,7 +1683,8 @@
               <div class="d-flex align-items-center">
                 <div class="dropdown" id="userProfile">
                   <div class="d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image" style="width: 30px; height: 30px; border-radius: 50%;">
+                    <img src="<?= base_url('/assets/img/Ellipse 12.png') ?>" alt="Profile Image"
+                      style="width: 30px; height: 30px; border-radius: 50%;">
                     <span class="ms-2"><?= $this->session->userdata('Kanavu_userName'); ?></span>
                   </div>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -1668,19 +1702,21 @@
       </div>
     </div>
   </nav>
-  
+
   <br>
 
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
     </div>
-    
+
     <div class="carousel-inner">
       <!-- Slide 1 -->
       <div class="carousel-item active">
-        <img src="<?= base_url('assets/img/old1.jpg') ?>" class="d-block w-100" alt="Image 1"> 
+        <img src="<?= base_url('assets/img/old1.jpg') ?>" class="d-block w-100" alt="Image 1">
         <div class="imgtext1 mt-5 pt-5">
           <p>THE <strong>WORLD'S <br>PLATFORM</strong> FOR <br>
             <span style="color: #ed3136;">HELP</span>
@@ -1690,7 +1726,8 @@
               <li style="font-weight: bold;margin-left">"Empowering Lives, Defeating diseases & disasters"</li>
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color:#ed3136 ; color: white; border: none;">
+                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm"
+                    style="background-color:#ed3136 ; color: white; border: none;">
                     Start a Fundraiser
                   </button>
                 </a>
@@ -1699,9 +1736,9 @@
           </div>
         </div>
       </div>
-      
+
       <br>
-      
+
       <!-- Slide 2 -->
       <div class="carousel-item">
         <img src="<?= base_url('assets/img/old2.jpg') ?>" class="d-block w-100" alt="Image 2">
@@ -1714,7 +1751,8 @@
               <li style="font-weight: bold;">"Empowering Lives, Defeating diseases & disasters"</li>
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm" style="background-color: #ed3136; color: white; border: none;">
+                  <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm"
+                    style="background-color: #ed3136; color: white; border: none;">
                     Start a Fundraiser
                   </button>
                 </a>
@@ -1773,26 +1811,32 @@
     <div style="display: flex; justify-content: center;">
       <img class="w-25 heart" src="assets/img/underline.svg" alt="no image">
     </div>
-    <div class="p text-center mt-4">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
+    <div class="p text-center mt-4">We try our best to help helpless people,<br>Donate to charity causes around the
+      world.</div>
   </div><br>
 
   <!-- Fundraiser Cards with Fixed Size -->
-  <div class="container pt-4"> 
+  <div class="container pt-4">
     <div class="row g-4" id="fundraiserCards">
       <?php if (!empty($fundraisers)): ?>
-        <?php 
+        <?php
         // Helper to calculate progress
-        function getProgressPercentage($fundraiser) {
-          if ($fundraiser->amount == 0) return 0;
+        function getProgressPercentage($fundraiser)
+        {
+          if ($fundraiser->amount == 0)
+            return 0;
           return min(($fundraiser->raised_amount / $fundraiser->amount) * 100, 100);
         }
 
         // Sort by lowest percentage
-        usort($fundraisers, function($a, $b) {
+        usort($fundraisers, function ($a, $b) {
           return getProgressPercentage($a) <=> getProgressPercentage($b);
         });
 
-        foreach ($fundraisers as $fundraiser): 
+        // Display 2 rows of causes (8 cards: 4 per row on desktop)
+        $display_fundraisers = array_slice($fundraisers, 0, 8);
+
+        foreach ($display_fundraisers as $fundraiser):
           $is_goal_reached = $fundraiser->raised_amount >= $fundraiser->amount;
 
           // Image path fix
@@ -1804,82 +1848,79 @@
           }
 
           $progress_percentage = getProgressPercentage($fundraiser);
-        ?>
+          ?>
 
-        <div class="col-12 col-sm-6 col-md-6 col-lg-3" style="position: relative;">
-          <div class="card h-100 shadow-sm">
-            <!-- Cover Image -->
-            <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>">
-              <img src="<?= $imageSrc ?>" 
-                  alt="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>"
+          <div class="col-12 col-sm-6 col-md-6 col-lg-3" style="position: relative;">
+            <div class="card h-100 shadow-sm">
+              <!-- Cover Image -->
+              <a href="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>">
+                <img src="<?= $imageSrc ?>" alt="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>"
                   class="card-img-top">
-            </a>
+              </a>
 
-            <?php if ($fundraiser->is_runforcause == 'yes'): ?>
-              <div class="position-absolute m-2" style="z-index: 5; top: 0; right: 0;">
-                  <span class="badge bg-danger text-white border-0 shadow-sm" 
-                        data-bs-toggle="tooltip" data-bs-placement="left" title="Your support fuels my run"
-                        style="font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 600; cursor: pointer;">
-                      <i class="bi bi-star-fill me-1"></i>Impact Run
+              <?php if ($fundraiser->is_runforcause == 'yes'): ?>
+                <div class="position-absolute m-2" style="z-index: 5; top: 0; right: 0;">
+                  <span class="badge bg-danger text-white border-0 shadow-sm" data-bs-toggle="tooltip"
+                    data-bs-placement="left" title="Your support fuels my run"
+                    style="font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 600; cursor: pointer;">
+                    <i class="bi bi-star-fill me-1"></i>Impact Run
                   </span>
-              </div>
-            <?php endif; ?>
-
-            <div class="card-body d-flex flex-column">
-              <!-- Title -->
-              <h5 class="card-title text-truncate">
-                <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
-              </h5>
-
-              <!-- Supporters & Creator -->
-              <div class="d-flex justify-content-between mb-2 small text-muted">
-                <span class="text-truncate" style="max-width: 40%;">
-                  <img src="<?= base_url('assets/img/heart1.svg') ?>" width="16" class="me-1">
-                  <?= intval($fundraiser->supporters_count) ?> 
-                  Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
-                </span>
-
-                <span class="text-truncate" style="max-width: 55%;">
-                  <img src="<?= base_url('assets/img/Frame.svg') ?>" width="16" class="me-1">
-                  Created By <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
-                </span>
-              </div>
-
-              <!-- Raised + Progress -->
-              <p class="mb-1 small">
-                <strong>₹<?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> / 
-                ₹<?= number_format($fundraiser->amount) ?></strong>
-              </p>
-
-              <div class="progress" style="height: 8px;">
-                <div class="progress-bar bg-danger" 
-                    style="width: <?= $progress_percentage ?>%;">
                 </div>
-              </div>
+              <?php endif; ?>
 
-              <!-- Donate + Share -->
-              <div class="d-flex justify-content-between align-items-center mt-3">
-                <?php if ($is_goal_reached): ?>
-                  <span class="badge bg-success">Completed</span>
-                <?php else: ?>
-                  <button class="btn btn-danger btn-sm donate-btn" 
-                          data-cause-id="<?= $fundraiser->id ?>" 
-                          data-is-runforcause="<?= $fundraiser->is_runforcause ?>"
-                          style="padding: 5px 15px; border-radius: 25px;">
-                    Donate Now
-                  </button>
-                <?php endif; ?>
+              <div class="card-body d-flex flex-column">
+                <!-- Title -->
+                <h5 class="card-title text-truncate">
+                  <?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>
+                </h5>
 
-                <div class="text-danger d-flex align-items-center share-btn" style="cursor:pointer;"
+                <!-- Supporters & Creator -->
+                <div class="d-flex justify-content-between mb-2 small text-muted">
+                  <span class="text-truncate" style="max-width: 40%;">
+                    <img src="<?= base_url('assets/img/heart1.svg') ?>" width="16" class="me-1">
+                    <?= intval($fundraiser->supporters_count) ?>
+                    Supporter<?= $fundraiser->supporters_count > 1 ? 's' : '' ?>
+                  </span>
+
+                  <span class="text-truncate" style="max-width: 55%;">
+                    <img src="<?= base_url('assets/img/Frame.svg') ?>" width="16" class="me-1">
+                    Created By <?= htmlspecialchars($fundraiser->created_by, ENT_QUOTES) ?>
+                  </span>
+                </div>
+
+                <!-- Raised + Progress -->
+                <p class="mb-1 small">
+                  <strong>₹<?= number_format(min($fundraiser->raised_amount, $fundraiser->amount)) ?> /
+                    ₹<?= number_format($fundraiser->amount) ?></strong>
+                </p>
+
+                <div class="progress" style="height: 8px;">
+                  <div class="progress-bar bg-danger" style="width: <?= $progress_percentage ?>%;">
+                  </div>
+                </div>
+
+                <!-- Donate + Share -->
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <?php if ($is_goal_reached): ?>
+                    <span class="badge bg-success">Completed</span>
+                  <?php else: ?>
+                    <button class="btn btn-danger btn-sm donate-btn" data-cause-id="<?= $fundraiser->id ?>"
+                      data-is-runforcause="<?= $fundraiser->is_runforcause ?>"
+                      style="padding: 5px 15px; border-radius: 25px;">
+                      Donate Now
+                    </button>
+                  <?php endif; ?>
+
+                  <div class="text-danger d-flex align-items-center share-btn" style="cursor:pointer;"
                     data-url="<?= base_url('helpus/' . str_replace(' ', '-', $fundraiser->name) . '-' . $fundraiser->id) ?>"
                     data-title="<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>"
                     data-image="<?= $imageSrc ?>">
-                  <i class="bi bi-share fs-6"></i>
+                    <i class="bi bi-share fs-6"></i>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
         <?php endforeach; ?>
       <?php else: ?>
@@ -1889,12 +1930,13 @@
   </div>
 
   <!-- See More Button -->
-  <?php if (!empty($fundraisers)): ?>   
-  <div class="text-center mt-3">
-    <a href="<?= base_url('/donate') ?>" class="btn" style="background-color: white; border: 1px solid #ed3136; color: #ed3136; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-      See More Causes
-    </a>
-  </div>
+  <?php if (!empty($fundraisers)): ?>
+    <div class="text-center mt-3">
+      <a href="<?= base_url('/donate') ?>" class="btn"
+        style="background-color: white; border: 1px solid #ed3136; color: #ed3136; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        See More Causes
+      </a>
+    </div>
   <?php endif; ?>
 
   </div><br><br>
@@ -1936,7 +1978,9 @@
               <span class="step-circle me-3">1</span>
               <div>
                 <h5>Use our tools to create your fundraiser</h5>
-                <p>>With our easy-to-use tools, you can set up your fundraiser in just minutes. Whether it’s for a personal cause, community project, or charitable initiative, our platform gives you everything you need to share your story, connect with supporters, and start raising funds right away.</p>
+                <p>>With our easy-to-use tools, you can set up your fundraiser in just minutes. Whether it’s for a
+                  personal cause, community project, or charitable initiative, our platform gives you everything you
+                  need to share your story, connect with supporters, and start raising funds right away.</p>
               </div>
             </li>
 
@@ -1945,7 +1989,8 @@
               <span class="step-circle me-3">2</span>
               <div>
                 <h5>Reach donors by sharing</h5>
-                <p>Spread the word about your fundraiser with just a click. Share your campaign across social media, email, and messaging apps to reach more donors, inspire support, and grow your impact faster.</p>
+                <p>Spread the word about your fundraiser with just a click. Share your campaign across social media,
+                  email, and messaging apps to reach more donors, inspire support, and grow your impact faster.</p>
               </div>
             </li>
 
@@ -1954,7 +1999,9 @@
               <span class="step-circle me-3">3</span>
               <div>
                 <h5>Securely receive funds</h5>
-                <p>Receive donations safely and without hassle. Our secure payment system ensures that every contribution goes directly to your fundraiser, giving you and your supporters peace of mind throughout the process.</p>
+                <p>Receive donations safely and without hassle. Our secure payment system ensures that every
+                  contribution goes directly to your fundraiser, giving you and your supporters peace of mind throughout
+                  the process.</p>
               </div>
             </li>
           </ul>
@@ -1991,21 +2038,24 @@
             <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
-                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">1</span>
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">1</span>
                   <h6 class="fw-bold mb-0 text-dark">Make Your Donation</h6>
                 </div>
-                
+
                 <div class="row g-3 align-items-center">
                   <div class="col-7">
                     <label class="text-muted small d-block mb-1 required-field">UPI ID</label>
                     <div class="d-flex align-items-center bg-white p-2 border rounded">
                       <span class="text-truncate small fw-bold" id="upiText">vyapar.175502705184@hdfcbank</span>
-                      <i class="bi bi-copy ms-auto text-primary cursor-pointer copy-icon" data-copy="upiText" title="Copy UPI"></i>
+                      <i class="bi bi-copy ms-auto text-primary cursor-pointer copy-icon" data-copy="upiText"
+                        title="Copy UPI"></i>
                     </div>
                   </div>
                   <div class="col-1 text-muted small fw-bold text-center">OR</div>
                   <div class="col-4 text-center">
-                    <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" class="img-fluid rounded border shadow-sm" style="max-height: 280px;" alt="QR Code">
+                    <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>"
+                      class="img-fluid rounded border shadow-sm" style="max-height: 280px;" alt="QR Code">
                     <small class="d-block text-muted mt-1" style="font-size: 10px;">Scan to Pay</small>
                   </div>
                 </div>
@@ -2016,7 +2066,8 @@
             <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
-                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">2</span>
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">2</span>
                   <h6 class="fw-bold mb-0 text-dark">Donation Details</h6>
                 </div>
                 <div class="row gx-4">
@@ -2024,13 +2075,15 @@
                     <label class="form-label required-field">Donation Amount (₹)</label>
                     <div class="input-group">
                       <span class="input-group-text bg-white border-end-0">₹</span>
-                      <input type="number" name="amount" class="form-control border-start-0 ps-0" id="amount" placeholder="Enter amount" required min="1" max="10000000" step="1">
+                      <input type="number" name="amount" class="form-control border-start-0 ps-0" id="amount"
+                        placeholder="Enter amount" required min="1" max="10000000" step="1">
                       <div id="error8" class="text-danger small mt-1"></div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <label class="form-label required-field">Transaction ID</label>
-                    <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter transaction ID" required maxlength="30">
+                    <input type="text" name="transactionid" class="form-control" id="transactionid"
+                      placeholder="Enter transaction ID" required maxlength="30">
                     <div id="error4" class="text-danger small mt-1"></div>
                   </div>
                 </div>
@@ -2041,38 +2094,44 @@
             <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
-                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:24px; height:24px;">3</span>
+                  <span class="badge bg-danger rounded-circle me-2 d-flex align-items-center justify-content-center"
+                    style="width:24px; height:24px;">3</span>
                   <h6 class="fw-bold mb-0 text-dark">Personal Details</h6>
                 </div>
                 <div class="row g-2">
                   <div class="col-12">
                     <label class="form-label required-field">Full Name</label>
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Enter your full name" required maxlength="50">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Enter your full name"
+                      required maxlength="50">
                     <div id="error6" class="text-danger small mt-1"></div>
                   </div>
                   <div class="col-6">
                     <label class="form-label required-field">Phone Number</label>
-                    <input type="tel" name="phoneno" class="form-control" id="phoneno" placeholder="10-digit number" required maxlength="10">
+                    <input type="tel" name="phoneno" class="form-control" id="phoneno" placeholder="10-digit number"
+                      required maxlength="10">
                     <div id="error3" class="text-danger small mt-1"></div>
                   </div>
                   <div class="col-6">
                     <label class="form-label required-field">City</label>
-                    <input type="text" name="city" class="form-control" id="city" placeholder="Enter city" required maxlength="30">
+                    <input type="text" name="city" class="form-control" id="city" placeholder="Enter city" required
+                      maxlength="30">
                     <div id="error9" class="text-danger small mt-1"></div>
                   </div>
                   <div class="col-12">
                     <label class="form-label">Email Address (Optional)</label>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter email address" maxlength="100">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter email address"
+                      maxlength="100">
                     <div id="error7" class="text-danger small mt-1"></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-3 shadow" style="border-radius: 12px; letter-spacing: 1px;" id="submitBtn">
+            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-3 shadow"
+              style="border-radius: 12px; letter-spacing: 1px;" id="submitBtn">
               Submit Donation
             </button>
-            
+
             <div class="text-center mt-3">
               <small class="text-muted">Funds go directly to <strong>The Kanavu Trust</strong></small>
             </div>
@@ -2083,63 +2142,65 @@
   </div>
 
   <style>
-  .brand-red {
-    background-color: #ed3136 !important;
-  }
-  .text-brand-red {
-    color: #ed3136 !important;
-  }
-</style>
+    .brand-red {
+      background-color: #ed3136 !important;
+    }
 
-<div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg">
-      
-      <div class="modal-header border-0 pb-0">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+    .text-brand-red {
+      color: #ed3136 !important;
+    }
+  </style>
 
-      <div class="modal-body text-center px-4 py-5">
+  <div class="modal fade" id="donationSuccess" tabindex="-1" aria-labelledby="donationSuccessLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
 
-        <!-- Success Icon -->
-        <div class="mb-4">
-          <div class="rounded-circle d-inline-flex p-4" style="background-color: rgba(237, 49, 54, 0.1);">
-            <i class="bi bi-check-circle-fill text-brand-red" style="font-size: 3rem;"></i>
+        <div class="modal-header border-0 pb-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body text-center px-4 py-5">
+
+          <!-- Success Icon -->
+          <div class="mb-4">
+            <div class="rounded-circle d-inline-flex p-4" style="background-color: rgba(237, 49, 54, 0.1);">
+              <i class="bi bi-check-circle-fill text-brand-red" style="font-size: 3rem;"></i>
+            </div>
           </div>
+
+          <!-- Title -->
+          <h4 class="modal-title fw-bold text-brand-red mb-3" id="donationSuccessLabel">
+            Donation Successful!
+          </h4>
+
+          <!-- Message -->
+          <p class="text-muted mb-4">
+            Thank you for your generous contribution. Your support helps us continue our mission and make a real
+            difference.
+          </p>
+
+          <!-- Confirmation Details -->
+          <div class="bg-light rounded p-3 mb-4">
+            <p class="mb-1">
+              <small class="text-muted">A confirmation email has been sent to you</small>
+            </p>
+            <p class="mb-0 fw-bold text-dark">
+              Thank you for being part of our community!
+            </p>
+          </div>
+
         </div>
 
-        <!-- Title -->
-        <h4 class="modal-title fw-bold text-brand-red mb-3" id="donationSuccessLabel">
-          Donation Successful!
-        </h4>
-
-        <!-- Message -->
-        <p class="text-muted mb-4">
-          Thank you for your generous contribution. Your support helps us continue our mission and make a real difference.
-        </p>
-
-        <!-- Confirmation Details -->
-        <div class="bg-light rounded p-3 mb-4">
-          <p class="mb-1">
-            <small class="text-muted">A confirmation email has been sent to you</small>
-          </p>
-          <p class="mb-0 fw-bold text-dark">
-            Thank you for being part of our community!
-          </p>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn brand-red text-white px-5 py-2 fw-bold" id="donationRedirectBtn"
+            data-bs-dismiss="modal">
+            Ok
+          </button>
         </div>
 
       </div>
-
-      <div class="modal-footer border-0 pt-0">
-        <button type="button" class="btn brand-red text-white px-5 py-2 fw-bold"
-                id="donationRedirectBtn" data-bs-dismiss="modal">
-          Ok
-        </button>
-      </div>
-
     </div>
   </div>
-</div>  
 
   <!--login alert modal-->
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -2198,7 +2259,7 @@
           return value.replace(/[^0-9.]/g, '');
         }
       },
-      
+
       transactionid: {
         validate: (value) => {
           const trimmed = value.trim();
@@ -2212,7 +2273,7 @@
           return value.replace(/[^A-Za-z0-9]/g, '');
         }
       },
-      
+
       name: {
         validate: (value) => {
           const trimmed = value.trim();
@@ -2229,7 +2290,7 @@
             .join(' ');
         }
       },
-      
+
       phoneno: {
         validate: (value) => {
           const trimmed = value.trim();
@@ -2243,7 +2304,7 @@
           return value.replace(/\D/g, '').slice(0, 10);
         }
       },
-      
+
       city: {
         validate: (value) => {
           const trimmed = value.trim();
@@ -2257,7 +2318,7 @@
           return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
         }
       },
-      
+
       email: {
         validate: (value) => {
           if (!value.trim()) return true; // Optional field
@@ -2274,26 +2335,26 @@
       Object.keys(validationRules).forEach(fieldId => {
         const field = document.getElementById(fieldId);
         const rule = validationRules[fieldId];
-        
+
         if (field) {
           // Input event for formatting and validation
-          field.addEventListener('input', function(e) {
+          field.addEventListener('input', function (e) {
             // Apply formatting if available
             if (rule.format) {
               this.value = rule.format(this.value);
             }
-            
+
             // Validate the field
             validateField(fieldId);
           });
-          
+
           // Blur event for final validation
-          field.addEventListener('blur', function() {
+          field.addEventListener('blur', function () {
             validateField(fieldId);
           });
-          
+
           // Focus event to remove error styling
-          field.addEventListener('focus', function() {
+          field.addEventListener('focus', function () {
             this.classList.remove('is-invalid');
             const errorElement = document.getElementById(rule.errorId);
             if (errorElement) {
@@ -2309,35 +2370,35 @@
       const field = document.getElementById(fieldId);
       const rule = validationRules[fieldId];
       const errorElement = document.getElementById(rule.errorId);
-      
+
       if (!field || !errorElement) return true;
-      
+
       const value = field.value.trim();
-      
+
       // Clear previous error
       errorElement.textContent = '';
       field.classList.remove('is-invalid', 'is-valid');
-      
+
       // Skip validation for optional empty fields
       if (!rule.required && !value) {
         field.classList.add('is-valid');
         return true;
       }
-      
+
       // Check if required field is empty
       if (rule.required && !value) {
         errorElement.textContent = 'This field is required';
         field.classList.add('is-invalid');
         return false;
       }
-      
+
       // Apply validation rule
       if (!rule.validate(value)) {
         errorElement.textContent = rule.errorMessage;
         field.classList.add('is-invalid');
         return false;
       }
-      
+
       // Field is valid
       field.classList.add('is-valid');
       return true;
@@ -2347,7 +2408,7 @@
     function validateAllFields() {
       let isValid = true;
       let firstInvalidField = null;
-      
+
       Object.keys(validationRules).forEach(fieldId => {
         if (!validateField(fieldId)) {
           isValid = false;
@@ -2356,7 +2417,7 @@
           }
         }
       });
-      
+
       return { isValid, firstInvalidField };
     }
 
@@ -2366,7 +2427,7 @@
         const field = document.getElementById(fieldId);
         const rule = validationRules[fieldId];
         const errorElement = document.getElementById(rule.errorId);
-        
+
         if (field) {
           field.classList.remove('is-invalid', 'is-valid');
           field.value = '';
@@ -2378,7 +2439,7 @@
     }
 
     // Initialize validation when modal opens
-    document.getElementById('donationModal').addEventListener('shown.bs.modal', function() {
+    document.getElementById('donationModal').addEventListener('shown.bs.modal', function () {
       setupRealTimeValidation();
       // Set focus to first field
       setTimeout(() => {
@@ -2387,31 +2448,31 @@
     });
 
     // Reset validation when modal closes
-    document.getElementById('donationModal').addEventListener('hidden.bs.modal', function() {
+    document.getElementById('donationModal').addEventListener('hidden.bs.modal', function () {
       resetValidation();
     });
 
     // Override form submission with validation
-    document.getElementById('donationForm').addEventListener('submit', function(e) {
+    document.getElementById('donationForm').addEventListener('submit', function (e) {
       e.preventDefault();
-      
+
       const validationResult = validateAllFields();
-      
+
       if (!validationResult.isValid) {
         // Scroll to first error
         if (validationResult.firstInvalidField) {
-          validationResult.firstInvalidField.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
+          validationResult.firstInvalidField.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
           });
           validationResult.firstInvalidField.focus();
         }
-        
+
         // Show alert message
         showAlert('Please correct the errors in the form before submitting.', 'danger');
         return false;
       }
-      
+
       // All validations passed - submit the form via AJAX
       submitDonationForm(this);
     });
@@ -2420,64 +2481,64 @@
     function submitDonationForm(form) {
       const submitBtn = document.getElementById('submitBtn');
       const originalText = submitBtn.innerHTML;
-      
+
       // Disable submit button and show loading
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
-      
+
       const formData = new FormData(form);
-      
+
       fetch(form.action, {
         method: 'POST',
         body: formData
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'success') {
-          // Hide donation modal
-          const donationModal = bootstrap.Modal.getInstance(document.getElementById('donationModal'));
-          donationModal.hide();
-          
-          // Show success modal
-          setTimeout(() => {
-            const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
-            successModal.show();
-            
-            // Handle success modal close
-            document.getElementById('donationRedirectBtn').onclick = function() {
-              if (data.redirect) {
-                window.location.href = data.redirect;
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            // Hide donation modal
+            const donationModal = bootstrap.Modal.getInstance(document.getElementById('donationModal'));
+            donationModal.hide();
+
+            // Show success modal
+            setTimeout(() => {
+              const successModal = new bootstrap.Modal(document.getElementById('donationSuccess'));
+              successModal.show();
+
+              // Handle success modal close
+              document.getElementById('donationRedirectBtn').onclick = function () {
+                if (data.redirect) {
+                  window.location.href = data.redirect;
+                }
+                successModal.hide();
+              };
+            }, 300);
+          } else {
+            // Show error message
+            showAlert(data.message || 'Donation failed. Please try again.', 'danger');
+            // Highlight the specific error field if provided
+            if (data.field) {
+              const field = document.getElementById(data.field);
+              if (field) {
+                field.classList.add('is-invalid');
+                const errorElement = document.getElementById('error' + data.field);
+                if (errorElement) {
+                  errorElement.textContent = data.message;
+                }
+                field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                field.focus();
               }
-              successModal.hide();
-            };
-          }, 300);
-        } else {
-          // Show error message
-          showAlert(data.message || 'Donation failed. Please try again.', 'danger');
-          // Highlight the specific error field if provided
-          if (data.field) {
-            const field = document.getElementById(data.field);
-            if (field) {
-              field.classList.add('is-invalid');
-              const errorElement = document.getElementById('error' + data.field);
-              if (errorElement) {
-                errorElement.textContent = data.message;
-              }
-              field.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              field.focus();
             }
           }
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        showAlert('An error occurred. Please try again later.', 'danger');
-      })
-      .finally(() => {
-        // Re-enable submit button
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-      });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          showAlert('An error occurred. Please try again later.', 'danger');
+        })
+        .finally(() => {
+          // Re-enable submit button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        });
     }
 
     // Show alert message
@@ -2485,7 +2546,7 @@
       // Remove existing alerts
       const existingAlert = document.querySelector('.custom-alert');
       if (existingAlert) existingAlert.remove();
-      
+
       // Create alert element
       const alert = document.createElement('div');
       alert.className = `custom-alert alert alert-${type} alert-dismissible fade show position-fixed`;
@@ -2494,9 +2555,9 @@
         ${message}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       `;
-      
+
       document.body.appendChild(alert);
-      
+
       // Auto remove after 5 seconds
       setTimeout(() => {
         if (alert.parentNode) {
@@ -2506,7 +2567,7 @@
     }
 
     // Initialize validation on page load
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       setupRealTimeValidation();
     });
 
@@ -2574,14 +2635,14 @@
     }
 
     // Handle donate button clicks
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       // Donate button click
       if (e.target.closest('.donate-btn')) {
         e.preventDefault();
         const button = e.target.closest('.donate-btn');
         const causeId = button.getAttribute('data-cause-id');
         const isRunForCause = button.getAttribute('data-is-runforcause');
-        
+
         // Update modal title based on is_runforcause
         const modalTitle = document.getElementById('donationModalTitle');
         if (modalTitle) {
@@ -2591,7 +2652,7 @@
         setCauseId(causeId);
         openDonationModal();
       }
-      
+
       // Share button click
       if (e.target.closest('.share-btn')) {
         e.preventDefault();
@@ -2601,7 +2662,7 @@
         const image = button.getAttribute('data-image');
         shareCause(url, title, image);
       }
-      
+
       // Copy UPI button click
       if (e.target.closest('.copy-icon')) {
         e.preventDefault();
@@ -2610,7 +2671,7 @@
     });
 
     // Login redirect
-    document.getElementById('loginRedirectBtn')?.addEventListener('click', function() {
+    document.getElementById('loginRedirectBtn')?.addEventListener('click', function () {
       const baseUrl = "<?= base_url('/login') ?>";
       const currentUrl = window.location.href;
       window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
@@ -2744,17 +2805,17 @@
     });
 
     // Active nav link highlighting
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const currentUrl = window.location.href;
       const navLinks = document.querySelectorAll('.nav-link');
-      
+
       navLinks.forEach(link => {
         if (link.href === currentUrl) {
           navLinks.forEach(l => l.classList.remove('active'));
           link.classList.add('active');
         }
       });
-      
+
       if (currentUrl.includes('/kanavuhome#how-it-works-section')) {
         navLinks.forEach(l => l.classList.remove('active'));
         document.getElementById('kanavuhomepage')?.classList.add('active');
@@ -2764,4 +2825,5 @@
   </script>
 
 </body>
+
 </html>

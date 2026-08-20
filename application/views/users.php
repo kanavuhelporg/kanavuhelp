@@ -262,7 +262,8 @@
 
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-decoration-none style-logout" data-bs-toggle="modal"
+                            <a href="#" class="nav-link text-decoration-none style-logout"
+                                style="font-weight:400;color:black;" data-bs-toggle="modal"
                                 data-bs-target="#logoutModal">
                                 <i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Logout
                             </a>
