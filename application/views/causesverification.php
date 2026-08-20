@@ -1567,7 +1567,7 @@
                                         <label class="form-label small">Cause Description <span
                                                 class="text-danger">*</span></label>
                                         <textarea name="cause_description" id="field_cause_description"
-                                            class="form-control" rows="4" maxlength="250" required></textarea>
+                                            class="form-control" rows="4" maxlength="1500" required></textarea>
                                         <small id="field_cause_description_err" class="text-danger"
                                             style="display:none;"></small>
                                     </div>
@@ -2235,9 +2235,9 @@
                     }
 
                     // 9. Validate Cause Description (required)
-                    var causeDesc = document.getElementById('field_cause_description')
-                    if (causeDesc && causeDesc.value.trim() === '') {
-                        showError(causeDesc, document.getElementById('field_cause_description_err'), 'Cause Description is required.');
+                    var causeDesc = document.getElementById('field_cause_description');
+                    if (causeDesc && (causeDesc.value.trim() === '' || causeDesc.value.trim().length > 1500)) {
+                        showError(causeDesc, document.getElementById('field_cause_description_err'), causeDesc.value.trim() === '' ? 'Cause Description is required.' : 'Cause Description must not exceed 1500 characters.');
                         ok = false;
                         if (!firstInvalidEl) firstInvalidEl = causeDesc;
                     }
