@@ -740,10 +740,10 @@
                                                 <div class="action-buttons">
                                                     <button onclick="setUrl(<?= htmlspecialchars(json_encode($donation)); ?>)" 
                                                             class="btn btn-warning btn-sm" 
-                                                            data-toggle="modal" data-target="#sendmail">Status</button>
+                                                            data-bs-toggle="modal" data-bs-target="#sendmail">Status</button>
                                                     <button onclick="editDonation(<?= htmlspecialchars(json_encode($donation)); ?>)" 
                                                             class="btn btn-success btn-sm" 
-                                                            data-toggle="modal" data-target="#editDonationModal"><i class="fa fa-edit"></i></button>
+                                                            data-bs-toggle="modal" data-bs-target="#editDonationModal"><i class="fa fa-edit"></i></button>
                                                     
                                                     <button onclick="deleteDonation(<?= $donation->donation_id; ?>)" 
                                                             class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
@@ -811,7 +811,7 @@
                 <form id="editDonationForm" action="<?php echo site_url('admin/updateDonation'); ?>" method="post">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editDonationLabel">Edit Donation</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
                                     </button>
                     </div>
                     <div class="modal-body">
@@ -850,7 +850,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>
@@ -864,7 +864,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 id="mailto" class="text-danger">Send Email</h5>
-                    <button data-dismiss="modal" class="btn btn-close"></button>
+                    <button data-bs-dismiss="modal" class="btn btn-close"></button>
                 </div>
                 <div class="modal-body">
                     <div id="statusheading" class="d-flex justify-content-between mb-3">
@@ -939,13 +939,13 @@
 
         // Edit donation function
         function editDonation(donation) {
-            document.getElementById('donationId').value = donation.donation_id;
-            document.getElementById('donationName').value = donation.name;
-            document.getElementById('donationEmail').value = donation.email;
-            document.getElementById('donationMobile').value = donation.phoneno;
-            document.getElementById('donationAmount').value = donation.amount;
-            document.getElementById('donationTransactionId').value = donation.transactionid;
-            document.getElementById('donationVerified').value = donation.status;
+            document.getElementById('donationId').value = donation.donation_id || '';
+            document.getElementById('donationName').value = donation.name || '';
+            document.getElementById('donationEmail').value = donation.email || '';
+            document.getElementById('donationMobile').value = donation.phoneno || '';
+            document.getElementById('donationAmount').value = donation.amount || '';
+            document.getElementById('donationTransactionId').value = donation.transactionid || '';
+            document.getElementById('donationVerified').value = donation.status !== undefined ? donation.status : '0';
         }
 
         // ---- Edit Donation Form Validation ----
