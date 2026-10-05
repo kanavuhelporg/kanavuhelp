@@ -1192,8 +1192,19 @@
             <div class="text-center">
               <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
             </div>
+
+            <!-- Top Details (Trust, TID, & UPI) -->
+            <div class="text-center my-2">
+              <div class="text-muted small fw-bold text-uppercase" style="letter-spacing: 1px;">THE KANAVU TRUST</div>
+              <div class="fw-bold text-dark fs-5 my-1">TID: 68334166</div>
+              <div class="d-inline-flex align-items-center border rounded-pill px-3 py-1 bg-light mt-1 mb-2">
+                <span class="small fw-bold text-dark me-2" id="upiText">Vyapar.175502705184@hdfcbank</span>
+                <i class="bi bi-copy text-primary cursor-pointer copy-icon" data-copy="upiText" title="Copy UPI" style="cursor: pointer;"></i>
+              </div>
+            </div>
+
             <div class="text-center">
-              <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
+              <img src="<?= base_url('assets/img/hdfc_qr_clean.png') ?>" alt="HDFC QR Code" class="img-fluid rounded border shadow-sm" style="width: 50%; margin-top: -10px; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; background: #ffffff; padding: 2px;">
             </div>
 
             <div class="text-center mt-2">

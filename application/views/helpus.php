@@ -942,7 +942,8 @@
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong></p>
+              <strong><?= isset($fundraiser->days_left) ? htmlspecialchars($fundraiser->days_left) : '0' ?></strong>
+            </p>
             <?php if ($fundraiser->days_left >= 0 && (!$fundraiser->hide_donation_button)): ?>
               <!-- Donate Button -->
               <div class="d-flex justify-content-between">
@@ -1005,7 +1006,8 @@
 
                                 <div class="ms-3">
                                   <div class="text-dark fw-bold mb-0" style="font-size: 1rem;">
-                                    <?= htmlspecialchars($donor->name); ?></div>
+                                    <?= htmlspecialchars($donor->name); ?>
+                                  </div>
                                   <div class="text-muted d-flex align-items-center" style="font-size: 0.85rem;">
                                     <i class="bi bi-geo-alt me-1"></i>
                                     <?= htmlspecialchars($donor->donor_location ?: 'Anonymous'); ?>
@@ -1042,8 +1044,8 @@
               // Prepare a JavaScript array of donors, or an empty array if no donors are available
               const donors = [
                 <?php if (!empty($fundraiser->topdonars)): ?>
-              <?php foreach ($fundraiser->topdonars as $donor): ?>
-                    {
+                    <?php foreach ($fundraiser->topdonars as $donor): ?>
+                                {
                       name: "<?= htmlspecialchars($donor->name); ?>",
                       initial: "<?= substr($donor->name, 0, 1); ?>",
                       amount: <?= $donor->amount; ?>
@@ -1394,7 +1396,8 @@
         <div class="modal-header border-0 bg-danger text-white p-4">
           <div>
             <h5 class="fw-bold mb-0" id="donationModalTitle">
-              <?= ($fundraiser->is_runforcause == 'yes') ? 'Support for Our Run' : 'Support Our Cause' ?></h5>
+              <?= ($fundraiser->is_runforcause == 'yes') ? 'Support for Our Run' : 'Support Our Cause' ?>
+            </h5>
             <small class="opacity-75">Follow 3 simple steps to complete your donation</small>
           </div>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -1420,19 +1423,27 @@
                   <h6 class="fw-bold mb-0 text-dark">Make Your donation</h6>
                 </div>
 
+                <!-- Top Details (Trust & TID) -->
+                <div class="text-center mb-3 p-2 bg-white rounded border">
+                  <div class="text-muted small fw-bold text-uppercase" style="letter-spacing: 1px;">THE KANAVU TRUST</div>
+                  <div class="fw-bold text-dark fs-5 my-1">TID: 68334166</div>
+                </div>
+
                 <div class="row g-3 align-items-center">
                   <div class="col-7">
                     <label class="text-muted small d-block mb-1">UPI ID</label>
                     <div class="d-flex align-items-center bg-white p-2 border rounded">
-                      <span class="text-truncate small fw-bold" id="upiText">vyapar.175502705184@hdfcbank</span>
+                      <span class="text-truncate small fw-bold" id="upiText">Vyapar.175502705184@hdfcbank</span>
                       <i class="bi bi-copy ms-auto text-primary cursor-pointer copy-icon" data-copy="upiText"
                         title="Copy UPI"></i>
                     </div>
                   </div>
                   <div class="col-1 text-muted small fw-bold text-center">OR</div>
                   <div class="col-4 text-center">
-                    <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>"
-                      class="img-fluid rounded border shadow-sm" style="max-height: 280px;" alt="QR Code">
+                    <img src="<?= base_url('assets/img/hdfc_qr_clean.png') ?>"
+                      class="img-fluid rounded border shadow-sm"
+                      style="max-height: 280px; width: 100%; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; background: #ffffff; padding: 2px;"
+                      alt="QR Code">
                     <small class="d-block text-muted mt-1" style="font-size: 10px;">Scan to Pay</small>
                   </div>
                 </div>

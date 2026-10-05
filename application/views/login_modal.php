@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
 
   <style>
     body {
@@ -722,7 +723,8 @@
                     <span class="ms-2"><?= $this->session->userdata('Kanavu_userName') ?></span>
                   </div>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userProfile">
-                    <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <li><a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fas fa-sign-out-alt"></i>
+                        Logout</a></li>
                   </ul>
                 </div>
               </div>
@@ -752,7 +754,8 @@
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
+                  <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm"
+                    style="background-color: red; color: white; border: none;">
                     Start a Fundraiser
                   </button>
                 </a>
@@ -776,7 +779,8 @@
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
                 <a href="<?= base_url('/individual') ?>">
-                  <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
+                  <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm"
+                    style="background-color: red; color: white; border: none;">
                     Start a Fundraiser
                   </button>
                 </a>
@@ -793,7 +797,8 @@
     <div style="display: flex; justify-content: center;">
       <img class="img-fluid heart" src="assets/img/underline.svg" alt="no image">
     </div>
-    <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.</div>
+    <div class="p text-center">We try our best to help helpless people,<br>Donate to charity causes around the world.
+    </div>
   </div><br>
 
   <div id="fundraiserCarousel" class="carousel slide mt-5 fundraiser-carousel" data-bs-ride="carousel">
@@ -819,20 +824,25 @@
                           <p class="card-title"><?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?></p>
                           <div class="d-flex justify-content-between align-items-center">
                             <p class="card-text text-muted mb-0">by <?= htmlspecialchars($fundraiser->name, ENT_QUOTES) ?></p>
-                            <button type="button" class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
+                            <button type="button"
+                              class="btn card_button text-muted ms-auto"><?= htmlspecialchars($fundraiser->category, ENT_QUOTES) ?></button>
                           </div>
-                          <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹ <?= number_format($fundraiser->amount) ?></strong></p>
+                          <p class="card-text"><strong>₹ <?= number_format($fundraiser->raised_amount) ?> raised out of ₹
+                              <?= number_format($fundraiser->amount) ?></strong></p>
                           <div class="progress mb-2">
                             <?php
                             $progress_percentage = ($fundraiser->raised_amount / $fundraiser->amount) * 100;
                             ?>
-                            <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar" aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar" style="width: <?= $progress_percentage ?>%;" role="progressbar"
+                              aria-valuenow="<?= $progress_percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
 
                           <div class="d-flex align-items-center mt-auto">
-                            <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)) : ?>
-                              <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)" data-bs-toggle="modal">Donate Now</a>
-                              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <i class="bi bi-share ms-2" style="color:red " onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>')"></i>
+                            <?php if ($fundraiser->days_left > 0 && (!$fundraiser->hide_donation_button)): ?>
+                              <a href="#" class="btn donate_btn no-hover" onclick="setCauseId(<?= $fundraiser->id ?>)"
+                                data-bs-toggle="modal">Donate Now</a>
+                              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <i class="bi bi-share ms-2" style="color:red "
+                                onclick="shareCause('<?= base_url('helpus/' . $fundraiser->id) ?>', '<?= htmlspecialchars($fundraiser->cause_heading, ENT_QUOTES) ?>')"></i>
                             <?php endif; ?>
                           </div>
                         </div>
@@ -851,7 +861,8 @@
       <?php endif; ?>
     </div>
 
-    <button class="carousel-control-prev" type="button" style="color:black" data-bs-target="#fundraiserCarousel" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" style="color:black" data-bs-target="#fundraiserCarousel"
+      data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
@@ -1154,17 +1165,20 @@
       </div>
       <div class="social-icons d-flex justify-content-center text-center my-2">
         <a href="https://www.facebook.com/" target="_blank" class="mx-2">
-          <img src="<?= base_url('assets/img/facebook-f.svg') ?>" alt="Facebook Logo" class="img-fluid" style="max-width: 30px;">
+          <img src="<?= base_url('assets/img/facebook-f.svg') ?>" alt="Facebook Logo" class="img-fluid"
+            style="max-width: 30px;">
         </a>
         <a href="https://twitter.com/" target="_blank" class="mx-2">
-          <img src="<?= base_url('assets/img/twitter.svg') ?>" alt="Twitter Logo" class="img-fluid" style="max-width: 30px;">
+          <img src="<?= base_url('assets/img/twitter.svg') ?>" alt="Twitter Logo" class="img-fluid"
+            style="max-width: 30px;">
         </a>
         <a href="https://www.linkedin.com/" target="_blank" class="mx-2">
-          <img src="<?= base_url('assets/img/linkedin-in.svg') ?>" alt="LinkedIn Logo" class="img-fluid" style="max-width: 30px;">
+          <img src="<?= base_url('assets/img/linkedin-in.svg') ?>" alt="LinkedIn Logo" class="img-fluid"
+            style="max-width: 30px;">
         </a>
       </div>
-      <img src="<?= base_url('assets/img/footer-secured-card 1.svg') ?>" alt="Secure Card" class="footimg img-fluid mx-auto d-block"
-        style="max-width: 200px;">
+      <img src="<?= base_url('assets/img/footer-secured-card 1.svg') ?>" alt="Secure Card"
+        class="footimg img-fluid mx-auto d-block" style="max-width: 200px;">
       <p class="text-center" style="font-size:15px;">
         Copyright <span id="currentYear"></span> @ kanavu.help. All Rights Reserved.
       </p>
@@ -1179,21 +1193,38 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>" onsubmit="return validateForm()">
+          <form id="donationForm" method="POST" action="<?= base_url('kanavuhelp/processDonation') ?>"
+            onsubmit="return validateForm()">
             <!-- Honeypot field to prevent automated spam bot submissions -->
             <div style="display:none;">
               <input type="text" name="username_verification_honey" value="" autocomplete="off">
             </div>
             <!-- Hidden fields to store cause ID and user ID -->
             <input type="hidden" name="cause_id" id="cause_id" value="">
-            <input type="hidden" name="user_id" id="user_id" value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
+            <input type="hidden" name="user_id" id="user_id"
+              value="<?= $is_logged_in ? $this->session->userdata('userId') : ''; ?>">
 
             <!-- Donation Form Fields -->
             <div class="text-center">
-              <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%" style="margin-top: -20px;">
+              <img src="<?= base_url('assets/img/handwithheart.png') ?>" alt="handwithheart_img" width="20%"
+                style="margin-top: -20px;">
             </div>
+
+            <!-- Top Details (Trust, TID, & UPI) -->
+            <div class="text-center my-2">
+              <div class="text-muted small fw-bold text-uppercase" style="letter-spacing: 1px;">THE KANAVU TRUST</div>
+              <div class="fw-bold text-dark fs-5 my-1">TID: 68334166</div>
+              <div class="d-inline-flex align-items-center border rounded-pill px-3 py-1 bg-light mt-1 mb-2">
+                <span class="small fw-bold text-dark me-2" id="upiText">Vyapar.175502705184@hdfcbank</span>
+                <i class="bi bi-copy text-primary cursor-pointer copy-icon" data-copy="upiText" title="Copy UPI"
+                  style="cursor: pointer;"></i>
+              </div>
+            </div>
+
             <div class="text-center">
-              <img src="<?= base_url('assets/img/hdfc_qr_scranner.jpeg') ?>" alt="handwithheart_img" width="50%" style="margin-top: -20px;">
+              <img src="<?= base_url('assets/img/hdfc_qr_clean.png') ?>" alt="HDFC QR Code"
+                class="img-fluid rounded border shadow-sm"
+                style="width: 50%; margin-top: -10px; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; background: #ffffff; padding: 2px;">
             </div>
 
             <div class="text-center mt-2">
@@ -1208,10 +1239,11 @@
                 <option>USD</option>
               </select>
 
-              <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*" style="width:40%;" required>
+              <input type="number" name="amount" class="form-control ms-5" id="amount" placeholder="Enter amount*"
+                style="width:40%;" required>
 
             </div>
-<br>
+            <br>
             <!-- Name -->
             <!-- <div class="form-group ms-4">
       <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name*" style="width:92%;" required>
@@ -1227,26 +1259,30 @@
 
             <!-- Phone Number -->
             <div class="form-group ms-4">
-              <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Enter your phone number*" style="width:92%;" required>
+              <input type="tel" name="phoneno" class="form-control" id="phone" placeholder="Enter your phone number*"
+                style="width:92%;" required>
               <p id="error3" style="color:red"></p>
             </div>
 
             <!-- Transaction ID -->
             <div class="form-group ms-4">
-              <input type="text" name="transactionid" class="form-control" id="transactionid" placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
+              <input type="text" name="transactionid" class="form-control" id="transactionid"
+                placeholder="Enter UPI Transaction Id*" style="width:92%;" required>
               <p id="error4" style="color:red"></p>
             </div>
 
             <!-- Continue Button -->
             <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-danger" style="width:50%; border-radius:10px; background-color:white; color:red;">
+              <button type="submit" class="btn btn-danger"
+                style="width:50%; border-radius:10px; background-color:white; color:red;">
                 Continue to Pay ₹
               </button>
             </div>
           </form>
 
           <!-- Terms and Privacy Policy -->
-          <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
+          <p class="text-center small mt-2">By continuing, you agree to our <a href="#">Terms of Service</a> & <a
+              href="#">Privacy Policy</a></p>
         </div>
       </div>
     </div>
@@ -1269,55 +1305,55 @@
   </div>
 
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>You need to log in to continue with the donation.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="loginRedirectBtn">OK</button>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>You need to log in to continue with the donation.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="loginRedirectBtn">OK</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
   <script>
     // Simulate user login status (from backend or session)
     var isLoggedIn = <?= json_encode($is_logged_in); ?>; // Backend should set this
 
-// Handle Donate button click using event delegation
-document.querySelector('.container').addEventListener('click', function(event) {
-  if (event.target.classList.contains('donate_btn')) {
-    event.preventDefault(); // Prevent default link behavior
+    // Handle Donate button click using event delegation
+    document.querySelector('.container').addEventListener('click', function (event) {
+      if (event.target.classList.contains('donate_btn')) {
+        event.preventDefault(); // Prevent default link behavior
 
    /* if (!isLoggedIn) {
       const baseUrl = "<?= base_url('/login') ?>"; 
-      // Ask for confirmation before redirecting to the login page
-      var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-    loginModal.show();
+        // Ask for confirmation before redirecting to the login page
+        var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
 
-    // Redirect to login page with return URL on OK button click
-    document.getElementById('loginRedirectBtn').addEventListener('click', function() {
-      var currentUrl = window.location.href;
+        // Redirect to login page with return URL on OK button click
+        document.getElementById('loginRedirectBtn').addEventListener('click', function () {
+          var currentUrl = window.location.href;
 
-// Redirect to the login page with the returnUrl parameter
-      window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
-    });// Replace with your actual login URL
-      
-    } else {*/
-      // Show the donation modal if logged in
-      var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
-      donationModal.show();
-  //  }
-  }
-});
+          // Redirect to the login page with the returnUrl parameter
+          window.location.href = `${baseUrl}?returnUrl=${encodeURIComponent(currentUrl)}`;
+        });// Replace with your actual login URL
+
+      } else {*/
+        // Show the donation modal if logged in
+        var donationModal = new bootstrap.Modal(document.getElementById('donationModal'));
+        donationModal.show();
+        //  }
+      }
+    });
 
     // Handle modal close event to ensure page is accessible
     var donationModal = document.getElementById('donationModal');
-    donationModal.addEventListener('hidden.bs.modal', function(event) {
+    donationModal.addEventListener('hidden.bs.modal', function (event) {
       // This will trigger when the modal is fully closed
       document.body.classList.remove('modal-open'); // Ensure body is not still marked as modal-open
       var modalBackdrop = document.querySelector('.modal-backdrop');
@@ -1328,9 +1364,23 @@ document.querySelector('.container').addEventListener('click', function(event) {
       // Reset form fields when the modal is closed
       donationModal.querySelector('form').reset();
     });
+
+    document.querySelectorAll(".copy-icon").forEach(icon => {
+      icon.addEventListener("click", () => {
+        let id = icon.getAttribute("data-copy");
+        let text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text);
+        icon.classList.remove("bi-copy");
+        icon.classList.add("bi-check2-circle", "text-success");
+        setTimeout(() => {
+          icon.classList.remove("bi-check2-circle", "text-success");
+          icon.classList.add("bi-copy");
+        }, 1500);
+      });
+    });
   </script>
   <script>
-    document.getElementById('donationForm').onsubmit = function(event) {
+    document.getElementById('donationForm').onsubmit = function (event) {
 
       event.preventDefault(); // Prevent default form submission
 
@@ -1402,9 +1452,9 @@ document.querySelector('.container').addEventListener('click', function(event) {
 
       // Send AJAX request
       fetch('/kanavuhelp/processDonation', { // Make sure to use the correct path
-          method: 'POST',
-          body: formData
-        })
+        method: 'POST',
+        body: formData
+      })
         .then(response => response.json())
         .then(data => {
           if (data.status === 'error') {
@@ -1423,7 +1473,7 @@ document.querySelector('.container').addEventListener('click', function(event) {
             loginModal.show();
 
             // Redirect to login page with return URL on OK button click
-            document.getElementById('donationRedirectBtn').addEventListener('click', function() {
+            document.getElementById('donationRedirectBtn').addEventListener('click', function () {
 
               window.location.href = data.redirect;
               // Redirect to the login page with the returnUrl parameter
@@ -1469,13 +1519,13 @@ document.querySelector('.container').addEventListener('click', function(event) {
   </script>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       // Initialize and show the modal when the page loads
       var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
       loginModal.show();
 
       // Redirect to the login page when "Login" button is clicked
-      document.getElementById('loginRedirectBtn').addEventListener('click', function() {
+      document.getElementById('loginRedirectBtn').addEventListener('click', function () {
         var currentUrl = "<?= base_url('individual') ?>";
 
         // Check if baseUrl is properly defined
