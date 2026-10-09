@@ -1545,6 +1545,10 @@
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <?php if ($is_goal_reached): ?>
                                 <span class="badge bg-success">Completed</span>
+                            <?php elseif (isset($fundraiser->days_left) && $fundraiser->days_left <= 0): ?>
+                                <button class="btn btn-danger btn-sm donate_btn" disabled style="padding: 5px 15px; border-radius: 25px; opacity: 0.65; cursor: not-allowed;">
+                                    Donate Now
+                                </button>
                             <?php else: ?>
                                 <button class="btn btn-danger btn-sm donate_btn" 
                                         onclick="setCauseId(<?= $fundraiser->id ?>); openDonationModal('<?= $fundraiser->is_runforcause ?>');" style="padding: 5px 15px; border-radius: 25px;">
