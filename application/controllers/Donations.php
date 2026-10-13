@@ -46,6 +46,18 @@ class Donations extends CI_Controller {
                 // Check if goal is reached
                 $f->is_goal_reached = ($f->raised_amount >= $f->amount);
 
+                // Check if expired
+                $is_expired = false;
+                if (!empty($f->end_date) && $f->end_date !== '0000-00-00') {
+                    $end_date = new DateTime($f->end_date);
+                    $current_date = new DateTime();
+                    $interval = $end_date->diff($current_date);
+                    if ($interval->invert == 0) {
+                        $is_expired = true;
+                    }
+                }
+                $f->is_expired = $is_expired;
+
                 // ⭐ SAVE COMPLETED STATUS IN donation_for_cause TABLE
                 if ($f->is_goal_reached) {
                     $this->UserModel->mark_cause_completed($f->id);
@@ -121,13 +133,15 @@ class Donations extends CI_Controller {
                                 // If goal reached, show 'Completed'
                                 if ($fundraiser->is_goal_reached) {
                                     $output .= '<span class="badge bg-success mt-2">Completed</span>';
+                                } elseif ($fundraiser->is_expired) {
+                                    $output .= '<button type="button" class="btn bg-danger text-white donate_btn" disabled style="opacity: 0.65; cursor: not-allowed;">Donate Now</button>';
                                 } else {
                                     $output .= '<button type="button" class="btn bg-danger text-white donate_btn" 
                                                 onclick="setCauseId('.$fundraiser->id.'); openDonationModal(\''.$fundraiser->is_runforcause.'\');">Donate Now</button>';
                                 }
 
                                 $output .= '
-                                <div class="text-danger"
+                                <div class="text-danger ms-auto"
                                     onclick="shareCause(\''.
                                         base_url('helpus/' . str_replace(" ","-", $fundraiser->name) . '-' . $fundraiser->id) .'\',
                                         \'' . htmlspecialchars($fundraiser->cause_heading) . '\',
