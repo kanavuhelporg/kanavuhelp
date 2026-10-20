@@ -2244,8 +2244,8 @@
 
                     // 10. Validate Goal Amount (required)
                     var amount = document.getElementById('field_amount');
-                    if (amount && (amount.value.trim() === '' || parseFloat(amount.value) < 1000 || parseFloat(amount.value) > 100000)) {
-                        showError(amount, document.getElementById('field_amount_err'), 'Goal Amount must be between 1000 and 100000.');
+                    if (amount && (amount.value.trim() === '' || parseFloat(amount.value) < 1000 || parseFloat(amount.value) > 1000000)) {
+                        showError(amount, document.getElementById('field_amount_err'), 'Goal Amount must be between 1000 and 1000000.');
                         ok = false;
                         if (!firstInvalidEl) firstInvalidEl = amount;
                     }

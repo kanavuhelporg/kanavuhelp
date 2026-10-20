@@ -2009,8 +2009,8 @@
         const amount = document.getElementById("amount").value.trim();
         const errorElement = document.getElementById("amount-error");
 
-        if (!amount || isNaN(amount) || parseFloat(amount) < 1000 || parseFloat(amount) > 100000) {
-          errorElement.textContent = "Amount must be between 1000 to 100000.";
+        if (!amount || isNaN(amount) || parseFloat(amount) < 1000 || parseFloat(amount) > 1000000) {
+          errorElement.textContent = "Amount must be between 1000 to 1000000.";
           return false;
         }
         errorElement.textContent = "";
