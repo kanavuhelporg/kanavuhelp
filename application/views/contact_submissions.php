@@ -410,6 +410,14 @@
                           <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
                         </a>
                     </li>
+
+                    <li class="nav-item py-2">
+                        <a href="<?= base_url('admin/fundraiser_enquiries') ?>"
+                          class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/fundraiser_enquiries') ? 'active' : '' ?>"
+                          style="font-weight:400;color:black;">
+                          <i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiry
+                        </a>
+                    </li>
                     
                     <li class="nav-item">
                         <a href="<?= base_url('causesverification') ?>"
@@ -475,6 +483,14 @@
                               class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
                               style="font-weight:400;color:black;">
                               <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
+                            </a>
+                        </li>
+
+                        <li class="nav-item py-2 px-3">
+                            <a href="<?= base_url('admin/fundraiser_enquiries') ?>"
+                              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/fundraiser_enquiries') ? 'active' : '' ?>"
+                              style="font-weight:400;color:black;">
+                              <i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiry
                             </a>
                         </li>
                         

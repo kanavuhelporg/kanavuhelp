@@ -1722,4 +1722,138 @@ class admin extends CI_Controller
         }
     }
 
+    public function fundraiser_enquiries()
+    {
+        if (!$this->session->userdata('adminId')) {
+            redirect('admin');
+        }
+        $this->load->model('UserModel');
+        $status = $this->input->get('status', true);
+        if (empty($status)) {
+            $status = 'all';
+        }
+        $data['current_status'] = $status;
+        $data['enquiries'] = $this->UserModel->get_fundraiser_enquiries($status);
+        $data['total_count'] = $this->UserModel->count_fundraiser_enquiries('all');
+        $data['pending_count'] = $this->UserModel->count_fundraiser_enquiries('pending');
+        $data['approved_count'] = $this->UserModel->count_fundraiser_enquiries('approved');
+        $data['rejected_count'] = $this->UserModel->count_fundraiser_enquiries('rejected');
+
+        $this->load->view('admin_fundraiser_enquiries', $data);
+    }
+
+    public function get_enquiry_details()
+    {
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        $this->load->model('UserModel');
+        $id = $this->input->get('id', true);
+        $enquiry = $this->UserModel->get_fundraiser_enquiry_by_id($id);
+        if ($enquiry) {
+            echo json_encode(['status' => 'success', 'data' => $enquiry]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Record not found']);
+        }
+    }
+
+    public function approve_enquiry()
+    {
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        $this->load->model('UserModel');
+        $this->load->library('email');
+
+        $id = $this->input->post('id', true);
+        $remarks = $this->input->post('remarks', true) ?: 'Approved by admin for cause creation.';
+        $admin_id = $this->session->userdata('adminId');
+
+        $enquiry = $this->UserModel->get_fundraiser_enquiry_by_id($id);
+        if (!$enquiry) {
+            echo json_encode(['status' => 'error', 'message' => 'Enquiry not found']);
+            return;
+        }
+
+        $updated = $this->UserModel->update_fundraiser_enquiry_status($id, 'approved', $remarks, $admin_id);
+
+        if ($updated) {
+            // Generate a secure unique approval token and save to DB
+            $token = bin2hex(random_bytes(32));
+            $this->UserModel->save_approval_token($id, $token);
+
+            // Build the token-based confirmation link for the cause creator
+            $approval_link = base_url('fundraiser_approve_token/' . $token);
+
+            // Send approval email with secure token link to applicant
+            $userSubject = 'Great News! Your Fundraiser Enquiry Has Been Approved - Kanavu Help';
+            $userMessage = "
+                <html>
+                <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
+                    <div style='max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;'>
+                        <div style='background-color: #16a34a; color: #ffffff; padding: 20px; text-align: center;'>
+                            <h2 style='margin:0;'>Fundraiser Enquiry Approved!</h2>
+                            <p style='margin: 5px 0 0 0;'>Ref ID: #FE-{$id}</p>
+                        </div>
+                        <div style='padding: 25px;'>
+                            <p>Hello <strong>" . htmlspecialchars($enquiry->fullname) . "</strong>,</p>
+                            <p>We are delighted to inform you that your fundraiser enquiry for <strong>" . htmlspecialchars($enquiry->cause_title) . "</strong> has been <span style='color: #16a34a; font-weight: bold;'>APPROVED</span> by the Kanavu Help admin team.</p>
+                            <div style='background: #f0fdf4; border-left: 4px solid #16a34a; padding: 12px 16px; margin: 20px 0;'>
+                                <p style='margin: 4px 0;'><strong>Category:</strong> " . htmlspecialchars($enquiry->cause_category) . "</p>
+                                <p style='margin: 4px 0;'><strong>Target Amount:</strong> &#8377;" . number_format((float)$enquiry->target_amount, 2) . "</p>
+                                <p style='margin: 4px 0;'><strong>Admin Remarks:</strong> " . htmlspecialchars($remarks) . "</p>
+                            </div>
+                            <p><strong>Next Step:</strong> Click the button below to confirm your approval and proceed to set up your fundraiser campaign on Kanavu Help:</p>
+                            <div style='text-align: center; margin: 28px 0;'>
+                                <a href='{$approval_link}'
+                                   style='background-color: #16a34a; color: #ffffff; padding: 14px 32px; border-radius: 30px; text-decoration: none; font-size: 16px; font-weight: bold; display: inline-block;'>
+                                   Confirm &amp; Start Your Fundraiser
+                                </a>
+                            </div>
+                            <p style='font-size: 13px; color: #666;'>If the button does not work, copy and paste this link into your browser:</p>
+                            <p style='font-size: 13px; color: #2563eb; word-break: break-all;'><a href='{$approval_link}'>{$approval_link}</a></p>
+                            <p style='font-size: 12px; color: #999; margin-top: 16px;'>This link is unique and secure. Our team will also contact you on <strong>" . htmlspecialchars($enquiry->phone) . "</strong> for further guidance.</p>
+                            <p style='margin-top: 30px;'>Best Regards,<br><strong>Kanavu Help Verification Team</strong></p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            ";
+
+            $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
+            $this->email->to($enquiry->email);
+            $this->email->subject($userSubject);
+            $this->email->message($userMessage);
+            $this->email->set_mailtype('html');
+            @$this->email->send();
+
+            echo json_encode(['status' => 'success', 'message' => 'Enquiry #FE-' . $id . ' approved! A secure link has been sent to ' . $enquiry->email]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to approve enquiry.']);
+        }
+    }
+
+    public function reject_enquiry()
+    {
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        $this->load->model('UserModel');
+        $id = $this->input->post('id', true);
+        $remarks = $this->input->post('remarks', true) ?: 'Enquiry rejected.';
+        $admin_id = $this->session->userdata('adminId');
+
+        $updated = $this->UserModel->update_fundraiser_enquiry_status($id, 'rejected', $remarks, $admin_id);
+
+        if ($updated) {
+            echo json_encode(['status' => 'success', 'message' => 'Enquiry #FE-' . $id . ' has been marked as rejected.']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to reject enquiry.']);
+        }
+    }
+
 }
+

@@ -65,6 +65,15 @@ $route['login_myhelps'] = 'donors/login_myhelps';
 $route['blogs'] = 'kanavuhelp/blogs';
 /**wordpress blog website */
 $route['contactus'] = 'kanavuhelp/contactus';
+$route['fundraiser-enquiry'] = 'kanavuhelp/fundraiser_enquiry';
+$route['fundraiser_enquiry'] = 'kanavuhelp/fundraiser_enquiry';
+$route['submit_fundraiser_enquiry'] = 'kanavuhelp/submit_fundraiser_enquiry';
+$route['fundraiser_approve_token'] = 'kanavuhelp/fundraiser_approve_token';
+$route['fundraiser_approve_token/(:any)'] = 'kanavuhelp/fundraiser_approve_token/$1';
+$route['admin/fundraiser_enquiries'] = 'admin/fundraiser_enquiries';
+$route['admin/approve_enquiry'] = 'admin/approve_enquiry';
+$route['admin/reject_enquiry'] = 'admin/reject_enquiry';
+$route['admin/get_enquiry_details'] = 'admin/get_enquiry_details';
 $route['individual'] = 'kanavuhelp/individual';
 $route['charity'] = 'kanavuhelp/charity';
 $route['abouts'] = 'kanavuhelp/abouts';

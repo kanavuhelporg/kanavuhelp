@@ -729,12 +729,15 @@
             <li class="nav-item">
               <a id="aboutuspage" class="nav-link mx-lg-2 " href="<?= base_url('/abouts') ?>">About us</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="display: none;">
               <a id="individualpage" class="nav-link mx-lg-2" href="<?= base_url('/individual') ?>">Start a
                 Fundraiser</a>
             </li>
             <li class="nav-item">
               <a id="donatepage" class="nav-link mx-lg-2 active" href="<?= base_url('/donate') ?>">Donate</a>
+            </li>
+            <li class="nav-item">
+              <a id="fundraiserenquirypage" class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Fundraiser Enquiry</a>
             </li>
             <li class="nav-item">
               <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>

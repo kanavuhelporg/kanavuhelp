@@ -693,11 +693,14 @@
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-            <li class="nav-item">
+            <li class="nav-item" style="display: none;">
               <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Fundraiser Enquiry</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
@@ -751,9 +754,9 @@
               <li style="font-weight: bold;margin-left">"Empowering Lives, Defeating diseases & disasters"</li>
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
-                <a href="<?= base_url('/individual') ?>">
+                <a href="<?= base_url('/fundraiser-enquiry') ?>">
                   <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
-                    Start a Fundraiser
+                    Fundraiser Enquiry
                   </button>
                 </a>
               </li>
@@ -775,9 +778,9 @@
               <li style="font-weight: bold;">"Empowering Lives, Defeating diseases & disasters"</li>
               <li>Join Us in the Fight & Healing.</li><br>
               <li>
-                <a href="<?= base_url('/individual') ?>">
+                <a href="<?= base_url('/fundraiser-enquiry') ?>">
                   <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
-                    Start a Fundraiser
+                    Fundraiser Enquiry
                   </button>
                 </a>
               </li>

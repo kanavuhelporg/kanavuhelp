@@ -556,6 +556,113 @@ public function mark_cause_completed($cause_id)
     return $this->db->update('donation_for_cause');
 }
 
+public function ensure_fundraiser_enquiry_table()
+{
+    $sql = "CREATE TABLE IF NOT EXISTS `fundraiser_enquiry` (
+      `id` INT AUTO_INCREMENT PRIMARY KEY,
+      `fullname` VARCHAR(150) NOT NULL,
+      `email` VARCHAR(150) NOT NULL,
+      `phone` VARCHAR(20) NOT NULL,
+      `cause_category` VARCHAR(100) NOT NULL,
+      `beneficiary_relation` VARCHAR(50) DEFAULT NULL,
+      `beneficiary_name` VARCHAR(150) DEFAULT NULL,
+      `beneficiary_age` INT DEFAULT NULL,
+      `location` VARCHAR(150) DEFAULT NULL,
+      `target_amount` DECIMAL(12,2) DEFAULT NULL,
+      `urgency_level` VARCHAR(50) DEFAULT NULL,
+      `cause_title` VARCHAR(255) DEFAULT NULL,
+      `cause_description` TEXT NOT NULL,
+      `status` ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+      `admin_remarks` TEXT DEFAULT NULL,
+      `approved_at` DATETIME DEFAULT NULL,
+      `approved_by` INT DEFAULT NULL,
+      `approval_token` VARCHAR(100) DEFAULT NULL,
+      `token_used` TINYINT(1) DEFAULT 0,
+      `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+    $this->db->query($sql);
+
+    // Add approval_token column if it doesn't exist (for existing tables)
+    $check_token = $this->db->query("SHOW COLUMNS FROM `fundraiser_enquiry` LIKE 'approval_token'");
+    if ($check_token->num_rows() === 0) {
+        $this->db->query("ALTER TABLE `fundraiser_enquiry` ADD COLUMN `approval_token` VARCHAR(100) DEFAULT NULL");
+    }
+    // Add token_used column if it doesn't exist
+    $check_used = $this->db->query("SHOW COLUMNS FROM `fundraiser_enquiry` LIKE 'token_used'");
+    if ($check_used->num_rows() === 0) {
+        $this->db->query("ALTER TABLE `fundraiser_enquiry` ADD COLUMN `token_used` TINYINT(1) DEFAULT 0");
+    }
+}
+
+public function insert_fundraiser_enquiry($data)
+{
+    $this->ensure_fundraiser_enquiry_table();
+    return $this->db->insert('fundraiser_enquiry', $data);
+}
+
+public function get_fundraiser_enquiries($status = null)
+{
+    $this->ensure_fundraiser_enquiry_table();
+    if (!empty($status) && $status !== 'all') {
+        $this->db->where('status', $status);
+    }
+    $this->db->order_by('created_at', 'DESC');
+    return $this->db->get('fundraiser_enquiry')->result();
+}
+
+public function get_fundraiser_enquiry_by_id($id)
+{
+    $this->ensure_fundraiser_enquiry_table();
+    $this->db->where('id', $id);
+    return $this->db->get('fundraiser_enquiry')->row();
+}
+
+public function update_fundraiser_enquiry_status($id, $status, $admin_remarks = null, $admin_id = null)
+{
+    $this->ensure_fundraiser_enquiry_table();
+    $data = [
+        'status' => $status,
+        'admin_remarks' => $admin_remarks
+    ];
+    if ($status === 'approved') {
+        $data['approved_at'] = date('Y-m-d H:i:s');
+        $data['approved_by'] = $admin_id;
+    }
+    $this->db->where('id', $id);
+    return $this->db->update('fundraiser_enquiry', $data);
+}
+
+public function count_fundraiser_enquiries($status = null)
+{
+    $this->ensure_fundraiser_enquiry_table();
+    if (!empty($status) && $status !== 'all') {
+        $this->db->where('status', $status);
+    }
+    return $this->db->count_all_results('fundraiser_enquiry');
+}
+
+public function save_approval_token($id, $token)
+{
+    $this->db->where('id', $id);
+    return $this->db->update('fundraiser_enquiry', [
+        'approval_token' => $token,
+        'token_used'     => 0
+    ]);
+}
+
+public function get_enquiry_by_token($token)
+{
+    $this->ensure_fundraiser_enquiry_table();
+    $this->db->where('approval_token', $token);
+    $this->db->where('status', 'approved');
+    return $this->db->get('fundraiser_enquiry')->row();
+}
+
+public function mark_token_used($id)
+{
+    $this->db->where('id', $id);
+    return $this->db->update('fundraiser_enquiry', ['token_used' => 1]);
+}
 
 }
 ?>

@@ -310,6 +310,13 @@
                     </li>
 
                     <li class="nav-item py-2">
+                        <a href="<?= base_url('admin/fundraiser_enquiries') ?>"
+                            class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/fundraiser_enquiries') ? 'active' : '' ?>">
+                            <i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiry
+                        </a>
+                    </li>
+
+                    <li class="nav-item py-2">
                         <a href="<?= base_url('causesverification') ?>"
                             class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'causesverification') ? 'active' : '' ?>">
                             <i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification
@@ -370,6 +377,13 @@
                             <a href="<?= base_url('contact_submissions') ?>"
                                 class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>">
                                 <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
+                            </a>
+                        </li>
+
+                        <li class="nav-item py-2 px-3">
+                            <a href="<?= base_url('admin/fundraiser_enquiries') ?>"
+                                class="nav-link text-decoration-none <?= (uri_string() == 'admin/fundraiser_enquiries') ? 'active' : '' ?>">
+                                <i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiry
                             </a>
                         </li>
 

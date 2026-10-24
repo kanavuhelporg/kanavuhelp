@@ -267,11 +267,14 @@
         </div>
         <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                    <li class="nav-item">
+                    <li class="nav-item" style="display: none;">
                         <a class="nav-link" href="<?= base_url('/individual') ?>">Start a Fundraiser</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Fundraiser Enquiry</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>

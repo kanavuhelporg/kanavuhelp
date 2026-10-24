@@ -18,6 +18,8 @@
 
           <li class="nav-item py-2"><a href="<?= base_url('contact_submissions') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries</a></li>
 
+          <li class="nav-item py-2"><a href="<?= base_url('admin/fundraiser_enquiries') ?>" id="bg-fundraiser-enquiries" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiries</a></li>
+
           <li class="nav-item">
             <a style="font-weight:400;color:black;" class="nav-link text-decoration-none" href="<?= base_url('causesverification') ?>"><i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification</a>
           </li>
