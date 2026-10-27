@@ -266,22 +266,27 @@
           </li>
           <li class="nav-item mb-1">
             <a href="<?= base_url('transactionverification') ?>" class="nav-link">
-              <i class="fa-solid fa-cart-shopping"></i> Transactions
+              <i class="fa-solid fa-money-bill-transfer"></i> Transactions
             </a>
           </li>
           <li class="nav-item mb-1">
             <a href="<?= base_url('admin/get_total_amount') ?>" class="nav-link">
-              <i class="fa-solid fa-money-bill-transfer"></i> Admin Set Amount
+              <i class="fa-solid fa-sliders"></i> Admin Set Amount
             </a>
           </li>
           <li class="nav-item mb-1">
             <a href="<?= base_url('contact_submissions') ?>" class="nav-link">
-              <i class="fa-solid fa-envelope-open-text"></i> Enquiries
+              <i class="fa-solid fa-envelope-open-text"></i> Contact Form
             </a>
           </li>
           <li class="nav-item mb-1">
-            <a href="<?= base_url('admin/fundraiser_enquiries') ?>" class="nav-link active">
-              <i class="fa-solid fa-clipboard-question"></i> Fundraiser Enquiry
+            <a href="<?= base_url('admin/fundraiser_enquiries') ?>" class="nav-link active d-flex align-items-center">
+              <i class="fa-solid fa-clipboard-question"></i>
+              <span>Fundraiser Enquiry</span>
+              <?php if (!empty($pending_count) && $pending_count > 0): ?>
+                <span class="badge rounded-pill bg-danger ms-auto"
+                  style="font-size: 11px; padding: 3px 8px; font-weight: 600;"><?= $pending_count; ?></span>
+              <?php endif; ?>
             </a>
           </li>
           <li class="nav-item mb-1">
@@ -316,19 +321,25 @@
             </li>
             <li class="nav-item mb-2">
               <a href="<?= base_url('transactionverification') ?>" class="nav-link"><i
-                  class="fa-solid fa-cart-shopping"></i> Transactions</a>
+                  class="fa-solid fa-money-bill-transfer"></i> Transactions</a>
             </li>
             <li class="nav-item mb-2">
-              <a href="<?= base_url('admin/get_total_amount') ?>" class="nav-link"><i
-                  class="fa-solid fa-money-bill-transfer"></i> Admin Set Amount</a>
+              <a href="<?= base_url('admin/get_total_amount') ?>" class="nav-link"><i class="fa-solid fa-sliders"></i>
+                Admin Set Amount</a>
             </li>
             <li class="nav-item mb-2">
               <a href="<?= base_url('contact_submissions') ?>" class="nav-link"><i
-                  class="fa-solid fa-envelope-open-text"></i> Enquiries</a>
+                  class="fa-solid fa-envelope-open-text"></i> Contact Form</a>
             </li>
             <li class="nav-item mb-2">
-              <a href="<?= base_url('admin/fundraiser_enquiries') ?>" class="nav-link active"><i
-                  class="fa-solid fa-clipboard-question"></i> Fundraiser Enquiry</a>
+              <a href="<?= base_url('admin/fundraiser_enquiries') ?>"
+                class="nav-link active d-flex align-items-center"><i class="fa-solid fa-clipboard-question"></i>
+                <span>Fundraiser Enquiry</span>
+                <?php if (!empty($pending_count) && $pending_count > 0): ?>
+                  <span class="badge rounded-pill bg-danger ms-auto"
+                    style="font-size: 11px; padding: 3px 8px; font-weight: 600;"><?= $pending_count; ?></span>
+                <?php endif; ?>
+              </a>
             </li>
             <li class="nav-item mb-2">
               <a href="<?= base_url('causesverification') ?>" class="nav-link"><i
@@ -438,7 +449,7 @@
                   <th>Urgency</th>
                   <th>Status</th>
                   <th>Date</th>
-                  <th style="width: 140px;" class="text-center">Actions</th>
+                  <th style="width: 80px;" class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -492,22 +503,6 @@
                             onclick="viewDetails(<?= $row->id; ?>)">
                             <i class="fa-solid fa-eye"></i>
                           </button>
-
-                          <!-- Approve Button -->
-                          <?php if ($row->status !== 'approved'): ?>
-                            <button type="button" class="action-btn btn btn-outline-success" title="Approve Enquiry"
-                              onclick="openApproveModal(<?= $row->id; ?>, '<?= htmlspecialchars(addslashes($row->fullname)); ?>')">
-                              <i class="fa-solid fa-check"></i>
-                            </button>
-                          <?php endif; ?>
-
-                          <!-- Reject Button -->
-                          <?php if ($row->status !== 'rejected'): ?>
-                            <button type="button" class="action-btn btn btn-outline-danger" title="Reject Enquiry"
-                              onclick="openRejectModal(<?= $row->id; ?>, '<?= htmlspecialchars(addslashes($row->fullname)); ?>')">
-                              <i class="fa-solid fa-times"></i>
-                            </button>
-                          <?php endif; ?>
                         </div>
                       </td>
                     </tr>
@@ -697,7 +692,26 @@
                 ${d.admin_remarks ? `
                 <div class="col-12 mt-2">
                   <p class="mb-1 text-muted small fw-semibold">ADMIN REMARKS</p>
-                  <div class="p-2 bg-warning bg-opacity-10 border border-warning rounded small text-dark">${d.admin_remarks}</div>
+                  <div class="p-2 rounded small" style="background-color: #fefce8; border: 1px solid #fef08a; color: #854d0e;">${d.admin_remarks}</div>
+                </div>` : ''}
+
+                ${(d.status === 'approved' && d.approval_token) ? `
+                <div class="col-12 mt-2">
+                  <div class="p-3 rounded" style="background-color: #f0fdf4; border: 1px solid #86efac;">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="fw-bold text-success small"><i class="fa-solid fa-link me-1"></i> CAUSE CREATION LINK (MANUAL LINK)</span>
+                    </div>
+                    <div class="input-group mb-2 shadow-sm">
+                      <input type="text" class="form-control font-monospace border" readonly value="<?= base_url("fundraiser_approve_token/") ?>${d.approval_token}" style="font-size: 13px; color: #0f172a; background-color: #ffffff !important; border-color: #86efac; font-weight: 500;" onclick="this.select(); copyCauseLink('<?= base_url("fundraiser_approve_token/") ?>${d.approval_token}');">
+                      <button type="button" class="btn btn-success px-3 fw-semibold" onclick="copyCauseLink('<?= base_url("fundraiser_approve_token/") ?>${d.approval_token}')" title="Copy Link to Clipboard">
+                        <i class="fa-solid fa-copy me-1"></i> Copy Link
+                      </button>
+                      <button type="button" class="btn btn-outline-success px-3 fw-semibold" style="background-color: #ffffff;" onclick="sendManualLink(${d.id})" title="Send Mail to Applicant">
+                        <i class="fa-solid fa-paper-plane me-1"></i> Send Mail
+                      </button>
+                    </div>
+                    <small class="text-muted d-block" style="font-size: 12px;">This link allows the approved applicant to access the cause verification form and create their cause campaign.</small>
+                  </div>
                 </div>` : ''}
 
                 <div class="col-12 text-end text-muted small mt-2">
@@ -708,6 +722,10 @@
             $('#modalDetailsBody').html(html);
 
             var actionsHtml = '';
+            if (d.status === 'approved' && d.approval_token) {
+              actionsHtml += `<button type="button" class="btn btn-outline-success me-2" onclick="copyCauseLink('<?= base_url("fundraiser_approve_token/") ?>${d.approval_token}')"><i class="fa-solid fa-link me-1"></i> Copy Cause Link</button>`;
+              actionsHtml += `<button type="button" class="btn btn-outline-primary me-2" onclick="sendManualLink(${d.id})"><i class="fa-solid fa-paper-plane me-1"></i> Resend Mail</button>`;
+            }
             if (d.status !== 'approved') {
               actionsHtml += `<button type="button" class="btn btn-success me-2" onclick="$('#detailsModal').modal('hide'); openApproveModal(${d.id}, '${d.fullname}');"><i class="fa-solid fa-check me-1"></i> Approve Enquiry</button>`;
             }
@@ -752,7 +770,6 @@
 
           if (res.status === 'success') {
             $('#status-cell-' + id).html('<span class="badge-approved"><i class="fa-solid fa-check"></i> Approved</span>');
-            $('#action-cell-' + id + ' .btn-outline-success').remove();
             alert('Success: ' + res.message);
           } else {
             alert('Error: ' + res.message);
@@ -761,6 +778,80 @@
         error: function () {
           btn.prop('disabled', false).html('<i class="fa-solid fa-check me-1"></i> Confirm & Approve');
           alert('Network or server error while approving.');
+        }
+      });
+    }
+
+    // Copy Cause Link helper
+    function copyCauseLink(link) {
+      if (!link) {
+        alert('Cause creation link is not available.');
+        return;
+      }
+
+      function showCopySuccess() {
+        alert('Cause creation link copied to clipboard.');
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(link).then(function () {
+          showCopySuccess();
+        }).catch(function () {
+          fallbackCopyText(link);
+        });
+      } else {
+        fallbackCopyText(link);
+      }
+    }
+
+    function fallbackCopyText(text) {
+      var textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.top = "0";
+      textArea.style.left = "0";
+      textArea.style.width = "2em";
+      textArea.style.height = "2em";
+      textArea.style.padding = "0";
+      textArea.style.border = "none";
+      textArea.style.outline = "none";
+      textArea.style.boxShadow = "none";
+      textArea.style.background = "transparent";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        var successful = document.execCommand('copy');
+        if (successful) {
+          alert('Cause creation link copied to clipboard.');
+        } else {
+          prompt('Copy this link:', text);
+        }
+      } catch (err) {
+        prompt('Copy this link:', text);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    // Send Manual Link via Email
+    function sendManualLink(id) {
+      if (!confirm('Send manual cause creation link email to this applicant?')) {
+        return;
+      }
+      $.ajax({
+        url: '<?= base_url("admin/send_manual_enquiry_link") ?>',
+        type: 'POST',
+        data: { id: id },
+        dataType: 'json',
+        success: function (res) {
+          if (res.status === 'success') {
+            alert('Success: ' + res.message);
+          } else {
+            alert('Error: ' + res.message);
+          }
+        },
+        error: function () {
+          alert('Failed to send link. Server error.');
         }
       });
     }
@@ -797,7 +888,6 @@
 
           if (res.status === 'success') {
             $('#status-cell-' + id).html('<span class="badge-rejected"><i class="fa-solid fa-ban"></i> Rejected</span>');
-            $('#action-cell-' + id + ' .btn-outline-danger').remove();
             alert('Enquiry marked as rejected.');
           } else {
             alert('Error: ' + res.message);

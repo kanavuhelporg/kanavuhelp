@@ -658,10 +658,74 @@ public function get_enquiry_by_token($token)
     return $this->db->get('fundraiser_enquiry')->row();
 }
 
+public function link_enquiry_to_cause($enquiry_id, $cause_id)
+{
+    $this->ensure_fundraiser_enquiry_table();
+    $this->db->where('id', $enquiry_id);
+    return $this->db->update('fundraiser_enquiry', ['cause_id' => $cause_id]);
+}
+
 public function mark_token_used($id)
 {
+    $this->ensure_fundraiser_enquiry_table();
     $this->db->where('id', $id);
     return $this->db->update('fundraiser_enquiry', ['token_used' => 1]);
+}
+
+public function get_latest_approved_enquiry_by_email($email)
+{
+    $this->ensure_fundraiser_enquiry_table();
+    $this->db->where('email', $email);
+    $this->db->where('status', 'approved');
+    $this->db->where('token_used', 0);
+    $this->db->order_by('id', 'DESC');
+    return $this->db->get('fundraiser_enquiry')->row();
+}
+
+public function ensure_individualform_docx_columns()
+{
+    // Ensure cause_id exists in fundraiser_enquiry
+    $check_cause_id = $this->db->query("SHOW COLUMNS FROM `fundraiser_enquiry` LIKE 'cause_id'");
+    if ($check_cause_id && $check_cause_id->num_rows() === 0) {
+        $this->db->query("ALTER TABLE `fundraiser_enquiry` ADD COLUMN `cause_id` INT DEFAULT NULL");
+    }
+
+    $columns = [
+        'enquiry_id'                    => "INT DEFAULT NULL",
+        'beneficiary_relation'          => "VARCHAR(100) DEFAULT NULL",
+        'beneficiary_occupation'        => "VARCHAR(150) DEFAULT NULL",
+        'family_members_count'          => "INT DEFAULT NULL",
+        'earning_members_count'         => "INT DEFAULT NULL",
+        'monthly_family_income'         => "DECIMAL(12,2) DEFAULT NULL",
+        'income_source'                 => "VARCHAR(100) DEFAULT NULL",
+        'financial_commitments'         => "TEXT DEFAULT NULL",
+        'support_required'              => "TEXT DEFAULT NULL",
+        'amount_already_received'       => "DECIMAL(12,2) DEFAULT 0.00",
+        'amount_still_required'         => "DECIMAL(12,2) DEFAULT NULL",
+        'verifier_name'                 => "VARCHAR(150) DEFAULT NULL",
+        'verifier_relation'             => "VARCHAR(100) DEFAULT NULL",
+        'verifier_phone'                => "VARCHAR(20) DEFAULT NULL",
+        'verifier_organization'         => "VARCHAR(200) DEFAULT NULL",
+        'source_of_cause'               => "VARCHAR(100) DEFAULT NULL",
+        'declaration_confirmed'         => "TINYINT(1) DEFAULT 0",
+        'applicant_name'                => "VARCHAR(150) DEFAULT NULL",
+        'declaration_date'              => "DATE DEFAULT NULL",
+        'applicant_signature'           => "VARCHAR(150) DEFAULT NULL",
+        'approval_token'                => "VARCHAR(100) DEFAULT NULL",
+        'internal_verification_status'  => "VARCHAR(50) DEFAULT 'Under Verification'",
+        'internal_verification_by'      => "VARCHAR(100) DEFAULT NULL",
+        'internal_verification_date'    => "DATETIME DEFAULT NULL",
+        'internal_verification_notes'   => "TEXT DEFAULT NULL",
+        'internal_final_decision'       => "VARCHAR(50) DEFAULT 'Pending'",
+        'internal_approved_support'     => "VARCHAR(255) DEFAULT NULL"
+    ];
+
+    foreach ($columns as $column => $definition) {
+        $check = $this->db->query("SHOW COLUMNS FROM `individualform` LIKE '$column'");
+        if ($check && $check->num_rows() === 0) {
+            $this->db->query("ALTER TABLE `individualform` ADD COLUMN `$column` $definition");
+        }
+    }
 }
 
 }

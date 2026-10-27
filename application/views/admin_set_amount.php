@@ -512,7 +512,7 @@
             <a href="<?= base_url('admin/get_total_amount') ?>"
               class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>"
               style="font-weight:400;color:black;">
-              <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Admin Set Amount
+              <i class="fa-solid fa-sliders"></i>&nbsp;&nbsp;Admin Set Amount
             </a>
           </li>
           
@@ -520,15 +520,22 @@
             <a href="<?= base_url('contact_submissions') ?>"
               class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
               style="font-weight:400;color:black;">
-              <i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries
+              <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Contact Form
             </a>
           </li>
 
+          <?php
+            $ci =& get_instance();
+            $pending_fe_count = $ci->db->table_exists('fundraiser_enquiry') ? $ci->db->where('status', 'pending')->count_all_results('fundraiser_enquiry') : 0;
+          ?>
           <li class="nav-item py-2">
             <a href="<?= base_url('admin/fundraiser_enquiries') ?>"
-              class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/fundraiser_enquiries') ? 'active' : '' ?>"
+              class="nav-link text-decoration-none d-flex align-items-center justify-content-between ps-gray rounded <?= (uri_string() == 'admin/fundraiser_enquiries') ? 'active' : '' ?>"
               style="font-weight:400;color:black;">
-              <i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiry
+              <span><i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiry</span>
+              <?php if (!empty($pending_fe_count) && $pending_fe_count > 0): ?>
+                <span class="badge rounded-pill bg-danger" style="font-size: 11px; padding: 3px 8px; font-weight: 600;"><?= $pending_fe_count; ?></span>
+              <?php endif; ?>
             </a>
           </li>
           
@@ -841,7 +848,7 @@
           <a href="<?= base_url('admin/get_total_amount') ?>"
             class="nav-link text-decoration-none ps-gray rounded <?= (uri_string() == 'admin/get_total_amount') ? 'active' : '' ?>"
             style="font-weight:400;color:black;">
-            <i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp; Admin Set Amount
+            <i class="fa-solid fa-sliders"></i>&nbsp;&nbsp; Admin Set Amount
           </a>
         </li>
         
@@ -849,15 +856,18 @@
           <a href="<?= base_url('contact_submissions') ?>"
             class="nav-link text-decoration-none <?= (uri_string() == 'contact_submissions') ? 'active' : '' ?>"
             style="font-weight:400;color:black; position: relative;">
-            <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Enquiries
+            <i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Contact Form
           </a>
         </li>
 
         <li class="nav-item py-2 px-3">
           <a href="<?= base_url('admin/fundraiser_enquiries') ?>"
-            class="nav-link text-decoration-none <?= (uri_string() == 'admin/fundraiser_enquiries') ? 'active' : '' ?>"
+            class="nav-link text-decoration-none d-flex align-items-center justify-content-between <?= (uri_string() == 'admin/fundraiser_enquiries') ? 'active' : '' ?>"
             style="font-weight:400;color:black; position: relative;">
-            <i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiry
+            <span><i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiry</span>
+            <?php if (!empty($pending_fe_count) && $pending_fe_count > 0): ?>
+              <span class="badge rounded-pill bg-danger" style="font-size: 11px; padding: 3px 8px; font-weight: 600;"><?= $pending_fe_count; ?></span>
+            <?php endif; ?>
           </a>
         </li>
 

@@ -1829,10 +1829,87 @@ class admin extends CI_Controller
             $this->email->set_mailtype('html');
             @$this->email->send();
 
-            echo json_encode(['status' => 'success', 'message' => 'Enquiry #FE-' . $id . ' approved! A secure link has been sent to ' . $enquiry->email]);
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Enquiry #FE-' . $id . ' approved! A secure link has been sent to ' . $enquiry->email,
+                'approval_link' => $approval_link,
+                'approval_token' => $token
+            ]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Failed to approve enquiry.']);
         }
+    }
+
+    public function send_manual_enquiry_link()
+    {
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        $this->load->model('UserModel');
+        $this->load->library('email');
+
+        $id = $this->input->post('id', true);
+        $enquiry = $this->UserModel->get_fundraiser_enquiry_by_id($id);
+        if (!$enquiry) {
+            echo json_encode(['status' => 'error', 'message' => 'Enquiry not found']);
+            return;
+        }
+
+        if ($enquiry->status !== 'approved') {
+            echo json_encode(['status' => 'error', 'message' => 'Enquiry must be approved before sending cause creation link.']);
+            return;
+        }
+
+        $token = $enquiry->approval_token;
+        if (empty($token)) {
+            $token = bin2hex(random_bytes(32));
+            $this->UserModel->save_approval_token($id, $token);
+        }
+
+        $approval_link = base_url('fundraiser_approve_token/' . $token);
+
+        $userSubject = 'Your Fundraiser Cause Creation Link - Kanavu Help';
+        $userMessage = "
+            <html>
+            <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
+                <div style='max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;'>
+                    <div style='background-color: #16a34a; color: #ffffff; padding: 20px; text-align: center;'>
+                        <h2 style='margin:0;'>Start Your Fundraiser Campaign</h2>
+                        <p style='margin: 5px 0 0 0;'>Ref ID: #FE-{$id}</p>
+                    </div>
+                    <div style='padding: 25px;'>
+                        <p>Hello <strong>" . htmlspecialchars($enquiry->fullname) . "</strong>,</p>
+                        <p>Your fundraiser enquiry for <strong>" . htmlspecialchars($enquiry->cause_title) . "</strong> has been approved. You can create your cause campaign using the link below:</p>
+                        <div style='text-align: center; margin: 28px 0;'>
+                            <a href='{$approval_link}'
+                               style='background-color: #16a34a; color: #ffffff; padding: 14px 32px; border-radius: 30px; text-decoration: none; font-size: 16px; font-weight: bold; display: inline-block;'>
+                               Start Your Fundraiser
+                            </a>
+                        </div>
+                        <p style='font-size: 13px; color: #666;'>Direct Link:</p>
+                        <p style='font-size: 13px; color: #2563eb; word-break: break-all;'><a href='{$approval_link}'>{$approval_link}</a></p>
+                        <p style='font-size: 12px; color: #999; margin-top: 16px;'>This link is exclusive to your approved enquiry.</p>
+                        <p style='margin-top: 30px;'>Best Regards,<br><strong>Kanavu Help Verification Team</strong></p>
+                    </div>
+                </div>
+            </body>
+            </html>
+        ";
+
+        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
+        $this->email->to($enquiry->email);
+        $this->email->subject($userSubject);
+        $this->email->message($userMessage);
+        $this->email->set_mailtype('html');
+        @$this->email->send();
+
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Manual cause link sent successfully to ' . $enquiry->email,
+            'approval_link' => $approval_link,
+            'approval_token' => $token
+        ]);
     }
 
     public function reject_enquiry()

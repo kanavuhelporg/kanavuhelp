@@ -583,23 +583,41 @@ class kanavuhelp extends CI_Controller
     }
 
 
-    public function individual()
+    public function individual($token = null)
     {
-        // if (!$this->session->userdata('Kanavu_userId')) {
-        //  redirect('login_modal');
-        //  exit;
-        //  }
-
-        //category for individudal form
-        // else {
-        // Load model if not already loaded
         $this->load->model('UserModel');
 
-        // Retrieve categories from the database
-        $data['result'] = $this->UserModel->get_all_categories();
+        // Check token from route parameter, query parameter, or session
+        if (empty($token)) {
+            $token = $this->input->get('token', true);
+        }
+        if (empty($token)) {
+            $token = $this->session->userdata('approved_enquiry_token');
+        }
 
-        $this->load->view('individual', $data);
-        //}
+        // Check if logged-in user has an active approved enquiry
+        if (empty($token) && $this->session->userdata('Kanavu_userId')) {
+            $user_id = $this->session->userdata('Kanavu_userId');
+            $user = $this->db->get_where('user', ['id' => $user_id])->row();
+            if ($user && !empty($user->email)) {
+                $approved_enquiry = $this->UserModel->get_latest_approved_enquiry_by_email($user->email);
+                if ($approved_enquiry && !empty($approved_enquiry->approval_token)) {
+                    $token = $approved_enquiry->approval_token;
+                }
+            }
+        }
+
+        // If an approved token is present, direct to cause creation with the given input fields
+        if (!empty($token)) {
+            return $this->create_cause($token);
+        }
+
+        // Only approved users can access cause creation!
+        // Unapproved users are shown the access restriction / enquiry prompt:
+        $data['status'] = 'invalid';
+        $data['page_title'] = 'Access Restricted - Kanavu Help';
+        $data['message'] = 'Cause creation requires Admin approval. Only approved users can create a cause. Please submit a Fundraiser Enquiry first to receive approval.';
+        $this->load->view('cause_access_restricted', $data);
     }
     public function charity()
     {
@@ -1502,39 +1520,268 @@ class kanavuhelp extends CI_Controller
 
     public function fundraiser_approve_token($token = null)
     {
+        if (empty($token)) {
+            $token = $this->input->get('token', true);
+        }
+        return $this->create_cause($token);
+    }
+
+    public function create_cause($token = null)
+    {
         $this->load->model('UserModel');
 
+        // Check token from URL argument, query parameter, or from session
         if (empty($token)) {
-            $data['status']  = 'invalid';
-            $data['message'] = 'No token provided. Please use the link from your approval email.';
-            $this->load->view('fundraiser_approval_confirmed', $data);
+            $token = $this->input->get('token', true);
+        }
+        if (empty($token)) {
+            $token = $this->session->userdata('approved_enquiry_token');
+        }
+
+        // Check if logged-in user has an active approved enquiry
+        if (empty($token) && $this->session->userdata('Kanavu_userId')) {
+            $user_id = $this->session->userdata('Kanavu_userId');
+            $user = $this->db->get_where('user', ['id' => $user_id])->row();
+            if ($user && !empty($user->email)) {
+                $approved_enquiry = $this->UserModel->get_latest_approved_enquiry_by_email($user->email);
+                if ($approved_enquiry && !empty($approved_enquiry->approval_token)) {
+                    $token = $approved_enquiry->approval_token;
+                }
+            }
+        }
+
+        if (empty($token)) {
+            $data['status'] = 'invalid';
+            $data['page_title'] = 'Access Restricted - Kanavu Help';
+            $data['message'] = 'No approval token found. Cause creation requires Admin approval. Please submit a Fundraiser Enquiry first.';
+            $this->load->view('cause_access_restricted', $data);
             return;
         }
 
         $enquiry = $this->UserModel->get_enquiry_by_token($token);
 
         if (!$enquiry) {
-            $data['status']  = 'invalid';
-            $data['message'] = 'This approval link is invalid or has expired. Please contact our support team.';
-            $this->load->view('fundraiser_approval_confirmed', $data);
+            $data['status'] = 'invalid';
+            $data['page_title'] = 'Invalid Link - Kanavu Help';
+            $data['message'] = 'This approval link is invalid, incomplete, or has expired. Please contact our support team.';
+            $this->load->view('cause_access_restricted', $data);
             return;
         }
 
-        if ((int)$enquiry->token_used === 1) {
-            $data['status']   = 'used';
-            $data['enquiry']  = $enquiry;
-            $data['message']  = 'This approval link has already been used. Your account is confirmed.';
-            $this->load->view('fundraiser_approval_confirmed', $data);
+        if ((int) $enquiry->token_used === 1) {
+            $data['status'] = 'used';
+            $data['page_title'] = 'Cause Already Submitted - Kanavu Help';
+            $data['enquiry'] = $enquiry;
+            $data['message'] = 'This approval link has already been used to create a cause for "' . htmlspecialchars($enquiry->cause_title ?? 'your fundraiser') . '".';
+            $this->load->view('cause_access_restricted', $data);
             return;
         }
 
-        // Mark token as used
+        // Store active approval session
+        $this->session->set_userdata('approved_enquiry_token', $token);
+        $this->session->set_userdata('approved_enquiry_id', $enquiry->id);
+
+        $data['enquiry'] = $enquiry;
+        $data['token'] = $token;
+        $this->load->view('cause_creation', $data);
+    }
+
+    public function submit_approved_cause()
+    {
+        $this->load->model('UserModel');
+        $this->load->library(['upload', 'form_validation']);
+
+        $token = trim($this->input->post('approval_token', true));
+        if (empty($token)) {
+            $token = $this->session->userdata('approved_enquiry_token');
+        }
+
+        if (empty($token)) {
+            $data['status'] = 'invalid';
+            $data['message'] = 'Unauthorized submission. Missing approval token.';
+            $this->load->view('cause_access_restricted', $data);
+            return;
+        }
+
+        $enquiry = $this->UserModel->get_enquiry_by_token($token);
+
+        if (!$enquiry || (int) $enquiry->token_used === 1) {
+            $data['status'] = ((int) ($enquiry->token_used ?? 0) === 1) ? 'used' : 'invalid';
+            $data['message'] = ($data['status'] === 'used') ? 'This approval link has already been used.' : 'Invalid or expired approval token.';
+            $this->load->view('cause_access_restricted', $data);
+            return;
+        }
+
+        // Ensure columns in individualform
+        $this->UserModel->ensure_individualform_docx_columns();
+
+        // Handle File Uploads
+        $upload_dir = './assets/individualform_img/';
+        if (!is_dir($upload_dir)) {
+            @mkdir($upload_dir, 0777, true);
+        }
+
+        $config = array();
+        $config['upload_path'] = $upload_dir;
+        $config['allowed_types'] = 'gif|jpg|jpeg|png|svg|pdf';
+        $config['max_size'] = 10240; // 10MB
+        $config['encrypt_name'] = TRUE;
+
+        $this->upload->initialize($config);
+
+        $cover_image = '';
+        $document_one = '';
+        $document_two = '';
+        $document_three = '';
+
+        if (!empty($_FILES['cover_image']['name'])) {
+            if ($this->upload->do_upload('cover_image')) {
+                $uploadData = $this->upload->data();
+                $cover_image = $uploadData['file_name'];
+            } else {
+                $this->session->set_flashdata('error', 'Cover image upload error: ' . $this->upload->display_errors('', ''));
+                redirect('create-cause/' . $token);
+                return;
+            }
+        }
+
+        if (!empty($_FILES['document_one']['name'])) {
+            if ($this->upload->do_upload('document_one')) {
+                $uploadData = $this->upload->data();
+                $document_one = $uploadData['file_name'];
+            } else {
+                $this->session->set_flashdata('error', 'Document 1 upload error: ' . $this->upload->display_errors('', ''));
+                redirect('create-cause/' . $token);
+                return;
+            }
+        }
+
+        if (!empty($_FILES['document_two']['name'])) {
+            if ($this->upload->do_upload('document_two')) {
+                $uploadData = $this->upload->data();
+                $document_two = $uploadData['file_name'];
+            }
+        }
+
+        if (!empty($_FILES['document_three']['name'])) {
+            if ($this->upload->do_upload('document_three')) {
+                $uploadData = $this->upload->data();
+                $document_three = $uploadData['file_name'];
+            }
+        }
+
+        // Extract input fields
+        $requester_name = trim($this->input->post('requester_name', true)) ?: $enquiry->fullname;
+        $requester_phone = trim($this->input->post('requester_phone', true)) ?: $enquiry->phone;
+        $requester_email = trim($this->input->post('requester_email', true)) ?: $enquiry->email;
+        $requester_location = trim($this->input->post('requester_location', true)) ?: $enquiry->location;
+        $beneficiary_relation = trim($this->input->post('beneficiary_relation', true)) ?: ($enquiry->beneficiary_relation ?? 'Self');
+        $beneficiary_name = trim($this->input->post('beneficiary_name', true)) ?: ($enquiry->beneficiary_name ?? $requester_name);
+        $beneficiary_age = (int) $this->input->post('beneficiary_age', true) ?: (int) ($enquiry->beneficiary_age ?? 0);
+        $beneficiary_occupation = trim($this->input->post('beneficiary_occupation', true));
+        $family_members_count = (int) $this->input->post('family_members_count', true);
+        $earning_members_count = (int) $this->input->post('earning_members_count', true);
+        $monthly_family_income = (float) $this->input->post('monthly_family_income', true);
+        $income_source = trim($this->input->post('income_source', true));
+        $financial_commitments = trim($this->input->post('financial_commitments', true));
+        $cause_category = trim($this->input->post('cause_category', true)) ?: $enquiry->cause_category;
+        $cause_heading = trim($this->input->post('cause_heading', true)) ?: ($enquiry->cause_title ?? 'Fundraiser Campaign');
+        $cause_description = trim($this->input->post('cause_description', true)) ?: $enquiry->cause_description;
+        $support_required = trim($this->input->post('support_required', true));
+        $amount = (float) $this->input->post('amount', true) ?: (float) $enquiry->target_amount;
+        $amount_already_received = (float) $this->input->post('amount_already_received', true);
+        $amount_still_required = max(0, $amount - $amount_already_received);
+        $end_date = trim($this->input->post('end_date', true)) ?: date('Y-m-d', strtotime('+30 days'));
+        $cause_video_link = trim($this->input->post('cause_video_link', true));
+        $verifier_name = trim($this->input->post('verifier_name', true));
+        $verifier_relation = trim($this->input->post('verifier_relation', true));
+        $verifier_phone = trim($this->input->post('verifier_phone', true));
+        $verifier_organization = trim($this->input->post('verifier_organization', true));
+        $source_of_cause = trim($this->input->post('source_of_cause', true));
+        $declaration_confirmed = ($this->input->post('declaration_1') && $this->input->post('declaration_2') && $this->input->post('declaration_3') && $this->input->post('declaration_4')) ? 1 : 0;
+        $applicant_name = trim($this->input->post('applicant_name', true)) ?: $requester_name;
+        $declaration_date = trim($this->input->post('declaration_date', true)) ?: date('Y-m-d');
+        $applicant_signature = trim($this->input->post('applicant_signature', true)) ?: $applicant_name;
+
+        // Check if user already exists or create new user
+        $checkUser = $this->UserModel->checkUserexist($requester_email);
+        if ($checkUser && $checkUser->num_rows() > 0) {
+            $existingUser = $checkUser->row();
+            $userId = $existingUser->id;
+        } else {
+            $newUserData = [
+                'name' => $requester_name,
+                'email' => $requester_email,
+                'mobileNumber' => $requester_phone,
+                'location' => $requester_location,
+                'age' => $beneficiary_age,
+                'category' => 'user'
+            ];
+            $this->db->insert('user', $newUserData);
+            $userId = $this->db->insert_id();
+        }
+
+        // Prepare cause record
+        $causeData = [
+            'user_id' => $userId,
+            'enquiry_id' => $enquiry->id,
+            'created_by' => $requester_name,
+            'email' => $requester_email,
+            'phone' => $requester_phone,
+            'location' => $requester_location,
+            'category' => $cause_category,
+            'form_selected_text' => $cause_category,
+            'name' => $beneficiary_name,
+            'age' => $beneficiary_age,
+            'beneficiary_relation' => $beneficiary_relation,
+            'beneficiary_occupation' => $beneficiary_occupation,
+            'family_members_count' => $family_members_count,
+            'earning_members_count' => $earning_members_count,
+            'monthly_family_income' => $monthly_family_income,
+            'income_source' => $income_source,
+            'financial_commitments' => $financial_commitments,
+            'cause_heading' => $cause_heading,
+            'cause_description' => $cause_description,
+            'support_required' => $support_required,
+            'amount' => $amount,
+            'amount_already_received' => $amount_already_received,
+            'amount_still_required' => $amount_still_required,
+            'end_date' => $end_date,
+            'Cause_video_link' => $cause_video_link,
+            'Cause_video_link_eng' => $cause_video_link,
+            'cover_image' => $cover_image,
+            'cause_image1' => $document_one,
+            'cause_image2' => $document_two,
+            'cause_image3' => $document_three,
+            'verifier_name' => $verifier_name,
+            'verifier_relation' => $verifier_relation,
+            'verifier_phone' => $verifier_phone,
+            'verifier_organization' => $verifier_organization,
+            'source_of_cause' => $source_of_cause,
+            'declaration_confirmed' => $declaration_confirmed,
+            'applicant_name' => $applicant_name,
+            'declaration_date' => $declaration_date,
+            'applicant_signature' => $applicant_signature,
+            'approval_token' => $token,
+            'is_runforcause' => 'no',
+            'verified' => 0, // Pending admin verification
+            'created_at' => (new DateTime('now', new DateTimeZone('Asia/Kolkata')))->format('Y-m-d H:i:s')
+        ];
+
+        $this->db->insert('individualform', $causeData);
+        $causeId = $this->db->insert_id();
+
+        // Mark token as used and link cause to enquiry
+        $this->UserModel->link_enquiry_to_cause($enquiry->id, $causeId);
         $this->UserModel->mark_token_used($enquiry->id);
 
-        $data['status']  = 'success';
-        $data['enquiry'] = $enquiry;
-        $data['message'] = 'Your fundraiser approval has been confirmed! Our team will contact you shortly to help you launch your campaign.';
-        $this->load->view('fundraiser_approval_confirmed', $data);
+        // Clear token session
+        $this->session->unset_userdata('approved_enquiry_token');
+        $this->session->unset_userdata('approved_enquiry_id');
+
+        $data['cause'] = (object) $causeData;
+        $data['cause']->id = $causeId;
+        $this->load->view('cause_submission_success', $data);
     }
 
     public function submit_fundraiser_enquiry()
@@ -1570,9 +1817,9 @@ class kanavuhelp extends CI_Controller
             'cause_category' => $cause_category,
             'beneficiary_relation' => $beneficiary_relation,
             'beneficiary_name' => $beneficiary_name,
-            'beneficiary_age' => !empty($beneficiary_age) ? (int)$beneficiary_age : null,
+            'beneficiary_age' => !empty($beneficiary_age) ? (int) $beneficiary_age : null,
             'location' => $location,
-            'target_amount' => !empty($target_amount) ? (float)$target_amount : null,
+            'target_amount' => !empty($target_amount) ? (float) $target_amount : null,
             'urgency_level' => $urgency_level,
             'cause_title' => $cause_title,
             'cause_description' => $cause_description,
@@ -1600,7 +1847,7 @@ class kanavuhelp extends CI_Controller
                             <div style='background: #fdf2f2; border-left: 4px solid #ed3136; padding: 12px 16px; margin: 20px 0;'>
                                 <p style='margin: 4px 0;'><strong>Cause:</strong> {$cause_title}</p>
                                 <p style='margin: 4px 0;'><strong>Category:</strong> {$cause_category}</p>
-                                <p style='margin: 4px 0;'><strong>Target Amount:</strong> &#8377;" . number_format((float)$target_amount, 2) . "</p>
+                                <p style='margin: 4px 0;'><strong>Target Amount:</strong> &#8377;" . number_format((float) $target_amount, 2) . "</p>
                                 <p style='margin: 4px 0;'><strong>Status:</strong> <span style='color: #d97706; font-weight: bold;'>Pending Admin Review</span></p>
                             </div>
                             <p>Our team is currently reviewing your enquiry. Once an administrator approves your enquiry, you will receive an approval confirmation and instructions on the next steps to launch your cause.</p>
@@ -1634,7 +1881,7 @@ class kanavuhelp extends CI_Controller
                         <tr><td style='background:#f4f4f4;'><strong>Raising For:</strong></td><td>{$beneficiary_relation}</td></tr>
                         <tr><td style='background:#f4f4f4;'><strong>Beneficiary:</strong></td><td>{$beneficiary_name} (Age: {$beneficiary_age})</td></tr>
                         <tr><td style='background:#f4f4f4;'><strong>Location:</strong></td><td>{$location}</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Target Amount:</strong></td><td>&#8377;" . number_format((float)$target_amount, 2) . "</td></tr>
+                        <tr><td style='background:#f4f4f4;'><strong>Target Amount:</strong></td><td>&#8377;" . number_format((float) $target_amount, 2) . "</td></tr>
                         <tr><td style='background:#f4f4f4;'><strong>Urgency:</strong></td><td>{$urgency_level}</td></tr>
                         <tr><td style='background:#f4f4f4;'><strong>Cause Title:</strong></td><td>{$cause_title}</td></tr>
                         <tr><td style='background:#f4f4f4;'><strong>Story / Need:</strong></td><td>" . nl2br(htmlspecialchars($cause_description)) . "</td></tr>
@@ -1718,7 +1965,7 @@ class kanavuhelp extends CI_Controller
             $error_msg = isset($response['response']['message']) ? $response['response']['message'] : (isset($response['message']) ? $response['message'] : 'Unknown Error');
             $this->session->set_userdata("mailstatus", "failed");
             echo "<script>alert('Failed to send OTP to $to. Reason: " . addslashes($error_msg) . "');</script>";
-            
+
             if ($path == "login") {
                 echo "<script>window.location.href = '/login';</script>";
             } else {

@@ -14,11 +14,15 @@
             <a href="<?= base_url('admindashbord') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-chart-simple"></i>&nbsp;&nbsp;Admin Dashbord </a>
           </li>
 
-          <li class="nav-item py-2"><a href="<?= base_url('transactionverification') ?>" id="bg-transaction" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Transaction</a></li>
+          <li class="nav-item py-2"><a href="<?= base_url('transactionverification') ?>" id="bg-transaction" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-money-bill-transfer"></i>&nbsp;&nbsp;Transaction</a></li>
 
-          <li class="nav-item py-2"><a href="<?= base_url('contact_submissions') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-sharp fa-solid fa-cart-shopping"></i>&nbsp;&nbsp;Enquiries</a></li>
+          <li class="nav-item py-2"><a href="<?= base_url('contact_submissions') ?>" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-envelope-open-text"></i>&nbsp;&nbsp;Contact Form</a></li>
 
-          <li class="nav-item py-2"><a href="<?= base_url('admin/fundraiser_enquiries') ?>" id="bg-fundraiser-enquiries" style="font-weight:400;color:black;" class="nav-link text-decoration-none"><i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiries</a></li>
+          <?php
+            $ci =& get_instance();
+            $pending_fe_count = $ci->db->table_exists('fundraiser_enquiry') ? $ci->db->where('status', 'pending')->count_all_results('fundraiser_enquiry') : 0;
+          ?>
+          <li class="nav-item py-2"><a href="<?= base_url('admin/fundraiser_enquiries') ?>" id="bg-fundraiser-enquiries" style="font-weight:400;color:black;" class="nav-link text-decoration-none d-flex align-items-center justify-content-between"><span><i class="fa-solid fa-clipboard-question"></i>&nbsp;&nbsp;Fundraiser Enquiry</span><?php if (!empty($pending_fe_count) && $pending_fe_count > 0): ?><span class="badge rounded-pill bg-danger" style="font-size: 11px; padding: 3px 8px; font-weight: 600;"><?= $pending_fe_count; ?></span><?php endif; ?></a></li>
 
           <li class="nav-item">
             <a style="font-weight:400;color:black;" class="nav-link text-decoration-none" href="<?= base_url('causesverification') ?>"><i class="fa-solid fa-hand-holding-medical"></i>&nbsp;&nbsp;Causes verification</a>
