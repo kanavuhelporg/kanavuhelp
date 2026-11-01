@@ -561,9 +561,9 @@ public function ensure_fundraiser_enquiry_table()
     $sql = "CREATE TABLE IF NOT EXISTS `fundraiser_enquiry` (
       `id` INT AUTO_INCREMENT PRIMARY KEY,
       `fullname` VARCHAR(150) NOT NULL,
-      `email` VARCHAR(150) NOT NULL,
+      `email` VARCHAR(150) DEFAULT NULL,
       `phone` VARCHAR(20) NOT NULL,
-      `cause_category` VARCHAR(100) NOT NULL,
+      `cause_category` VARCHAR(100) DEFAULT NULL,
       `beneficiary_relation` VARCHAR(50) DEFAULT NULL,
       `beneficiary_name` VARCHAR(150) DEFAULT NULL,
       `beneficiary_age` INT DEFAULT NULL,
@@ -571,7 +571,7 @@ public function ensure_fundraiser_enquiry_table()
       `target_amount` DECIMAL(12,2) DEFAULT NULL,
       `urgency_level` VARCHAR(50) DEFAULT NULL,
       `cause_title` VARCHAR(255) DEFAULT NULL,
-      `cause_description` TEXT NOT NULL,
+      `cause_description` TEXT DEFAULT NULL,
       `status` ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
       `admin_remarks` TEXT DEFAULT NULL,
       `approved_at` DATETIME DEFAULT NULL,
@@ -581,6 +581,11 @@ public function ensure_fundraiser_enquiry_table()
       `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
     $this->db->query($sql);
+
+    // Make sure optional columns are nullable on existing tables
+    @$this->db->query("ALTER TABLE `fundraiser_enquiry` MODIFY `email` VARCHAR(150) DEFAULT NULL");
+    @$this->db->query("ALTER TABLE `fundraiser_enquiry` MODIFY `cause_category` VARCHAR(100) DEFAULT NULL");
+    @$this->db->query("ALTER TABLE `fundraiser_enquiry` MODIFY `cause_description` TEXT DEFAULT NULL");
 
     // Add approval_token column if it doesn't exist (for existing tables)
     $check_token = $this->db->query("SHOW COLUMNS FROM `fundraiser_enquiry` LIKE 'approval_token'");
@@ -726,6 +731,25 @@ public function ensure_individualform_docx_columns()
             $this->db->query("ALTER TABLE `individualform` ADD COLUMN `$column` $definition");
         }
     }
+}
+
+
+public function get_admin_emails()
+{
+    $admin_emails = [];
+    $admins = $this->db->select('email')->from('user')->where('category', 'admin')->get()->result();
+    if (!empty($admins)) {
+        foreach ($admins as $a) {
+            if (!empty($a->email) && filter_var($a->email, FILTER_VALIDATE_EMAIL)) {
+                $admin_emails[] = trim($a->email);
+            }
+        }
+    }
+    $admin_emails = array_unique($admin_emails);
+    if (empty($admin_emails)) {
+        $admin_emails = ['support@kanavu.help'];
+    }
+    return $admin_emails;
 }
 
 }

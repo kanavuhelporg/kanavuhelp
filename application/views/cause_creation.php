@@ -162,6 +162,13 @@
       margin: 0;
     }
 
+    .declaration-row .form-label {
+      min-height: 24px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
     .form-label {
       font-weight: 700;
       font-size: 13.5px;
@@ -197,19 +204,7 @@
       cursor: not-allowed;
     }
 
-    .autofill-tag {
-      display: inline-block;
-      background: #eff6ff;
-      color: #2563eb;
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 4px;
-      margin-left: 6px;
-      vertical-align: middle;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
+
 
     .radio-card-grid {
       display: grid;
@@ -436,7 +431,11 @@
     <div class="container">
       <div class="verified-pill">
         <i class="fas fa-certificate"></i>
-        <span>Admin Approved Enquiry • Ref #FE-<?= htmlspecialchars($enquiry->id) ?></span>
+        <?php if (!empty($enquiry->id)): ?>
+          <span><i class="fas fa-check-circle me-1"></i> Admin Approved Enquiry &bull; Ref #FE-<?= htmlspecialchars($enquiry->id) ?></span>
+        <?php else: ?>
+          <span><i class="fas fa-shield-alt me-1"></i> Verified Cause Creation</span>
+        <?php endif; ?>
       </div>
       <h1>Cause Verification &amp; Creation Form</h1>
       <p>Please complete this official verification form to set up and launch your verified fundraiser campaign on
@@ -473,31 +472,37 @@
 
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label">Full Name <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
-              <input type="text" name="requester_name" class="form-control"
+              <label class="form-label" for="requester_name">Full Name <span class="required">*</span></label>
+              <input type="text" id="requester_name" name="requester_name" class="form-control"
                 value="<?= htmlspecialchars($enquiry->fullname) ?>" required>
+              <div class="invalid-feedback-custom" id="requester_name-error">Please enter a valid full name (letters
+                only, no pure numbers or special characters).</div>
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">Mobile / WhatsApp Number <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
-              <input type="tel" name="requester_phone" class="form-control"
-                value="<?= htmlspecialchars($enquiry->phone) ?>" maxlength="15" required>
+              <label class="form-label" for="requester_phone">Mobile / WhatsApp Number <span
+                  class="required">*</span></label>
+              <input type="tel" id="requester_phone" name="requester_phone" class="form-control"
+                value="<?= htmlspecialchars($enquiry->phone) ?>" maxlength="10"
+                oninput="this.value = this.value.replace(/\D/g, '').slice(0, 10);" required>
+              <div class="invalid-feedback-custom" id="requester_phone-error">Please enter a valid 10-digit mobile
+                number starting with 6, 7, 8, or 9.</div>
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">Email Address <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
-              <input type="email" name="requester_email" class="form-control"
-                value="<?= htmlspecialchars($enquiry->email) ?>" readonly required>
+              <label class="form-label" for="requester_email">Email Address <span class="required">*</span></label>
+              <input type="email" id="requester_email" name="requester_email" class="form-control"
+                value="<?= htmlspecialchars($enquiry->email) ?>" required>
+              <div class="invalid-feedback-custom" id="requester_email-error">Please enter a valid email address.</div>
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">Location (Village / Town – District) <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
-              <input type="text" name="requester_location" class="form-control"
+              <label class="form-label" for="requester_location">Location (Village / Town / District) <span
+                  class="required">*</span></label>
+              <input type="text" id="requester_location" name="requester_location" class="form-control"
                 value="<?= htmlspecialchars($enquiry->location) ?>" required>
+              <div class="invalid-feedback-custom" id="requester_location-error">Please enter a valid location (letters
+                required, cannot be pure numbers or special characters).</div>
             </div>
 
             <div class="col-12">
@@ -534,15 +539,15 @@
 
           <div class="row g-3">
             <div class="col-md-5">
-              <label class="form-label">Beneficiary Name <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
-              <input type="text" name="beneficiary_name" class="form-control"
+              <label class="form-label" for="beneficiary_name">Beneficiary Name <span class="required">*</span></label>
+              <input type="text" id="beneficiary_name" name="beneficiary_name" class="form-control"
                 value="<?= htmlspecialchars($enquiry->beneficiary_name ?? $enquiry->fullname) ?>" required>
+              <div class="invalid-feedback-custom" id="beneficiary_name-error">Please enter a valid beneficiary name
+                (letters only, no pure numbers or special characters).</div>
             </div>
 
             <div class="col-md-3">
-              <label class="form-label">Age <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
+              <label class="form-label">Age <span class="required">*</span></label>
               <input type="number" name="beneficiary_age" class="form-control" min="0" max="120"
                 value="<?= htmlspecialchars($enquiry->beneficiary_age ?? '') ?>" required>
             </div>
@@ -623,8 +628,7 @@
 
           <div class="row g-3">
             <div class="col-12">
-              <label class="form-label">Type of Cause <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
+              <label class="form-label">Type of Cause <span class="required">*</span></label>
               <div class="radio-card-grid">
                 <?php
                 $cause_types = ['Medical', 'Education', 'Accident / Emergency', 'Food / Basic Needs', 'Disability Support', 'Family Support', 'Disaster / Relief', 'Other'];
@@ -641,15 +645,13 @@
             </div>
 
             <div class="col-12">
-              <label class="form-label">Cause Title / Campaign Heading <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
+              <label class="form-label">Cause Title / Campaign Heading <span class="required">*</span></label>
               <input type="text" name="cause_heading" class="form-control"
                 value="<?= htmlspecialchars($enquiry->cause_title ?? '') ?>" minlength="4" maxlength="150" required>
             </div>
 
             <div class="col-12">
-              <label class="form-label">What Happened? (Situation Explanation) <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
+              <label class="form-label">What Happened? (Situation Explanation) <span class="required">*</span></label>
               <textarea name="cause_description" class="form-control" rows="4"
                 placeholder="Briefly explain the situation, when it happened, and why help is needed."
                 required><?= htmlspecialchars($enquiry->cause_description ?? '') ?></textarea>
@@ -663,10 +665,11 @@
             </div>
 
             <div class="col-md-4">
-              <label class="form-label">Total Amount Required (&#8377;) <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
-              <input type="number" id="totalAmount" name="amount" class="form-control" min="500" step="100"
+              <label class="form-label" for="totalAmount">Total Amount Required (&#8377;) <span class="required">*</span></label>
+              <input type="number" id="totalAmount" name="amount" class="form-control" min="1000" max="1000000" step="100"
                 value="<?= htmlspecialchars($enquiry->target_amount ?? '') ?>" required>
+              <div class="invalid-feedback-custom" id="totalAmount-error">Total amount must be between &#8377;1,000 and &#8377;10,00,000 (10 Lakhs).</div>
+              <small class="text-muted">Min: &#8377;1,000 | Max: &#8377;10,00,000 (10 Lakhs)</small>
             </div>
 
             <div class="col-md-4">
@@ -688,9 +691,10 @@
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">Cause YouTube / Video Link <span class="required">*</span></label>
-              <input type="url" name="cause_video_link" class="form-control"
+              <label class="form-label" for="cause_video_link">Cause YouTube Link <span class="required">*</span></label>
+              <input type="url" id="cause_video_link" name="cause_video_link" class="form-control"
                 placeholder="https://www.youtube.com/watch?v=..." required>
+              <div class="invalid-feedback-custom" id="cause_video_link-error">Please enter a valid YouTube video link (e.g. https://www.youtube.com/watch?v=... or https://youtu.be/...).</div>
               <small class="text-muted">Enter a valid YouTube video link telling your story or explaining the
                 cause.</small>
             </div>
@@ -721,8 +725,8 @@
               <label class="form-label">Supporting Document 1 (Primary Proof) <span class="required">*</span></label>
               <input type="file" name="document_one" class="form-control"
                 accept="image/jpeg,image/png,image/jpg,application/pdf" required>
-              <small class="text-muted">Hospital estimate, medical summary, school fee structure, or death
-                certificate.</small>
+              <small class="text-muted">Hospital estimate, medical summary, school fee structure, or any
+                documents.</small>
             </div>
 
             <div class="col-md-6">
@@ -832,24 +836,28 @@
             </div>
           </div>
 
-          <div class="row g-3">
+          <div class="row g-3 declaration-row">
             <div class="col-md-4">
-              <label class="form-label">Applicant Name <span class="required">*</span><span
-                  class="autofill-tag">Auto-filled</span></label>
-              <input type="text" name="applicant_name" class="form-control"
+              <label class="form-label" for="applicant_name">Applicant Name <span class="required">*</span></label>
+              <input type="text" id="applicant_name" name="applicant_name" class="form-control"
                 value="<?= htmlspecialchars($enquiry->fullname) ?>" required>
+              <div class="invalid-feedback-custom" id="applicant_name-error">Please enter a valid name (letters only).
+              </div>
             </div>
 
             <div class="col-md-4">
-              <label class="form-label">Date <span class="required">*</span><span
-                  class="autofill-tag">Today</span></label>
-              <input type="date" name="declaration_date" class="form-control" value="<?= date('Y-m-d') ?>" required>
+              <label class="form-label" for="declaration_date">Date <span class="required">*</span></label>
+              <input type="date" id="declaration_date" name="declaration_date" class="form-control"
+                value="<?= date('Y-m-d') ?>" required>
             </div>
 
             <div class="col-md-4">
-              <label class="form-label">Digital Signature / Consent Confirmation <span class="required">*</span></label>
-              <input type="text" name="applicant_signature" class="form-control"
+              <label class="form-label" for="applicant_signature">Digital Signature / Consent <span
+                  class="required">*</span></label>
+              <input type="text" id="applicant_signature" name="applicant_signature" class="form-control"
                 placeholder="Type your Full Name to sign" required>
+              <div class="invalid-feedback-custom" id="applicant_signature-error">Please type your name to sign (letters
+                only).</div>
             </div>
           </div>
         </div>
@@ -859,9 +867,9 @@
              ============================================== -->
         <div class="submit-bar">
           <p class="text-muted mb-3" style="font-size: 13.5px;">
-            <i class="fas fa-lock text-success me-1"></i>
-            This is a secure, one-time link. Upon submission, this token will be finalized and your cause will be sent
-            to the Kanavu Help verification desk.
+            <i class="fas fa-shield-alt text-success me-1"></i>
+            This is your verified cause creation link. Upon submission, your cause will be sent to the Kanavu Help
+            verification desk.
           </p>
           <button type="submit" id="submitBtn" class="btn-submit-cause">
             <i class="fas fa-paper-plane me-2"></i>Submit Cause for Verification
@@ -940,8 +948,172 @@
     document.getElementById('amountReceived').addEventListener('input', calculateAmountStillRequired);
     calculateAmountStillRequired();
 
+    // Validation helpers (English & Tamil text supported)
+    function isValidName(val) {
+      val = (val || '').trim();
+      if (val.length < 2) return false;
+      // Allow English letters (a-z, A-Z) and Tamil characters (\u0B80-\u0BFF), spaces, dots, hyphens
+      if (!/^[a-zA-Z\u0B80-\u0BFF\s.'-]+$/.test(val)) return false;
+      var letters = val.match(/[a-zA-Z\u0B80-\u0BFF]/g);
+      return letters && letters.length >= 2;
+    }
+
+    function isValidLocation(val) {
+      val = (val || '').trim();
+      if (!val) return true;
+      if (/^\d+$/.test(val)) return false;
+      if (!/^[a-zA-Z0-9\u0B80-\u0BFF\s,./'-]+$/.test(val)) return false;
+      var letters = val.match(/[a-zA-Z\u0B80-\u0BFF]/g);
+      return letters && letters.length >= 2;
+    }
+
+    function isValidEmail(val) {
+      val = (val || '').trim();
+      if (!val) return false;
+      return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val);
+    }
+
+    function isValidPhone(val) {
+      val = (val || '').trim().replace(/\D/g, '');
+      if (!/^[6-9]\d{9}$/.test(val)) return false;
+      if (/^(\d)\1{9}$/.test(val)) return false;
+      return true;
+    }
+
+    function isYouTubeUrl(url) {
+      url = (url || '').trim();
+      if (!url) return false;
+      var ytRegex = /^(https?:\/\/)?((www|m)\.)?(youtube\.com\/(watch\?.*v=|shorts\/|embed\/)|youtu\.be\/)[a-zA-Z0-9_-]{11}(.*)?$/i;
+      return ytRegex.test(url);
+    }
+
+    function setFieldError(fieldId, isError) {
+      var el = document.getElementById(fieldId);
+      var err = document.getElementById(fieldId + '-error');
+      if (el) {
+        if (isError) el.classList.add('is-invalid');
+        else el.classList.remove('is-invalid');
+      }
+      if (err) {
+        if (isError) err.classList.add('visible');
+        else err.classList.remove('visible');
+      }
+    }
+
+    // Real-time error clear
+    ['requester_name', 'requester_phone', 'requester_email', 'requester_location', 'beneficiary_name', 'totalAmount', 'cause_video_link', 'applicant_name', 'applicant_signature'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', function () {
+          setFieldError(id, false);
+        });
+      }
+    });
+
     // Form submit validation & button state
     document.getElementById('causeCreationForm').addEventListener('submit', function (e) {
+      var isValid = true;
+      var firstInvalidField = null;
+
+      // 1. Requester Name
+      var rName = (document.getElementById('requester_name') ? document.getElementById('requester_name').value : '');
+      if (!isValidName(rName)) {
+        setFieldError('requester_name', true);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = document.getElementById('requester_name');
+      } else {
+        setFieldError('requester_name', false);
+      }
+
+      // 2. Requester Phone
+      var rPhone = (document.getElementById('requester_phone') ? document.getElementById('requester_phone').value : '');
+      if (!isValidPhone(rPhone)) {
+        setFieldError('requester_phone', true);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = document.getElementById('requester_phone');
+      } else {
+        setFieldError('requester_phone', false);
+      }
+
+      // 3. Requester Email
+      var rEmail = (document.getElementById('requester_email') ? document.getElementById('requester_email').value : '');
+      if (!isValidEmail(rEmail)) {
+        setFieldError('requester_email', true);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = document.getElementById('requester_email');
+      } else {
+        setFieldError('requester_email', false);
+      }
+
+      // 4. Requester Location
+      var rLoc = (document.getElementById('requester_location') ? document.getElementById('requester_location').value : '');
+      if (!isValidLocation(rLoc)) {
+        setFieldError('requester_location', true);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = document.getElementById('requester_location');
+      } else {
+        setFieldError('requester_location', false);
+      }
+
+      // 5. Beneficiary Name
+      var bName = (document.getElementById('beneficiary_name') ? document.getElementById('beneficiary_name').value : '');
+      if (!isValidName(bName)) {
+        setFieldError('beneficiary_name', true);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = document.getElementById('beneficiary_name');
+      } else {
+        setFieldError('beneficiary_name', false);
+      }
+
+      // Total Amount (Min 1,000, Max 10,00,000)
+      var totalAmt = parseFloat(document.getElementById('totalAmount').value) || 0;
+      if (totalAmt < 1000 || totalAmt > 1000000) {
+        setFieldError('totalAmount', true);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = document.getElementById('totalAmount');
+      } else {
+        setFieldError('totalAmount', false);
+      }
+
+      // 6. Cause YouTube Link (YouTube URLs only)
+      var ytLink = (document.getElementById('cause_video_link') ? document.getElementById('cause_video_link').value : '');
+      if (!isYouTubeUrl(ytLink)) {
+        setFieldError('cause_video_link', true);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = document.getElementById('cause_video_link');
+      } else {
+        setFieldError('cause_video_link', false);
+      }
+
+      // 6. Applicant Name
+      var aName = (document.getElementById('applicant_name') ? document.getElementById('applicant_name').value : '');
+      if (!isValidName(aName)) {
+        setFieldError('applicant_name', true);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = document.getElementById('applicant_name');
+      } else {
+        setFieldError('applicant_name', false);
+      }
+
+      // 7. Applicant Signature
+      var aSig = (document.getElementById('applicant_signature') ? document.getElementById('applicant_signature').value : '');
+      if (!isValidName(aSig)) {
+        setFieldError('applicant_signature', true);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = document.getElementById('applicant_signature');
+      } else {
+        setFieldError('applicant_signature', false);
+      }
+
+      if (!isValid) {
+        e.preventDefault();
+        if (firstInvalidField) {
+          firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstInvalidField.focus();
+        }
+        return false;
+      }
+
       var btn = document.getElementById('submitBtn');
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Submitting Cause...';

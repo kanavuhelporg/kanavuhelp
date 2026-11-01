@@ -87,13 +87,34 @@
     }
 
     .stat-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .stat-icon.icon-blue {
+      background-color: #e0f2fe !important;
+      color: #0284c7 !important;
+    }
+
+    .stat-icon.icon-yellow {
+      background-color: #fef3c7 !important;
+      color: #d97706 !important;
+    }
+
+    .stat-icon.icon-green {
+      background-color: #dcfce7 !important;
+      color: #16a34a !important;
+    }
+
+    .stat-icon.icon-red {
+      background-color: #fee2e2 !important;
+      color: #dc2626 !important;
     }
 
     /* Table */
@@ -362,7 +383,7 @@
                 <div class="text-muted small fw-semibold">TOTAL ENQUIRIES</div>
                 <div class="fs-3 fw-bold text-dark"><?= $total_count; ?></div>
               </div>
-              <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+              <div class="stat-icon icon-blue">
                 <i class="fa-solid fa-folder-open"></i>
               </div>
             </div>
@@ -373,7 +394,7 @@
                 <div class="text-muted small fw-semibold">PENDING REVIEW</div>
                 <div class="fs-3 fw-bold text-warning"><?= $pending_count; ?></div>
               </div>
-              <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+              <div class="stat-icon icon-yellow">
                 <i class="fa-solid fa-clock"></i>
               </div>
             </div>
@@ -384,7 +405,7 @@
                 <div class="text-muted small fw-semibold">APPROVED ENQUIRIES</div>
                 <div class="fs-3 fw-bold text-success"><?= $approved_count; ?></div>
               </div>
-              <div class="stat-icon bg-success bg-opacity-10 text-success">
+              <div class="stat-icon icon-green">
                 <i class="fa-solid fa-check-circle"></i>
               </div>
             </div>
@@ -395,7 +416,7 @@
                 <div class="text-muted small fw-semibold">REJECTED</div>
                 <div class="fs-3 fw-bold text-danger"><?= $rejected_count; ?></div>
               </div>
-              <div class="stat-icon bg-danger bg-opacity-10 text-danger">
+              <div class="stat-icon icon-red">
                 <i class="fa-solid fa-ban"></i>
               </div>
             </div>
@@ -770,7 +791,8 @@
 
           if (res.status === 'success') {
             $('#status-cell-' + id).html('<span class="badge-approved"><i class="fa-solid fa-check"></i> Approved</span>');
-            alert('Success: ' + res.message);
+            alert(res.message || 'Enquiry #FE-' + id + ' has been approved successfully.');
+            setTimeout(function () { location.reload(); }, 800);
           } else {
             alert('Error: ' + res.message);
           }

@@ -1550,31 +1550,32 @@ class kanavuhelp extends CI_Controller
             }
         }
 
-        if (empty($token)) {
-            $data['status'] = 'invalid';
-            $data['page_title'] = 'Access Restricted - Kanavu Help';
-            $data['message'] = 'No approval token found. Cause creation requires Admin approval. Please submit a Fundraiser Enquiry first.';
-            $this->load->view('cause_access_restricted', $data);
-            return;
+        $enquiry = null;
+        if (!empty($token)) {
+            $enquiry = $this->UserModel->get_enquiry_by_token($token);
         }
 
-        $enquiry = $this->UserModel->get_enquiry_by_token($token);
-
+        // Allow cause creation directly without a prior fundraiser enquiry
         if (!$enquiry) {
-            $data['status'] = 'invalid';
-            $data['page_title'] = 'Invalid Link - Kanavu Help';
-            $data['message'] = 'This approval link is invalid, incomplete, or has expired. Please contact our support team.';
-            $this->load->view('cause_access_restricted', $data);
-            return;
-        }
-
-        if ((int) $enquiry->token_used === 1) {
-            $data['status'] = 'used';
-            $data['page_title'] = 'Cause Already Submitted - Kanavu Help';
-            $data['enquiry'] = $enquiry;
-            $data['message'] = 'This approval link has already been used to create a cause for "' . htmlspecialchars($enquiry->cause_title ?? 'your fundraiser') . '".';
-            $this->load->view('cause_access_restricted', $data);
-            return;
+            if (empty($token)) {
+                $token = 'cause_verified_' . substr(md5(uniqid(mt_rand(), true)), 0, 16);
+            }
+            $enquiry = (object) [
+                'id' => 0,
+                'fullname' => '',
+                'phone' => '',
+                'email' => '',
+                'location' => '',
+                'beneficiary_relation' => 'Self',
+                'beneficiary_name' => '',
+                'beneficiary_age' => '',
+                'target_amount' => '',
+                'cause_category' => '',
+                'cause_title' => '',
+                'cause_description' => '',
+                'status' => 'approved',
+                'approval_token' => $token
+            ];
         }
 
         // Store active approval session
@@ -1595,21 +1596,29 @@ class kanavuhelp extends CI_Controller
         if (empty($token)) {
             $token = $this->session->userdata('approved_enquiry_token');
         }
-
         if (empty($token)) {
-            $data['status'] = 'invalid';
-            $data['message'] = 'Unauthorized submission. Missing approval token.';
-            $this->load->view('cause_access_restricted', $data);
-            return;
+            $token = 'cause_verified_' . substr(md5(uniqid(mt_rand(), true)), 0, 16);
         }
 
         $enquiry = $this->UserModel->get_enquiry_by_token($token);
 
-        if (!$enquiry || (int) $enquiry->token_used === 1) {
-            $data['status'] = ((int) ($enquiry->token_used ?? 0) === 1) ? 'used' : 'invalid';
-            $data['message'] = ($data['status'] === 'used') ? 'This approval link has already been used.' : 'Invalid or expired approval token.';
-            $this->load->view('cause_access_restricted', $data);
-            return;
+        if (!$enquiry) {
+            $enquiry = (object) [
+                'id' => 0,
+                'fullname' => $this->input->post('requester_name', true) ?: '',
+                'phone' => $this->input->post('requester_phone', true) ?: '',
+                'email' => $this->input->post('requester_email', true) ?: '',
+                'location' => $this->input->post('requester_location', true) ?: '',
+                'beneficiary_relation' => $this->input->post('beneficiary_relation', true) ?: 'Self',
+                'beneficiary_name' => $this->input->post('beneficiary_name', true) ?: '',
+                'beneficiary_age' => (int) $this->input->post('beneficiary_age', true) ?: 0,
+                'target_amount' => (float) $this->input->post('amount', true) ?: 0,
+                'cause_category' => $this->input->post('cause_category', true) ?: 'General',
+                'cause_title' => $this->input->post('cause_heading', true) ?: 'Fundraiser Campaign',
+                'cause_description' => $this->input->post('cause_description', true) ?: '',
+                'status' => 'approved',
+                'approval_token' => $token
+            ];
         }
 
         // Ensure columns in individualform
@@ -1688,7 +1697,12 @@ class kanavuhelp extends CI_Controller
         $cause_heading = trim($this->input->post('cause_heading', true)) ?: ($enquiry->cause_title ?? 'Fundraiser Campaign');
         $cause_description = trim($this->input->post('cause_description', true)) ?: $enquiry->cause_description;
         $support_required = trim($this->input->post('support_required', true));
-        $amount = (float) $this->input->post('amount', true) ?: (float) $enquiry->target_amount;
+        $amount = (float) $this->input->post('amount', true) ?: (float) ($enquiry->target_amount ?? 0);
+        if ($amount < 1000 || $amount > 1000000) {
+            $this->session->set_flashdata('error', 'Total amount required must be between ₹1,000 and ₹10,00,000 (10 Lakhs).');
+            redirect('fundraiser_approve_token/' . $token);
+            return;
+        }
         $amount_already_received = (float) $this->input->post('amount_already_received', true);
         $amount_still_required = max(0, $amount - $amount_already_received);
         $end_date = trim($this->input->post('end_date', true)) ?: date('Y-m-d', strtotime('+30 days'));
@@ -1702,6 +1716,51 @@ class kanavuhelp extends CI_Controller
         $applicant_name = trim($this->input->post('applicant_name', true)) ?: $requester_name;
         $declaration_date = trim($this->input->post('declaration_date', true)) ?: date('Y-m-d');
         $applicant_signature = trim($this->input->post('applicant_signature', true)) ?: $applicant_name;
+
+        // Form Validations (English & Tamil text allowed for names, email format, 10-digit phone)
+        if (preg_match('/^\d+$/', $requester_name) || !preg_match('/^[a-zA-Z\x{0B80}-\x{0BFF}\s.\'-]{2,150}$/u', $requester_name) || preg_match_all('/[a-zA-Z\x{0B80}-\x{0BFF}]/u', $requester_name) < 2) {
+            $this->session->set_flashdata('error', 'Please enter a valid Full Name (letters only, no pure numbers or special characters).');
+            redirect('fundraiser_approve_token/' . $token);
+            return;
+        }
+
+        if (preg_match('/^\d+$/', $beneficiary_name) || !preg_match('/^[a-zA-Z\x{0B80}-\x{0BFF}\s.\'-]{2,150}$/u', $beneficiary_name) || preg_match_all('/[a-zA-Z\x{0B80}-\x{0BFF}]/u', $beneficiary_name) < 2) {
+            $this->session->set_flashdata('error', 'Please enter a valid Beneficiary Name (letters only).');
+            redirect('fundraiser_approve_token/' . $token);
+            return;
+        }
+
+        if (preg_match('/^\d+$/', $applicant_signature) || !preg_match('/^[a-zA-Z\x{0B80}-\x{0BFF}\s.\'-]{2,150}$/u', $applicant_signature) || preg_match_all('/[a-zA-Z\x{0B80}-\x{0BFF}]/u', $applicant_signature) < 2) {
+            $this->session->set_flashdata('error', 'Please enter a valid Digital Signature (letters only).');
+            redirect('fundraiser_approve_token/' . $token);
+            return;
+        }
+
+        if (!empty($requester_location) && (preg_match('/^\d+$/', $requester_location) || !preg_match('/^[a-zA-Z0-9\x{0B80}-\x{0BFF}\s,.\'-]{2,150}$/u', $requester_location) || preg_match_all('/[a-zA-Z\x{0B80}-\x{0BFF}]/u', $requester_location) < 2)) {
+            $this->session->set_flashdata('error', 'Please enter a valid Location (letters required, cannot be pure numbers or special characters).');
+            redirect('fundraiser_approve_token/' . $token);
+            return;
+        }
+
+        if (!filter_var($requester_email, FILTER_VALIDATE_EMAIL)) {
+            $this->session->set_flashdata('error', 'Please enter a valid Email Address.');
+            redirect('fundraiser_approve_token/' . $token);
+            return;
+        }
+
+        $cleanPhone = preg_replace('/[^\d]/', '', $requester_phone);
+        if (!preg_match('/^[6-9]\d{9}$/', $cleanPhone) || preg_match('/^(\d)\1{9}$/', $cleanPhone)) {
+            $this->session->set_flashdata('error', 'Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.');
+            redirect('fundraiser_approve_token/' . $token);
+            return;
+        }
+
+        // Validate YouTube Video Link (Must be a valid YouTube URL)
+        if (empty($cause_video_link) || !preg_match('/^(https?:\/\/)?((www|m)\.)?(youtube\.com\/(watch\?.*v=|shorts\/|embed\/)|youtu\.be\/)[a-zA-Z0-9_-]{11}/i', $cause_video_link)) {
+            $this->session->set_flashdata('error', 'Please enter a valid YouTube video link (e.g. https://www.youtube.com/watch?v=... or https://youtu.be/...).');
+            redirect('fundraiser_approve_token/' . $token);
+            return;
+        }
 
         // Check if user already exists or create new user
         $checkUser = $this->UserModel->checkUserexist($requester_email);
@@ -1724,7 +1783,7 @@ class kanavuhelp extends CI_Controller
         // Prepare cause record
         $causeData = [
             'user_id' => $userId,
-            'enquiry_id' => $enquiry->id,
+            'enquiry_id' => !empty($enquiry->id) ? $enquiry->id : null,
             'created_by' => $requester_name,
             'email' => $requester_email,
             'phone' => $requester_phone,
@@ -1771,9 +1830,53 @@ class kanavuhelp extends CI_Controller
         $this->db->insert('individualform', $causeData);
         $causeId = $this->db->insert_id();
 
-        // Mark token as used and link cause to enquiry
+        // Link cause to enquiry
         $this->UserModel->link_enquiry_to_cause($enquiry->id, $causeId);
-        $this->UserModel->mark_token_used($enquiry->id);
+
+        // Send Notification Email to Admin about new Cause Creation
+        $adminEmails = $this->UserModel->get_admin_emails();
+        $enquiryRefText = !empty($enquiry->id) ? "from Enquiry #FE-{$enquiry->id}" : "(Direct Submission)";
+        $enquiryHeaderRef = !empty($enquiry->id) ? "Enquiry Ref: #FE-{$enquiry->id}" : "Direct Submission";
+        $adminSubject = "New Cause Created #CI-{$causeId} {$enquiryRefText}: {$cause_heading}";
+        $adminMessage = "
+            <html>
+            <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
+                <div style='max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;'>
+                    <div style='background-color: #ed3136; color: #ffffff; padding: 18px; text-align: center;'>
+                        <h2 style='margin:0;'>New Cause Creation Submitted</h2>
+                        <p style='margin: 4px 0 0 0;'>Cause ID: #CI-{$causeId} | {$enquiryHeaderRef}</p>
+                    </div>
+                    <div style='padding: 20px;'>
+                        <p>A new cause campaign has been created via the approved cause creation form and is waiting for verification.</p>
+                        <table cellpadding='8' style='border-collapse: collapse; width: 100%; border: 1px solid #eee; font-size: 14px;'>
+                            <tr><td style='background:#f9f9f9; width: 35%;'><strong>Cause Title:</strong></td><td>{$cause_heading}</td></tr>
+                            <tr><td style='background:#f9f9f9;'><strong>Category:</strong></td><td>{$cause_category}</td></tr>
+                            <tr><td style='background:#f9f9f9;'><strong>Target Goal:</strong></td><td>&#8377;" . number_format((float) $amount, 2) . "</td></tr>
+                            <tr><td style='background:#f9f9f9;'><strong>Requester:</strong></td><td>{$requester_name} ({$requester_phone})</td></tr>
+                            <tr><td style='background:#f9f9f9;'><strong>Email:</strong></td><td>{$requester_email}</td></tr>
+                            <tr><td style='background:#f9f9f9;'><strong>Beneficiary:</strong></td><td>{$beneficiary_name} (Relation: {$beneficiary_relation})</td></tr>
+                            <tr><td style='background:#f9f9f9;'><strong>Location:</strong></td><td>{$requester_location}</td></tr>
+                            <tr><td style='background:#f9f9f9;'><strong>Verifier:</strong></td><td>{$verifier_name} ({$verifier_phone})</td></tr>
+                            <tr><td style='background:#f9f9f9;'><strong>End Date:</strong></td><td>{$end_date}</td></tr>
+                        </table>
+                        <p style='margin-top:20px;'>Please log into the Admin Dashboard under <strong>Causes Verification</strong> to review the submitted documents and approve the cause live.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+        ";
+
+        if (!empty($adminEmails)) {
+            foreach ($adminEmails as $toAdmin) {
+                $this->email->clear();
+                $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'Kanavu Help System');
+                $this->email->to($toAdmin);
+                $this->email->subject($adminSubject);
+                $this->email->message($adminMessage);
+                $this->email->set_mailtype('html');
+                @$this->email->send();
+            }
+        }
 
         // Clear token session
         $this->session->unset_userdata('approved_enquiry_token');
@@ -1790,37 +1893,64 @@ class kanavuhelp extends CI_Controller
         $this->load->library('email');
         $this->load->model('UserModel');
 
-        $fullname = trim($this->input->post('fullname', true));
-        $email = trim($this->input->post('emailId', true));
-        $phone = trim($this->input->post('Phonenumber', true));
-        $cause_category = trim($this->input->post('cause_category', true));
-        $beneficiary_relation = trim($this->input->post('beneficiary_relation', true));
+        // Inputs: Name (Created by) and Phone number are mandatory; other fields are optional
+        $fullname = trim($this->input->post('fullname', true) ?: $this->input->post('name', true) ?: $this->input->post('created_by', true));
+        $phone = trim($this->input->post('Phonenumber', true) ?: $this->input->post('phone', true));
         $beneficiary_name = trim($this->input->post('beneficiary_name', true));
-        $beneficiary_age = trim($this->input->post('beneficiary_age', true));
+        $cause_category = trim($this->input->post('cause_category', true) ?: $this->input->post('category', true));
+        $email = trim($this->input->post('emailId', true) ?: $this->input->post('email', true));
         $location = trim($this->input->post('location', true));
-        $target_amount = trim($this->input->post('target_amount', true));
-        $urgency_level = trim($this->input->post('urgency_level', true));
-        $cause_title = trim($this->input->post('cause_title', true));
-        $cause_description = trim($this->input->post('cause_description', true));
 
-        // Basic server-side validation
-        if (empty($fullname) || empty($email) || empty($phone) || empty($cause_category) || empty($cause_description)) {
-            $this->session->set_flashdata('enquiry_error', 'Please fill in all mandatory fields.');
+        // Validation: Name (Mandatory, English & Tamil letters allowed)
+        if (empty($fullname) || preg_match('/^\d+$/', $fullname) || !preg_match('/^[a-zA-Z\x{0B80}-\x{0BFF}\s.\'-]{2,150}$/u', $fullname) || preg_match_all('/[a-zA-Z\x{0B80}-\x{0BFF}]/u', $fullname) < 2) {
+            $this->session->set_flashdata('enquiry_error', 'Please enter a valid Name (letters only, cannot be pure numbers or special characters).');
             redirect(base_url('/fundraiser-enquiry'));
             return;
         }
 
+        // Phone Number (Mandatory: 10 digits starting with 6, 7, 8, or 9)
+        $cleanPhone = preg_replace('/[^\d]/', '', $phone);
+        if (!preg_match('/^[6-9]\d{9}$/', $cleanPhone) || preg_match('/^(\d)\1{9}$/', $cleanPhone)) {
+            $this->session->set_flashdata('enquiry_error', 'Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.');
+            redirect(base_url('/fundraiser-enquiry'));
+            return;
+        }
+
+        // Beneficiary Name (Optional: English & Tamil letters allowed)
+        if (!empty($beneficiary_name) && (preg_match('/^\d+$/', $beneficiary_name) || !preg_match('/^[a-zA-Z\x{0B80}-\x{0BFF}\s.\'-]{2,150}$/u', $beneficiary_name) || preg_match_all('/[a-zA-Z\x{0B80}-\x{0BFF}]/u', $beneficiary_name) < 2)) {
+            $this->session->set_flashdata('enquiry_error', 'Please enter a valid Beneficiary Name (letters only).');
+            redirect(base_url('/fundraiser-enquiry'));
+            return;
+        }
+
+        // Email ID (Optional: valid format if provided)
+        if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->session->set_flashdata('enquiry_error', 'Please enter a valid Email address.');
+            redirect(base_url('/fundraiser-enquiry'));
+            return;
+        }
+
+        // Location (Optional: English & Tamil letters allowed)
+        if (!empty($location) && (preg_match('/^\d+$/', $location) || !preg_match('/^[a-zA-Z0-9\x{0B80}-\x{0BFF}\s,.\'-]{2,150}$/u', $location) || preg_match_all('/[a-zA-Z\x{0B80}-\x{0BFF}]/u', $location) < 2)) {
+            $this->session->set_flashdata('enquiry_error', 'Please enter a valid Location (letters required, cannot be pure numbers or special characters).');
+            redirect(base_url('/fundraiser-enquiry'));
+            return;
+        }
+
+        $cause_title = !empty($beneficiary_name) ? "Fundraiser for {$beneficiary_name}" : "Fundraiser Enquiry by {$fullname}";
+        $cause_description = "Fundraiser enquiry submitted via website.";
+
         $enquiry_data = [
             'fullname' => $fullname,
-            'email' => $email,
+            'email' => !empty($email) ? $email : null,
             'phone' => $phone,
-            'cause_category' => $cause_category,
-            'beneficiary_relation' => $beneficiary_relation,
-            'beneficiary_name' => $beneficiary_name,
-            'beneficiary_age' => !empty($beneficiary_age) ? (int) $beneficiary_age : null,
-            'location' => $location,
-            'target_amount' => !empty($target_amount) ? (float) $target_amount : null,
-            'urgency_level' => $urgency_level,
+            'cause_category' => !empty($cause_category) ? $cause_category : 'General',
+            'beneficiary_relation' => null,
+            'beneficiary_name' => !empty($beneficiary_name) ? $beneficiary_name : null,
+            'beneficiary_age' => null,
+            'location' => !empty($location) ? $location : null,
+            'target_amount' => null,
+            'urgency_level' => null,
             'cause_title' => $cause_title,
             'cause_description' => $cause_description,
             'status' => 'pending',
@@ -1831,74 +1961,51 @@ class kanavuhelp extends CI_Controller
         $insert_id = $this->db->insert_id();
 
         if ($inserted) {
-            // Send Confirmation Email to Applicant
-            $userSubject = 'We received your Fundraiser Enquiry - Kanavu Help';
-            $userMessage = "
+            // Send Notification Email to Admin about new Fundraiser Enquiry
+            $adminEmails = $this->UserModel->get_admin_emails();
+            $catLabel = !empty($cause_category) ? $cause_category : 'General';
+            $adminSubject = "New Fundraiser Enquiry #FE-{$insert_id}: {$fullname} ({$catLabel})";
+            $adminMessage = "
                 <html>
                 <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
                     <div style='max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;'>
-                        <div style='background-color: #ed3136; color: #ffffff; padding: 20px; text-align: center;'>
-                            <h2 style='margin:0;'>Fundraiser Enquiry Received</h2>
-                            <p style='margin: 5px 0 0 0;'>Ref ID: #FE-{$insert_id}</p>
+                        <div style='background-color: #ed3136; color: #ffffff; padding: 18px; text-align: center;'>
+                            <h2 style='margin:0;'>New Fundraiser Enquiry Received</h2>
+                            <p style='margin: 4px 0 0 0;'>Ref ID: #FE-{$insert_id}</p>
                         </div>
-                        <div style='padding: 25px;'>
-                            <p>Hello <strong>{$fullname}</strong>,</p>
-                            <p>Thank you for submitting your fundraiser enquiry to <strong>Kanavu Help</strong>. We have successfully registered your request.</p>
-                            <div style='background: #fdf2f2; border-left: 4px solid #ed3136; padding: 12px 16px; margin: 20px 0;'>
-                                <p style='margin: 4px 0;'><strong>Cause:</strong> {$cause_title}</p>
-                                <p style='margin: 4px 0;'><strong>Category:</strong> {$cause_category}</p>
-                                <p style='margin: 4px 0;'><strong>Target Amount:</strong> &#8377;" . number_format((float) $target_amount, 2) . "</p>
-                                <p style='margin: 4px 0;'><strong>Status:</strong> <span style='color: #d97706; font-weight: bold;'>Pending Admin Review</span></p>
-                            </div>
-                            <p>Our team is currently reviewing your enquiry. Once an administrator approves your enquiry, you will receive an approval confirmation and instructions on the next steps to launch your cause.</p>
-                            <p style='margin-top: 30px;'>Warm Regards,<br><strong>Kanavu Help Verification Team</strong></p>
+                        <div style='padding: 20px;'>
+                            <p>A new fundraiser enquiry has been entered on Kanavu Help:</p>
+                            <table cellpadding='8' style='border-collapse: collapse; width: 100%; border: 1px solid #eee; font-size: 14px;'>
+                                <tr><td style='background:#f9f9f9; width: 35%;'><strong>Enquiry ID:</strong></td><td>#FE-{$insert_id}</td></tr>
+                                <tr><td style='background:#f9f9f9;'><strong>Applicant / Created by:</strong></td><td>{$fullname}</td></tr>
+                                <tr><td style='background:#f9f9f9;'><strong>Mobile Number:</strong></td><td>{$phone}</td></tr>
+                                <tr><td style='background:#f9f9f9;'><strong>Beneficiary Name:</strong></td><td>" . (!empty($beneficiary_name) ? htmlspecialchars($beneficiary_name) : 'Not specified') . "</td></tr>
+                                <tr><td style='background:#f9f9f9;'><strong>Category:</strong></td><td>{$catLabel}</td></tr>
+                                <tr><td style='background:#f9f9f9;'><strong>Email ID:</strong></td><td>" . (!empty($email) ? htmlspecialchars($email) : 'Not provided') . "</td></tr>
+                                <tr><td style='background:#f9f9f9;'><strong>Location:</strong></td><td>" . (!empty($location) ? htmlspecialchars($location) : 'Not specified') . "</td></tr>
+                            </table>
+                            <p style='margin-top:20px;'>Please log into the Admin Dashboard under <strong>Fundraiser Enquiries</strong> to review and approve this enquiry, then share the cause creation link with the applicant.</p>
                         </div>
                     </div>
                 </body>
                 </html>
             ";
 
-            $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
-            $this->email->to($email);
-            $this->email->subject($userSubject);
-            $this->email->message($userMessage);
-            $this->email->set_mailtype('html');
-            @$this->email->send();
+            if (!empty($adminEmails)) {
+                foreach ($adminEmails as $toAdmin) {
+                    $this->email->clear();
+                    $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'Kanavu Help System');
+                    $this->email->to($toAdmin);
+                    $this->email->subject($adminSubject);
+                    $this->email->message($adminMessage);
+                    $this->email->set_mailtype('html');
+                    @$this->email->send();
+                }
+            }
 
-            // Send Notification Email to Admin
-            $adminEmail = 'support@kanavu.help';
-            $adminSubject = "New Fundraiser Enquiry #FE-{$insert_id}: {$fullname} ({$cause_category})";
-            $adminMessage = "
-                <html>
-                <body style='font-family: Arial, sans-serif; line-height: 1.6;'>
-                    <h2 style='color: #ed3136;'>New Fundraiser Enquiry Awaiting Approval</h2>
-                    <table cellpadding='8' style='border-collapse: collapse; width: 100%; border: 1px solid #ddd;'>
-                        <tr><td style='background:#f4f4f4; width: 35%;'><strong>Enquiry ID:</strong></td><td>#FE-{$insert_id}</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Applicant Name:</strong></td><td>{$fullname}</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Email:</strong></td><td>{$email}</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Phone:</strong></td><td>{$phone}</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Category:</strong></td><td>{$cause_category}</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Raising For:</strong></td><td>{$beneficiary_relation}</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Beneficiary:</strong></td><td>{$beneficiary_name} (Age: {$beneficiary_age})</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Location:</strong></td><td>{$location}</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Target Amount:</strong></td><td>&#8377;" . number_format((float) $target_amount, 2) . "</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Urgency:</strong></td><td>{$urgency_level}</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Cause Title:</strong></td><td>{$cause_title}</td></tr>
-                        <tr><td style='background:#f4f4f4;'><strong>Story / Need:</strong></td><td>" . nl2br(htmlspecialchars($cause_description)) . "</td></tr>
-                    </table>
-                    <p style='margin-top:20px;'>Please log into the Admin Dashboard to review and Approve or Reject this enquiry.</p>
-                </body>
-                </html>
-            ";
+// Only admin receives email notification; user email skipped as per workflow
 
-            $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'Kanavu Help System');
-            $this->email->to($adminEmail);
-            $this->email->subject($adminSubject);
-            $this->email->message($adminMessage);
-            $this->email->set_mailtype('html');
-            @$this->email->send();
-
-            $this->session->set_flashdata('enquiry_success', 'Thank you! Your Fundraiser Enquiry has been submitted successfully. Our admin team will review and approve your enquiry shortly.');
+            $this->session->set_flashdata('enquiry_success', 'Thank you! Your Fundraiser Enquiry has been submitted successfully. Our team will review your details and contact you shortly.');
         } else {
             $this->session->set_flashdata('enquiry_error', 'There was an issue submitting your enquiry. Please try again.');
         }
