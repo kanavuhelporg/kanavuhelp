@@ -1738,6 +1738,7 @@ class admin extends CI_Controller
         $data['pending_count'] = $this->UserModel->count_fundraiser_enquiries('pending');
         $data['approved_count'] = $this->UserModel->count_fundraiser_enquiries('approved');
         $data['rejected_count'] = $this->UserModel->count_fundraiser_enquiries('rejected');
+        $data['hold_count'] = $this->UserModel->count_fundraiser_enquiries('hold');
 
         $this->load->view('admin_fundraiser_enquiries', $data);
     }
@@ -1770,6 +1771,7 @@ class admin extends CI_Controller
         $id = $this->input->post('id', true);
         $remarks = $this->input->post('remarks', true) ?: 'Approved by admin for cause creation.';
         $admin_id = $this->session->userdata('adminId');
+        $admin_name = $this->session->userdata('adminName') ?: 'Admin';
 
         $enquiry = $this->UserModel->get_fundraiser_enquiry_by_id($id);
         if (!$enquiry) {
@@ -1777,7 +1779,16 @@ class admin extends CI_Controller
             return;
         }
 
-        $updated = $this->UserModel->update_fundraiser_enquiry_status($id, 'approved', $remarks, $admin_id);
+        if ($enquiry->status === 'approved') {
+            $approver = !empty($enquiry->approved_admin_name) ? $enquiry->approved_admin_name : 'another admin';
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'This enquiry is already approved by ' . $approver . '. It cannot be approved again.'
+            ]);
+            return;
+        }
+
+        $updated = $this->UserModel->update_fundraiser_enquiry_status($id, 'approved', $remarks, $admin_id, $admin_name);
 
         if ($updated) {
             // Generate a secure unique approval token and save to DB
@@ -1822,6 +1833,11 @@ class admin extends CI_Controller
             return;
         }
 
+        if (empty($enquiry->email) || !filter_var($enquiry->email, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(['status' => 'error', 'message' => 'No valid email address is available for this enquiry.']);
+            return;
+        }
+
         $token = $enquiry->approval_token;
         if (empty($token)) {
             $token = bin2hex(random_bytes(32));
@@ -1863,14 +1879,21 @@ class admin extends CI_Controller
         $this->email->subject($userSubject);
         $this->email->message($userMessage);
         $this->email->set_mailtype('html');
-        @$this->email->send();
+        $sent = @$this->email->send();
 
-        echo json_encode([
-            'status' => 'success',
-            'message' => 'Manual cause link sent successfully to ' . $enquiry->email,
-            'approval_link' => $approval_link,
-            'approval_token' => $token
-        ]);
+        if ($sent) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Manual cause link sent successfully to ' . $enquiry->email,
+                'approval_link' => $approval_link,
+                'approval_token' => $token
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Failed to send email to ' . $enquiry->email . '. Please check SMTP/email configuration.'
+            ]);
+        }
     }
 
     public function reject_enquiry()
@@ -1890,6 +1913,67 @@ class admin extends CI_Controller
             echo json_encode(['status' => 'success', 'message' => 'Enquiry #FE-' . $id . ' has been marked as rejected.']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Failed to reject enquiry.']);
+        }
+    }
+
+    public function toggle_enquiry_hold()
+    {
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        $this->load->model('UserModel');
+
+        $id = $this->input->post('id', true);
+        $action = $this->input->post('action', true); // 'hold' or 'unhold'
+        $remarks = trim((string) $this->input->post('remarks', true));
+        $admin_id = $this->session->userdata('adminId');
+        $admin_name = $this->session->userdata('adminName') ?: 'Admin';
+
+        if (!in_array($action, ['hold', 'unhold'], true)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid action.']);
+            return;
+        }
+
+        $enquiry = $this->UserModel->get_fundraiser_enquiry_by_id($id);
+        if (!$enquiry) {
+            echo json_encode(['status' => 'error', 'message' => 'Enquiry not found.']);
+            return;
+        }
+
+        if ($enquiry->status !== 'approved') {
+            echo json_encode(['status' => 'error', 'message' => 'Only approved enquiries can be put on hold or unheld.']);
+            return;
+        }
+
+        $is_hold = ($action === 'hold');
+        if ($is_hold && (int) $enquiry->is_hold === 1) {
+            $holder = !empty($enquiry->hold_admin_name) ? $enquiry->hold_admin_name : 'an admin';
+            echo json_encode(['status' => 'error', 'message' => 'This enquiry is already on hold by ' . $holder . '.']);
+            return;
+        }
+        if (!$is_hold && (int) $enquiry->is_hold === 0) {
+            echo json_encode(['status' => 'error', 'message' => 'This enquiry is not currently on hold.']);
+            return;
+        }
+
+        if ($remarks === '') {
+            $remarks = $is_hold ? 'Put on hold by admin.' : 'Removed from hold by admin.';
+        }
+
+        $updated = $this->UserModel->toggle_fundraiser_enquiry_hold($id, $is_hold, $admin_id, $admin_name, $remarks);
+        if ($updated) {
+            $msg = $is_hold
+                ? 'Enquiry #FE-' . $id . ' has been put on hold by ' . $admin_name . '.'
+                : 'Enquiry #FE-' . $id . ' has been unheld by ' . $admin_name . '.';
+            echo json_encode([
+                'status' => 'success',
+                'message' => $msg,
+                'is_hold' => $is_hold ? 1 : 0,
+                'admin_name' => $admin_name
+            ]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to update hold status.']);
         }
     }
 

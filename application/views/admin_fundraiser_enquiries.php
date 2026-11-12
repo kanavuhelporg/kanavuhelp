@@ -180,6 +180,19 @@
       gap: 5px;
     }
 
+    .badge-hold {
+      background-color: #ffedd5;
+      color: #c2410c;
+      border: 1px solid #fed7aa;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 12.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
     .filter-btn {
       border: 1px solid #cbd5e1;
       background: #ffffff;
@@ -444,6 +457,10 @@
                 class="filter-btn <?= ($current_status == 'rejected') ? 'active' : '' ?>">
                 Rejected <span class="badge rounded-pill"><?= $rejected_count; ?></span>
               </a>
+              <a href="<?= base_url('admin/fundraiser_enquiries?status=hold') ?>"
+                class="filter-btn <?= ($current_status == 'hold') ? 'active' : '' ?>">
+                On Hold <span class="badge rounded-pill"><?= $hold_count ?? 0; ?></span>
+              </a>
             </div>
 
             <div class="col-12 col-md-4">
@@ -509,7 +526,23 @@
                       </td>
                       <td id="status-cell-<?= $row->id; ?>">
                         <?php if ($row->status == 'approved'): ?>
-                          <span class="badge-approved"><i class="fa-solid fa-check"></i> Approved</span>
+                          <?php if (!empty($row->is_hold) && (int) $row->is_hold === 1): ?>
+                            <span class="badge-hold"><i class="fa-solid fa-pause"></i> On Hold</span>
+                            <?php if (!empty($row->hold_admin_name)): ?>
+                              <div class="small text-muted mt-1" style="font-size: 12px;">
+                                <i class="fa-solid fa-user-clock text-warning me-1"></i>By:
+                                <strong><?= htmlspecialchars($row->hold_admin_name); ?></strong>
+                              </div>
+                            <?php endif; ?>
+                          <?php else: ?>
+                            <span class="badge-approved"><i class="fa-solid fa-check"></i> Approved</span>
+                            <?php if (!empty($row->approved_admin_name)): ?>
+                              <div class="small text-muted mt-1" style="font-size: 12px;">
+                                <i class="fa-solid fa-user-check text-success me-1"></i>By:
+                                <strong><?= htmlspecialchars($row->approved_admin_name); ?></strong>
+                              </div>
+                            <?php endif; ?>
+                          <?php endif; ?>
                         <?php elseif ($row->status == 'rejected'): ?>
                           <span class="badge-rejected"><i class="fa-solid fa-ban"></i> Rejected</span>
                         <?php else: ?>
@@ -629,6 +662,36 @@
     </div>
   </div>
 
+  <!-- MODAL: Hold / Unhold Confirmation -->
+  <div class="modal fade" id="holdModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header bg-warning text-dark" id="holdModalHeader">
+          <h5 class="modal-title fw-bold" id="holdModalTitle"><i class="fa-solid fa-pause-circle me-2"></i> Hold
+            Approved Enquiry</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <p class="fs-6" id="holdModalPrompt">Are you sure you want to put this approved enquiry on hold for <strong
+              id="holdApplicantName"></strong>?</p>
+          <div class="mb-3">
+            <label for="holdRemarks" class="form-label fw-semibold">Remarks (Optional)</label>
+            <textarea class="form-control" id="holdRemarks" rows="2"
+              placeholder="Enter reason or note for hold/unhold..."></textarea>
+          </div>
+          <input type="hidden" id="holdEnquiryId">
+          <input type="hidden" id="holdActionType">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-warning fw-bold" id="confirmHoldBtn" onclick="submitHoldToggle()">
+            <i class="fa-solid fa-pause me-1"></i> Confirm Hold
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Live table search filter
     $('#tableSearch').on('keyup', function () {
@@ -652,13 +715,51 @@
         success: function (res) {
           if (res.status === 'success') {
             var d = res.data;
+            var isHold = parseInt(d.is_hold || 0, 10) === 1;
             var statusBadge = '';
             if (d.status === 'approved') {
-              statusBadge = '<span class="badge-approved"><i class="fa-solid fa-check"></i> Approved</span>';
+              if (isHold) {
+                statusBadge = '<span class="badge-hold"><i class="fa-solid fa-pause"></i> On Hold</span>';
+              } else {
+                statusBadge = '<span class="badge-approved"><i class="fa-solid fa-check"></i> Approved</span>';
+              }
             } else if (d.status === 'rejected') {
               statusBadge = '<span class="badge-rejected"><i class="fa-solid fa-ban"></i> Rejected</span>';
             } else {
               statusBadge = '<span class="badge-pending"><i class="fa-solid fa-clock"></i> Pending Review</span>';
+            }
+
+            var holdTrackingHtml = '';
+            if (d.status === 'approved' && (isHold || d.hold_admin_name || d.unhold_admin_name)) {
+              var historyItems = '';
+              if (d.hold_history) {
+                try {
+                  var hist = JSON.parse(d.hold_history);
+                  if (Array.isArray(hist) && hist.length > 0) {
+                    historyItems = '<ul class="list-unstyled mb-0 mt-2 small">';
+                    hist.forEach(function (item) {
+                      var label = item.action === 'hold'
+                        ? '<span class="text-warning fw-semibold"><i class="fa-solid fa-pause me-1"></i>Hold</span>'
+                        : '<span class="text-info fw-semibold"><i class="fa-solid fa-play me-1"></i>Unhold</span>';
+                      historyItems += '<li class="mb-1">' + label + ' by <strong>' + $('<div>').text(item.admin_name || 'Admin').html() + '</strong> on ' + (item.at || '') + (item.remarks ? ' — <em>' + $('<div>').text(item.remarks).html() + '</em>' : '') + '</li>';
+                    });
+                    historyItems += '</ul>';
+                  }
+                } catch (e) { }
+              }
+
+              holdTrackingHtml = `
+                <div class="col-12 mt-2">
+                  <p class="mb-1 text-muted small fw-semibold">HOLD / UNHOLD TRACKING</p>
+                  <div class="p-3 rounded small" style="background-color: ${isHold ? '#fff7ed' : '#f0f9ff'}; border: 1px solid ${isHold ? '#fed7aa' : '#bae6fd'};">
+                    <div>
+                      <strong>Current State:</strong> ${isHold ? '<span class="text-danger fw-bold">On Hold</span>' : '<span class="text-success fw-bold">Active (Not on Hold)</span>'}
+                    </div>
+                    ${d.hold_admin_name ? `<div class="mt-1"><strong>Last Hold By:</strong> ${$('<div>').text(d.hold_admin_name).html()} ${d.hold_at ? '(' + d.hold_at + ')' : ''} ${d.hold_remarks ? '- ' + $('<div>').text(d.hold_remarks).html() : ''}</div>` : ''}
+                    ${d.unhold_admin_name ? `<div class="mt-1"><strong>Last Unhold By:</strong> ${$('<div>').text(d.unhold_admin_name).html()} ${d.unhold_at ? '(' + d.unhold_at + ')' : ''} ${d.unhold_remarks ? '- ' + $('<div>').text(d.unhold_remarks).html() : ''}</div>` : ''}
+                    ${historyItems}
+                  </div>
+                </div>`;
             }
 
             var html = `
@@ -668,17 +769,17 @@
                   <div>${statusBadge}</div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <p class="mb-1 text-muted small fw-semibold">APPLICANT NAME</p>
-                  <p class="fw-bold text-dark m-0">${d.fullname}</p>
+                  <p class="fw-bold text-dark m-0 text-break">${d.fullname}</p>
                 </div>
                 <div class="col-md-3">
                   <p class="mb-1 text-muted small fw-semibold">PHONE</p>
                   <p class="fw-bold text-dark m-0"><a href="tel:${(d.country_code ? d.country_code + ' ' : '') + (d.phone || '')}" class="text-dark text-decoration-none">${(d.country_code ? d.country_code + ' ' : '') + (d.phone || '')}</a></p>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-5">
                   <p class="mb-1 text-muted small fw-semibold">EMAIL</p>
-                  <p class="fw-bold text-dark m-0">${d.email}</p>
+                  <p class="fw-bold text-dark m-0 text-break">${d.email || '-'}</p>
                 </div>
 
                 <div class="col-md-4">
@@ -712,11 +813,23 @@
                   <div class="p-3 bg-light rounded border text-secondary" style="white-space: pre-wrap; line-height: 1.6;">${d.cause_description}</div>
                 </div>
 
+                ${d.status === 'approved' ? `
+                <div class="col-md-6">
+                  <p class="mb-1 text-muted small fw-semibold">APPROVED BY ADMIN</p>
+                  <p class="fw-bold text-success m-0"><i class="fa-solid fa-user-check me-1"></i>${$('<div>').text(d.approved_admin_name || 'Admin').html()}</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="mb-1 text-muted small fw-semibold">APPROVED ON</p>
+                  <p class="fw-bold text-dark m-0">${d.approved_at || '-'}</p>
+                </div>` : ''}
+
                 ${d.admin_remarks ? `
                 <div class="col-12 mt-2">
                   <p class="mb-1 text-muted small fw-semibold">ADMIN REMARKS</p>
                   <div class="p-2 rounded small" style="background-color: #fefce8; border: 1px solid #fef08a; color: #854d0e;">${d.admin_remarks}</div>
                 </div>` : ''}
+
+                ${holdTrackingHtml}
 
                 ${(d.status === 'approved' && d.approval_token) ? `
                 <div class="col-12 mt-2">
@@ -738,7 +851,9 @@
                 </div>` : ''}
 
                 <div class="col-12 text-end text-muted small mt-2">
-                  Submitted On: ${d.created_at} ${d.approved_at ? '| Approved On: ' + d.approved_at : ''}
+                  Submitted On: ${d.created_at}
+                  ${d.approved_admin_name ? ' | Approved By: <strong>' + $('<div>').text(d.approved_admin_name).html() + '</strong>' : ''}
+                  ${d.approved_at ? ' | Approved On: ' + d.approved_at : ''}
                 </div>
               </div>
             `;
@@ -749,11 +864,18 @@
               actionsHtml += `<button type="button" class="btn btn-outline-success me-2" onclick="copyCauseLink('<?= base_url("fundraiser_approve_token/") ?>${d.approval_token}')"><i class="fa-solid fa-link me-1"></i> Copy Cause Link</button>`;
               actionsHtml += `<button type="button" class="btn btn-outline-primary me-2" onclick="sendManualLink(${d.id})"><i class="fa-solid fa-paper-plane me-1"></i> Resend Mail</button>`;
             }
+            if (d.status === 'approved') {
+              if (isHold) {
+                actionsHtml += `<button type="button" class="btn btn-info text-white me-2" data-id="${d.id}" data-name="${$('<div>').text(d.fullname || '').html()}" data-action="unhold" onclick="$('#detailsModal').modal('hide'); openHoldModalFromBtn(this);"><i class="fa-solid fa-play me-1"></i> Unhold Enquiry</button>`;
+              } else {
+                actionsHtml += `<button type="button" class="btn btn-warning me-2" data-id="${d.id}" data-name="${$('<div>').text(d.fullname || '').html()}" data-action="hold" onclick="$('#detailsModal').modal('hide'); openHoldModalFromBtn(this);"><i class="fa-solid fa-pause me-1"></i> Hold Enquiry</button>`;
+              }
+            }
             if (d.status !== 'approved') {
-              actionsHtml += `<button type="button" class="btn btn-success me-2" onclick="$('#detailsModal').modal('hide'); openApproveModal(${d.id}, '${d.fullname}');"><i class="fa-solid fa-check me-1"></i> Approve Enquiry</button>`;
+              actionsHtml += `<button type="button" class="btn btn-success me-2" onclick="$('#detailsModal').modal('hide'); openApproveModal(${d.id}, '${(d.fullname || '').replace(/'/g, "\\'")}');"><i class="fa-solid fa-check me-1"></i> Approve Enquiry</button>`;
             }
             if (d.status !== 'rejected') {
-              actionsHtml += `<button type="button" class="btn btn-danger" onclick="$('#detailsModal').modal('hide'); openRejectModal(${d.id}, '${d.fullname}');"><i class="fa-solid fa-times me-1"></i> Reject</button>`;
+              actionsHtml += `<button type="button" class="btn btn-danger" onclick="$('#detailsModal').modal('hide'); openRejectModal(${d.id}, '${(d.fullname || '').replace(/'/g, "\\'")}');"><i class="fa-solid fa-times me-1"></i> Reject</button>`;
             }
             $('#modalActionButtons').html(actionsHtml);
           } else {
@@ -920,6 +1042,69 @@
         error: function () {
           btn.prop('disabled', false).html('<i class="fa-solid fa-ban me-1"></i> Confirm Rejection');
           alert('Network or server error while rejecting.');
+        }
+      });
+    }
+
+    function openHoldModalFromBtn(btn) {
+      var id = $(btn).data('id');
+      var name = $(btn).data('name');
+      var action = $(btn).data('action');
+      openHoldModal(id, name, action);
+    }
+
+    function openHoldModal(id, name, action) {
+      $('#holdEnquiryId').val(id);
+      $('#holdActionType').val(action);
+      $('#holdApplicantName').text(name);
+      $('#holdRemarks').val('');
+
+      if (action === 'unhold') {
+        $('#holdModalHeader').removeClass('bg-warning text-dark').addClass('bg-info text-white');
+        $('#holdModalTitle').html('<i class="fa-solid fa-play-circle me-2"></i> Unhold Approved Enquiry');
+        $('#holdModalPrompt').html('Are you sure you want to unhold the approved enquiry for <strong>' + $('<div>').text(name).html() + '</strong>?');
+        $('#confirmHoldBtn').removeClass('btn-warning').addClass('btn-info text-white').html('<i class="fa-solid fa-play me-1"></i> Confirm Unhold');
+      } else {
+        $('#holdModalHeader').removeClass('bg-info text-white').addClass('bg-warning text-dark');
+        $('#holdModalTitle').html('<i class="fa-solid fa-pause-circle me-2"></i> Hold Approved Enquiry');
+        $('#holdModalPrompt').html('Are you sure you want to put the approved enquiry for <strong>' + $('<div>').text(name).html() + '</strong> on hold?');
+        $('#confirmHoldBtn').removeClass('btn-info text-white').addClass('btn-warning').html('<i class="fa-solid fa-pause me-1"></i> Confirm Hold');
+      }
+
+      $('#holdModal').modal('show');
+    }
+
+    function submitHoldToggle() {
+      var id = $('#holdEnquiryId').val();
+      var action = $('#holdActionType').val();
+      var remarks = $('#holdRemarks').val();
+      var btn = $('#confirmHoldBtn');
+
+      var defaultBtnHtml = action === 'unhold'
+        ? '<i class="fa-solid fa-play me-1"></i> Confirm Unhold'
+        : '<i class="fa-solid fa-pause me-1"></i> Confirm Hold';
+
+      btn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin me-1"></i> Processing...');
+
+      $.ajax({
+        url: '<?= base_url("admin/toggle_enquiry_hold") ?>',
+        type: 'POST',
+        data: { id: id, action: action, remarks: remarks },
+        dataType: 'json',
+        success: function (res) {
+          btn.prop('disabled', false).html(defaultBtnHtml);
+          $('#holdModal').modal('hide');
+
+          if (res.status === 'success') {
+            alert(res.message);
+            location.reload();
+          } else {
+            alert('Error: ' + res.message);
+          }
+        },
+        error: function () {
+          btn.prop('disabled', false).html(defaultBtnHtml);
+          alert('Network or server error while updating hold status.');
         }
       });
     }
