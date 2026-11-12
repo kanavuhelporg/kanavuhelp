@@ -306,7 +306,7 @@
                             <a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
                         </li>
                         <li class="nav-item">
-                            <a id="fundraiserenquirypage" class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Fundraiser Enquiry</a>
+                            <a id="fundraiserenquirypage" class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Start a Fundraiser</a>
                         </li>
                         <li class="nav-item">
                             <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>

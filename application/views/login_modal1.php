@@ -700,7 +700,7 @@
               <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Fundraiser Enquiry</a>
+              <a class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Start a Fundraiser</a>
             </li>
             <li class="nav-item">
               <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>
@@ -756,7 +756,7 @@
               <li>
                 <a href="<?= base_url('/fundraiser-enquiry') ?>">
                   <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
-                    Fundraiser Enquiry
+                    Start a Fundraiser
                   </button>
                 </a>
               </li>
@@ -780,7 +780,7 @@
               <li>
                 <a href="<?= base_url('/fundraiser-enquiry') ?>">
                   <button type="button" class="btn border rounded-pill px-4 py-2 shadow-sm" style="background-color: red; color: white; border: none;">
-                    Fundraiser Enquiry
+                    Start a Fundraiser
                   </button>
                 </a>
               </li>

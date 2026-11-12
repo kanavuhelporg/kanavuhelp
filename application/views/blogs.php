@@ -274,7 +274,7 @@
                         <a class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Fundraiser Enquiry</a>
+                        <a class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Start a Fundraiser</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-lg-2" href="<?= base_url('/myhelps') ?>">My Helps</a>

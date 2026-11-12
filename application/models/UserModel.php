@@ -562,6 +562,7 @@ public function ensure_fundraiser_enquiry_table()
       `id` INT AUTO_INCREMENT PRIMARY KEY,
       `fullname` VARCHAR(150) NOT NULL,
       `email` VARCHAR(150) DEFAULT NULL,
+      `country_code` VARCHAR(10) DEFAULT '+91',
       `phone` VARCHAR(20) NOT NULL,
       `cause_category` VARCHAR(100) DEFAULT NULL,
       `beneficiary_relation` VARCHAR(50) DEFAULT NULL,
@@ -596,6 +597,11 @@ public function ensure_fundraiser_enquiry_table()
     $check_used = $this->db->query("SHOW COLUMNS FROM `fundraiser_enquiry` LIKE 'token_used'");
     if ($check_used->num_rows() === 0) {
         $this->db->query("ALTER TABLE `fundraiser_enquiry` ADD COLUMN `token_used` TINYINT(1) DEFAULT 0");
+    }
+    // Add country_code column if it doesn't exist
+    $check_cc = $this->db->query("SHOW COLUMNS FROM `fundraiser_enquiry` LIKE 'country_code'");
+    if ($check_cc->num_rows() === 0) {
+        $this->db->query("ALTER TABLE `fundraiser_enquiry` ADD COLUMN `country_code` VARCHAR(10) DEFAULT '+91' AFTER `email`");
     }
 }
 

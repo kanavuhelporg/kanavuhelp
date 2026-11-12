@@ -484,8 +484,10 @@
                         <small class="text-muted">#FE-<?= $row->id; ?></small>
                       </td>
                       <td>
-                        <div><i class="fa-solid fa-phone text-muted small me-1"></i> <a href="tel:<?= $row->phone; ?>"
-                            class="text-dark text-decoration-none"><?= htmlspecialchars($row->phone); ?></a></div>
+                        <?php $displayPhone = (!empty($row->country_code) ? $row->country_code . ' ' : '') . $row->phone; ?>
+                        <div><i class="fa-solid fa-phone text-muted small me-1"></i> <a
+                            href="tel:<?= htmlspecialchars($displayPhone); ?>"
+                            class="text-dark text-decoration-none"><?= htmlspecialchars($displayPhone); ?></a></div>
                         <small class="text-muted"><i class="fa-solid fa-envelope text-muted small me-1"></i>
                           <?= htmlspecialchars($row->email); ?></small>
                       </td>
@@ -672,7 +674,7 @@
                 </div>
                 <div class="col-md-3">
                   <p class="mb-1 text-muted small fw-semibold">PHONE</p>
-                  <p class="fw-bold text-dark m-0"><a href="tel:${d.phone}" class="text-dark text-decoration-none">${d.phone}</a></p>
+                  <p class="fw-bold text-dark m-0"><a href="tel:${(d.country_code ? d.country_code + ' ' : '') + (d.phone || '')}" class="text-dark text-decoration-none">${(d.country_code ? d.country_code + ' ' : '') + (d.phone || '')}</a></p>
                 </div>
                 <div class="col-md-3">
                   <p class="mb-1 text-muted small fw-semibold">EMAIL</p>

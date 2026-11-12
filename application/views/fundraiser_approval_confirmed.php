@@ -159,7 +159,7 @@
       </a>
       <div class="d-flex align-items-center gap-3 ms-auto">
         <a href="<?= base_url('') ?>" class="text-decoration-none fw-semibold" style="color:#1a202c;font-size:15px;">Home</a>
-        <a href="<?= base_url('/fundraiser-enquiry') ?>" class="text-decoration-none fw-semibold" style="color:#1a202c;font-size:15px;">Fundraiser Enquiry</a>
+        <a href="<?= base_url('/fundraiser-enquiry') ?>" class="text-decoration-none fw-semibold" style="color:#1a202c;font-size:15px;">Start a Fundraiser</a>
         <a href="<?= base_url('/contactus') ?>" class="text-decoration-none fw-semibold" style="color:#1a202c;font-size:15px;">Contact Us</a>
       </div>
     </div>
@@ -190,7 +190,7 @@
           </div>
           <div class="detail-row">
             <span class="detail-label"><i class="fas fa-phone me-1"></i> Contact</span>
-            <span class="detail-value">+91 <?= htmlspecialchars($enquiry->phone) ?></span>
+            <span class="detail-value"><?= htmlspecialchars(!empty($enquiry->country_code) ? $enquiry->country_code : '+91') ?> <?= htmlspecialchars($enquiry->phone) ?></span>
           </div>
           <div class="detail-row">
             <span class="detail-label"><i class="fas fa-tag me-1"></i> Category</span>
@@ -210,7 +210,7 @@
 
         <div class="next-steps">
           <h6><i class="fas fa-road me-2 text-danger"></i>What Happens Next?</h6>
-          <div class="step-item"><div class="step-num">1</div><div>Our fundraising specialist will contact you on <strong><?= htmlspecialchars($enquiry->phone) ?></strong> within 24-48 hours.</div></div>
+          <div class="step-item"><div class="step-num">1</div><div>Our fundraising specialist will contact you on <strong><?= htmlspecialchars(!empty($enquiry->country_code) ? $enquiry->country_code . ' ' : '') ?><?= htmlspecialchars($enquiry->phone) ?></strong> within 24-48 hours.</div></div>
           <div class="step-item"><div class="step-num">2</div><div>We will guide you to submit your cause documents and story for verification.</div></div>
           <div class="step-item"><div class="step-num">3</div><div>Once verified, your public fundraiser will go live on the Kanavu Help platform!</div></div>
         </div>
@@ -274,7 +274,7 @@
       <div class="d-flex justify-content-center gap-3 mt-2">
         <a href="<?= base_url('/abouts') ?>" class="text-white text-decoration-none">About Us</a>
         <span class="text-white-50">|</span>
-        <a href="<?= base_url('/fundraiser-enquiry') ?>" class="text-white text-decoration-none">Fundraiser Enquiry</a>
+        <a href="<?= base_url('/fundraiser-enquiry') ?>" class="text-white text-decoration-none">Start a Fundraiser</a>
         <span class="text-white-50">|</span>
         <a href="<?= base_url('/contactus') ?>" class="text-white text-decoration-none">Contact Us</a>
       </div>

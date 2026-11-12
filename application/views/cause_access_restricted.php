@@ -299,7 +299,7 @@
               <a class="nav-link" href="<?= base_url('/donate') ?>">Donate</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('/fundraiser-enquiry') ?>">Fundraiser Enquiry</a>
+              <a class="nav-link" href="<?= base_url('/fundraiser-enquiry') ?>">Start a Fundraiser</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<?= base_url('/blogs') ?>">Blog</a>
@@ -384,8 +384,7 @@
         </div>
 
         <div>
-          <a href="<?= base_url('/fundraiser-enquiry') ?>" class="btn-enquiry"><i class="fas fa-file-pen me-2"></i>Submit
-            Fundraiser Enquiry</a>
+          <a href="<?= base_url('/fundraiser-enquiry') ?>" class="btn-enquiry"><i class="fas fa-file-pen me-2"></i>Start a Fundraiser</a>
           <a href="<?= base_url('') ?>" class="btn-home"><i class="fas fa-arrow-left me-1"></i>Back to Home</a>
         </div>
       <?php endif; ?>
@@ -402,7 +401,7 @@
         <a class="text-white text-decoration-none border-end pe-3" href="<?= base_url('/contactus') ?>">Contact</a>
         <a class="text-white text-decoration-none border-end pe-3" href="<?= base_url('/abouts') ?>">About Us</a>
         <a class="text-white text-decoration-none border-end pe-3"
-          href="<?= base_url('/fundraiser-enquiry') ?>">Fundraiser Enquiry</a>
+          href="<?= base_url('/fundraiser-enquiry') ?>">Start a Fundraiser</a>
         <a class="text-white text-decoration-none border-end pe-3" href="<?= base_url('/terms_of_use') ?>"
           target="_blank" rel="noopener noreferrer">Terms of Use</a>
         <a class="text-white text-decoration-none" href="<?= base_url('/privacy_policy') ?>" target="_blank"

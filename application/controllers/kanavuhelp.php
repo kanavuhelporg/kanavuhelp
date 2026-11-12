@@ -1893,8 +1893,9 @@ class kanavuhelp extends CI_Controller
         $this->load->library('email');
         $this->load->model('UserModel');
 
-        // Inputs: Name (Created by) and Phone number are mandatory; other fields are optional
+        // Inputs: Name (Created by), Beneficiary Name, and Phone number (with Country Code) are mandatory; other fields are optional
         $fullname = trim($this->input->post('fullname', true) ?: $this->input->post('name', true) ?: $this->input->post('created_by', true));
+        $country_code = trim($this->input->post('country_code', true)) ?: '+91';
         $phone = trim($this->input->post('Phonenumber', true) ?: $this->input->post('phone', true));
         $beneficiary_name = trim($this->input->post('beneficiary_name', true));
         $cause_category = trim($this->input->post('cause_category', true) ?: $this->input->post('category', true));
@@ -1908,17 +1909,94 @@ class kanavuhelp extends CI_Controller
             return;
         }
 
-        // Phone Number (Mandatory: 10 digits starting with 6, 7, 8, or 9)
-        $cleanPhone = preg_replace('/[^\d]/', '', $phone);
-        if (!preg_match('/^[6-9]\d{9}$/', $cleanPhone) || preg_match('/^(\d)\1{9}$/', $cleanPhone)) {
-            $this->session->set_flashdata('enquiry_error', 'Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.');
+        // Country code phone length rules (min/max national digits)
+        $countryPhoneRules = [
+            '+91' => ['min' => 10, 'max' => 10, 'name' => 'India'],
+            '+1' => ['min' => 10, 'max' => 10, 'name' => 'USA / Canada'],
+            '+44' => ['min' => 10, 'max' => 10, 'name' => 'United Kingdom'],
+            '+971' => ['min' => 9, 'max' => 9, 'name' => 'United Arab Emirates'],
+            '+65' => ['min' => 8, 'max' => 8, 'name' => 'Singapore'],
+            '+60' => ['min' => 9, 'max' => 10, 'name' => 'Malaysia'],
+            '+61' => ['min' => 9, 'max' => 9, 'name' => 'Australia'],
+            '+966' => ['min' => 9, 'max' => 9, 'name' => 'Saudi Arabia'],
+            '+974' => ['min' => 8, 'max' => 8, 'name' => 'Qatar'],
+            '+965' => ['min' => 8, 'max' => 8, 'name' => 'Kuwait'],
+            '+968' => ['min' => 8, 'max' => 8, 'name' => 'Oman'],
+            '+973' => ['min' => 8, 'max' => 8, 'name' => 'Bahrain'],
+            '+94' => ['min' => 9, 'max' => 9, 'name' => 'Sri Lanka'],
+            '+977' => ['min' => 10, 'max' => 10, 'name' => 'Nepal'],
+            '+880' => ['min' => 10, 'max' => 10, 'name' => 'Bangladesh'],
+            '+92' => ['min' => 10, 'max' => 10, 'name' => 'Pakistan'],
+            '+49' => ['min' => 10, 'max' => 11, 'name' => 'Germany'],
+            '+33' => ['min' => 9, 'max' => 9, 'name' => 'France'],
+            '+39' => ['min' => 9, 'max' => 10, 'name' => 'Italy'],
+            '+34' => ['min' => 9, 'max' => 9, 'name' => 'Spain'],
+            '+31' => ['min' => 9, 'max' => 9, 'name' => 'Netherlands'],
+            '+41' => ['min' => 9, 'max' => 9, 'name' => 'Switzerland'],
+            '+46' => ['min' => 7, 'max' => 10, 'name' => 'Sweden'],
+            '+47' => ['min' => 8, 'max' => 8, 'name' => 'Norway'],
+            '+45' => ['min' => 8, 'max' => 8, 'name' => 'Denmark'],
+            '+353' => ['min' => 9, 'max' => 9, 'name' => 'Ireland'],
+            '+64' => ['min' => 8, 'max' => 10, 'name' => 'New Zealand'],
+            '+81' => ['min' => 10, 'max' => 10, 'name' => 'Japan'],
+            '+82' => ['min' => 9, 'max' => 10, 'name' => 'South Korea'],
+            '+86' => ['min' => 11, 'max' => 11, 'name' => 'China'],
+            '+852' => ['min' => 8, 'max' => 8, 'name' => 'Hong Kong'],
+            '+66' => ['min' => 9, 'max' => 9, 'name' => 'Thailand'],
+            '+62' => ['min' => 9, 'max' => 12, 'name' => 'Indonesia'],
+            '+63' => ['min' => 10, 'max' => 10, 'name' => 'Philippines'],
+            '+84' => ['min' => 9, 'max' => 10, 'name' => 'Vietnam'],
+            '+27' => ['min' => 9, 'max' => 9, 'name' => 'South Africa'],
+            '+234' => ['min' => 10, 'max' => 10, 'name' => 'Nigeria'],
+            '+254' => ['min' => 9, 'max' => 9, 'name' => 'Kenya'],
+            '+20' => ['min' => 10, 'max' => 10, 'name' => 'Egypt'],
+            '+55' => ['min' => 10, 'max' => 11, 'name' => 'Brazil'],
+            '+52' => ['min' => 10, 'max' => 10, 'name' => 'Mexico'],
+            '+7' => ['min' => 10, 'max' => 10, 'name' => 'Russia'],
+            '+90' => ['min' => 10, 'max' => 10, 'name' => 'Turkey'],
+            '+972' => ['min' => 9, 'max' => 9, 'name' => 'Israel'],
+            '+48' => ['min' => 9, 'max' => 9, 'name' => 'Poland'],
+            '+351' => ['min' => 9, 'max' => 9, 'name' => 'Portugal'],
+            '+30' => ['min' => 10, 'max' => 10, 'name' => 'Greece'],
+            '+43' => ['min' => 10, 'max' => 13, 'name' => 'Austria'],
+            '+32' => ['min' => 8, 'max' => 9, 'name' => 'Belgium'],
+            '+358' => ['min' => 9, 'max' => 10, 'name' => 'Finland'],
+            '+960' => ['min' => 7, 'max' => 7, 'name' => 'Maldives'],
+            '+975' => ['min' => 8, 'max' => 8, 'name' => 'Bhutan'],
+            '+95' => ['min' => 8, 'max' => 10, 'name' => 'Myanmar'],
+            '+230' => ['min' => 8, 'max' => 8, 'name' => 'Mauritius'],
+            '+679' => ['min' => 7, 'max' => 7, 'name' => 'Fiji'],
+        ];
+
+        if (!isset($countryPhoneRules[$country_code])) {
+            $this->session->set_flashdata('enquiry_error', 'Please select a valid country code.');
             redirect(base_url('/fundraiser-enquiry'));
             return;
         }
 
-        // Beneficiary Name (Optional: English & Tamil letters allowed)
-        if (!empty($beneficiary_name) && (preg_match('/^\d+$/', $beneficiary_name) || !preg_match('/^[a-zA-Z\x{0B80}-\x{0BFF}\s.\'-]{2,150}$/u', $beneficiary_name) || preg_match_all('/[a-zA-Z\x{0B80}-\x{0BFF}]/u', $beneficiary_name) < 2)) {
-            $this->session->set_flashdata('enquiry_error', 'Please enter a valid Beneficiary Name (letters only).');
+        $rule = $countryPhoneRules[$country_code];
+        $cleanPhone = preg_replace('/[^\d]/', '', $phone);
+        if ($country_code === '+91') {
+            if (!preg_match('/^[6-9]\d{9}$/', $cleanPhone) || preg_match('/^(\d)\1{9}$/', $cleanPhone)) {
+                $this->session->set_flashdata('enquiry_error', 'Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.');
+                redirect(base_url('/fundraiser-enquiry'));
+                return;
+            }
+        } else {
+            $len = strlen($cleanPhone);
+            if ($len < $rule['min'] || $len > $rule['max'] || preg_match('/^(\d)\1+$/', $cleanPhone)) {
+                $lenMsg = ($rule['min'] === $rule['max'])
+                    ? "{$rule['max']}-digit"
+                    : "{$rule['min']} to {$rule['max']} digit";
+                $this->session->set_flashdata('enquiry_error', "Please enter a valid {$lenMsg} phone number for {$rule['name']} ({$country_code}).");
+                redirect(base_url('/fundraiser-enquiry'));
+                return;
+            }
+        }
+
+        // Beneficiary Name (Mandatory: English & Tamil letters allowed)
+        if (empty($beneficiary_name) || preg_match('/^\d+$/', $beneficiary_name) || !preg_match('/^[a-zA-Z\x{0B80}-\x{0BFF}\s.\'-]{2,150}$/u', $beneficiary_name) || preg_match_all('/[a-zA-Z\x{0B80}-\x{0BFF}]/u', $beneficiary_name) < 2) {
+            $this->session->set_flashdata('enquiry_error', 'Please enter a valid Beneficiary Name (letters only, cannot be pure numbers or special characters).');
             redirect(base_url('/fundraiser-enquiry'));
             return;
         }
@@ -1943,10 +2021,11 @@ class kanavuhelp extends CI_Controller
         $enquiry_data = [
             'fullname' => $fullname,
             'email' => !empty($email) ? $email : null,
-            'phone' => $phone,
+            'country_code' => $country_code,
+            'phone' => $cleanPhone,
             'cause_category' => !empty($cause_category) ? $cause_category : 'General',
             'beneficiary_relation' => null,
-            'beneficiary_name' => !empty($beneficiary_name) ? $beneficiary_name : null,
+            'beneficiary_name' => $beneficiary_name,
             'beneficiary_age' => null,
             'location' => !empty($location) ? $location : null,
             'target_amount' => null,
@@ -1978,7 +2057,7 @@ class kanavuhelp extends CI_Controller
                             <table cellpadding='8' style='border-collapse: collapse; width: 100%; border: 1px solid #eee; font-size: 14px;'>
                                 <tr><td style='background:#f9f9f9; width: 35%;'><strong>Enquiry ID:</strong></td><td>#FE-{$insert_id}</td></tr>
                                 <tr><td style='background:#f9f9f9;'><strong>Applicant / Created by:</strong></td><td>{$fullname}</td></tr>
-                                <tr><td style='background:#f9f9f9;'><strong>Mobile Number:</strong></td><td>{$phone}</td></tr>
+                                <tr><td style='background:#f9f9f9;'><strong>Mobile Number:</strong></td><td>{$country_code} {$cleanPhone}</td></tr>
                                 <tr><td style='background:#f9f9f9;'><strong>Beneficiary Name:</strong></td><td>" . (!empty($beneficiary_name) ? htmlspecialchars($beneficiary_name) : 'Not specified') . "</td></tr>
                                 <tr><td style='background:#f9f9f9;'><strong>Category:</strong></td><td>{$catLabel}</td></tr>
                                 <tr><td style='background:#f9f9f9;'><strong>Email ID:</strong></td><td>" . (!empty($email) ? htmlspecialchars($email) : 'Not provided') . "</td></tr>
@@ -2003,7 +2082,7 @@ class kanavuhelp extends CI_Controller
                 }
             }
 
-// Only admin receives email notification; user email skipped as per workflow
+            // Only admin receives email notification; user email skipped as per workflow
 
             $this->session->set_flashdata('enquiry_success', 'Thank you! Your Fundraiser Enquiry has been submitted successfully. Our team will review your details and contact you shortly.');
         } else {

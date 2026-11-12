@@ -1663,7 +1663,7 @@
               <a id="donatepage" class="nav-link mx-lg-2" href="<?= base_url('/donate') ?>">Donate</a>
             </li>
             <li class="nav-item">
-              <a id="fundraiserenquirypage" class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Fundraiser Enquiry</a>
+              <a id="fundraiserenquirypage" class="nav-link mx-lg-2" href="<?= base_url('/fundraiser-enquiry') ?>">Start a Fundraiser</a>
             </li>
             <li class="nav-item">
               <a id="blogs" class="nav-link mx-lg-2" href="<?= base_url('/blogs') ?>">Blog</a>
@@ -1731,7 +1731,7 @@
                 <a href="<?= base_url('/fundraiser-enquiry') ?>">
                   <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm"
                     style="background-color:#ed3136 ; color: white; border: none;">
-                    Fundraiser Enquiry
+                    Start a Fundraiser
                   </button>
                 </a>
               </li>
@@ -1756,7 +1756,7 @@
                 <a href="<?= base_url('/fundraiser-enquiry') ?>">
                   <button type="button" class="btn border rounded-pill mt-3 px-4 py-2 shadow-sm"
                     style="background-color: #ed3136; color: white; border: none;">
-                    Fundraiser Enquiry
+                    Start a Fundraiser
                   </button>
                 </a>
               </li>

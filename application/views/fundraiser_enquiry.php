@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Fundraiser Enquiry - Kanavu Help</title>
+  <title>Start a Fundraiser - Kanavu Help</title>
 
   <!-- G4 (google analytics) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0Q147F1Y"></script>
@@ -112,6 +112,136 @@
       border-color: var(--primary-red);
       box-shadow: 0 0 0 3px rgba(237, 49, 54, 0.15);
       outline: none;
+    }
+
+    .phone-field-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .country-picker-wrapper {
+      position: relative;
+      width: 155px;
+      min-width: 135px;
+      flex: 0 0 155px;
+    }
+
+    .country-code-trigger {
+      width: 100%;
+      padding: 10px 32px 10px 12px;
+      font-weight: 600;
+      background-color: #ffffff;
+      cursor: pointer;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .country-dropdown-panel {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      width: 270px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14);
+      z-index: 1050;
+      display: none;
+      overflow: hidden;
+    }
+
+    .country-dropdown-panel.open {
+      display: block;
+    }
+
+    .country-search-box {
+      padding: 8px;
+      border-bottom: 1px solid #e2e8f0;
+      background: #f8fafc;
+      position: relative;
+    }
+
+    .country-search-box i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 12.5px;
+      pointer-events: none;
+    }
+
+    .country-search-input {
+      padding: 7px 10px 7px 30px !important;
+      font-size: 13.5px !important;
+      border-radius: 8px !important;
+    }
+
+    .country-options-list {
+      max-height: 220px;
+      overflow-y: auto;
+      padding: 4px 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .country-option-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      font-size: 13.5px;
+      color: #1e293b;
+      cursor: pointer;
+      transition: background-color 0.15s;
+    }
+
+    .country-option-item:hover,
+    .country-option-item.highlighted {
+      background-color: #fff1f2;
+    }
+
+    .country-option-item.active {
+      background-color: #fee2e2;
+      font-weight: 700;
+      color: #b91c1c;
+    }
+
+    .country-option-code {
+      font-weight: 700;
+      color: #64748b;
+      margin-left: 8px;
+      flex-shrink: 0;
+    }
+
+    .country-option-item.active .country-option-code {
+      color: #b91c1c;
+    }
+
+    .country-no-results {
+      padding: 12px;
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .phone-field-row .phone-number-input {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    @media (max-width: 480px) {
+      .country-picker-wrapper {
+        width: 135px;
+        flex: 0 0 135px;
+      }
+
+      .country-dropdown-panel {
+        width: 245px;
+      }
     }
 
     .custom-dropdown-wrapper {
@@ -245,7 +375,7 @@
               <a class="nav-link" href="<?= base_url('/donate') ?>">Donate</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="<?= base_url('/fundraiser-enquiry') ?>">Fundraiser Enquiry</a>
+              <a class="nav-link active" href="<?= base_url('/fundraiser-enquiry') ?>">Start a Fundraiser</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<?= base_url('/blogs') ?>">Blog</a>
@@ -335,14 +465,14 @@
               </div>
             </div>
 
-            <!-- 2. Beneficiary Name (Optional) -->
+            <!-- 2. Beneficiary Name (MANDATORY) -->
             <div class="row mb-3 align-items-center">
               <label for="beneficiary_name" class="col-sm-4 col-form-label">
-                Beneficiary Name:
+                Beneficiary Name:<span class="text-danger">*</span>
               </label>
               <div class="col-sm-8">
                 <input type="text" id="beneficiary_name" name="beneficiary_name" class="form-control"
-                  placeholder="Beneficiary Name" maxlength="100">
+                  placeholder="Beneficiary Name" minlength="2" maxlength="100" required>
                 <div id="beneficiary_name-error" class="error-msg">Please enter a valid beneficiary name (letters only,
                   no pure numbers or special characters).</div>
               </div>
@@ -387,9 +517,83 @@
                 Phone Number:<span class="text-danger">*</span>
               </label>
               <div class="col-sm-8">
-                <input type="tel" id="Phonenumber" name="Phonenumber" class="form-control"
-                  placeholder="10-digit Mobile Number" maxlength="10"
-                  oninput="this.value = this.value.replace(/\D/g, '').slice(0, 10);" required>
+                <div class="phone-field-row">
+                  <div class="country-picker-wrapper" id="countryPickerWrapper">
+                    <button type="button" id="countryCodeTrigger" class="form-select country-code-trigger"
+                      aria-haspopup="listbox" aria-expanded="false" aria-label="Country Code">
+                      <span id="countryCodeTriggerText">+91 (India)</span>
+                    </button>
+                    <div class="country-dropdown-panel" id="countryDropdownPanel">
+                      <div class="country-search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="countrySearchInput" class="form-control country-search-input"
+                          placeholder="Search country or code..." autocomplete="off">
+                      </div>
+                      <ul class="country-options-list" id="countryOptionsList" role="listbox"></ul>
+                    </div>
+                    <select id="country_code" name="country_code" class="d-none" aria-label="Country Code">
+                      <option value="+91" data-min="10" data-max="10" data-name="India" selected>+91 (India)</option>
+                      <option value="+61" data-min="9" data-max="9" data-name="Australia">+61 (Australia)</option>
+                      <option value="+43" data-min="10" data-max="13" data-name="Austria">+43 (Austria)</option>
+                      <option value="+973" data-min="8" data-max="8" data-name="Bahrain">+973 (Bahrain)</option>
+                      <option value="+880" data-min="10" data-max="10" data-name="Bangladesh">+880 (Bangladesh)</option>
+                      <option value="+32" data-min="8" data-max="9" data-name="Belgium">+32 (Belgium)</option>
+                      <option value="+975" data-min="8" data-max="8" data-name="Bhutan">+975 (Bhutan)</option>
+                      <option value="+55" data-min="10" data-max="11" data-name="Brazil">+55 (Brazil)</option>
+                      <option value="+1" data-min="10" data-max="10" data-name="USA / Canada">+1 (USA / Canada)</option>
+                      <option value="+86" data-min="11" data-max="11" data-name="China">+86 (China)</option>
+                      <option value="+45" data-min="8" data-max="8" data-name="Denmark">+45 (Denmark)</option>
+                      <option value="+20" data-min="10" data-max="10" data-name="Egypt">+20 (Egypt)</option>
+                      <option value="+679" data-min="7" data-max="7" data-name="Fiji">+679 (Fiji)</option>
+                      <option value="+358" data-min="9" data-max="10" data-name="Finland">+358 (Finland)</option>
+                      <option value="+33" data-min="9" data-max="9" data-name="France">+33 (France)</option>
+                      <option value="+49" data-min="10" data-max="11" data-name="Germany">+49 (Germany)</option>
+                      <option value="+30" data-min="10" data-max="10" data-name="Greece">+30 (Greece)</option>
+                      <option value="+852" data-min="8" data-max="8" data-name="Hong Kong">+852 (Hong Kong)</option>
+                      <option value="+62" data-min="9" data-max="12" data-name="Indonesia">+62 (Indonesia)</option>
+                      <option value="+353" data-min="9" data-max="9" data-name="Ireland">+353 (Ireland)</option>
+                      <option value="+972" data-min="9" data-max="9" data-name="Israel">+972 (Israel)</option>
+                      <option value="+39" data-min="9" data-max="10" data-name="Italy">+39 (Italy)</option>
+                      <option value="+81" data-min="10" data-max="10" data-name="Japan">+81 (Japan)</option>
+                      <option value="+254" data-min="9" data-max="9" data-name="Kenya">+254 (Kenya)</option>
+                      <option value="+965" data-min="8" data-max="8" data-name="Kuwait">+965 (Kuwait)</option>
+                      <option value="+60" data-min="9" data-max="10" data-name="Malaysia">+60 (Malaysia)</option>
+                      <option value="+960" data-min="7" data-max="7" data-name="Maldives">+960 (Maldives)</option>
+                      <option value="+230" data-min="8" data-max="8" data-name="Mauritius">+230 (Mauritius)</option>
+                      <option value="+52" data-min="10" data-max="10" data-name="Mexico">+52 (Mexico)</option>
+                      <option value="+95" data-min="8" data-max="10" data-name="Myanmar">+95 (Myanmar)</option>
+                      <option value="+977" data-min="10" data-max="10" data-name="Nepal">+977 (Nepal)</option>
+                      <option value="+31" data-min="9" data-max="9" data-name="Netherlands">+31 (Netherlands)</option>
+                      <option value="+64" data-min="8" data-max="10" data-name="New Zealand">+64 (New Zealand)</option>
+                      <option value="+234" data-min="10" data-max="10" data-name="Nigeria">+234 (Nigeria)</option>
+                      <option value="+47" data-min="8" data-max="8" data-name="Norway">+47 (Norway)</option>
+                      <option value="+968" data-min="8" data-max="8" data-name="Oman">+968 (Oman)</option>
+                      <option value="+92" data-min="10" data-max="10" data-name="Pakistan">+92 (Pakistan)</option>
+                      <option value="+63" data-min="10" data-max="10" data-name="Philippines">+63 (Philippines)</option>
+                      <option value="+48" data-min="9" data-max="9" data-name="Poland">+48 (Poland)</option>
+                      <option value="+351" data-min="9" data-max="9" data-name="Portugal">+351 (Portugal)</option>
+                      <option value="+974" data-min="8" data-max="8" data-name="Qatar">+974 (Qatar)</option>
+                      <option value="+7" data-min="10" data-max="10" data-name="Russia">+7 (Russia)</option>
+                      <option value="+966" data-min="9" data-max="9" data-name="Saudi Arabia">+966 (Saudi Arabia)
+                      </option>
+                      <option value="+65" data-min="8" data-max="8" data-name="Singapore">+65 (Singapore)</option>
+                      <option value="+27" data-min="9" data-max="9" data-name="South Africa">+27 (South Africa)</option>
+                      <option value="+82" data-min="9" data-max="10" data-name="South Korea">+82 (South Korea)</option>
+                      <option value="+34" data-min="9" data-max="9" data-name="Spain">+34 (Spain)</option>
+                      <option value="+94" data-min="9" data-max="9" data-name="Sri Lanka">+94 (Sri Lanka)</option>
+                      <option value="+46" data-min="7" data-max="10" data-name="Sweden">+46 (Sweden)</option>
+                      <option value="+41" data-min="9" data-max="9" data-name="Switzerland">+41 (Switzerland)</option>
+                      <option value="+66" data-min="9" data-max="9" data-name="Thailand">+66 (Thailand)</option>
+                      <option value="+90" data-min="10" data-max="10" data-name="Turkey">+90 (Turkey)</option>
+                      <option value="+971" data-min="9" data-max="9" data-name="United Arab Emirates">+971 (UAE)
+                      </option>
+                      <option value="+44" data-min="10" data-max="10" data-name="United Kingdom">+44 (UK)</option>
+                      <option value="+84" data-min="9" data-max="10" data-name="Vietnam">+84 (Vietnam)</option>
+                    </select>
+                  </div>
+                  <input type="tel" id="Phonenumber" name="Phonenumber" class="form-control phone-number-input"
+                    placeholder="10-digit Mobile Number" maxlength="10" required>
+                </div>
                 <div id="Phonenumber-error" class="error-msg">Please enter a valid 10-digit mobile number starting with
                   6, 7, 8, or 9.</div>
               </div>
@@ -441,7 +645,7 @@
       <div class="d-flex justify-content-center gap-3 mt-3 flex-wrap">
         <a href="<?= base_url('/abouts') ?>" class="text-white text-decoration-none">About Us</a>
         <span class="text-white-50">|</span>
-        <a href="<?= base_url('/fundraiser-enquiry') ?>" class="text-white text-decoration-none">Fundraiser Enquiry</a>
+        <a href="<?= base_url('/fundraiser-enquiry') ?>" class="text-white text-decoration-none">Start a Fundraiser</a>
         <span class="text-white-50">|</span>
         <a href="<?= base_url('/contactus') ?>" class="text-white text-decoration-none">Contact Us</a>
         <span class="text-white-50">|</span>
@@ -459,6 +663,188 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('fundraiserEnquiryForm');
+      const countryCodeEl = document.getElementById('country_code');
+      const countryPickerWrapper = document.getElementById('countryPickerWrapper');
+      const countryCodeTrigger = document.getElementById('countryCodeTrigger');
+      const countryCodeTriggerText = document.getElementById('countryCodeTriggerText');
+      const countryDropdownPanel = document.getElementById('countryDropdownPanel');
+      const countrySearchInput = document.getElementById('countrySearchInput');
+      const countryOptionsList = document.getElementById('countryOptionsList');
+      const phoneInputEl = document.getElementById('Phonenumber');
+      const phoneErrorEl = document.getElementById('Phonenumber-error');
+
+      let highlightedIndex = -1;
+
+      function renderCountryOptions(filterText) {
+        const query = (filterText || '').trim().toLowerCase();
+        countryOptionsList.innerHTML = '';
+        highlightedIndex = -1;
+
+        const options = Array.from(countryCodeEl.options);
+        const matches = [];
+
+        options.forEach(function (opt, idx) {
+          const code = opt.value;
+          const name = opt.getAttribute('data-name') || opt.textContent;
+          const label = opt.textContent;
+          const searchTarget = (name + ' ' + label + ' ' + code).toLowerCase();
+          if (!query || searchTarget.indexOf(query) !== -1) {
+            matches.push({ opt: opt, idx: idx, code: code, name: name, label: label });
+          }
+        });
+
+        if (matches.length === 0) {
+          const emptyLi = document.createElement('li');
+          emptyLi.className = 'country-no-results';
+          emptyLi.textContent = 'No country found';
+          countryOptionsList.appendChild(emptyLi);
+          return;
+        }
+
+        matches.forEach(function (item) {
+          const li = document.createElement('li');
+          li.className = 'country-option-item' + (item.idx === countryCodeEl.selectedIndex ? ' active' : '');
+          li.setAttribute('role', 'option');
+          li.setAttribute('data-index', String(item.idx));
+
+          const nameSpan = document.createElement('span');
+          nameSpan.textContent = item.name;
+
+          const codeSpan = document.createElement('span');
+          codeSpan.className = 'country-option-code';
+          codeSpan.textContent = item.code;
+
+          li.appendChild(nameSpan);
+          li.appendChild(codeSpan);
+
+          li.addEventListener('click', function () {
+            selectCountryByIndex(item.idx);
+          });
+
+          countryOptionsList.appendChild(li);
+        });
+      }
+
+      function openCountryDropdown() {
+        countryDropdownPanel.classList.add('open');
+        countryCodeTrigger.setAttribute('aria-expanded', 'true');
+        countrySearchInput.value = '';
+        renderCountryOptions('');
+        setTimeout(function () {
+          countrySearchInput.focus();
+        }, 10);
+      }
+
+      function closeCountryDropdown() {
+        countryDropdownPanel.classList.remove('open');
+        countryCodeTrigger.setAttribute('aria-expanded', 'false');
+        highlightedIndex = -1;
+      }
+
+      function selectCountryByIndex(idx) {
+        countryCodeEl.selectedIndex = idx;
+        const opt = countryCodeEl.options[idx];
+        countryCodeTriggerText.textContent = opt.textContent;
+        countryCodeEl.dispatchEvent(new Event('change'));
+        closeCountryDropdown();
+        phoneInputEl.focus();
+      }
+
+      countryCodeTrigger.addEventListener('click', function () {
+        if (countryDropdownPanel.classList.contains('open')) {
+          closeCountryDropdown();
+        } else {
+          openCountryDropdown();
+        }
+      });
+
+      countrySearchInput.addEventListener('input', function () {
+        renderCountryOptions(this.value);
+      });
+
+      countrySearchInput.addEventListener('keydown', function (e) {
+        const items = countryOptionsList.querySelectorAll('.country-option-item');
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (items.length > 0) {
+            highlightedIndex = (highlightedIndex + 1) % items.length;
+            updateHighlight(items);
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (items.length > 0) {
+            highlightedIndex = (highlightedIndex - 1 + items.length) % items.length;
+            updateHighlight(items);
+          }
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (items.length > 0) {
+            const targetItem = highlightedIndex >= 0 ? items[highlightedIndex] : items[0];
+            selectCountryByIndex(parseInt(targetItem.getAttribute('data-index'), 10));
+          }
+        } else if (e.key === 'Escape') {
+          closeCountryDropdown();
+          countryCodeTrigger.focus();
+        }
+      });
+
+      function updateHighlight(items) {
+        items.forEach(function (el, i) {
+          if (i === highlightedIndex) {
+            el.classList.add('highlighted');
+            el.scrollIntoView({ block: 'nearest' });
+          } else {
+            el.classList.remove('highlighted');
+          }
+        });
+      }
+
+      document.addEventListener('click', function (e) {
+        if (!countryPickerWrapper.contains(e.target)) {
+          closeCountryDropdown();
+        }
+      });
+
+      renderCountryOptions('');
+
+      function getSelectedPhoneRule() {
+        const opt = countryCodeEl.options[countryCodeEl.selectedIndex];
+        return {
+          code: opt.value,
+          min: parseInt(opt.getAttribute('data-min'), 10) || 10,
+          max: parseInt(opt.getAttribute('data-max'), 10) || 10,
+          name: opt.getAttribute('data-name') || 'Selected Country'
+        };
+      }
+
+      function updatePhoneConstraints() {
+        const rule = getSelectedPhoneRule();
+        phoneInputEl.maxLength = rule.max;
+        phoneInputEl.value = phoneInputEl.value.replace(/\D/g, '').slice(0, rule.max);
+
+        if (rule.code === '+91') {
+          phoneInputEl.placeholder = '10-digit Mobile Number';
+          phoneErrorEl.textContent = 'Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.';
+        } else if (rule.min === rule.max) {
+          phoneInputEl.placeholder = rule.max + '-digit Phone Number';
+          phoneErrorEl.textContent = 'Please enter a valid ' + rule.max + '-digit phone number for ' + rule.name + ' (' + rule.code + ').';
+        } else {
+          phoneInputEl.placeholder = rule.min + '-' + rule.max + ' digit Phone Number';
+          phoneErrorEl.textContent = 'Please enter a valid phone number (' + rule.min + ' to ' + rule.max + ' digits) for ' + rule.name + ' (' + rule.code + ').';
+        }
+      }
+
+      updatePhoneConstraints();
+
+      countryCodeEl.addEventListener('change', function () {
+        updatePhoneConstraints();
+        showError('Phonenumber', false);
+      });
+
+      phoneInputEl.addEventListener('input', function () {
+        const rule = getSelectedPhoneRule();
+        this.value = this.value.replace(/\D/g, '').slice(0, rule.max);
+      });
 
       function isValidName(val) {
         val = (val || '').trim();
@@ -484,10 +870,15 @@
         return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val);
       }
 
-      function isValidPhone(val) {
+      function isValidPhone(val, rule) {
         val = (val || '').trim().replace(/\D/g, '');
-        if (!/^[6-9]\d{9}$/.test(val)) return false;
-        if (/^(\d)\1{9}$/.test(val)) return false;
+        if (rule.code === '+91') {
+          if (!/^[6-9]\d{9}$/.test(val)) return false;
+          if (/^(\d)\1{9}$/.test(val)) return false;
+          return true;
+        }
+        if (val.length < rule.min || val.length > rule.max) return false;
+        if (/^(\d)\1+$/.test(val)) return false;
         return true;
       }
 
@@ -528,9 +919,9 @@
           showError('fullname', false);
         }
 
-        // 2. Beneficiary Name (Optional - letters only if filled)
+        // 2. Beneficiary Name (Mandatory - letters only, min 2 letters, no pure numeric or special chars)
         const bNameVal = document.getElementById('beneficiary_name').value.trim();
-        if (bNameVal !== '' && !isValidName(bNameVal)) {
+        if (!isValidName(bNameVal)) {
           showError('beneficiary_name', true);
           isValid = false;
           if (!firstInvalidField) firstInvalidField = document.getElementById('beneficiary_name');
@@ -538,9 +929,10 @@
           showError('beneficiary_name', false);
         }
 
-        // 3. Phonenumber (Mandatory - 10 digits)
+        // 3. Phonenumber (Mandatory - validated by selected country code min/max length)
+        const phoneRule = getSelectedPhoneRule();
         const phoneVal = document.getElementById('Phonenumber').value.trim();
-        if (!isValidPhone(phoneVal)) {
+        if (!isValidPhone(phoneVal, phoneRule)) {
           showError('Phonenumber', true);
           isValid = false;
           if (!firstInvalidField) firstInvalidField = document.getElementById('Phonenumber');
