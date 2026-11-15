@@ -127,6 +127,47 @@
       margin-top: 20px;
     }
 
+    /* Pagination style */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .pagination .page-item .page-link {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      text-align: center;
+      line-height: 40px;
+      border: none;
+      background-color: #f0f0f0;
+      color: #000;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .pagination .page-item.active .page-link {
+      background-color: #0A517F;
+      color: #fff;
+    }
+
+    .pagination .page-item.disabled .page-link {
+      background-color: #f0f0f0;
+      color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+      background-color: #d6d6d6;
+      color: #000;
+    }
+
     .table th {
       background-color: #f8fafc;
       font-weight: 700;
@@ -490,7 +531,7 @@
                   <th style="width: 80px;" class="text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="enquiry-tbody">
                 <?php if (!empty($enquiries)): ?>
                   <?php $sno = 1;
                   foreach ($enquiries as $row): ?>
@@ -564,16 +605,27 @@
                     </tr>
                   <?php endforeach; ?>
                 <?php else: ?>
-                  <tr>
+                  <tr id="no-enquiries-row">
                     <td colspan="10" class="text-center py-5 text-muted">
                       <i class="fa-solid fa-inbox fs-1 mb-2 d-block text-secondary"></i>
                       No fundraiser enquiries found in this category.
                     </td>
                   </tr>
                 <?php endif; ?>
+                <tr id="no-results" style="display: none;">
+                  <td colspan="10" class="text-center py-5 text-muted">
+                    <i class="fa-solid fa-magnifying-glass fs-2 mb-2 d-block text-secondary"></i>
+                    No matching enquiries found.
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
+
+          <!-- Pagination -->
+          <nav aria-label="Pagination" class="mt-4" id="pagination-nav" style="display: none;">
+            <ul class="pagination mb-0" id="pagination-ul"></ul>
+          </nav>
         </div>
       </div>
     </div>
@@ -693,12 +745,181 @@
   </div>
 
   <script>
-    // Live table search filter
-    $('#tableSearch').on('keyup', function () {
-      var value = $(this).val().toLowerCase();
-      $('#enquiryTable tbody tr').filter(function () {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+    // Search & Pagination Logic
+    document.addEventListener('DOMContentLoaded', function () {
+      const tbody = document.getElementById('enquiry-tbody');
+      if (!tbody) return;
+
+      const rows = Array.from(tbody.querySelectorAll('tr')).filter(function (row) {
+        return row.id && row.id.indexOf('row-') === 0;
       });
+      const searchInput = document.getElementById('tableSearch');
+      const paginationNav = document.getElementById('pagination-nav');
+      const paginationUl = document.getElementById('pagination-ul');
+      const recordsPerPage = 5;
+      let currentPage = 1;
+      let filteredRows = rows;
+
+      function displayPage(page) {
+        const start = (page - 1) * recordsPerPage;
+        const end = start + recordsPerPage;
+
+        rows.forEach(function (row) {
+          row.style.display = 'none';
+        });
+
+        const pageRows = filteredRows.slice(start, end);
+        pageRows.forEach(function (row) {
+          row.style.display = '';
+        });
+
+        pageRows.forEach(function (row, index) {
+          if (row.cells && row.cells[0]) {
+            row.cells[0].textContent = start + index + 1;
+          }
+        });
+
+        const noResultsRow = document.getElementById('no-results');
+        if (noResultsRow) {
+          noResultsRow.style.display = (rows.length > 0 && filteredRows.length === 0) ? '' : 'none';
+        }
+      }
+
+      function generatePagination() {
+        paginationUl.innerHTML = '';
+        const totalPages = Math.ceil(filteredRows.length / recordsPerPage);
+
+        if (totalPages <= 1) {
+          paginationNav.style.display = 'none';
+          return;
+        }
+
+        paginationNav.style.display = 'block';
+
+        // Previous button
+        const prevLi = document.createElement('li');
+        prevLi.classList.add('page-item');
+        if (currentPage === 1) prevLi.classList.add('disabled');
+        prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><i class="fas fa-arrow-left"></i></a>`;
+        prevLi.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (currentPage > 1) {
+            currentPage--;
+            displayPage(currentPage);
+            generatePagination();
+          }
+        });
+        paginationUl.appendChild(prevLi);
+
+        // Page numbers
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage + 1 < maxVisiblePages) {
+          startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        // First page and ellipsis
+        if (startPage > 1) {
+          const firstLi = document.createElement('li');
+          firstLi.classList.add('page-item');
+          firstLi.innerHTML = `<a class="page-link" href="#">1</a>`;
+          firstLi.addEventListener('click', function (e) {
+            e.preventDefault();
+            currentPage = 1;
+            displayPage(currentPage);
+            generatePagination();
+          });
+          paginationUl.appendChild(firstLi);
+
+          if (startPage > 2) {
+            const ellipsisLi = document.createElement('li');
+            ellipsisLi.classList.add('page-item', 'disabled');
+            ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+            paginationUl.appendChild(ellipsisLi);
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const li = document.createElement('li');
+          li.classList.add('page-item');
+          if (i === currentPage) li.classList.add('active');
+          li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+          li.addEventListener('click', function (e) {
+            e.preventDefault();
+            currentPage = i;
+            displayPage(currentPage);
+            generatePagination();
+          });
+          paginationUl.appendChild(li);
+        }
+
+        // Last page and ellipsis
+        if (endPage < totalPages) {
+          if (endPage < totalPages - 1) {
+            const ellipsisLi = document.createElement('li');
+            ellipsisLi.classList.add('page-item', 'disabled');
+            ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
+            paginationUl.appendChild(ellipsisLi);
+          }
+
+          const lastLi = document.createElement('li');
+          lastLi.classList.add('page-item');
+          lastLi.innerHTML = `<a class="page-link" href="#">${totalPages}</a>`;
+          lastLi.addEventListener('click', function (e) {
+            e.preventDefault();
+            currentPage = totalPages;
+            displayPage(currentPage);
+            generatePagination();
+          });
+          paginationUl.appendChild(lastLi);
+        }
+
+        // Next button
+        const nextLi = document.createElement('li');
+        nextLi.classList.add('page-item');
+        if (currentPage === totalPages) nextLi.classList.add('disabled');
+        nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><i class="fas fa-arrow-right"></i></a>`;
+        nextLi.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (currentPage < totalPages) {
+            currentPage++;
+            displayPage(currentPage);
+            generatePagination();
+          }
+        });
+        paginationUl.appendChild(nextLi);
+      }
+
+      function filterRows() {
+        const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+        filteredRows = rows.filter(function (row) {
+          if (searchTerm !== '') {
+            return row.textContent.toLowerCase().indexOf(searchTerm) > -1;
+          }
+          return true;
+        });
+
+        currentPage = 1;
+        displayPage(currentPage);
+        generatePagination();
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', function () {
+          clearTimeout(this.searchTimeout);
+          this.searchTimeout = setTimeout(filterRows, 250);
+        });
+      }
+
+      if (rows.length > 0) {
+        displayPage(currentPage);
+        generatePagination();
+      } else {
+        if (paginationNav) paginationNav.style.display = 'none';
+      }
     });
 
     // View Details Modal
