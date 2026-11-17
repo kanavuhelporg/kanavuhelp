@@ -1722,4 +1722,260 @@ class admin extends CI_Controller
         }
     }
 
+    public function fundraiser_enquiries()
+    {
+        if (!$this->session->userdata('adminId')) {
+            redirect('admin');
+        }
+        $this->load->model('UserModel');
+        $status = $this->input->get('status', true);
+        if (empty($status)) {
+            $status = 'all';
+        }
+        $data['current_status'] = $status;
+        $data['enquiries'] = $this->UserModel->get_fundraiser_enquiries($status);
+        $data['total_count'] = $this->UserModel->count_fundraiser_enquiries('all');
+        $data['pending_count'] = $this->UserModel->count_fundraiser_enquiries('pending');
+        $data['approved_count'] = $this->UserModel->count_fundraiser_enquiries('approved');
+        $data['rejected_count'] = $this->UserModel->count_fundraiser_enquiries('rejected');
+        $data['hold_count'] = $this->UserModel->count_fundraiser_enquiries('hold');
+
+        $this->load->view('admin_fundraiser_enquiries', $data);
+    }
+
+    public function get_enquiry_details()
+    {
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        $this->load->model('UserModel');
+        $id = $this->input->get('id', true);
+        $enquiry = $this->UserModel->get_fundraiser_enquiry_by_id($id);
+        if ($enquiry) {
+            echo json_encode(['status' => 'success', 'data' => $enquiry]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Record not found']);
+        }
+    }
+
+    public function approve_enquiry()
+    {
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        $this->load->model('UserModel');
+        $this->load->library('email');
+
+        $id = $this->input->post('id', true);
+        $remarks = $this->input->post('remarks', true) ?: 'Approved by admin for cause creation.';
+        $admin_id = $this->session->userdata('adminId');
+        $admin_name = $this->session->userdata('adminName') ?: 'Admin';
+
+        $enquiry = $this->UserModel->get_fundraiser_enquiry_by_id($id);
+        if (!$enquiry) {
+            echo json_encode(['status' => 'error', 'message' => 'Enquiry not found']);
+            return;
+        }
+
+        if ($enquiry->status === 'approved') {
+            $approver = !empty($enquiry->approved_admin_name) ? $enquiry->approved_admin_name : 'another admin';
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'This enquiry is already approved by ' . $approver . '. It cannot be approved again.'
+            ]);
+            return;
+        }
+
+        $updated = $this->UserModel->update_fundraiser_enquiry_status($id, 'approved', $remarks, $admin_id, $admin_name);
+
+        if ($updated) {
+            // Generate a secure unique approval token and save to DB
+            $token = bin2hex(random_bytes(32));
+            $this->UserModel->save_approval_token($id, $token);
+
+            // Build the static reusable link for the cause creator
+            $approval_link = base_url('fundraiser_approve_token/' . $token);
+
+            // NOTE: Do not automatically send email to applicant upon approval as requested.
+            // Admin manually copies and shares this link with the applicant.
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Enquiry #FE-' . $id . ' has been approved successfully.',
+                'approval_link' => $approval_link,
+                'approval_token' => $token
+            ]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to approve enquiry.']);
+        }
+    }
+
+    public function send_manual_enquiry_link()
+    {
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        $this->load->model('UserModel');
+        $this->load->library('email');
+
+        $id = $this->input->post('id', true);
+        $enquiry = $this->UserModel->get_fundraiser_enquiry_by_id($id);
+        if (!$enquiry) {
+            echo json_encode(['status' => 'error', 'message' => 'Enquiry not found']);
+            return;
+        }
+
+        if ($enquiry->status !== 'approved') {
+            echo json_encode(['status' => 'error', 'message' => 'Enquiry must be approved before sending cause creation link.']);
+            return;
+        }
+
+        if (empty($enquiry->email) || !filter_var($enquiry->email, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(['status' => 'error', 'message' => 'No valid email address is available for this enquiry.']);
+            return;
+        }
+
+        $token = $enquiry->approval_token;
+        if (empty($token)) {
+            $token = bin2hex(random_bytes(32));
+            $this->UserModel->save_approval_token($id, $token);
+        }
+
+        $approval_link = base_url('fundraiser_approve_token/' . $token);
+
+        $userSubject = 'Your Fundraiser Cause Creation Link - Kanavu Help';
+        $userMessage = "
+            <html>
+            <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
+                <div style='max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;'>
+                    <div style='background-color: #16a34a; color: #ffffff; padding: 20px; text-align: center;'>
+                        <h2 style='margin:0;'>Start Your Fundraiser Campaign</h2>
+                        <p style='margin: 5px 0 0 0;'>Ref ID: #FE-{$id}</p>
+                    </div>
+                    <div style='padding: 25px;'>
+                        <p>Hello <strong>" . htmlspecialchars($enquiry->fullname) . "</strong>,</p>
+                        <p>Your fundraiser enquiry for <strong>" . htmlspecialchars($enquiry->cause_title) . "</strong> has been approved. You can create your cause campaign using the link below:</p>
+                        <div style='text-align: center; margin: 28px 0;'>
+                            <a href='{$approval_link}'
+                               style='background-color: #16a34a; color: #ffffff; padding: 14px 32px; border-radius: 30px; text-decoration: none; font-size: 16px; font-weight: bold; display: inline-block;'>
+                               Start Your Fundraiser
+                            </a>
+                        </div>
+                        <p style='font-size: 13px; color: #666;'>Direct Link:</p>
+                        <p style='font-size: 13px; color: #2563eb; word-break: break-all;'><a href='{$approval_link}'>{$approval_link}</a></p>
+                        <p style='font-size: 12px; color: #999; margin-top: 16px;'>This link is exclusive to your approved enquiry.</p>
+                        <p style='margin-top: 30px;'>Best Regards,<br><strong>Kanavu Help Verification Team</strong></p>
+                    </div>
+                </div>
+            </body>
+            </html>
+        ";
+
+        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
+        $this->email->to($enquiry->email);
+        $this->email->subject($userSubject);
+        $this->email->message($userMessage);
+        $this->email->set_mailtype('html');
+        $sent = @$this->email->send();
+
+        if ($sent) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Manual cause link sent successfully to ' . $enquiry->email,
+                'approval_link' => $approval_link,
+                'approval_token' => $token
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Failed to send email to ' . $enquiry->email . '. Please check SMTP/email configuration.'
+            ]);
+        }
+    }
+
+    public function reject_enquiry()
+    {
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        $this->load->model('UserModel');
+        $id = $this->input->post('id', true);
+        $remarks = $this->input->post('remarks', true) ?: 'Enquiry rejected.';
+        $admin_id = $this->session->userdata('adminId');
+
+        $updated = $this->UserModel->update_fundraiser_enquiry_status($id, 'rejected', $remarks, $admin_id);
+
+        if ($updated) {
+            echo json_encode(['status' => 'success', 'message' => 'Enquiry #FE-' . $id . ' has been marked as rejected.']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to reject enquiry.']);
+        }
+    }
+
+    public function toggle_enquiry_hold()
+    {
+        if (!$this->session->userdata('adminId')) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        $this->load->model('UserModel');
+
+        $id = $this->input->post('id', true);
+        $action = $this->input->post('action', true); // 'hold' or 'unhold'
+        $remarks = trim((string) $this->input->post('remarks', true));
+        $admin_id = $this->session->userdata('adminId');
+        $admin_name = $this->session->userdata('adminName') ?: 'Admin';
+
+        if (!in_array($action, ['hold', 'unhold'], true)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid action.']);
+            return;
+        }
+
+        $enquiry = $this->UserModel->get_fundraiser_enquiry_by_id($id);
+        if (!$enquiry) {
+            echo json_encode(['status' => 'error', 'message' => 'Enquiry not found.']);
+            return;
+        }
+
+        if ($enquiry->status !== 'approved') {
+            echo json_encode(['status' => 'error', 'message' => 'Only approved enquiries can be put on hold or unheld.']);
+            return;
+        }
+
+        $is_hold = ($action === 'hold');
+        if ($is_hold && (int) $enquiry->is_hold === 1) {
+            $holder = !empty($enquiry->hold_admin_name) ? $enquiry->hold_admin_name : 'an admin';
+            echo json_encode(['status' => 'error', 'message' => 'This enquiry is already on hold by ' . $holder . '.']);
+            return;
+        }
+        if (!$is_hold && (int) $enquiry->is_hold === 0) {
+            echo json_encode(['status' => 'error', 'message' => 'This enquiry is not currently on hold.']);
+            return;
+        }
+
+        if ($remarks === '') {
+            $remarks = $is_hold ? 'Put on hold by admin.' : 'Removed from hold by admin.';
+        }
+
+        $updated = $this->UserModel->toggle_fundraiser_enquiry_hold($id, $is_hold, $admin_id, $admin_name, $remarks);
+        if ($updated) {
+            $msg = $is_hold
+                ? 'Enquiry #FE-' . $id . ' has been put on hold by ' . $admin_name . '.'
+                : 'Enquiry #FE-' . $id . ' has been unheld by ' . $admin_name . '.';
+            echo json_encode([
+                'status' => 'success',
+                'message' => $msg,
+                'is_hold' => $is_hold ? 1 : 0,
+                'admin_name' => $admin_name
+            ]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to update hold status.']);
+        }
+    }
+
 }
+
