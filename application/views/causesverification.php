@@ -2596,9 +2596,13 @@
                         alert("Please select a verification status (Verified or Rejected) before sending.");
                         return;
                     }
+                    if (!email || email.trim() === "" || email === "null" || email === "undefined") {
+                        alert("Email is not available");
+                        return;
+                    }
                     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(email)) {
-                        alert("Please provide a valid email address.");
+                    if (!emailRegex.test(email.trim())) {
+                        alert("Invalid email address format");
                         return;
                     }
                     let message = document.getElementById("causestatus").innerText.trim();

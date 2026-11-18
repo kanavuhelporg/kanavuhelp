@@ -1091,6 +1091,15 @@ function sendEmail(donationid, email, donarname, adminname, transactionid, amoun
         alert("First choose any one radio button only");
         return;
     }
+    if (!email || email.trim() === "" || email === "null" || email === "undefined") {
+        alert("Email is not available");
+        return;
+    }
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+        alert("Invalid email address format");
+        return;
+    }
     let message = document.getElementById("transactionstatus").innerText;
     let a = document.createElement("a");
     a.href = `sendtransactionVerficationstatus?email=${email}&message=${message}&donationid=${donationid}&donarname=${donarname}&adminname=${adminname}&status=${status}&transactionid=${transactionid}&amount=${amount}`;
