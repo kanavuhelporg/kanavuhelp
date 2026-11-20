@@ -1468,14 +1468,23 @@ class kanavuhelp extends CI_Controller
             </html>
         ";
 
-        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
-        $this->email->to($userEmail);
-        $this->email->subject($userSubject);
-        $this->email->message($userMessage);
-        $this->email->set_mailtype('html');
-        $userEmailSent = $this->email->send();
+        $fromEmail = $this->config->item('from_email') ?: 'support@help.kanavu.org';
+        $isFromValid = (!empty($fromEmail) && filter_var($fromEmail, FILTER_VALIDATE_EMAIL));
+        $userEmailSent = false;
+        $adminEmailSent = false;
 
-        // --- 2️⃣ Send Notification Email to Admin ---
+        // --- 1️⃣ Send Confirmation Email to the User (validate from and to first) ---
+        if ($isFromValid && !empty($userEmail) && filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+            $this->email->clear();
+            $this->email->from($fromEmail, 'The Kanavu Trust');
+            $this->email->to($userEmail);
+            $this->email->subject($userSubject);
+            $this->email->message($userMessage);
+            $this->email->set_mailtype('html');
+            $userEmailSent = $this->email->send();
+        }
+
+        // --- 2️⃣ Send Notification Email to Admin (validate from and to first) ---
         $adminSubject = 'New Contact Form Submission Received';
         $adminMessage = "
             <html>
@@ -1493,12 +1502,15 @@ class kanavuhelp extends CI_Controller
             </html>
         ";
 
-        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'Kanavu Help Website');
-        $this->email->to($adminEmail);
-        $this->email->subject($adminSubject);
-        $this->email->message($adminMessage);
-        $this->email->set_mailtype('html');
-        $adminEmailSent = $this->email->send();
+        if ($isFromValid && !empty($adminEmail) && filter_var($adminEmail, FILTER_VALIDATE_EMAIL)) {
+            $this->email->clear();
+            $this->email->from($fromEmail, 'Kanavu Help Website');
+            $this->email->to($adminEmail);
+            $this->email->subject($adminSubject);
+            $this->email->message($adminMessage);
+            $this->email->set_mailtype('html');
+            $adminEmailSent = $this->email->send();
+        }
 
         // --- 3️⃣ Flash Message Based on Status ---
         if ($userEmailSent && $adminEmailSent) {
@@ -1866,15 +1878,27 @@ class kanavuhelp extends CI_Controller
             </html>
         ";
 
-        if (!empty($adminEmails)) {
+        // Send Notification Email to Admin about new Cause Creation
+        $fromEmail = $this->config->item('from_email') ?: 'support@help.kanavu.org';
+        $isFromValid = (!empty($fromEmail) && filter_var($fromEmail, FILTER_VALIDATE_EMAIL));
+
+        if ($isFromValid && !empty($adminEmails)) {
             foreach ($adminEmails as $toAdmin) {
-                $this->email->clear();
-                $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'Kanavu Help System');
-                $this->email->to($toAdmin);
-                $this->email->subject($adminSubject);
-                $this->email->message($adminMessage);
-                $this->email->set_mailtype('html');
-                @$this->email->send();
+                $toAdmin = trim($toAdmin);
+                if (!empty($toAdmin) && filter_var($toAdmin, FILTER_VALIDATE_EMAIL)) {
+                    $this->email->clear();
+                    $this->email->from($fromEmail, 'Kanavu Help System');
+                    $this->email->to($toAdmin);
+                    $this->email->subject($adminSubject);
+                    $this->email->message($adminMessage);
+                    $this->email->set_mailtype('html');
+                    $sent = @$this->email->send();
+                    // If SMTP fails or is blocked on live server, send via Resend API (HTTPS Port 443)
+                    if (!$sent) {
+                        $this->load->library('resend');
+                        $this->resend->send($toAdmin, $adminSubject, $adminMessage);
+                    }
+                }
             }
         }
 
@@ -2040,45 +2064,64 @@ class kanavuhelp extends CI_Controller
         $insert_id = $this->db->insert_id();
 
         if ($inserted) {
-            // Send Notification Email to Admin about new Fundraiser Enquiry
-            $adminEmails = $this->UserModel->get_admin_emails();
-            $catLabel = !empty($cause_category) ? $cause_category : 'General';
-            $adminSubject = "New Fundraiser Enquiry #FE-{$insert_id}: {$fullname} ({$catLabel})";
-            $adminMessage = "
-                <html>
-                <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
-                    <div style='max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;'>
-                        <div style='background-color: #ed3136; color: #ffffff; padding: 18px; text-align: center;'>
-                            <h2 style='margin:0;'>New Fundraiser Enquiry Received</h2>
-                            <p style='margin: 4px 0 0 0;'>Ref ID: #FE-{$insert_id}</p>
-                        </div>
-                        <div style='padding: 20px;'>
-                            <p>A new fundraiser enquiry has been entered on Kanavu Help:</p>
-                            <table cellpadding='8' style='border-collapse: collapse; width: 100%; border: 1px solid #eee; font-size: 14px;'>
-                                <tr><td style='background:#f9f9f9; width: 35%;'><strong>Enquiry ID:</strong></td><td>#FE-{$insert_id}</td></tr>
-                                <tr><td style='background:#f9f9f9;'><strong>Applicant / Created by:</strong></td><td>{$fullname}</td></tr>
-                                <tr><td style='background:#f9f9f9;'><strong>Mobile Number:</strong></td><td>{$country_code} {$cleanPhone}</td></tr>
-                                <tr><td style='background:#f9f9f9;'><strong>Beneficiary Name:</strong></td><td>" . (!empty($beneficiary_name) ? htmlspecialchars($beneficiary_name) : 'Not specified') . "</td></tr>
-                                <tr><td style='background:#f9f9f9;'><strong>Category:</strong></td><td>{$catLabel}</td></tr>
-                                <tr><td style='background:#f9f9f9;'><strong>Email ID:</strong></td><td>" . (!empty($email) ? htmlspecialchars($email) : 'Not provided') . "</td></tr>
-                                <tr><td style='background:#f9f9f9;'><strong>Location:</strong></td><td>" . (!empty($location) ? htmlspecialchars($location) : 'Not specified') . "</td></tr>
-                            </table>
-                            <p style='margin-top:20px;'>Please log into the Admin Dashboard under <strong>Fundraiser Enquiries</strong> to review and approve this enquiry, then share the cause creation link with the applicant.</p>
-                        </div>
-                    </div>
-                </body>
-                </html>
-            ";
+            $fromEmail = $this->config->item('from_email') ?: 'support@help.kanavu.org';
+            $isFromValid = (!empty($fromEmail) && filter_var($fromEmail, FILTER_VALIDATE_EMAIL));
 
-            if (!empty($adminEmails)) {
-                foreach ($adminEmails as $toAdmin) {
-                    $this->email->clear();
-                    $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'Kanavu Help System');
-                    $this->email->to($toAdmin);
-                    $this->email->subject($adminSubject);
-                    $this->email->message($adminMessage);
-                    $this->email->set_mailtype('html');
-                    @$this->email->send();
+            $safeBeneficiary = !empty($beneficiary_name) ? htmlspecialchars($beneficiary_name) : 'Not specified';
+            $safeCategory = !empty($cause_category) ? htmlspecialchars($cause_category) : 'General';
+            $safeEmail = !empty($email) ? htmlspecialchars($email) : 'Not provided';
+            $safeLocation = !empty($location) ? htmlspecialchars($location) : 'Not specified';
+
+            // Send Notification Email to Admin about new Fundraiser Enquiry
+            if ($isFromValid) {
+                $adminEmails = $this->UserModel->get_admin_emails();
+                $catLabel = !empty($cause_category) ? $cause_category : 'General';
+                $adminSubject = "New Fundraiser Enquiry #FE-{$insert_id}: {$fullname} ({$catLabel})";
+                $adminMessage = "
+                    <html>
+                    <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
+                        <div style='max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;'>
+                            <div style='background-color: #ed3136; color: #ffffff; padding: 18px; text-align: center;'>
+                                <h2 style='margin:0;'>New Fundraiser Enquiry Received</h2>
+                                <p style='margin: 4px 0 0 0;'>Ref ID: #FE-{$insert_id}</p>
+                            </div>
+                            <div style='padding: 20px;'>
+                                <p>A new fundraiser enquiry has been entered on Kanavu Help:</p>
+                                <table cellpadding='8' style='border-collapse: collapse; width: 100%; border: 1px solid #eee; font-size: 14px;'>
+                                    <tr><td style='background:#f9f9f9; width: 35%;'><strong>Enquiry ID:</strong></td><td>#FE-{$insert_id}</td></tr>
+                                    <tr><td style='background:#f9f9f9;'><strong>Applicant / Created by:</strong></td><td>{$fullname}</td></tr>
+                                    <tr><td style='background:#f9f9f9;'><strong>Mobile Number:</strong></td><td>{$country_code} {$cleanPhone}</td></tr>
+                                    <tr><td style='background:#f9f9f9;'><strong>Beneficiary Name:</strong></td><td>{$safeBeneficiary}</td></tr>
+                                    <tr><td style='background:#f9f9f9;'><strong>Category:</strong></td><td>{$catLabel}</td></tr>
+                                    <tr><td style='background:#f9f9f9;'><strong>Email ID:</strong></td><td>{$safeEmail}</td></tr>
+                                    <tr><td style='background:#f9f9f9;'><strong>Location:</strong></td><td>{$safeLocation}</td></tr>
+                                </table>
+                                <p style='margin-top:20px;'>Please log into the Admin Dashboard under <strong>Fundraiser Enquiries</strong> to review and approve this enquiry, then share the cause creation link with the applicant.</p>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                ";
+
+                if (!empty($adminEmails)) {
+                    foreach ($adminEmails as $toAdmin) {
+                        $toAdmin = trim($toAdmin);
+                        // Check if having to email-id, then validate email-id format, next send mail process
+                        if (!empty($toAdmin) && filter_var($toAdmin, FILTER_VALIDATE_EMAIL)) {
+                            $this->email->clear();
+                            $this->email->from($fromEmail, 'Kanavu Help System');
+                            $this->email->to($toAdmin);
+                            $this->email->subject($adminSubject);
+                            $this->email->message($adminMessage);
+                            $this->email->set_mailtype('html');
+                            $sent = @$this->email->send();
+                            // If SMTP fails or is blocked on live server, send via Resend API (HTTPS Port 443)
+                            if (!$sent) {
+                                $this->load->library('resend');
+                                $this->resend->send($toAdmin, $adminSubject, $adminMessage);
+                            }
+                        }
+                    }
                 }
             }
 

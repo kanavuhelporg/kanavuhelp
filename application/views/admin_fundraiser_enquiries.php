@@ -1063,7 +1063,7 @@
                       <button type="button" class="btn btn-success px-3 fw-semibold" onclick="copyCauseLink('<?= base_url("fundraiser_approve_token/") ?>${d.approval_token}')" title="Copy Link to Clipboard">
                         <i class="fa-solid fa-copy me-1"></i> Copy Link
                       </button>
-                      <button type="button" class="btn btn-outline-success px-3 fw-semibold" style="background-color: #ffffff;" onclick="sendManualLink(${d.id})" title="Send Mail to Applicant">
+                      <button type="button" class="btn btn-outline-success px-3 fw-semibold" style="background-color: #ffffff;" onclick="sendManualLink(${d.id}, '${d.email || ''}')" title="Send Mail to Applicant">
                         <i class="fa-solid fa-paper-plane me-1"></i> Send Mail
                       </button>
                     </div>
@@ -1083,7 +1083,7 @@
             var actionsHtml = '';
             if (d.status === 'approved' && d.approval_token) {
               actionsHtml += `<button type="button" class="btn btn-outline-success me-2" onclick="copyCauseLink('<?= base_url("fundraiser_approve_token/") ?>${d.approval_token}')"><i class="fa-solid fa-link me-1"></i> Copy Cause Link</button>`;
-              actionsHtml += `<button type="button" class="btn btn-outline-primary me-2" onclick="sendManualLink(${d.id})"><i class="fa-solid fa-paper-plane me-1"></i> Resend Mail</button>`;
+              actionsHtml += `<button type="button" class="btn btn-outline-primary me-2" onclick="sendManualLink(${d.id}, '${d.email || ''}')"><i class="fa-solid fa-paper-plane me-1"></i> Resend Mail</button>`;
             }
             if (d.status === 'approved') {
               if (isHold) {
@@ -1201,7 +1201,16 @@
     }
 
     // Send Manual Link via Email
-    function sendManualLink(id) {
+    function sendManualLink(id, email) {
+      if (!email || email.trim() === '' || email === 'null' || email === 'undefined') {
+        alert('Email is not available');
+        return;
+      }
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.trim())) {
+        alert('Invalid email address format');
+        return;
+      }
       if (!confirm('Send manual cause creation link email to this applicant?')) {
         return;
       }
@@ -1214,7 +1223,7 @@
           if (res.status === 'success') {
             alert('Success: ' + res.message);
           } else {
-            alert('Error: ' + res.message);
+            alert(res.message);
           }
         },
         error: function () {

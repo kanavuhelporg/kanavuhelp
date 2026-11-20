@@ -983,6 +983,34 @@ class admin extends CI_Controller
         $transactionid = $this->input->get("transactionid");
         $amount = preg_replace('/[^0-9.]/', '', $this->input->get("amount"));
 
+        $fromEmail = $this->config->item('from_email') ?: 'support@help.kanavu.org';
+        $toEmail = !empty($donaremail) ? trim($donaremail) : '';
+
+        // Must validate both fromemail and toemail first before processing email sending
+        if (empty($fromEmail)) {
+            $this->session->set_userdata("transactionemailerrorstatus", "From email is not available");
+            redirect("/transactionverification");
+            return;
+        }
+
+        if (!filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
+            $this->session->set_userdata("transactionemailerrorstatus", "Invalid From email address format");
+            redirect("/transactionverification");
+            return;
+        }
+
+        if (empty($toEmail)) {
+            $this->session->set_userdata("transactionemailerrorstatus", "To email is not available");
+            redirect("/transactionverification");
+            return;
+        }
+
+        if (!filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
+            $this->session->set_userdata("transactionemailerrorstatus", "Invalid To email address format");
+            redirect("/transactionverification");
+            return;
+        }
+
         // Load PDF Library
         $this->load->library('pdf');
         $pdfContent = null;
@@ -1002,8 +1030,9 @@ class admin extends CI_Controller
             // Email content
             $emailContent = $this->generateEmailContent($donarname, $transactionid, $message, $status);
 
-            $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
-            $this->email->to($donaremail);
+            $this->email->clear();
+            $this->email->from($fromEmail, 'The Kanavu Trust');
+            $this->email->to($toEmail);
 
             $this->email->subject(
                 $status == 'verified'
@@ -1019,8 +1048,20 @@ class admin extends CI_Controller
             //     $this->email->attach($filePath);
             // }
 
-            // Send email
-            if ($this->email->send()) {
+            // Send email (try SMTP first, then fall back to Resend API over HTTPS 443 if SMTP is blocked)
+            $sent = @$this->email->send();
+            if (!$sent) {
+                $this->load->library('resend');
+                $receiptSubject = ($status == 'verified'
+                    ? 'Transaction Receipt - The Kanavu Trust'
+                    : 'Transaction Status Update - The Kanavu Trust');
+                $res = $this->resend->send($toEmail, $receiptSubject, $emailContent);
+                if (!empty($res['status'])) {
+                    $sent = true;
+                }
+            }
+
+            if ($sent) {
 
                 // Delete PDF file since it's no longer needed
                 if ($status == 'verified' && file_exists($filePath)) {
@@ -1241,15 +1282,35 @@ class admin extends CI_Controller
         $userName = $this->input->get("username");
         $message = $this->input->get("message");
         $adminName = $this->input->get("adminname");
-        $to = $userEmail;
+        $to = !empty($userEmail) ? trim($userEmail) : '';
+        $fromEmail = $this->config->item('from_email') ?: 'support@help.kanavu.org';
 
-        if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
-            $this->session->set_userdata("emailerrorstatus", "Please provide a valid email address.");
+        // Must validate both fromemail and toemail first before processing email sending
+        if (empty($fromEmail)) {
+            $this->session->set_userdata("emailerrorstatus", "From email is not available");
             redirect("/causesverification");
             return;
         }
 
-        $emailParts = explode('@', $userEmail);
+        if (!filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
+            $this->session->set_userdata("emailerrorstatus", "Invalid From email address format");
+            redirect("/causesverification");
+            return;
+        }
+
+        if (empty($to)) {
+            $this->session->set_userdata("emailerrorstatus", "To email is not available");
+            redirect("/causesverification");
+            return;
+        }
+
+        if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+            $this->session->set_userdata("emailerrorstatus", "Invalid To email address format");
+            redirect("/causesverification");
+            return;
+        }
+
+        $emailParts = explode('@', $to);
         $domain = end($emailParts);
         if (!checkdnsrr($domain, 'MX') && !checkdnsrr($domain, 'A')) {
             $this->session->set_userdata("emailerrorstatus", "The email domain '" . htmlspecialchars($domain) . "' does not exist.");
@@ -1269,7 +1330,8 @@ class admin extends CI_Controller
             return;
         }
 
-        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
+        $this->email->clear();
+        $this->email->from($fromEmail, 'The Kanavu Trust');
         $this->email->to($to);
         $this->email->subject('The Kanavu Trust');
         $this->email->message($message);
@@ -1277,7 +1339,16 @@ class admin extends CI_Controller
         // $this->email->set_header("MIME-Version", "1.0");
         // $this->email->set_header("Content-Type: text/html", "charset=UTF-8\r\n");
 
-        if ($this->email->send()) {
+        $sent = @$this->email->send();
+        if (!$sent) {
+            $this->load->library('resend');
+            $res = $this->resend->send($to, 'The Kanavu Trust', $message);
+            if (!empty($res['status'])) {
+                $sent = true;
+            }
+        }
+
+        if ($sent) {
             // Set a session variable to indicate OTP was sent
             $find = array(",", "!", ".", "'");
             $replace = array("");
@@ -1488,37 +1559,71 @@ class admin extends CI_Controller
 
     public function send_test_email()
     {
+        $this->config->load('email');
+        $this->load->library('email');
+
+        $toEmail = $this->input->get('to') ?: 'nathiyadev.ksv@gmail.com';
+        $useApi = $this->input->get('api'); // Access ?api=1 to test via Resend HTTP API
+
+        $currentDateTime = date('Y-m-d H:i:s');
+        $subject = 'Kanavu Help Test Email - ' . $currentDateTime;
+        $message = "<h3>Test Email from Kanavu Help</h3><p>Sent On: {$currentDateTime}</p>";
+
+        // Test 1: Via Resend HTTP API (cURL over HTTPS port 443 - bypasses all firewall/SMTP restrictions)
+        if ($useApi == '1') {
+            $this->load->library('resend');
+            $response = $this->resend->send($toEmail, $subject, $message);
+            echo "<h3>Testing Resend HTTP API (Port 443 HTTPS):</h3><pre>";
+            print_r($response);
+            echo "</pre>";
+            if (!empty($response['status'])) {
+                echo '<div style="color: green; font-weight: bold;">✅ Email sent successfully via Resend API!</div>';
+            } else {
+                echo '<div style="color: red; font-weight: bold;">❌ Resend API failed. Check API key in config/email.php.</div>';
+            }
+            return;
+        }
+
+        // Test 2: Via SMTP using config/email.php settings
+        $smtp_host = $this->config->item('smtp_host') ?: 'smtp.resend.com';
+        $smtp_port = $this->config->item('smtp_port') ?: 465;
+        $smtp_user = $this->config->item('smtp_user') ?: 'resend';
+        $smtp_pass = $this->config->item('smtp_pass') ?: '';
+        $smtp_crypto = $this->config->item('smtp_crypto') ?: ($smtp_port == 465 ? 'ssl' : 'tls');
+
         $config = array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'mail.help.kanavu.org',
-            'smtp_port' => 465,
-            'smtp_user' => 'support@help.kanavu.org',
-            'smtp_pass' => 'S8z?HUxsnd30',
-            'mailtype' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n",
-            'crlf' => "\r\n",
-            'smtp_timeout' => 30,
+            'protocol'    => 'smtp',
+            'smtp_host'   => $smtp_host,
+            'smtp_port'   => $smtp_port,
+            'smtp_user'   => $smtp_user,
+            'smtp_pass'   => $smtp_pass,
+            'smtp_crypto' => $smtp_crypto, // Crucial: 'ssl' for 465, prevents STARTTLS Broken Pipe
+            'mailtype'    => 'html',
+            'charset'     => 'utf-8',
+            'newline'     => "\r\n",
+            'crlf'        => "\r\n",
+            'smtp_timeout'=> 30,
         );
 
-        $this->load->library('email');
         $this->email->clear(TRUE);
         $this->email->initialize($config);
 
-        $currentDateTime = date('Y-m-d H:i:s');
-        $message = "<h3>Test Email from Kanavu Help</h3><p>Sent On: {$currentDateTime}</p>";
-
-        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'Kanavu Help Website');
-        $this->email->to('nathiyadev.ksv@gmail.com');
-        $this->email->subject('Kanavu Help Test Email - ' . $currentDateTime);
+        $fromEmail = $this->config->item('from_email') ?: 'support@help.kanavu.org';
+        $this->email->from($fromEmail, 'Kanavu Help Website');
+        $this->email->to($toEmail);
+        $this->email->subject($subject);
         $this->email->message($message);
 
+        echo "<h4>Attempting SMTP test via {$smtp_host}:{$smtp_port} (crypto: {$smtp_crypto})...</h4>";
+
         if ($this->email->send()) {
-            echo 'Email sent successfully!';
+            echo '<div style="color: green; font-weight: bold;">✅ Email sent successfully via SMTP!</div>';
         } else {
+            echo '<div style="color: red; font-weight: bold;">❌ SMTP Email failed!</div>';
             echo '<pre>';
             print_r($this->email->print_debugger());
             echo '</pre>';
+            echo '<hr><p>💡 <b>Tip:</b> If cPanel blocks outbound SMTP ports, test via Resend HTTP API (Port 443): <a href="' . base_url('admin/send_test_email?api=1') . '">' . base_url('admin/send_test_email?api=1') . '</a></p>';
         }
     }
 
@@ -1833,8 +1938,26 @@ class admin extends CI_Controller
             return;
         }
 
-        if (empty($enquiry->email) || !filter_var($enquiry->email, FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(['status' => 'error', 'message' => 'No valid email address is available for this enquiry.']);
+        // 1. Must validate both fromemail and toemail first before processing email sending
+        $fromEmail = $this->config->item('from_email') ?: 'support@help.kanavu.org';
+        if (empty($fromEmail)) {
+            echo json_encode(['status' => 'error', 'message' => 'From email is not available']);
+            return;
+        }
+
+        if (!filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid From email address format']);
+            return;
+        }
+
+        $toEmail = !empty($enquiry->email) ? trim($enquiry->email) : '';
+        if (empty($toEmail)) {
+            echo json_encode(['status' => 'error', 'message' => 'To email is not available']);
+            return;
+        }
+
+        if (!filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid To email address format']);
             return;
         }
 
@@ -1845,6 +1968,8 @@ class admin extends CI_Controller
         }
 
         $approval_link = base_url('fundraiser_approve_token/' . $token);
+        $safeName = htmlspecialchars($enquiry->fullname);
+        $safeTitle = htmlspecialchars($enquiry->cause_title);
 
         $userSubject = 'Your Fundraiser Cause Creation Link - Kanavu Help';
         $userMessage = "
@@ -1856,8 +1981,8 @@ class admin extends CI_Controller
                         <p style='margin: 5px 0 0 0;'>Ref ID: #FE-{$id}</p>
                     </div>
                     <div style='padding: 25px;'>
-                        <p>Hello <strong>" . htmlspecialchars($enquiry->fullname) . "</strong>,</p>
-                        <p>Your fundraiser enquiry for <strong>" . htmlspecialchars($enquiry->cause_title) . "</strong> has been approved. You can create your cause campaign using the link below:</p>
+                        <p>Hello <strong>{$safeName}</strong>,</p>
+                        <p>Your fundraiser enquiry for <strong>{$safeTitle}</strong> has been approved. You can create your cause campaign using the link below:</p>
                         <div style='text-align: center; margin: 28px 0;'>
                             <a href='{$approval_link}'
                                style='background-color: #16a34a; color: #ffffff; padding: 14px 32px; border-radius: 30px; text-decoration: none; font-size: 16px; font-weight: bold; display: inline-block;'>
@@ -1874,24 +1999,34 @@ class admin extends CI_Controller
             </html>
         ";
 
-        $this->email->from($this->config->item('from_email') ?: 'support@help.kanavu.org', 'The Kanavu Trust');
-        $this->email->to($enquiry->email);
+        // 3. Process email sending
+        $this->email->clear();
+        $this->email->from($fromEmail, 'The Kanavu Trust');
+        $this->email->to($toEmail);
         $this->email->subject($userSubject);
         $this->email->message($userMessage);
         $this->email->set_mailtype('html');
         $sent = @$this->email->send();
+        // Fall back to Resend API over HTTPS 443 if SMTP is blocked on the server
+        if (!$sent) {
+            $this->load->library('resend');
+            $res = $this->resend->send($toEmail, $userSubject, $userMessage);
+            if (!empty($res['status'])) {
+                $sent = true;
+            }
+        }
 
         if ($sent) {
             echo json_encode([
                 'status' => 'success',
-                'message' => 'Manual cause link sent successfully to ' . $enquiry->email,
+                'message' => 'Manual cause link sent successfully to ' . $toEmail,
                 'approval_link' => $approval_link,
                 'approval_token' => $token
             ]);
         } else {
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Failed to send email to ' . $enquiry->email . '. Please check SMTP/email configuration.'
+                'message' => 'Failed to send email to ' . $toEmail . '. Please check SMTP/email configuration.'
             ]);
         }
     }
